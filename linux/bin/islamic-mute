@@ -44,7 +44,7 @@ move_all_to() {
 }
 
 install_cmd() {
-    local model="${1:-$REPO/models/dfn3/dfn3_stream.onnx}"
+    local model="${1:-$REPO/models/dfn3/dfn3_stream_int8.onnx}"
     [ -x "$REPO/build/im-stream" ] || die "build first: make -C $REPO"
     [ -f "$model" ] || die "model not found: $model"
     mkdir -p "$LIB/lib" "$LIB/models" "$CFG" "$STATE"
