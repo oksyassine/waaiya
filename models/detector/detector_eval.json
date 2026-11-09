@@ -1,0 +1,178 @@
+{
+ "val": {
+  "auc_female_singing_vs_rest": 0.994675,
+  "auc_female_vs_male_singing": 0.99805,
+  "gender_acc": 0.8341666460037231,
+  "style_acc": 0.9516666531562805,
+  "threshold": 0.8283949106931687,
+  "false_mute_rate_by_group": {
+   "recitation_F": 0.0,
+   "recitation_M": 0.11,
+   "singing_M": 0.01,
+   "speech_F": 0.005,
+   "speech_M": 0.0
+  },
+  "catch_at_threshold": 0.95
+ },
+ "ext_opensinger": {
+  "auc_female_singing_vs_rest": 0.871975,
+  "auc_female_vs_male_singing": 0.871975,
+  "gender_acc": 0.8424999713897705,
+  "style_acc": 0.13750000298023224,
+  "threshold": 2.6078582504851544e-05,
+  "false_mute_rate_by_group": {
+   "singing_M": 0.675
+  },
+  "catch_at_threshold": 0.95,
+  "at_val_threshold": {
+   "catch_female_singing": 0.095,
+   "false_mute_male_singing": 0.0
+  }
+ },
+ "train_log": [
+  {
+   "auc_female_singing_vs_rest": 0.990405,
+   "auc_female_vs_male_singing": 0.99435,
+   "gender_acc": 0.8100000023841858,
+   "style_acc": 0.9591666460037231,
+   "threshold": 0.544118219614029,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.15,
+    "singing_M": 0.025,
+    "speech_F": 0.005,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 1000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.992655,
+   "auc_female_vs_male_singing": 0.9973,
+   "gender_acc": 0.82833331823349,
+   "style_acc": 0.9549999833106995,
+   "threshold": 0.7512807339429856,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.125,
+    "singing_M": 0.015,
+    "speech_F": 0.005,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 2000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.994675,
+   "auc_female_vs_male_singing": 0.99805,
+   "gender_acc": 0.8341666460037231,
+   "style_acc": 0.9516666531562805,
+   "threshold": 0.8283949106931687,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.11,
+    "singing_M": 0.01,
+    "speech_F": 0.005,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 3000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.99272,
+   "auc_female_vs_male_singing": 0.9975,
+   "gender_acc": 0.8383333086967468,
+   "style_acc": 0.9508333206176758,
+   "threshold": 0.8116458445787434,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.125,
+    "singing_M": 0.005,
+    "speech_F": 0.005,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 4000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.990985,
+   "auc_female_vs_male_singing": 0.996275,
+   "gender_acc": 0.840833306312561,
+   "style_acc": 0.9424999952316284,
+   "threshold": 0.7180717647075654,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.175,
+    "singing_M": 0.01,
+    "speech_F": 0.005,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 5000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.993405,
+   "auc_female_vs_male_singing": 0.99725,
+   "gender_acc": 0.8441666960716248,
+   "style_acc": 0.9474999904632568,
+   "threshold": 0.8064156979322433,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.14,
+    "singing_M": 0.01,
+    "speech_F": 0.0,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 6000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.993555,
+   "auc_female_vs_male_singing": 0.99775,
+   "gender_acc": 0.8541666865348816,
+   "style_acc": 0.9516666531562805,
+   "threshold": 0.8054458707571032,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.135,
+    "singing_M": 0.0,
+    "speech_F": 0.0,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 7000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.992805,
+   "auc_female_vs_male_singing": 0.9974,
+   "gender_acc": 0.8441666960716248,
+   "style_acc": 0.9491666555404663,
+   "threshold": 0.7634082019329071,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.145,
+    "singing_M": 0.0,
+    "speech_F": 0.0,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 8000
+  },
+  {
+   "auc_female_singing_vs_rest": 0.993165,
+   "auc_female_vs_male_singing": 0.997725,
+   "gender_acc": 0.8483333587646484,
+   "style_acc": 0.9474999904632568,
+   "threshold": 0.8448419421911241,
+   "false_mute_rate_by_group": {
+    "recitation_F": 0.0,
+    "recitation_M": 0.135,
+    "singing_M": 0.005,
+    "speech_F": 0.0,
+    "speech_M": 0.0
+   },
+   "catch_at_threshold": 0.95,
+   "step": 9000
+  }
+ ]
+}
