@@ -1,6 +1,6 @@
 /* im-process: run the streaming engine over a WAV file, exactly as a live sink would,
  * then remove the engine delay so the output lines up with the input.
- * Usage: im-process -m model.onnx [--mono] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]] [--keep-delay] [--block N] in.wav out.wav */
+ * Usage: im-process -m model.onnx [--mono] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]] [--keep-delay] [--block N] [--aligned] in.wav out.wav */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     const char *detector = NULL;
     unsigned policy = 0;
     const char *model = NULL, *inp = NULL, *outp = NULL;
-    int mono = 0, keep_delay = 0, block = 256;
+    int mono = 0, keep_delay = 0, block = 256, aligned = 0;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-m") && i + 1 < argc) model = argv[++i];
         else if (!strcmp(argv[i], "--mono")) mono = 1;
@@ -24,12 +24,13 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[i], "--mute-female-voice")) policy |= IM_POLICY_MUTE_FEMALE_VOICE;
         else if (!strcmp(argv[i], "--fail-closed")) policy |= IM_POLICY_FAIL_CLOSED;
         else if (!strcmp(argv[i], "--keep-delay")) keep_delay = 1;
+        else if (!strcmp(argv[i], "--aligned")) aligned = 1; /* hop-aligned path, one hop less delay */
         else if (!strcmp(argv[i], "--block") && i + 1 < argc) block = atoi(argv[++i]);
         else if (!inp) inp = argv[i];
         else if (!outp) outp = argv[i];
     }
     if (!model || !inp || !outp || block <= 0) {
-        fprintf(stderr, "usage: im-process -m model.onnx [--mono] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]] [--keep-delay] [--block N] in.wav out.wav\n");
+        fprintf(stderr, "usage: im-process -m model.onnx [--mono] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]] [--keep-delay] [--block N] [--aligned] in.wav out.wav\n");
         return 2;
     }
     char err[512];
@@ -46,8 +47,10 @@ int main(int argc, char **argv) {
     if (detector && im_engine_detector_status(e, NULL) < 0) fprintf(stderr, "%s\n", im_engine_detector_error(e));
     im_engine_set_policy(e, policy);
     long muted = 0, chunks = 0;
-    int lat = im_engine_latency(e), ch = w.channels;
+    int lat = aligned ? im_engine_aligned_latency(e) : im_engine_latency(e), ch = w.channels, hop = im_engine_hop(e);
+    if (aligned) block = hop * (block / hop > 0 ? block / hop : 1);
     long total = w.frames + (keep_delay ? 0 : lat);
+    if (aligned) total = (total + hop - 1) / hop * hop;
     float *in = calloc((size_t)total * ch, sizeof(float));
     float *out = calloc((size_t)total * ch, sizeof(float));
     if (!in || !out) { fprintf(stderr, "out of memory\n"); return 1; }
@@ -55,7 +58,8 @@ int main(int argc, char **argv) {
     double t0 = now();
     for (long i = 0; i < total; i += block) {
         int n = (int)(total - i < block ? total - i : block);
-        im_engine_process_interleaved(e, in + (size_t)i * ch, out + (size_t)i * ch, n);
+        if (aligned) im_engine_process_hops_interleaved(e, in + (size_t)i * ch, out + (size_t)i * ch, n / hop);
+        else im_engine_process_interleaved(e, in + (size_t)i * ch, out + (size_t)i * ch, n);
         if (policy) { muted += im_engine_detector_status(e, NULL) == 1; chunks++; }
     }
     double dt = now() - t0;
