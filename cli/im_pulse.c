@@ -17,7 +17,7 @@
  * Fail-closed: if the engine cannot load or a call fails, silence is written, never the unfiltered input.
  * Exits 1 if the server connection or a stream fails (the daemon restarts it), 3 if libpulse.so.0 is missing.
  *
- * Usage: im-pulse -m model.onnx --sink <real sink> [--source islamic_mute.monitor] [--target-ms 20] [--max-target-ms 0]
+ * Usage: im-pulse -m model.onnx --sink <real sink> [--source islamic_mute.monitor] [--target-ms 35] [--max-target-ms 0]
  *                 [--mono] [--threads 1] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]]
  *                 [--channels 2] [--rate 48000] [--minreq-ms 10] [--stats-s 10]
  * libpulse is loaded with dlopen (cli/pulse_dl.h), so building needs no libpulse-dev. */
@@ -359,7 +359,7 @@ static void stats_line(void) {
 }
 
 static void usage(void) {
-    fprintf(stderr, "usage: im-pulse -m model.onnx --sink <sink> [--source islamic_mute.monitor] [--target-ms 20] [--max-target-ms 0]\n"
+    fprintf(stderr, "usage: im-pulse -m model.onnx --sink <sink> [--source islamic_mute.monitor] [--target-ms 35] [--max-target-ms 0]\n"
                     "                [--mono] [--threads 1] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]]\n"
                     "                [--channels 2] [--rate 48000] [--minreq-ms 10] [--stats-s 10]\n");
 }
@@ -368,7 +368,7 @@ int main(int argc, char **argv) {
     const char *model = NULL, *detector = NULL, *source = "islamic_mute.monitor", *sink = NULL;
     unsigned policy = 0;
     int ch = 2, rate = 48000, mono = 0, threads = 1;
-    double target_ms = 20, max_target_ms = 0, minreq_ms = 10, stats_s = 10;
+    double target_ms = 35, max_target_ms = 0, minreq_ms = 10, stats_s = 10;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-m") && i + 1 < argc) model = argv[++i];
         else if (!strcmp(argv[i], "--source") && i + 1 < argc) source = argv[++i];
