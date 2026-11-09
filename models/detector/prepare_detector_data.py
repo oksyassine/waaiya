@@ -141,7 +141,10 @@ def main():
     vocalset(a.out, a.hours * 2, a.tmp, rng)
     if not a.no_quran:
         quran(a.out, a.hours, a.workers, rng)
-    from_hf_parquet("tvergho/slakh", f"{a.out}/music", 1.0 * 3600, set(), rng, columns=("audio", "stem_mix"))
+    # the HF subset only has data/test-*.parquet; with the default split_hint="train" nothing matched (detector v1 trained without music)
+    s = from_hf_parquet("tvergho/slakh", f"{a.out}/music", 1.0 * 3600, set(), rng, split_hint="test", columns=("audio", "stem_mix"))
+    if s < 600:
+        raise SystemExit(f"music augmentation: only {s:.0f} s from tvergho/slakh")
     for g, repo in (("F", "CodecSR/opensinger_female"), ("M", "CodecSR/opensinger_male")):
         s = from_hf_parquet(repo, f"{a.out}/ext/singing_{g}", 0.4 * 3600, set(), rng, split_hint="original")
         print(f"OpenSinger {g} (evaluation only): {s / 3600:.2f} h", flush=True)
