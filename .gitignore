@@ -1,0 +1,76 @@
+# --- Build outputs ---
+build/
+android/**/build/
+android/.gradle/
+android/.kotlin/
+android/app/.cxx/
+android/local.properties
+android/captures/
+*.apk
+*.aab
+*.o
+*.so
+*.so.*
+
+# --- Vendored binaries / toolchains (fetched locally, see README) ---
+third_party/onnxruntime/
+third_party/sysroot/
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# --- Model weights: shipped as release assets, never committed (docs/MODELS.md) ---
+*.onnx
+*.onnx.data
+*.state_init.bin
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+models/detector/weights/
+runs/
+
+# --- Datasets and audio (downloaded or generated; licences in THIRD_PARTY_LICENSES.md) ---
+testset/data/
+models/detector/evalset/
+data/
+*.wav
+*.flac
+*.mp3
+*.ogg
+*.raw
+
+# --- Evaluation: keep the Markdown reports, not raw per-item output ---
+eval/results/*
+!eval/results/*.md
+
+# --- Kaggle run outputs ---
+kaggle/**/out/
+kaggle/**/output/
+
+# --- Secrets: never commit ---
+kaggle.json
+access_token
+.kaggle/
+.env
+.env.*
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+keystore.properties
+signing.properties
+google-services.json
+
+# --- Editors / OS ---
+.idea/
+*.iml
+.vscode/
+.DS_Store
+*.swp
+*~
