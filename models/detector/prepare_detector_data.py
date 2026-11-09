@@ -68,6 +68,17 @@ def fleurs(out, lang, h, tmp):
         print(f"FLEURS {lang} {split}: F {done['F'] / 3600:.2f} h, M {done['M'] / 3600:.2f} h", flush=True)
 
 
+def singer(path):
+    """VocalSet singer id as 'f3' / 'm11'. Folders are 'female3' / 'male11' (FULL/female3/...);
+    file names start with 'f3_' / 'm11_'. Returns None if neither is found."""
+    for p in path.split("/")[:-1]:
+        m = re.fullmatch(r"(female|male|[fm])(\d+)", p.lower())
+        if m:
+            return m.group(1)[0] + m.group(2)
+    m = re.match(r"([fm])(\d+)_", os.path.basename(path).lower())
+    return m.group(1) + m.group(2) if m else None
+
+
 def vocalset(out, h, tmp, rng):
     z = f"{tmp}/VocalSet11.zip"
     if not os.path.exists(z):
@@ -75,8 +86,9 @@ def vocalset(out, h, tmp, rng):
         urllib.request.urlretrieve(VOCALSET_URL, z)
     with zipfile.ZipFile(z) as zf:
         names = [n for n in zf.namelist() if n.lower().endswith(".wav") and "__macosx" not in n.lower()]
-        singer = lambda n: next((p for p in n.split("/") if re.fullmatch(r"[fm]\d+", p)), None)  # noqa: E731
         singers = sorted({singer(n) for n in names if singer(n)}, key=lambda s: (s[0], int(s[1:])))
+        if not all(any(s[0] == g for s in singers) for g in "fm"):
+            raise SystemExit(f"VocalSet: could not read singer ids (got {singers}); sample paths: {names[:5]}")
         held = {max((s for s in singers if s[0] == g), key=lambda s: int(s[1:])) for g in "fm"}
         print(f"VocalSet: {len(names)} wavs, singers {singers}, validation singers {sorted(held)}", flush=True)
         rng.shuffle(names)
