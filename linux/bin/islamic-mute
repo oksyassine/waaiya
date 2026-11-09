@@ -1,0 +1,169 @@
+#!/usr/bin/env bash
+# islamic-mute: always-on, system-wide voice filter for Linux (removes instruments, keeps voice).
+#
+#   islamic-mute install [model.onnx]   copy engine + model into ~/.local (no root needed)
+#   islamic-mute run [--default]        run in the foreground (used by the systemd user service)
+#   islamic-mute start | stop | status  control the background service
+#   islamic-mute enable | disable       start automatically at login (systemd --user)
+#   islamic-mute model <file.onnx>      switch model (restart to apply)
+#   islamic-mute women-singing on [detector.onnx] | off
+#                                       for men: also mute women's singing (restart to apply). Fail-closed:
+#                                       if the detector cannot load, voice is muted while this is on.
+#
+# How it works: apps play into a virtual output "Islamic Mute". The filter reads it, removes
+# instruments, and plays the result to the real speakers or headphones.
+# Fail-closed: if the filter crashes, apps keep playing into the silent virtual output while the
+# filter restarts. Only an explicit stop restores normal (unfiltered) audio.
+# Output changes (e.g. Bluetooth headphones connecting) are followed automatically.
+set -uo pipefail
+
+APP=islamic-mute
+LIB="${XDG_DATA_HOME:-$HOME/.local/share}/$APP"
+CFG="${XDG_CONFIG_HOME:-$HOME/.config}/$APP"
+STATE="${XDG_STATE_HOME:-$HOME/.local/state}/$APP"
+SINK=islamic_mute
+HERE="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+REPO="$(cd "$HERE/../.." 2>/dev/null && pwd)"
+FMT=(--raw --format=float32le --rate=48000 --channels=2)
+IN_LAT="${IM_IN_LATENCY_MS:-10}"
+OUT_LAT="${IM_OUT_LATENCY_MS:-30}"
+
+log() { echo "$APP: $*" >&2; }
+die() { log "$*"; exit 1; }
+current_default() { pactl get-default-sink 2>/dev/null || pactl info 2>/dev/null | sed -n 's/^Default Sink: //p'; }
+sink_exists() { pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -qx "$1"; }
+model_path() { cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"; }
+detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.onnx"; }
+policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
+stream_bin() { [ -x "$LIB/lib/im-stream" ] && echo "$LIB/lib/im-stream" || echo "$REPO/build/im-stream"; }
+
+move_all_to() {
+    pactl list short sink-inputs 2>/dev/null | awk '{print $1}' | while read -r i; do
+        pactl move-sink-input "$i" "$1" 2>/dev/null || true
+    done
+}
+
+install_cmd() {
+    local model="${1:-$REPO/models/dfn3/dfn3_stream.onnx}"
+    [ -x "$REPO/build/im-stream" ] || die "build first: make -C $REPO"
+    [ -f "$model" ] || die "model not found: $model"
+    mkdir -p "$LIB/lib" "$LIB/models" "$CFG" "$STATE"
+    cp -P "$REPO"/build/libonnxruntime.so* "$REPO/build/im-stream" "$REPO/build/islamic_mute_ladspa.so" "$LIB/lib/"
+    cp "$model" "$LIB/models/"
+    local base="${model%.onnx}"
+    [ -f "$base.state_init.bin" ] && cp "$base.state_init.bin" "$LIB/models/"
+    echo "$LIB/models/$(basename "$model")" > "$CFG/model"
+    local det="$REPO/models/detector/detector_v1.onnx"
+    [ -f "$det" ] && cp "$det" "$LIB/models/detector.onnx"
+    install -m 755 "$HERE/islamic-mute" "$LIB/islamic-mute"
+    mkdir -p "$HOME/.config/systemd/user"
+    sed "s|@BIN@|$LIB/islamic-mute|g" "$HERE/../systemd/islamic-mute.service.in" > "$HOME/.config/systemd/user/islamic-mute.service"
+    systemctl --user daemon-reload 2>/dev/null || true
+    log "installed to $LIB (model: $(model_path))"
+    log "start now: $APP start    start at every login: $APP enable"
+}
+
+run_cmd() {
+    local make_default=0 stopping=0 pipe_pid="" module="" master=""
+    [ "${1:-}" = "--default" ] && make_default=1
+    command -v pactl >/dev/null || die "pactl not found (PulseAudio or pipewire-pulse required)"
+    mkdir -p "$STATE"
+    master="${IM_MASTER:-$(current_default)}"
+    [ "$master" = "$SINK" ] && master="$(cat "$STATE/master" 2>/dev/null || true)"
+    [ -n "$master" ] && sink_exists "$master" || die "no real output device found"
+    if ! sink_exists "$SINK"; then
+        module="$(pactl load-module module-null-sink sink_name=$SINK rate=48000 channels=2 \
+                  sink_properties=device.description=Islamic_Mute)" || die "cannot create virtual output"
+        echo "$module" > "$STATE/module_id"
+    fi
+    pactl set-sink-volume "$SINK" 100% 2>/dev/null || true
+
+    start_pipe() {
+        echo "$master" > "$STATE/master"
+        # args: 1 virtual sink, 2 filter binary, 3 model, 4 input latency, 5 real output, 6 output latency,
+        #       7 detector ("" = none), 8 policy flags, 9.. format
+        local det="" flags; flags="$(policy_flags)"
+        [ -n "$flags" ] && det="$(detector_path)"
+        setsid bash -c 'd=(); [ -n "$8" ] && d=(-d "$7" $8)
+            parec -d "$1.monitor" "${@:9}" --latency-msec="$4" | "$2" -m "$3" "${d[@]}" | pacat -d "$5" "${@:9}" --latency-msec="$6"' \
+            _ "$SINK" "$(stream_bin)" "$(model_path)" "$IN_LAT" "$master" "$OUT_LAT" "$det" "$flags" "${FMT[@]}" \
+            2>>"$STATE/filter.log" &
+        pipe_pid=$!
+        log "filtering -> $master (model $(basename "$(model_path)")${flags:+, women singing muted})"
+    }
+    stop_pipe() { [ -n "$pipe_pid" ] && kill -TERM -- "-$pipe_pid" 2>/dev/null; wait "$pipe_pid" 2>/dev/null; pipe_pid=""; }
+    shutdown() {
+        stopping=1
+        stop_pipe
+        # explicit stop: give the user normal audio back
+        if [ "$(current_default)" = "$SINK" ] && sink_exists "$master"; then pactl set-default-sink "$master"; fi
+        sink_exists "$master" && move_all_to "$master"
+        local id; id="$(cat "$STATE/module_id" 2>/dev/null || true)"
+        [ -n "$id" ] && pactl unload-module "$id" 2>/dev/null
+        rm -f "$STATE/module_id" "$STATE/run.pid"
+        log "stopped, audio restored to $master"
+        exit 0
+    }
+    trap shutdown TERM INT
+    echo $$ > "$STATE/run.pid"
+    start_pipe
+    if [ $make_default = 1 ]; then pactl set-default-sink "$SINK"; move_all_to "$SINK"; fi
+
+    while [ $stopping = 0 ]; do
+        sleep 1 & wait $!
+        # filter died: restart it; apps stay on the silent virtual output meanwhile (fail-closed)
+        if ! kill -0 "$pipe_pid" 2>/dev/null; then
+            log "filter stopped unexpectedly, restarting"; stop_pipe; start_pipe
+        fi
+        # the virtual output vanished (sound server restart): recreate it
+        if ! sink_exists "$SINK"; then
+            module="$(pactl load-module module-null-sink sink_name=$SINK rate=48000 channels=2 \
+                      sink_properties=device.description=Islamic_Mute)" && echo "$module" > "$STATE/module_id"
+            stop_pipe; start_pipe
+            [ $make_default = 1 ] && pactl set-default-sink "$SINK"
+        fi
+        # the user or the system picked another output (e.g. headphones): follow it
+        local d; d="$(current_default)"
+        if [ -n "$d" ] && [ "$d" != "$SINK" ] && [ $make_default = 1 ]; then
+            log "output changed to $d"
+            master="$d"; stop_pipe; start_pipe
+            pactl set-default-sink "$SINK"; move_all_to "$SINK"
+        fi
+        if [ -n "$master" ] && ! sink_exists "$master"; then
+            # current real output disappeared (headphones unplugged): use whatever the system offers next
+            local next; next="$(pactl list short sinks | awk '{print $2}' | grep -vx "$SINK" | head -1)"
+            if [ -n "$next" ]; then log "output $master gone, using $next"; master="$next"; stop_pipe; start_pipe; fi
+        fi
+    done
+}
+
+status_cmd() {
+    echo "server:   $(pactl info 2>/dev/null | sed -n 's/^Server Name: //p')"
+    echo "model:    $(model_path)"
+    if [ -n "$(policy_flags)" ]; then echo "women's singing: muted (detector $(detector_path))"; else echo "women's singing: not filtered"; fi
+    echo "output:   $(cat "$STATE/master" 2>/dev/null || echo '?')"
+    if sink_exists "$SINK"; then echo "filter:   running"; else echo "filter:   stopped"; fi
+    echo "default:  $(current_default)"
+    systemctl --user is-enabled islamic-mute.service >/dev/null 2>&1 && echo "autostart: on" || echo "autostart: off"
+}
+
+case "${1:-}" in
+    install) shift; install_cmd "$@" ;;
+    run) shift; run_cmd "$@" ;;
+    start) systemctl --user start islamic-mute.service && status_cmd ;;
+    stop) systemctl --user stop islamic-mute.service; status_cmd ;;
+    enable) systemctl --user enable --now islamic-mute.service ;;
+    disable) systemctl --user disable --now islamic-mute.service ;;
+    status) status_cmd ;;
+    model) [ -f "${2:-}" ] || die "usage: $APP model file.onnx"; readlink -f "$2" > "$CFG/model"; log "model set; run '$APP stop; $APP start'" ;;
+    women-singing)
+        case "${2:-}" in
+            on) [ -n "${3:-}" ] && { [ -f "$3" ] || die "detector not found: $3"; readlink -f "$3" > "$CFG/detector"; }
+                mkdir -p "$CFG"; echo on > "$CFG/women_singing"
+                [ -f "$(detector_path)" ] || log "warning: no detector at $(detector_path): voice will be muted while this is on (fail-closed)"
+                log "women's singing will be muted; run '$APP stop; $APP start'" ;;
+            off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP stop; $APP start'" ;;
+            *) die "usage: $APP women-singing on [detector.onnx] | off" ;;
+        esac ;;
+    *) sed -n '2,18p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+esac

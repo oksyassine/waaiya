@@ -1,0 +1,25 @@
+Islamic Mute
+Copyright 2026 The Islamic Mute authors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes or is built with third-party software and models.
+Full list, licences and dataset notes: THIRD_PARTY_LICENSES.md.
+
+- ONNX Runtime 1.19.2, Copyright (c) Microsoft Corporation. MIT License.
+  Binary builds bundle libonnxruntime; ship its ThirdPartyNotices.txt with them.
+- DeepFilterNet3 model and code (deepfilternet 0.5.6), Copyright (c) 2021 Hendrik Schroeter.
+  MIT OR Apache-2.0. Used for the models in models/dfn3/ and as the base of the voice model.
+- EfficientAT (mn04 MobileNetV3, AudioSet-pretrained weights), Copyright (c) 2022 Florian Schmid.
+  MIT License (models/detector/efficientat/LICENSE). Base of the women's-singing detector.
+- AudioSet class list (models/detector/efficientat/class_labels_indices.csv), Google Inc.
+  Dataset CC BY 4.0; ontology CC BY-SA 4.0.
+- Shizuku-API 13.1.5 (api, provider, aidl, shared) by RikkaApps. MIT License.
+- AndroidX and Media3 1.5.1 (Android Open Source Project), Kotlin standard library 2.0.21
+  (JetBrains), Guava, Gradle wrapper (Copyright 2015-2021 the original authors).
+  Apache License 2.0.
+
+Models trained by this project use these CC BY 4.0 datasets:
+LibriSpeech (Panayotov et al.), VocalSet (Wilkins et al.), Slakh2100 (Manilow et al.)
+[voice_v1 and detector_v1]; Arabic Speech Corpus (N. Halabi) [voice_v1]; FLEURS (Google) [detector_v1].
+See THIRD_PARTY_LICENSES.md for the Quran recitation data, whose licence is not cleared.
