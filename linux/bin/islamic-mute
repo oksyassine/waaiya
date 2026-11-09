@@ -15,6 +15,8 @@
 # Fail-closed: if the filter crashes, apps keep playing into the silent virtual output while the
 # filter restarts. Only an explicit stop restores normal (unfiltered) audio.
 # Output changes (e.g. Bluetooth headphones connecting) are followed automatically.
+# The filter is im-pulse (one process using libpulse; holds its output buffer at IM_TARGET_MS, default 20)
+# when installed, else parec | im-stream | pacat. IM_BACKEND=pipe forces the pipeline.
 set -uo pipefail
 
 APP=islamic-mute
@@ -27,6 +29,7 @@ REPO="$(cd "$HERE/../.." 2>/dev/null && pwd)"
 FMT=(--raw --format=float32le --rate=48000 --channels=2)
 IN_LAT="${IM_IN_LATENCY_MS:-10}"
 OUT_LAT="${IM_OUT_LATENCY_MS:-30}"
+TARGET_MS="${IM_TARGET_MS:-20}"
 
 log() { echo "$APP: $*" >&2; }
 die() { log "$*"; exit 1; }
@@ -36,9 +39,16 @@ model_path() { cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"; 
 detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.onnx"; }
 policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
 stream_bin() { [ -x "$LIB/lib/im-stream" ] && echo "$LIB/lib/im-stream" || echo "$REPO/build/im-stream"; }
+# im-pulse next to the im-stream in use (installed or build), unless IM_BACKEND=pipe
+pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "${IM_BACKEND:-}" != pipe ] && [ -x "$b" ] && echo "$b"; }
 
 move_all_to() {
+    # never move our own output stream (pacat runs as client "islamic-mute"): moving it into the
+    # virtual sink would loop the filter into itself and silence the speakers. im-pulse uses DONT_MOVE.
+    local own; own="$(LC_ALL=C pactl list sink-inputs 2>/dev/null |
+        awk '/^Sink Input #/ {id = substr($3, 2)} /application.name = "islamic-mute"/ {print id}')"
     pactl list short sink-inputs 2>/dev/null | awk '{print $1}' | while read -r i; do
+        printf '%s\n' "$own" | grep -qx "$i" && continue
         pactl move-sink-input "$i" "$1" 2>/dev/null || true
     done
 }
@@ -49,6 +59,7 @@ install_cmd() {
     [ -f "$model" ] || die "model not found: $model"
     mkdir -p "$LIB/lib" "$LIB/models" "$CFG" "$STATE"
     cp -P "$REPO"/build/libonnxruntime.so* "$REPO/build/im-stream" "$REPO/build/islamic_mute_ladspa.so" "$LIB/lib/"
+    if [ -x "$REPO/build/im-pulse" ]; then cp "$REPO/build/im-pulse" "$LIB/lib/"; else rm -f "$LIB/lib/im-pulse"; fi
     cp "$model" "$LIB/models/"
     local base="${model%.onnx}"
     [ -f "$base.state_init.bin" ] && cp "$base.state_init.bin" "$LIB/models/"
@@ -64,7 +75,8 @@ install_cmd() {
 }
 
 run_cmd() {
-    local make_default=0 stopping=0 pipe_pid="" module="" master=""
+    local make_default=0 stopping=0 pipe_pid="" module="" master="" backend=pipe started=0 quick_fails=0
+    [ -n "$(pulse_bin)" ] && backend=pulse
     [ "${1:-}" = "--default" ] && make_default=1
     command -v pactl >/dev/null || die "pactl not found (PulseAudio or pipewire-pulse required)"
     mkdir -p "$STATE"
@@ -84,8 +96,18 @@ run_cmd() {
         #       7 detector ("" = none), 8 policy flags, 9.. format
         local det="" flags; flags="$(policy_flags)"
         [ -n "$flags" ] && det="$(detector_path)"
+        started=$SECONDS
+        if [ "$backend" = pulse ]; then
+            # own process group (setsid), like the pipeline, so stop_pipe can signal it the same way
+            # shellcheck disable=SC2086
+            setsid "$(pulse_bin)" -m "$(model_path)" ${flags:+-d "$det" $flags} --source "$SINK.monitor" --sink "$master" \
+                --target-ms "$TARGET_MS" --max-target-ms "${IM_MAX_TARGET_MS:-0}" 2>>"$STATE/filter.log" &
+            pipe_pid=$!
+            log "filtering -> $master (im-pulse, model $(basename "$(model_path)")${flags:+, women singing muted})"
+            return
+        fi
         setsid bash -c 'd=(); [ -n "$8" ] && d=(-d "$7" $8)
-            parec -d "$1.monitor" "${@:9}" --latency-msec="$4" | "$2" -m "$3" "${d[@]}" | pacat -d "$5" "${@:9}" --latency-msec="$6"' \
+            parec -d "$1.monitor" "${@:9}" --latency-msec="$4" | "$2" -m "$3" "${d[@]}" | pacat --client-name=islamic-mute -d "$5" "${@:9}" --latency-msec="$6"' \
             _ "$SINK" "$(stream_bin)" "$(model_path)" "$IN_LAT" "$master" "$OUT_LAT" "$det" "$flags" "${FMT[@]}" \
             2>>"$STATE/filter.log" &
         pipe_pid=$!
@@ -113,6 +135,14 @@ run_cmd() {
         sleep 1 & wait $!
         # filter died: restart it; apps stay on the silent virtual output meanwhile (fail-closed)
         if ! kill -0 "$pipe_pid" 2>/dev/null; then
+            wait "$pipe_pid" 2>/dev/null; local rc=$?
+            if [ "$backend" = pulse ]; then
+                # im-pulse exits 3 without libpulse.so.0; three exits within 3 s of starting: also give up on it
+                if [ $((SECONDS - started)) -le 3 ]; then quick_fails=$((quick_fails + 1)); else quick_fails=0; fi
+                if [ $rc = 3 ] || [ $quick_fails -ge 3 ]; then
+                    log "im-pulse failed (exit $rc), falling back to parec | im-stream | pacat"; backend=pipe
+                fi
+            fi
             log "filter stopped unexpectedly, restarting"; stop_pipe; start_pipe
         fi
         # the virtual output vanished (sound server restart): recreate it
@@ -142,6 +172,7 @@ status_cmd() {
     echo "model:    $(model_path)"
     if [ -n "$(policy_flags)" ]; then echo "women's singing: muted (detector $(detector_path))"; else echo "women's singing: not filtered"; fi
     echo "output:   $(cat "$STATE/master" 2>/dev/null || echo '?')"
+    if [ -n "$(pulse_bin)" ]; then echo "backend:  im-pulse (target ${TARGET_MS} ms)"; else echo "backend:  parec | im-stream | pacat"; fi
     if sink_exists "$SINK"; then echo "filter:   running"; else echo "filter:   stopped"; fi
     echo "default:  $(current_default)"
     systemctl --user is-enabled islamic-mute.service >/dev/null 2>&1 && echo "autostart: on" || echo "autostart: off"
@@ -165,5 +196,5 @@ case "${1:-}" in
             off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP stop; $APP start'" ;;
             *) die "usage: $APP women-singing on [detector.onnx] | off" ;;
         esac ;;
-    *) sed -n '2,18p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+    *) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac
