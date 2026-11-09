@@ -1,0 +1,14 @@
+[Unit]
+Description=Islamic Mute: system-wide voice filter (removes instruments, keeps voice)
+After=pulseaudio.service pipewire-pulse.service wireplumber.service
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 2
+ExecStart=@BIN@ run --default
+KillMode=mixed
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,39 @@
+# PipeWire filter-chain: virtual output "Islamic Mute" running the voice filter plugin.
+# The plugin's "latency" output port is reported to the graph, so video players
+# that read the sink delay (mpv, Chromium, OBS) can keep lip-sync.
+context.properties = { log.level = 0 }
+context.spa-libs = {
+    audio.convert.* = audioconvert/libspa-audioconvert
+    support.*       = support/libspa-support
+}
+context.modules = [
+    { name = libpipewire-module-rt args = { nice.level = -11 } flags = [ ifexists nofail ] }
+    { name = libpipewire-module-protocol-native }
+    { name = libpipewire-module-client-node }
+    { name = libpipewire-module-adapter }
+    { name = libpipewire-module-filter-chain
+        args = {
+            node.description = "Islamic Mute"
+            media.name       = "Islamic Mute"
+            audio.rate       = 48000
+            filter.graph = {
+                nodes = [
+                    { type = ladspa name = im plugin = "@PLUGIN@" label = islamic_mute_stereo
+                      control = { "Enabled" = 1 } }
+                ]
+                inputs  = [ "im:In L" "im:In R" ]
+                outputs = [ "im:Out L" "im:Out R" ]
+            }
+            audio.channels = 2
+            audio.position = [ FL FR ]
+            capture.props = {
+                node.name   = "@SINK@"
+                media.class = Audio/Sink
+            }
+            playback.props = {
+                node.name    = "@SINK@_out"
+                node.passive = true
+            }
+        }
+    }
+]
