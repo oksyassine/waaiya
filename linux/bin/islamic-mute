@@ -67,6 +67,10 @@ install_cmd() {
     local det="$REPO/models/detector/detector_v1.onnx"
     [ -f "$det" ] && cp "$det" "$LIB/models/detector.onnx"
     install -m 755 "$HERE/islamic-mute" "$LIB/islamic-mute"
+    # put the command on PATH (~/.local/bin is on PATH by default on Debian/Ubuntu/Fedora)
+    mkdir -p "$HOME/.local/bin"
+    ln -sfn "$LIB/islamic-mute" "$HOME/.local/bin/$APP"
+    case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) log "add ~/.local/bin to PATH (or log out and in) to use '$APP' directly" ;; esac
     mkdir -p "$HOME/.config/systemd/user"
     sed "s|@BIN@|$LIB/islamic-mute|g" "$HERE/../systemd/islamic-mute.service.in" > "$HOME/.config/systemd/user/islamic-mute.service"
     systemctl --user daemon-reload 2>/dev/null || true
