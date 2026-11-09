@@ -110,3 +110,41 @@ needs `islamic-mute install` to pick this up.
 2. **Talk to PulseAudio directly instead of `parec | … | pacat`.** One process with a libpulse stream could watch its
    own playback latency and drop to a target after an underrun. That would remove the permanent +6–10 ms steps, which pipes cannot see.
 3. **PipeWire filter-chain with a latency port**, so players compensate the lag instead of suffering it.
+
+## im-pulse: one process with libpulse (2026-11-09, second pass)
+
+`build/im-pulse` (`cli/im_pulse.c`) replaces `parec | im-stream | pacat`. It records the virtual sink's monitor, runs
+the hop-aligned engine (30 ms) in a worker thread, and writes to the real sink. Before each write it holds the
+playback latency at `--target-ms` (default 20) ± half a hop. Above that it drops the oldest input; below it, it writes
+silence; while the stream is stopped it fills only to the target. This removes the pipe's permanent underrun creep.
+It loads libpulse with `dlopen`, so it builds without `libpulse-dev`. The daemon uses it when it is installed;
+`IM_BACKEND=pipe` restores the pipeline.
+
+Same session, null sinks, interleaved runs, 30 s speech+music, `eval/latency/meas_pipe.sh`. The machine was not idle:
+a CPU-heavy browser tab and, for part of the session, a 4-core training job. Delay = virtual-sink monitor to output-sink monitor.
+
+| Condition | Pipe (10/30/480, hop-aligned engine) | im-pulse, target 20 ms |
+|---|---|---|
+| Steady, quiet periods (2 + 2 runs) | 53.2, 53.2 ms; 0 underruns | 54.7, 54.5 ms; 0–1 underruns, 2–5 small corrections |
+| Steady, busy periods (2 + 2 runs) | 74.3 ms (2 underruns before the recording); 60.1 → 86.0 ms (3 underruns) | 54.8, 55.6 ms; 0 underruns |
+| 4 forced 60 ms stalls (SIGSTOP), 4 runs each | first → last window 52.4 → 70.1, 87.1 → 83.4, 60.2 → 71.4, 54.9 → 73.6 ms; 4–7 underruns | 53.6 → 57.3, 53.0 → 53.9 ms; 9–18 underruns, 0.3–0.5 s of input dropped |
+| Player asks for 50 ms (`PLAYLAT=50`) | 60.0 → 68.5 ms; 2 underruns | 54.2 → 56.1 ms; 1 underrun |
+| 4 busy processes (`LOAD_N=4`), 2 runs each | 76–86 ms; 6–30 underruns | 56–60 ms; 80–83 underruns (about 1.1 s dropped per 30 s) |
+| 8 busy processes (`burn.py`) | not measurable (output correlation 0.03); 323–350 underruns | not measurable; 486–501 underruns |
+| Target 15 ms, busy period (1 run) | — | 50.9 ms; 11 underruns |
+
+In short: im-pulse keeps the delay at about 30 ms + target + 3–5 ms and does not creep. On a quiet machine it is
+1.5 ms slower than a pipe that has not yet underrun. When the CPU is busy it underruns more than the pipe, because the
+pipe's creep acts as a growing safety buffer. A bounded adaptive target (`--max-target-ms`) raised the delay to the
+pipe's level (~88 ms) under load and still had 47–55 underruns, so it is off by default.
+
+What was found while building it (kept in the code):
+- `pa_stream_get_latency` with automatic timing updates only was ~10 ms off, because PulseAudio backs the updates
+  off to 1.5 s. im-pulse requests a timing update after every write.
+- Running the engine inside the record callback (3.4 ms per stereo hop) blocked the libpulse mainloop and gave
+  59 underruns in 25 s with a 50 ms player buffer. Mono gave 7 and no engine gave 6. A worker thread brought it to
+  16–29 in the same test. The pipe gets 1–3 there; why is still open.
+- Corrections in whole hops with a band one hop wide oscillated (drop, insert, drop). Corrections are now
+  exact in size, and small ones must persist for 100 ms first.
+- Dropping input while the stream was stopped after an underrun could deadlock (the stream never restarted).
+  While stopped, im-pulse now uses the queue's read and write indices.

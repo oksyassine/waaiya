@@ -9,7 +9,10 @@ CFLAGS  += $(SYSFLAG) -Iengine/include -I$(ORT)/include -fvisibility=hidden -fPI
 LDLIBS   = -L$(ORT)/lib -lonnxruntime -lm
 BUILD    = build
 
-all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so
+all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse
+
+# im-pulse loads libpulse.so.0 at run time (cli/pulse_dl.h), so it builds without libpulse-dev.
+pulse: $(BUILD)/im-pulse
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -32,10 +35,13 @@ $(BUILD)/im-process: cli/im_process.c cli/wav.c $(ENGINE_OBJ)
 $(BUILD)/im-stream: cli/im_stream.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
 
+$(BUILD)/im-pulse: cli/im_pulse.c cli/pulse_dl.h $(ENGINE_OBJ)
+	$(CC) $(CFLAGS) -pthread $(filter %.c %.o,$^) -o $@ $(LDLIBS) -ldl -Wl,-rpath,'$$ORIGIN'
+
 $(BUILD)/islamic_mute_ladspa.so: linux/ladspa/im_ladspa.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -shared $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN' -Wl,--no-undefined
 
 clean:
 	rm -rf $(BUILD)
 
-.PHONY: all clean
+.PHONY: all clean pulse
