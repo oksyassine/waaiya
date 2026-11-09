@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".LicencesActivity" android:exported="false" />
+
         <!-- "Share to" / "Open with" player: perfect lip-sync for videos from WhatsApp, Telegram, files. -->
         <activity android:name=".PlayerActivity" android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
