@@ -5,7 +5,7 @@ Model weights are **not in git**. `.gitignore` excludes `*.onnx`, `*.state_init.
 | File | Size | How to get it |
 |---|---|---|
 | `models/dfn3/dfn3_stream.onnx` + `.state_init.bin` | 16 MB | `python models/dfn3/export_stream.py --out models/dfn3/dfn3_stream.onnx` (downloads the official DeepFilterNet3 checkpoint) |
-| `models/dfn3/dfn3_stream_{fp16,int8}.onnx` | 4.4 / 2.4 MB | `python models/shrink.py models/dfn3/dfn3_stream.onnx --fp16 --int8` |
+| `models/dfn3/dfn3_stream_{fp16,int8}.onnx` | 4.4 / 2.4 MB | `python models/shrink.py models/dfn3/dfn3_stream.onnx --fp16 --int8` | **Default** for the APK and `islamic-mute install` is the int8 file (listening check passed).
 | `voice_v1.onnx` + `.state_init.bin` | ~16 MB (2-5 MB shrunk) | Kaggle notebook `kaggle/voice-train` (see `models/voice/README.md`) |
 | `models/detector/detector_v1.onnx` | ~4 MB | Kaggle notebook `kaggle/detector-train` |
 | `models/detector/weights/mn04_as_mAP_432.pt` | 4 MB | EfficientAT release v0.0.1 (fetched by the detector notebook) |

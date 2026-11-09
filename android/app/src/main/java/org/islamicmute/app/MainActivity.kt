@@ -97,6 +97,11 @@ class MainActivity : Activity() {
         setup.addView(text("(The second line is optional: it stops Android asking for screen-capture permission at every start.)", 12f))
         col.addView(setup)
 
+        col.addView(Button(this).apply {
+            text = "Open-source licences"
+            setOnClickListener { startActivity(Intent(this@MainActivity, LicencesActivity::class.java)) }
+        })
+
         setContentView(ScrollView(this).apply { addView(col) })
         Shizuku.addBinderReceivedListenerSticky(shizukuChanged)
         Shizuku.addBinderDeadListener(shizukuDead)
