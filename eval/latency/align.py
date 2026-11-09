@@ -27,6 +27,7 @@ print(f"naive lag {lag/R*1e3:.2f} ms | start offset (corr) {1e3*(o2-o1):.2f} ms 
 # windowed delays (2 s windows) on the shared clock: a dropout/underrun shows up as a jump
 off = o2 - o1; W = 2 * R; ds = []
 import os, subprocess, soundfile as sf
+SEARCH = int(float(os.environ.get("IM_ALIGN_SEARCH_MS", "25")) * R / 1000)
 if len(sys.argv) > 2 and sys.argv[2] == "ref":   # compare against the offline engine output of the dry recording
     RP = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     sf.write(p + "_dry.wav", np.load(p + "_s1.npy"), R, subtype="FLOAT")
@@ -38,9 +39,16 @@ g = int(round(lag))
 for st in range(0, len(d1) - W - abs(g), W):
     a = d1[st:st + W]
     if np.sqrt((a**2).mean()) < 0.003: continue
-    b = d2[max(0, st + g - 2400): st + g - 2400 + W + 4800]
-    if len(b) < W + 4800: continue
-    l, c = lag_samples(a, b[2400:2400 + W], 1200)
+    if SEARCH <= 1200:  # default: circular search within +-25 ms of the global lag
+        b = d2[max(0, st + g - 2400): st + g - 2400 + W + 4800]
+        if len(b) < W + 4800: continue
+        l, c = lag_samples(a, b[2400:2400 + W], 1200)
+    else:  # IM_ALIGN_SEARCH_MS > 25: linear search, follows delay steps larger than 25 ms
+        if st + g - SEARCH < 0: continue
+        b = d2[st + g - SEARCH: st + g + W + SEARCH]
+        if len(b) < W + 2 * SEARCH: continue
+        l, c = lag_samples(a, b, 2 * SEARCH)
+        l -= SEARCH
     if c > 0.5: ds.append(1e3 * ((g + l) / R + off))
 ds = np.array(ds)
 # also residual check: wet vs dry energy in silent dropouts (zero runs > 5 ms inside active output)
