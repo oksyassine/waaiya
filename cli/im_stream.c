@@ -69,11 +69,15 @@ int main(int argc, char **argv) {
     char err[512];
     im_config cfg = {model, ch, rate, threads, mono, detector};
     im_engine *e = NULL;
-    if (im_engine_create(&cfg, &e, err, sizeof err) != IM_OK)
+    int created = im_engine_create(&cfg, &e, err, sizeof err) == IM_OK;
+    /* whole hops per block: each hop's output leaves in the same call (one hop less delay) */
+    int hop = im_engine_hop(e), aligned = hop > 0 && block % hop == 0;
+    int lat = aligned ? im_engine_aligned_latency(e) : im_engine_latency(e);
+    if (!created)
         fprintf(stderr, "im-stream: %s -> output muted (fail-closed)\n", err);
     else
-        fprintf(stderr, "im-stream: \"%s\" ready, latency %d samples (%.1f ms)\n", im_engine_model_name(e),
-                im_engine_latency(e), 1000.0 * im_engine_latency(e) / rate);
+        fprintf(stderr, "im-stream: \"%s\" ready, latency %d samples (%.1f ms)%s\n", im_engine_model_name(e),
+                lat, 1000.0 * lat / rate, aligned ? ", hop-aligned" : "");
     if (detector && e && im_engine_detector_status(e, NULL) < 0)
         fprintf(stderr, "im-stream: %s%s\n", im_engine_detector_error(e),
                 (policy & IM_POLICY_FAIL_CLOSED) ? " -> voice muted while the policy is on (fail-closed)" : "");
@@ -89,7 +93,8 @@ int main(int argc, char **argv) {
             long q = pipe_queued(0);
             while (q > limit && q >= (long)bytes && read_full(0, in, bytes)) { dropped_in++; q -= (long)bytes; }
         }
-        im_engine_process_interleaved(e, in, out, block);
+        if (aligned) im_engine_process_hops_interleaved(e, in, out, block / hop);
+        else im_engine_process_interleaved(e, in, out, block);
         /* output backlog (player side not draining fast enough): drop this block instead of queueing it */
         if (limit > 0 && pipe_queued(1) > limit) { dropped_out++; }
         else if (!write_full(1, out, bytes)) break;

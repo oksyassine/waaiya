@@ -52,6 +52,23 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeProcess(JNIEnv *env
     (*env)->ReleasePrimitiveArrayCritical(env, in, pi, JNI_ABORT);
 }
 
+/* Hop-aligned: in/out hold hops * hop frames; one hop less delay than nativeProcess. Returns 0 or -1. */
+JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeProcessHops(JNIEnv *env, jclass cls, jlong h, jfloatArray in,
+                                                                         jfloatArray out, jint hops) {
+    (void)cls;
+    jfloat *pi = (*env)->GetPrimitiveArrayCritical(env, in, NULL);
+    jfloat *po = (*env)->GetPrimitiveArrayCritical(env, out, NULL);
+    int r = im_engine_process_hops_interleaved((im_engine *)(intptr_t)h, pi, po, hops);
+    (*env)->ReleasePrimitiveArrayCritical(env, out, po, 0);
+    (*env)->ReleasePrimitiveArrayCritical(env, in, pi, JNI_ABORT);
+    return r;
+}
+
+JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeAlignedLatency(JNIEnv *env, jclass cls, jlong h) {
+    (void)env; (void)cls;
+    return im_engine_aligned_latency((im_engine *)(intptr_t)h);
+}
+
 JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeLatency(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     return im_engine_latency((im_engine *)(intptr_t)h);
