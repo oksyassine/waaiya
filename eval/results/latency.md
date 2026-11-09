@@ -115,7 +115,7 @@ needs `islamic-mute install` to pick this up.
 
 `build/im-pulse` (`cli/im_pulse.c`) replaces `parec | im-stream | pacat`. It records the virtual sink's monitor, runs
 the hop-aligned engine (30 ms) in a worker thread, and writes to the real sink. Before each write it holds the
-playback latency at `--target-ms` (default 20) ± half a hop. Above that it drops the oldest input; below it, it writes
+playback latency at `--target-ms` (default 20 then; now 35, see the third pass below) ± half a hop. Above that it drops the oldest input; below it, it writes
 silence; while the stream is stopped it fills only to the target. This removes the pipe's permanent underrun creep.
 It loads libpulse with `dlopen`, so it builds without `libpulse-dev`. The daemon uses it when it is installed;
 `IM_BACKEND=pipe` restores the pipeline.
@@ -148,3 +148,28 @@ What was found while building it (kept in the code):
   exact in size, and small ones must persist for 100 ms first.
 - Dropping input while the stream was stopped after an underrun could deadlock (the stream never restarted).
   While stopped, im-pulse now uses the queue's read and write indices.
+
+## Real sound card: target 20 ms cuts audio (2026-11-09, third pass)
+
+The tables above used null sinks as the output. On the real ALSA sink (i7-1185G7, PulseAudio 15, card latency ~9 ms),
+the installed daemon at target 20 ms gave ~20 underruns per second while Chrome played, and dropped ~3 s of audio
+per 10 s: the audio "cuts a lot with short breaks". When the virtual sink is idle, the engine skips the model on
+digital silence (0.6 ms per hop), so idle stats looked clean. With music a stereo hop costs 2.8 ms at full clock and
+~5 ms live (the CPU clocks down at this light load). Reported playback latency includes the card's ~9 ms, so at 20 ms
+only 1–2 ms of slack is left before each write. Repro: null sink `im_dbg`, `paplay` music into it, im-pulse from
+its monitor to the ALSA sink with its stream volume at 0.
+
+| 8–25 s of music into the monitored sink, output = ALSA sink | underruns |
+|---|---|
+| im-pulse target 20 (10 s) | 27 |
+| im-pulse target 20, `--mono` (10 s) | 30 |
+| im-pulse target 30 (10 s) | 5 |
+| im-pulse target 35 (25 s) | 1 |
+| im-pulse target 40 (25 s) | 1 |
+| im-pulse target 30, `--mono` (25 s) | 0 |
+| pipe 10/30 ms, `pacat -v` (25 s) | 11 |
+| im-pulse target 20, output to a null sink instead (10 s) | 3 |
+| im-pulse target 20, music into an unmonitored sink (10 s) | 1 |
+
+The daemon default is now 35 ms (`IM_TARGET_MS`), so app-to-card delay is about 30 + 35 = 65 ms with the 30 ms
+model. A look-ahead-0 model would bring it to about 45 ms.

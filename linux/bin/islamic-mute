@@ -6,6 +6,7 @@
 #   islamic-mute start | stop | status  control the background service
 #   islamic-mute enable | disable       start automatically at login (systemd --user)
 #   islamic-mute model <file.onnx>      switch model (restart to apply)
+#   islamic-mute backend pipe | pulse   pipe = parec | im-stream | pacat; pulse = im-pulse (restart to apply)
 #   islamic-mute women-singing on [detector.onnx] | off
 #                                       for men: also mute women's singing (restart to apply). Fail-closed:
 #                                       if the detector cannot load, voice is muted while this is on.
@@ -15,8 +16,8 @@
 # Fail-closed: if the filter crashes, apps keep playing into the silent virtual output while the
 # filter restarts. Only an explicit stop restores normal (unfiltered) audio.
 # Output changes (e.g. Bluetooth headphones connecting) are followed automatically.
-# The filter is im-pulse (one process using libpulse; holds its output buffer at IM_TARGET_MS, default 20)
-# when installed, else parec | im-stream | pacat. IM_BACKEND=pipe forces the pipeline.
+# The filter is im-pulse (one process using libpulse; holds its output buffer at IM_TARGET_MS, default 35)
+# when installed, else parec | im-stream | pacat. 'backend pipe' (or IM_BACKEND=pipe) forces the pipeline.
 set -uo pipefail
 
 APP=islamic-mute
@@ -29,7 +30,7 @@ REPO="$(cd "$HERE/../.." 2>/dev/null && pwd)"
 FMT=(--raw --format=float32le --rate=48000 --channels=2)
 IN_LAT="${IM_IN_LATENCY_MS:-10}"
 OUT_LAT="${IM_OUT_LATENCY_MS:-30}"
-TARGET_MS="${IM_TARGET_MS:-20}"
+TARGET_MS="${IM_TARGET_MS:-35}"
 
 log() { echo "$APP: $*" >&2; }
 die() { log "$*"; exit 1; }
@@ -39,8 +40,10 @@ model_path() { cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"; 
 detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.onnx"; }
 policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
 stream_bin() { [ -x "$LIB/lib/im-stream" ] && echo "$LIB/lib/im-stream" || echo "$REPO/build/im-stream"; }
-# im-pulse next to the im-stream in use (installed or build), unless IM_BACKEND=pipe
-pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "${IM_BACKEND:-}" != pipe ] && [ -x "$b" ] && echo "$b"; }
+# im-pulse next to the im-stream in use (installed or build), unless the backend is "pipe"
+# (IM_BACKEND, else "$APP backend pipe|pulse" saved in $CFG/backend)
+backend() { echo "${IM_BACKEND:-$(cat "$CFG/backend" 2>/dev/null)}"; }
+pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "$(backend)" != pipe ] && [ -x "$b" ] && echo "$b"; }
 
 move_all_to() {
     # never move our own output stream (pacat runs as client "islamic-mute"): moving it into the
@@ -190,6 +193,9 @@ case "${1:-}" in
     enable) systemctl --user enable --now islamic-mute.service ;;
     disable) systemctl --user disable --now islamic-mute.service ;;
     status) status_cmd ;;
+    backend)
+        case "${2:-}" in pipe|pulse) echo "$2" > "$CFG/backend"; log "backend set to $2; run '$APP stop; $APP start'" ;;
+            *) die "usage: $APP backend pipe|pulse   (now: $(backend || true))" ;; esac ;;
     model) [ -f "${2:-}" ] || die "usage: $APP model file.onnx"; readlink -f "$2" > "$CFG/model"; log "model set; run '$APP stop; $APP start'" ;;
     women-singing)
         case "${2:-}" in
@@ -200,5 +206,5 @@ case "${1:-}" in
             off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP stop; $APP start'" ;;
             *) die "usage: $APP women-singing on [detector.onnx] | off" ;;
         esac ;;
-    *) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+    *) sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac
