@@ -5,6 +5,8 @@ plugins {
 
 val ortVersion = "1.19.2"
 val ort: Configuration by configurations.creating
+val releaseAbis = listOf("arm64-v8a", "armeabi-v7a")
+val abiSplit = providers.gradleProperty("imAbiSplit").map { it != "false" }.getOrElse(false)
 
 android {
     namespace = "org.islamicmute.app"
@@ -17,11 +19,31 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "0.1.0"
-        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
     }
     buildTypes {
-        release { isMinifyEnabled = false }
+        debug {
+            ndk { abiFilters += listOf("arm64-v8a", "x86_64") }  // x86_64: emulators
+        }
+        release {
+            // Phones only (32- and 64-bit ARM). Also limits the universal APK when -PimAbiSplit is set.
+            ndk { abiFilters += releaseAbis }
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // No signing config: assembleRelease writes app-release-unsigned.apk. Sign it with your own key.
+        }
+    }
+    // `./gradlew assembleRelease -PimAbiSplit`: one APK per ABI plus the universal one (about 10 MB instead of
+    // 16 MB per download). Meant for release builds. Per-ABI versionCodes are not set here; add them before
+    // publishing split APKs to a store that needs distinct codes (F-Droid, Play with multiple APKs).
+    splits {
+        abi {
+            isEnable = abiSplit
+            reset()
+            include(*releaseAbis.toTypedArray())
+            isUniversalApk = true
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -29,7 +51,13 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     externalNativeBuild { cmake { path = file("src/main/cpp/CMakeLists.txt"); version = "3.22.1" } }
-    packaging { jniLibs { useLegacyPackaging = true } }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+            // ONNX Runtime's Java binding: unused (the engine calls the C API in libonnxruntime.so directly).
+            excludes += "**/libonnxruntime4j_jni.so"
+        }
+    }
     buildFeatures {
         aidl = true         // ISetupService: the Shizuku UserService interface
         buildConfig = true  // APPLICATION_ID / VERSION_CODE for the UserService
@@ -58,10 +86,10 @@ tasks.matching { it.name.startsWith("configureCMake") || it.name.startsWith("bui
     dependsOn(extractOrt)
 }
 
-// Bundle the voice model: -PimModel=/path/model.onnx (default: the DeepFilterNet3 streaming export).
+// Bundle the voice model: -PimModel=/path/model.onnx (default: the int8 DeepFilterNet3 streaming export).
 val modelAssets = layout.buildDirectory.dir("modelAssets")
 val copyModel by tasks.registering(Copy::class) {
-    val model = providers.gradleProperty("imModel").orElse(rootProject.file("../models/dfn3/dfn3_stream.onnx").path)
+    val model = providers.gradleProperty("imModel").orElse(rootProject.file("../models/dfn3/dfn3_stream_int8.onnx").path)
     from(model) { rename { "voice.onnx" } }
     from(model.map { it.removeSuffix(".onnx") + ".state_init.bin" }) { rename { "voice.state_init.bin" } }
     // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
@@ -72,3 +100,49 @@ val copyModel by tasks.registering(Copy::class) {
 android.sourceSets["main"].assets.srcDir(modelAssets)
 android.androidResources.noCompress += listOf("onnx", "bin")
 tasks.named("preBuild") { dependsOn(copyModel) }
+
+// Open-source licences screen (LicencesActivity): the texts are copied from the repository at build time so the
+// app always shows the current NOTICE / THIRD_PARTY_LICENSES.md. android/app/licences/ holds the licence texts
+// that exist nowhere else in the repository (Shizuku-API, DeepFilterNet).
+// ONNX Runtime's LICENSE and ThirdPartyNotices.txt are not in the AAR: they are taken from the ONNX Runtime
+// release unpacked in third_party/onnxruntime/ (or -PimOrtDir=...), which must be the same version as the AAR.
+// A release build fails without them; a debug build gets a placeholder pointing to the upstream file.
+val licenceAssets = layout.buildDirectory.dir("licenceAssets")
+val copyLicences by tasks.registering(Sync::class) {
+    val repo = rootProject.file("..")
+    val ortDir = file(providers.gradleProperty("imOrtDir").getOrElse(repo.resolve("third_party/onnxruntime").path))
+    val rootTexts = mapOf(
+        "NOTICE" to "NOTICE.txt",
+        "LICENSE" to "LICENSE-Apache-2.0.txt",
+        "THIRD_PARTY_LICENSES.md" to "THIRD_PARTY_LICENSES.txt",  // .txt: WebView shows it as plain text
+        "models/detector/efficientat/LICENSE" to "EfficientAT-LICENSE.txt",
+    )
+    val ortVersionFile = ortDir.resolve("VERSION_NUMBER")
+    val ortOk = ortVersionFile.isFile && ortVersionFile.readText().trim() == ortVersion &&
+        ortDir.resolve("LICENSE").isFile && ortDir.resolve("ThirdPartyNotices.txt").isFile
+    rootTexts.forEach { (src, dst) -> from(repo.resolve(src)) { rename { dst } } }
+    from("licences")
+    if (ortOk) from(ortDir) { include("LICENSE", "ThirdPartyNotices.txt"); rename { "onnxruntime-${it.removeSuffix(".txt")}.txt" } }
+    into(licenceAssets.map { it.dir("licences") })
+    outputs.upToDateWhen { false }  // cheap, and the release/debug check below must run every time
+    doFirst {
+        val missing = rootTexts.keys.filterNot { repo.resolve(it).isFile }
+        if (missing.isNotEmpty()) throw GradleException("Licence texts missing: $missing")
+        if (!ortOk) {
+            val msg = "ONNX Runtime $ortVersion LICENSE / ThirdPartyNotices.txt not found in $ortDir " +
+                "(unpack onnxruntime-linux-x64-$ortVersion.tgz there, or pass -PimOrtDir=...)"
+            if (gradle.taskGraph.allTasks.any { it.name.contains("Release") }) throw GradleException(msg)
+            logger.warn("warning: $msg; using a placeholder (debug only)")
+        }
+    }
+    doLast {
+        if (!ortOk) {
+            val url = "https://github.com/microsoft/onnxruntime/blob/v$ortVersion"
+            val dir = licenceAssets.get().dir("licences").asFile
+            dir.resolve("onnxruntime-LICENSE.txt").writeText("MIT License, Copyright (c) Microsoft Corporation.\n$url/LICENSE\n")
+            dir.resolve("onnxruntime-ThirdPartyNotices.txt").writeText("Debug build without the notices file.\n$url/ThirdPartyNotices.txt\n")
+        }
+    }
+}
+android.sourceSets["main"].assets.srcDir(licenceAssets)
+tasks.named("preBuild") { dependsOn(copyLicences) }
