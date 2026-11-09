@@ -102,11 +102,17 @@ class FilterService : Service() {
             record.startRecording()
             track.play()
             while (!stop) {
-                val n = record.read(inBuf, 0, inBuf.size, AudioRecord.READ_BLOCKING)
-                if (n <= 0) continue
-                engine.process(inBuf, outBuf, n / ch)
+                // collect exactly one hop so the engine can return it at once (hop-aligned: one hop less delay)
+                var got = 0
+                while (got < inBuf.size && !stop) {
+                    val n = record.read(inBuf, got, inBuf.size - got, AudioRecord.READ_BLOCKING)
+                    if (n < 0) break
+                    got += n
+                }
+                if (got < inBuf.size) continue
+                engine.processHops(inBuf, outBuf, 1)
                 muter?.gate?.let { engine.setGate(it) }
-                track.write(outBuf, 0, n, AudioTrack.WRITE_BLOCKING)
+                track.write(outBuf, 0, outBuf.size, AudioTrack.WRITE_BLOCKING)
             }
         } finally {
             runCatching { record.stop() }; record.release()

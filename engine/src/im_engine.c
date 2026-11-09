@@ -432,7 +432,38 @@ void im_engine_process_interleaved(im_engine *e, const float *in, float *out, in
     process_core(e, NULL, NULL, nframes, in, out);
 }
 
+/* Hop-aligned path: collect a whole hop, run it, return its output at once (no extra hop of buffering).
+ * The dry path reads the shared delay line `hop` samples ahead, i.e. model_latency samples back. */
+int im_engine_process_hops_interleaved(im_engine *e, const float *in, float *out, int nhops) {
+    if (!e || nhops < 0) return -1;
+    if (e->fill != 0) return -1;
+    const int ch = e->channels, hop = e->hop;
+    for (int k = 0; k < nhops; k++) {
+        const float *x = in + (size_t)k * hop * ch;
+        float *y = out + (size_t)k * hop * ch;
+        float dry[IM_MAX_CH];
+        int pos = e->dry_pos;
+        for (int i = 0; i < hop; i++)
+            for (int c = 0; c < ch; c++) e->in_buf[c][i] = x[(size_t)i * ch + c];
+        process_hop(e);
+        for (int i = 0; i < hop; i++) {
+            e->gate += ((e->det_muted && e->enabled ? 0.0f : e->gate_target) - e->gate) * e->gate_coef;
+            int rd = (pos + hop) % e->dry_len;
+            for (int c = 0; c < ch; c++) {
+                float xi = e->in_buf[c][i];
+                dry[c] = e->model_latency > 0 ? e->dry_buf[c][rd] : xi;
+                e->dry_buf[c][pos] = xi;
+                y[(size_t)i * ch + c] = (e->enabled ? e->out_buf[c][i] : dry[c]) * e->gate;
+            }
+            if (++pos >= e->dry_len) pos = 0;
+        }
+        e->dry_pos = pos;
+    }
+    return 0;
+}
+
 int im_engine_latency(const im_engine *e) { return e ? e->model_latency + e->hop : 0; }
+int im_engine_aligned_latency(const im_engine *e) { return e ? e->model_latency : 0; }
 int im_engine_hop(const im_engine *e) { return e ? e->hop : 0; }
 int im_engine_model_rate(const im_engine *e) { return e ? e->rate : 0; }
 int im_engine_failed(const im_engine *e) { return e ? e->failed : 1; }

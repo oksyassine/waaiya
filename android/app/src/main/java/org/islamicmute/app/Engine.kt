@@ -17,6 +17,8 @@ class Engine private constructor(private var handle: Long) : AutoCloseable {
         @JvmStatic private external fun nativeSetPolicy(h: Long, policy: Int)
         @JvmStatic private external fun nativeDetectorStatus(h: Long, probs: FloatArray?): Int
         @JvmStatic private external fun nativeProcess(h: Long, input: FloatArray, output: FloatArray, frames: Int)
+        @JvmStatic private external fun nativeProcessHops(h: Long, input: FloatArray, output: FloatArray, hops: Int): Int
+        @JvmStatic private external fun nativeAlignedLatency(h: Long): Int
         @JvmStatic private external fun nativeLatency(h: Long): Int
         @JvmStatic private external fun nativeFailed(h: Long): Boolean
         @JvmStatic private external fun nativeSetGate(h: Long, gain: Float)
@@ -47,6 +49,11 @@ class Engine private constructor(private var handle: Long) : AutoCloseable {
 
     /** Interleaved float audio, any block size. */
     fun process(input: FloatArray, output: FloatArray, frames: Int) = nativeProcess(handle, input, output, frames)
+
+    /** Whole hops only (frames = hops * hop): each hop leaves in the same call, so the delay is
+     *  [alignedLatency] (one hop less than [latency]). Do not mix with [process] on one stream. */
+    fun processHops(input: FloatArray, output: FloatArray, hops: Int): Int = nativeProcessHops(handle, input, output, hops)
+    val alignedLatency: Int get() = nativeAlignedLatency(handle)
     fun setGate(gain: Float) = nativeSetGate(handle, gain)
     fun setPolicy(policy: Int) = nativeSetPolicy(handle, policy)
 

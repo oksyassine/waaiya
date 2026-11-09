@@ -40,8 +40,17 @@ void im_engine_process(im_engine *e, const float *const *in, float *const *out, 
 /* Interleaved processing, any block size, in-place allowed. */
 void im_engine_process_interleaved(im_engine *e, const float *in, float *out, int nframes);
 
+/* Hop-aligned interleaved processing: in/out hold nhops * hop frames. Each hop is processed as soon as it
+ * arrives and its output is returned in the same call, so the delay is only the model look-ahead
+ * (im_engine_aligned_latency) instead of look-ahead + one hop. Use either this or the any-block-size
+ * functions for a stream, not both; call im_engine_reset when switching. In-place allowed.
+ * Returns 0, or -1 (nothing processed, out untouched) if the engine holds a partial hop from the other path. */
+int im_engine_process_hops_interleaved(im_engine *e, const float *in, float *out, int nhops);
+
 /* Total delay from input to output in samples: model look-ahead + hop buffering. */
 int im_engine_latency(const im_engine *e);
+/* Delay of im_engine_process_hops_interleaved in samples: model look-ahead only. */
+int im_engine_aligned_latency(const im_engine *e);
 int im_engine_hop(const im_engine *e);
 int im_engine_model_rate(const im_engine *e);
 int im_engine_failed(const im_engine *e);       /* 1 if the model never loaded */
