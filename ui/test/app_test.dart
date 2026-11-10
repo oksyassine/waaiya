@@ -49,16 +49,15 @@ void main() {
     expect(find.text('التصفية تعمل'), findsOneWidget);
     expect(find.textContaining('40'), findsOneWidget); // delay in words
 
-    // A setting the service reads at start: "stop and start to apply".
+    // Settings apply live: no "stop and start" note.
     await tester.tap(find.text('كتم غناء النساء'));
     await tester.pumpAndSettle();
     expect(backend.state.settings.muteWomenSinging, isTrue);
-    expect(find.text('أوقف التصفية ثم شغّلها لتطبيق التغييرات.'), findsOneWidget);
+    expect(find.text('أوقف التصفية ثم شغّلها لتطبيق التغييرات.'), findsNothing);
 
     await tester.tap(find.byKey(const Key('power')));
     await tester.pumpAndSettle();
     expect(backend.state.filter.running, isFalse);
-    expect(find.text('أوقف التصفية ثم شغّلها لتطبيق التغييرات.'), findsNothing);
   });
 
   testWidgets('women do not see the singing option; Android-only cards follow the capabilities', (tester) async {
@@ -128,6 +127,12 @@ void main() {
       blur: const BlurInfo(overlayAllowed: true, state: BlurState.failing),
     );
     expect(blurStatus(l, running), (l.blurStatusFailing, true));
+    // Shizuku layer (Android 12+): nothing to allow; not applied yet = starting.
+    final layer = needsOverlay.copyWith(
+      filter: const FilterInfo(state: FilterState.filtering),
+      blur: const BlurInfo(shizukuLayer: true),
+    );
+    expect(blurStatus(l, layer), (l.blurStatusStarting, false));
     final failed = running.copyWith(blur: const BlurInfo(message: BackendMessage('setup_failed', 'log')));
     expect(blurStatus(l, failed), (l.blurSetupFailed('log'), true));
   });

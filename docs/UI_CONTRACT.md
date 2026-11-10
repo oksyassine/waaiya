@@ -39,7 +39,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | Key | Type | Meaning |
 |---|---|---|
 | `platform` | String | `android`, `linux`, `windows`, `macos` |
-| `version` | String | App version name (`0.2.2`) |
+| `version` | String | App version name (`0.2.3`) |
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
 | `settings` | Map | The settings below, with their current values |
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM` (`FilterService.State`) |
@@ -52,11 +52,12 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `setup.busy` | bool | A Shizuku grant is running |
 | `setup.message` | Map? | `{code, detail}`: `failed` (detail = command log), `refused`, `done_restart`, `error` (detail = text) |
 | `setup.adbCommands` | String? | The two `adb shell ...` lines for this package |
-| `blur.state` | String? | `STARTING`, `ON`, `ON_COVERS_VISIBLE`, `NO_OVERLAY`, `MODELS_MISSING`, `FAILING` (`ScreenBlur.State`); null when not running |
+| `blur.state` | String? | `STARTING`, `ON`, `ON_COVERS_VISIBLE`, `NO_OVERLAY`, `MODELS_MISSING`, `FAILING` (`ScreenBlur.State`); null when not running (or not yet applied: shown as starting) |
 | `blur.overlayAllowed` | bool | May draw over other apps |
 | `blur.a11yBuild` | bool | This build declares the blur accessibility service (`BuildConfig.BLUR_A11Y`) |
 | `blur.a11yEnabled` | bool | That service is on |
 | `blur.touchPassThrough` | bool | Touches reach the app under a cover (so a full-screen fail cover is safe) |
+| `blur.shizukuLayer` | bool | Shizuku is ready on Android 12+: the covers are a Shizuku shell layer (`ShizukuCovers`), nothing else to allow |
 | `blur.busy` | bool | A Shizuku blur grant is running |
 | `blur.message` | Map? | `{code: "setup_failed", detail}` |
 | `models.detector` | bool | The women's-singing detector is bundled |
@@ -76,16 +77,17 @@ Capabilities (the UI hides what is false):
 ## Settings
 
 `setSetting` accepts only these keys (the `Settings.kt` names and defaults). Any other key or a wrong type is
-`bad_args`. `lang` lives in the same file but is changed only through `setLanguage`.
+`bad_args`. `lang` lives in the same file but is changed only through `setLanguage`. "Live": the running filter
+and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchdog), so the UI shows no restart note.
 
 | Key | Type | Default | Applies |
 |---|---|---|---|
-| `gender` | String `""`/`man`/`woman` | `""` (not asked yet: show onboarding) | next filter start |
-| `mute_women_singing` | bool | false | next filter start |
-| `silence_unfilterable` | bool | true | at once (read on every poll) |
-| `blur_women` | bool | false | next filter start |
-| `blur_nudity` | bool | false | next filter start |
-| `blur_fail_cover` | bool | true | at once; ignored unless `blur.touchPassThrough` |
+| `gender` | String `""`/`man`/`woman` | `""` (not asked yet: show onboarding) | live |
+| `mute_women_singing` | bool | false | live |
+| `silence_unfilterable` | bool | true | live |
+| `blur_women` | bool | false | live |
+| `blur_nudity` | bool | false | live |
+| `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` |
 
 ## Methods (MethodChannel `waaiya/app`)
 

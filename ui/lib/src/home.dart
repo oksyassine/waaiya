@@ -10,33 +10,19 @@ import 'theme.dart';
 import 'widgets.dart';
 
 /// Main screen: one large on/off control with its state in words, the one-time setup, links, screen blur,
-/// settings. Shows the same things, under the same conditions, as the native MainActivity.
-class HomeScreen extends StatefulWidget {
+/// settings. Shows the same things, under the same conditions, as the native MainActivity. Settings apply live
+/// (the running filter and blur re-read them every half second), so there is no "restart" note.
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  /// A setting that the service reads at start changed while it runs: say "stop and start".
-  bool _restartNote = false;
-
-  void _changedWhileRunning() {
-    if (WaaiyaScope.of(context).state.filter.running) setState(() => _restartNote = true);
-  }
-
-  Future<void> _set(String key, Object value, {bool needsRestart = false}) async {
-    await runAction(context, (b) => b.setSetting(key, value));
-    if (needsRestart && mounted) _changedWhileRunning();
-  }
+  static Future<void> _set(BuildContext context, String key, Object value) =>
+      runAction(context, (b) => b.setSetting(key, value));
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final s = WaaiyaScope.of(context).state;
     final caps = s.capabilities;
-    if (!s.filter.running) _restartNote = false;
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -59,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             if (caps.screenBlur)
-              BlurCard(onChanged: (key, v) => _set(key, v, needsRestart: key != SettingKeys.blurFailCover)),
+              BlurCard(onChanged: (key, v) => _set(context, key, v)),
             _settings(context, s),
             if (caps.links) SectionCard(title: l.playerTitle, body: l.playerBody),
             const SizedBox(height: 16),
@@ -82,12 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
       title: l.settingsTitle,
       children: [
         const SizedBox(height: 8),
-        // Read by the running muter on every poll: applies at once.
         SettingSwitch(
           title: l.settingSilenceTitle,
           body: l.settingSilenceBody,
           value: st.silenceUnfilterable,
-          onChanged: (v) => _set(SettingKeys.silenceUnfilterable, v),
+          onChanged: (v) => _set(context, SettingKeys.silenceUnfilterable, v),
         ),
         if (st.isMan && s.capabilities.womenSinging)
           SettingSwitch(
@@ -95,9 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
             body: singingNoModel ? l.settingSingingNoModel : l.settingSingingBody,
             bodyIsError: singingNoModel,
             value: st.muteWomenSinging,
-            onChanged: (v) => _set(SettingKeys.muteWomenSinging, v, needsRestart: true),
+            onChanged: (v) => _set(context, SettingKeys.muteWomenSinging, v),
           ),
-        if (_restartNote) StatusText(l.settingRestart),
         const Divider(),
         ValueRow(
           label: '${l.settingGenderTitle}: ${st.isMan ? l.genderMan : l.genderWoman}',
@@ -105,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () async {
             final i = await chooseOne(context,
                 title: l.settingGenderTitle, options: [l.genderMan, l.genderWoman], selected: st.isMan ? 0 : 1);
-            if (i != null) await _set(SettingKeys.gender, i == 0 ? 'man' : 'woman', needsRestart: true);
+            if (i != null && context.mounted) await _set(context, SettingKeys.gender, i == 0 ? 'man' : 'woman');
           },
         ),
         ValueRow(

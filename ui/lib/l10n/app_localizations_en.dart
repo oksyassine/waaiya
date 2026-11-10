@@ -373,7 +373,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurStatusNeedsOverlay =>
-      'The blur needs to draw over other apps: allow it with Shizuku, or allow \"Display over other apps\" in Android settings. A tap on a blurred area does not reach the app underneath.';
+      'The blur needs to draw over other apps. Best: start Shizuku (and allow Waaiya in it): the blur then draws its own layer, which taps pass through. Otherwise allow \"Display over other apps\" in Android settings; a tap on a blurred area then does not reach the app underneath.';
 
   @override
   String get blurFailUnavailable =>

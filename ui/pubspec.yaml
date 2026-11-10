@@ -1,6 +1,6 @@
 name: waaiya_ui
 description: Waaiya's shared screens, used by the Android app (ui_module) and the desktop apps (desktop).
-version: 0.2.2
+version: 0.2.3
 publish_to: none
 
 environment:
