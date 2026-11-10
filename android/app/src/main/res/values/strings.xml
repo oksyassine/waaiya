@@ -121,6 +121,7 @@
     <string name="blur_setup_shizuku">Allow with Shizuku</string>
     <string name="blur_setup_manual">Allow in Android settings</string>
     <string name="blur_status_needs_setup">The blur needs to draw over other apps. Best: allow it with Shizuku (turns on the Waaiya Blur accessibility service, so touches still reach the app underneath). Or allow "Display over other apps" in Android settings (touches on a blurred area are then lost).</string>
+    <string name="blur_status_needs_overlay">The blur needs to draw over other apps: allow it with Shizuku, or allow "Display over other apps" in Android settings. A tap on a blurred area does not reach the app underneath.</string>
     <string name="blur_status_restart">Stop and start filtering to apply the blur settings.</string>
     <string name="blur_status_starting">Blur starting…</string>
     <string name="blur_status_on">Blur on.</string>

@@ -252,16 +252,18 @@ class MainActivity : Activity() {
     private fun refreshBlur(on: Boolean) {
         val a11y = blurAccessibilityEnabled()
         val overlay = android.provider.Settings.canDrawOverlays(this)
-        val needsSetup = settings.blurOn && !a11y
+        // builds without the accessibility service (the default: Play Protect blocks it) need the overlay permission
+        val needsSetup = settings.blurOn && (if (BuildConfig.BLUR_A11Y) !a11y else !overlay)
         blurSetup.visibility = if (needsSetup) View.VISIBLE else View.GONE
         blurSetup.isEnabled = !blurBusy
         blurSetupManual.visibility = if (needsSetup && !overlay) View.VISIBLE else View.GONE
         val bs = ScreenBlur.state
+        val setupText = if (BuildConfig.BLUR_A11Y) R.string.blur_status_needs_setup else R.string.blur_status_needs_overlay
         val msg: Pair<String, Boolean>? = when {
             blurMessage != null -> blurMessage!! to true
             !settings.blurOn -> null
-            needsSetup && !overlay -> getString(R.string.blur_status_needs_setup) to true
-            !on -> if (needsSetup) getString(R.string.blur_status_needs_setup) to false else null
+            needsSetup && !overlay -> getString(setupText) to true
+            !on -> if (needsSetup) getString(setupText) to false else null
             bs == null -> getString(R.string.blur_status_restart) to false
             bs == ScreenBlur.State.STARTING -> getString(R.string.blur_status_starting) to false
             bs == ScreenBlur.State.ON -> getString(R.string.blur_status_on) to false

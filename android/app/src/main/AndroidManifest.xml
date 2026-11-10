@@ -79,18 +79,8 @@
             android:exported="false"
             android:foregroundServiceType="dataSync|mediaProcessing" />
 
-        <!-- Screen blur: only hosts the covers window (touches pass through accessibility overlays). It reads no
-             screen content and handles no events: see res/xml/blur_accessibility.xml. -->
-        <service android:name=".BlurAccessibilityService"
-            android:exported="false"
-            android:label="@string/blur_a11y_label"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data android:name="android.accessibilityservice" android:resource="@xml/blur_accessibility" />
-        </service>
-
+        <!-- Screen blur's accessibility service (touches pass through the covers) is only in builds made with
+             -PimBlurA11y: src/blurA11y/AndroidManifest.xml. Play Protect blocks sideloaded apps that declare one. -->
         <service android:name=".FilterService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
