@@ -85,9 +85,10 @@ class BlurCard extends StatelessWidget {
           onChanged: passThrough ? (v) => onChanged(SettingKeys.blurFailCover, v) : null,
         ),
         if (!passThrough)
-          StatusText(b.a11yBuild
-              ? l.blurFailNeedsA11y
-              : (b.layerSupported ? l.blurFailUnavailable : l.blurFailOldAndroid)),
+          StatusText(
+            b.a11yBuild ? l.blurFailNeedsA11y : (b.layerSupported ? l.blurFailUnavailable : l.blurFailOldAndroid),
+            color: Theme.of(context).colorScheme.primary, // as the native note
+          ),
         if (fix != null)
           Align(
             alignment: AlignmentDirectional.centerStart,

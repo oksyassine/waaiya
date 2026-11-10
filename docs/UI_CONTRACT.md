@@ -101,7 +101,7 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `runSetupStep` | `{step: 0,1,2}` | null | The checklist button: 0 = get Shizuku (store), 1 = update (TOO_OLD) or open Shizuku, 2 = grant through Shizuku (asks Shizuku's permission first if needed). Outcome in `setup.*` events. When Shizuku is installed but not running, Flutter shows the start guide for step 1 instead of calling this. | `unsupported` |
 | `blurSetup` | none | null | "Allow with Shizuku" and the button under the greyed-out "cover the screen" switch: `ShizukuSetup.grantBlur`, or the store / Shizuku's permission dialog / Shizuku first. Outcome in `blur.*` events. For NOT_RUNNING Flutter shows the guide instead. | `unsupported` |
 | `openShizuku` | none | null | Opens Shizuku (its store page when not installed). From the guide. | `unsupported` |
-| `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS`, else `ACTION_DEVICE_INFO_SETTINGS` (Developer options not on yet). From the guide. | `unsupported` |
+| `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS` when Developer options are on, else `ACTION_DEVICE_INFO_SETTINGS` (About phone, to turn them on). From the guide. | `unsupported` |
 | `openOverlaySettings` | none | null | Android's "Display over other apps" page | `unsupported` |
 | `setLanguage` | `{tag: "ar"\|"en"}` | null | Saved natively for the native screens, services and notifications (`Lang`); no activity restart, Flutter switches in place | JSON file |
 | `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` (later) |

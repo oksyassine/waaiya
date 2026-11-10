@@ -103,17 +103,20 @@ class SettingSwitch extends StatelessWidget {
 
 /// A line of secondary text that turns red for problems.
 class StatusText extends StatelessWidget {
-  const StatusText(this.text, {super.key, this.isError = false});
+  const StatusText(this.text, {super.key, this.isError = false, this.color});
 
   final String text;
   final bool isError;
+
+  /// Overrides the colour (e.g. the primary colour for a hint).
+  final Color? color;
 
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 12),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: isError ? WaaiyaColors.of(context).error : null),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color ?? (isError ? WaaiyaColors.of(context).error : null)),
         ),
       );
 }
