@@ -49,10 +49,21 @@ def main():
     check("person covered with margin", covers(out, 0.38, 0.39) and covers(out, 0.5, 0.6))
     check("held during a missed detection", covers(c.update(300, img, []), 0.5, 0.6))
     check("released after the hold time", not covers(c.update(900, img, []), 0.5, 0.6))
-    # one detection per track per frame
-    c = Cover(covers_visible=False)
+    # one detection per track per frame (drawn unmerged here, to see the tracks)
+    c = Cover(covers_visible=False, merge_gap=0)
     out = c.update(0, img, [det(0.1, 0.2, 0.45, 0.8), det(0.35, 0.2, 0.7, 0.8), det(0.6, 0.2, 0.95, 0.8)])
     check("overlapping people keep separate covers", len(out) == 3)
+    # groups: close covers are drawn as one, so the gaps between people are covered too
+    c = Cover(covers_visible=False)
+    out = c.update(0, img, [det(0.05, 0.3, 0.2, 0.6), det(0.32, 0.3, 0.47, 0.6), det(0.59, 0.3, 0.74, 0.6)])
+    check("a group is covered as one, gaps included", len(out) == 1 and covers(out, 0.26, 0.45) and covers(out, 0.53, 0.45))
+    c = Cover(covers_visible=False)
+    out = c.update(0, img, [det(0.05, 0.1, 0.15, 0.3), det(0.8, 0.6, 0.9, 0.8)])
+    check("people far apart keep their own covers", len(out) == 2 and not covers(out, 0.5, 0.45))
+    c = Cover(covers_visible=False)
+    c.update(0, img, [VRect(0, 0, 1, 1, 4, 0.9, -1)])
+    out = c.update(10, img, [det(0.4, 0.4, 0.6, 0.8)])
+    check("a whole-frame cover is not merged into", sum(r[4] == "full" for r in out) == 1 and len(out) == 2)
     # men are not covered and never refresh a cover
     c = Cover(covers_visible=False)
     out = c.update(0, img, [det(0.1, 0.1, 0.3, 0.5, kind=0)])
