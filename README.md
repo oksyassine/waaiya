@@ -82,8 +82,11 @@ python eval/evaluate.py --candidate dfn3=models/dfn3/dfn3_stream.onnx [--asr bas
 
 ```bash
 scripts/fetch_deps.sh                   # default model (the APK bundles it)
+# The main screen is Flutter (ui/, docs/UI_CONTRACT.md): needs Flutter 3.41+, and once per checkout:
+(cd ui_module && flutter pub get)
 # Needs Python 3.11 on the build machine (Chaquopy runs the link feature's yt-dlp in the app):
 cd android && ./gradlew assembleDebug -PimBuildPython=/path/to/python3.11
+#   -PimNativeUi                 the old native main screen instead of the Flutter one
 #   -PimModel=/path/model.onnx   bundle another voice model
 #   -PimX86                      also build x86_64 (emulators); phones are arm64-v8a + armeabi-v7a
 adb install -r app/build/outputs/apk/debug/app-debug.apk
