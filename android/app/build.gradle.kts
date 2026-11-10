@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +9,15 @@ val ortVersion = "1.19.2"
 val ort: Configuration by configurations.creating
 val releaseAbis = listOf("arm64-v8a", "armeabi-v7a")
 val abiSplit = providers.gradleProperty("imAbiSplit").map { it != "false" }.getOrElse(false)
+
+// Release signing: a keystore.properties (storeFile, storePassword, keyAlias, keyPassword) outside the repo,
+// by default ~/.config/islamic-mute-signing/keystore.properties, or -PimSigning=/path/keystore.properties.
+// Without it, assembleRelease writes app-release-unsigned.apk. Keep the key safe: updates need the same key.
+val signingProps = Properties().apply {
+    val f = file(providers.gradleProperty("imSigning").getOrElse(
+        System.getProperty("user.home") + "/.config/islamic-mute-signing/keystore.properties"))
+    if (f.isFile) f.inputStream().use { load(it) }
+}
 
 android {
     namespace = "org.islamicmute.app"
@@ -21,6 +32,12 @@ android {
         versionName = "0.1.0"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
     }
+    if (!signingProps.isEmpty) signingConfigs.create("release") {
+        storeFile = file(signingProps.getProperty("storeFile"))
+        storePassword = signingProps.getProperty("storePassword")
+        keyAlias = signingProps.getProperty("keyAlias")
+        keyPassword = signingProps.getProperty("keyPassword")
+    }
     buildTypes {
         debug {
             ndk { abiFilters += listOf("arm64-v8a", "x86_64") }  // x86_64: emulators
@@ -31,7 +48,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // No signing config: assembleRelease writes app-release-unsigned.apk. Sign it with your own key.
+            signingConfig = signingConfigs.findByName("release")  // null (unsigned APK) without keystore.properties
         }
     }
     // `./gradlew assembleRelease -PimAbiSplit`: one APK per ABI plus the universal one (about 10 MB instead of
