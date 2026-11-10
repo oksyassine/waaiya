@@ -1,6 +1,10 @@
 """Generate the Kaggle training notebook from the repo sources (so the notebook never drifts from the code).
 
 python kaggle/make_notebook.py [--owner KAGGLE_USER]  ->  kaggle/voice-train/{notebook.ipynb, kernel-metadata.json}
+
+Low-delay variant (10 ms: look-ahead 0), fine-tuned from the voice_v1 checkpoint kept in a private dataset:
+python kaggle/make_notebook.py --lookahead 0 --init-dataset KAGGLE_USER/islamic-mute-voice-v1-ckpt
+    ->  kaggle/voice-lowdelay/ (kernel KAGGLE_USER/islamic-mute-voice-lowdelay)
 """
 import argparse, json, os
 
@@ -26,17 +30,30 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--owner", default="KAGGLE_USER")
     ap.add_argument("--slug", default=None)
+    ap.add_argument("--folder", default=None, help="output folder under kaggle/ (default from the slug)")
     ap.add_argument("--detector", action="store_true", help="generate the women's-singing detector notebook instead")
+    ap.add_argument("--lookahead", type=int, default=2, choices=(0, 1, 2),
+                    help="voice model look-ahead in frames (2 = 30 ms like DFN3, 1 = 20 ms, 0 = 10 ms)")
+    ap.add_argument("--init-dataset", default="",
+                    help="Kaggle dataset (owner/slug) holding a train.py last.pt to start from instead of DFN3")
+    ap.add_argument("--train-hours", type=float, default=5.0)
     args = ap.parse_args()
     if args.detector:
         return detector(args.owner, args.slug or "islamic-mute-detector-train")
-    args.slug = args.slug or "islamic-mute-voice-train"
-    cells = [md("""
+    la = args.lookahead
+    args.slug = args.slug or ("islamic-mute-voice-train" if la == 2 else "islamic-mute-voice-lowdelay")
+    folder = args.folder or args.slug.replace("islamic-mute-", "")
+    delay = 10 + 10 * la  # ms at 48 kHz: STFT overlap (10 ms) + look-ahead frames (10 ms each)
+    name = "voice_v1" if la == 2 and not args.init_dataset else f"voice_ld{la}"
+    init_slug = args.init_dataset.split("/")[-1]
+    start = (f"the checkpoint in the attached dataset `{args.init_dataset}` (voice_v1, look-ahead 2)"
+             if args.init_dataset else "the pretrained DeepFilterNet3 (MIT/Apache)")
+    cells = [md(f"""
 # Islamic Mute: train the voice model (keep speech, recitation and singing; remove instruments)
 
-Fine-tunes DeepFilterNet3 (MIT/Apache) so that **all voice is kept** and only musical instruments are removed,
-then exports the 30 ms streaming ONNX model used by the Linux/Android engine and scores it against the
-baseline on our evaluation set.
+Fine-tunes {start} so that **all voice is kept** and only musical instruments are removed,
+with a look-ahead of **{la} frame(s)**, then exports the **{delay} ms** streaming ONNX model used by the
+Linux/Android engine and scores it against the baseline on our evaluation set.
 
 | Data | Licence |
 |---|---|
@@ -46,20 +63,33 @@ baseline on our evaluation set.
 | Diverse Quran Reciters (attached) | rights belong to the reciters: get permission before releasing weights, or set `USE_QURAN = False` |
 | Slakh2100 instrument stems and mixes (Hugging Face subset) | CC BY 4.0 |
 
-Outputs (in `/kaggle/working/out`): `voice_v1.onnx` + `voice_v1.state_init.bin` (drop-in model), `last.pt`, `eval_summary.md`.
-"""), code("""
+Outputs (in `/kaggle/working/out`): `{name}.onnx` + `{name}.state_init.bin` (drop-in model), `last.pt`, `eval_summary.md`.
+"""), code(f"""
 # ---- settings -------------------------------------------------------------
-TRAIN_HOURS = 5.0            # wall-clock training budget (Kaggle GPU sessions stop at 12 h)
+TRAIN_HOURS = {args.train_hours}            # wall-clock training budget (Kaggle GPU sessions stop at 12 h)
+LOOKAHEAD = {la}                # model look-ahead frames: {delay} ms algorithmic delay
+INIT_DATASET = {init_slug!r}   # attached dataset with last.pt to start from ("" = pretrained DFN3)
+MODEL = {name!r}
+""" + """
 DATA_HOURS = "speech_en=3,speech_ar=3,singing=4,recitation=4,slakh=10"
 USE_QURAN = True             # see the licence note above
 BATCH = 16
 MAX_STEPS = 60000            # upper bound; TRAIN_HOURS normally stops first
 VOICE_WEIGHTS = {"speech_en": 0.7, "speech_ar": 1.0, "singing": 1.5, "recitation": 1.5}
 
-import os, subprocess, sys, time
+import glob, os, subprocess, sys, time
 CODE, TMP, OUT = "/kaggle/working/code", "/kaggle/tmp", "/kaggle/working/out"
 for d in (CODE, TMP, OUT):
     os.makedirs(d, exist_ok=True)
+
+INIT = ""
+if INIT_DATASET:  # /kaggle/input/<slug>/ or /kaggle/input/datasets/<owner>/<slug>/ (never walk the big datasets)
+    roots = [d for d in glob.glob("/kaggle/input/*") + glob.glob("/kaggle/input/*/*/*") if os.path.basename(d) == INIT_DATASET]
+    found = sorted(f for r in roots for f in glob.glob(os.path.join(r, "**", "last.pt"), recursive=True))
+    assert found, f"no last.pt in the attached dataset {INIT_DATASET}: {roots}"
+    INIT = found[0]
+    print("starting from", INIT, os.path.getsize(INIT), "bytes")
+START = f" --lookahead {LOOKAHEAD}" + (f" --resume {INIT}" if INIT else "")
 
 def run(cmd, cwd=CODE, env=None):
     \"\"\"Run a shell command, stream its output, fail loudly.\"\"\"
@@ -101,36 +131,42 @@ run(f"du -sh {TMP}/data/*/*")
 """), md("## 3. Train (smoke test first, then the full run with a time budget)"), code("""
 voice = [f"--voice {TMP}/data/voice/{k}:{w}" for k, w in VOICE_WEIGHTS.items() if os.path.isdir(f"{TMP}/data/voice/{k}")]
 common = " ".join(voice) + f" --music {TMP}/data/music/slakh --synth-music 0.15 --workers 4"
-run(f"{PY} models/voice/train.py {common} --steps 20 --batch 4 --log-every 5 --out {TMP}/smoke")
+run(f"{PY} models/voice/train.py {common}{START} --steps 20 --batch 4 --log-every 5 --out {TMP}/smoke")
 t0 = time.time()
-run(f"{PY} models/voice/train.py {common} --steps {MAX_STEPS} --batch {BATCH} --hours {TRAIN_HOURS} "
+run(f"{PY} models/voice/train.py {common}{START} --steps {MAX_STEPS} --batch {BATCH} --hours {TRAIN_HOURS} "
     f"--log-every 200 --save-every 1000 --out {OUT}")
 print(f"training took {(time.time() - t0) / 3600:.2f} h")
-"""), md("## 4. Export streaming ONNX (baseline and fine-tuned)"), code("""
+"""), md("## 4. Export streaming ONNX (baseline, starting checkpoint and fine-tuned)"), code("""
 run(f"{PY} models/dfn3/export_stream.py --out {OUT}/dfn3_baseline.onnx")
-run(f"{PY} models/dfn3/export_stream.py --checkpoint {OUT}/last.pt --out {OUT}/voice_v1.onnx "
-    "--name 'Voice v1 (speech, recitation, singing)' --keeps speech,recitation,singing")
+cands = f"baseline={OUT}/dfn3_baseline.onnx"
+if INIT:  # the starting checkpoint at its own look-ahead, for a same-run comparison
+    run(f"{PY} models/dfn3/export_stream.py --checkpoint {INIT} --out {TMP}/start.onnx")
+    cands += f" start={TMP}/start.onnx"
+label = "Voice v1" if LOOKAHEAD == 2 else f"Voice low-delay {10 + 10 * LOOKAHEAD} ms"
+run(f"{PY} models/dfn3/export_stream.py --checkpoint {OUT}/last.pt --lookahead {LOOKAHEAD} --out {OUT}/{MODEL}.onnx "
+    f"--name '{label} (speech, recitation, singing)' --keeps speech,recitation,singing")
+cands += f" {MODEL}={OUT}/{MODEL}.onnx"
 """), md("## 5. Evaluate on the held-out test set"), code("""
 run(f"{PY} testset/fetch_sources.py")
 run(f"{PY} testset/build_testset.py")
-run(f"{PY} kaggle/eval_onnx.py baseline={OUT}/dfn3_baseline.onnx voice_v1={OUT}/voice_v1.onnx", env={"EVAL_OUT": OUT})
+run(f"{PY} kaggle/eval_onnx.py {cands}", env={"EVAL_OUT": OUT})
 """), code("""
 run(f"rm -rf {CODE}/testset/data; ls -la {OUT}")
 print(open(f"{OUT}/eval_summary.md").read())
 """)]
     nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
                                         "language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 5}
-    write(nb, "voice-train", args.owner, args.slug)
+    write(nb, folder, args.owner, args.slug, DATASETS + ([args.init_dataset] if args.init_dataset else []))
 
 
-def write(nb, folder, owner, slug):
+def write(nb, folder, owner, slug, datasets=DATASETS):
     out_dir = os.path.join(ROOT, "kaggle", folder)
     os.makedirs(out_dir, exist_ok=True)
     json.dump(nb, open(os.path.join(out_dir, "notebook.ipynb"), "w"), indent=1)
     meta = {"id": f"{owner}/{slug}", "title": slug, "code_file": "notebook.ipynb",
             "language": "python", "kernel_type": "notebook", "is_private": True, "enable_gpu": True,
             "enable_tpu": False, "enable_internet": True, "machine_shape": "NvidiaTeslaT4",
-            "dataset_sources": DATASETS, "competition_sources": [], "kernel_sources": [], "model_sources": []}
+            "dataset_sources": datasets, "competition_sources": [], "kernel_sources": [], "model_sources": []}
     json.dump(meta, open(os.path.join(out_dir, "kernel-metadata.json"), "w"), indent=1)
     print("wrote", out_dir)
 

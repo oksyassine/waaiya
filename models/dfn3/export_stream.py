@@ -11,7 +11,13 @@ Engine model contract (every model the engine loads follows it):
 All DSP (STFT, features, ISTFT) lives inside the graph, so the engine only
 loops hops and threads state. This file uses the official `deepfilternet`
 package (PyPI) for weights and layers and adds per-frame caches for the
-causal convolutions, the GRU hidden states and the 2-frame look-ahead.
+causal convolutions, the GRU hidden states and the look-ahead.
+
+Look-ahead `la` (frames, 0..2): the pretrained model uses 2 (30 ms total delay). DeepFilterNet applies it
+only as a time shift (DfNet.pad_feat shifts the features left by conv_lookahead frames, and the deep
+filter window spans frames t-(order-1-la)..t+la), so the same weights run at any `la`; quality at a
+smaller `la` needs fine-tuning (models/voice/train.py --lookahead). Delay = (n_fft - hop) + la * hop:
+la=0 -> 10 ms, la=1 -> 20 ms, la=2 -> 30 ms at 48 kHz.
 """
 import argparse
 import inspect
@@ -26,8 +32,9 @@ import torch
 import torch.nn as nn
 
 import df_compat  # noqa: F401  (newer torchaudio)
+from df.config import config
 from df.enhance import init_df
-from df.deepfilternet3 import ModelParams
+from df.deepfilternet3 import ModelParams, init_model
 
 PAD_TYPES = (nn.ConstantPad2d,)
 
@@ -53,6 +60,59 @@ def norm_alpha(sr: int, hop: int, tau: float) -> float:
     return a
 
 
+def init_df_la(la: int = 2, log_level: str = "ERROR"):
+    """Pretrained DeepFilterNet3 built with `la` frames of look-ahead (conv_lookahead = df_lookahead = la).
+
+    The weights do not depend on the look-ahead (only DfNet.pad_feat and DfNet.df_op do), so the
+    pretrained state dict loads unchanged into the rebuilt model."""
+    model, df_state, _ = init_df(log_level=log_level)  # loads config.ini (look-ahead 2) + weights
+    p = ModelParams()
+    if (p.conv_lookahead, p.df_lookahead) != (la, la):
+        assert 0 <= la <= p.df_order - 1, f"look-ahead must be in 0..{p.df_order - 1}"
+        config.set("conv_lookahead", la, int, ModelParams().section)
+        config.set("df_lookahead", la, int, "df")
+        new = init_model(df_state)
+        new.load_state_dict(model.state_dict())
+        model = new
+    assert model.df_lookahead == la and model.df_op.lookahead == la
+    assert la == 0 or tuple(model.pad_feat.padding)[2:] == (-la, la)
+    return model, df_state
+
+
+@torch.no_grad()
+def shift_df_taps(model: nn.Module, src_la: int) -> None:
+    """Re-align the deep-filter taps of weights trained at look-ahead `src_la` to the model's look-ahead.
+
+    Tap o of the deep filter multiplies frame t-(order-1-la)+o, so moving weights from look-ahead 2 to 0
+    unchanged would apply the "current frame" tap to frame t-2: the band below nb_df comes out 20 ms
+    late (SI-SDR collapses). Moving tap o to o + (src_la - la) keeps every tap on the same relative frame;
+    taps that would point into the future (beyond the new look-ahead) are dropped, new past taps start
+    at zero. Only the two layers that emit the order*2 tap channels change: df_out (GroupedLinearEinsum,
+    output layout [freq, tap, re/im]) and the last 1x1 conv + BatchNorm of df_convp.
+    A starting point for fine-tuning (models/voice/train.py), not a substitute for it."""
+    shift = src_la - model.df_lookahead
+    if shift == 0:
+        return
+    order = model.df_order
+    nch = 2 * order
+    src = [2 * (c // 2 - shift) + c % 2 if 0 <= c // 2 - shift < order else -1 for c in range(nch)]  # new <- old
+
+    def remap(t, dim, fill):
+        old = t.clone()
+        for c, o in enumerate(src):
+            t.select(dim, c).copy_(old.select(dim, o) if o >= 0 else torch.full_like(old.select(dim, 0), fill))
+
+    w = model.df_dec.df_out[0].weight  # [groups, in/groups, out/groups], out = nb_df * nch
+    assert w.shape[-1] % nch == 0
+    remap(w.view(*w.shape[:-1], w.shape[-1] // nch, nch), -1, 0.0)
+    pw = [m for m in model.df_dec.df_convp if isinstance(m, nn.Conv2d)][-1]
+    bn = [m for m in model.df_dec.df_convp if isinstance(m, nn.BatchNorm2d)][-1]
+    assert pw.out_channels == nch and pw.bias is None and bn.num_features == nch
+    remap(pw.weight, 0, 0.0)
+    for t, fill in ((bn.weight, 0.0), (bn.bias, 0.0), (bn.running_mean, 0.0), (bn.running_var, 1.0)):
+        remap(t, 0, fill)
+
+
 class StreamDFN3(nn.Module):
     def __init__(self, model: nn.Module, df_state):
         super().__init__()
@@ -65,9 +125,10 @@ class StreamDFN3(nn.Module):
         self.nb_erb = p.nb_erb
         self.nb_df = p.nb_df
         self.order = p.df_order
-        assert p.conv_lookahead == p.df_lookahead == 2, "export assumes 2-frame look-ahead"
         assert self.n_fft == 2 * self.hop
-        self.la = p.df_lookahead
+        self.la = model.df_lookahead  # output frame n - la is emitted when frame n arrives
+        assert model.df_op.lookahead == self.la
+        assert self.la == 0 or tuple(model.pad_feat.padding)[2:] == (-self.la, self.la), "conv_lookahead != df_lookahead"
         self.alpha = norm_alpha(self.sr, self.hop, p.norm_tau)
         ch = p.conv_ch
         kt = p.df_pathway_kernel_size_t
@@ -113,7 +174,7 @@ class StreamDFN3(nn.Module):
             ("erb_hist", (2, self.nb_erb)),          # conv_kernel_inp time 3 -> 2 past frames
             ("specf_hist", (2, 2, self.nb_df)),      # [T, re/im, F]
             ("c0_hist", (kt - 1, ch, self.nb_df)),   # df_convp time kernel kt
-            ("spec_hist", (2 * self.la, 2, self.nf)),  # spec frames n-4..n-1, [T, re/im, F]
+            ("spec_hist", (self.order - 1, 2, self.nf)),  # spec frames n-4..n-1, [T, re/im, F]
             ("h_enc", (n_enc, 1, gru_h)),
             ("h_erb", (n_erb, 1, gru_h)),
             ("h_df", (n_df, 1, gru_h)),
@@ -170,7 +231,8 @@ class StreamDFN3(nn.Module):
         sq = torch.sqrt(unit_new)
         feat_spec = torch.stack([re_l / sq, im_l / sq])  # [2, F']
 
-        # encoder (convs see frames n-2..n, i.e. the 2-frame look-ahead)
+        # encoder (input convs have a 3-frame time kernel: they see feature frames n-2..n and,
+        # with look-ahead la, produce the result for output frame n-la)
         fe = torch.cat([erb_hist, feat_erb[None]]).reshape(1, 1, 3, self.nb_erb)
         e0 = run_nopad(m.enc.erb_conv0, fe)
         e1 = m.enc.erb_conv1(e0)
@@ -201,10 +263,10 @@ class StreamDFN3(nn.Module):
         c = m.df_dec.df_out(c).view(1, 1, self.nb_df, self.order * 2) + c0p
         coefs = c.view(self.nb_df, self.order, 2)  # [F', O, re/im]
 
-        # apply to spectrum frame n-2
+        # apply to spectrum frame n-la; the deep filter window is always frames n-(order-1)..n
         spec_cur = torch.stack([re, im])[None]  # [1, 2, F]
-        spec_win = torch.cat([spec_hist, spec_cur])  # [5, 2, F] frames n-4..n
-        target = spec_win[self.la]  # [2, F]
+        spec_win = torch.cat([spec_hist, spec_cur])  # [order, 2, F] frames n-4..n
+        target = spec_win[self.order - 1 - self.la]  # [2, F]
         gain = mask.reshape(1, self.nb_erb) @ m.mask.erb_inv_fb  # [1, F]
         out_re = target[0] * gain[0]
         out_im = target[1] * gain[0]
@@ -236,10 +298,14 @@ class StreamDFN3(nn.Module):
         return audio_out, new_state
 
 
-def build(checkpoint: str = ""):
-    model, df_state, _ = init_df(log_level="ERROR")
-    if checkpoint:  # fine-tuned weights from models/voice/train.py
-        model.load_state_dict(torch.load(checkpoint, map_location="cpu")["model"])
+def build(checkpoint: str = "", la=None):
+    """Streaming wrapper + offline model. `la` None = the checkpoint's training look-ahead (2 if unknown)."""
+    ck = torch.load(checkpoint, map_location="cpu") if checkpoint else None  # fine-tuned weights (train.py)
+    if la is None:
+        la = int((ck or {}).get("args", {}).get("lookahead", 2))
+    model, df_state = init_df_la(la)
+    if ck is not None:
+        model.load_state_dict(ck["model"])
     model = model.cpu().eval()
     return StreamDFN3(model, df_state), model, df_state
 
@@ -250,8 +316,10 @@ def main():
     ap.add_argument("--checkpoint", default="", help="fine-tuned weights (models/voice/train.py)")
     ap.add_argument("--name", default="DeepFilterNet3 (speech mode)")
     ap.add_argument("--keeps", default="speech")
+    ap.add_argument("--lookahead", type=int, default=None,
+                    help="look-ahead frames 0..2 (default: the checkpoint's training value, else 2)")
     args = ap.parse_args()
-    s, _, _ = build(args.checkpoint)
+    s, _, _ = build(args.checkpoint, args.lookahead)
     x = torch.zeros(s.hop)
     st = s.state_init.clone()
     with torch.no_grad():
@@ -267,14 +335,15 @@ def main():
         "im.contract": "1", "im.sample_rate": str(s.sr), "im.hop": str(s.hop),
         "im.state_size": str(s.state_size), "im.latency_samples": str(s.latency_samples),
         "im.model_name": args.name, "im.licence": "MIT OR Apache-2.0",
-        "im.keeps": args.keeps,
+        "im.keeps": args.keeps, "im.lookahead_frames": str(s.la),
     }
     for k, v in meta.items():
         e = mp.metadata_props.add()
         e.key, e.value = k, v
     onnx.save(mp, args.out)
     s.state_init.numpy().astype("<f4").tofile(args.out.replace(".onnx", ".state_init.bin"))
-    print(f"exported {args.out}: state_size={s.state_size} latency={s.latency_samples} samples")
+    print(f"exported {args.out}: look-ahead={s.la} state_size={s.state_size} "
+          f"latency={s.latency_samples} samples ({1000 * s.latency_samples / s.sr:.0f} ms)")
 
 
 if __name__ == "__main__":
