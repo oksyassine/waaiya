@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">واعية</string>
     <string name="tagline">يزيل الآلات الموسيقية من صوت كل التطبيقات، ويُبقي الكلام والتلاوة.</string>
 
     <string name="onboard_title">أهلًا بك</string>
-    <string name="onboard_body">يزيل Islamic Mute الآلات الموسيقية من صوت كل تطبيقات هذا الهاتف، ويُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.</string>
+    <string name="onboard_body">تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.</string>
     <string name="onboard_question">أنا</string>
     <string name="gender_man">رجل</string>
     <string name="gender_woman">امرأة</string>
@@ -20,12 +21,12 @@
     <string name="power_start_cd">تشغيل التصفية</string>
     <string name="power_stop_cd">إيقاف التصفية</string>
     <string name="capture_hint">سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.</string>
-    <string name="need_record_audio">يحتاج Islamic Mute إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.</string>
+    <string name="need_record_audio">تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.</string>
 
     <string name="setup_banner_title">بقيت خطوة واحدة</string>
     <string name="setup_banner_body">بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.</string>
     <string name="setup_title">إعداد لمرة واحدة</string>
-    <string name="setup_body">يسمح لـ Islamic Mute بكتم الصوت الأصلي. تفعله مرة واحدة، ويبقى حتى تلغي تثبيت التطبيق.</string>
+    <string name="setup_body">يسمح لواعية بكتم الصوت الأصلي. تفعله مرة واحدة، ويبقى حتى تلغي تثبيت التطبيق.</string>
     <string name="step1_title">ثبّت Shizuku</string>
     <string name="step1_body">تطبيق مساعد مجاني من متجر Play.</string>
     <string name="step1_action">تحميل Shizuku</string>
@@ -34,7 +35,7 @@
     <string name="step2_action">فتح Shizuku</string>
     <string name="step2_update">تحديث Shizuku</string>
     <string name="step2_too_old">نسخة Shizuku قديمة. حدّثها من متجر Play.</string>
-    <string name="step2_denied">تم ضبط Shizuku على رفض Islamic Mute دائمًا. اسمح له من قائمة التطبيقات في Shizuku.</string>
+    <string name="step2_denied">تم ضبط Shizuku على رفض واعية دائمًا. اسمح لها من قائمة التطبيقات في Shizuku.</string>
     <string name="step3_title">امنح الإذن</string>
     <string name="step3_body">ضغطة واحدة، ثم اختر «سماح».</string>
     <string name="step3_action">منح الإذن</string>
@@ -61,9 +62,9 @@
     <string name="change">تغيير</string>
 
     <string name="player_title">فيديو بتزامن تام</string>
-    <string name="player_body">شارك فيديو مع Islamic Mute (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.</string>
+    <string name="player_body">شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.</string>
     <string name="licences">تراخيص المصادر المفتوحة</string>
-    <string name="licences_intro">برنامج Islamic Mute حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.</string>
+    <string name="licences_intro">واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.</string>
     <string name="licences_cc">رخصة المشاع الإبداعي - النسبة 4.0 (بيانات التدريب): https://creativecommons.org/licenses/by/4.0/</string>
     <string name="licences_full">النصوص الكاملة</string>
     <string name="back">رجوع</string>

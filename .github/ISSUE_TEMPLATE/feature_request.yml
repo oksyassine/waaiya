@@ -1,0 +1,13 @@
+name: Feature request
+description: Suggest an improvement or a new platform
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What do you need, and why?
+    validations: { required: true }
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could it work?

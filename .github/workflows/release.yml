@@ -1,0 +1,87 @@
+name: Release
+
+# Push a tag like v0.2.0 to build release files and attach them to a draft GitHub release.
+# The APK is signed only if the repository has these secrets (otherwise an unsigned APK is attached and must be
+# signed by the maintainer before anyone can install it):
+#   ANDROID_KEYSTORE_B64 (base64 of the .jks), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - run: scripts/fetch_deps.sh
+      - run: make -j"$(nproc)" all
+      - name: Package
+        run: |
+          d="waaiya-linux-x64-${GITHUB_REF_NAME}"
+          mkdir -p "$d/build" "$d/models/dfn3" "$d/linux"
+          cp -P build/im-* build/*.so* "$d/build/"
+          cp models/dfn3/dfn3_stream_int8.* "$d/models/dfn3/"
+          cp -r linux/bin linux/systemd linux/pipewire "$d/linux/"
+          cp LICENSE NOTICE THIRD_PARTY_LICENSES.md third_party/onnxruntime/ThirdPartyNotices.txt "$d/"
+          tar czf "$d.tar.gz" "$d"
+      - uses: actions/upload-artifact@v4
+        with: { name: linux, path: "waaiya-linux-x64-*.tar.gz" }
+
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "17" }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
+      - uses: gradle/actions/setup-gradle@v4
+        with: { cache-read-only: true }
+      - run: scripts/fetch_deps.sh
+      - name: Signing config (only when the secrets exist)
+        env:
+          KS: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KS" ]; then
+            d="$RUNNER_TEMP/signing"; mkdir -p "$d"
+            echo "$KS" | base64 -d > "$d/release.jks"
+            printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
+              "$d/release.jks" "$KS_PASS" "$KEY_ALIAS" "$KEY_PASS" > "$d/keystore.properties"
+            echo "SIGNING=-PimSigning=$d/keystore.properties" >> "$GITHUB_ENV"
+          else
+            echo "::warning::No signing secrets: the APK will be unsigned."
+          fi
+      - name: Build release APKs (per ABI + universal)
+        working-directory: android
+        run: ./gradlew --no-daemon assembleRelease -PimAbiSplit -PimBuildPython="$(which python3.11)" ${SIGNING:-}
+      - name: Collect
+        run: |
+          mkdir out
+          for f in android/app/build/outputs/apk/release/*.apk; do
+            cp "$f" "out/waaiya-${GITHUB_REF_NAME}-$(basename "$f" | sed 's/^app-//')"
+          done
+          rm -rf "$RUNNER_TEMP/signing"
+      - uses: actions/upload-artifact@v4
+        with: { name: android, path: out/*.apk }
+
+  publish:
+    needs: [linux, android]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: dist, merge-multiple: true }
+      - run: cd dist && sha256sum * > SHA256SUMS
+      - name: Draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --draft --generate-notes --title "Waaiya $GITHUB_REF_NAME"
