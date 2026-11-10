@@ -283,7 +283,7 @@ class MainActivity : Activity() {
             !settings.blurOn -> null
             needsSetup && !overlay -> getString(setupText) to true
             !on -> if (needsSetup) getString(setupText) to false else null
-            bs == null -> getString(R.string.blur_status_restart) to false
+            bs == null -> getString(R.string.blur_status_starting) to false // applied within half a second
             bs == ScreenBlur.State.STARTING -> getString(R.string.blur_status_starting) to false
             bs == ScreenBlur.State.ON -> getString(R.string.blur_status_on) to false
             bs == ScreenBlur.State.ON_COVERS_VISIBLE -> getString(R.string.blur_status_on_visible) to false
@@ -301,7 +301,6 @@ class MainActivity : Activity() {
     private fun blurChanged() {
         blurMessage = null
         refresh()
-        if (FilterService.running) restartNote.visibility = View.VISIBLE
     }
 
     private fun onBlurSetup() {
@@ -439,11 +438,8 @@ class MainActivity : Activity() {
             .show()
     }
 
-    /** The service reads settings when it starts: say so if it is running. */
-    private fun settingChanged() {
-        refresh()
-        if (FilterService.running) restartNote.visibility = View.VISIBLE
-    }
+    /** The running filter and blur follow the settings within half a second: no restart needed. */
+    private fun settingChanged() = refresh()
 
     private fun startFilter() {
         micDenied = false

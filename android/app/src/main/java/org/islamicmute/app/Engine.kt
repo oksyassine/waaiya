@@ -38,7 +38,8 @@ class Engine private constructor(private var handle: Long) : AutoCloseable {
 
         fun open(context: Context, channels: Int, mono: Boolean = false): Engine {
             val policy = policy(Settings(context))
-            val detector = if (policy != 0) ModelStore.detectorPath(context) else null
+            // always loaded when bundled: the policy can be switched on later without restarting (FilterService)
+            val detector = ModelStore.detectorPath(context)
             return Engine(nativeCreate(ModelStore.modelPath(context), detector, channels, SAMPLE_RATE, mono, policy))
         }
     }
