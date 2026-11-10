@@ -82,8 +82,9 @@ class FilterService : Service() {
         publish(State.STARTING)
         val settings = Settings(this)
         muter = SessionMuter(this, settings).also { it.start() }
-        // Screen blur shares this projection; its virtual display must be created now (Android 14+ time limit).
-        if (settings.blurOn) blur = runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
+        // Screen blur shares this projection; its virtual display must be created now (Android 14+ time limit),
+        // so it starts parked even when the blur is off and follows the settings live.
+        blur = runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
             .onFailure { Log.e(TAG, "screen blur did not start", it) }.getOrNull()
         worker = Thread({ loop(mp) }, "im-filter").apply { start() }
         return START_NOT_STICKY
@@ -120,6 +121,9 @@ class FilterService : Service() {
         val engine = Engine.open(this, ch)
         delayMs = engine.alignedLatency * 1000 / Engine.SAMPLE_RATE  // the loop uses the hop-aligned path
         publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING)
+        val settings = Settings(this)
+        var policy = Engine.policy(settings)
+        var hops = 0
         val inBuf = FloatArray(hop * ch)
         val outBuf = FloatArray(hop * ch)
         try {
@@ -134,6 +138,10 @@ class FilterService : Service() {
                     got += n
                 }
                 if (got < inBuf.size) continue
+                if (++hops % 50 == 0) {  // every 0.5 s: settings changed in the app apply live
+                    val p = Engine.policy(settings)
+                    if (p != policy) { policy = p; engine.setPolicy(p) }
+                }
                 engine.processHops(inBuf, outBuf, 1)
                 muter?.gate?.let { engine.setGate(it) }
                 track.write(outBuf, 0, outBuf.size, AudioTrack.WRITE_BLOCKING)

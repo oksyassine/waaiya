@@ -265,7 +265,9 @@ class MainActivity : Activity() {
         val a11y = blurAccessibilityEnabled()
         val overlay = android.provider.Settings.canDrawOverlays(this)
         // builds without the accessibility service (the default: Play Protect blocks it) need the overlay permission
-        val needsSetup = settings.blurOn && (if (BuildConfig.BLUR_A11Y) !a11y else !overlay)
+        // Shizuku running (Android 12+): the covers are a shell layer, nothing else to allow
+        val shizukuLayer = Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(this) == ShizukuSetup.State.READY
+        val needsSetup = settings.blurOn && !shizukuLayer && (if (BuildConfig.BLUR_A11Y) !a11y else !overlay)
         blurSetup.visibility = if (needsSetup) View.VISIBLE else View.GONE
         blurSetup.isEnabled = !blurBusy
         blurSetupManual.visibility = if (needsSetup && !overlay) View.VISIBLE else View.GONE
@@ -281,7 +283,7 @@ class MainActivity : Activity() {
             !settings.blurOn -> null
             needsSetup && !overlay -> getString(setupText) to true
             !on -> if (needsSetup) getString(setupText) to false else null
-            bs == null -> getString(R.string.blur_status_restart) to false
+            bs == null -> getString(R.string.blur_status_starting) to false // applied within half a second
             bs == ScreenBlur.State.STARTING -> getString(R.string.blur_status_starting) to false
             bs == ScreenBlur.State.ON -> getString(R.string.blur_status_on) to false
             bs == ScreenBlur.State.ON_COVERS_VISIBLE -> getString(R.string.blur_status_on_visible) to false
@@ -299,7 +301,6 @@ class MainActivity : Activity() {
     private fun blurChanged() {
         blurMessage = null
         refresh()
-        if (FilterService.running) restartNote.visibility = View.VISIBLE
     }
 
     private fun onBlurSetup() {
@@ -437,11 +438,8 @@ class MainActivity : Activity() {
             .show()
     }
 
-    /** The service reads settings when it starts: say so if it is running. */
-    private fun settingChanged() {
-        refresh()
-        if (FilterService.running) restartNote.visibility = View.VISIBLE
-    }
+    /** The running filter and blur follow the settings within half a second: no restart needed. */
+    private fun settingChanged() = refresh()
 
     private fun startFilter() {
         micDenied = false

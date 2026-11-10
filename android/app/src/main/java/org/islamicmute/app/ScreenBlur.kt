@@ -71,6 +71,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     @Volatile private var modelsBad = false
     private var lastStart = 0L
     private var pending = false
+    /** Policy in force (main thread writes): 0 = blur off, the virtual display is parked (no surface, no cost). */
+    @Volatile private var policy = -1
 
     private val dm = context.getSystemService(DisplayManager::class.java)
     private val displayListener = object : DisplayManager.DisplayListener {
@@ -79,29 +81,53 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         override fun onDisplayRemoved(id: Int) {}
     }
 
-    /** Must run right after the projection is obtained (Android 14+: the virtual display must follow within minutes). */
+    /**
+     * Runs whenever filtering starts, even with the blur off: Android 14+ stops the whole projection (audio too) when
+     * its virtual display is created more than a few minutes after consent, so the display is created now, parked
+     * without a surface while the blur is off. The settings are then followed live (watchdog -> [apply]).
+     */
     fun start() {
-        publish(State.STARTING)
-        if (!overlay.attach()) {
-            publish(State.NO_OVERLAY)
-            // still capture: when the user enables the accessibility service later, the overlay attaches then
-        } else overlay.show(FloatArray(0), 0, null, 0, true) // self-test square
-        val scr = overlay.screen()
-        size(scr)
+        size(overlay.screen())
         val r = ImageReader.newInstance(capW, capH, PixelFormat.RGBA_8888, 3)
         r.setOnImageAvailableListener({ schedule() }, worker)
         reader = r
         display = projection.createVirtualDisplay("waaiya-blur", capW, capH, context.resources.displayMetrics.densityDpi,
-            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, r.surface, null, worker)
+            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, null, null, worker)
         dm.registerDisplayListener(displayListener, worker)
+        main.post(watchdog)
+    }
+
+    /** Applies the blur settings (main thread): off parks everything, on/changed (re)loads the models. */
+    private fun apply(p: Int) {
+        if (p == policy) return
+        val was = policy
+        policy = p
+        if (p == 0) {
+            overlay.detach()
+            worker.post {
+                runCatching { display?.surface = null }
+                vision?.close(); vision = null
+                modelsBad = false; failStreak = 0
+            }
+            publish(null)
+            return
+        }
+        val turningOn = was <= 0
+        if (turningOn) {
+            publish(State.STARTING)
+            if (overlay.attach()) overlay.show(FloatArray(0), 0, null, 0, true) // self-test square
+        }
         worker.post {
-            vision = Vision.open(context, Vision.policy(settings), false).also {
+            if (policy != p) return@post // changed again meanwhile
+            if (turningOn) { testDone = false; coversVisible = false; testUntil = SystemClock.uptimeMillis() + SELF_TEST_MS }
+            vision?.close()
+            vision = Vision.open(context, p, coversVisible).also {
                 modelsBad = it.status != 0
                 if (modelsBad) Log.e(TAG, "blur models: ${it.error}")
             }
-            testUntil = SystemClock.uptimeMillis() + SELF_TEST_MS
+            failStreak = 0
+            if (turningOn) runCatching { display?.surface = reader?.surface }
         }
-        main.post(watchdog)
     }
 
     fun stop() {
@@ -137,7 +163,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val r = ImageReader.newInstance(capW, capH, PixelFormat.RGBA_8888, 3)
         r.setOnImageAvailableListener({ schedule() }, worker)
         display?.resize(capW, capH, context.resources.displayMetrics.densityDpi)
-        display?.surface = r.surface
+        if (policy > 0) display?.surface = r.surface
         reader?.close()
         reader = r
     }
@@ -207,13 +233,16 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val busy = busySince
         val failing = modelsBad || failStreak >= 3 || (busy != 0L && now - busy > STALL_MS)
         // a full-screen cover only where touches pass through it (accessibility overlay): otherwise the phone is stuck
-        val canCover = settings.blurFailCover && overlay.host == BlurOverlay.Host.ACCESSIBILITY
+        val canCover = settings.blurFailCover &&
+            (overlay.host == BlurOverlay.Host.ACCESSIBILITY || overlay.host == BlurOverlay.Host.SHIZUKU)
         return if (!failing) 0 else if (canCover) 1 else 2
     }
 
     private val watchdog = object : Runnable {
         override fun run() {
             if (stopped) return
+            apply(if (settings.blurOn) Vision.policy(settings) else 0) // settings apply live
+            if (policy <= 0) { main.postDelayed(this, 500); return }
             if (overlay.host == null && overlay.attach()) {
                 Log.i(TAG, "blur overlay attached late (${overlay.host})")
                 overlay.show(FloatArray(0), 0, null, 0, true)
@@ -221,6 +250,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             }
             val fm = failMode()
             overlay.setFailMode(fm)
+            overlay.heartbeat()
             publish(when {
                 overlay.host == null -> State.NO_OVERLAY
                 modelsBad -> State.MODELS_MISSING

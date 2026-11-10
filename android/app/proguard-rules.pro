@@ -25,3 +25,11 @@
 -keepclasseswithmembernames,includedescriptorclasses class org.islamicmute.app.Vision {
     native <methods>;
 }
+
+# Screen-blur covers drawn by the shell: Shizuku instantiates CoverService by class name in its own process.
+-keep class org.islamicmute.app.CoverService {
+    <init>(...);
+    public *;
+}
+-keep class org.islamicmute.app.ICoverService { *; }
+-keep class org.islamicmute.app.ICoverService$** { *; }
