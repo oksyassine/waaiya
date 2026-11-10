@@ -75,9 +75,9 @@
     <string name="notif_stop">Stop</string>
     <!-- Link feature -->
     <string name="link_entry_title">Open a link</string>
-    <string name="link_entry_body">Paste a YouTube or TikTok link to watch it or save it without music.</string>
+    <string name="link_entry_body">Paste a YouTube, TikTok or Instagram link to watch it or save it without music.</string>
     <string name="link_title">Open a link</string>
-    <string name="link_hint">https://… (YouTube, TikTok…)</string>
+    <string name="link_hint">https://… (YouTube, TikTok, Instagram…)</string>
     <string name="link_field_label">Video or audio link</string>
     <string name="link_paste">Paste</string>
     <string name="link_open">Open</string>
@@ -92,8 +92,8 @@
     <string name="link_cancelled">Cancelled. Nothing was saved.</string>
     <string name="link_export_failed">Could not save this one. Nothing was saved.</string>
     <string name="link_saved">Saved without music</string>
-    <string name="link_saved_video">In your gallery: Movies › Islamic Mute</string>
-    <string name="link_saved_audio">In your music: Music › Islamic Mute</string>
+    <string name="link_saved_video">In your gallery: Movies › Waaiya</string>
+    <string name="link_saved_audio">In your music: Music › Waaiya</string>
     <string name="link_play">Play</string>
     <string name="link_share">Share</string>
     <string name="link_share_note">Only share videos you are allowed to share.</string>
@@ -101,10 +101,11 @@
     <string name="link_live">Live streams cannot be saved.</string>
     <string name="link_busy">Another video is being saved. Please wait for it to finish.</string>
     <string name="link_invalid">Please paste a web link (starting with https://).</string>
-    <string name="link_login">This site only shows this video to logged-in users. Islamic Mute cannot open it yet.</string>
+    <string name="link_login">The site would not show this video without an account. Public posts usually open: try again in a few minutes. Private posts cannot be opened.</string>
     <string name="link_unsupported">This site is not supported.</string>
     <string name="link_playlist">This is a playlist. Please open one video.</string>
-    <string name="link_no_format">This video is not in a format Islamic Mute can filter yet.</string>
+    <string name="link_no_format">This video is not in a format Waaiya can filter yet.</string>
     <string name="link_failed">Could not open this link. Check your connection and try again.</string>
     <string name="link_play_failed">Could not play this. Nothing unfiltered was played.</string>
+    <string name="link_limited">The site is limiting requests right now. Try again in a few minutes.</string>
 </resources>

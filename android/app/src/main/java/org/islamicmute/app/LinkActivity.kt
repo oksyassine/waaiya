@@ -58,6 +58,9 @@ class LinkActivity : Activity() {
         LinkExportService.addListener(exportChanged)
         handle(intent)
         showExport()
+        // Keep yt-dlp current (at most once a day; a no-op when nothing newer is on PyPI). Never delays a link:
+        // a link waits only for the moment the new copy is switched in.
+        thread(name = "im-ytdlp-update") { runCatching { Links.update(applicationContext) } }
     }
 
     override fun onNewIntent(intent: Intent) { super.onNewIntent(intent); setIntent(intent); handle(intent) }

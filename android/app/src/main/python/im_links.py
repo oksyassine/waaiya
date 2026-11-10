@@ -1,7 +1,7 @@
-"""Link feature: turns a page link (YouTube, TikTok, ...) into the media streams Islamic Mute can filter.
+"""Link feature: turns a page link (YouTube, TikTok, ...) into the media streams Waaiya can filter.
 
-Runs inside the app through Chaquopy. Only yt-dlp's Python API is used (no shell, no config files, no plugins
-fetched at run time). YouTube's JavaScript challenge is solved by the bundled yt-dlp-ejs scripts in QuickJS.
+Runs inside the app through Chaquopy. Only yt-dlp's Python API is used (no shell, no config files, no plugins).
+yt-dlp itself may be a newer copy downloaded by im_update.py (checked against PyPI's hashes). YouTube's JavaScript challenge is solved by the bundled yt-dlp-ejs scripts in QuickJS.
 """
 import json
 import os
@@ -14,7 +14,7 @@ MAX_HEIGHT = 720  # enough for a phone screen; keeps downloads and processing li
 
 
 class LinkError(Exception):
-    """args[0] is a code the app turns into a translated message: invalid_url, login, unsupported_site,
+    """args[0] is a code the app turns into a translated message: invalid_url, login, limited, unsupported_site,
     playlist, no_format, failed (args[1] = detail)."""
 
 
@@ -89,7 +89,12 @@ def resolve(url, qjs_path, cache_dir):
         info = y.extract_info(url.strip(), download=False)
     except yt_dlp.utils.DownloadError as e:
         msg = str(e)
-        if "logged-in" in msg or "login" in msg.lower() or "cookies" in msg:
+        low = msg.lower()
+        # Instagram & co. refuse anonymous visitors only some of the time (rate limits, per-post settings):
+        # "rate-limit reached or login required" is a refusal to retry later, not proof the post is private.
+        if "rate-limit" in low or "rate limit" in low or "too many requests" in low or "http error 429" in low:
+            raise LinkError("limited")
+        if "logged-in" in low or "login" in low or "log in" in low or "cookies" in low:
             raise LinkError("login")
         if "Unsupported URL" in msg:
             raise LinkError("unsupported_site")
