@@ -1,12 +1,16 @@
 package org.islamicmute.app
 
 import android.content.Context
+import android.media.AudioManager
+import android.media.AudioPlaybackConfiguration
 import android.media.audiofx.DynamicsProcessing
 import android.os.IBinder
 import android.os.ParcelFileDescriptor
 import android.os.Process
 import android.util.Log
 import java.io.FileInputStream
+import java.util.concurrent.Semaphore
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 /**
@@ -27,6 +31,12 @@ class SessionMuter(private val context: Context, private val settings: Settings)
     private val effects = HashMap<Int, DynamicsProcessing>()
     private val missed = HashMap<Int, Int>()
     @Volatile private var running = false
+    // Woken as soon as any player starts or changes state, so a new video is muted in ~0.1 s (the dump) instead
+    // of up to 0.6 s with polling alone. The 500 ms poll stays as a fallback.
+    private val wake = Semaphore(0)
+    private val playbackCallback = object : AudioManager.AudioPlaybackCallback() {
+        override fun onPlaybackConfigChanged(configs: MutableList<AudioPlaybackConfiguration>?) { wake.release() }
+    }
     /** Optional extra gain for the filtered output (used later by the singing/gender gate). */
     @Volatile var gate: Float? = null
     @Volatile var lastError: String? = null
@@ -35,16 +45,21 @@ class SessionMuter(private val context: Context, private val settings: Settings)
     fun start() {
         if (!context.hasDumpPermission()) { lastError = "DUMP permission not granted"; return }
         running = true
+        context.getSystemService(AudioManager::class.java).registerAudioPlaybackCallback(playbackCallback, null)
         thread(name = "im-muter", isDaemon = true) {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
             while (running) {
                 runCatching { poll() }.onFailure { lastError = it.message; Log.w("IslamicMute", "muter: $it") }
-                Thread.sleep(500)
+                wake.tryAcquire(500, TimeUnit.MILLISECONDS)
+                wake.drainPermits()
             }
         }
     }
 
     fun stop() {
         running = false
+        runCatching { context.getSystemService(AudioManager::class.java).unregisterAudioPlaybackCallback(playbackCallback) }
+        wake.release()
         synchronized(effects) { effects.values.forEach { runCatching { it.release() } }; effects.clear() }
     }
 

@@ -1,4 +1,5 @@
 /* JNI bridge: org.islamicmute.app.Engine <-> C engine (same code as desktop). */
+#include <stdlib.h>
 #include <android/log.h>
 #include <jni.h>
 #include <stdint.h>
@@ -56,11 +57,18 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeProcess(JNIEnv *env
 JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeProcessHops(JNIEnv *env, jclass cls, jlong h, jfloatArray in,
                                                                          jfloatArray out, jint hops) {
     (void)cls;
-    jfloat *pi = (*env)->GetPrimitiveArrayCritical(env, in, NULL);
-    jfloat *po = (*env)->GetPrimitiveArrayCritical(env, out, NULL);
-    int r = im_engine_process_hops_interleaved((im_engine *)(intptr_t)h, pi, po, hops);
-    (*env)->ReleasePrimitiveArrayCritical(env, out, po, 0);
-    (*env)->ReleasePrimitiveArrayCritical(env, in, pi, JNI_ABORT);
+    /* copies instead of GetPrimitiveArrayCritical: the engine run (several ms) must not hold the GC lock
+     * ("JNI critical lock held for 16-26 ms" on a Galaxy S24), and a hop is only a few KB */
+    im_engine *e = (im_engine *)(intptr_t)h;
+    jsize n = (*env)->GetArrayLength(env, in);
+    if (hops <= 0 || n != (*env)->GetArrayLength(env, out) || n < hops * im_engine_hop(e)) return -1;
+    float stack[2 * 480 * 2];
+    float *buf = (size_t)n <= sizeof stack / sizeof *stack ? stack : malloc((size_t)n * sizeof *buf);
+    if (!buf) return -1;
+    (*env)->GetFloatArrayRegion(env, in, 0, n, buf);
+    int r = im_engine_process_hops_interleaved(e, buf, buf, hops); /* in-place is allowed */
+    if (r == 0) (*env)->SetFloatArrayRegion(env, out, 0, n, buf);
+    if (buf != stack) free(buf);
     return r;
 }
 
