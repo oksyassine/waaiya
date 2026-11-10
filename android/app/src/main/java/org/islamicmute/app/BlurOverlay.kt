@@ -255,7 +255,15 @@ class BlurOverlay(private val context: Context) {
         private var ox = 0
         private var oy = 0
         private val bmp = Paint(Paint.FILTER_BITMAP_FLAG or Paint.ANTI_ALIAS_FLAG)
-        private val tint = Paint().apply { color = Color.argb(70, 30, 30, 30) }
+        private val tint = Paint().apply { color = Color.argb(120, 30, 30, 30) }
+        // Heavy blur: each cover shows its own area averaged into a few big cells (about BLUR_CELL_DP each),
+        // smoothed by bitmap filtering, so faces, hair and outlines melt into the surroundings.
+        private var thumbPx = IntArray(0)
+        private var thumbW = 0
+        private var thumbH = 0
+        private val cells = Bitmap.createBitmap(MAX_CELLS, MAX_CELLS, Bitmap.Config.ARGB_8888)
+        private val cellPx = IntArray(MAX_CELLS * MAX_CELLS)
+        private val cellSrc = Rect()
         private val solid = Paint().apply { color = ctx.getColor(R.color.surface) }
         private val text = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = ctx.getColor(R.color.text_primary); textAlign = Paint.Align.CENTER
@@ -278,6 +286,31 @@ class BlurOverlay(private val context: Context) {
             if (this.rects.size < count * 5) this.rects = FloatArray(count * 5)
             System.arraycopy(rects, 0, this.rects, 0, count * 5)
             this.count = count; this.thumb = thumb; this.failMode = failMode; this.testSquare = testSquare; this.scr = scr
+            if (thumb != null && !thumb.isRecycled) {
+                thumbW = thumb.width; thumbH = thumb.height
+                if (thumbPx.size < thumbW * thumbH) thumbPx = IntArray(thumbW * thumbH)
+                thumb.getPixels(thumbPx, 0, thumbW, 0, 0, thumbW, thumbH)
+            } else { thumbW = 0; thumbH = 0 }
+        }
+
+        /** Averages the thumbnail under r (screen pixels) into nx * ny cells of [cells]; false without a thumbnail. */
+        private fun fillCells(r: RectF, w: Float, h: Float, nx: Int, ny: Int): Boolean {
+            if (thumbW == 0 || thumbH == 0) return false
+            for (j in 0 until ny) for (i in 0 until nx) {
+                val x0 = ((r.left + r.width() * i / nx) / w * thumbW).toInt().coerceIn(0, thumbW - 1)
+                val x1 = ((r.left + r.width() * (i + 1) / nx) / w * thumbW).toInt().coerceIn(x0 + 1, thumbW)
+                val y0 = ((r.top + r.height() * j / ny) / h * thumbH).toInt().coerceIn(0, thumbH - 1)
+                val y1 = ((r.top + r.height() * (j + 1) / ny) / h * thumbH).toInt().coerceIn(y0 + 1, thumbH)
+                var sr = 0; var sg = 0; var sb = 0; var n = 0
+                for (y in y0 until y1) for (x in x0 until x1) {
+                    val p = thumbPx[y * thumbW + x]
+                    sr += Color.red(p); sg += Color.green(p); sb += Color.blue(p); n++
+                }
+                cellPx[j * MAX_CELLS + i] = Color.rgb(sr / n, sg / n, sb / n)
+            }
+            cells.setPixels(cellPx, 0, MAX_CELLS, 0, 0, MAX_CELLS, MAX_CELLS)
+            cellSrc.set(0, 0, nx, ny)
+            return true
         }
 
         fun origin(x: Int, y: Int) { ox = x; oy = y }
@@ -312,8 +345,8 @@ class BlurOverlay(private val context: Context) {
                 c.drawText(context.getString(R.string.blur_cover_slow), w / 2, h / 2, text)
                 return
             }
-            dst.set(0, 0, scr.width(), scr.height())
             val radius = 12 * density
+            val cell = BLUR_CELL_DP * density
             for (i in 0 until count) {
                 r.set(rects[i * 5] * w, rects[i * 5 + 1] * h, rects[i * 5 + 2] * w, rects[i * 5 + 3] * h)
                 val full = rects[i * 5 + 4].toInt() == Vision.KIND_FULL
@@ -321,9 +354,21 @@ class BlurOverlay(private val context: Context) {
                 if (!full) {
                     path.reset(); path.addRoundRect(r, radius, radius, android.graphics.Path.Direction.CW); c.clipPath(path)
                 } else c.clipRect(r)
-                val t = thumb
-                if (t != null && !t.isRecycled) c.drawBitmap(t, null, dst, bmp) else c.drawRect(r, solid)
-                c.drawRect(r, tint)
+                if (full) {
+                    c.drawRect(r, solid) // nudity: opaque, nothing of the picture shows
+                } else {
+                    val nx = Math.round(r.width() / cell).coerceIn(1, MAX_CELLS)
+                    val ny = Math.round(r.height() / cell).coerceIn(1, MAX_CELLS)
+                    if (fillCells(r, w, h, nx, ny)) {
+                        // stretch by half a cell beyond the cover so the filtered edge cells keep their full colour
+                        dst.set((r.left - r.width() / nx / 2).toInt(), (r.top - r.height() / ny / 2).toInt(),
+                            (r.right + r.width() / nx / 2).toInt(), (r.bottom + r.height() / ny / 2).toInt())
+                        c.save(); c.clipRect(r)
+                        c.drawBitmap(cells, cellSrc, dst, bmp)
+                        c.restore()
+                    } else c.drawRect(r, solid)
+                    c.drawRect(r, tint)
+                }
                 c.restore()
                 if (full) c.drawText(context.getString(R.string.blur_cover_full), w / 2, h / 2, text)
             }
@@ -343,6 +388,9 @@ class BlurOverlay(private val context: Context) {
         /** Self-test square, drawn at the left edge, half-way down, for at most a second when the blur starts
          *  (not at the top: an app overlay may sit under the status bar). */
         const val TEST_SQUARE_DP = 16f
+        /** Window hosts: blur cell size; a person's cover shows only a few soft blobs of colour. */
+        const val BLUR_CELL_DP = 90f
+        const val MAX_CELLS = 8
         /** App-overlay host: a whole-screen cover stops here (fraction of the height), leaving the bottom touchable. */
         const val FULL_COVER_BOTTOM = 0.88f
     }
