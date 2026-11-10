@@ -73,4 +73,37 @@
     <string name="notif_title">Waaiya is on</string>
     <string name="notif_text">Instruments are removed from all apps</string>
     <string name="notif_stop">Stop</string>
+    <!-- Link feature -->
+    <string name="link_entry_title">Open a link</string>
+    <string name="link_entry_body">Paste a YouTube or TikTok link to watch it or save it without music.</string>
+    <string name="link_title">Open a link</string>
+    <string name="link_hint">https://… (YouTube, TikTok…)</string>
+    <string name="link_field_label">Video or audio link</string>
+    <string name="link_paste">Paste</string>
+    <string name="link_open">Open</string>
+    <string name="link_resolving">Opening the link…</string>
+    <string name="link_meta">%1$s · %2$s</string>
+    <string name="link_watch">Watch without music</string>
+    <string name="link_save">Save without music</string>
+    <string name="link_listen">Listen without music</string>
+    <string name="link_downloading">Downloading…</string>
+    <string name="link_filtering">Removing music…</string>
+    <string name="link_cancel">Cancel</string>
+    <string name="link_cancelled">Cancelled. Nothing was saved.</string>
+    <string name="link_export_failed">Could not save this one. Nothing was saved.</string>
+    <string name="link_saved">Saved without music</string>
+    <string name="link_saved_video">In your gallery: Movies › Islamic Mute</string>
+    <string name="link_saved_audio">In your music: Music › Islamic Mute</string>
+    <string name="link_play">Play</string>
+    <string name="link_share">Share</string>
+    <string name="link_share_note">Only share videos you are allowed to share.</string>
+    <string name="link_channel">Saving links</string>
+    <string name="link_live">Live streams cannot be saved.</string>
+    <string name="link_busy">Another video is being saved. Please wait for it to finish.</string>
+    <string name="link_invalid">Please paste a web link (starting with https://).</string>
+    <string name="link_login">This site only shows this video to logged-in users. Islamic Mute cannot open it yet.</string>
+    <string name="link_unsupported">This site is not supported.</string>
+    <string name="link_playlist">This is a playlist. Please open one video.</string>
+    <string name="link_no_format">This video is not in a format Islamic Mute can filter yet.</string>
+    <string name="link_failed">Could not open this link. Check your connection and try again.</string>
 </resources>

@@ -102,6 +102,15 @@
 
             <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView style="@style/Text.Section" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="@string/link_entry_title" android:accessibilityHeading="true" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" android:text="@string/link_entry_body" />
+                <Button android:id="@+id/open_link" style="@style/Button.Tonal" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/link_open" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView style="@style/Text.Section" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="@string/settings_title" android:accessibilityHeading="true" />
                 <Switch android:id="@+id/switch_silence" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:minHeight="48dp" android:layout_marginTop="8dp" android:textSize="16sp"

@@ -14,7 +14,28 @@ object Links {
         val title: String, val durationSec: Double?, val isLive: Boolean, val site: String, val thumbnail: String?,
         /** Either [video] + [audio] (separate streams), or [progressive] (one file with both), or [audio] only. */
         val video: Stream?, val audio: Stream?, val progressive: Stream?,
-    )
+    ) {
+        fun streams() = Streams(video, audio, progressive)
+        val hasVideo get() = video != null || progressive != null
+    }
+
+    /** The part of [Resolved] the player and the exporter need. */
+    data class Streams(val video: Stream?, val audio: Stream?, val progressive: Stream?)
+
+    fun streamsJson(st: Streams): String = JSONObject().apply {
+        fun put(k: String, s: Stream?) { if (s != null) put(k, JSONObject().put("url", s.url).put("headers", JSONObject(s.headers))
+            .put("height", s.height ?: JSONObject.NULL).put("ext", s.ext ?: JSONObject.NULL).put("size", s.size ?: JSONObject.NULL)) }
+        put("video", st.video); put("audio", st.audio); put("progressive", st.progressive)
+    }.toString()
+
+    fun streamsFromJson(json: String): Streams = JSONObject(json).let { Streams(stream(it, "video"), stream(it, "audio"), stream(it, "progressive")) }
+
+    private fun stream(o: JSONObject, k: String): Stream? = o.optJSONObject(k)?.let { s ->
+        val h = s.optJSONObject("headers")
+        Stream(s.getString("url"), h?.keys()?.asSequence()?.associateWith { h.getString(it) } ?: emptyMap(),
+            s.optInt("height").takeIf { s.has("height") && !s.isNull("height") }, s.optString("ext").takeIf { s.has("ext") && !s.isNull("ext") },
+            s.optLong("size").takeIf { s.has("size") && !s.isNull("size") })
+    }
 
     /** Message is meant for the user. */
     class LinkException(message: String) : Exception(message)
@@ -35,18 +56,23 @@ object Links {
         val json = try {
             python(ctx).getModule("im_links").callAttr("resolve", url, qjs, cache).toString()
         } catch (e: PyException) {
+            // Python's LinkError("code", detail): message reads "LinkError: ('code', 'detail')" or "LinkError: code"
             val m = e.message ?: ""
-            throw LinkException(if (m.startsWith("LinkError: ")) m.removePrefix("LinkError: ") else "Could not open this link.\n$m")
+            val code = Regex("""^LinkError: \(?'?(\w+)""").find(m)?.groupValues?.get(1)
+            val res = when (code) {
+                "invalid_url" -> R.string.link_invalid
+                "login" -> R.string.link_login
+                "unsupported_site" -> R.string.link_unsupported
+                "playlist" -> R.string.link_playlist
+                "no_format" -> R.string.link_no_format
+                else -> R.string.link_failed
+            }
+            android.util.Log.w("IslamicMute", "link: $m")
+            throw LinkException(ctx.getString(res))
         }
         val o = JSONObject(json)
-        fun stream(k: String): Stream? = o.optJSONObject(k)?.let { s ->
-            val h = s.optJSONObject("headers")
-            Stream(s.getString("url"), h?.keys()?.asSequence()?.associateWith { h.getString(it) } ?: emptyMap(),
-                s.optInt("height").takeIf { s.has("height") && !s.isNull("height") }, s.optString("ext").ifEmpty { null },
-                s.optLong("size").takeIf { s.has("size") && !s.isNull("size") })
-        }
         return Resolved(o.optString("title"), o.optDouble("duration").takeIf { !it.isNaN() }, o.optBoolean("is_live"),
-            o.optString("site"), o.optString("thumbnail").ifEmpty { null }, stream("video"), stream("audio"), stream("progressive"))
+            o.optString("site"), o.optString("thumbnail").ifEmpty { null }, stream(o, "video"), stream(o, "audio"), stream(o, "progressive"))
     }
 
     fun ytDlpVersion(ctx: Context): String = python(ctx).getModule("im_links").callAttr("version").toString()
