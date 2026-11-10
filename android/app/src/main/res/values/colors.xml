@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Semantic colour tokens (light). Every screen uses these names, never raw hex. Contrast checked:
+     text_primary/text_secondary on bg and surface >= 7:1 / 4.5:1; on_primary on primary >= 4.5:1. -->
+<resources>
+    <color name="bg">#F6F7F5</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#ECEFEC</color>
+    <color name="outline">#C9CFCB</color>
+    <color name="text_primary">#17201C</color>
+    <color name="text_secondary">#4A5550</color>
+    <color name="primary">#0D6B5E</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#D3EFE8</color>
+    <color name="on_primary_container">#053D35</color>
+    <color name="off_ring">#76817C</color>
+    <color name="warning_container">#FFF1D6</color>
+    <color name="on_warning_container">#5A3B00</color>
+    <color name="error">#B3261E</color>
+    <color name="code_bg">#ECEFEC</color>
+    <color name="launcher_bg">#0D6B5E</color>
+</resources>

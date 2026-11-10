@@ -3,7 +3,13 @@ package org.islamicmute.app
 import android.app.Activity
 import android.os.Bundle
 import android.webkit.WebView
+import android.os.Build
+import android.view.Gravity
+import android.view.View
+import android.view.WindowInsets
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -17,44 +23,87 @@ import android.widget.TextView
 class LicencesActivity : Activity() {
     private var doc: WebView? = null
 
+    private lateinit var titleView: TextView
+    private lateinit var body: FrameLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "Open-source licences"
+        // Same edge-to-edge handling as the main screen: our own header, padded below the status bar.
+        if (Build.VERSION.SDK_INT >= 30) window.setDecorFitsSystemWindows(false)
+        val dp = resources.displayMetrics.density
+        val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setBackgroundColor(getColor(R.color.bg)) }
+        val header = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL
+            setPaddingRelative((4 * dp).toInt(), (4 * dp).toInt(), (16 * dp).toInt(), (4 * dp).toInt())
+        }
+        header.addView(ImageButton(this).apply {
+            setImageResource(R.drawable.ic_arrow_back)
+            setBackgroundResource(R.drawable.bg_button_text)
+            contentDescription = getString(R.string.back)
+            setOnClickListener { goBack() }
+        }, LinearLayout.LayoutParams((48 * dp).toInt(), (48 * dp).toInt()))
+        titleView = TextView(this, null, 0, R.style.Text_Headline).apply {
+            setPaddingRelative((8 * dp).toInt(), 0, 0, 0); isSingleLine = true
+            ellipsize = android.text.TextUtils.TruncateAt.END; isAccessibilityHeading = true
+        }
+        header.addView(titleView, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        root.addView(header)
+        body = FrameLayout(this)
+        root.addView(body, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
+        root.setOnApplyWindowInsetsListener { v, insets ->
+            val bars = if (Build.VERSION.SDK_INT >= 30)
+                insets.getInsets(WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout())
+            else @Suppress("DEPRECATION") android.graphics.Insets.of(insets.systemWindowInsetLeft,
+                insets.systemWindowInsetTop, insets.systemWindowInsetRight, insets.systemWindowInsetBottom)
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
+            insets
+        }
+        setContentView(root)
         showIndex()
     }
 
     private fun showIndex() {
         doc?.destroy(); doc = null
-        val pad = (16 * resources.displayMetrics.density).toInt()
-        val col = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(pad, pad, pad, pad) }
-        fun text(s: String, size: Float = 14f) = TextView(this).apply {
-            text = s; textSize = size; setPadding(0, pad / 2, 0, pad / 2); setTextIsSelectable(true)
+        titleView.setText(R.string.licences)
+        val dp = resources.displayMetrics.density
+        val pad = (20 * dp).toInt()
+        val col = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(pad, 0, pad, pad) }
+        fun text(s: String, style: Int = R.style.Text_Secondary) = TextView(this, null, 0, style).apply {
+            text = s; setPadding(0, pad / 2, 0, pad / 2); setTextIsSelectable(true)
         }
-        col.addView(text("Islamic Mute is free software under the GNU Affero General Public License v3 or later.", 16f))
-        col.addView(text(asset("NOTICE.txt")))
-        col.addView(text("Creative Commons Attribution 4.0 (training data): https://creativecommons.org/licenses/by/4.0/"))
-        col.addView(text("Full texts", 18f))
-        for ((label, file) in DOCS) col.addView(Button(this).apply {
-            text = label
-            isAllCaps = false
-            setOnClickListener { showDoc(label, file) }
+        col.addView(text(getString(R.string.licences_intro), R.style.Text_Body))
+        // NOTICE is English legal text: keep it left-to-right in an Arabic UI.
+        col.addView(text(asset("NOTICE.txt")).apply {
+            textDirection = View.TEXT_DIRECTION_LTR; textAlignment = View.TEXT_ALIGNMENT_TEXT_START
         })
-        setContentView(ScrollView(this).apply { addView(col) })
+        col.addView(text(getString(R.string.licences_cc)))
+        col.addView(text(getString(R.string.licences_full), R.style.Text_Section))
+        for ((label, file) in DOCS) col.addView(Button(this, null, 0, R.style.Button_Tonal).apply {
+            text = label
+            setOnClickListener { showDoc(label, file) }
+        }, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+            topMargin = (8 * dp).toInt()
+        })
+        body.removeAllViews()
+        body.addView(ScrollView(this).apply { addView(col) })
     }
 
     private fun showDoc(label: String, file: String) {
-        title = label
+        titleView.text = label
         doc = WebView(this).apply {
             settings.javaScriptEnabled = false
             settings.defaultTextEncodingName = "utf-8"
             loadUrl("file:///android_asset/$DIR/$file")
         }
-        setContentView(doc)
+        body.removeAllViews()
+        body.addView(doc)
     }
+
+    private fun goBack() { if (doc != null) showIndex() else finish() }
 
     @Deprecated("framework Activity API")
     override fun onBackPressed() {
-        if (doc != null) { title = "Open-source licences"; showIndex() }
+        if (doc != null) showIndex()
         else @Suppress("DEPRECATION") super.onBackPressed()
     }
 

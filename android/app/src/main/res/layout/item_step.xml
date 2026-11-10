@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One setup step: number (or check when done), title, help text, optional action. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal" android:paddingTop="16dp">
+    <FrameLayout android:id="@+id/step_badge" android:layout_width="32dp" android:layout_height="32dp"
+        android:background="@drawable/bg_step" android:importantForAccessibility="no">
+        <TextView android:id="@+id/step_number" android:layout_width="match_parent" android:layout_height="match_parent"
+            android:gravity="center" android:textAlignment="center" android:textSize="15sp" android:fontFamily="sans-serif-medium"
+            android:textColor="@color/text_secondary" />
+        <ImageView android:id="@+id/step_check" android:layout_width="20dp" android:layout_height="20dp"
+            android:layout_gravity="center" android:src="@drawable/ic_check" android:visibility="gone" />
+    </FrameLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+        android:layout_marginStart="16dp" android:orientation="vertical">
+        <TextView android:id="@+id/step_title" style="@style/Text.Body" android:fontFamily="sans-serif-medium"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="32dp"
+            android:gravity="center_vertical|start" />
+        <TextView android:id="@+id/step_body" style="@style/Text.Secondary"
+            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp" />
+        <Button android:id="@+id/step_action" style="@style/Button.Tonal"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" />
+    </LinearLayout>
+</LinearLayout>
