@@ -115,8 +115,9 @@ class LicencesActivity : Activity() {
         runCatching { assets.open("$DIR/$name").bufferedReader().use { it.readText() } }.getOrElse { "($name missing)" }
 
     companion object {
-        private const val DIR = "licences"
-        private val DOCS = listOf(
+        const val DIR = "licences"
+        /** Label to asset file; also served to the Flutter licences screen (UiBridge). */
+        val DOCS = listOf(
             "Apache License 2.0 (Waaiya, AndroidX, Media3, Kotlin, Guava)" to "LICENSE-Apache-2.0.txt",
             "Third-party components, models and training data" to "THIRD_PARTY_LICENSES.txt",
             "ONNX Runtime (MIT)" to "onnxruntime-LICENSE.txt",
