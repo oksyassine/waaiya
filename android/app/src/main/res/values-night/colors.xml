@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Semantic colour tokens (dark). Same names as values/colors.xml. -->
+<resources>
+    <color name="bg">#0F1513</color>
+    <color name="surface">#18201D</color>
+    <color name="surface_variant">#232D29</color>
+    <color name="outline">#3D4A45</color>
+    <color name="text_primary">#E6ECE9</color>
+    <color name="text_secondary">#AAB6B1</color>
+    <color name="primary">#7AD8C6</color>
+    <color name="on_primary">#00382F</color>
+    <color name="primary_container">#0E4E44</color>
+    <color name="on_primary_container">#C8F2E9</color>
+    <color name="off_ring">#6F7A76</color>
+    <color name="warning_container">#4A3407</color>
+    <color name="on_warning_container">#FFE3B0</color>
+    <color name="error">#F2B8B5</color>
+    <color name="code_bg">#232D29</color>
+    <color name="launcher_bg">#0D6B5E</color>
+</resources>

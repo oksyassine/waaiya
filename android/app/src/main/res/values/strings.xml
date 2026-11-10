@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Islamic Mute</string>
+    <string name="tagline">Removes musical instruments from every app and keeps speech and recitation.</string>
+
+    <string name="onboard_title">Welcome</string>
+    <string name="onboard_body">Islamic Mute removes musical instruments from the sound of every app on this phone. Speech and Quran recitation are kept. For now, singing voices are removed too.</string>
+    <string name="onboard_question">I am</string>
+    <string name="gender_man">A man</string>
+    <string name="gender_woman">A woman</string>
+    <string name="onboard_why">This only decides which optional settings you see. You can change it later.</string>
+
+    <string name="state_on_title">Filtering is on</string>
+    <string name="state_off_title">Filtering is off</string>
+    <string name="state_starting">Starting…</string>
+    <string name="state_on_detail">Instruments are removed from all apps. Delay about %1$d ms.</string>
+    <string name="state_off_detail">Tap the button to start.</string>
+    <string name="state_model_failed">The sound model could not load, so the sound is muted for safety.</string>
+    <string name="state_capture_denied">The microphone permission is needed to receive other apps\' sound.</string>
+    <string name="state_stopped_by_system">Android stopped filtering. Tap the button to start again.</string>
+    <string name="power_start_cd">Start filtering</string>
+    <string name="power_stop_cd">Stop filtering</string>
+    <string name="capture_hint">Android will ask to share your screen. Only the sound is used: nothing is recorded or sent.</string>
+    <string name="need_record_audio">Islamic Mute needs the microphone permission to receive other apps\' sound. It never records you.</string>
+
+    <string name="setup_banner_title">One more step</string>
+    <string name="setup_banner_body">Without the one-time setup below, you will hear the music and the filtered sound together.</string>
+    <string name="setup_title">One-time setup</string>
+    <string name="setup_body">Lets Islamic Mute silence the original sound. You do it once; it stays until you uninstall the app.</string>
+    <string name="step1_title">Install Shizuku</string>
+    <string name="step1_body">A free helper app from the Play Store.</string>
+    <string name="step1_action">Get Shizuku</string>
+    <string name="step2_title">Start Shizuku</string>
+    <string name="step2_body">In Shizuku, choose \"Start via Wireless debugging\" and follow its steps, then come back.</string>
+    <string name="step2_action">Open Shizuku</string>
+    <string name="step2_too_old">Your Shizuku version is too old. Update it from the Play Store.</string>
+    <string name="step2_denied">Shizuku is set to always deny Islamic Mute. In Shizuku, allow it in the list of apps.</string>
+    <string name="step3_title">Give permission</string>
+    <string name="step3_body">One tap, then choose \"Allow\".</string>
+    <string name="step3_action">Give permission</string>
+    <string name="step3_busy">Setting up…</string>
+    <string name="setup_done_restart">Done. Stop and start filtering once to apply it.</string>
+    <string name="setup_failed">Setup did not finish. Details:\n%1$s</string>
+    <string name="shizuku_refused">Shizuku permission was refused. Tap the button to try again.</string>
+    <string name="step_done_cd">Done</string>
+    <string name="step_todo_cd">Step %1$d</string>
+    <string name="computer_toggle">Use a computer instead</string>
+    <string name="computer_body">Turn on USB debugging, connect the phone and run:</string>
+    <string name="copy">Copy</string>
+    <string name="copied">Copied</string>
+    <string name="computer_note">The second line is optional: it stops the screen-sharing question at every start.</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="setting_silence_title">Silence apps that block filtering</string>
+    <string name="setting_silence_body">Recommended. Some apps do not allow their sound to be filtered; this mutes them instead of letting music through.</string>
+    <string name="setting_singing_title">Mute women\'s singing</string>
+    <string name="setting_singing_body">Women\'s speech and recitation are kept.</string>
+    <string name="setting_singing_no_model">This version has no singing detector, so all voices are muted while this is on.</string>
+    <string name="setting_restart">Stop and start filtering to apply changes.</string>
+    <string name="setting_gender_title">I am</string>
+    <string name="change">Change</string>
+
+    <string name="player_title">Videos in perfect sync</string>
+    <string name="player_body">Share a video to Islamic Mute (or use \"Open with\") to watch it filtered with no delay.</string>
+    <string name="licences">Open-source licences</string>
+    <string name="licences_intro">Islamic Mute is free software under the Apache License 2.0.</string>
+    <string name="licences_cc">Creative Commons Attribution 4.0 (training data): https://creativecommons.org/licenses/by/4.0/</string>
+    <string name="licences_full">Full texts</string>
+    <string name="back">Back</string>
+
+    <string name="notif_channel">Filter</string>
+    <string name="notif_title">Islamic Mute is on</string>
+    <string name="notif_text">Instruments are removed from all apps</string>
+    <string name="notif_stop">Stop</string>
+</resources>
