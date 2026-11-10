@@ -24,6 +24,9 @@ val signingProps = Properties().apply {
     if (f.isFile) f.inputStream().use { load(it) }
 }
 
+// Screen blur: declare the accessibility service only on request (Play Protect blocks sideloaded apps that have one).
+val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
+
 android {
     namespace = "org.islamicmute.app"
     compileSdk = 35
@@ -33,9 +36,11 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.2.1"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
+        buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
+        if (blurA11y) versionNameSuffix = "-a11y"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
         // not per build type, so emulator builds add x86_64 with -PimX86.
@@ -131,6 +136,11 @@ val copyModel by tasks.registering(Copy::class) {
     into(modelAssets)
 }
 android.sourceSets["main"].assets.srcDir(modelAssets)
+
+// -PimBlurA11y: also declare the screen blur's accessibility service (touches pass through the covers).
+androidComponents {
+    onVariants { v -> if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml") }
+}
 
 // Link feature: yt-dlp (+ EJS scripts) under Python 3.11, and QuickJS shipped as an executable named lib*.so so it
 // is extracted to nativeLibraryDir, the only place an app may execute files from.

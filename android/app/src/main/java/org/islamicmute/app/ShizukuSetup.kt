@@ -129,9 +129,10 @@ class SetupService : ISetupService.Stub() {
         val pkg = BuildConfig.APPLICATION_ID
         val service = "$pkg/${BlurAccessibilityService::class.java.name}"
         val log = StringBuilder()
+        log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "SYSTEM_ALERT_WINDOW", "allow"))
+        if (!BuildConfig.BLUR_A11Y) return log.toString() // this build has no accessibility service
         // Android 13+: sideloaded apps cannot have accessibility turned on until this app-op allows it.
         log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "ACCESS_RESTRICTED_SETTINGS", "allow"))
-        log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "SYSTEM_ALERT_WINDOW", "allow"))
         val current = output("/system/bin/settings", "get", "secure", "enabled_accessibility_services")
             .takeUnless { it == "null" }.orEmpty()
         val list = current.split(':').filter { it.isNotBlank() }
