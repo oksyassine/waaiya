@@ -100,9 +100,14 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "blurSetup" -> { blurSetup(); result.success(null) }
                 "openShizuku" -> { openShizuku(); result.success(null) }
                 "openDeveloperOptions" -> {
-                    // Developer options, or About phone when they are not turned on yet (step 2 of the guide)
-                    runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
-                        .onFailure { activity.startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)) }
+                    // Developer options, or About phone when they are not turned on yet (step 2 of the guide).
+                    // Checked first: with them off, the Developer options page opens and closes at once (no exception).
+                    val devOn = android.provider.Settings.Global.getInt(activity.contentResolver,
+                        android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+                    val about = Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)
+                    if (devOn) runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                        .onFailure { activity.startActivity(about) }
+                    else activity.startActivity(about)
                     result.success(null)
                 }
                 "openOverlaySettings" -> {
