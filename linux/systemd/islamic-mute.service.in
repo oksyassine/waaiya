@@ -1,5 +1,5 @@
 [Unit]
-Description=Islamic Mute: system-wide voice filter (removes instruments, keeps voice)
+Description=Waaiya: system-wide voice filter (removes instruments, keeps voice)
 After=pulseaudio.service pipewire-pulse.service wireplumber.service
 
 [Service]

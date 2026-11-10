@@ -1,0 +1,47 @@
+name: Linux engine
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-smoke-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch ONNX Runtime and the default model (checksummed)
+        run: scripts/fetch_deps.sh
+      - name: Build engine, CLI, LADSPA plugin and im-pulse
+        run: make -j"$(nproc)" all build/test-detector
+      - name: Smoke test, filter a generated file through the C engine
+        run: |
+          python3 - <<'PY'
+          import math, random, struct, wave
+          sr = 48000
+          with wave.open("in.wav", "wb") as w:
+              w.setnchannels(2); w.setsampwidth(2); w.setframerate(sr)
+              frames = bytearray()
+              for n in range(sr * 3):
+                  s = 0.3 * math.sin(2 * math.pi * 440 * n / sr) + 0.05 * (random.random() - 0.5)
+                  frames += struct.pack("<hh", int(s * 32767), int(s * 32767))
+              w.writeframes(bytes(frames))
+          PY
+          build/im-process -m models/dfn3/dfn3_stream_int8.onnx in.wav out.wav
+          python3 - <<'PY'
+          import wave
+          a, b = wave.open("in.wav"), wave.open("out.wav")
+          assert b.getnframes() == a.getnframes(), (a.getnframes(), b.getnframes())
+          print("ok:", b.getnframes(), "frames,", b.getnchannels(), "channels")
+          PY
+      - name: Shell scripts parse
+        run: for f in linux/bin/islamic-mute linux/*.sh scripts/*.sh; do bash -n "$f"; done

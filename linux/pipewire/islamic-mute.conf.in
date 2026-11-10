@@ -1,4 +1,4 @@
-# PipeWire filter-chain: virtual output "Islamic Mute" running the voice filter plugin.
+# PipeWire filter-chain: virtual output "Waaiya" running the voice filter plugin.
 # The plugin's "latency" output port is reported to the graph, so video players
 # that read the sink delay (mpv, Chromium, OBS) can keep lip-sync.
 context.properties = { log.level = 0 }
@@ -13,7 +13,7 @@ context.modules = [
     { name = libpipewire-module-adapter }
     { name = libpipewire-module-filter-chain
         args = {
-            node.description = "Islamic Mute"
+            node.description = "Waaiya"
             media.name       = "Islamic Mute"
             audio.rate       = 48000
             filter.graph = {

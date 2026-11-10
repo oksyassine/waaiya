@@ -28,7 +28,8 @@ def code(text):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--owner", default="KAGGLE_USER")
+    ap.add_argument("--owner", default=os.environ.get("KAGGLE_USERNAME", "KAGGLE_USER"),
+                    help="Kaggle user that owns the kernel (default: $KAGGLE_USERNAME)")
     ap.add_argument("--slug", default=None)
     ap.add_argument("--folder", default=None, help="output folder under kaggle/ (default from the slug)")
     ap.add_argument("--detector", action="store_true", help="generate the women's-singing detector notebook instead")

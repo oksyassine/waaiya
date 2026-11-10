@@ -74,3 +74,11 @@ google-services.json
 .DS_Store
 *.swp
 *~
+
+# --- Local leftovers: venv snapshots, Kaggle run downloads (code copies, logs, checkpoints) ---
+.venv-*/
+.venv-freeze*.txt
+*.log
+models/voice/v3/eval_rows.json
+models/voice/lowdelay/
+models/detector/v2/
