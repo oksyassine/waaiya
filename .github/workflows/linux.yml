@@ -40,10 +40,19 @@ jobs:
           PY
           build/im-process -m models/dfn3/dfn3_stream_int8.onnx in.wav out.wav
           python3 - <<'PY'
-          import wave
-          a, b = wave.open("in.wav"), wave.open("out.wav")
-          assert b.getnframes() == a.getnframes(), (a.getnframes(), b.getnframes())
-          print("ok:", b.getnframes(), "frames,", b.getnchannels(), "channels")
+          import struct
+          def frames(path):  # RIFF reader that also takes float WAV (format 3), which the wave module refuses
+              d = open(path, "rb").read(); i = 12; ch = bits = None
+              while i < len(d):
+                  cid, size = d[i:i + 4], struct.unpack("<I", d[i + 4:i + 8])[0]
+                  if cid == b"fmt ":
+                      ch, bits = struct.unpack("<H", d[i + 10:i + 12])[0], struct.unpack("<H", d[i + 22:i + 24])[0]
+                  if cid == b"data":
+                      return size // (ch * bits // 8), ch
+                  i += 8 + size + (size & 1)
+          (a, _), (b, ch) = frames("in.wav"), frames("out.wav")
+          assert a == b, (a, b)
+          print("ok:", b, "frames,", ch, "channels")
           PY
       - name: Shell scripts parse
         run: for f in linux/bin/islamic-mute linux/*.sh scripts/*.sh; do bash -n "$f"; done
