@@ -42,10 +42,18 @@ object Lang {
 
     /** Switches the app language; the open screen is rebuilt in the new language. */
     fun set(activity: Activity, tag: String) {
-        prefs(activity).edit().putString(PREF, tag).apply()
+        store(activity, tag)
+        if (Build.VERSION.SDK_INT < 33) activity.recreate()
+    }
+
+    /**
+     * Saves the language for the native screens, services and notifications without restarting the open screen
+     * (the Flutter screens switch language themselves; UiActivity declares locale config changes).
+     */
+    fun store(ctx: Context, tag: String) {
+        prefs(ctx).edit().putString(PREF, tag).apply()
         if (Build.VERSION.SDK_INT >= 33)
-            activity.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(tag)
-        else activity.recreate()
+            ctx.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(tag)
     }
 
     /** Android 10-12: a context with the chosen language (attachBaseContext of activities and services). */

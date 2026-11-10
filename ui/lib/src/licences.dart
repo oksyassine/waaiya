@@ -60,6 +60,12 @@ class _LicencesScreenState extends State<LicencesScreen> {
                   child: Text(doc.label, textAlign: TextAlign.center),
                 ),
               ],
+              // The screens themselves: Flutter engine, framework and Dart packages (their NOTICES).
+              const SizedBox(height: 8),
+              FilledButton.tonal(
+                onPressed: () => showLicensePage(context: context, applicationName: l.appName),
+                child: const Text('Flutter and Dart packages (BSD-3-Clause and others)', textAlign: TextAlign.center),
+              ),
             ],
           );
         },

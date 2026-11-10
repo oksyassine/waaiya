@@ -119,6 +119,27 @@ Clipboard (the adb commands) uses Flutter's own `Clipboard`; it needs no backend
 - Linux already has a working host (`linux/bin/waaiya start|stop|status`); the desktop app can drive it later
   through the same `TODO(engine)` points.
 
+## Layout and building
+
+| Path | What it is |
+|---|---|
+| `ui/` | Dart package: screens, `WaaiyaBackend`, `ChannelBackend`, `MemoryBackend` (tests, desktop base), theme, l10n |
+| `ui/lib/l10n/` | `app_ar.arb` (template, default) and `app_en.arb`, generated from the Android strings by `ui/tool/arb_from_android.py`; the Dart files from them by `flutter gen-l10n` (committed: path dependencies do not run it) |
+| `ui_module/` | Flutter add-to-app module; `main()` runs the screens over `ChannelBackend` |
+| `android/app/.../UiActivity.kt`, `UiBridge.kt` | The `FlutterActivity` behind the launcher alias `.MainActivity`, and the channel implementation |
+| `desktop/` | Flutter app (Linux, Windows) with `DesktopBackend` |
+
+```bash
+cd ui_module && flutter pub get          # once: creates ui_module/.android, which android/settings.gradle.kts includes
+cd android && ./gradlew assembleDebug    # -PimNativeUi: the old native main screen instead of Flutter
+cd ui && flutter analyze && flutter test
+cd desktop && flutter build linux        # Windows: `flutter build windows` on Windows (CI: .github/workflows/flutter.yml)
+python3 ui/tool/arb_from_android.py && (cd ui && flutter gen-l10n)   # after changing res/values*/strings.xml
+```
+
+Texts: Android's `res/values*/strings.xml` stay the source of every text. Flutter-only texts are listed in
+`ui/tool/arb_from_android.py` (`EXTRA`); their Arabic is not reviewed yet.
+
 ## Changing the contract
 
 Add keys, never rename them; a backend that does not know a key leaves it out and the UI uses the default. Change

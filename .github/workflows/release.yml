@@ -45,6 +45,11 @@ jobs:
       - run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
       - uses: gradle/actions/setup-gradle@v4
         with: { cache-read-only: true }
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: "3.41.5", cache: true }
+      - name: Flutter module (main screen; creates ui_module/.android)
+        working-directory: ui_module
+        run: flutter pub get
       - run: scripts/fetch_deps.sh
         env:
           GH_TOKEN: ${{ github.token }}
