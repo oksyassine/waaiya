@@ -48,6 +48,7 @@ class MainActivity : Activity() {
     private lateinit var blurSetupManual: Button
     private lateinit var blurFail: Switch
     private lateinit var blurFailNote: TextView
+    private lateinit var blurFailFix: Button
     private var blurBusy = false
     private var blurMessage: String? = null
     /** Shizuku's permission dialog was opened from the blur card: grant the blur (not the setup) when it returns. */
@@ -144,6 +145,8 @@ class MainActivity : Activity() {
         }
         blurFail = findViewById(R.id.switch_blur_fail)
         blurFailNote = findViewById(R.id.blur_fail_note)
+        blurFailFix = findViewById(R.id.blur_fail_fix)
+        blurFailFix.setOnClickListener { onBlurSetup() }
         // read by the running blur on every frame: applies at once. Greyed out in refreshBlur() when touches cannot
         // pass through the covers (a full-screen cover would then lock the phone).
         blurFail.setOnCheckedChangeListener { v, checked -> if (v.isEnabled) settings.blurFailCover = checked }
@@ -275,7 +278,22 @@ class MainActivity : Activity() {
         blurFail.isEnabled = passThrough  // before isChecked: the listener ignores changes while disabled
         blurFail.isChecked = passThrough && settings.blurFailCover
         blurFailNote.visibility = if (passThrough) View.GONE else View.VISIBLE
-        blurFailNote.setText(if (BuildConfig.BLUR_A11Y) R.string.blur_fail_needs_a11y else R.string.blur_fail_unavailable)
+        blurFailNote.setText(when {
+            BuildConfig.BLUR_A11Y -> R.string.blur_fail_needs_a11y
+            Build.VERSION.SDK_INT < 31 -> R.string.blur_fail_old_android
+            else -> R.string.blur_fail_unavailable
+        })
+        // the way out of the greyed-out switch: the next Shizuku step (the covers then let taps through)
+        val fix = when (if (passThrough || Build.VERSION.SDK_INT < 31) null else ShizukuSetup.state(this)) {
+            null, ShizukuSetup.State.READY -> null
+            ShizukuSetup.State.NOT_INSTALLED -> R.string.step1_action
+            ShizukuSetup.State.TOO_OLD -> R.string.step2_update
+            ShizukuSetup.State.NEEDS_PERMISSION -> R.string.step3_action
+            ShizukuSetup.State.DENIED_PERMANENTLY -> R.string.step2_action
+            else -> R.string.step2_guide
+        }
+        blurFailFix.visibility = if (fix == null) View.GONE else View.VISIBLE
+        fix?.let { blurFailFix.setText(it) }
         val bs = ScreenBlur.state
         val setupText = if (BuildConfig.BLUR_A11Y) R.string.blur_status_needs_setup else R.string.blur_status_needs_overlay
         val msg: Pair<String, Boolean>? = when {
@@ -312,8 +330,28 @@ class MainActivity : Activity() {
                 runCatching { ShizukuSetup.requestPermission() }.onFailure { blurAfterPermission = false }
             }
             ShizukuSetup.State.NOT_INSTALLED, ShizukuSetup.State.TOO_OLD -> openStore()
-            else -> packageManager.getLaunchIntentForPackage(ShizukuSetup.SHIZUKU_PACKAGE)?.let { startActivity(it) }
+            ShizukuSetup.State.DENIED_PERMANENTLY -> openShizuku()
+            else -> showShizukuGuide()
         }
+    }
+
+    private fun openShizuku() {
+        packageManager.getLaunchIntentForPackage(ShizukuSetup.SHIZUKU_PACKAGE)?.let { startActivity(it) } ?: openStore()
+    }
+
+    /** Wireless-debugging steps to start Shizuku, with shortcuts to Developer options and Shizuku. */
+    private fun showShizukuGuide() {
+        android.app.AlertDialog.Builder(this)
+            .setTitle(R.string.guide_title)
+            .setMessage(R.string.guide_body)
+            .setPositiveButton(R.string.guide_open_shizuku) { _, _ -> openShizuku() }
+            .setNeutralButton(R.string.guide_open_dev) { _, _ ->
+                // Developer options, or About phone when they are not turned on yet (step 2 of the guide)
+                runCatching { startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                    .onFailure { runCatching { startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)) } }
+            }
+            .setNegativeButton(R.string.guide_close, null)
+            .show()
     }
 
     private fun grantBlur() {
@@ -342,7 +380,7 @@ class MainActivity : Activity() {
         val content = listOf(
             Triple(R.string.step1_title, R.string.step1_body, R.string.step1_action),
             Triple(R.string.step2_title, if (tooOld) R.string.step2_too_old else R.string.step2_body,
-                if (tooOld) R.string.step2_update else R.string.step2_action),
+                if (tooOld) R.string.step2_update else R.string.step2_guide),
             Triple(R.string.step3_title, if (denied) R.string.step2_denied else R.string.step3_body,
                 when { denied -> R.string.step2_action; shizukuBusy -> R.string.step3_busy; else -> R.string.step3_action }))
         for ((i, row) in steps.withIndex()) {
@@ -378,8 +416,8 @@ class MainActivity : Activity() {
             s == ShizukuSetup.State.READY -> grantWithShizuku()
             s == ShizukuSetup.State.NEEDS_PERMISSION -> runCatching { ShizukuSetup.requestPermission() }
                 .onFailure { shizukuMessage = "Shizuku: ${it.message}"; refresh() }
-            else -> packageManager.getLaunchIntentForPackage(ShizukuSetup.SHIZUKU_PACKAGE)?.let { startActivity(it) }
-                ?: refresh()
+            step == 1 -> showShizukuGuide()
+            else -> openShizuku()
         }
     }
 

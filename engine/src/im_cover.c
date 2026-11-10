@@ -46,7 +46,7 @@ im_cover *im_cover_create(int covers_visible) {
     im_cover *c = calloc(1, sizeof *c);
     if (!c) return NULL;
     c->covers_visible = covers_visible;
-    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f};
+    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f};
     return c;
 }
 
@@ -126,6 +126,34 @@ static int stricter(int a, int b) {
 }
 
 static void drop(im_cover *c, int i) { c->t[i] = c->t[--c->nt]; }
+
+/* Group covers: two covers whose gap is at most gap * (the smaller one's height) become their bounding box, until
+ * no pair is left. Only the drawn rects are merged; tracks stay one per person. A FULL rect is left alone. */
+static int merge_close(im_vrect *r, int n, float gap) {
+    if (gap <= 0) return n;
+    for (int again = 1; again;) {
+        again = 0;
+        for (int i = 0; i < n && !again; i++) {
+            if (r[i].kind == IM_VK_FULL) continue;
+            for (int j = i + 1; j < n; j++) {
+                if (r[j].kind == IM_VK_FULL) continue;
+                float g = gap * fminf(r[i].y1 - r[i].y0, r[j].y1 - r[j].y0);
+                float gx = fmaxf(r[i].x0, r[j].x0) - fminf(r[i].x1, r[j].x1); /* < 0: they overlap on this axis */
+                float gy = fmaxf(r[i].y0, r[j].y0) - fminf(r[i].y1, r[j].y1);
+                if (gx > g || gy > g) continue;
+                r[i].x0 = fminf(r[i].x0, r[j].x0); r[i].y0 = fminf(r[i].y0, r[j].y0);
+                r[i].x1 = fmaxf(r[i].x1, r[j].x1); r[i].y1 = fmaxf(r[i].y1, r[j].y1);
+                r[i].kind = stricter(r[i].kind, r[j].kind);
+                r[i].score = fmaxf(r[i].score, r[j].score);
+                r[i].p_male = -1;
+                r[j] = r[--n];
+                again = 1; /* the grown cover may now reach others: start over */
+                break;
+            }
+        }
+    }
+    return n;
+}
 
 int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h, int stride, const im_vrect *dets,
                     int n, im_vrect *out, int max) {
@@ -251,6 +279,7 @@ int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h,
         r.x0 = fmaxf(0, r.x0); r.y0 = fmaxf(0, r.y0); r.x1 = fminf(1, r.x1); r.y1 = fminf(1, r.y1);
         if (r.x1 > r.x0 && r.y1 > r.y0) out[m++] = r;
     }
+    m = merge_close(out, m, p->merge_gap);
     memcpy(c->out_prev, c->out_last, sizeof c->out_prev);
     c->n_prev = c->n_last;
     c->n_last = m < MAX_OUT ? m : MAX_OUT;
