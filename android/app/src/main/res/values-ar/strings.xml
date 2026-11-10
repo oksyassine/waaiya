@@ -32,6 +32,7 @@
     <string name="step2_title">شغّل Shizuku</string>
     <string name="step2_body">في Shizuku اختر «البدء عبر تصحيح الأخطاء اللاسلكي» واتبع خطواته، ثم ارجع إلى هنا.</string>
     <string name="step2_action">فتح Shizuku</string>
+    <string name="step2_update">تحديث Shizuku</string>
     <string name="step2_too_old">نسخة Shizuku قديمة. حدّثها من متجر Play.</string>
     <string name="step2_denied">تم ضبط Shizuku على رفض Islamic Mute دائمًا. اسمح له من قائمة التطبيقات في Shizuku.</string>
     <string name="step3_title">امنح الإذن</string>
