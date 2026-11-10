@@ -105,7 +105,9 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `getLicences` | none | `{notice, docs: [{label, file}]}` | Assets copied at build time (`copyLicences`) | Files next to the app, else a link to the repository |
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
 
-Clipboard (the adb commands) uses Flutter's own `Clipboard`; it needs no backend method.
+Reading: there is no per-key getter. Every setting and the language are in the snapshot (`getState`, and every
+event), which is the getter; `setSetting` and `setLanguage` are the setters. Clipboard (the adb commands) uses
+Flutter's own `Clipboard`; it needs no backend method.
 
 ## Where the desktop backend differs
 

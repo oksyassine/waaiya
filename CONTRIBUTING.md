@@ -14,6 +14,7 @@ Thank you for helping. Bug reports, translations, tests on real devices and code
 ```bash
 scripts/fetch_deps.sh                 # ONNX Runtime 1.19.2 and the default model, with checksums
 make                                  # Linux engine, CLI, LADSPA plugin, im-pulse
+(cd ui_module && flutter pub get)     # once: the Android main screen is Flutter (ui/, Flutter 3.41+)
 cd android && ./gradlew assembleDebug # Android (JDK 17, Android SDK + NDK 27.1, Python 3.11 on PATH)
 ```
 
