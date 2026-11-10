@@ -21,6 +21,8 @@ import android.widget.TextView
  * with ONNX Runtime's 340 KB ThirdPartyNotices.txt better than a TextView.
  */
 class LicencesActivity : Activity() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     private var doc: WebView? = null
 
     private lateinit var titleView: TextView

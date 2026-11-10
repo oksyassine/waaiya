@@ -26,6 +26,8 @@ import rikka.shizuku.Shizuku
  * setup as a numbered checklist (Shizuku, or a computer), and settings. Framework views and resources only.
  */
 class MainActivity : Activity() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     private lateinit var settings: Settings
     private lateinit var power: ImageButton
     private lateinit var stateTitle: TextView
@@ -44,6 +46,8 @@ class MainActivity : Activity() {
     private lateinit var blurStatus: TextView
     private lateinit var blurSetup: Button
     private lateinit var blurSetupManual: Button
+    private lateinit var blurFail: Switch
+    private lateinit var blurFailNote: TextView
     private var blurBusy = false
     private var blurMessage: String? = null
     /** Shizuku's permission dialog was opened from the blur card: grant the blur (not the setup) when it returns. */
@@ -93,6 +97,12 @@ class MainActivity : Activity() {
         findViewById<Button>(R.id.choose_man).setOnClickListener { setGender("man") }
         findViewById<Button>(R.id.choose_woman).setOnClickListener { setGender("woman") }
         findViewById<Button>(R.id.change_gender).setOnClickListener { askGender() }
+        findViewById<Button>(R.id.change_language).setOnClickListener { askLanguage() }
+        findViewById<Button>(R.id.onboard_language).apply {
+            val other = if (Lang.current(this@MainActivity) == Lang.AR) Lang.EN else Lang.AR
+            text = getString(if (other == Lang.AR) R.string.language_ar else R.string.language_en)
+            setOnClickListener { Lang.set(this@MainActivity, other) }
+        }
 
         power.setOnClickListener { if (FilterService.running) stopFilter() else startFilter() }
 
@@ -132,11 +142,11 @@ class MainActivity : Activity() {
             isChecked = settings.blurNudity
             setOnCheckedChangeListener { _, v -> settings.blurNudity = v; blurChanged() }
         }
-        findViewById<Switch>(R.id.switch_blur_fail).apply {
-            isChecked = settings.blurFailCover
-            // read by the running blur on every frame: applies at once
-            setOnCheckedChangeListener { _, v -> settings.blurFailCover = v }
-        }
+        blurFail = findViewById(R.id.switch_blur_fail)
+        blurFailNote = findViewById(R.id.blur_fail_note)
+        // read by the running blur on every frame: applies at once. Greyed out in refreshBlur() when touches cannot
+        // pass through the covers (a full-screen cover would then lock the phone).
+        blurFail.setOnCheckedChangeListener { v, checked -> if (v.isEnabled) settings.blurFailCover = checked }
         blurSetup.setOnClickListener { onBlurSetup() }
         blurSetupManual.setOnClickListener {
             runCatching { startActivity(Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -244,6 +254,8 @@ class MainActivity : Activity() {
             R.color.error else R.color.text_secondary))
         if (!on) restartNote.visibility = View.GONE
         refreshBlur(on)
+        findViewById<TextView>(R.id.language_value).text = getString(R.string.setting_language_title, getString(
+            if (Lang.current(this) == Lang.AR) R.string.language_ar else R.string.language_en))
         genderValue.text = getString(R.string.setting_gender_title) + ": " +
             getString(if (man) R.string.gender_man else R.string.gender_woman)
     }
@@ -257,6 +269,11 @@ class MainActivity : Activity() {
         blurSetup.visibility = if (needsSetup) View.VISIBLE else View.GONE
         blurSetup.isEnabled = !blurBusy
         blurSetupManual.visibility = if (needsSetup && !overlay) View.VISIBLE else View.GONE
+        val passThrough = blurTouchPassThrough()
+        blurFail.isEnabled = passThrough  // before isChecked: the listener ignores changes while disabled
+        blurFail.isChecked = passThrough && settings.blurFailCover
+        blurFailNote.visibility = if (passThrough) View.GONE else View.VISIBLE
+        blurFailNote.setText(if (BuildConfig.BLUR_A11Y) R.string.blur_fail_needs_a11y else R.string.blur_fail_unavailable)
         val bs = ScreenBlur.state
         val setupText = if (BuildConfig.BLUR_A11Y) R.string.blur_status_needs_setup else R.string.blur_status_needs_overlay
         val msg: Pair<String, Boolean>? = when {
@@ -392,6 +409,19 @@ class MainActivity : Activity() {
         settings.gender = g
         refresh()
         findViewById<View>(R.id.scroll).scrollTo(0, 0)
+    }
+
+    private fun askLanguage() {
+        val tags = arrayOf(Lang.AR, Lang.EN)
+        val names = arrayOf(getString(R.string.language_ar), getString(R.string.language_en))
+        AlertDialog.Builder(this)
+            .setTitle(R.string.language_title)
+            .setSingleChoiceItems(names, tags.indexOf(Lang.current(this))) { d, which ->
+                d.dismiss()
+                if (tags[which] != Lang.current(this)) Lang.set(this, tags[which])
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun askGender() {

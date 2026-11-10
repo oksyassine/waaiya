@@ -206,7 +206,9 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val now = SystemClock.uptimeMillis()
         val busy = busySince
         val failing = modelsBad || failStreak >= 3 || (busy != 0L && now - busy > STALL_MS)
-        return if (!failing) 0 else if (settings.blurFailCover) 1 else 2
+        // a full-screen cover only where touches pass through it (accessibility overlay): otherwise the phone is stuck
+        val canCover = settings.blurFailCover && overlay.host == BlurOverlay.Host.ACCESSIBILITY
+        return if (!failing) 0 else if (canCover) 1 else 2
     }
 
     private val watchdog = object : Runnable {

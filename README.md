@@ -20,6 +20,9 @@ the Android package `org.islamicmute.app` and the Linux service, keep the old na
 | **iOS / iPadOS** | Limited by Apple | No app may change other apps' sound. Planned: in-app player for links, Safari extension. |
 | **Browsers** | Planned | Extension filtering the tab's media (desktop Chrome, Firefox, Edge, Safari). |
 
+The Android app is Arabic first, with English in its settings (Android 13+ also lists both in the system's
+per-app language settings).
+
 Download the Android app from the [releases](https://github.com/oksyassine/waaiya/releases). How each platform
 is handled, and what is shared between them: [docs/PLATFORMS.md](docs/PLATFORMS.md).
 Research behind the design: `reports/System wide instrument muting app.md`.
