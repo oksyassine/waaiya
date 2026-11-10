@@ -30,8 +30,12 @@ ort() {
 models() {
     local base="https://github.com/$REPO/releases/download/$MODELS_TAG" tmp
     tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' RETURN
-    fetch "$base/SHA256SUMS" "$tmp/SHA256SUMS"
-    for f in dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin; do fetch "$base/$f" "$tmp/$f"; done
+    local files=(SHA256SUMS dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin) f
+    if ! (for f in "${files[@]}"; do fetch "$base/$f" "$tmp/$f" || exit 1; done) 2>/dev/null; then
+        # Private fork or CI before the repository is public: the GitHub CLI (with GH_TOKEN) can still read it.
+        command -v gh >/dev/null || { echo "cannot download $base (install gh and log in for a private repo)" >&2; return 1; }
+        rm -f "$tmp"/*; for f in "${files[@]}"; do gh release download "$MODELS_TAG" --repo "$REPO" -p "$f" -D "$tmp"; done
+    fi
     (cd "$tmp" && sha256sum -c --quiet --ignore-missing SHA256SUMS)
     mkdir -p models/dfn3 && mv "$tmp"/dfn3_stream_int8.* models/dfn3/
     echo "models ($MODELS_TAG) -> models/dfn3/"

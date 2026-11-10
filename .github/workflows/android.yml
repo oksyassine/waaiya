@@ -33,6 +33,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Default model and ONNX Runtime licence texts
         run: scripts/fetch_deps.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Build debug APK (arm64-v8a, armeabi-v7a)
         working-directory: android
         run: ./gradlew --no-daemon assembleDebug lintDebug -PimBuildPython="$(which python3.11)"
