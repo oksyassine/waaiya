@@ -34,7 +34,7 @@ class Params(C.Structure):
 
 class CoverParams(C.Structure):
     _fields_ = [("margin", C.c_float), ("margin_min", C.c_float), ("lead_ms", C.c_float), ("hold_ms", C.c_float),
-                ("full_hold_ms", C.c_float), ("cut_level", C.c_float)]
+                ("full_hold_ms", C.c_float), ("cut_level", C.c_float), ("merge_gap", C.c_float)]
 
 
 def _lib(path=None):
