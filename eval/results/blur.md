@@ -27,3 +27,23 @@ larger backbone on a GPU.
 
 What these numbers do not measure: video (motion, the overlay delay), phone speed, and nudity (no explicit test
 images are collected; on 1000 ordinary photos the nudity model flags 1.9%, mostly bikinis and lingerie).
+
+## Group covers (`merge_gap`, engine/src/im_cover.c)
+
+Women in group boxes were the weakest case (71.5%). Of the women missed there, 36 of 37 were partly covered:
+each person got their own cover and the gaps between them, where a hidden or missed person often is, stayed
+open. Covers closer than `merge_gap` × (the smaller one's height) are now drawn as one. Measured with every
+person covered (no gender model), so only the detector and the tracker play; the second slice was not used to
+choose the value.
+
+| merge_gap | images | women covered | small | group boxes | screen covered |
+|---|---|---|---|---|---|
+| 0 (before) | 0-2000 | 93.6% | 88.4% | 71.5% | 70.8% |
+| 0.05 | 0-2000 | 95.4% | 93.8% | 86.2% | 74.3% |
+| **0.30 (default)** | 0-2000 | **95.7%** | 93.8% | **90.0%** | 75.6% |
+| 1.00 | 0-2000 | 95.9% | 93.8% | 91.5% | 76.6% |
+| 0 (before) | 2000-4000 (held out) | 91.4% | 62.2% | 75.2% | 70.3% |
+| **0.30 (default)** | 2000-4000 (held out) | **94.7%** | 78.8% | **90.3%** | 75.2% |
+
+Cost: about 5 points more of the screen covered. With the gender model, a man standing between covered people is
+now covered as well; that number has not been measured again (needs `gender.onnx`).
