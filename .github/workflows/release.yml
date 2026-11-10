@@ -18,6 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: scripts/fetch_deps.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
       - run: make -j"$(nproc)" all
       - name: Package
         run: |
@@ -45,6 +47,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with: { cache-read-only: true }
       - run: scripts/fetch_deps.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Signing config (only when the secrets exist)
         env:
           KS: ${{ secrets.ANDROID_KEYSTORE_B64 }}
