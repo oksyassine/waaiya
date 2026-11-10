@@ -108,4 +108,30 @@
     <string name="link_failed">تعذّر فتح هذا الرابط. تحقّق من الاتصال وحاول مرة أخرى.</string>
     <string name="link_play_failed">تعذّر تشغيل هذا المقطع، ولم يُشغَّل أي صوت دون تصفية.</string>
     <string name="link_limited">الموقع يحدّ من الطلبات الآن. حاول مرة أخرى بعد بضع دقائق.</string>
+
+    <!-- Screen blur -->
+    <string name="blur_title">تمويه الشاشة</string>
+    <string name="blur_body">يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.</string>
+    <string name="blur_women_title">تمويه النساء</string>
+    <string name="blur_women_body">الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.</string>
+    <string name="blur_nudity_title">تمويه الصور غير المحتشمة</string>
+    <string name="blur_nudity_body">العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.</string>
+    <string name="blur_fail_title">تغطية الشاشة إذا عجز التمويه عن المتابعة</string>
+    <string name="blur_fail_body">مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.</string>
+    <string name="blur_setup_shizuku">السماح عبر Shizuku</string>
+    <string name="blur_setup_manual">السماح من إعدادات أندرويد</string>
+    <string name="blur_status_needs_setup">يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).</string>
+    <string name="blur_status_restart">أوقف التصفية ثم شغّلها لتطبيق إعدادات التمويه.</string>
+    <string name="blur_status_starting">جارٍ تشغيل التمويه…</string>
+    <string name="blur_status_on">التمويه يعمل.</string>
+    <string name="blur_status_on_visible">التمويه يعمل بوضع الحذر: هذا الهاتف يُظهر التمويه في التقاط الشاشة نفسه، فتبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.</string>
+    <string name="blur_status_models">هذه النسخة تفتقد نموذج التمويه للخيار المختار.</string>
+    <string name="blur_status_failing">التمويه عاجز عن المتابعة الآن.</string>
+    <string name="blur_status_no_overlay">لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.</string>
+    <string name="blur_setup_failed">تعذّر السماح عبر Shizuku:\n%1$s</string>
+    <string name="blur_cover_slow">واعية: التمويه متوقف (عاجز عن المتابعة)</string>
+    <string name="blur_cover_full">غطّته واعية</string>
+    <string name="blur_not_working">التمويه لا يعمل</string>
+    <string name="blur_a11y_label">تمويه واعية</string>
+    <string name="blur_a11y_description">يعرض تمويه الشاشة من واعية فوق التطبيقات الأخرى. لا يقرأ الشاشة ولا ما تفعله ولا محتوى أي تطبيق؛ وظيفته فقط أن تمرّ اللمسات عبر المناطق المموّهة.</string>
 </resources>

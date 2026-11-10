@@ -9,7 +9,7 @@ CFLAGS  += $(SYSFLAG) -Iengine/include -I$(ORT)/include -fvisibility=hidden -fPI
 LDLIBS   = -L$(ORT)/lib -lonnxruntime -lm
 BUILD    = build
 
-all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse
+all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so
 
 # im-pulse loads libpulse.so.0 at run time (cli/pulse_dl.h), so it builds without libpulse-dev.
 pulse: $(BUILD)/im-pulse
@@ -25,6 +25,12 @@ $(BUILD)/im_engine.o: engine/src/im_engine.c engine/include/im_engine.h engine/s
 
 $(BUILD)/im_detector.o: engine/src/im_detector.c engine/src/im_detector.h | $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+VISION_SRC = engine/src/im_vision.c engine/src/im_cover.c
+
+# Screen blur (models/vision): shared library, used by the Python scorer (models/vision/eval_blur.py) via ctypes.
+$(BUILD)/libimvision.so: $(VISION_SRC) engine/include/im_vision.h | $(BUILD)
+	$(CC) $(CFLAGS) -shared $(VISION_SRC) -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN' -Wl,--no-undefined
 
 $(BUILD)/test-detector: engine/test/test_detector.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -Iengine/src -Icli $^ cli/wav.c -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'

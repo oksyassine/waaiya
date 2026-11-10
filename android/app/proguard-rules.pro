@@ -20,3 +20,8 @@
 
 # Reflection: SessionMuter reaches android.os.ServiceManager (a framework class, nothing to keep in the APK).
 # ONNX Runtime's Java API (ai.onnxruntime.*) is unused and may be removed; only libonnxruntime.so is loaded.
+
+# Screen blur JNI: src/main/cpp/vision_jni.c exports Java_org_islamicmute_app_Vision_native*.
+-keepclasseswithmembernames,includedescriptorclasses class org.islamicmute.app.Vision {
+    native <methods>;
+}

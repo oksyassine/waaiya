@@ -33,8 +33,8 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
@@ -97,6 +97,8 @@ dependencies {
     val shizukuVersion = "13.1.5"
     implementation("dev.rikka.shizuku:api:$shizukuVersion")
     implementation("dev.rikka.shizuku:provider:$shizukuVersion")
+    // Screen blur: sets the hidden "skip screenshot" flag on our overlay so the screen capture shows what is under it.
+    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
 }
 
 // The engine links ONNX Runtime's C API: unpack headers and .so files from the AAR for CMake.
@@ -119,6 +121,13 @@ val copyModel by tasks.registering(Copy::class) {
     // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
     val detector = providers.gradleProperty("imDetector").orElse(rootProject.file("../models/detector/detector_v1.onnx").path)
     from(detector) { rename { "detector.onnx" } }
+    // Screen blur (models/vision/export_vision.py): person detector, woman/man classifier, nudity classifier.
+    // -PimBlurPerson / -PimBlurGender / -PimBlurNsfw override; a missing file just leaves that part out
+    // (no gender model = every person covered; no nudity model = the nudity option reports "not available").
+    val vision = rootProject.file("../models/vision")
+    from(providers.gradleProperty("imBlurPerson").orElse(vision.resolve("person_yolox_nano.onnx").path)) { rename { "blur_person.onnx" } }
+    from(providers.gradleProperty("imBlurGender").orElse(vision.resolve("gender.onnx").path)) { rename { "blur_gender.onnx" } }
+    from(providers.gradleProperty("imBlurNsfw").orElse(vision.resolve("nsfw_marqo_int8.onnx").path)) { rename { "blur_nsfw.onnx" } }
     into(modelAssets)
 }
 android.sourceSets["main"].assets.srcDir(modelAssets)

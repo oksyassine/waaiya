@@ -50,6 +50,7 @@ class FilterService : Service() {
     private var projection: MediaProjection? = null
     private var worker: Thread? = null
     private var muter: SessionMuter? = null
+    private var blur: ScreenBlur? = null
     @Volatile private var stop = false
     @Volatile private var stoppedBySystem = false
 
@@ -77,7 +78,11 @@ class FilterService : Service() {
         stop = false
         stoppedBySystem = false
         publish(State.STARTING)
-        muter = SessionMuter(this, Settings(this)).also { it.start() }
+        val settings = Settings(this)
+        muter = SessionMuter(this, settings).also { it.start() }
+        // Screen blur shares this projection; its virtual display must be created now (Android 14+ time limit).
+        if (settings.blurOn) blur = runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
+            .onFailure { Log.e(TAG, "screen blur did not start", it) }.getOrNull()
         worker = Thread({ loop(mp) }, "im-filter").apply { start() }
         return START_NOT_STICKY
     }
@@ -141,6 +146,7 @@ class FilterService : Service() {
     override fun onDestroy() {
         stop = true
         worker?.join(500)
+        blur?.stop(); blur = null
         muter?.stop()           // un-mutes the original sessions: an explicit stop restores normal audio
         projection?.stop()
         if (state != State.NO_CAPTURE_PERMISSION) publish(if (stoppedBySystem) State.STOPPED_BY_SYSTEM else State.STOPPED)

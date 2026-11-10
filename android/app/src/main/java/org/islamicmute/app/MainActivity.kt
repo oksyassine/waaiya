@@ -41,6 +41,13 @@ class MainActivity : Activity() {
     private lateinit var restartNote: TextView
     private lateinit var genderValue: TextView
     private lateinit var steps: List<View>
+    private lateinit var blurStatus: TextView
+    private lateinit var blurSetup: Button
+    private lateinit var blurSetupManual: Button
+    private var blurBusy = false
+    private var blurMessage: String? = null
+    /** Shizuku's permission dialog was opened from the blur card: grant the blur (not the setup) when it returns. */
+    private var blurAfterPermission = false
     private var shizukuBusy = false
     private var shizukuMessage: String? = null
     /** Start was tapped but the microphone/notification permission request is still open. */
@@ -56,8 +63,9 @@ class MainActivity : Activity() {
     private val shizukuPermission = Shizuku.OnRequestPermissionResultListener { code, result ->
         if (code != ShizukuSetup.REQUEST_CODE) return@OnRequestPermissionResultListener
         runOnUiThread {
-            if (result == PackageManager.PERMISSION_GRANTED) grantWithShizuku()
+            if (result == PackageManager.PERMISSION_GRANTED) { if (blurAfterPermission) grantBlur() else grantWithShizuku() }
             else { shizukuMessage = getString(R.string.shizuku_refused); refresh() }
+            blurAfterPermission = false
         }
     }
 
@@ -113,12 +121,34 @@ class MainActivity : Activity() {
                 val r = android.graphics.Rect(); computerBox.getDrawingRect(r); computerBox.requestRectangleOnScreen(r)
             }
         }
+        blurStatus = findViewById(R.id.blur_status)
+        blurSetup = findViewById(R.id.blur_setup)
+        blurSetupManual = findViewById(R.id.blur_setup_manual)
+        findViewById<Switch>(R.id.switch_blur_women).apply {
+            isChecked = settings.blurWomen
+            setOnCheckedChangeListener { _, v -> settings.blurWomen = v; blurChanged() }
+        }
+        findViewById<Switch>(R.id.switch_blur_nudity).apply {
+            isChecked = settings.blurNudity
+            setOnCheckedChangeListener { _, v -> settings.blurNudity = v; blurChanged() }
+        }
+        findViewById<Switch>(R.id.switch_blur_fail).apply {
+            isChecked = settings.blurFailCover
+            // read by the running blur on every frame: applies at once
+            setOnCheckedChangeListener { _, v -> settings.blurFailCover = v }
+        }
+        blurSetup.setOnClickListener { onBlurSetup() }
+        blurSetupManual.setOnClickListener {
+            runCatching { startActivity(Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName"))) }
+        }
         findViewById<Button>(R.id.open_link).setOnClickListener { startActivity(Intent(this, LinkActivity::class.java)) }
         findViewById<Button>(R.id.licences).setOnClickListener {
             startActivity(Intent(this, LicencesActivity::class.java))
         }
 
         FilterService.addListener(serviceChanged)
+        ScreenBlur.addListener(serviceChanged)
         Shizuku.addBinderReceivedListenerSticky(shizukuChanged)
         Shizuku.addBinderDeadListener(shizukuDead)
         Shizuku.addRequestPermissionResultListener(shizukuPermission)
@@ -129,6 +159,7 @@ class MainActivity : Activity() {
 
     override fun onDestroy() {
         FilterService.removeListener(serviceChanged)
+        ScreenBlur.removeListener(serviceChanged)
         Shizuku.removeBinderReceivedListener(shizukuChanged)
         Shizuku.removeBinderDeadListener(shizukuDead)
         Shizuku.removeRequestPermissionResultListener(shizukuPermission)
@@ -212,8 +243,71 @@ class MainActivity : Activity() {
         singingBody.setTextColor(getColor(if (settings.muteWomenSinging && !ModelStore.hasDetector(this))
             R.color.error else R.color.text_secondary))
         if (!on) restartNote.visibility = View.GONE
+        refreshBlur(on)
         genderValue.text = getString(R.string.setting_gender_title) + ": " +
             getString(if (man) R.string.gender_man else R.string.gender_woman)
+    }
+
+    /** Screen-blur card: what it needs, and its state while filtering runs. */
+    private fun refreshBlur(on: Boolean) {
+        val a11y = blurAccessibilityEnabled()
+        val overlay = android.provider.Settings.canDrawOverlays(this)
+        val needsSetup = settings.blurOn && !a11y
+        blurSetup.visibility = if (needsSetup) View.VISIBLE else View.GONE
+        blurSetup.isEnabled = !blurBusy
+        blurSetupManual.visibility = if (needsSetup && !overlay) View.VISIBLE else View.GONE
+        val bs = ScreenBlur.state
+        val msg: Pair<String, Boolean>? = when {
+            blurMessage != null -> blurMessage!! to true
+            !settings.blurOn -> null
+            needsSetup && !overlay -> getString(R.string.blur_status_needs_setup) to true
+            !on -> if (needsSetup) getString(R.string.blur_status_needs_setup) to false else null
+            bs == null -> getString(R.string.blur_status_restart) to false
+            bs == ScreenBlur.State.STARTING -> getString(R.string.blur_status_starting) to false
+            bs == ScreenBlur.State.ON -> getString(R.string.blur_status_on) to false
+            bs == ScreenBlur.State.ON_COVERS_VISIBLE -> getString(R.string.blur_status_on_visible) to false
+            bs == ScreenBlur.State.MODELS_MISSING -> getString(R.string.blur_status_models) to true
+            bs == ScreenBlur.State.FAILING -> getString(R.string.blur_status_failing) to true
+            else -> getString(R.string.blur_status_no_overlay) to true
+        }
+        blurStatus.visibility = if (msg == null) View.GONE else View.VISIBLE
+        msg?.let { (text, bad) ->
+            blurStatus.text = text
+            blurStatus.setTextColor(getColor(if (bad) R.color.error else R.color.text_secondary))
+        }
+    }
+
+    private fun blurChanged() {
+        blurMessage = null
+        refresh()
+        if (FilterService.running) restartNote.visibility = View.VISIBLE
+    }
+
+    private fun onBlurSetup() {
+        blurMessage = null
+        when (ShizukuSetup.state(this)) {
+            ShizukuSetup.State.READY -> grantBlur()
+            ShizukuSetup.State.NEEDS_PERMISSION -> {
+                blurAfterPermission = true
+                runCatching { ShizukuSetup.requestPermission() }.onFailure { blurAfterPermission = false }
+            }
+            ShizukuSetup.State.NOT_INSTALLED, ShizukuSetup.State.TOO_OLD -> openStore()
+            else -> packageManager.getLaunchIntentForPackage(ShizukuSetup.SHIZUKU_PACKAGE)?.let { startActivity(it) }
+        }
+    }
+
+    private fun grantBlur() {
+        blurAfterPermission = false
+        if (blurBusy) return
+        blurBusy = true
+        refresh()
+        ShizukuSetup.grantBlur(this) { log ->
+            if (isDestroyed) return@grantBlur
+            blurBusy = false
+            blurMessage = if (blurAccessibilityEnabled() || android.provider.Settings.canDrawOverlays(this)) null
+                          else getString(R.string.blur_setup_failed, log)
+            refresh()
+        }
     }
 
     /** The three Shizuku steps: done ones get a check, the current one gets its action button. */
