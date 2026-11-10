@@ -136,6 +136,8 @@
                 <TextView android:id="@+id/blur_fail_note" style="@style/Text.Secondary" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_marginTop="4dp" android:paddingEnd="56dp"
                     android:textColor="@color/primary" android:visibility="gone" />
+                <Button android:id="@+id/blur_fail_fix" style="@style/Button.Text" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:visibility="gone" />
                 <TextView android:id="@+id/blur_status" style="@style/Text.Secondary" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_marginTop="12dp" android:visibility="gone"
                     android:accessibilityLiveRegion="polite" />

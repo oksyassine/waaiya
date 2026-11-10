@@ -56,10 +56,14 @@ object Lang {
             ctx.getSystemService(LocaleManager::class.java).applicationLocales = LocaleList.forLanguageTags(tag)
     }
 
-    /** Android 10-12: a context with the chosen language (attachBaseContext of activities and services). */
+    /**
+     * A context with the chosen language (attachBaseContext of activities and services). Needed on Android 10-12,
+     * and on 13+ for the very first launch: the per-app language set in [init] only reaches screens opened after
+     * it, so the first screen would otherwise show the phone's language.
+     */
     fun wrap(base: Context): Context {
-        if (Build.VERSION.SDK_INT >= 33) return base
-        val locale = Locale(prefs(base).getString(PREF, AR) ?: AR)
+        val locale = Locale(current(base))
+        if (base.resources.configuration.locales[0].language == locale.language) return base
         val cfg = Configuration(base.resources.configuration)
         cfg.setLocales(LocaleList(locale))
         cfg.setLayoutDirection(locale)

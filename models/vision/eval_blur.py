@@ -10,7 +10,7 @@ through im_vision_detect + one im_cover_update (margins). Ground truth: the anno
 
     make build/libimvision.so
     python models/vision/eval_blur.py --person models/vision/person_yolox_nano.onnx \
-        [--gender models/vision/gender.onnx] [--limit 2000] [--male-clear 0.85] [--out eval/results/blur.md]
+        [--gender models/vision/gender.onnx] [--limit 2000] [--start 0] [--male-clear 0.85] [--merge-gap 0.3] [--out eval/results/blur.md]
 """
 import argparse
 import csv
@@ -51,6 +51,8 @@ def main():
     ap.add_argument("--male-clear", type=float)
     ap.add_argument("--person-score", type=float)
     ap.add_argument("--margin", type=float, help="cover margin, fraction of the person size")
+    ap.add_argument("--merge-gap", type=float, help="covers closer than this fraction of a person's height are joined")
+    ap.add_argument("--start", type=int, default=0, help="skip this many images (a held-out slice)")
     ap.add_argument("--threads", type=int, default=2)
     ap.add_argument("--out")
     a = ap.parse_args()
@@ -62,7 +64,7 @@ def main():
                 gt[r["ImageID"]].append(("f" if r["LabelName"] in FEMALE else "m", r["IsGroupOf"] == "1",
                                          (float(r["XMin"]), float(r["YMin"]), float(r["XMax"]), float(r["YMax"]))))
     full = os.path.join(a.data, "crops/validation/full")
-    ids = sorted(i for i in gt if os.path.exists(os.path.join(full, i + ".jpg")))[: a.limit]
+    ids = sorted(i for i in gt if os.path.exists(os.path.join(full, i + ".jpg")))[a.start: a.start + a.limit]
 
     v = Vision(person=a.person, gender=a.gender, policy=WOMEN, threads=a.threads)
     if v.status:
@@ -74,7 +76,8 @@ def main():
         kw["person_score"] = a.person_score
     prm = v.params(**kw)
 
-    cover = Cover(covers_visible=False, **({"margin": a.margin} if a.margin is not None else {}))
+    ckw = {k: v for k, v in (("margin", a.margin), ("merge_gap", a.merge_gap)) if v is not None}
+    cover = Cover(covers_visible=False, **ckw)
     stats = defaultdict(lambda: [0, 0])  # key -> [hits, total]
     screen, times = [], []
     for k, i in enumerate(ids):
@@ -104,11 +107,13 @@ def main():
             w = stats[("women covered", "all")]
             print(f"{k + 1}/{len(ids)} women covered {w[0] / max(1, w[1]):.3f}", flush=True)
 
-    lines = [f"# Screen blur, end to end ({len(ids)} Open Images validation images, long side {a.long_side})", "",
+    lines = [f"# Screen blur, end to end ({len(ids)} Open Images validation images"
+             f"{f' from #{a.start}' if a.start else ''}, long side {a.long_side})", "",
              f"- person model: `{os.path.basename(a.person)}`; gender model: "
              f"`{os.path.basename(a.gender) if a.gender else 'none (every person covered)'}`",
              f"- params: person_score {prm['person_score']:.2f}, male_clear {prm['male_clear']:.2f}, "
-             f"nms {prm['nms_iou']:.2f}, margin {cover.params()['margin']:.2f}", "",
+             f"nms {prm['nms_iou']:.2f}, margin {cover.params()['margin']:.2f}, "
+             f"merge_gap {cover.params()['merge_gap']:.2f}", "",
              "| measure | all | large (h>=30%) | medium (10-30%) | small (<10%) | group boxes |", "|---|---|---|---|---|---|"]
     for what in ("women covered", "men left clear"):
         cells = []

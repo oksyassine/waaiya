@@ -87,6 +87,8 @@ typedef struct {
     float hold_ms;       /* keep a cover this long after the person was last seen (default 500) */
     float full_hold_ms;  /* same for a whole-frame (nudity) cover (default 1500) */
     float cut_level;     /* mean thumbnail change (0..1) that counts as a scene change (default 0.12) */
+    float merge_gap;     /* covers closer than this fraction of the smaller one's height are drawn as one, so the
+                          * gaps in a group (where a missed person often is) are covered too (default 0.30: eval/results/blur.md; 0 = off) */
 } im_cover_params;
 
 /* covers_visible = 1 when our own covers appear in the captured frames (the overlay could not be excluded from
