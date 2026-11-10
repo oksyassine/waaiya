@@ -207,7 +207,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val busy = busySince
         val failing = modelsBad || failStreak >= 3 || (busy != 0L && now - busy > STALL_MS)
         // a full-screen cover only where touches pass through it (accessibility overlay): otherwise the phone is stuck
-        val canCover = settings.blurFailCover && overlay.host == BlurOverlay.Host.ACCESSIBILITY
+        val canCover = settings.blurFailCover &&
+            (overlay.host == BlurOverlay.Host.ACCESSIBILITY || overlay.host == BlurOverlay.Host.SHIZUKU)
         return if (!failing) 0 else if (canCover) 1 else 2
     }
 
@@ -221,6 +222,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             }
             val fm = failMode()
             overlay.setFailMode(fm)
+            overlay.heartbeat()
             publish(when {
                 overlay.host == null -> State.NO_OVERLAY
                 modelsBad -> State.MODELS_MISSING

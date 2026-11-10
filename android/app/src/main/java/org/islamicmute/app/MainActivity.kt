@@ -265,7 +265,9 @@ class MainActivity : Activity() {
         val a11y = blurAccessibilityEnabled()
         val overlay = android.provider.Settings.canDrawOverlays(this)
         // builds without the accessibility service (the default: Play Protect blocks it) need the overlay permission
-        val needsSetup = settings.blurOn && (if (BuildConfig.BLUR_A11Y) !a11y else !overlay)
+        // Shizuku running (Android 12+): the covers are a shell layer, nothing else to allow
+        val shizukuLayer = Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(this) == ShizukuSetup.State.READY
+        val needsSetup = settings.blurOn && !shizukuLayer && (if (BuildConfig.BLUR_A11Y) !a11y else !overlay)
         blurSetup.visibility = if (needsSetup) View.VISIBLE else View.GONE
         blurSetup.isEnabled = !blurBusy
         blurSetupManual.visibility = if (needsSetup && !overlay) View.VISIBLE else View.GONE
