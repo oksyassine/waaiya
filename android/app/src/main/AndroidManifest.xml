@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
@@ -47,6 +48,15 @@
                 <data android:scheme="content" android:mimeType="audio/*" />
                 <data android:scheme="file" android:mimeType="video/*" />
                 <data android:scheme="file" android:mimeType="audio/*" />
+            </intent-filter>
+        </activity>
+
+        <!-- Paste or share a link (YouTube, TikTok, ...): watch, save or share it without music. -->
+        <activity android:name=".LinkActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
 

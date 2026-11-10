@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.chaquo.python")
 }
 
 val ortVersion = "1.19.2"
@@ -31,6 +32,9 @@ android {
         versionCode = 1
         versionName = "0.1.0"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
+        // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
+        // not per build type, so emulator builds add x86_64 with -PimX86.
+        ndk { abiFilters += releaseAbis + (if (providers.gradleProperty("imX86").isPresent) listOf("x86_64") else emptyList()) }
     }
     if (!signingProps.isEmpty) signingConfigs.create("release") {
         storeFile = file(signingProps.getProperty("storeFile"))
@@ -39,12 +43,9 @@ android {
         keyPassword = signingProps.getProperty("keyPassword")
     }
     buildTypes {
-        debug {
-            ndk { abiFilters += listOf("arm64-v8a", "x86_64") }  // x86_64: emulators
-        }
+        debug {}
         release {
             // Phones only (32- and 64-bit ARM). Also limits the universal APK when -PimAbiSplit is set.
-            ndk { abiFilters += releaseAbis }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -115,6 +116,32 @@ val copyModel by tasks.registering(Copy::class) {
     into(modelAssets)
 }
 android.sourceSets["main"].assets.srcDir(modelAssets)
+
+// Link feature: yt-dlp (+ EJS scripts) under Python 3.11, and QuickJS shipped as an executable named lib*.so so it
+// is extracted to nativeLibraryDir, the only place an app may execute files from.
+chaquopy {
+    defaultConfig {
+        version = "3.11"
+        providers.gradleProperty("imBuildPython").orNull?.let { buildPython(it) }
+        pip {
+            install("yt-dlp==2026.10.26")
+            install("yt-dlp-ejs==0.8.0")
+        }
+    }
+}
+val qjsLibs = layout.buildDirectory.dir("qjsLibs")
+val buildQjs by tasks.registering(Exec::class) {
+    val abis = android.defaultConfig.ndk.abiFilters.toList().sorted()
+    inputs.file("../tools/build_qjs.sh")
+    inputs.property("abis", abis)
+    outputs.dir(qjsLibs)
+    executable = "bash"
+    args(listOf(file("../tools/build_qjs.sh").path, android.sdkDirectory.path, android.ndkDirectory.path,
+        layout.buildDirectory.dir("qjs").get().asFile.path, qjsLibs.get().asFile.path) + abis)
+}
+android.sourceSets["main"].jniLibs.srcDir(qjsLibs)
+tasks.named("preBuild") { dependsOn(buildQjs) }
+android.packaging.jniLibs.useLegacyPackaging = true
 android.androidResources.noCompress += listOf("onnx", "bin")
 tasks.named("preBuild") { dependsOn(copyModel) }
 
