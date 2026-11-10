@@ -82,3 +82,9 @@ google-services.json
 models/voice/v3/eval_rows.json
 models/voice/lowdelay/
 models/detector/v2/
+
+# Vision training/eval data and downloaded third-party weights (not redistributed in git)
+models/vision/data/
+models/vision/downloads/
+models/vision/gender/
+models/vision/*.log

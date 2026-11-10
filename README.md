@@ -13,7 +13,7 @@ the Android package `org.islamicmute.app` and the Linux service, keep the old na
 
 | Platform | Status | How it works |
 |---|---|---|
-| **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. |
+| **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. Optional screen blur (women, immodest images) over every app. |
 | **Linux** (PulseAudio, PipeWire-Pulse) | Works | Virtual output + always-on user service (`waaiya install`, `waaiya start`). |
 | **macOS** 14.4+ | Planned | Core Audio process tap; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
 | **Windows** 10/11 | Planned | Per-app loopback capture or a virtual device; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
@@ -31,6 +31,7 @@ Research behind the design: `reports/System wide instrument muting app.md`.
 | `engine/` | C11 streaming engine on the ONNX Runtime C API. Loads any model that follows the contract below. Same code for Linux, Android (NDK), macOS, Windows. |
 | `models/dfn3/` | Streaming export of DeepFilterNet3 (speech mode) + parity tests against the official implementation. |
 | `models/voice/` | Training of our own model that keeps speech, Quran recitation and singing (stage 3). |
+| `models/vision/` | Screen blur models: export of the person and nudity models, our woman/man classifier, scorer. |
 | `cli/` | `im-process` (file in/out, delay-compensated) and `im-stream` (raw stdin/stdout filter used by the Linux daemon). |
 | `linux/` | `waaiya` command (also installed as `islamic-mute`), systemd user service, LADSPA plugin (for PipeWire filter-chain), live tests. |
 | `testset/` | Builds the evaluation set: licensed voice clips + synthesised instrumental music (exact references). |
@@ -132,6 +133,32 @@ the detector is missing or fails while the option is on, the voice is muted.
 - Android: the toggle appears for men; build with `-PimDetector=/path/detector_v1.onnx`
   (default `models/detector/detector_v1.onnx` if present).
 - Parity test (C front end vs PyTorch): `make build/test-detector && python models/detector/test_detector_engine.py detector.onnx`.
+
+## Screen blur (optional, Android)
+
+While filtering runs, Waaiya can also cover, over every app, **women** (whole body; people the app cannot
+clearly tell are men are covered too) and **immodest images** (nudity, revealing clothing; the whole screen is
+covered). Both are off by default and chosen in the app. Everything runs on the phone.
+
+How it works: the screen is captured small (long side 640 px, same screen-capture permission as the audio
+filter), a person detector (YOLOX-Nano, Apache-2.0) finds people, our own classifier (`models/vision/train_gender.py`,
+trained on Open Images boxes) says woman or man for each, and a nudity classifier (Marqo ViT-tiny, Apache-2.0)
+checks the frame a few times a second. Covers are drawn in an overlay window: through an accessibility service
+that only hosts that window (touches pass through it), or as a "display over other apps" window (touches on a
+cover are lost). Shizuku can turn either on (**Allow with Shizuku** in the app).
+
+Limits, said plainly:
+- The cover is drawn after the frame was analysed (about 50–150 ms), so new content can show uncovered for that
+  long. Covers are widened and moved ahead of the measured motion to reduce it.
+- To see under its own covers, the app asks Android to leave the covers out of its screen capture (a hidden flag).
+  At start it checks whether that worked. If not, it runs in a cautious mode: a cover stays until the scene changes.
+- DRM-protected video (most paid streaming) captures as black: it cannot be analysed or covered.
+- When the blur cannot keep up or fails, the user's setting decides: cover the whole screen, or show a warning.
+- Measured numbers (and what they do not cover) are in `eval/results/blur.md`.
+
+C code: `engine/src/im_vision.c` (models), `engine/src/im_cover.c` (tracker), header `engine/include/im_vision.h`.
+Android: `ScreenBlur.kt`, `BlurOverlay.kt`, `Vision.kt`. Tests: `models/vision/test_vision_engine.py` (C vs the
+original YOLOX), `models/vision/test_cover.py` (tracker), `models/vision/eval_blur.py` (end to end).
 
 ## Contributing / building
 

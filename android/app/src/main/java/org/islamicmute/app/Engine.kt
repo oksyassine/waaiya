@@ -71,13 +71,17 @@ object ModelStore {
     private const val MODEL = "voice.onnx"
     private const val STATE = "voice.state_init.bin"
     private const val DETECTOR = "detector.onnx"
+    const val BLUR_PERSON = "blur_person.onnx"
+    const val BLUR_GENDER = "blur_gender.onnx"
+    const val BLUR_NSFW = "blur_nsfw.onnx"
+    private val BLUR_MODELS = listOf(BLUR_PERSON, BLUR_GENDER, BLUR_NSFW)
 
     fun modelPath(context: Context): String {
         val dir = File(context.filesDir, "models").apply { mkdirs() }
         val version = context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
         val stamp = File(dir, "version")
         if (stamp.takeIf { it.exists() }?.readText() != version.toString()) {
-            for (name in listOf(MODEL, STATE, DETECTOR)) {
+            for (name in listOf(MODEL, STATE, DETECTOR) + BLUR_MODELS) {
                 runCatching { context.assets.open(name).use { i -> File(dir, name).outputStream().use { i.copyTo(it) } } }
             }
             stamp.writeText(version.toString())
@@ -90,6 +94,14 @@ object ModelStore {
         modelPath(context)
         return File(File(context.filesDir, "models"), DETECTOR).takeIf { it.exists() }?.absolutePath
     }
+
+    /** A screen-blur model copied out of the APK, or null when this build does not bundle it. */
+    fun blurModel(context: Context, name: String): String? {
+        modelPath(context)
+        return File(File(context.filesDir, "models"), name).takeIf { it.exists() }?.absolutePath
+    }
+
+    fun hasAsset(context: Context, name: String): Boolean = runCatching { context.assets.open(name).close() }.isSuccess
 
     fun hasDetector(context: Context): Boolean = runCatching { context.assets.open(DETECTOR).close() }.isSuccess
 }

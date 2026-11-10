@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <!-- Granted once by the user over ADB/Shizuku; lets the app list other apps' audio sessions to mute the originals. -->
     <uses-permission android:name="android.permission.DUMP" tools:ignore="ProtectedPermissions" />
+    <!-- Screen blur without the accessibility service: covers drawn as an app overlay (touches on a cover are lost). -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- Android 11+ package visibility: detect "Shizuku installed but not running" and open it. -->
     <queries>
@@ -76,6 +78,18 @@
         <service android:name=".LinkExportService"
             android:exported="false"
             android:foregroundServiceType="dataSync|mediaProcessing" />
+
+        <!-- Screen blur: only hosts the covers window (touches pass through accessibility overlays). It reads no
+             screen content and handles no events: see res/xml/blur_accessibility.xml. -->
+        <service android:name=".BlurAccessibilityService"
+            android:exported="false"
+            android:label="@string/blur_a11y_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/blur_accessibility" />
+        </service>
 
         <service android:name=".FilterService"
             android:exported="false"
