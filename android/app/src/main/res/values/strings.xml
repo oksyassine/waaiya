@@ -108,4 +108,30 @@
     <string name="link_failed">Could not open this link. Check your connection and try again.</string>
     <string name="link_play_failed">Could not play this. Nothing unfiltered was played.</string>
     <string name="link_limited">The site is limiting requests right now. Try again in a few minutes.</string>
+
+    <!-- Screen blur -->
+    <string name="blur_title">Screen blur</string>
+    <string name="blur_body">Covers people and images on screen, in every app, while filtering is on. It runs on the phone; nothing is sent anywhere.</string>
+    <string name="blur_women_title">Blur women</string>
+    <string name="blur_women_body">Whole body. People the app cannot clearly tell are men are blurred too.</string>
+    <string name="blur_nudity_title">Blur immodest images</string>
+    <string name="blur_nudity_body">Nudity and revealing clothing, of anyone: the whole screen is covered.</string>
+    <string name="blur_fail_title">Cover the screen if the blur cannot keep up</string>
+    <string name="blur_fail_body">On: the whole screen is covered when the phone is too slow or the blur fails. Off: the screen stays visible with a warning.</string>
+    <string name="blur_setup_shizuku">Allow with Shizuku</string>
+    <string name="blur_setup_manual">Allow in Android settings</string>
+    <string name="blur_status_needs_setup">The blur needs to draw over other apps. Best: allow it with Shizuku (turns on the Waaiya Blur accessibility service, so touches still reach the app underneath). Or allow "Display over other apps" in Android settings (touches on a blurred area are then lost).</string>
+    <string name="blur_status_restart">Stop and start filtering to apply the blur settings.</string>
+    <string name="blur_status_starting">Blur starting…</string>
+    <string name="blur_status_on">Blur on.</string>
+    <string name="blur_status_on_visible">Blur on, in cautious mode: this phone shows the blur in its own screen capture, so a blurred area stays blurred until the scene changes.</string>
+    <string name="blur_status_models">This version lacks a blur model for the chosen option.</string>
+    <string name="blur_status_failing">The blur cannot keep up right now.</string>
+    <string name="blur_status_no_overlay">The blur cannot draw over other apps: allow it above.</string>
+    <string name="blur_setup_failed">Shizuku could not allow it:\n%1$s</string>
+    <string name="blur_cover_slow">Waaiya: blur paused (cannot keep up)</string>
+    <string name="blur_cover_full">Covered by Waaiya</string>
+    <string name="blur_not_working">Blur not working</string>
+    <string name="blur_a11y_label">Waaiya Blur</string>
+    <string name="blur_a11y_description">Draws Waaiya\'s screen blur over other apps. It does not read the screen, your actions or any app content; it only lets touches pass through the blurred areas.</string>
 </resources>

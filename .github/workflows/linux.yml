@@ -54,5 +54,9 @@ jobs:
           assert a == b, (a, b)
           print("ok:", b, "frames,", ch, "channels")
           PY
+      - name: Screen blur tracker tests (C, synthetic frames; no models needed)
+        run: |
+          python3 -m venv /tmp/venv && /tmp/venv/bin/pip install --quiet numpy
+          /tmp/venv/bin/python models/vision/test_cover.py
       - name: Shell scripts parse
         run: for f in linux/bin/islamic-mute linux/*.sh scripts/*.sh; do bash -n "$f"; done

@@ -7,4 +7,8 @@ interface ISetupService {
 
     // Grants DUMP and allows PROJECT_MEDIA for this app. Returns a log of the commands for diagnostics.
     String grantSetup() = 1;
+
+    // Screen blur: lets this app draw over other apps and turns on its accessibility service (which only hosts the
+    // covers window), lifting Android 13+'s "restricted setting" for sideloaded apps first. Returns the command log.
+    String grantBlur() = 2;
 }

@@ -66,7 +66,12 @@ object ShizukuSetup {
      * [done] runs on the main thread with the command log or an error message. The caller re-checks the
      * real state (checkSelfPermission / app-op) afterwards: that is the source of truth, not this text.
      */
-    fun grant(ctx: Context, done: (String) -> Unit) {
+    fun grant(ctx: Context, done: (String) -> Unit) = run(ctx, done) { it.grantSetup() }
+
+    /** Screen blur: overlay permission + the covers' accessibility service, through the same UserService. */
+    fun grantBlur(ctx: Context, done: (String) -> Unit) = run(ctx, done) { it.grantBlur() }
+
+    private fun run(ctx: Context, done: (String) -> Unit, call: (ISetupService) -> String) {
         val main = Handler(Looper.getMainLooper())
         var finished = false  // only touched on the main thread
         fun finish(msg: String) = main.post { if (!finished) { finished = true; done(msg) } }
@@ -81,7 +86,7 @@ object ShizukuSetup {
                 if (binder == null || !binder.pingBinder()) { finish("Shizuku service did not start"); return }
                 val conn = this
                 thread(name = "im-shizuku") {
-                    val result = runCatching { ISetupService.Stub.asInterface(binder).grantSetup() }
+                    val result = runCatching { call(ISetupService.Stub.asInterface(binder)) }
                     result.onSuccess { Log.i(TAG, "shizuku setup:\n$it") }.onFailure { Log.w(TAG, "shizuku setup failed", it) }
                     runCatching { Shizuku.unbindUserService(args, conn, true) }
                     finish(result.getOrElse { "Shizuku: ${it.message ?: it.javaClass.simpleName}" })
@@ -119,6 +124,29 @@ class SetupService : ISetupService.Stub() {
         log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "PROJECT_MEDIA", "allow"))
         return log.toString()
     }
+
+    override fun grantBlur(): String {
+        val pkg = BuildConfig.APPLICATION_ID
+        val service = "$pkg/${BlurAccessibilityService::class.java.name}"
+        val log = StringBuilder()
+        // Android 13+: sideloaded apps cannot have accessibility turned on until this app-op allows it.
+        log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "ACCESS_RESTRICTED_SETTINGS", "allow"))
+        log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "SYSTEM_ALERT_WINDOW", "allow"))
+        val current = output("/system/bin/settings", "get", "secure", "enabled_accessibility_services")
+            .takeUnless { it == "null" }.orEmpty()
+        val list = current.split(':').filter { it.isNotBlank() }
+        if (list.none { it.equals(service, ignoreCase = true) }) {
+            log.appendLine(run("/system/bin/settings", "put", "secure", "enabled_accessibility_services",
+                (list + service).joinToString(":")))
+        }
+        log.appendLine(run("/system/bin/settings", "put", "secure", "accessibility_enabled", "1"))
+        return log.toString()
+    }
+
+    private fun output(vararg cmd: String): String = runCatching {
+        val p = ProcessBuilder(*cmd).redirectErrorStream(true).start()
+        p.inputStream.bufferedReader().readText().trim().also { p.waitFor() }
+    }.getOrDefault("")
 
     private fun run(vararg cmd: String): String = runCatching {
         val p = ProcessBuilder(*cmd).redirectErrorStream(true).start()

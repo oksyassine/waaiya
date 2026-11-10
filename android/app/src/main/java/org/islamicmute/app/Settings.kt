@@ -20,4 +20,21 @@ class Settings(context: Context) {
     var silenceUnfilterable: Boolean
         get() = p.getBoolean("silence_unfilterable", true)
         set(v) = p.edit().putBoolean("silence_unfilterable", v).apply()
+
+    /** Screen blur: cover women (whole body; people the model cannot tell apart are covered too). */
+    var blurWomen: Boolean
+        get() = p.getBoolean("blur_women", false)
+        set(v) = p.edit().putBoolean("blur_women", v).apply()
+
+    /** Screen blur: cover nudity / immodest images of anyone. */
+    var blurNudity: Boolean
+        get() = p.getBoolean("blur_nudity", false)
+        set(v) = p.edit().putBoolean("blur_nudity", v).apply()
+
+    /** When the blur cannot keep up or its models fail: true = cover the whole screen, false = show it with a warning. */
+    var blurFailCover: Boolean
+        get() = p.getBoolean("blur_fail_cover", true)
+        set(v) = p.edit().putBoolean("blur_fail_cover", v).apply()
+
+    val blurOn: Boolean get() = blurWomen || blurNudity
 }

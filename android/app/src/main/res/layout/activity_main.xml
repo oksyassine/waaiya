@@ -109,6 +109,37 @@
                     android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/link_open" />
             </LinearLayout>
 
+            <!-- Screen blur: covers women (and people not clearly men) and immodest images over every app. -->
+            <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView style="@style/Text.Section" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="@string/blur_title" android:accessibilityHeading="true" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp" android:text="@string/blur_body" />
+                <Switch android:id="@+id/switch_blur_women" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:layout_marginTop="8dp" android:textSize="16sp"
+                    android:textColor="@color/text_primary" android:text="@string/blur_women_title" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingEnd="56dp" android:text="@string/blur_women_body" />
+                <Switch android:id="@+id/switch_blur_nudity" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:layout_marginTop="12dp" android:textSize="16sp"
+                    android:textColor="@color/text_primary" android:text="@string/blur_nudity_title" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingEnd="56dp" android:text="@string/blur_nudity_body" />
+                <Switch android:id="@+id/switch_blur_fail" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:layout_marginTop="12dp" android:textSize="16sp"
+                    android:textColor="@color/text_primary" android:text="@string/blur_fail_title" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingEnd="56dp" android:text="@string/blur_fail_body" />
+                <TextView android:id="@+id/blur_status" style="@style/Text.Secondary" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="12dp" android:visibility="gone"
+                    android:accessibilityLiveRegion="polite" />
+                <Button android:id="@+id/blur_setup" style="@style/Button.Tonal" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_marginTop="8dp" android:visibility="gone"
+                    android:text="@string/blur_setup_shizuku" />
+                <Button android:id="@+id/blur_setup_manual" style="@style/Button.Text" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:visibility="gone" android:text="@string/blur_setup_manual" />
+            </LinearLayout>
+
             <LinearLayout style="@style/Card" android:layout_width="match_parent" android:layout_height="wrap_content">
                 <TextView style="@style/Text.Section" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="@string/settings_title" android:accessibilityHeading="true" />
