@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Added only with -PimBlurA11y (build.gradle.kts). Google Play Protect's fraud protection blocks the install, from
+     a browser or file manager, of an app that declares an accessibility service; this build is for users who
+     install it another way (adb, or with Play Protect scanning turned off for the install). -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Only hosts the screen-blur covers window (touches pass through accessibility overlays). It reads no
+             screen content and handles no events: see res/xml/blur_accessibility.xml. -->
+        <service android:name="org.islamicmute.app.BlurAccessibilityService"
+            android:exported="false"
+            android:label="@string/blur_a11y_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice" android:resource="@xml/blur_accessibility" />
+        </service>
+    </application>
+</manifest>

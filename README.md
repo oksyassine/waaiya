@@ -143,9 +143,11 @@ covered). Both are off by default and chosen in the app. Everything runs on the 
 How it works: the screen is captured small (long side 640 px, same screen-capture permission as the audio
 filter), a person detector (YOLOX-Nano, Apache-2.0) finds people, our own classifier (`models/vision/train_gender.py`,
 trained on Open Images boxes) says woman or man for each, and a nudity classifier (Marqo ViT-tiny, Apache-2.0)
-checks the frame a few times a second. Covers are drawn in an overlay window: through an accessibility service
-that only hosts that window (touches pass through it), or as a "display over other apps" window (touches on a
-cover are lost). Shizuku can turn either on (**Allow with Shizuku** in the app).
+checks the frame a few times a second. Covers are drawn in a "display over other apps" window (Shizuku can
+allow it: **Allow with Shizuku**); a tap on a covered area does not reach the app underneath.
+A build made with `-PimBlurA11y` also declares an accessibility service that only hosts the covers window, so
+touches pass through it. It is not the default: Google Play Protect blocks installing, from a browser or a file
+manager, any app that declares an accessibility service. Install that build with adb.
 
 Limits, said plainly:
 - The cover is drawn after the frame was analysed (about 50–150 ms), so new content can show uncovered for that
