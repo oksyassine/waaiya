@@ -43,7 +43,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 /**
  * "Save without music": downloads the streams of a resolved link, joins video and audio into one MP4 (no
  * re-encoding), runs the audio through the voice filter (same engine and exact delay compensation as the
- * player; the video is copied as is), and publishes the result to Movies/ or Music/ "Islamic Mute".
+ * player; the video is copied as is), and publishes the result to Movies/ or Music/ "Waaiya".
  *
  * Fail-closed: files holding the original audio stay in the app cache and are deleted; the gallery only ever
  * receives a fully filtered file. Any error (unsupported audio, model failure, network) means no file.
@@ -251,9 +251,9 @@ class LinkExportService : Service() {
     }
 
     private fun publishToGallery(file: File, title: String, isVideo: Boolean): Uri {
-        val base = title.replace(Regex("""[\\/:*?"<>|\n\r]"""), " ").trim().take(80).ifEmpty { "Islamic Mute" }
+        val base = title.replace(Regex("""[\\/:*?"<>|\n\r]"""), " ").trim().take(80).ifEmpty { "Waaiya" }
         val ext = if (isVideo) ".mp4" else ".m4a"
-        val folder = (if (isVideo) Environment.DIRECTORY_MOVIES else Environment.DIRECTORY_MUSIC) + "/Islamic Mute/"
+        val folder = (if (isVideo) Environment.DIRECTORY_MOVIES else Environment.DIRECTORY_MUSIC) + "/Waaiya/"
         val collection = if (isVideo) MediaStore.Video.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
                          else MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         // Saving the same video twice: "Title (2).mp4" instead of clashing with the existing entry.
