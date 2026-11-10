@@ -4,7 +4,7 @@ library;
 export 'l10n/app_localizations.dart';
 export 'src/app.dart' show WaaiyaApp, WaaiyaScope;
 export 'src/backend.dart';
-export 'src/blur_card.dart' show blurStatus;
+export 'src/blur_card.dart' show blurFailFix, blurStatus;
 export 'src/channel_backend.dart';
 export 'src/memory_backend.dart';
 export 'src/setup_card.dart' show SetupStep, setupSteps;

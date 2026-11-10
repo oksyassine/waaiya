@@ -91,8 +91,18 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('بقيت خطوة واحدة'), findsOneWidget);
     expect(find.text('إعداد لمرة واحدة'), findsOneWidget);
-    expect(find.text('فتح Shizuku'), findsOneWidget); // step 2 is current
+    expect(find.text('كيف أشغّل Shizuku؟'), findsOneWidget); // step 2 is current: the guide
     expect(find.text('تحميل Shizuku'), findsNothing); // step 1 done
+    await tester.ensureVisible(find.text('كيف أشغّل Shizuku؟'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('كيف أشغّل Shizuku؟'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('shizuku_guide')), findsOneWidget);
+    expect(find.text('تشغيل Shizuku خطوة بخطوة'), findsOneWidget);
+    expect(find.text('خيارات المطور'), findsOneWidget);
+    await tester.tap(find.text('إغلاق'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('shizuku_guide')), findsNothing);
     await tester.ensureVisible(find.text('استخدم حاسوبًا بدلًا من ذلك'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('استخدم حاسوبًا بدلًا من ذلك'));
@@ -135,6 +145,42 @@ void main() {
     expect(blurStatus(l, layer), (l.blurStatusStarting, false));
     final failed = running.copyWith(blur: const BlurInfo(message: BackendMessage('setup_failed', 'log')));
     expect(blurStatus(l, failed), (l.blurSetupFailed('log'), true));
+  });
+
+  test('greyed-out cover switch: note and next Shizuku step (MainActivity 0.2.4)', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    AppState with_(ShizukuState? s, {bool layer = true, bool pass = false}) => AppState(
+          setup: SetupInfo(shizuku: s),
+          blur: BlurInfo(layerSupported: layer, touchPassThrough: pass),
+        );
+    expect(blurFailFix(l, with_(ShizukuState.notInstalled)), l.step1Action);
+    expect(blurFailFix(l, with_(ShizukuState.tooOld)), l.step2Update);
+    expect(blurFailFix(l, with_(ShizukuState.notRunning)), l.step2Guide);
+    expect(blurFailFix(l, with_(ShizukuState.needsPermission)), l.step3Action);
+    expect(blurFailFix(l, with_(ShizukuState.deniedPermanently)), l.step2Action);
+    expect(blurFailFix(l, with_(ShizukuState.ready)), isNull);
+    expect(blurFailFix(l, with_(ShizukuState.notRunning, pass: true)), isNull); // taps already pass through
+    expect(blurFailFix(l, with_(ShizukuState.notRunning, layer: false)), isNull); // Android < 12
+  });
+
+  testWidgets('blur card: greyed-out switch shows the note and opens the guide', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man', blurWomen: true),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(shizuku: ShizukuState.notRunning),
+        blur: BlurInfo(layerSupported: true, overlayAllowed: true),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    final fix = find.byKey(const Key('blur_fail_fix'));
+    await tester.ensureVisible(fix);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('معطّل مؤقتًا'), findsOneWidget); // blur_fail_unavailable note
+    await tester.tap(fix);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('shizuku_guide')), findsOneWidget);
   });
 
   test('snapshots: missing keys take defaults, names round-trip', () {

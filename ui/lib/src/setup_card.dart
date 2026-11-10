@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
+import 'guide.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -32,7 +33,7 @@ class SetupStep {
       done: running,
       title: l.step2Title,
       body: tooOld ? l.step2TooOld : l.step2Body,
-      action: tooOld ? l.step2Update : l.step2Action,
+      action: tooOld ? l.step2Update : l.step2Guide,
     ),
     SetupStep(
       done: setup.originalsMuted,
@@ -119,7 +120,10 @@ class SetupSection extends StatelessWidget {
           step: steps[i],
           current: i == current,
           enabled: !(i == 2 && setup.busy),
-          onPressed: () => runAction(context, (b) => b.runSetupStep(i)),
+          // Step 2 (installed, not running): the wireless-debugging guide, as MainActivity.onStepAction.
+          onPressed: () => i == 1 && setup.shizuku != ShizukuState.tooOld
+              ? showShizukuGuide(context)
+              : runAction(context, (b) => b.runSetupStep(i)),
         ),
     ];
   }

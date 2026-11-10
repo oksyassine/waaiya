@@ -170,6 +170,7 @@ class BlurInfo {
     this.a11yEnabled = false,
     this.touchPassThrough = false,
     this.shizukuLayer = false,
+    this.layerSupported = false,
     this.busy = false,
     this.message,
   });
@@ -181,6 +182,7 @@ class BlurInfo {
         a11yEnabled: _bool(m['a11yEnabled'], false),
         touchPassThrough: _bool(m['touchPassThrough'], false),
         shizukuLayer: _bool(m['shizukuLayer'], false),
+        layerSupported: _bool(m['layerSupported'], false),
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
       );
@@ -194,6 +196,9 @@ class BlurInfo {
 
   /// Shizuku is ready on Android 12+: the covers are a Shizuku shell layer, nothing else to allow.
   final bool shizukuLayer;
+
+  /// The Shizuku cover layer is possible on this device (Android 12+), once Shizuku runs and allows Waaiya.
+  final bool layerSupported;
   final bool busy;
 
   /// `setup_failed` (detail = log).
@@ -206,6 +211,7 @@ class BlurInfo {
         'a11yEnabled': a11yEnabled,
         'touchPassThrough': touchPassThrough,
         'shizukuLayer': shizukuLayer,
+        'layerSupported': layerSupported,
         'busy': busy,
         'message': message?.toMap(),
       };
@@ -372,7 +378,8 @@ abstract interface class WaaiyaBackend {
 
   Future<void> stopFilter();
 
-  /// The setup checklist's button: 0 = get Shizuku, 1 = open / update it, 2 = grant through it.
+  /// The setup checklist's button: 0 = get Shizuku, 1 = update it (TOO_OLD) or open it, 2 = grant through it.
+  /// Step 1 when Shizuku is installed but not running shows the guide in Flutter instead (showShizukuGuide).
   Future<void> runSetupStep(int step);
 
   /// Screen blur: "Allow with Shizuku".
@@ -380,6 +387,12 @@ abstract interface class WaaiyaBackend {
 
   /// Screen blur: "Allow in Android settings".
   Future<void> openOverlaySettings();
+
+  /// Opens the Shizuku app (its store page when it is not installed). Capability `shizukuSetup`.
+  Future<void> openShizuku();
+
+  /// Android's Developer options (About phone when they are not turned on yet). Capability `shizukuSetup`.
+  Future<void> openDeveloperOptions();
 
   /// "ar" or "en"; saved natively so native screens, services and notifications follow it.
   Future<void> setLanguage(String tag);

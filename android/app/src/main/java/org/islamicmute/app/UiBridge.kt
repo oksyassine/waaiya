@@ -98,6 +98,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 }
                 "runSetupStep" -> { runSetupStep(call.argument<Int>("step") ?: throw BadArgs("step")); result.success(null) }
                 "blurSetup" -> { blurSetup(); result.success(null) }
+                "openShizuku" -> { openShizuku(); result.success(null) }
+                "openDeveloperOptions" -> {
+                    // Developer options, or About phone when they are not turned on yet (step 2 of the guide)
+                    runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                        .onFailure { activity.startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)) }
+                    result.success(null)
+                }
                 "openOverlaySettings" -> {
                     activity.startActivity(Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:${activity.packageName}")))
@@ -164,6 +171,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "touchPassThrough" to activity.blurTouchPassThrough(),
             // Shizuku running (Android 12+): the covers are a shell layer (ShizukuCovers), nothing else to allow
             "shizukuLayer" to (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(activity) == ShizukuSetup.State.READY),
+            "layerSupported" to (Build.VERSION.SDK_INT >= 31),  // Shizuku covers need Android 12+
             "busy" to blurBusy,
             "message" to blurMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
         ),
@@ -253,7 +261,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             s == ShizukuSetup.State.READY -> grantWithShizuku()
             s == ShizukuSetup.State.NEEDS_PERMISSION -> runCatching { ShizukuSetup.requestPermission() }
                 .onFailure { shizukuMessage = "error" to "Shizuku: ${it.message}" }
-            else -> openShizuku()
+            else -> openShizuku()  // step 1 not running: Flutter shows the guide (MainActivity.showShizukuGuide)
         }
         refresh()
     }
@@ -285,7 +293,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 runCatching { ShizukuSetup.requestPermission() }.onFailure { blurAfterPermission = false }
             }
             ShizukuSetup.State.NOT_INSTALLED, ShizukuSetup.State.TOO_OLD -> openStore()
-            else -> openShizuku()
+            else -> openShizuku()  // DENIED_PERMANENTLY; for NOT_RUNNING Flutter shows the guide instead of calling this
         }
         refresh()
     }
@@ -311,8 +319,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         runCatching { activity.startActivity(market) }.onFailure { runCatching { activity.startActivity(web) } }
     }
 
+    /** Shizuku itself, or its store page when it is not installed (as MainActivity.openShizuku). */
     private fun openShizuku() {
         activity.packageManager.getLaunchIntentForPackage(ShizukuSetup.SHIZUKU_PACKAGE)?.let { activity.startActivity(it) }
+            ?: openStore()
     }
 
     private fun licenceAsset(name: String): String =

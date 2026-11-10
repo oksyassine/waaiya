@@ -1,7 +1,7 @@
 name: waaiya_desktop
 description: Waaiya for Windows and Linux (later macOS), with the shared screens of ../ui (docs/UI_CONTRACT.md).
 publish_to: none
-version: 0.2.3+5
+version: 0.2.4+6
 
 environment:
   sdk: ^3.11.0
