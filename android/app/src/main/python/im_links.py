@@ -4,6 +4,7 @@ Runs inside the app through Chaquopy. Only yt-dlp's Python API is used (no shell
 fetched at run time). YouTube's JavaScript challenge is solved by the bundled yt-dlp-ejs scripts in QuickJS.
 """
 import json
+import os
 import tempfile
 from urllib.parse import urlparse
 
@@ -38,7 +39,9 @@ def _pick(info):
     video = [f for f in fm if has_v(f) and not has_a(f) and _avc(f) and f.get("ext") == "mp4" and h(f) <= MAX_HEIGHT]
     audio = [f for f in fm if has_a(f) and not has_v(f) and _aac(f)]
     both = [f for f in fm if has_v(f) and has_a(f) and _avc(f) and f.get("ext") == "mp4" and h(f) <= MAX_HEIGHT]
-    br = lambda f: f.get("abr") or f.get("tbr") or 0
+    # Stereo/mono first (the voice model takes 1-2 channels; 5.1 tracks are refused, never passed through),
+    # then the highest bitrate.
+    br = lambda f: ((f.get("audio_channels") or 2) <= 2, f.get("abr") or f.get("tbr") or 0)
     if video and audio:
         return max(video, key=h), max(audio, key=br), None
     if both:
@@ -56,10 +59,15 @@ def _pick(info):
     raise LinkError("no_format")
 
 
-def _stream(f):
+def _stream(f, ydl):
     if not f:
         return None
-    return {"url": f["url"], "headers": f.get("http_headers") or {}, "height": f.get("height"),
+    headers = dict(f.get("http_headers") or {})
+    # Some sites (TikTok) only serve the media to the session that opened the page: send its cookies too.
+    cookie = ydl.cookiejar.get_cookie_header(f["url"])
+    if cookie:
+        headers["Cookie"] = cookie
+    return {"url": f["url"], "headers": headers, "height": f.get("height"),
             "ext": f.get("ext"), "format_id": f.get("format_id"), "size": f.get("filesize") or f.get("filesize_approx")}
 
 
@@ -69,15 +77,16 @@ def resolve(url, qjs_path, cache_dir):
     p = urlparse(url.strip())
     if p.scheme not in ("http", "https") or not p.netloc:
         raise LinkError("invalid_url")
+    os.makedirs(cache_dir, exist_ok=True)
     tempfile.tempdir = cache_dir  # QuickJS reads the challenge scripts from temporary files
     opts = {
         "quiet": True, "no_warnings": True, "noplaylist": True, "skip_download": True,
         "js_runtimes": {"quickjs": {"path": qjs_path}}, "remote_components": set(),
         "cachedir": cache_dir + "/yt-dlp", "socket_timeout": 20,
     }
+    y = yt_dlp.YoutubeDL(opts)
     try:
-        with yt_dlp.YoutubeDL(opts) as y:
-            info = y.extract_info(url.strip(), download=False)
+        info = y.extract_info(url.strip(), download=False)
     except yt_dlp.utils.DownloadError as e:
         msg = str(e)
         if "logged-in" in msg or "login" in msg.lower() or "cookies" in msg:
@@ -88,10 +97,12 @@ def resolve(url, qjs_path, cache_dir):
     if info.get("_type") == "playlist" or info.get("entries") is not None:
         raise LinkError("playlist")
     v, a, both = _pick(info)
+    streams = {"video": _stream(v, y), "audio": _stream(a, y), "progressive": _stream(both, y)}
+    y.close()
     return json.dumps({
         "title": info.get("title") or "", "duration": info.get("duration"), "is_live": bool(info.get("is_live")),
         "site": info.get("extractor_key") or info.get("extractor") or "", "thumbnail": info.get("thumbnail"),
-        "video": _stream(v), "audio": _stream(a), "progressive": _stream(both),
+        **streams,
     })
 
 

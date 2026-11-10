@@ -78,7 +78,10 @@ python eval/evaluate.py --candidate dfn3=models/dfn3/dfn3_stream.onnx [--asr bas
 
 ```bash
 scripts/fetch_deps.sh                   # default model (the APK bundles it)
-cd android && ./gradlew assembleDebug   # -PimModel=/path/model.onnx to bundle another model
+# Needs Python 3.11 on the build machine (Chaquopy runs the link feature's yt-dlp in the app):
+cd android && ./gradlew assembleDebug -PimBuildPython=/path/to/python3.11
+#   -PimModel=/path/model.onnx   bundle another voice model
+#   -PimX86                      also build x86_64 (emulators); phones are arm64-v8a + armeabi-v7a
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
@@ -97,6 +100,16 @@ Both are granted once, in one of two ways:
   adb shell pm grant org.islamicmute.app android.permission.DUMP
   adb shell appops set org.islamicmute.app PROJECT_MEDIA allow   # optional
   ```
+
+## Links: watch or save a video without music
+
+"Open a link" (or Share from YouTube/TikTok to Islamic Mute) reads the page with
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) inside the app (Chaquopy, Python 3.11; YouTube's JavaScript check runs in
+QuickJS-NG, built by `android/tools/build_qjs.sh`). **Watch** streams it through the filtered player. **Save**
+downloads it, filters the audio (the video is copied unchanged) and puts the file in Movies/ (or Music/) "Islamic
+Mute"; the AAC encoder's start delay is measured once per phone and compensated, so lip sync is kept. Fail-closed:
+audio the filter cannot take (e.g. 5.1) means no file, never an unfiltered one. Sites that need a login
+(Instagram, Vimeo) do not work yet. Code: `android/app/src/main/python/im_links.py`, `Links.kt`, `LinkExport.kt`.
 
 ## Women's-singing filter (optional, for men)
 

@@ -106,4 +106,5 @@
     <string name="link_playlist">This is a playlist. Please open one video.</string>
     <string name="link_no_format">This video is not in a format Islamic Mute can filter yet.</string>
     <string name="link_failed">Could not open this link. Check your connection and try again.</string>
+    <string name="link_play_failed">Could not play this. Nothing unfiltered was played.</string>
 </resources>

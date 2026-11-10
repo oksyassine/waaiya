@@ -63,6 +63,14 @@ class PlayerActivity : Activity() {
         val p = ExoPlayer.Builder(this, renderers).build()
         player = p
         setContentView(PlayerView(this).apply { this.player = p })
+        // A link that cannot be played (expired, blocked, unsupported audio): say so instead of a black screen.
+        p.addListener(object : androidx.media3.common.Player.Listener {
+            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                android.util.Log.w("IslamicMute", "playback failed", error)
+                android.widget.Toast.makeText(this@PlayerActivity, R.string.link_play_failed, android.widget.Toast.LENGTH_LONG).show()
+                finish()
+            }
+        })
         if (streams != null) p.setMediaSource(webSource(Links.streamsFromJson(streams)))
         else p.setMediaItem(MediaItem.fromUri(uri!!))
         p.prepare()
