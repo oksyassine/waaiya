@@ -45,6 +45,10 @@ class MainActivity : Activity() {
     private var shizukuMessage: String? = null
     /** Start was tapped but the microphone/notification permission request is still open. */
     private var startAfterPermission = false
+    /** Notifications are asked at most once per screen: a refusal must not block or loop Start. */
+    private var askedNotifications = false
+    /** The microphone permission was refused at the last Start: keep saying why until the next tap. */
+    private var micDenied = false
 
     private val serviceChanged: () -> Unit = { refresh() }
     private val shizukuChanged = Shizuku.OnBinderReceivedListener { runOnUiThread { refresh() } }
@@ -86,7 +90,8 @@ class MainActivity : Activity() {
 
         findViewById<Switch>(R.id.switch_silence).apply {
             isChecked = settings.silenceUnfilterable
-            setOnCheckedChangeListener { _, v -> settings.silenceUnfilterable = v; settingChanged() }
+            // Read by the running muter on every poll: applies at once, no restart needed.
+            setOnCheckedChangeListener { _, v -> settings.silenceUnfilterable = v }
         }
         singing.isChecked = settings.muteWomenSinging
         singing.setOnCheckedChangeListener { _, v -> settings.muteWomenSinging = v; settingChanged() }
@@ -186,6 +191,10 @@ class MainActivity : Activity() {
         stateDetail.setTextColor(getColor(
             if (st == FilterService.State.MODEL_FAILED || st == FilterService.State.NO_CAPTURE_PERMISSION) R.color.error
             else R.color.text_secondary))
+        if (micDenied && !on) {
+            stateDetail.setText(R.string.need_record_audio)
+            stateDetail.setTextColor(getColor(R.color.error))
+        }
 
         val dumpOk = hasDumpPermission()
         val projectOk = hasProjectMediaAppOp()
@@ -213,15 +222,14 @@ class MainActivity : Activity() {
         val running = installed && s != ShizukuSetup.State.NOT_RUNNING && s != ShizukuSetup.State.TOO_OLD
         val done = listOf(installed, running, dumpOk)
         val current = done.indexOfFirst { !it }
-        val body2 = when (s) {
-            ShizukuSetup.State.TOO_OLD -> R.string.step2_too_old
-            ShizukuSetup.State.DENIED_PERMANENTLY -> R.string.step2_denied
-            else -> R.string.step2_body
-        }
+        val tooOld = s == ShizukuSetup.State.TOO_OLD
+        val denied = s == ShizukuSetup.State.DENIED_PERMANENTLY
         val content = listOf(
             Triple(R.string.step1_title, R.string.step1_body, R.string.step1_action),
-            Triple(R.string.step2_title, body2, R.string.step2_action),
-            Triple(R.string.step3_title, R.string.step3_body, if (shizukuBusy) R.string.step3_busy else R.string.step3_action))
+            Triple(R.string.step2_title, if (tooOld) R.string.step2_too_old else R.string.step2_body,
+                if (tooOld) R.string.step2_update else R.string.step2_action),
+            Triple(R.string.step3_title, if (denied) R.string.step2_denied else R.string.step3_body,
+                when { denied -> R.string.step2_action; shizukuBusy -> R.string.step3_busy; else -> R.string.step3_action }))
         for ((i, row) in steps.withIndex()) {
             val (title, body, action) = content[i]
             row.findViewById<TextView>(R.id.step_title).setText(title)
@@ -237,10 +245,8 @@ class MainActivity : Activity() {
                 (if (done[i]) getString(R.string.step_done_cd) else getString(R.string.step_todo_cd, i + 1)) +
                     ". " + getString(title)
             val btn = row.findViewById<Button>(R.id.step_action)
-            // Step 2 also offers "Open Shizuku" when Shizuku must be told to allow us.
-            val showAction = i == current || (i == 2 && s == ShizukuSetup.State.DENIED_PERMANENTLY)
-            btn.visibility = if (showAction) View.VISIBLE else View.GONE
-            btn.setText(if (i == 2 && s == ShizukuSetup.State.DENIED_PERMANENTLY) R.string.step2_action else action)
+            btn.visibility = if (i == current) View.VISIBLE else View.GONE
+            btn.setText(action)
             btn.isEnabled = !(i == 2 && shizukuBusy)
             btn.setOnClickListener { onStepAction(i) }
         }
@@ -311,14 +317,17 @@ class MainActivity : Activity() {
     }
 
     private fun startFilter() {
+        micDenied = false
         // Ask for the runtime permissions only now, when their purpose is clear (capture needs RECORD_AUDIO).
+        // Only RECORD_AUDIO gates Start; the notification permission is optional and asked once.
         val wanted = buildList {
             if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
                 add(android.Manifest.permission.RECORD_AUDIO)
-            if (Build.VERSION.SDK_INT >= 33 &&
+            if (Build.VERSION.SDK_INT >= 33 && !askedNotifications &&
                 checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
                 add(android.Manifest.permission.POST_NOTIFICATIONS)
         }
+        if (Build.VERSION.SDK_INT >= 33 && android.Manifest.permission.POST_NOTIFICATIONS in wanted) askedNotifications = true
         if (wanted.isNotEmpty()) {
             // Android's dialog says "record audio": say first why, and that nothing is recorded.
             if (android.Manifest.permission.RECORD_AUDIO in wanted) stateDetail.setText(R.string.need_record_audio)
@@ -327,7 +336,11 @@ class MainActivity : Activity() {
             return
         }
         val mpm = getSystemService(MediaProjectionManager::class.java)
-        startActivityForResult(mpm.createScreenCaptureIntent(), REQ_CAPTURE)
+        // Android 14+ offers "a single app" first; a system-wide filter needs the whole device, so ask for that only.
+        val intent = if (Build.VERSION.SDK_INT >= 34)
+            mpm.createScreenCaptureIntent(android.media.projection.MediaProjectionConfig.createConfigForDefaultDisplay())
+        else mpm.createScreenCaptureIntent()
+        startActivityForResult(intent, REQ_CAPTURE)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -335,10 +348,7 @@ class MainActivity : Activity() {
         if (requestCode != REQ_PERMISSIONS || !startAfterPermission) return
         startAfterPermission = false
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) startFilter()
-        else {
-            stateDetail.setText(R.string.need_record_audio)
-            stateDetail.setTextColor(getColor(R.color.error))
-        }
+        else { micDenied = true; refresh() }
     }
 
     private fun stopFilter() {

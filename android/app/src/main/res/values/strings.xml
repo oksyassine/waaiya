@@ -33,6 +33,7 @@
     <string name="step2_title">Start Shizuku</string>
     <string name="step2_body">In Shizuku, choose \"Start via Wireless debugging\" and follow its steps, then come back.</string>
     <string name="step2_action">Open Shizuku</string>
+    <string name="step2_update">Update Shizuku</string>
     <string name="step2_too_old">Your Shizuku version is too old. Update it from the Play Store.</string>
     <string name="step2_denied">Shizuku is set to always deny Islamic Mute. In Shizuku, allow it in the list of apps.</string>
     <string name="step3_title">Give permission</string>
