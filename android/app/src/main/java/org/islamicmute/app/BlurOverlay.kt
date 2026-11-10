@@ -252,6 +252,8 @@ class BlurOverlay(private val context: Context) {
  * not read, log or act on any screen content or event.
  */
 class BlurAccessibilityService : AccessibilityService() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     companion object {
         @Volatile var instance: BlurAccessibilityService? = null
             private set
@@ -263,6 +265,12 @@ class BlurAccessibilityService : AccessibilityService() {
     override fun onDestroy() { instance = null; super.onDestroy() }
     override fun onUnbind(intent: android.content.Intent?): Boolean { instance = null; return super.onUnbind(intent) }
 }
+
+/**
+ * Touches reach the app under the covers only through the accessibility overlay. Without it, a full-screen cover would
+ * block every touch, so the "cover the screen" fail setting is off and greyed out.
+ */
+fun Context.blurTouchPassThrough(): Boolean = BuildConfig.BLUR_A11Y && blurAccessibilityEnabled()
 
 /** True when the user (or Shizuku) turned on [BlurAccessibilityService]. */
 fun Context.blurAccessibilityEnabled(): Boolean {

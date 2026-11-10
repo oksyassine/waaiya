@@ -50,6 +50,8 @@ import java.util.concurrent.CopyOnWriteArraySet
  */
 @OptIn(UnstableApi::class)
 class LinkExportService : Service() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     enum class Phase { IDLE, DOWNLOADING, FILTERING, DONE, FAILED }
 
     /** Snapshot shown by the link screen. [progress] is 0..1 within the phase, -1 if unknown. */

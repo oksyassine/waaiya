@@ -25,6 +25,8 @@ import android.util.Log
  * engine, and plays the result on a low-latency track. SessionMuter silences the original streams.
  */
 class FilterService : Service() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     /** What the screen shows. Published on the main thread to the companion's listeners. */
     enum class State { STOPPED, STARTING, FILTERING, MODEL_FAILED, NO_CAPTURE_PERMISSION, STOPPED_BY_SYSTEM }
 
