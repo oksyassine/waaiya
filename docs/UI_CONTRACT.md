@@ -45,6 +45,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM` (`FilterService.State`) |
 | `filter.delayMs` | int | Engine delay of the running filter |
 | `filter.micDenied` | bool | The microphone permission was refused at the last start (until the next start) |
+| `filter.simulated` | bool | Desktop preview: start/stop are not connected to an engine yet (the screen says so) |
 | `setup.originalsMuted` | bool | The originals can be silenced (Android: `DUMP` granted) |
 | `setup.consentSkipped` | bool | No screen-capture question at start (Android: app-op `PROJECT_MEDIA` = allow) |
 | `setup.shizuku` | String? | `NOT_INSTALLED`, `NOT_RUNNING`, `TOO_OLD`, `NEEDS_PERMISSION`, `DENIED_PERMANENTLY`, `READY` (`ShizukuSetup.State`); null off Android |

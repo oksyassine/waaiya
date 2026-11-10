@@ -1,0 +1,537 @@
+{
+  "@@locale": "ar",
+  "appName": "واعية",
+  "@appName": {
+    "description": "Android string app_name"
+  },
+  "tagline": "يزيل الآلات الموسيقية من صوت كل التطبيقات، ويُبقي الكلام والتلاوة.",
+  "@tagline": {
+    "description": "Android string tagline"
+  },
+  "onboardTitle": "أهلًا بك",
+  "@onboardTitle": {
+    "description": "Android string onboard_title"
+  },
+  "onboardBody": "تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.",
+  "@onboardBody": {
+    "description": "Android string onboard_body"
+  },
+  "onboardQuestion": "أنا",
+  "@onboardQuestion": {
+    "description": "Android string onboard_question"
+  },
+  "genderMan": "رجل",
+  "@genderMan": {
+    "description": "Android string gender_man"
+  },
+  "genderWoman": "امرأة",
+  "@genderWoman": {
+    "description": "Android string gender_woman"
+  },
+  "onboardWhy": "هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.",
+  "@onboardWhy": {
+    "description": "Android string onboard_why"
+  },
+  "stateOnTitle": "التصفية تعمل",
+  "@stateOnTitle": {
+    "description": "Android string state_on_title"
+  },
+  "stateOffTitle": "التصفية متوقفة",
+  "@stateOffTitle": {
+    "description": "Android string state_off_title"
+  },
+  "stateStarting": "جارٍ التشغيل…",
+  "@stateStarting": {
+    "description": "Android string state_starting"
+  },
+  "stateOnDetail": "تُزال الآلات من كل التطبيقات. التأخير نحو {delayMs} ميلي ثانية.",
+  "@stateOnDetail": {
+    "description": "Android string state_on_detail",
+    "placeholders": {
+      "delayMs": {
+        "type": "int"
+      }
+    }
+  },
+  "stateOffDetail": "اضغط الزر للتشغيل.",
+  "@stateOffDetail": {
+    "description": "Android string state_off_detail"
+  },
+  "stateModelFailed": "تعذّر تحميل نموذج الصوت، فكُتم الصوت احتياطًا.",
+  "@stateModelFailed": {
+    "description": "Android string state_model_failed"
+  },
+  "stateCaptureDenied": "يلزم إذن الميكروفون لاستقبال صوت التطبيقات الأخرى.",
+  "@stateCaptureDenied": {
+    "description": "Android string state_capture_denied"
+  },
+  "stateStoppedBySystem": "أوقف أندرويد التصفية. اضغط الزر للتشغيل من جديد.",
+  "@stateStoppedBySystem": {
+    "description": "Android string state_stopped_by_system"
+  },
+  "powerStartCd": "تشغيل التصفية",
+  "@powerStartCd": {
+    "description": "Android string power_start_cd"
+  },
+  "powerStopCd": "إيقاف التصفية",
+  "@powerStopCd": {
+    "description": "Android string power_stop_cd"
+  },
+  "captureHint": "سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.",
+  "@captureHint": {
+    "description": "Android string capture_hint"
+  },
+  "needRecordAudio": "تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.",
+  "@needRecordAudio": {
+    "description": "Android string need_record_audio"
+  },
+  "setupBannerTitle": "بقيت خطوة واحدة",
+  "@setupBannerTitle": {
+    "description": "Android string setup_banner_title"
+  },
+  "setupBannerBody": "بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.",
+  "@setupBannerBody": {
+    "description": "Android string setup_banner_body"
+  },
+  "setupTitle": "إعداد لمرة واحدة",
+  "@setupTitle": {
+    "description": "Android string setup_title"
+  },
+  "setupBody": "يسمح لواعية بكتم الصوت الأصلي. تفعله مرة واحدة، ويبقى حتى تلغي تثبيت التطبيق.",
+  "@setupBody": {
+    "description": "Android string setup_body"
+  },
+  "step1Title": "ثبّت Shizuku",
+  "@step1Title": {
+    "description": "Android string step1_title"
+  },
+  "step1Body": "تطبيق مساعد مجاني من متجر Play.",
+  "@step1Body": {
+    "description": "Android string step1_body"
+  },
+  "step1Action": "تحميل Shizuku",
+  "@step1Action": {
+    "description": "Android string step1_action"
+  },
+  "step2Title": "شغّل Shizuku",
+  "@step2Title": {
+    "description": "Android string step2_title"
+  },
+  "step2Body": "في Shizuku اختر «البدء عبر تصحيح الأخطاء اللاسلكي» واتبع خطواته، ثم ارجع إلى هنا.",
+  "@step2Body": {
+    "description": "Android string step2_body"
+  },
+  "step2Action": "فتح Shizuku",
+  "@step2Action": {
+    "description": "Android string step2_action"
+  },
+  "step2Update": "تحديث Shizuku",
+  "@step2Update": {
+    "description": "Android string step2_update"
+  },
+  "step2TooOld": "نسخة Shizuku قديمة. حدّثها من متجر Play.",
+  "@step2TooOld": {
+    "description": "Android string step2_too_old"
+  },
+  "step2Denied": "تم ضبط Shizuku على رفض واعية دائمًا. اسمح لها من قائمة التطبيقات في Shizuku.",
+  "@step2Denied": {
+    "description": "Android string step2_denied"
+  },
+  "step3Title": "امنح الإذن",
+  "@step3Title": {
+    "description": "Android string step3_title"
+  },
+  "step3Body": "ضغطة واحدة، ثم اختر «سماح».",
+  "@step3Body": {
+    "description": "Android string step3_body"
+  },
+  "step3Action": "منح الإذن",
+  "@step3Action": {
+    "description": "Android string step3_action"
+  },
+  "step3Busy": "جارٍ الإعداد…",
+  "@step3Busy": {
+    "description": "Android string step3_busy"
+  },
+  "setupDoneRestart": "تم. أوقف التصفية ثم شغّلها مرة واحدة لتطبيق ذلك.",
+  "@setupDoneRestart": {
+    "description": "Android string setup_done_restart"
+  },
+  "setupFailed": "لم يكتمل الإعداد. التفاصيل:\n{details}",
+  "@setupFailed": {
+    "description": "Android string setup_failed",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "shizukuRefused": "رُفض إذن Shizuku. اضغط الزر للمحاولة مرة أخرى.",
+  "@shizukuRefused": {
+    "description": "Android string shizuku_refused"
+  },
+  "stepDoneCd": "تم",
+  "@stepDoneCd": {
+    "description": "Android string step_done_cd"
+  },
+  "stepTodoCd": "الخطوة {step}",
+  "@stepTodoCd": {
+    "description": "Android string step_todo_cd",
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "computerToggle": "استخدم حاسوبًا بدلًا من ذلك",
+  "@computerToggle": {
+    "description": "Android string computer_toggle"
+  },
+  "computerBody": "فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:",
+  "@computerBody": {
+    "description": "Android string computer_body"
+  },
+  "copy": "نسخ",
+  "@copy": {
+    "description": "Android string copy"
+  },
+  "copied": "تم النسخ",
+  "@copied": {
+    "description": "Android string copied"
+  },
+  "computerNote": "السطر الثاني اختياري: يوقف سؤال مشاركة الشاشة عند كل تشغيل.",
+  "@computerNote": {
+    "description": "Android string computer_note"
+  },
+  "settingsTitle": "الإعدادات",
+  "@settingsTitle": {
+    "description": "Android string settings_title"
+  },
+  "settingSilenceTitle": "كتم التطبيقات التي تمنع التصفية",
+  "@settingSilenceTitle": {
+    "description": "Android string setting_silence_title"
+  },
+  "settingSilenceBody": "مستحسن. بعض التطبيقات لا تسمح بتصفية صوتها، فيُكتم بدل أن تمرّ الموسيقى.",
+  "@settingSilenceBody": {
+    "description": "Android string setting_silence_body"
+  },
+  "settingSingingTitle": "كتم غناء النساء",
+  "@settingSingingTitle": {
+    "description": "Android string setting_singing_title"
+  },
+  "settingSingingBody": "يُبقي كلام النساء وتلاوتهن.",
+  "@settingSingingBody": {
+    "description": "Android string setting_singing_body"
+  },
+  "settingSingingNoModel": "هذه النسخة بلا كاشف للغناء، لذا تُكتم كل الأصوات ما دام هذا الخيار مفعّلًا.",
+  "@settingSingingNoModel": {
+    "description": "Android string setting_singing_no_model"
+  },
+  "settingRestart": "أوقف التصفية ثم شغّلها لتطبيق التغييرات.",
+  "@settingRestart": {
+    "description": "Android string setting_restart"
+  },
+  "settingGenderTitle": "أنا",
+  "@settingGenderTitle": {
+    "description": "Android string setting_gender_title"
+  },
+  "change": "تغيير",
+  "@change": {
+    "description": "Android string change"
+  },
+  "playerTitle": "فيديو بتزامن تام",
+  "@playerTitle": {
+    "description": "Android string player_title"
+  },
+  "playerBody": "شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.",
+  "@playerBody": {
+    "description": "Android string player_body"
+  },
+  "licences": "تراخيص المصادر المفتوحة",
+  "@licences": {
+    "description": "Android string licences"
+  },
+  "licencesIntro": "واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.",
+  "@licencesIntro": {
+    "description": "Android string licences_intro"
+  },
+  "licencesCc": "رخصة المشاع الإبداعي - النسبة 4.0 (بيانات التدريب): https://creativecommons.org/licenses/by/4.0/",
+  "@licencesCc": {
+    "description": "Android string licences_cc"
+  },
+  "licencesFull": "النصوص الكاملة",
+  "@licencesFull": {
+    "description": "Android string licences_full"
+  },
+  "back": "رجوع",
+  "@back": {
+    "description": "Android string back"
+  },
+  "linkEntryTitle": "فتح رابط",
+  "@linkEntryTitle": {
+    "description": "Android string link_entry_title"
+  },
+  "linkEntryBody": "الصق رابطًا من YouTube أو TikTok أو Instagram لمشاهدته أو حفظه بلا موسيقى.",
+  "@linkEntryBody": {
+    "description": "Android string link_entry_body"
+  },
+  "linkTitle": "فتح رابط",
+  "@linkTitle": {
+    "description": "Android string link_title"
+  },
+  "linkHint": "https://… (YouTube، TikTok، Instagram…)",
+  "@linkHint": {
+    "description": "Android string link_hint"
+  },
+  "linkFieldLabel": "رابط الفيديو أو الصوت",
+  "@linkFieldLabel": {
+    "description": "Android string link_field_label"
+  },
+  "linkPaste": "لصق",
+  "@linkPaste": {
+    "description": "Android string link_paste"
+  },
+  "linkOpen": "فتح",
+  "@linkOpen": {
+    "description": "Android string link_open"
+  },
+  "linkResolving": "جارٍ فتح الرابط…",
+  "@linkResolving": {
+    "description": "Android string link_resolving"
+  },
+  "linkMeta": "{first} · {second}",
+  "@linkMeta": {
+    "description": "Android string link_meta",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "linkWatch": "مشاهدة بلا موسيقى",
+  "@linkWatch": {
+    "description": "Android string link_watch"
+  },
+  "linkSave": "حفظ بلا موسيقى",
+  "@linkSave": {
+    "description": "Android string link_save"
+  },
+  "linkListen": "استماع بلا موسيقى",
+  "@linkListen": {
+    "description": "Android string link_listen"
+  },
+  "linkDownloading": "جارٍ التنزيل…",
+  "@linkDownloading": {
+    "description": "Android string link_downloading"
+  },
+  "linkFiltering": "جارٍ إزالة الموسيقى…",
+  "@linkFiltering": {
+    "description": "Android string link_filtering"
+  },
+  "linkCancel": "إلغاء",
+  "@linkCancel": {
+    "description": "Android string link_cancel"
+  },
+  "linkCancelled": "أُلغي، ولم يُحفظ شيء.",
+  "@linkCancelled": {
+    "description": "Android string link_cancelled"
+  },
+  "linkExportFailed": "تعذّر الحفظ، ولم يُحفظ شيء.",
+  "@linkExportFailed": {
+    "description": "Android string link_export_failed"
+  },
+  "linkSaved": "حُفظ بلا موسيقى",
+  "@linkSaved": {
+    "description": "Android string link_saved"
+  },
+  "linkSavedVideo": "في المعرض: الأفلام › Waaiya",
+  "@linkSavedVideo": {
+    "description": "Android string link_saved_video"
+  },
+  "linkSavedAudio": "في الموسيقى: Music › Waaiya",
+  "@linkSavedAudio": {
+    "description": "Android string link_saved_audio"
+  },
+  "linkPlay": "تشغيل",
+  "@linkPlay": {
+    "description": "Android string link_play"
+  },
+  "linkShare": "مشاركة",
+  "@linkShare": {
+    "description": "Android string link_share"
+  },
+  "linkShareNote": "لا تشارك إلا المقاطع التي يحق لك مشاركتها.",
+  "@linkShareNote": {
+    "description": "Android string link_share_note"
+  },
+  "linkLive": "لا يمكن حفظ البث المباشر.",
+  "@linkLive": {
+    "description": "Android string link_live"
+  },
+  "linkBusy": "يجري حفظ مقطع آخر، يرجى الانتظار حتى ينتهي.",
+  "@linkBusy": {
+    "description": "Android string link_busy"
+  },
+  "linkInvalid": "الصق رابط ويب (يبدأ بـ https://).",
+  "@linkInvalid": {
+    "description": "Android string link_invalid"
+  },
+  "linkLogin": "لم يعرض الموقع هذا المقطع دون حساب. المنشورات العامة تُفتح عادةً: حاول مرة أخرى بعد بضع دقائق. أما المنشورات الخاصة فلا يمكن فتحها.",
+  "@linkLogin": {
+    "description": "Android string link_login"
+  },
+  "linkUnsupported": "هذا الموقع غير مدعوم.",
+  "@linkUnsupported": {
+    "description": "Android string link_unsupported"
+  },
+  "linkPlaylist": "هذه قائمة تشغيل. افتح مقطعًا واحدًا.",
+  "@linkPlaylist": {
+    "description": "Android string link_playlist"
+  },
+  "linkNoFormat": "هذا المقطع بصيغة لا تستطيع واعية تصفيتها بعد.",
+  "@linkNoFormat": {
+    "description": "Android string link_no_format"
+  },
+  "linkFailed": "تعذّر فتح هذا الرابط. تحقّق من الاتصال وحاول مرة أخرى.",
+  "@linkFailed": {
+    "description": "Android string link_failed"
+  },
+  "linkPlayFailed": "تعذّر تشغيل هذا المقطع، ولم يُشغَّل أي صوت دون تصفية.",
+  "@linkPlayFailed": {
+    "description": "Android string link_play_failed"
+  },
+  "linkLimited": "الموقع يحدّ من الطلبات الآن. حاول مرة أخرى بعد بضع دقائق.",
+  "@linkLimited": {
+    "description": "Android string link_limited"
+  },
+  "blurTitle": "تمويه الشاشة",
+  "@blurTitle": {
+    "description": "Android string blur_title"
+  },
+  "blurBody": "يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.",
+  "@blurBody": {
+    "description": "Android string blur_body"
+  },
+  "blurWomenTitle": "تمويه النساء",
+  "@blurWomenTitle": {
+    "description": "Android string blur_women_title"
+  },
+  "blurWomenBody": "الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.",
+  "@blurWomenBody": {
+    "description": "Android string blur_women_body"
+  },
+  "blurNudityTitle": "تمويه الصور غير المحتشمة",
+  "@blurNudityTitle": {
+    "description": "Android string blur_nudity_title"
+  },
+  "blurNudityBody": "العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.",
+  "@blurNudityBody": {
+    "description": "Android string blur_nudity_body"
+  },
+  "blurFailTitle": "تغطية الشاشة إذا عجز التمويه عن المتابعة",
+  "@blurFailTitle": {
+    "description": "Android string blur_fail_title"
+  },
+  "blurFailBody": "مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailBody": {
+    "description": "Android string blur_fail_body"
+  },
+  "blurSetupShizuku": "السماح عبر Shizuku",
+  "@blurSetupShizuku": {
+    "description": "Android string blur_setup_shizuku"
+  },
+  "blurSetupManual": "السماح من إعدادات أندرويد",
+  "@blurSetupManual": {
+    "description": "Android string blur_setup_manual"
+  },
+  "blurStatusNeedsSetup": "يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).",
+  "@blurStatusNeedsSetup": {
+    "description": "Android string blur_status_needs_setup"
+  },
+  "blurStatusNeedsOverlay": "يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى: اسمح بذلك عبر Shizuku، أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد. اللمس على منطقة مموّهة لا يصل إلى التطبيق تحتها.",
+  "@blurStatusNeedsOverlay": {
+    "description": "Android string blur_status_needs_overlay"
+  },
+  "blurFailUnavailable": "غير متاح في هذه النسخة: هنا لا يصل اللمس على المنطقة المموّهة إلى التطبيق، فتغطية الشاشة كلها ستمنع كل لمس وقد تعلق. إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailUnavailable": {
+    "description": "Android string blur_fail_unavailable"
+  },
+  "blurFailNeedsA11y": "يحتاج إلى خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه). بدونها ستمنع تغطية الشاشة كلها كل لمس وقد تعلق، لذا تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailNeedsA11y": {
+    "description": "Android string blur_fail_needs_a11y"
+  },
+  "languageTitle": "اللغة",
+  "@languageTitle": {
+    "description": "Android string language_title"
+  },
+  "settingLanguageTitle": "اللغة: {language}",
+  "@settingLanguageTitle": {
+    "description": "Android string setting_language_title",
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "languageAr": "العربية",
+  "@languageAr": {
+    "description": "Android string language_ar"
+  },
+  "languageEn": "English",
+  "@languageEn": {
+    "description": "Android string language_en"
+  },
+  "blurStatusRestart": "أوقف التصفية ثم شغّلها لتطبيق إعدادات التمويه.",
+  "@blurStatusRestart": {
+    "description": "Android string blur_status_restart"
+  },
+  "blurStatusStarting": "جارٍ تشغيل التمويه…",
+  "@blurStatusStarting": {
+    "description": "Android string blur_status_starting"
+  },
+  "blurStatusOn": "التمويه يعمل.",
+  "@blurStatusOn": {
+    "description": "Android string blur_status_on"
+  },
+  "blurStatusOnVisible": "التمويه يعمل بوضع الحذر: هذا الهاتف يُظهر التمويه في التقاط الشاشة نفسه، فتبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.",
+  "@blurStatusOnVisible": {
+    "description": "Android string blur_status_on_visible"
+  },
+  "blurStatusModels": "هذه النسخة تفتقد نموذج التمويه للخيار المختار.",
+  "@blurStatusModels": {
+    "description": "Android string blur_status_models"
+  },
+  "blurStatusFailing": "التمويه عاجز عن المتابعة الآن.",
+  "@blurStatusFailing": {
+    "description": "Android string blur_status_failing"
+  },
+  "blurStatusNoOverlay": "لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.",
+  "@blurStatusNoOverlay": {
+    "description": "Android string blur_status_no_overlay"
+  },
+  "blurSetupFailed": "تعذّر السماح عبر Shizuku:\n{details}",
+  "@blurSetupFailed": {
+    "description": "Android string blur_setup_failed",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
+  "@desktopPreview": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "actionFailed": "تعذّر ذلك: {details}",
+  "@actionFailed": {
+    "description": "Flutter only. Arabic not reviewed yet.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  }
+}
