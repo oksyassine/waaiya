@@ -48,4 +48,17 @@ Recipe: same data and settings as voice v3 (`kaggle/voice-lowdelay/`; DATA_HOURS
 warmup + cosine schedule, 5 h budget on a T4). It starts from the voice_v1 checkpoint (`KAGGLE_USER/islamic-mute-voice-v1-ckpt`,
 step 12,275) with the taps moved, and trains with `--lookahead 0`.
 
-_Pending: the run has not finished yet._
+Result (run finished 2026-11-10 02:44 UTC; Kaggle's own scorer, same 65-item test set; "start" = voice_v1 at look-ahead 2):
+
+| group | suppression dB (voice_v1 → ld0) | voice retention dB (voice_v1 → ld0) |
+|---|---|---|
+| recitation | 21.91 → 21.79 | −2.67 → −2.90 |
+| singing | 23.24 → 23.11 | −1.81 → −2.30 |
+| speech_ar | 18.03 → 18.02 | −0.92 → −1.97 |
+| speech_en | 22.03 → 21.50 | −0.89 → −1.11 |
+| music-only leak | −54.88 → −56.92 | |
+
+The 10 ms model keeps the suppression of the 30 ms one and loses 0.2–1 dB of voice (most on Arabic speech).
+Not yet done: C-engine parity, int8 shrink, listening check. Files: `models/voice/lowdelay/out/voice_ld0.onnx`
+(+ `.state_init.bin`, not in git). Like voice_v1 it is trained on the Quran recitation data whose licence is not
+cleared, so it is not published (see `docs/MODELS.md`).

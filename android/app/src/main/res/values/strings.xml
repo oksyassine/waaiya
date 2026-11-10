@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Islamic Mute</string>
+    <string name="app_name">Waaiya</string>
     <string name="tagline">Removes musical instruments from every app and keeps speech and recitation.</string>
 
     <string name="onboard_title">Welcome</string>
-    <string name="onboard_body">Islamic Mute removes musical instruments from the sound of every app on this phone. Speech and Quran recitation are kept. For now, singing voices are removed too.</string>
+    <string name="onboard_body">Waaiya removes musical instruments from the sound of every app on this phone. Speech and Quran recitation are kept. For now, singing voices are removed too.</string>
     <string name="onboard_question">I am</string>
     <string name="gender_man">A man</string>
     <string name="gender_woman">A woman</string>
@@ -21,12 +21,12 @@
     <string name="power_start_cd">Start filtering</string>
     <string name="power_stop_cd">Stop filtering</string>
     <string name="capture_hint">Android will ask to share your screen. Only the sound is used: nothing is recorded or sent.</string>
-    <string name="need_record_audio">Islamic Mute needs the microphone permission to receive other apps\' sound. It never records you.</string>
+    <string name="need_record_audio">Waaiya needs the microphone permission to receive other apps\' sound. It never records you.</string>
 
     <string name="setup_banner_title">One more step</string>
     <string name="setup_banner_body">Without the one-time setup below, you will hear the music and the filtered sound together.</string>
     <string name="setup_title">One-time setup</string>
-    <string name="setup_body">Lets Islamic Mute silence the original sound. You do it once; it stays until you uninstall the app.</string>
+    <string name="setup_body">Lets Waaiya silence the original sound. You do it once; it stays until you uninstall the app.</string>
     <string name="step1_title">Install Shizuku</string>
     <string name="step1_body">A free helper app from the Play Store.</string>
     <string name="step1_action">Get Shizuku</string>
@@ -35,7 +35,7 @@
     <string name="step2_action">Open Shizuku</string>
     <string name="step2_update">Update Shizuku</string>
     <string name="step2_too_old">Your Shizuku version is too old. Update it from the Play Store.</string>
-    <string name="step2_denied">Shizuku is set to always deny Islamic Mute. In Shizuku, allow it in the list of apps.</string>
+    <string name="step2_denied">Shizuku is set to always deny Waaiya. In Shizuku, allow it in the list of apps.</string>
     <string name="step3_title">Give permission</string>
     <string name="step3_body">One tap, then choose \"Allow\".</string>
     <string name="step3_action">Give permission</string>
@@ -62,15 +62,15 @@
     <string name="change">Change</string>
 
     <string name="player_title">Videos in perfect sync</string>
-    <string name="player_body">Share a video to Islamic Mute (or use \"Open with\") to watch it filtered with no delay.</string>
+    <string name="player_body">Share a video to Waaiya (or use \"Open with\") to watch it filtered with no delay.</string>
     <string name="licences">Open-source licences</string>
-    <string name="licences_intro">Islamic Mute is free software under the Apache License 2.0.</string>
+    <string name="licences_intro">Waaiya is free software under the Apache License 2.0.</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (training data): https://creativecommons.org/licenses/by/4.0/</string>
     <string name="licences_full">Full texts</string>
     <string name="back">Back</string>
 
     <string name="notif_channel">Filter</string>
-    <string name="notif_title">Islamic Mute is on</string>
+    <string name="notif_title">Waaiya is on</string>
     <string name="notif_text">Instruments are removed from all apps</string>
     <string name="notif_stop">Stop</string>
 </resources>

@@ -1,8 +1,27 @@
-# Islamic Mute
+# Waaiya · واعية
 
-System-wide voice filter: removes musical instruments from everything the device plays and keeps the voice.
-On-device, streaming, fail-closed (if the filter cannot run, the output is silent, never unfiltered).
+[![Android](https://github.com/oksyassine/waaiya/actions/workflows/android.yml/badge.svg)](https://github.com/oksyassine/waaiya/actions/workflows/android.yml)
+[![Linux engine](https://github.com/oksyassine/waaiya/actions/workflows/linux.yml/badge.svg)](https://github.com/oksyassine/waaiya/actions/workflows/linux.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
+> «وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ», "and that a heedful ear would retain it" (al-Ḥāqqah 69:12)
+
+Waaiya removes musical instruments from everything your device plays and keeps the voice: speech, Quran
+recitation, lectures. It runs on the device, in real time, and fails closed: if the filter cannot run, you hear
+silence, never the unfiltered sound. (The project was called "Islamic Mute" before; some internal names, such as
+the Android package `org.islamicmute.app` and the Linux service, keep the old name so existing installs update.)
+
+| Platform | Status | How it works |
+|---|---|---|
+| **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. |
+| **Linux** (PulseAudio, PipeWire-Pulse) | Works | Virtual output + always-on user service (`waaiya install`, `waaiya start`). |
+| **macOS** 14.4+ | Planned | Core Audio process tap; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
+| **Windows** 10/11 | Planned | Per-app loopback capture or a virtual device; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
+| **iOS / iPadOS** | Limited by Apple | No app may change other apps' sound. Planned: in-app player for links, Safari extension. |
+| **Browsers** | Planned | Extension filtering the tab's media (desktop Chrome, Firefox, Edge, Safari). |
+
+Download the Android app from the [releases](https://github.com/oksyassine/waaiya/releases). How each platform
+is handled, and what is shared between them: [docs/PLATFORMS.md](docs/PLATFORMS.md).
 Research behind the design: `reports/System wide instrument muting app.md`.
 
 ## Layout
@@ -13,10 +32,12 @@ Research behind the design: `reports/System wide instrument muting app.md`.
 | `models/dfn3/` | Streaming export of DeepFilterNet3 (speech mode) + parity tests against the official implementation. |
 | `models/voice/` | Training of our own model that keeps speech, Quran recitation and singing (stage 3). |
 | `cli/` | `im-process` (file in/out, delay-compensated) and `im-stream` (raw stdin/stdout filter used by the Linux daemon). |
-| `linux/` | `islamic-mute` command, systemd user service, LADSPA plugin (for PipeWire filter-chain), live tests. |
+| `linux/` | `waaiya` command (also installed as `islamic-mute`), systemd user service, LADSPA plugin (for PipeWire filter-chain), live tests. |
 | `testset/` | Builds the evaluation set: licensed voice clips + synthesised instrumental music (exact references). |
 | `eval/` | Scores models through the real engine: instrument suppression, voice retention, SI-SDR, leakage, optional WER. |
-| `android/` | Android app (stage 2). |
+| `android/` | Android app: system-wide filter, player, links (yt-dlp in the app). |
+| `scripts/` | `fetch_deps.sh`: ONNX Runtime and the default model, with checksums. |
+| `kaggle/` | Training notebooks (Kaggle GPU) for the voice model and the detector. |
 
 ## Model contract (`im.contract = 1`)
 
@@ -27,14 +48,20 @@ Optional `<model>.state_init.bin` (raw float32) holds the initial state. All DSP
 ## Build and run (Linux)
 
 ```bash
+scripts/fetch_deps.sh                 # ONNX Runtime 1.19.2 + default model (int8 DeepFilterNet3), checksummed
 make                                  # needs gcc; uses third_party/sysroot if libc headers are missing
+linux/bin/waaiya install              # copies engine + model to ~/.local; then:
+waaiya start                          # or: waaiya enable  (always on, every login)
+waaiya status | stop
+```
+
+To export the models yourself instead of downloading them:
+
+```bash
 python3 -m venv .venv && . .venv/bin/activate && pip install deepfilternet torch==2.1.2 onnx onnxruntime soundfile
 python models/dfn3/export_stream.py --out models/dfn3/dfn3_stream.onnx
 python models/dfn3/test_parity.py     # streaming export == official DeepFilterNet3
 python models/dfn3/test_engine.py     # C engine == PyTorch
-linux/bin/islamic-mute install
-islamic-mute start                    # or: islamic-mute enable  (always on, every login)
-islamic-mute status | stop
 ```
 
 Tests that touch the sound server are isolated (null sinks, nothing audible):
@@ -50,6 +77,7 @@ python eval/evaluate.py --candidate dfn3=models/dfn3/dfn3_stream.onnx [--asr bas
 ## Android
 
 ```bash
+scripts/fetch_deps.sh                   # default model (the APK bundles it)
 cd android && ./gradlew assembleDebug   # -PimModel=/path/model.onnx to bundle another model
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
@@ -60,7 +88,7 @@ Optionally, the app-op `PROJECT_MEDIA` = allow stops Android asking for screen-c
 Both are granted once, in one of two ways:
 
 - **Without a computer (Shizuku):** install and start [Shizuku](https://shizuku.rikka.app) (wireless debugging
-  on Android 11+, or root), open Islamic Mute and tap **Grant with Shizuku**, then allow it in Shizuku's dialog.
+  on Android 11+, or root), open Waaiya and tap **Grant with Shizuku**, then allow it in Shizuku's dialog.
   The app runs a short-lived Shizuku UserService that executes `cmd package grant` and `cmd appops set`
   (see `android/app/src/main/java/org/islamicmute/app/ShizukuSetup.kt`). Shizuku can be stopped afterwards:
   both grants persist until the app is uninstalled.
@@ -80,16 +108,17 @@ the detector is missing or fails while the option is on, the voice is muted.
   Code: `models/detector/` (`train_detector.py`, `prepare_detector_data.py`, `mobilenet.py`).
 - Engine: `im_config.detector_path` + `im_engine_set_policy(e, IM_POLICY_MUTE_FEMALE_SINGING | IM_POLICY_FAIL_CLOSED)`;
   CLI: `im-process -m voice.onnx -d detector.onnx --mute-female-singing in.wav out.wav`.
-- Linux: `islamic-mute women-singing on [detector.onnx]` (or `off`), then restart.
+- Linux: `waaiya women-singing on [detector.onnx]` (or `off`), then restart.
 - Android: the toggle appears for men; build with `-PimDetector=/path/detector_v1.onnx`
   (default `models/detector/detector_v1.onnx` if present).
 - Parity test (C front end vs PyTorch): `make build/test-detector && python models/detector/test_detector_engine.py detector.onnx`.
 
 ## Contributing / building
 
-- Build steps are above (Linux: `make`; Android: `./gradlew assembleDebug`). The Linux build expects ONNX Runtime
-  1.19.2 (`onnxruntime-linux-x64-1.19.2.tgz` from the ONNX Runtime GitHub releases) unpacked into
-  `third_party/onnxruntime/`, or pass `ORT=/path/to/onnxruntime` to `make`.
+See [CONTRIBUTING.md](CONTRIBUTING.md). In short:
+
+- Build steps are above (Linux: `make`; Android: `./gradlew assembleDebug`). `scripts/fetch_deps.sh` puts ONNX
+  Runtime 1.19.2 in `third_party/onnxruntime/`, or pass `ORT=/path/to/onnxruntime` to `make`.
 - Model files are not in git: export them or download them from the release assets (`docs/MODELS.md`).
 - Project status and open work: `docs/STATUS.md`. Run the parity tests and `eval/evaluate.py` before proposing model
   or engine changes.

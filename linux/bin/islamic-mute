@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# islamic-mute: always-on, system-wide voice filter for Linux (removes instruments, keeps voice).
+# waaiya (also installed as islamic-mute): always-on, system-wide voice filter for Linux (removes instruments, keeps voice).
 #
 #   islamic-mute install [model.onnx]   copy engine + model into ~/.local (no root needed)
 #   islamic-mute run [--default]        run in the foreground (used by the systemd user service)
@@ -11,7 +11,7 @@
 #                                       for men: also mute women's singing (restart to apply). Fail-closed:
 #                                       if the detector cannot load, voice is muted while this is on.
 #
-# How it works: apps play into a virtual output "Islamic Mute". The filter reads it, removes
+# How it works: apps play into a virtual output "Waaiya". The filter reads it, removes
 # instruments, and plays the result to the real speakers or headphones.
 # Fail-closed: if the filter crashes, apps keep playing into the silent virtual output while the
 # filter restarts. Only an explicit stop restores normal (unfiltered) audio.
@@ -73,7 +73,8 @@ install_cmd() {
     # put the command on PATH (~/.local/bin is on PATH by default on Debian/Ubuntu/Fedora)
     mkdir -p "$HOME/.local/bin"
     ln -sfn "$LIB/islamic-mute" "$HOME/.local/bin/$APP"
-    case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) log "add ~/.local/bin to PATH (or log out and in) to use '$APP' directly" ;; esac
+    ln -sfn "$LIB/islamic-mute" "$HOME/.local/bin/waaiya"  # the project name; same command
+    case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) log "add ~/.local/bin to PATH (or log out and in) to use 'waaiya' directly" ;; esac
     mkdir -p "$HOME/.config/systemd/user"
     sed "s|@BIN@|$LIB/islamic-mute|g" "$HERE/../systemd/islamic-mute.service.in" > "$HOME/.config/systemd/user/islamic-mute.service"
     systemctl --user daemon-reload 2>/dev/null || true
@@ -92,7 +93,7 @@ run_cmd() {
     [ -n "$master" ] && sink_exists "$master" || die "no real output device found"
     if ! sink_exists "$SINK"; then
         module="$(pactl load-module module-null-sink sink_name=$SINK rate=48000 channels=2 \
-                  sink_properties=device.description=Islamic_Mute)" || die "cannot create virtual output"
+                  sink_properties=device.description=Waaiya)" || die "cannot create virtual output"
         echo "$module" > "$STATE/module_id"
     fi
     pactl set-sink-volume "$SINK" 100% 2>/dev/null || true
@@ -155,7 +156,7 @@ run_cmd() {
         # the virtual output vanished (sound server restart): recreate it
         if ! sink_exists "$SINK"; then
             module="$(pactl load-module module-null-sink sink_name=$SINK rate=48000 channels=2 \
-                      sink_properties=device.description=Islamic_Mute)" && echo "$module" > "$STATE/module_id"
+                      sink_properties=device.description=Waaiya)" && echo "$module" > "$STATE/module_id"
             stop_pipe; start_pipe
             [ $make_default = 1 ] && pactl set-default-sink "$SINK"
         fi

@@ -1,0 +1,32 @@
+name: Bug report
+description: Something does not work, or music is heard when it should not be
+labels: [bug]
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: [Android, Linux, Other]
+    validations: { required: true }
+  - type: input
+    id: version
+    attributes:
+      label: App version and device / distribution
+      placeholder: "0.1.0, Samsung S24 (Android 15) / Ubuntu 24.04 with PipeWire"
+    validations: { required: true }
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+      description: If music leaked, say which app or link, when (start, middle) and for how long.
+    validations: { required: true }
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "Android: `adb logcat -d | grep -i -e waaiya -e islamicmute`. Linux: `journalctl --user -u islamic-mute -n 200`."
+      render: text
