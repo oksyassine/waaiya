@@ -22,7 +22,10 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 /**
  * The screen-blur covers, drawn over every app.
  *
- * Window: an accessibility overlay when [BlurAccessibilityService] runs (full screen; Android lets touches pass
+ * Best host (Android 12+, Shizuku running): [ShizukuCovers], a layer owned by the shell, which touches pass through
+ * and which is left out of the screen capture, with no accessibility service and no overlay permission.
+ *
+ * Otherwise a window: an accessibility overlay when [BlurAccessibilityService] runs (full screen; Android lets touches pass
  * through accessibility overlays), otherwise an app overlay ("display over other apps") sized to the covers only,
  * because Android 12+ drops touches that land on an opaque app overlay.
  *
@@ -31,7 +34,7 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
  * All calls on the main thread.
  */
 class BlurOverlay(private val context: Context) {
-    enum class Host { ACCESSIBILITY, APP_OVERLAY }
+    enum class Host { SHIZUKU, ACCESSIBILITY, APP_OVERLAY }
 
     private val main = Handler(Looper.getMainLooper())
     private var wm: WindowManager? = null
@@ -43,8 +46,37 @@ class BlurOverlay(private val context: Context) {
     var skipApplied = false
         private set
 
-    /** Attaches the window. Returns false when neither an accessibility service nor the overlay permission is there. */
+    private var layer: ShizukuCovers? = null
+    /** After the Shizuku layer failed, windows are used for a while instead of retrying every watchdog tick. */
+    private var layerFailedAt = -1_000_000L
+
+    /** Picks the host: the Shizuku layer when possible (decided asynchronously, falling back to a window), else a
+     *  window. Returns false when nothing can draw (no Shizuku, no accessibility service, no overlay permission). */
     fun attach(): Boolean {
+        if (view != null || layer != null) return true
+        if (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(context) == ShizukuSetup.State.READY &&
+            android.os.SystemClock.uptimeMillis() - layerFailedAt > 30_000) {
+            val l = ShizukuCovers(context)
+            layer = l
+            host = Host.SHIZUKU
+            l.connect { ok ->
+                if (layer !== l) return@connect                 // detached meanwhile
+                if (ok) {
+                    skipApplied = true
+                    show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+                } else {
+                    Log.w(TAG, "blur: Shizuku layer unavailable, using a window")
+                    layerFailedAt = android.os.SystemClock.uptimeMillis()
+                    layer = null; host = null
+                    attachWindow()
+                }
+            }
+            return true
+        }
+        return attachWindow()
+    }
+
+    private fun attachWindow(): Boolean {
         if (view != null) return true
         val a11y = BlurAccessibilityService.instance
         val (ctx, type, h) = when {
@@ -79,6 +111,8 @@ class BlurOverlay(private val context: Context) {
     }
 
     fun detach() {
+        layer?.stop(); layer = null
+        if (host == Host.SHIZUKU) { host = null; skipApplied = false }
         val v = view ?: return
         runCatching { wm?.removeViewImmediate(v) }
         view = null; wm = null; params = null; host = null; skipApplied = false
@@ -97,6 +131,20 @@ class BlurOverlay(private val context: Context) {
     private var lastCount = 0
     private var lastThumb: Bitmap? = null
     private var lastFail = 0
+    private var lastTest = false
+
+    /** Called twice a second: keeps the Shizuku layer's covers alive (it hides them when the app goes quiet), and
+     *  drops a dead Shizuku layer so the next attach() falls back to a window. */
+    fun heartbeat() {
+        val l = layer ?: return
+        if (!l.alive && host == Host.SHIZUKU && skipApplied) {
+            Log.w(TAG, "blur: Shizuku layer died (Shizuku stopped?)")
+            layerFailedAt = android.os.SystemClock.uptimeMillis()
+            layer = null; host = null; skipApplied = false
+            return
+        }
+        if (skipApplied) show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+    }
 
     /** Changes only the failure display, keeping the current covers. */
     fun setFailMode(failMode: Int) {
@@ -108,10 +156,18 @@ class BlurOverlay(private val context: Context) {
      * failMode: 0 none, 1 cover everything (the blur cannot keep up and the user chose "cover"), 2 warning badge.
      */
     fun show(rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int, testSquare: Boolean) {
-        lastRects = rects; lastCount = count; lastThumb = thumb; lastFail = failMode
-        val v = view ?: return
+        lastRects = rects; lastCount = count; lastThumb = thumb; lastFail = failMode; lastTest = testSquare
         val scr = screen()
-        v.set(rects, count, thumb, failMode, testSquare, scr)
+        if (host == Host.SHIZUKU) { layer?.let { showOnLayer(it, rects, count, thumb, failMode, testSquare, scr) }; return }
+        val v = view ?: return
+        var rs = rects
+        if (host == Host.APP_OVERLAY) {
+            // here a cover swallows touches: a whole-screen (nudity) cover leaves the bottom free so people can
+            // still scroll or leave
+            rs = rects.copyOf(count * 5)
+            for (i in 0 until count) if (rs[i * 5 + 4].toInt() == Vision.KIND_FULL) rs[i * 5 + 3] = minOf(rs[i * 5 + 3], FULL_COVER_BOTTOM)
+        }
+        v.set(rs, count, thumb, failMode, testSquare, scr)
         if (host == Host.APP_OVERLAY) {
             // window = union of the covers (touches elsewhere reach the app); hidden when there is nothing to draw
             val u = v.union(scr)
@@ -125,6 +181,49 @@ class BlurOverlay(private val context: Context) {
             }
         }
         v.invalidate()
+    }
+
+    private var layerBuf = FloatArray(0)
+
+    /** Covers as solid shell layers, each tinted with the mean colour of what it hides (from the thumbnail). */
+    private fun showOnLayer(l: ShizukuCovers, rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int,
+                            testSquare: Boolean, scr: Rect) {
+        val n = count + 2
+        if (layerBuf.size < n * ShizukuCovers.RECORD) layerBuf = FloatArray(n * ShizukuCovers.RECORD)
+        val b = layerBuf
+        var k = 0
+        fun put(x0: Float, y0: Float, x1: Float, y1: Float, kind: Int, rgb: Int) {
+            val o = k++ * ShizukuCovers.RECORD
+            b[o] = x0; b[o + 1] = y0; b[o + 2] = x1; b[o + 3] = y1; b[o + 4] = kind.toFloat()
+            b[o + 5] = Color.red(rgb) / 255f; b[o + 6] = Color.green(rgb) / 255f; b[o + 7] = Color.blue(rgb) / 255f
+        }
+        val w = scr.width().toFloat(); val h = scr.height().toFloat()
+        val fallback = context.getColor(R.color.surface)
+        if (failMode == 1) put(0f, 0f, w, h, ShizukuCovers.KIND_FAIL_COVER, fallback)
+        else for (i in 0 until count) {
+            val x0 = rects[i * 5]; val y0 = rects[i * 5 + 1]; val x1 = rects[i * 5 + 2]; val y1 = rects[i * 5 + 3]
+            put(x0 * w, y0 * h, x1 * w, y1 * h, rects[i * 5 + 4].toInt(), meanColor(thumb, x0, y0, x1, y1) ?: fallback)
+        }
+        if (failMode == 2) {
+            val d = context.resources.displayMetrics.density
+            put(0f, 0f, w, 6 * d, ShizukuCovers.KIND_BADGE, Color.RED) // thin red bar at the top: blur not working
+        }
+        if (testSquare) {
+            val s = BlurOverlay.TEST_SQUARE_DP * context.resources.displayMetrics.density
+            put(0f, h / 2, s, h / 2 + s, ShizukuCovers.KIND_TEST, Color.MAGENTA)
+        }
+        l.update(b, k)
+    }
+
+    /** Mean colour of the thumbnail cells under a cover, darkened a little (a calm, opaque tint). */
+    private fun meanColor(t: Bitmap?, x0: Float, y0: Float, x1: Float, y1: Float): Int? {
+        if (t == null || t.isRecycled) return null
+        val cx0 = (x0 * t.width).toInt().coerceIn(0, t.width - 1); val cx1 = (x1 * t.width).toInt().coerceIn(cx0, t.width - 1)
+        val cy0 = (y0 * t.height).toInt().coerceIn(0, t.height - 1); val cy1 = (y1 * t.height).toInt().coerceIn(cy0, t.height - 1)
+        var r = 0L; var g = 0L; var bl = 0L; var n = 0
+        for (y in cy0..cy1) for (x in cx0..cx1) { val p = t.getPixel(x, y); r += Color.red(p); g += Color.green(p); bl += Color.blue(p); n++ }
+        if (n == 0) return null
+        return Color.rgb((r / n * 0.8).toInt(), (g / n * 0.8).toInt(), (bl / n * 0.8).toInt())
     }
 
     /** Hidden API: SurfaceControl.Transaction#setSkipScreenshot on the overlay window's surface (Android 12+). */
@@ -244,6 +343,8 @@ class BlurOverlay(private val context: Context) {
         /** Self-test square, drawn at the left edge, half-way down, for at most a second when the blur starts
          *  (not at the top: an app overlay may sit under the status bar). */
         const val TEST_SQUARE_DP = 16f
+        /** App-overlay host: a whole-screen cover stops here (fraction of the height), leaving the bottom touchable. */
+        const val FULL_COVER_BOTTOM = 0.88f
     }
 }
 
@@ -270,7 +371,9 @@ class BlurAccessibilityService : AccessibilityService() {
  * Touches reach the app under the covers only through the accessibility overlay. Without it, a full-screen cover would
  * block every touch, so the "cover the screen" fail setting is off and greyed out.
  */
-fun Context.blurTouchPassThrough(): Boolean = BuildConfig.BLUR_A11Y && blurAccessibilityEnabled()
+fun Context.blurTouchPassThrough(): Boolean =
+    (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(this) == ShizukuSetup.State.READY) ||
+        (BuildConfig.BLUR_A11Y && blurAccessibilityEnabled())
 
 /** True when the user (or Shizuku) turned on [BlurAccessibilityService]. */
 fun Context.blurAccessibilityEnabled(): Boolean {
