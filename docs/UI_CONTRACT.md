@@ -39,7 +39,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | Key | Type | Meaning |
 |---|---|---|
 | `platform` | String | `android`, `linux`, `windows`, `macos` |
-| `version` | String | App version name (`0.2.3`) |
+| `version` | String | App version name (`0.2.4`) |
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
 | `settings` | Map | The settings below, with their current values |
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM` (`FilterService.State`) |
@@ -57,6 +57,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `blur.a11yBuild` | bool | This build declares the blur accessibility service (`BuildConfig.BLUR_A11Y`) |
 | `blur.a11yEnabled` | bool | That service is on |
 | `blur.touchPassThrough` | bool | Touches reach the app under a cover (so a full-screen fail cover is safe) |
+| `blur.layerSupported` | bool | The Shizuku cover layer is possible on this device (Android 12+) |
 | `blur.shizukuLayer` | bool | Shizuku is ready on Android 12+: the covers are a Shizuku shell layer (`ShizukuCovers`), nothing else to allow |
 | `blur.busy` | bool | A Shizuku blur grant is running |
 | `blur.message` | Map? | `{code: "setup_failed", detail}` |
@@ -67,7 +68,7 @@ Capabilities (the UI hides what is false):
 
 | Key | Android | Desktop (now) |
 |---|---|---|
-| `shizukuSetup` | true | false |
+| `shizukuSetup` (setup checklist, Shizuku guide, `openShizuku`, `openDeveloperOptions`) | true | false |
 | `adbSetup` | true | false |
 | `captureConsent` (Android asks to share the screen at start) | true | false |
 | `screenBlur` | true | false (later: Windows capture + overlay) |
@@ -97,8 +98,10 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `setSetting` | `{key, value}` | null | `Settings` setters | JSON file |
 | `startFilter` | none | `started`, `mic_denied`, `consent_denied`, `already_running` | Asks RECORD_AUDIO (+ POST_NOTIFICATIONS once), then the MediaProjection consent (whole screen on 14+), then starts `FilterService`. The result arrives when the dialogs are done; the state then follows through events. | TODO(engine): start the audio host through `dart:ffi`; now simulated |
 | `stopFilter` | none | null | `FilterService.ACTION_STOP` | TODO(engine) |
-| `runSetupStep` | `{step: 0,1,2}` | null | The checklist button: 0 = get Shizuku (store), 1 = open / update Shizuku, 2 = grant through Shizuku (asks Shizuku's permission first if needed). Outcome in `setup.*` events. | `unsupported` |
-| `blurSetup` | none | null | "Allow with Shizuku": `ShizukuSetup.grantBlur`, or installs / opens Shizuku first. Outcome in `blur.*` events. | `unsupported` |
+| `runSetupStep` | `{step: 0,1,2}` | null | The checklist button: 0 = get Shizuku (store), 1 = update (TOO_OLD) or open Shizuku, 2 = grant through Shizuku (asks Shizuku's permission first if needed). Outcome in `setup.*` events. When Shizuku is installed but not running, Flutter shows the start guide for step 1 instead of calling this. | `unsupported` |
+| `blurSetup` | none | null | "Allow with Shizuku" and the button under the greyed-out "cover the screen" switch: `ShizukuSetup.grantBlur`, or the store / Shizuku's permission dialog / Shizuku first. Outcome in `blur.*` events. For NOT_RUNNING Flutter shows the guide instead. | `unsupported` |
+| `openShizuku` | none | null | Opens Shizuku (its store page when not installed). From the guide. | `unsupported` |
+| `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS`, else `ACTION_DEVICE_INFO_SETTINGS` (Developer options not on yet). From the guide. | `unsupported` |
 | `openOverlaySettings` | none | null | Android's "Display over other apps" page | `unsupported` |
 | `setLanguage` | `{tag: "ar"\|"en"}` | null | Saved natively for the native screens, services and notifications (`Lang`); no activity restart, Flutter switches in place | JSON file |
 | `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` (later) |
@@ -106,7 +109,8 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
 
 Reading: there is no per-key getter. Every setting and the language are in the snapshot (`getState`, and every
-event), which is the getter; `setSetting` and `setLanguage` are the setters. Clipboard (the adb commands) uses
+event), which is the getter; `setSetting` and `setLanguage` are the setters. The Shizuku start guide (wireless debugging, `guide_*` texts) is a Flutter dialog, shown from setup step 2 and from
+the blur card's Shizuku button while Shizuku is installed but not running. Clipboard (the adb commands) uses
 Flutter's own `Clipboard`; it needs no backend method.
 
 ## Where the desktop backend differs

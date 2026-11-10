@@ -48,6 +48,12 @@ class ChannelBackend implements WaaiyaBackend {
   Future<void> openOverlaySettings() => _call<void>('openOverlaySettings');
 
   @override
+  Future<void> openShizuku() => _call<void>('openShizuku');
+
+  @override
+  Future<void> openDeveloperOptions() => _call<void>('openDeveloperOptions');
+
+  @override
   Future<void> setLanguage(String tag) => _call<void>('setLanguage', {'tag': tag});
 
   @override

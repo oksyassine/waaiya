@@ -35,7 +35,7 @@ class DesktopBackend extends MemoryBackend {
     }
     final initial = AppState(
       platform: Platform.operatingSystem,
-      version: '0.2.3',
+      version: '0.2.4',
       language: saved[_langKey] == 'en' ? 'en' : 'ar', // Arabic first, whatever the system language
       settings: WaaiyaSettings.fromMap(settings),
       filter: const FilterInfo(simulated: true),

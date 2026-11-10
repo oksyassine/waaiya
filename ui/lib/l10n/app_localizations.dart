@@ -269,7 +269,7 @@ abstract class AppLocalizations {
   /// Android string step2_body
   ///
   /// In ar, this message translates to:
-  /// **'في Shizuku اختر «البدء عبر تصحيح الأخطاء اللاسلكي» واتبع خطواته، ثم ارجع إلى هنا.'**
+  /// **'يعمل Shizuku عبر الـ Wi‑Fi باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ في أندرويد. اضغط الزر لترى الخطوات، ثم ارجع إلى هنا.'**
   String get step2Body;
 
   /// Android string step2_action
@@ -749,13 +749,13 @@ abstract class AppLocalizations {
   /// Android string blur_fail_unavailable
   ///
   /// In ar, this message translates to:
-  /// **'غير متاح في هذه النسخة: هنا لا يصل اللمس على المنطقة المموّهة إلى التطبيق، فتغطية الشاشة كلها ستمنع كل لمس وقد تعلق. إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: يرسم Shizuku الأغطية ويمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailUnavailable;
 
   /// Android string blur_fail_needs_a11y
   ///
   /// In ar, this message translates to:
-  /// **'يحتاج إلى خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه). بدونها ستمنع تغطية الشاشة كلها كل لمس وقد تعلق، لذا تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailNeedsA11y;
 
   /// Android string language_title
@@ -829,6 +829,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تعذّر السماح عبر Shizuku:\n{details}'**
   String blurSetupFailed(String details);
+
+  /// Android string step2_guide
+  ///
+  /// In ar, this message translates to:
+  /// **'كيف أشغّل Shizuku؟'**
+  String get step2Guide;
+
+  /// Android string blur_fail_old_android
+  ///
+  /// In ar, this message translates to:
+  /// **'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  String get blurFailOldAndroid;
+
+  /// Android string guide_title
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل Shizuku خطوة بخطوة'**
+  String get guideTitle;
+
+  /// Android string guide_open_dev
+  ///
+  /// In ar, this message translates to:
+  /// **'خيارات المطور'**
+  String get guideOpenDev;
+
+  /// Android string guide_open_shizuku
+  ///
+  /// In ar, this message translates to:
+  /// **'فتح Shizuku'**
+  String get guideOpenShizuku;
+
+  /// Android string guide_close
+  ///
+  /// In ar, this message translates to:
+  /// **'إغلاق'**
+  String get guideClose;
+
+  /// Android string guide_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.'**
+  String get guideBody;
 
   /// Flutter only. Arabic not reviewed yet.
   ///

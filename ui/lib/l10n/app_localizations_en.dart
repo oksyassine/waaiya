@@ -106,7 +106,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get step2Body =>
-      'In Shizuku, choose \"Start via Wireless debugging\" and follow its steps, then come back.';
+      'Shizuku starts over Wi-Fi with Android\'s wireless debugging. Tap the button for the steps, then come back.';
 
   @override
   String get step2Action => 'Open Shizuku';
@@ -377,11 +377,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurFailUnavailable =>
-      'Not available in this version: here a tap on a blurred area does not reach the app, so a full-screen cover would block every touch and you could get stuck. When the blur cannot keep up, the screen stays visible with a warning.';
+      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) and it turns on: the covers are then drawn by Shizuku and taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Needs the Waaiya Blur accessibility service (Allow with Shizuku above). Without it, a full-screen cover would block every touch and you could get stuck, so the screen stays visible with a warning.';
+      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) or turn on the Waaiya Blur accessibility service (Allow with Shizuku above) and it turns on. Until then, the screen stays visible with a warning.';
 
   @override
   String get languageTitle => 'Language';
@@ -426,6 +426,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String blurSetupFailed(String details) {
     return 'Shizuku could not allow it:\n$details';
   }
+
+  @override
+  String get step2Guide => 'How to start Shizuku';
+
+  @override
+  String get blurFailOldAndroid =>
+      'Greyed out: on this Android version a full-screen cover would block every tap and you could get stuck (Shizuku covers need Android 12 or newer). When the blur cannot keep up, the screen stays visible with a warning.';
+
+  @override
+  String get guideTitle => 'Start Shizuku, step by step';
+
+  @override
+  String get guideOpenDev => 'Developer options';
+
+  @override
+  String get guideOpenShizuku => 'Open Shizuku';
+
+  @override
+  String get guideClose => 'Close';
+
+  @override
+  String get guideBody =>
+      'You need Wi-Fi and Android 11 or newer. Pairing is done once; after the phone restarts you only repeat step 7.\n\n1. Connect the phone to Wi-Fi.\n\n2. Turn on Developer options: Settings › About phone › Software information › tap “Build number” 7 times. (On other phones: Settings › About phone › Build number.)\n\n3. Open Shizuku. If it asks to show notifications, allow it: the pairing code is typed in a Shizuku notification.\n\n4. In Shizuku, under “Start via Wireless debugging”, tap “Pairing”. On the page that opens, tap “Developer options”, turn on “Wireless debugging” and confirm “Allow”.\n\n5. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n6. Keep that screen open and pull down the notifications. When Shizuku\'s notification says “Pairing service found”, tap “Enter pairing code” and type the code. Shizuku says pairing succeeded.\n\n7. Go back to Shizuku and tap “Start” under “Start via Wireless debugging”. Wait until it says “Shizuku is running”.\n\n8. Come back to Waaiya and tap “Give permission”, then “Allow”.\n\nAfter a phone restart Shizuku stops: connect to Wi-Fi, turn “Wireless debugging” back on if it is off, open Shizuku and tap “Start”. No new pairing.';
 
   @override
   String get desktopPreview =>

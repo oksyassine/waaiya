@@ -106,7 +106,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get step2Body =>
-      'في Shizuku اختر «البدء عبر تصحيح الأخطاء اللاسلكي» واتبع خطواته، ثم ارجع إلى هنا.';
+      'يعمل Shizuku عبر الـ Wi‑Fi باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ في أندرويد. اضغط الزر لترى الخطوات، ثم ارجع إلى هنا.';
 
   @override
   String get step2Action => 'فتح Shizuku';
@@ -371,11 +371,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurFailUnavailable =>
-      'غير متاح في هذه النسخة: هنا لا يصل اللمس على المنطقة المموّهة إلى التطبيق، فتغطية الشاشة كلها ستمنع كل لمس وقد تعلق. إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
+      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: يرسم Shizuku الأغطية ويمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
   String get blurFailNeedsA11y =>
-      'يحتاج إلى خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه). بدونها ستمنع تغطية الشاشة كلها كل لمس وقد تعلق، لذا تبقى الشاشة ظاهرة مع تنبيه.';
+      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
   String get languageTitle => 'اللغة';
@@ -420,6 +420,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String blurSetupFailed(String details) {
     return 'تعذّر السماح عبر Shizuku:\n$details';
   }
+
+  @override
+  String get step2Guide => 'كيف أشغّل Shizuku؟';
+
+  @override
+  String get blurFailOldAndroid =>
+      'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
+
+  @override
+  String get guideTitle => 'تشغيل Shizuku خطوة بخطوة';
+
+  @override
+  String get guideOpenDev => 'خيارات المطور';
+
+  @override
+  String get guideOpenShizuku => 'فتح Shizuku';
+
+  @override
+  String get guideClose => 'إغلاق';
+
+  @override
+  String get guideBody =>
+      'تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.';
 
   @override
   String get desktopPreview =>
