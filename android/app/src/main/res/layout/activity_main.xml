@@ -14,6 +14,9 @@
         <!-- First run: asked once, changeable in Settings. -->
         <LinearLayout android:id="@+id/onboarding" style="@style/Card" android:layout_marginTop="24dp"
             android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone">
+            <!-- first screen: switch to the other language in one tap (shows that language's own name) -->
+            <Button android:id="@+id/onboard_language" style="@style/Button.Text" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="end" />
             <TextView style="@style/Text.Headline" android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="@string/onboard_title" android:accessibilityHeading="true" />
             <TextView style="@style/Text.Body" android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -130,6 +133,9 @@
                     android:textColor="@color/text_primary" android:text="@string/blur_fail_title" />
                 <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:paddingEnd="56dp" android:text="@string/blur_fail_body" />
+                <TextView android:id="@+id/blur_fail_note" style="@style/Text.Secondary" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="4dp" android:paddingEnd="56dp"
+                    android:textColor="@color/primary" android:visibility="gone" />
                 <TextView android:id="@+id/blur_status" style="@style/Text.Secondary" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_marginTop="12dp" android:visibility="gone"
                     android:accessibilityLiveRegion="polite" />
@@ -164,6 +170,13 @@
                     <TextView android:id="@+id/gender_value" style="@style/Text.Body" android:layout_width="0dp"
                         android:layout_height="wrap_content" android:layout_weight="1" />
                     <Button android:id="@+id/change_gender" style="@style/Button.Text" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="@string/change" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:minHeight="48dp">
+                    <TextView android:id="@+id/language_value" style="@style/Text.Body" android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="1" />
+                    <Button android:id="@+id/change_language" style="@style/Button.Text" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/change" />
                 </LinearLayout>
             </LinearLayout>

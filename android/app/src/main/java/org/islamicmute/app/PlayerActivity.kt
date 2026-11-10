@@ -34,6 +34,8 @@ import java.nio.ByteOrder
  */
 @OptIn(UnstableApi::class)
 class PlayerActivity : Activity() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     private var player: ExoPlayer? = null
 
     companion object {

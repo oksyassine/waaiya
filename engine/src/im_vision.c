@@ -120,7 +120,7 @@ static void unload(im_vision *v, vmodel *m) {
 im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errlen) {
     im_vision *v = calloc(1, sizeof *v);
     if (!v) { if (err && errlen) snprintf(err, errlen, "out of memory"); return NULL; }
-    v->prm = (im_vision_params){0.10f, 0.5f, 0.85f, 0.6f, 12};
+    v->prm = (im_vision_params){0.10f, 0.5f, 0.98f, 0.6f, 12};
     v->last_nsfw = -1;
     v->nsfw_idx = -1;
     v->policy = cfg ? cfg->policy : 0;

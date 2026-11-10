@@ -21,7 +21,10 @@
     </queries>
 
     <!-- Our own filtered output must never be captured again (no feedback loop). -->
+    <!-- Arabic first, English on request (Lang.kt). localeConfig lists both for Android 13+'s per-app language. -->
     <application
+        android:name=".WaaiyaApp"
+        android:localeConfig="@xml/locales_config"
         android:allowAudioPlaybackCapture="false"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"

@@ -21,6 +21,8 @@ import kotlin.concurrent.thread
  * [LinkExportService] so it continues when the user leaves this screen.
  */
 class LinkActivity : Activity() {
+    override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
+
     private lateinit var input: EditText
     private lateinit var error: TextView
     private lateinit var resolving: View
