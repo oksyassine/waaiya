@@ -36,4 +36,21 @@ python eval/evaluate.py --candidate dfn3=models/dfn3/dfn3_stream.onnx --candidat
 
 Accept a new model only if, on the test set, recitation and singing voice retention rise to about -3 dB or better
 while instrument suppression stays above ~20 dB and music-only leakage stays below -30 dB.
-The exported model drops into every platform unchanged (same contract, same 30 ms look-ahead).
+The exported model drops into every platform unchanged (same contract; the delay is in its `im.latency_samples`).
+
+## Low delay (look-ahead 0 or 1)
+
+DeepFilterNet3 uses a 2-frame look-ahead: 10 ms STFT overlap + 20 ms = 30 ms. The same weights run at a
+smaller look-ahead; only the time alignment changes. `--lookahead 0` gives 10 ms and `--lookahead 1` gives 20 ms:
+
+```bash
+python models/voice/train.py ... --lookahead 0 --resume runs/voice_v1/last.pt --out runs/voice_ld0
+python models/dfn3/export_stream.py --checkpoint runs/voice_ld0/last.pt --out voice_ld0.onnx   # look-ahead read from the checkpoint
+python models/dfn3/test_parity.py 0 runs/voice_ld0/last.pt                                   # streaming == offline at look-ahead 0
+```
+
+When the starting weights were trained at another look-ahead, train.py first moves the deep-filter taps
+(`export_stream.shift_df_taps`), so each tap stays on the same relative frame. Without that step, the band below 5 kHz
+comes out 20 ms late and SI-SDR collapses. Kaggle: `python kaggle/make_notebook.py --lookahead 0 --init-dataset
+KAGGLE_USER/islamic-mute-voice-v1-ckpt` → `kaggle/voice-lowdelay/` (kernel `KAGGLE_USER/islamic-mute-voice-lowdelay`).
+Results: `eval/results/voice_lowdelay.md`.

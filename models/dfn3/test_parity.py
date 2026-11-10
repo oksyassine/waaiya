@@ -1,4 +1,10 @@
-"""Check the streaming export against libDF features and the official offline enhance()."""
+"""Check the streaming export against libDF features and the official offline enhance().
+
+Usage: python test_parity.py [lookahead 0..2, default 2] [checkpoint.pt]
+The offline reference is the official DfNet built with the same look-ahead (export_stream.init_df_la).
+"""
+import sys
+
 import numpy as np
 import torch
 from libdf import erb, erb_norm, unit_norm
@@ -7,7 +13,9 @@ from df.enhance import enhance
 from export_stream import build
 
 torch.manual_seed(0)
-s, model, df_state = build()
+la = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+s, model, df_state = build(sys.argv[2] if len(sys.argv) > 2 else "", la)
+print(f"look-ahead {s.la} frames, offline pad_feat={model.pad_feat}, df_op.lookahead={model.df_op.lookahead}")
 sr, hop = s.sr, s.hop
 
 # test signal: 3 s of noise-modulated harmonics + noise (any signal works for parity)
@@ -51,7 +59,7 @@ with torch.no_grad():
                 st[o:o + k] = 0
         outs.append(y.numpy())
 stream = np.concatenate(outs)
-# streaming adds the look-ahead (2 hops) on top of the offline output timeline
+# streaming adds the look-ahead (la hops) on top of the offline output timeline
 d = s.la * hop
 n = min(len(off), len(stream) - d)
 a_, b_ = off[hop * 4:n], stream[d + hop * 4:d + n]

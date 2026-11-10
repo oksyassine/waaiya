@@ -11,6 +11,11 @@ plus voice-only (keep everything) and music-only (output silence) examples.
 Runs on GPU (Kaggle/Colab T4 is enough) or CPU for smoke tests:
   python models/voice/train.py --voice data/voice --music data/music --steps 20000 --out runs/v1
 Export the result with:  python models/dfn3/export_stream.py --checkpoint runs/v1/last.pt --out voice_v1.onnx
+
+Low delay: --lookahead 0 (10 ms) or 1 (20 ms) builds DeepFilterNet3 with that look-ahead instead of the
+pretrained 2 (30 ms). Start it from a look-ahead-2 checkpoint with --resume (same weights, shifted time
+alignment, which fine-tuning adapts). The look-ahead is saved in the checkpoint's args, and the export
+script picks it up from there.
 """
 import argparse, glob, math, os, random, subprocess, sys, time
 
@@ -24,7 +29,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(ROOT, "models", "dfn3"))
 sys.path.insert(0, os.path.join(ROOT, "testset"))
 import df_compat  # noqa: E402,F401  (newer torchaudio)
-from export_stream import norm_alpha  # noqa: E402
+from export_stream import init_df_la, norm_alpha, shift_df_taps  # noqa: E402
 
 SR = 48000
 AUDIO_EXT = (".wav", ".flac", ".mp3", ".ogg", ".m4a", ".opus")
@@ -220,12 +225,14 @@ def main():
     ap.add_argument("--save-every", type=int, default=1000)
     ap.add_argument("--hours", type=float, default=0, help="stop and save after this much wall time (0 = no limit)")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--lookahead", type=int, default=2, choices=(0, 1, 2),
+                    help="model look-ahead in frames: 2 = pretrained DFN3 (30 ms delay), 1 = 20 ms, 0 = 10 ms")
     args = ap.parse_args()
 
-    from df.enhance import init_df
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model, df_state, _ = init_df(log_level="ERROR")  # pretrained DeepFilterNet3 = starting point
+    model, df_state = init_df_la(args.lookahead)  # pretrained DeepFilterNet3 = starting point
     model = model.to(device).train()
+    print(f"look-ahead {args.lookahead} frames ({10 + 10 * args.lookahead} ms algorithmic delay)", flush=True)
 
     def freeze_bn():  # keep pretrained BatchNorm statistics; small fine-tuning batches would corrupt them
         for m in model.modules():
@@ -233,8 +240,15 @@ def main():
                 m.eval()
 
     freeze_bn()
+    src_la = 2  # pretrained DeepFilterNet3
     if args.resume:
-        model.load_state_dict(torch.load(args.resume, map_location=device)["model"])
+        ck = torch.load(args.resume, map_location=device)
+        model.load_state_dict(ck["model"])
+        src_la = int(ck.get("args", {}).get("lookahead", 2))
+        print(f"resumed weights from {args.resume} (step {ck.get('step')}, look-ahead {src_la})", flush=True)
+    if src_la != args.lookahead:  # keep each deep-filter tap on the same relative frame
+        shift_df_taps(model, src_la)
+        print(f"re-aligned deep-filter taps: look-ahead {src_la} -> {args.lookahead}", flush=True)
     fe = FrontEnd(df_state, model.nb_df, device)
     if not Pool(args.voice):
         sys.exit("no voice files found (--voice DIR)")

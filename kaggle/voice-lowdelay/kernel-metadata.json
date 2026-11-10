@@ -1,0 +1,20 @@
+{
+ "id": "KAGGLE_USER/islamic-mute-voice-lowdelay",
+ "title": "islamic-mute-voice-lowdelay",
+ "code_file": "notebook.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_tpu": false,
+ "enable_internet": true,
+ "machine_shape": "NvidiaTeslaT4",
+ "dataset_sources": [
+  "hieugiaosu/librispeech",
+  "abdo3id/diverse-quran-reciters",
+  "KAGGLE_USER/islamic-mute-voice-v1-ckpt"
+ ],
+ "competition_sources": [],
+ "kernel_sources": [],
+ "model_sources": []
+}
