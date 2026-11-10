@@ -1,6 +1,6 @@
 name: waaiya_ui_module
 description: Waaiya's Flutter screens inside the Android app (add-to-app module; see docs/UI_CONTRACT.md).
-version: 0.2.2+4
+version: 0.2.3+5
 publish_to: none
 
 environment:

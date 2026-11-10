@@ -169,6 +169,7 @@ class BlurInfo {
     this.a11yBuild = false,
     this.a11yEnabled = false,
     this.touchPassThrough = false,
+    this.shizukuLayer = false,
     this.busy = false,
     this.message,
   });
@@ -179,6 +180,7 @@ class BlurInfo {
         a11yBuild: _bool(m['a11yBuild'], false),
         a11yEnabled: _bool(m['a11yEnabled'], false),
         touchPassThrough: _bool(m['touchPassThrough'], false),
+        shizukuLayer: _bool(m['shizukuLayer'], false),
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
       );
@@ -189,6 +191,9 @@ class BlurInfo {
   final bool a11yBuild;
   final bool a11yEnabled;
   final bool touchPassThrough;
+
+  /// Shizuku is ready on Android 12+: the covers are a Shizuku shell layer, nothing else to allow.
+  final bool shizukuLayer;
   final bool busy;
 
   /// `setup_failed` (detail = log).
@@ -200,6 +205,7 @@ class BlurInfo {
         'a11yBuild': a11yBuild,
         'a11yEnabled': a11yEnabled,
         'touchPassThrough': touchPassThrough,
+        'shizukuLayer': shizukuLayer,
         'busy': busy,
         'message': message?.toMap(),
       };

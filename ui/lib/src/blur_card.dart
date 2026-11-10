@@ -10,7 +10,7 @@ import 'widgets.dart';
 (String, bool)? blurStatus(AppLocalizations l, AppState s) {
   final b = s.blur;
   final on = s.filter.running;
-  final needsSetup = s.settings.blurOn && (b.a11yBuild ? !b.a11yEnabled : !b.overlayAllowed);
+  final needsSetup = s.settings.blurOn && !b.shizukuLayer && (b.a11yBuild ? !b.a11yEnabled : !b.overlayAllowed);
   final setupText = b.a11yBuild ? l.blurStatusNeedsSetup : l.blurStatusNeedsOverlay;
   final msg = b.message;
   if (msg != null) return (msg.code == 'setup_failed' ? l.blurSetupFailed(msg.detail) : msg.detail, true);
@@ -18,8 +18,7 @@ import 'widgets.dart';
   if (needsSetup && !b.overlayAllowed) return (setupText, true);
   if (!on) return needsSetup ? (setupText, false) : null;
   return switch (b.state) {
-    null => (l.blurStatusRestart, false),
-    BlurState.starting => (l.blurStatusStarting, false),
+    null || BlurState.starting => (l.blurStatusStarting, false), // settings apply within half a second
     BlurState.on => (l.blurStatusOn, false),
     BlurState.onCoversVisible => (l.blurStatusOnVisible, false),
     BlurState.modelsMissing => (l.blurStatusModels, true),
@@ -32,7 +31,7 @@ import 'widgets.dart';
 class BlurCard extends StatelessWidget {
   const BlurCard({super.key, required this.onChanged});
 
-  /// A blur setting changed (key, value).
+  /// A blur setting changed (key, value); the running blur follows it within half a second.
   final void Function(String key, bool value) onChanged;
 
   @override
@@ -41,7 +40,7 @@ class BlurCard extends StatelessWidget {
     final s = WaaiyaScope.of(context).state;
     final b = s.blur;
     final st = s.settings;
-    final needsSetup = st.blurOn && (b.a11yBuild ? !b.a11yEnabled : !b.overlayAllowed);
+    final needsSetup = st.blurOn && !b.shizukuLayer && (b.a11yBuild ? !b.a11yEnabled : !b.overlayAllowed);
     // A full-screen cover is only safe when touches pass through it; otherwise the phone could get stuck.
     final passThrough = b.touchPassThrough;
     final status = blurStatus(l, s);

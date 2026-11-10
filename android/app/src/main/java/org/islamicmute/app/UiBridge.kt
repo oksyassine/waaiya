@@ -162,6 +162,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "a11yBuild" to BuildConfig.BLUR_A11Y,
             "a11yEnabled" to activity.blurAccessibilityEnabled(),
             "touchPassThrough" to activity.blurTouchPassThrough(),
+            // Shizuku running (Android 12+): the covers are a shell layer (ShizukuCovers), nothing else to allow
+            "shizukuLayer" to (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(activity) == ShizukuSetup.State.READY),
             "busy" to blurBusy,
             "message" to blurMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
         ),
@@ -179,12 +181,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "gender" -> settings.gender = (value as? String)?.takeIf { it in listOf("", "man", "woman") }
                 ?: throw BadArgs("gender is \"\", \"man\" or \"woman\"")
             "mute_women_singing" -> settings.muteWomenSinging = bool()
-            "silence_unfilterable" -> settings.silenceUnfilterable = bool()  // read by the running muter at once
+            "silence_unfilterable" -> settings.silenceUnfilterable = bool()
             "blur_women" -> settings.blurWomen = bool()
             "blur_nudity" -> settings.blurNudity = bool()
-            "blur_fail_cover" -> settings.blurFailCover = bool()             // read by the running blur at once
+            "blur_fail_cover" -> settings.blurFailCover = bool()
             else -> throw BadArgs("unknown setting $key")
         }
+        // No restart: the running filter and blur re-read Settings every 0.5 s.
         if (key.startsWith("blur_")) blurMessage = null  // as MainActivity.blurChanged
         refresh()
     }

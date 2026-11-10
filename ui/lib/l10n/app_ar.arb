@@ -451,7 +451,7 @@
   "@blurStatusNeedsSetup": {
     "description": "Android string blur_status_needs_setup"
   },
-  "blurStatusNeedsOverlay": "يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى: اسمح بذلك عبر Shizuku، أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد. اللمس على منطقة مموّهة لا يصل إلى التطبيق تحتها.",
+  "blurStatusNeedsOverlay": "يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.",
   "@blurStatusNeedsOverlay": {
     "description": "Android string blur_status_needs_overlay"
   },
