@@ -103,13 +103,20 @@ Both are granted once, in one of two ways:
 
 ## Links: watch or save a video without music
 
-"Open a link" (or Share from YouTube/TikTok to Islamic Mute) reads the page with
+"Open a link" (or Share from YouTube/TikTok/Instagram to Waaiya) reads the page with
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) inside the app (Chaquopy, Python 3.11; YouTube's JavaScript check runs in
 QuickJS-NG, built by `android/tools/build_qjs.sh`). **Watch** streams it through the filtered player. **Save**
-downloads it, filters the audio (the video is copied unchanged) and puts the file in Movies/ (or Music/) "Islamic
-Mute"; the AAC encoder's start delay is measured once per phone and compensated, so lip sync is kept. Fail-closed:
-audio the filter cannot take (e.g. 5.1) means no file, never an unfiltered one. Sites that need a login
-(Instagram, Vimeo) do not work yet. Code: `android/app/src/main/python/im_links.py`, `Links.kt`, `LinkExport.kt`.
+downloads it, filters the audio (the video is copied unchanged) and puts the file in Movies/ (or Music/) "Waaiya";
+the AAC encoder's start delay is measured once per phone and compensated, so lip sync is kept. Fail-closed:
+audio the filter cannot take (e.g. 5.1) means no file, never an unfiltered one. Private posts, and public posts
+when a site refuses anonymous visitors for a while (Instagram does this at times), cannot be opened.
+
+yt-dlp keeps itself current: once a day the app checks PyPI for a newer release, and after a link fails it
+also takes yt-dlp's nightly build and retries once (`im_update.py`: PyPI SHA-256 checked, pure-Python wheels
+only, used only after it imports correctly, and a newer yt-dlp in an APK update always wins). Because the app
+downloads code, this build is meant for direct download (GitHub releases); stores that forbid downloading code
+(Google Play, F-Droid's main repository) would need a build with the self-update turned off.
+Code: `android/app/src/main/python/im_links.py`, `im_update.py`, `Links.kt`, `LinkExport.kt`.
 
 ## Women's-singing filter (optional, for men)
 
