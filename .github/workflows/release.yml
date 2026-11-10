@@ -42,8 +42,7 @@ jobs:
         with: { distribution: temurin, java-version: "17" }
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - uses: android-actions/setup-android@v3
-      - run: sdkmanager --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
+      - run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
       - uses: gradle/actions/setup-gradle@v4
         with: { cache-read-only: true }
       - run: scripts/fetch_deps.sh

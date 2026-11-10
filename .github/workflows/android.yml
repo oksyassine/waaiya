@@ -27,9 +27,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - uses: android-actions/setup-android@v3
       - name: NDK and CMake
-        run: sdkmanager --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
+        # The runner image has the Android SDK (ANDROID_HOME); add the pinned NDK and CMake.
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
       - uses: gradle/actions/setup-gradle@v4
       - name: Default model and ONNX Runtime licence texts
         run: scripts/fetch_deps.sh
