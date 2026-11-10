@@ -121,7 +121,7 @@
     <string name="blur_setup_shizuku">Allow with Shizuku</string>
     <string name="blur_setup_manual">Allow in Android settings</string>
     <string name="blur_status_needs_setup">The blur needs to draw over other apps. Best: allow it with Shizuku (turns on the Waaiya Blur accessibility service, so touches still reach the app underneath). Or allow "Display over other apps" in Android settings (touches on a blurred area are then lost).</string>
-    <string name="blur_status_needs_overlay">The blur needs to draw over other apps: allow it with Shizuku, or allow "Display over other apps" in Android settings. A tap on a blurred area does not reach the app underneath.</string>
+    <string name="blur_status_needs_overlay">The blur needs to draw over other apps. Best: start Shizuku (and allow Waaiya in it): the blur then draws its own layer, which taps pass through. Otherwise allow "Display over other apps" in Android settings; a tap on a blurred area then does not reach the app underneath.</string>
     <string name="blur_fail_unavailable">Not available in this version: here a tap on a blurred area does not reach the app, so a full-screen cover would block every touch and you could get stuck. When the blur cannot keep up, the screen stays visible with a warning.</string>
     <string name="blur_fail_needs_a11y">Needs the Waaiya Blur accessibility service (Allow with Shizuku above). Without it, a full-screen cover would block every touch and you could get stuck, so the screen stays visible with a warning.</string>
     <string name="language_title">Language</string>
