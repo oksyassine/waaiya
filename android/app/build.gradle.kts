@@ -7,6 +7,10 @@ plugins {
 }
 
 val ortVersion = "1.19.2"
+// yt-dlp bundled in the APK. The app updates itself from PyPI at run time (src/main/python/im_update.py);
+// this is the floor it starts from.
+val ytDlpVersion = "2026.10.26"
+val ytDlpEjsVersion = "0.8.0"
 val ort: Configuration by configurations.creating
 val releaseAbis = listOf("arm64-v8a", "armeabi-v7a")
 val abiSplit = providers.gradleProperty("imAbiSplit").map { it != "false" }.getOrElse(false)
@@ -31,6 +35,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "0.1.0"
+        buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
         // not per build type, so emulator builds add x86_64 with -PimX86.
@@ -125,8 +130,8 @@ chaquopy {
         version = "3.11"
         providers.gradleProperty("imBuildPython").orNull?.let { buildPython(it) }
         pip {
-            install("yt-dlp==2026.10.26")
-            install("yt-dlp-ejs==0.8.0")
+            install("yt-dlp==$ytDlpVersion")
+            install("yt-dlp-ejs==$ytDlpEjsVersion")
         }
     }
 }
