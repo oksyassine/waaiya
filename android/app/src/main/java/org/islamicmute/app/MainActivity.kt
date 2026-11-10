@@ -113,6 +113,7 @@ class MainActivity : Activity() {
                 val r = android.graphics.Rect(); computerBox.getDrawingRect(r); computerBox.requestRectangleOnScreen(r)
             }
         }
+        findViewById<Button>(R.id.open_link).setOnClickListener { startActivity(Intent(this, LinkActivity::class.java)) }
         findViewById<Button>(R.id.licences).setOnClickListener {
             startActivity(Intent(this, LicencesActivity::class.java))
         }

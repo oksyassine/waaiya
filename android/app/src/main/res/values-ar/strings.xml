@@ -73,4 +73,37 @@
     <string name="notif_title">التصفية تعمل</string>
     <string name="notif_text">تُزال الآلات من صوت كل التطبيقات</string>
     <string name="notif_stop">إيقاف</string>
+    <!-- Link feature -->
+    <string name="link_entry_title">فتح رابط</string>
+    <string name="link_entry_body">الصق رابطًا من YouTube أو TikTok لمشاهدته أو حفظه بلا موسيقى.</string>
+    <string name="link_title">فتح رابط</string>
+    <string name="link_hint">https://… (YouTube، TikTok…)</string>
+    <string name="link_field_label">رابط الفيديو أو الصوت</string>
+    <string name="link_paste">لصق</string>
+    <string name="link_open">فتح</string>
+    <string name="link_resolving">جارٍ فتح الرابط…</string>
+    <string name="link_meta">%1$s · %2$s</string>
+    <string name="link_watch">مشاهدة بلا موسيقى</string>
+    <string name="link_save">حفظ بلا موسيقى</string>
+    <string name="link_listen">استماع بلا موسيقى</string>
+    <string name="link_downloading">جارٍ التنزيل…</string>
+    <string name="link_filtering">جارٍ إزالة الموسيقى…</string>
+    <string name="link_cancel">إلغاء</string>
+    <string name="link_cancelled">أُلغي، ولم يُحفظ شيء.</string>
+    <string name="link_export_failed">تعذّر الحفظ، ولم يُحفظ شيء.</string>
+    <string name="link_saved">حُفظ بلا موسيقى</string>
+    <string name="link_saved_video">في المعرض: الأفلام › Islamic Mute</string>
+    <string name="link_saved_audio">في الموسيقى: Music › Islamic Mute</string>
+    <string name="link_play">تشغيل</string>
+    <string name="link_share">مشاركة</string>
+    <string name="link_share_note">لا تشارك إلا المقاطع التي يحق لك مشاركتها.</string>
+    <string name="link_channel">حفظ الروابط</string>
+    <string name="link_live">لا يمكن حفظ البث المباشر.</string>
+    <string name="link_busy">يجري حفظ مقطع آخر، يرجى الانتظار حتى ينتهي.</string>
+    <string name="link_invalid">الصق رابط ويب (يبدأ بـ https://).</string>
+    <string name="link_login">هذا الموقع لا يعرض هذا المقطع إلا للمستخدمين المسجّلين، ولا يستطيع Islamic Mute فتحه بعد.</string>
+    <string name="link_unsupported">هذا الموقع غير مدعوم.</string>
+    <string name="link_playlist">هذه قائمة تشغيل. افتح مقطعًا واحدًا.</string>
+    <string name="link_no_format">هذا المقطع بصيغة لا يستطيع Islamic Mute تصفيتها بعد.</string>
+    <string name="link_failed">تعذّر فتح هذا الرابط. تحقّق من الاتصال وحاول مرة أخرى.</string>
 </resources>

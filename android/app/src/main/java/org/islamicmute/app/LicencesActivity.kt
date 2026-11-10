@@ -122,6 +122,11 @@ class LicencesActivity : Activity() {
             "Shizuku-API (MIT)" to "Shizuku-API-LICENSE.txt",
             "DeepFilterNet (MIT; also available under Apache-2.0)" to "DeepFilterNet-LICENSE-MIT.txt",
             "EfficientAT detector backbone (MIT)" to "EfficientAT-LICENSE.txt",
+            "Chaquopy, Python in the app (MIT)" to "Chaquopy-LICENSE.txt",
+            "Python (PSF License)" to "Python-LICENSE.txt",
+            "yt-dlp, link reader (Unlicense)" to "yt-dlp-LICENSE.txt",
+            "yt-dlp-ejs (Unlicense; includes astring MIT, meriyah ISC)" to "yt-dlp-ejs-LICENSE.txt",
+            "QuickJS-NG, JavaScript engine (MIT)" to "quickjs-ng-LICENSE.txt",
         )
     }
 }
