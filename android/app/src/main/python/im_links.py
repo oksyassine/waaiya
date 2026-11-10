@@ -13,7 +13,8 @@ MAX_HEIGHT = 720  # enough for a phone screen; keeps downloads and processing li
 
 
 class LinkError(Exception):
-    """Message is shown to the user."""
+    """args[0] is a code the app turns into a translated message: invalid_url, login, unsupported_site,
+    playlist, no_format, failed (args[1] = detail)."""
 
 
 def _http(f):
@@ -44,7 +45,15 @@ def _pick(info):
         return None, None, max(both, key=h)
     if audio:
         return None, max(audio, key=br), None
-    raise LinkError("This link has no format Islamic Mute can play (MP4/H.264 video or AAC audio).")
+    # Direct file links (generic extractor) often carry no codec information: accept MP4/M4A by extension.
+    # Safe: the exporter refuses audio it cannot filter, and the player refuses it too (no unfiltered fallback).
+    unknown = [f for f in fm if f.get("vcodec") in (None, "unknown") and f.get("acodec") in (None, "unknown")]
+    for f in unknown:
+        if f.get("ext") in ("mp4", "m4v", "mov"):
+            return None, None, f
+        if f.get("ext") == "m4a":
+            return None, f, None
+    raise LinkError("no_format")
 
 
 def _stream(f):
@@ -59,7 +68,7 @@ def resolve(url, qjs_path, cache_dir):
     progressive file, or audio only). Raises LinkError with a user-facing message."""
     p = urlparse(url.strip())
     if p.scheme not in ("http", "https") or not p.netloc:
-        raise LinkError("Please paste a web link (starting with https://).")
+        raise LinkError("invalid_url")
     tempfile.tempdir = cache_dir  # QuickJS reads the challenge scripts from temporary files
     opts = {
         "quiet": True, "no_warnings": True, "noplaylist": True, "skip_download": True,
@@ -72,12 +81,12 @@ def resolve(url, qjs_path, cache_dir):
     except yt_dlp.utils.DownloadError as e:
         msg = str(e)
         if "logged-in" in msg or "login" in msg.lower() or "cookies" in msg:
-            raise LinkError("This site only shows this video to logged-in users. Islamic Mute cannot open it yet.")
+            raise LinkError("login")
         if "Unsupported URL" in msg:
-            raise LinkError("This site is not supported.")
-        raise LinkError("Could not open this link: " + msg.replace("ERROR: ", "")[:200])
+            raise LinkError("unsupported_site")
+        raise LinkError("failed", msg.replace("ERROR: ", "")[:300])
     if info.get("_type") == "playlist" or info.get("entries") is not None:
-        raise LinkError("This is a playlist. Please open one video.")
+        raise LinkError("playlist")
     v, a, both = _pick(info)
     return json.dumps({
         "title": info.get("title") or "", "duration": info.get("duration"), "is_live": bool(info.get("is_live")),

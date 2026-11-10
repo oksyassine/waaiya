@@ -87,6 +87,7 @@ dependencies {
     ort("com.microsoft.onnxruntime:onnxruntime-android:$ortVersion@aar")
     implementation("androidx.media3:media3-exoplayer:1.5.1")
     implementation("androidx.media3:media3-ui:1.5.1")
+    implementation("androidx.media3:media3-transformer:1.5.1")  // "Save without music": filter audio, copy video
     // Shizuku: one-tap setup (DUMP + PROJECT_MEDIA) without a computer. See ShizukuSetup.kt.
     val shizukuVersion = "13.1.5"
     implementation("dev.rikka.shizuku:api:$shizukuVersion")
