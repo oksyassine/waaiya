@@ -346,9 +346,14 @@ class MainActivity : Activity() {
             .setMessage(R.string.guide_body)
             .setPositiveButton(R.string.guide_open_shizuku) { _, _ -> openShizuku() }
             .setNeutralButton(R.string.guide_open_dev) { _, _ ->
-                // Developer options, or About phone when they are not turned on yet (step 2 of the guide)
-                runCatching { startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
-                    .onFailure { runCatching { startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)) } }
+                // Developer options, or About phone when they are not turned on yet (step 2 of the guide): with them
+                // off, Android opens and closes the Developer options page at once, without an error
+                val devOn = android.provider.Settings.Global.getInt(contentResolver,
+                    android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+                val about = Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)
+                if (devOn) runCatching { startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                    .onFailure { runCatching { startActivity(about) } }
+                else runCatching { startActivity(about) }
             }
             .setNegativeButton(R.string.guide_close, null)
             .show()
