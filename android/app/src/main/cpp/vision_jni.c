@@ -81,6 +81,18 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetTilesPerFrame(JN
     im_vision_set_params(b->v, &p);
 }
 
+/* Classifier threshold: a person is left uncovered only when p(man or boy) >= this (the user's strictness). */
+JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetMaleClear(JNIEnv *env, jclass cls, jlong h,
+                                                                           jfloat t) {
+    (void)env; (void)cls;
+    blur *b = (blur *)(intptr_t)h;
+    if (!b || !b->v || !(t > 0.5f && t <= 1.0f)) return; /* never below 0.5: that would clear people judged women */
+    im_vision_params p;
+    im_vision_get_params(b->v, &p);
+    p.male_clear = t;
+    im_vision_set_params(b->v, &p);
+}
+
 /* One captured frame (direct ByteBuffer, RGBA8888). models = run the person models, nsfw = also the nudity model.
  * out: float[max * 5] = x0, y0, x1, y1 (0..1), kind. thumb: optional int[tw * th] ARGB, the frame shrunk by area
  * averaging (the overlay draws it enlarged as the blurred picture). Returns the rect count m, or -(m + 1) when the

@@ -21,6 +21,7 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
         @JvmStatic private external fun nativeError(h: Long): String
         @JvmStatic private external fun nativeSetCoversVisible(h: Long, visible: Boolean)
         @JvmStatic private external fun nativeSetTilesPerFrame(h: Long, n: Int)
+        @JvmStatic private external fun nativeSetMaleClear(h: Long, t: Float)
         @JvmStatic private external fun nativeFrame(h: Long, buf: ByteBuffer, w: Int, hh: Int, stride: Int, tMs: Double,
                                                     models: Boolean, nsfw: Boolean, out: FloatArray, thumb: IntArray?,
                                                     tw: Int, th: Int): Int
@@ -47,6 +48,9 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
     val error: String get() = if (handle == 0L) "no memory" else nativeError(handle)
 
     fun setCoversVisible(v: Boolean) { if (handle != 0L) nativeSetCoversVisible(handle, v) }
+
+    /** A person is left uncovered only when the model's p(man) is at least [t] (Settings.blurMaleClear). */
+    fun setMaleClear(t: Float) { if (handle != 0L) nativeSetMaleClear(handle, t) }
 
     /** Portrait frames: person-detector tiles per frame (0 = all every frame, 1 = one, taking turns). */
     fun setTilesPerFrame(n: Int) { if (handle != 0L) nativeSetTilesPerFrame(handle, n) }
