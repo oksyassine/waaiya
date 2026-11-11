@@ -42,7 +42,7 @@ class Params(C.Structure):
                 ("nsfw_score", C.c_float), ("max_people", C.c_int), ("tiles", C.c_int),
                 ("tiles_per_frame", C.c_int), ("nest", C.c_float),
                 ("tile_score", C.c_float), ("seg", C.c_int), ("seg_threshold", C.c_float),
-                ("seg_min_fill", C.c_float)]
+                ("seg_min_fill", C.c_float), ("seg_max_people", C.c_int)]
 
 
 class CoverParams(C.Structure):
