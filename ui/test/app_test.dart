@@ -240,6 +240,36 @@ void main() {
     expect(engineErrorText(l, const BackendMessage('service_failed', 'log')), contains('log'));
   });
 
+  test('desktop blur (blurStandalone): runs without filtering; helper states and reasons have their texts', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    (String, bool)? status(BlurState? st, [BackendMessage? e, bool on = true]) => blurStatus(
+        l,
+        AppState(
+          settings: WaaiyaSettings(blurWomen: on),
+          capabilities: const Capabilities(screenBlur: true, blurStandalone: true),
+          blur: BlurInfo(state: st, error: e, overlayAllowed: true, touchPassThrough: true),
+        ));
+    expect(status(BlurState.onCoversVisible), (l.blurStatusOnVisibleDesktop, false)); // filter off, blur on
+    expect(status(null), (l.blurStatusStarting, false));
+    expect(status(BlurState.starting, const BackendMessage('share_dialog')), (l.blurStatusShareDialog, false));
+    expect(status(BlurState.noCapture, const BackendMessage('no_capture', 'portal refused'))!.$1,
+        contains('portal refused'));
+    expect(status(BlurState.noOverlay, const BackendMessage('no_overlay', 'no layer-shell'))!.$1,
+        l.blurStatusNoOverlayDesktop('no layer-shell'));
+    expect(status(BlurState.failing, const BackendMessage('failing', 'a frame has taken 1600 ms'))!.$1,
+        contains('1600 ms'));
+    expect(status(null, const BackendMessage('exited', 'exit code 3'))!.$1, l.blurStatusExited('exit code 3'));
+    expect(status(BlurState.on, null, false), isNull); // both options off: nothing to say
+    final snap = AppState.fromMap({
+      'blur': {'state': 'NO_CAPTURE', 'error': {'code': 'no_capture', 'detail': 'x'}},
+      'capabilities': {'blurStandalone': true},
+    });
+    expect(snap.blur.state, BlurState.noCapture);
+    expect(snap.blur.error!.detail, 'x');
+    expect(snap.capabilities.blurStandalone, isTrue);
+    expect(AppState.fromMap(snap.toMap()).blur.error!.code, 'no_capture');
+  });
+
   test('snapshots: missing keys take defaults, names round-trip', () {
     final s = AppState.fromMap({
       'language': 'en',

@@ -149,5 +149,12 @@
   "engineErrorStartFailed": "The filter did not start. Details:\n{details}",
   "engineErrorServiceFailed": "The filter stopped with an error. Details:\n{details}",
   "autostartTitle": "Start at login",
-  "autostartBody": "Filter the sound as soon as you log in."
+  "autostartBody": "Filter the sound as soon as you log in.",
+  "blurBodyDesktop": "Covers people and images on screen, over every window, while Waaiya is open (it works whether the sound filter is on or off). It runs on this computer; nothing is sent anywhere. Closing the Waaiya window stops the blur.",
+  "blurFailBodyDesktop": "On: the whole screen is covered when the computer is too slow or the blur fails; clicks still reach the windows underneath. Off: the screen stays visible with a red bar at the top.",
+  "blurStatusOnVisibleDesktop": "Blur on. This desktop shows the blur in its own screen capture, so a blurred area stays blurred until the scene changes.",
+  "blurStatusNoCapture": "The blur cannot see the screen. Details:\n{details}",
+  "blurStatusNoOverlayDesktop": "The blur cannot draw over other windows on this desktop. Details:\n{details}",
+  "blurStatusShareDialog": "Choose your screen in the screen-sharing window and allow it. Waaiya asks only once; the picture stays on this computer.",
+  "blurStatusExited": "The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n{details}"
 }

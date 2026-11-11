@@ -521,4 +521,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get autostartBody => 'تصفية الصوت فور تسجيل الدخول.';
+
+  @override
+  String get blurBodyDesktop =>
+      'يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.';
+
+  @override
+  String blurStatusNoCapture(String details) {
+    return 'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n$details';
+  }
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n$details';
+  }
 }

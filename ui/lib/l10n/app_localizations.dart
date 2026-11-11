@@ -997,6 +997,48 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تصفية الصوت فور تسجيل الدخول.'**
   String get autostartBody;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.'**
+  String get blurBodyDesktop;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.'**
+  String get blurFailBodyDesktop;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.'**
+  String get blurStatusOnVisibleDesktop;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
+  String blurStatusNoCapture(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n{details}'**
+  String blurStatusNoOverlayDesktop(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.'**
+  String get blurStatusShareDialog;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}'**
+  String blurStatusExited(String details);
 }
 
 class _AppLocalizationsDelegate

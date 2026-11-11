@@ -82,11 +82,52 @@ EXTRA.update({
     "autostart_title": ("Start at login", "التشغيل عند تسجيل الدخول"),
     "autostart_body": ("Filter the sound as soon as you log in.", "تصفية الصوت فور تسجيل الدخول."),
 })
+EXTRA.update({
+    # Desktop screen blur (linux/blur/im-blur, driven by desktop/lib/linux_blur.dart): blur.error codes.
+    "blur_body_desktop": (
+        "Covers people and images on screen, over every window, while Waaiya is open (it works whether the sound "
+        "filter is on or off). It runs on this computer; nothing is sent anywhere. Closing the Waaiya window stops "
+        "the blur.",
+        "يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). "
+        "يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.",
+    ),
+    "blur_fail_body_desktop": (
+        "On: the whole screen is covered when the computer is too slow or the blur fails; clicks still reach the "
+        "windows underneath. Off: the screen stays visible with a red bar at the top.",
+        "مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ "
+        "تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.",
+    ),
+    "blur_status_on_visible_desktop": (
+        "Blur on. This desktop shows the blur in its own screen capture, so a blurred area stays blurred until the "
+        "scene changes.",
+        "التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.",
+    ),
+    "blur_status_no_capture": (
+        "The blur cannot see the screen. Details:\n{details}",
+        "لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}",
+    ),
+    "blur_status_no_overlay_desktop": (
+        "The blur cannot draw over other windows on this desktop. Details:\n{details}",
+        "لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n{details}",
+    ),
+    "blur_status_share_dialog": (
+        "Choose your screen in the screen-sharing window and allow it. Waaiya asks only once; the picture stays on "
+        "this computer.",
+        "اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.",
+    ),
+    "blur_status_exited": (
+        "The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n{details}",
+        "توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}",
+    ),
+})
 EXTRA_PLACEHOLDERS = {
     "action_failed": [("details", "String")],
     "engine_error_install_failed": [("details", "String")],
     "engine_error_start_failed": [("details", "String")],
     "engine_error_service_failed": [("details", "String")],
+    "blur_status_no_capture": [("details", "String")],
+    "blur_status_no_overlay_desktop": [("details", "String")],
+    "blur_status_exited": [("details", "String")],
 }
 
 

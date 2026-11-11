@@ -528,4 +528,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get autostartBody => 'Filter the sound as soon as you log in.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Covers people and images on screen, over every window, while Waaiya is open (it works whether the sound filter is on or off). It runs on this computer; nothing is sent anywhere. Closing the Waaiya window stops the blur.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'On: the whole screen is covered when the computer is too slow or the blur fails; clicks still reach the windows underneath. Off: the screen stays visible with a red bar at the top.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Blur on. This desktop shows the blur in its own screen capture, so a blurred area stays blurred until the scene changes.';
+
+  @override
+  String blurStatusNoCapture(String details) {
+    return 'The blur cannot see the screen. Details:\n$details';
+  }
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'The blur cannot draw over other windows on this desktop. Details:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Choose your screen in the screen-sharing window and allow it. Waaiya asks only once; the picture stays on this computer.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n$details';
+  }
 }

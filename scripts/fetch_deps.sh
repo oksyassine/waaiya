@@ -2,13 +2,15 @@
 # Download what a fresh clone needs to build, with checksums:
 #   scripts/fetch_deps.sh ort      ONNX Runtime 1.19.2 for Linux x64 -> third_party/onnxruntime/ (headers, lib, licences)
 #   scripts/fetch_deps.sh models   default voice model (DeepFilterNet3 streaming, int8) -> models/dfn3/
-#   scripts/fetch_deps.sh          both
+#   scripts/fetch_deps.sh vision   screen-blur models (people, woman/man, nudity) -> models/vision/
+#   scripts/fetch_deps.sh          all three
 # Models are release assets (docs/MODELS.md), not git files. Set WAAIYA_REPO=owner/name to fetch from a fork.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 REPO="${WAAIYA_REPO:-oksyassine/waaiya}"
 MODELS_TAG=models-v1
+VISION_TAG=models-vision-v1
 ORT_VERSION=1.19.2
 ORT_SHA256=eb00c64e0041f719913c4080e0fed7d9963dc3aa9b54664df6036d8308dbcd33
 
@@ -27,23 +29,50 @@ ort() {
     echo "onnxruntime $ORT_VERSION -> third_party/onnxruntime"
 }
 
-models() {
-    local base="https://github.com/$REPO/releases/download/$MODELS_TAG" tmp
-    tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' RETURN
-    local files=(SHA256SUMS dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin) f
-    if ! (for f in "${files[@]}"; do fetch "$base/$f" "$tmp/$f" || exit 1; done) 2>/dev/null; then
+# release_files TAG DIR FILE...: downloads release assets (plus SHA256SUMS) into DIR and checks them.
+release_files() {
+    local tag="$1" dir="$2"; shift 2
+    local base="https://github.com/$REPO/releases/download/$tag" f
+    local files=(SHA256SUMS "$@")
+    if ! (for f in "${files[@]}"; do fetch "$base/$f" "$dir/$f" || exit 1; done) 2>/dev/null; then
         # Private fork or CI before the repository is public: the GitHub CLI (with GH_TOKEN) can still read it.
         command -v gh >/dev/null || { echo "cannot download $base (install gh and log in for a private repo)" >&2; return 1; }
-        rm -f "$tmp"/*; for f in "${files[@]}"; do gh release download "$MODELS_TAG" --repo "$REPO" -p "$f" -D "$tmp"; done
+        rm -f "$dir"/*; for f in "${files[@]}"; do gh release download "$tag" --repo "$REPO" -p "$f" -D "$dir"; done
     fi
-    (cd "$tmp" && sha256sum -c --quiet --ignore-missing SHA256SUMS)
+    # every requested file must be listed and match (not --ignore-missing on our side: a file missing from
+    # SHA256SUMS would otherwise pass unchecked)
+    for f in "$@"; do grep -q "  $f\$" "$dir/SHA256SUMS" || { echo "$f is not in $tag/SHA256SUMS" >&2; return 1; }; done
+    (cd "$dir" && sha256sum -c --quiet --ignore-missing SHA256SUMS)
+}
+
+models() {
+    local tmp; tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' RETURN
+    release_files "$MODELS_TAG" "$tmp" dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin
     mkdir -p models/dfn3 && mv "$tmp"/dfn3_stream_int8.* models/dfn3/
     echo "models ($MODELS_TAG) -> models/dfn3/"
+}
+
+vision() {
+    local files=(person_yolox_nano.onnx gender_v2.onnx nsfw_marqo_int8.onnx) f have=1
+    for f in "${files[@]}"; do [ -f "models/vision/$f" ] || have=0; done
+    local tmp; tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' RETURN
+    if [ "$have" = 1 ]; then
+        # already here (e.g. a local build): still checked against the release
+        release_files "$VISION_TAG" "$tmp" 2>/dev/null || true
+        if [ -f "$tmp/SHA256SUMS" ] && (cd models/vision && sha256sum -c --quiet --ignore-missing "$tmp/SHA256SUMS"); then
+            echo "vision models ($VISION_TAG) already in models/vision/"; return
+        fi
+    fi
+    rm -f "$tmp"/*
+    release_files "$VISION_TAG" "$tmp" "${files[@]}"
+    mkdir -p models/vision && for f in "${files[@]}"; do mv "$tmp/$f" models/vision/; done
+    echo "vision models ($VISION_TAG) -> models/vision/"
 }
 
 case "${1:-all}" in
     ort) ort ;;
     models) models ;;
-    all) ort; models ;;
-    *) echo "usage: $0 [ort|models|all]" >&2; exit 2 ;;
+    vision) vision ;;
+    all) ort; models; vision ;;
+    *) echo "usage: $0 [ort|models|vision|all]" >&2; exit 2 ;;
 esac

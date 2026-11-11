@@ -91,8 +91,8 @@ enum FilterState { stopped, starting, filtering, modelFailed, noCapturePermissio
 /// ShizukuSetup.State.
 enum ShizukuState { notInstalled, notRunning, tooOld, needsPermission, deniedPermanently, ready }
 
-/// ScreenBlur.State.
-enum BlurState { starting, on, onCoversVisible, noOverlay, modelsMissing, failing }
+/// ScreenBlur.State; `noCapture` only on desktop (the screen cannot be captured, see `blur.error`).
+enum BlurState { starting, on, onCoversVisible, noOverlay, modelsMissing, failing, noCapture }
 
 /// A result or failure reported by native code: a machine [code] (the UI picks the text) and a raw [detail].
 class BackendMessage {
@@ -206,6 +206,7 @@ class BlurInfo {
     this.layerSupported = false,
     this.busy = false,
     this.message,
+    this.error,
   });
 
   factory BlurInfo.fromMap(Map<Object?, Object?> m) => BlurInfo(
@@ -218,6 +219,7 @@ class BlurInfo {
         layerSupported: _bool(m['layerSupported'], false),
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
+        error: BackendMessage.fromMap(m['error']),
       );
 
   /// Null when the blur is not running.
@@ -237,6 +239,11 @@ class BlurInfo {
   /// `setup_failed` (detail = log).
   final BackendMessage? message;
 
+  /// Desktop blur helper: why it is not covering, or what it waits for. Codes: `no_capture`, `no_overlay`,
+  /// `models_missing`, `failing` (detail = the helper's reason, untranslated), `share_dialog` (Wayland: the
+  /// screen-share dialog is open), `exited` (the helper stopped; detail = its last output). Null: nothing to say.
+  final BackendMessage? error;
+
   Map<String, Object?> toMap() => {
         'state': state == null ? null : _enumName(state!),
         'overlayAllowed': overlayAllowed,
@@ -247,6 +254,7 @@ class BlurInfo {
         'layerSupported': layerSupported,
         'busy': busy,
         'message': message?.toMap(),
+        'error': error?.toMap(),
       };
 }
 
@@ -260,6 +268,7 @@ class Capabilities {
     this.links = false,
     this.womenSinging = false,
     this.autostart = false,
+    this.blurStandalone = false,
   });
 
   factory Capabilities.fromMap(Map<Object?, Object?> m) => Capabilities(
@@ -270,6 +279,7 @@ class Capabilities {
         links: _bool(m['links'], false),
         womenSinging: _bool(m['womenSinging'], false),
         autostart: _bool(m['autostart'], false),
+        blurStandalone: _bool(m['blurStandalone'], false),
       );
 
   static const android = Capabilities(
@@ -285,6 +295,10 @@ class Capabilities {
   /// "Start at login" ([WaaiyaBackend.setAutostart]); desktop.
   final bool autostart;
 
+  /// The blur runs on its own while a blur option is on, whether filtering is on or not (desktop, where it does
+  /// not share the screen capture with the sound filter). Android: false, the blur runs while filtering.
+  final bool blurStandalone;
+
   Map<String, bool> toMap() => {
         'shizukuSetup': shizukuSetup,
         'adbSetup': adbSetup,
@@ -293,6 +307,7 @@ class Capabilities {
         'links': links,
         'womenSinging': womenSinging,
         'autostart': autostart,
+        'blurStandalone': blurStandalone,
       };
 }
 
