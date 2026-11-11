@@ -345,6 +345,63 @@ static void redraw_all(int force) {
     for (int i = 0; i < B.n; i++) redraw(i, force);
 }
 
+/* ---- tests: a still picture as the screen (--capture-ppm), to check an overlay without a real capture */
+
+typedef struct {
+    ib_capture base;
+    int w, h, fw, fh, given;
+    uint8_t *rgba;
+} ppmcap;
+
+static int ppm_count(ib_capture *b) { (void)b; return 1; }
+static void ppm_geometry(ib_capture *b, int i, ib_geom *g) {
+    (void)i;
+    ppmcap *c = (ppmcap *)b;
+    *g = (ib_geom){0, 0, c->w, c->h, 0.6f};
+}
+static int ppm_grab(ib_capture *b, int i, const uint8_t **rgba, int *fw, int *fh) {
+    (void)i;
+    ppmcap *c = (ppmcap *)b;
+    if (c->given) return 0;
+    c->given = 1;
+    *rgba = c->rgba; *fw = c->fw; *fh = c->fh;
+    return 1;
+}
+static int ppm_fd(ib_capture *b) { (void)b; return -1; }
+static int ppm_dispatch(ib_capture *b) { (void)b; return 0; }
+static int ppm_ready(ib_capture *b) { (void)b; return 0; }
+static void ppm_destroy(ib_capture *b) { free(((ppmcap *)b)->rgba); free(b); }
+
+static ib_capture *ppm_capture_new(const char *path, char *err, size_t errlen) {
+    FILE *f = fopen(path, "rb");
+    int w = 0, h = 0, mx = 0;
+    if (!f || fscanf(f, "P6 %d %d %d", &w, &h, &mx) != 3 || w < 2 || h < 2 || mx != 255 || fgetc(f) == EOF) {
+        snprintf(err, errlen, "cannot read %s (binary PPM, 8 bit)", path);
+        if (f) fclose(f);
+        return NULL;
+    }
+    size_t n = (size_t)w * h;
+    uint32_t *src = malloc(n * 4);
+    uint8_t *rgb = malloc(n * 3);
+    ppmcap *c = calloc(1, sizeof *c);
+    if (!src || !rgb || !c || fread(rgb, 3, n, f) != n) {
+        snprintf(err, errlen, "cannot read %s", path);
+        fclose(f); free(src); free(rgb); free(c);
+        return NULL;
+    }
+    fclose(f);
+    for (size_t k = 0; k < n; k++) src[k] = (uint32_t)rgb[k * 3] << 16 | (uint32_t)rgb[k * 3 + 1] << 8 | rgb[k * 3 + 2];
+    free(rgb);
+    c->w = w; c->h = h;
+    ib_scale_size(w, h, IB_LONG_SIDE, &c->fw, &c->fh);
+    c->rgba = malloc((size_t)c->fw * c->fh * 4);
+    if (c->rgba) ib_downscale((const uint8_t *)src, w, h, w * 4, (ib_layout){16, 8, 0}, c->rgba, c->fw, c->fh, c->fw * 4);
+    free(src);
+    c->base = (ib_capture){.name = "ppm", .count = ppm_count, .geometry = ppm_geometry, .grab = ppm_grab, .fd = ppm_fd,
+                           .dispatch = ppm_dispatch, .ready = ppm_ready, .destroy = ppm_destroy, .no_selftest = 1};
+    return &c->base;
+}
+
 static void usage(void) {
     fprintf(stderr, "usage: im-blur [--models DIR] [--policy N] [--strictness N] [--fail-cover 0|1]\n"
                     "               [--backend auto|x11|wayland] [--token-file PATH] [--threads N] [--nsfw-score F]\n"
@@ -369,7 +426,7 @@ static void default_models_dir(char *out, size_t cap) {
 
 int main(int argc, char **argv) {
     char models[PATH_MAX] = "";
-    const char *backend = "auto", *token = NULL, *dump = NULL;
+    const char *backend = "auto", *token = NULL, *dump = NULL, *ppm = NULL;
     double stats_ms = 5000;
     double duty = 0.5;
     B.set = (ib_settings){IM_VISION_WOMEN | IM_VISION_NSFW, 0, 1};
@@ -388,6 +445,7 @@ int main(int argc, char **argv) {
         else if (!strcmp(a, "--nsfw-score")) B.nsfw_score = (float)atof(v);
         else if (!strcmp(a, "--stats-ms")) stats_ms = atof(v) > 100 ? atof(v) : 100;
         else if (!strcmp(a, "--duty")) duty = atof(v) >= 0.05 && atof(v) <= 1 ? atof(v) : 0.5;
+        else if (!strcmp(a, "--capture-ppm")) ppm = v; /* tests: a still picture (P6) as the only screen */
         else if (!strcmp(a, "--dump-frame")) dump = v; /* tests: the first analysed frame of screen 1, as PPM */
         else { usage(); return 2; }
     }
@@ -423,7 +481,7 @@ int main(int argc, char **argv) {
         } else if (!ov) {
             snprintf(oerr + strlen(oerr), sizeof oerr - strlen(oerr), "; no XWayland (DISPLAY unset)");
         }
-        if (ov) cap = ib_portal_capture_new(token, err, sizeof err);
+        if (ov) cap = ppm ? ppm_capture_new(ppm, err, sizeof err) : ib_portal_capture_new(token, err, sizeof err);
     } else if (x && *x) {
         g_backend = "x11";
         cap = ib_x11_capture_new(NULL, err, sizeof err);
@@ -538,11 +596,22 @@ int main(int argc, char **argv) {
             if (r < 0) { set_state(IB_ST_NO_CAPTURE, cap->err); phase = PH_DEAD; continue; }
             if (r == 0) {
                 if (!setup_screens()) { set_state(IB_ST_NO_OVERLAY, ov->err); phase = PH_DEAD; continue; }
-                g_test = 1;
-                redraw_all(1);
-                test_until = t + (wayland ? 4000 : 1500);
-                next_grab = t + 50;
-                phase = PH_SELFTEST;
+                if (cap->no_selftest) { /* tests: covers never in the capture */
+                    covers_visible = 0;
+                    pthread_mutex_lock(&B.mu);
+                    B.covers_visible = 0;
+                    B.reset = 1;
+                    pthread_cond_signal(&B.cv);
+                    pthread_mutex_unlock(&B.mu);
+                    phase = PH_RUN;
+                    next_grab = t;
+                } else {
+                    g_test = 1;
+                    redraw_all(1);
+                    test_until = t + (wayland ? 4000 : 1500);
+                    next_grab = t + 50;
+                    phase = PH_SELFTEST;
+                }
             }
         }
         if (phase == PH_SELFTEST && t >= next_grab && B.n > 0) {
@@ -650,7 +719,6 @@ int main(int argc, char **argv) {
                     dump = NULL;
                 }
                 pthread_mutex_lock(&B.mu);
-                if (B.loading) { pthread_mutex_unlock(&B.mu); s->have_prev = 0; break; } /* models not ready yet */
                 memcpy(B.jframe, f, sz);
                 B.jw = fw; B.jh = fh;
                 B.jt = t;
