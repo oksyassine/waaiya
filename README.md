@@ -147,13 +147,14 @@ clearly tell are men are covered too) and **immodest images** (nudity, revealing
 covered). Both are off by default and chosen in the app. Everything runs on the phone.
 
 How it works: the screen is captured small (long side 640 px, same screen-capture permission as the audio
-filter), a person detector (YOLOX-Nano, Apache-2.0) finds people, our own classifier (`models/vision/train_gender.py`,
-trained on Open Images boxes) says woman or man for each, and a nudity classifier (Marqo ViT-tiny, Apache-2.0)
-checks the frame a few times a second. Covers are drawn in a "display over other apps" window (Shizuku can
-allow it: **Allow with Shizuku**); a tap on a covered area does not reach the app underneath.
+filter), a person detector (YOLOX-Nano, Apache-2.0) finds people, our own classifier (MobileNetV3-large,
+`models/vision/train_gender_v2.py`, trained on 444k Open Images person boxes) says woman or man for each, and a nudity classifier (Marqo ViT-tiny, Apache-2.0)
+checks the frame a few times a second. With Shizuku running (Android 12+), the covers are drawn by
+Shizuku as a screen layer that taps go through. Without it, they are drawn in a "display over other apps" window
+(Shizuku can allow it: **Allow with Shizuku**), where a tap on a covered area does not reach the app underneath.
 A build made with `-PimBlurA11y` also declares an accessibility service that only hosts the covers window, so
 touches pass through it. It is not the default: Google Play Protect blocks installing, from a browser or a file
-manager, any app that declares an accessibility service. Install that build with adb.
+manager, any app that declares an accessibility service. Install that build with adb. **Who is left uncovered** (strict, balanced, relaxed) sets how sure the classifier must be that someone is a man before leaving him uncovered (99.9%, 99%, 98%); `eval/results/blur_tiles.md` has the trade-off.
 
 Limits, said plainly:
 - The cover is drawn after the frame was analysed (about 50–150 ms), so new content can show uncovered for that
