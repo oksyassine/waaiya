@@ -33,6 +33,8 @@ struct ib_capture {
     int (*ready)(ib_capture *);
     /* Wayland: the screen-share dialog is waiting for the user (read without locking: a hint for the state). */
     volatile int waiting_user;
+    /* Tests (--capture-ppm): the capture never shows the overlay, skip the self-test. */
+    int no_selftest;
     void (*destroy)(ib_capture *);
 };
 
