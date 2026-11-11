@@ -62,7 +62,10 @@ _Static_assert(IBX_XDamageReportNonEmpty == XDamageReportNonEmpty && IBX_XDamage
 
 /* ---------------------------------------------------------------- PipeWire / SPA (pw_dl.h) */
 #include <pipewire/pipewire.h>
+#include <spa/param/param.h>
+#if __has_include(<spa/param/buffers.h>) /* PipeWire 0.3.50+; before, the buffer keys were in param.h */
 #include <spa/param/buffers.h>
+#endif
 #include <spa/param/video/format-utils.h>
 
 #define IBP_NO_LOADER
