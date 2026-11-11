@@ -149,7 +149,9 @@ covered). Both are off by default and chosen in the app. Everything runs on the 
 How it works: the screen is captured small (long side 640 px, same screen-capture permission as the audio
 filter), a person detector (YOLOX-Nano, Apache-2.0) finds people, our own classifier (MobileNetV3-large,
 `models/vision/train_gender_v2.py`, trained on 444k Open Images person boxes) says woman or man for each, and a nudity classifier (Marqo ViT-tiny, Apache-2.0)
-checks the frame a few times a second. With Shizuku running (Android 12+), the covers are drawn by
+checks the frame a few times a second. A small segmenter (LR-ASPP MobileNetV3, fine-tuned on Open Images person
+masks) outlines each covered person, so the cover follows the body as a stack of strips and text beside them stays
+readable; when it is missing or unsure, the whole rectangle is covered. With Shizuku running (Android 12+), the covers are drawn by
 Shizuku as a screen layer that taps go through. Without it, they are drawn in a "display over other apps" window
 (Shizuku can allow it: **Allow with Shizuku**), where a tap on a covered area does not reach the app underneath.
 A build made with `-PimBlurA11y` also declares an accessibility service that only hosts the covers window, so
@@ -167,7 +169,8 @@ Limits, said plainly:
 
 C code: `engine/src/im_vision.c` (models), `engine/src/im_cover.c` (tracker), header `engine/include/im_vision.h`.
 Android: `ScreenBlur.kt`, `BlurOverlay.kt`, `Vision.kt`. Tests: `models/vision/test_vision_engine.py` (C vs the
-original YOLOX), `models/vision/test_cover.py` (tracker), `models/vision/eval_blur.py` (end to end).
+original YOLOX), `models/vision/test_cover.py` (tracker), `models/vision/eval_blur.py` (end to end),
+`models/vision/eval_silhouette.py` (outlines against rectangles, on person masks).
 
 ## Contributing / building
 
