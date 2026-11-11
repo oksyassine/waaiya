@@ -36,8 +36,8 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 7
-        versionName = "0.2.5"
+        versionCode = 8
+        versionName = "0.2.6"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         if (blurA11y) versionNameSuffix = "-a11y"

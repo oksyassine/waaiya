@@ -36,5 +36,20 @@ class Settings(context: Context) {
         get() = p.getBoolean("blur_fail_cover", true)
         set(v) = p.edit().putBoolean("blur_fail_cover", v).apply()
 
+    /**
+     * Screen blur: how sure the model must be that a person is a man before leaving him uncovered.
+     * 0 strict (99.9%, the default), 1 balanced (99%), 2 relaxed (98%). eval/results/blur_tiles.md.
+     */
+    var blurStrictness: Int
+        get() = p.getInt("blur_strictness", 0).coerceIn(0, 2)
+        set(v) = p.edit().putInt("blur_strictness", v.coerceIn(0, 2)).apply()
+
+    /** The classifier threshold for [blurStrictness]. */
+    val blurMaleClear: Float get() = MALE_CLEAR[blurStrictness]
+
     val blurOn: Boolean get() = blurWomen || blurNudity
+
+    companion object {
+        val MALE_CLEAR = floatArrayOf(0.999f, 0.99f, 0.98f)
+    }
 }
