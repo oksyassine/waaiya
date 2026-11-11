@@ -46,7 +46,7 @@ jobs:
           for p in ui desktop; do (cd "$p" && flutter test); done
 
   linux:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04  # GLib 2.72: a build on 24.04 needs GLib >= 2.80 (g_once_init_enter_pointer) to start
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
