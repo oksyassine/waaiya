@@ -14,6 +14,8 @@ object Links {
         val title: String, val durationSec: Double?, val isLive: Boolean, val site: String, val thumbnail: String?,
         /** Either [video] + [audio] (separate streams), or [progressive] (one file with both), or [audio] only. */
         val video: Stream?, val audio: Stream?, val progressive: Stream?,
+        /** The page has video, but only its audio could be used (its video cannot go into an MP4: VP9, AV1, HLS only). */
+        val videoUnavailable: Boolean = false,
     ) {
         fun streams() = Streams(video, audio, progressive)
         val hasVideo get() = video != null || progressive != null
@@ -100,7 +102,7 @@ object Links {
         val cache = File(ctx.cacheDir, "links").apply { mkdirs() }.path
         val py = python(ctx)
         val json = try {
-            synchronized(lock) { py.getModule("im_links").callAttr("resolve", url, qjs, cache).toString() }
+            synchronized(lock) { py.getModule("im_links").callAttr("resolve", url, qjs, cache, hevcDecoder).toString() }
         } catch (e: PyException) {
             // Python's LinkError("code", detail): message reads "LinkError: ('code', 'detail')" or "LinkError: code"
             val m = e.message ?: ""
@@ -118,8 +120,21 @@ object Links {
             throw LinkFailure(code, res)
         }
         val o = JSONObject(json)
+        fun picked(k: String) = o.optJSONObject(k)?.let { "${it.opt("vcodec")}/${it.opt("acodec")} ${it.opt("width")}x${it.opt("height")}" }
+        android.util.Log.i(TAG, "link ${o.optString("site")}: video=${picked("video")} audio=${picked("audio")} " +
+            "progressive=${picked("progressive")}" + if (o.optBoolean("video_unavailable")) " (video unavailable)" else "")
         return Resolved(o.optString("title"), o.optDouble("duration").takeIf { !it.isNaN() }, o.optBoolean("is_live"),
-            o.optString("site"), o.optString("thumbnail").ifEmpty { null }, stream(o, "video"), stream(o, "audio"), stream(o, "progressive"))
+            o.optString("site"), o.optString("thumbnail").ifEmpty { null }, stream(o, "video"), stream(o, "audio"), stream(o, "progressive"),
+            o.optBoolean("video_unavailable"))
+    }
+
+    /** HEVC video is taken only when a page has no H.264 and this phone can decode it. */
+    private val hevcDecoder: Boolean by lazy {
+        runCatching {
+            android.media.MediaCodecList(android.media.MediaCodecList.REGULAR_CODECS).codecInfos.any { c ->
+                !c.isEncoder && c.supportedTypes.any { it.equals(android.media.MediaFormat.MIMETYPE_VIDEO_HEVC, ignoreCase = true) }
+            }
+        }.getOrDefault(false)
     }
 
     fun ytDlpVersion(ctx: Context): String =
