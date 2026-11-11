@@ -60,7 +60,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     @Volatile private var stopped = false
 
     // worker-thread state
-    private val frame = Vision.Frame(FloatArray(64 * 5), 0, false)
+    private val frame = Vision.Frame(FloatArray(Vision.MAX_RECTS * 5), 0, false)
     private var lastNsfw = -1e9
     private var failStreak = 0
     private var frameMs = 0.0          // moving average of the model time per frame
