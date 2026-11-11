@@ -80,7 +80,8 @@ typedef struct {
     int seg_max_people;  /* covered people outlined per frame, largest first; smaller ones get their rectangle (default
                             6: about 7-11 ms per person on one x86 core, eval/results/blur_silhouette.md) */
     int seg_min_px;      /* people shorter than this (frame pixels) keep their rectangle: too few pixels to outline
-                            (default 48: eval/results/blur_silhouette.md) */
+                            (default 48: 96 gives the same coverage on photos but outlines half as many people in
+                            a portrait frame, where people are small; eval/results/blur_silhouette.md) */
 } im_vision_params;
 
 /* Outline of one person, relative to their box (0,0 = box top-left, 1,1 = box bottom-right; values outside 0..1

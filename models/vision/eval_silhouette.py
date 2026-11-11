@@ -139,6 +139,7 @@ def main():
     ap.add_argument("--timing-images", type=int, default=300, help="images also run without outlines, for the time")
     ap.add_argument("--seg-threshold", type=float, nargs="+", default=[0.25])
     ap.add_argument("--seg-min-fill", type=float, nargs="+", default=[0.25])
+    ap.add_argument("--seg-min-px", type=int, help="people shorter than this keep their rectangle (default: engine)")
     ap.add_argument("--strip-margin", type=float, nargs="+", default=[0.05])
     ap.add_argument("--bridge-gap", type=float, nargs="+", default=[0.3])
     ap.add_argument("--open-reach", type=float, nargs="+", default=[0.8])
@@ -152,7 +153,7 @@ def main():
     v = Vision(person=a.person, gender=a.gender, seg=a.seg, policy=WOMEN, threads=a.threads)
     if v.status:
         sys.exit("vision: " + v.error)
-    base = v.params()
+    base = v.params(**({"seg_min_px": a.seg_min_px} if a.seg_min_px is not None else {}))
     rect_cover = Cover(covers_visible=False)
     vis_cfgs = list(itertools.product(a.seg_threshold, a.seg_min_fill))
     cov_cfgs = list(itertools.product(a.strip_margin, a.bridge_gap, a.open_reach))
