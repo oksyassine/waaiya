@@ -13,7 +13,7 @@ void main() {
 
   test('settings and language are kept in a JSON file with the Android keys', () async {
     final file = File('${dir.path}/settings.json');
-    var b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false);
+    var b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false, findBlur: false);
     expect(b.state.language, 'ar');
     expect(b.state.filter.simulated, isTrue);
     expect(b.state.capabilities.shizukuSetup, isFalse);
@@ -28,7 +28,7 @@ void main() {
     expect(json['lang'], 'en');
     expect(json['blur_strictness'], 1);
 
-    b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false);
+    b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false, findBlur: false);
     expect(b.state.settings.gender, 'man');
     expect(b.state.settings.silenceUnfilterable, isFalse);
     expect(b.state.language, 'en');
@@ -38,7 +38,7 @@ void main() {
 
   test('licence texts come from the folder next to the app', () async {
     File('${dir.path}/NOTICE.txt').writeAsStringSync('Waaiya NOTICE');
-    final b = await DesktopBackend.open(file: File('${dir.path}/s.json'), licencesDir: dir, findEngine: false);
+    final b = await DesktopBackend.open(file: File('${dir.path}/s.json'), licencesDir: dir, findEngine: false, findBlur: false);
     expect((await b.getLicences()).notice, 'Waaiya NOTICE');
     expect(await b.getLicenceText('THIRD_PARTY_LICENSES.txt'), contains('github.com'));
     await expectLater(b.getLicenceText('../secret'), throwsA(isA<BackendException>()));
@@ -49,6 +49,7 @@ void main() {
           file: File('${dir.path}/w.json')..writeAsStringSync('{"gender":"woman"}'),
           licencesDir: dir,
           findEngine: false,
+          findBlur: false,
         ));
     await tester.pumpWidget(WaaiyaApp(backend: b!));
     await tester.pumpAndSettle();
@@ -56,7 +57,7 @@ void main() {
     expect(Directionality.of(tester.element(find.text('التصفية متوقفة'))), TextDirection.rtl);
     expect(find.textContaining('معاينة'), findsOneWidget);
     expect(find.text('تمويه الشاشة'), findsNothing);
-    await tester.ensureVisible(find.byKey(const Key('blur_strict'))); // shown as a value in the settings card
-    expect(find.text('مَن يبقى دون تغطية: صارم'), findsOneWidget);
+    // no blur here (a development run): "who is left uncovered" is not shown anywhere
+    expect(find.byKey(const Key('blur_strict')), findsNothing);
   });
 }

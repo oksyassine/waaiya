@@ -1,0 +1,7 @@
+nsfw_marqo_int8.onnx (Waaiya screen blur, immodest images)
+
+Source: Marqo/nsfw-image-detection-384, https://huggingface.co/Marqo/nsfw-image-detection-384
+(model.safetensors), exported to ONNX and int8-quantised by models/vision/export_vision.py.
+
+Licence: Apache License 2.0, as stated in the model card (license: apache-2.0). The model repository has no
+separate licence file; the licence text is the Apache License 2.0 shipped with Waaiya (LICENSE-Apache-2.0.txt).

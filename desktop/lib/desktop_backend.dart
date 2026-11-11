@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:waaiya_ui/waaiya_ui.dart';
 
+import 'linux_blur.dart';
 import 'linux_engine.dart';
 
 /// Desktop backend (docs/UI_CONTRACT.md, "Where the desktop backend differs").
@@ -14,10 +15,15 @@ import 'linux_engine.dart';
 /// then starts the systemd user service; Stop stops it (normal audio comes back); the state is polled from
 /// `waaiya status` and systemd. Elsewhere (Windows for now, or a development run without the engine) start/stop
 /// only change the reported state, and the screen says it is a preview (`filter.simulated`).
+///
+/// Linux screen blur ([LinuxBlur], when the bundle has it): runs while the app is open and a blur option is on,
+/// whether the sound filter runs or not (capability `blurStandalone`); its state is `blur.state` / `blur.error`.
 class DesktopBackend extends MemoryBackend {
-  DesktopBackend._(this.settingsFile, this.licencesDir, this.engine, this.startTimeout, AppState initial, Duration? poll)
+  DesktopBackend._(this.settingsFile, this.licencesDir, this.engine, this.blur, this.startTimeout, AppState initial,
+      Duration? poll)
       : super(initial: initial) {
     if (engine != null && poll != null) _timer = Timer.periodic(poll, (_) => refresh());
+    _blurSub = blur?.reports.listen(_onBlur);
   }
 
   /// Where the settings are stored.
@@ -28,6 +34,10 @@ class DesktopBackend extends MemoryBackend {
 
   /// The Linux engine host; null: simulated.
   final LinuxEngine? engine;
+
+  /// The Linux screen blur; null: no blur here (capability `screenBlur` false).
+  final LinuxBlur? blur;
+  StreamSubscription<BlurReport?>? _blurSub;
 
   Timer? _timer;
 
@@ -44,19 +54,29 @@ class DesktopBackend extends MemoryBackend {
 
   static const _langKey = 'lang';
 
-  /// [engine]: Linux engine host; by default the one next to the app on Linux. [poll]: state refresh period
-  /// (null: only after actions and [refresh] calls).
+  /// [engine]: Linux engine host; by default the one next to the app on Linux. [blur]: Linux screen blur; by
+  /// default the helper next to the app on Linux. [platform]: `linux`, `windows`, ... (tests; default: this
+  /// system). [poll]: state refresh period (null: only after actions and [refresh] calls).
   static Future<DesktopBackend> open({
     File? file,
     Directory? licencesDir,
     LinuxEngine? engine,
     bool findEngine = true,
+    LinuxBlur? blur,
+    bool findBlur = true,
+    String? platform,
     Duration? poll = const Duration(seconds: 3),
     Duration startTimeout = defaultStartTimeout,
   }) async {
     file ??= defaultSettingsFile();
+    platform ??= Platform.operatingSystem;
     licencesDir ??= Directory('${File(Platform.resolvedExecutable).parent.path}${Platform.pathSeparator}licences');
-    if (engine == null && findEngine && Platform.isLinux) engine = LinuxEngine.find();
+    final linux = platform == 'linux';
+    if (engine == null && findEngine && linux) engine = LinuxEngine.find();
+    if (!linux) blur = null; // TODO(blur): Windows capture + overlay
+    if (blur == null && findBlur && linux) {
+      blur = LinuxBlur.find(tokenFile: File('${file.parent.path}/screencast-restore-token'));
+    }
     var saved = <String, Object?>{};
     try {
       saved = (jsonDecode(await file.readAsString()) as Map).cast<String, Object?>();
@@ -70,7 +90,7 @@ class DesktopBackend extends MemoryBackend {
     }
     final detector = engine?.hasDetector ?? false;
     final initial = AppState(
-      platform: Platform.operatingSystem,
+      platform: platform,
       version: '0.2.6',
       language: saved[_langKey] == 'en' ? 'en' : 'ar', // Arabic first, whatever the system language
       settings: WaaiyaSettings.fromMap(settings),
@@ -78,10 +98,18 @@ class DesktopBackend extends MemoryBackend {
       detectorModel: detector,
       // Women's singing only with a bundled detector: without one the engine mutes all voice while it is on.
       // TODO(engine): Windows host.
-      capabilities: Capabilities(womenSinging: engine == null || detector, autostart: engine != null),
+      capabilities: Capabilities(
+        womenSinging: engine == null || detector,
+        autostart: engine != null,
+        screenBlur: blur != null,
+        blurStandalone: blur != null,
+      ),
+      // the covers let every click through (empty input region), so the full-screen fail cover is safe here
+      blur: blur != null ? const BlurInfo(overlayAllowed: true, touchPassThrough: true) : const BlurInfo(),
     );
-    final b = DesktopBackend._(file, licencesDir, engine, startTimeout, initial, poll);
+    final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll);
     await b.refresh(); // a filter already running (started at login) shows at once
+    await b._applyBlur();
     return b;
   }
 
@@ -112,9 +140,34 @@ class DesktopBackend extends MemoryBackend {
   }
 
   @override
-  Future<void> close() {
+  Future<void> close() async {
     _timer?.cancel();
+    await _blurSub?.cancel();
+    await blur?.dispose();
     return super.close();
+  }
+
+  // --- Linux screen blur ---
+
+  static const _blurKeys = {
+    SettingKeys.blurWomen,
+    SettingKeys.blurNudity,
+    SettingKeys.blurStrictness,
+    SettingKeys.blurFailCover,
+  };
+
+  Future<void> _applyBlur() async => blur?.apply(BlurConfig.of(state.settings));
+
+  void _onBlur(BlurReport? r) {
+    final exited = r == null ? blur?.exitDetail : null;
+    emit(state.copyWith(
+      blur: BlurInfo(
+        state: r?.blurState,
+        overlayAllowed: true,
+        touchPassThrough: true,
+        error: exited != null ? BackendMessage('exited', exited) : r?.blurError,
+      ),
+    ));
   }
 
   // --- Linux engine host ---
@@ -193,6 +246,7 @@ class DesktopBackend extends MemoryBackend {
   @override
   Future<void> setSetting(String key, Object value) async {
     await super.setSetting(key, value);
+    if (_blurKeys.contains(key)) await _applyBlur();
     final e = engine;
     if (e == null || key != SettingKeys.muteWomenSinging || !e.hasDetector) return;
     // `waaiya women-singing on|off` applies at the next start: restart a running filter.
@@ -228,6 +282,10 @@ class DesktopBackend extends MemoryBackend {
     LicenceDoc('GNU Affero General Public License v3 or later (Waaiya)', 'LICENSE-Apache-2.0.txt'),
     LicenceDoc('Third-party components, models and training data', 'THIRD_PARTY_LICENSES.txt'),
   ];
+  static const _blurDocs = [
+    LicenceDoc('YOLOX person detector (Apache-2.0)', 'YOLOX-LICENSE.txt'),
+    LicenceDoc('Marqo nudity classifier (Apache-2.0)', 'Marqo-nsfw-image-detection-384-NOTICE.txt'),
+  ];
   static const _engineDocs = [
     LicenceDoc('ONNX Runtime (MIT)', 'onnxruntime-LICENSE.txt'),
     LicenceDoc('ONNX Runtime third-party notices', 'onnxruntime-ThirdPartyNotices.txt'),
@@ -238,7 +296,8 @@ class DesktopBackend extends MemoryBackend {
   /// The base texts, plus the engine's when they are in the bundle.
   List<LicenceDoc> get _docs => [
         ..._baseDocs,
-        ..._engineDocs.where((d) => File('${licencesDir.path}${Platform.pathSeparator}${d.file}').existsSync()),
+        ...[..._engineDocs, ..._blurDocs]
+            .where((d) => File('${licencesDir.path}${Platform.pathSeparator}${d.file}').existsSync()),
       ];
 
   @override
