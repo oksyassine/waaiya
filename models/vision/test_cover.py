@@ -125,6 +125,9 @@ def main():
                                                                                    flags=3)])
     check("an outline open on every side reaches the rectangle's edges",
           covers(out, 0.365, 0.3) and covers(out, 0.635, 0.7) and covers(out, 0.5, 0.225))
+    out = Cover(covers_visible=False).update(0, img, [det(0.4, 0.3, 0.6, 0.6)], [body(empty=(1, 0), flags=2)])
+    check("a body cut by the crop's bottom (box too short): the bottom strip reaches past the rectangle",
+          covers(out, 0.5, 0.82) and not covers(out, 0.5, 0.86) and not covers(out, 0.41, 0.73))
     out = Cover(covers_visible=True).update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body()])
     check("covers visible in the capture: rectangles only", len(out) == 1 and covers(out, 0.41, 0.31))
     # one-to-one: overlapping outlined people keep their own strips; strips are not joined into a box
