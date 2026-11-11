@@ -41,13 +41,15 @@ class MemoryBackend implements WaaiyaBackend {
   @override
   Future<StartResult> startFilter() async {
     if (_state.filter.running) return StartResult.alreadyRunning;
-    emit(_state.copyWith(filter: FilterInfo(state: FilterState.filtering, delayMs: 40, simulated: _state.filter.simulated)));
+    final f = _state.filter;
+    emit(_state.copyWith(
+        filter: FilterInfo(state: FilterState.filtering, delayMs: 40, simulated: f.simulated, autostart: f.autostart)));
     return StartResult.started;
   }
 
   @override
   Future<void> stopFilter() async =>
-      emit(_state.copyWith(filter: FilterInfo(simulated: _state.filter.simulated)));
+      emit(_state.copyWith(filter: FilterInfo(simulated: _state.filter.simulated, autostart: _state.filter.autostart)));
 
   @override
   Future<void> runSetupStep(int step) async => throw const BackendException('unsupported', 'runSetupStep');
@@ -69,6 +71,17 @@ class MemoryBackend implements WaaiyaBackend {
     if (tag != 'ar' && tag != 'en') throw BackendException('bad_args', 'language "$tag"');
     emit(_state.copyWith(language: tag));
     await saved();
+  }
+
+  @override
+  Future<void> setAutostart(bool on) async {
+    if (!_state.capabilities.autostart) throw const BackendException('unsupported', 'setAutostart');
+    emit(_state.copyWith(filter: FilterInfo(
+      state: _state.filter.state,
+      delayMs: _state.filter.delayMs,
+      simulated: _state.filter.simulated,
+      autostart: on,
+    )));
   }
 
   @override

@@ -602,5 +602,60 @@
         "type": "String"
       }
     }
+  },
+  "stateOnDetailNoDelay": "تُزال الآلات من كل التطبيقات.",
+  "@stateOnDetailNoDelay": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "engineErrorNoPactl": "لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.",
+  "@engineErrorNoPactl": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "engineErrorNoSoundServer": "خادم الصوت لا يعمل (PulseAudio أو PipeWire).",
+  "@engineErrorNoSoundServer": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "engineErrorNoSystemd": "لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.",
+  "@engineErrorNoSystemd": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "engineErrorNoOutput": "لم يُعثر على مكبّرات صوت أو سماعات.",
+  "@engineErrorNoOutput": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "engineErrorInstallFailed": "تعذّر تثبيت التصفية. التفاصيل:\n{details}",
+  "@engineErrorInstallFailed": {
+    "description": "Flutter only. Arabic not reviewed yet.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "engineErrorStartFailed": "لم تبدأ التصفية. التفاصيل:\n{details}",
+  "@engineErrorStartFailed": {
+    "description": "Flutter only. Arabic not reviewed yet.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "engineErrorServiceFailed": "توقّفت التصفية بسبب خطأ. التفاصيل:\n{details}",
+  "@engineErrorServiceFailed": {
+    "description": "Flutter only. Arabic not reviewed yet.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "autostartTitle": "التشغيل عند تسجيل الدخول",
+  "@autostartTitle": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "autostartBody": "تصفية الصوت فور تسجيل الدخول.",
+  "@autostartBody": {
+    "description": "Flutter only. Arabic not reviewed yet."
   }
 }

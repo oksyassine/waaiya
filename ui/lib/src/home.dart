@@ -74,6 +74,14 @@ class HomeScreen extends StatelessWidget {
           value: st.silenceUnfilterable,
           onChanged: (v) => _set(context, SettingKeys.silenceUnfilterable, v),
         ),
+        if (s.capabilities.autostart)
+          SettingSwitch(
+            key: const Key('autostart'),
+            title: l.autostartTitle,
+            body: l.autostartBody,
+            value: s.filter.autostart,
+            onChanged: (v) => runAction(context, (b) => b.setAutostart(v)),
+          ),
         if (st.isMan && s.capabilities.womenSinging)
           SettingSwitch(
             title: l.settingSingingTitle,
@@ -130,7 +138,8 @@ class PowerSection extends StatelessWidget {
       _ => l.stateOffTitle,
     };
     var detail = switch (f.state) {
-      FilterState.filtering => l.stateOnDetail(f.delayMs),
+      // no measured delay (desktop host): the sentence without it
+      FilterState.filtering => f.delayMs > 0 ? l.stateOnDetail(f.delayMs) : l.stateOnDetailNoDelay,
       FilterState.modelFailed => l.stateModelFailed,
       FilterState.noCapturePermission => l.stateCaptureDenied,
       FilterState.stoppedBySystem => l.stateStoppedBySystem,
@@ -140,6 +149,11 @@ class PowerSection extends StatelessWidget {
     var detailIsError = f.state == FilterState.modelFailed || f.state == FilterState.noCapturePermission;
     if (f.micDenied && !on) {
       detail = l.needRecordAudio;
+      detailIsError = true;
+    }
+    final error = f.error;
+    if (error != null) {
+      detail = engineErrorText(l, error);
       detailIsError = true;
     }
 
@@ -182,3 +196,15 @@ class PowerSection extends StatelessWidget {
     );
   }
 }
+
+/// Text for a `filter.error` code (docs/UI_CONTRACT.md).
+String engineErrorText(AppLocalizations l, BackendMessage e) => switch (e.code) {
+      'no_pactl' => l.engineErrorNoPactl,
+      'no_sound_server' => l.engineErrorNoSoundServer,
+      'no_systemd' => l.engineErrorNoSystemd,
+      'no_output' => l.engineErrorNoOutput,
+      'install_failed' => l.engineErrorInstallFailed(e.detail),
+      'start_failed' => l.engineErrorStartFailed(e.detail),
+      'service_failed' => l.engineErrorServiceFailed(e.detail),
+      _ => l.actionFailed(e.detail.isEmpty ? e.code : e.detail),
+    };

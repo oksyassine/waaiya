@@ -57,6 +57,9 @@ class ChannelBackend implements WaaiyaBackend {
   Future<void> setLanguage(String tag) => _call<void>('setLanguage', {'tag': tag});
 
   @override
+  Future<void> setAutostart(bool on) => _call<void>('setAutostart', {'on': on});
+
+  @override
   Future<void> openLinkScreen() => _call<void>('openLinkScreen');
 
   @override

@@ -13,7 +13,7 @@ void main() {
 
   test('settings and language are kept in a JSON file with the Android keys', () async {
     final file = File('${dir.path}/settings.json');
-    var b = await DesktopBackend.open(file: file, licencesDir: dir);
+    var b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false);
     expect(b.state.language, 'ar');
     expect(b.state.filter.simulated, isTrue);
     expect(b.state.capabilities.shizukuSetup, isFalse);
@@ -28,7 +28,7 @@ void main() {
     expect(json['lang'], 'en');
     expect(json['blur_strictness'], 1);
 
-    b = await DesktopBackend.open(file: file, licencesDir: dir);
+    b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false);
     expect(b.state.settings.gender, 'man');
     expect(b.state.settings.silenceUnfilterable, isFalse);
     expect(b.state.language, 'en');
@@ -38,7 +38,7 @@ void main() {
 
   test('licence texts come from the folder next to the app', () async {
     File('${dir.path}/NOTICE.txt').writeAsStringSync('Waaiya NOTICE');
-    final b = await DesktopBackend.open(file: File('${dir.path}/s.json'), licencesDir: dir);
+    final b = await DesktopBackend.open(file: File('${dir.path}/s.json'), licencesDir: dir, findEngine: false);
     expect((await b.getLicences()).notice, 'Waaiya NOTICE');
     expect(await b.getLicenceText('THIRD_PARTY_LICENSES.txt'), contains('github.com'));
     await expectLater(b.getLicenceText('../secret'), throwsA(isA<BackendException>()));
@@ -48,6 +48,7 @@ void main() {
     final b = await tester.runAsync(() => DesktopBackend.open(
           file: File('${dir.path}/w.json')..writeAsStringSync('{"gender":"woman"}'),
           licencesDir: dir,
+          findEngine: false,
         ));
     await tester.pumpWidget(WaaiyaApp(backend: b!));
     await tester.pumpAndSettle();

@@ -489,4 +489,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String actionFailed(String details) {
     return 'That did not work: $details';
   }
+
+  @override
+  String get stateOnDetailNoDelay => 'Instruments are removed from all apps.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Sound tools not found (pactl). Waaiya needs PulseAudio, or PipeWire with pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'The sound server is not running (PulseAudio or PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'This system has no systemd user session, which runs the filter in the background.';
+
+  @override
+  String get engineErrorNoOutput => 'No speakers or headphones found.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Could not install the filter. Details:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'The filter did not start. Details:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'The filter stopped with an error. Details:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Start at login';
+
+  @override
+  String get autostartBody => 'Filter the sound as soon as you log in.';
 }

@@ -107,13 +107,22 @@ class BackendMessage {
 }
 
 class FilterInfo {
-  const FilterInfo({this.state = FilterState.stopped, this.delayMs = 0, this.micDenied = false, this.simulated = false});
+  const FilterInfo({
+    this.state = FilterState.stopped,
+    this.delayMs = 0,
+    this.micDenied = false,
+    this.simulated = false,
+    this.error,
+    this.autostart = false,
+  });
 
   factory FilterInfo.fromMap(Map<Object?, Object?> m) => FilterInfo(
         state: _enum(FilterState.values, m['state']) ?? FilterState.stopped,
         delayMs: _int(m['delayMs']),
         micDenied: _bool(m['micDenied'], false),
         simulated: _bool(m['simulated'], false),
+        error: BackendMessage.fromMap(m['error']),
+        autostart: _bool(m['autostart'], false),
       );
 
   final FilterState state;
@@ -125,11 +134,24 @@ class FilterInfo {
   /// Desktop preview: start/stop are not connected to an engine yet.
   final bool simulated;
 
+  /// Why the filter could not start or stopped (desktop engine host): `no_pactl`, `no_sound_server`, `no_systemd`,
+  /// `no_output`, `install_failed`, `start_failed`, `service_failed` (detail = log lines). Null: no problem.
+  final BackendMessage? error;
+
+  /// The filter starts at login (capability `autostart`).
+  final bool autostart;
+
   bool get running =>
       state == FilterState.starting || state == FilterState.filtering || state == FilterState.modelFailed;
 
-  Map<String, Object> toMap() =>
-      {'state': _enumName(state), 'delayMs': delayMs, 'micDenied': micDenied, 'simulated': simulated};
+  Map<String, Object?> toMap() => {
+        'state': _enumName(state),
+        'delayMs': delayMs,
+        'micDenied': micDenied,
+        'simulated': simulated,
+        'error': error?.toMap(),
+        'autostart': autostart,
+      };
 }
 
 class SetupInfo {
@@ -237,6 +259,7 @@ class Capabilities {
     this.screenBlur = false,
     this.links = false,
     this.womenSinging = false,
+    this.autostart = false,
   });
 
   factory Capabilities.fromMap(Map<Object?, Object?> m) => Capabilities(
@@ -246,6 +269,7 @@ class Capabilities {
         screenBlur: _bool(m['screenBlur'], false),
         links: _bool(m['links'], false),
         womenSinging: _bool(m['womenSinging'], false),
+        autostart: _bool(m['autostart'], false),
       );
 
   static const android = Capabilities(
@@ -258,6 +282,9 @@ class Capabilities {
   final bool links;
   final bool womenSinging;
 
+  /// "Start at login" ([WaaiyaBackend.setAutostart]); desktop.
+  final bool autostart;
+
   Map<String, bool> toMap() => {
         'shizukuSetup': shizukuSetup,
         'adbSetup': adbSetup,
@@ -265,6 +292,7 @@ class Capabilities {
         'screenBlur': screenBlur,
         'links': links,
         'womenSinging': womenSinging,
+        'autostart': autostart,
       };
 }
 
@@ -341,14 +369,15 @@ class AppState {
       };
 }
 
-/// startFilter outcome.
-enum StartResult { started, micDenied, consentDenied, alreadyRunning }
+/// startFilter outcome; `failed`: see `filter.error`.
+enum StartResult { started, micDenied, consentDenied, alreadyRunning, failed }
 
 StartResult startResultFromCode(Object? code) => switch (code) {
       'started' => StartResult.started,
       'mic_denied' => StartResult.micDenied,
       'consent_denied' => StartResult.consentDenied,
       'already_running' => StartResult.alreadyRunning,
+      'failed' => StartResult.failed,
       _ => StartResult.consentDenied,
     };
 
@@ -407,6 +436,9 @@ abstract interface class WaaiyaBackend {
 
   /// "ar" or "en"; saved natively so native screens, services and notifications follow it.
   Future<void> setLanguage(String tag);
+
+  /// Start the filter at login, or not (capability `autostart`). State in `filter.autostart`.
+  Future<void> setAutostart(bool on);
 
   /// The native link screen (watch or save a link without music).
   Future<void> openLinkScreen();
