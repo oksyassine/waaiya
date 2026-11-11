@@ -29,7 +29,7 @@ class Config(C.Structure):
 
 class Params(C.Structure):
     _fields_ = [("person_score", C.c_float), ("nms_iou", C.c_float), ("male_clear", C.c_float),
-                ("nsfw_score", C.c_float), ("max_people", C.c_int)]
+                ("nsfw_score", C.c_float), ("max_people", C.c_int), ("tiles", C.c_int)]
 
 
 class CoverParams(C.Structure):
