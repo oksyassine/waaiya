@@ -255,7 +255,7 @@ class BlurOverlay(private val context: Context) {
         private var ox = 0
         private var oy = 0
         private val bmp = Paint(Paint.FILTER_BITMAP_FLAG or Paint.ANTI_ALIAS_FLAG)
-        private val tint = Paint().apply { color = Color.argb(120, 30, 30, 30) }
+        private val tint = Paint().apply { color = Color.argb(200, 30, 30, 30) } // mostly opaque: shapes and colours do not show through
         // Heavy blur: each cover shows its own area averaged into a few big cells (about BLUR_CELL_DP each),
         // smoothed by bitmap filtering, so faces, hair and outlines melt into the surroundings.
         private var thumbPx = IntArray(0)
@@ -401,7 +401,7 @@ class BlurOverlay(private val context: Context) {
          *  (not at the top: an app overlay may sit under the status bar). */
         const val TEST_SQUARE_DP = 16f
         /** Window hosts: blur cell size; a person's cover shows only a few soft blobs of colour. */
-        const val BLUR_CELL_DP = 90f
+        const val BLUR_CELL_DP = 140f
         const val MAX_CELLS = 8
         /** App-overlay host: a whole-screen cover stops here (fraction of the height), leaving the bottom touchable. */
         const val FULL_COVER_BOTTOM = 0.88f

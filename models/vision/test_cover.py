@@ -60,46 +60,46 @@ def main():
 
     img = texture(1)
     # clean capture: hold, then release
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     out = c.update(0, img, [det(0.4, 0.4, 0.6, 0.8)])
     check("person covered with margin", covers(out, 0.38, 0.39) and covers(out, 0.5, 0.6))
     check("held during a missed detection", covers(c.update(300, img, []), 0.5, 0.6))
     check("released after the hold time", not covers(c.update(900, img, []), 0.5, 0.6))
     # one detection per track per frame (drawn unmerged here, to see the tracks)
-    c = Cover(covers_visible=False, merge_gap=0)
+    c = Cover(covers_visible=False, static_level=0, merge_gap=0)
     out = c.update(0, img, [det(0.1, 0.2, 0.45, 0.8), det(0.35, 0.2, 0.7, 0.8), det(0.6, 0.2, 0.95, 0.8)])
     check("overlapping people keep separate covers", len(out) == 3)
     # groups: close covers are drawn as one, so the gaps between people are covered too
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     out = c.update(0, img, [det(0.05, 0.3, 0.2, 0.6), det(0.32, 0.3, 0.47, 0.6), det(0.59, 0.3, 0.74, 0.6)])
     check("a group is covered as one, gaps included", len(out) == 1 and covers(out, 0.26, 0.45) and covers(out, 0.53, 0.45))
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     out = c.update(0, img, [det(0.05, 0.1, 0.15, 0.3), det(0.8, 0.6, 0.9, 0.8)])
     check("people far apart keep their own covers", len(out) == 2 and not covers(out, 0.5, 0.45))
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     c.update(0, img, [VRect(0, 0, 1, 1, 4, 0.9, -1)])
     out = c.update(10, img, [det(0.4, 0.4, 0.6, 0.8)])
     check("a whole-frame cover is not merged into", sum(r[4] == "full" for r in out) == 1 and len(out) == 2)
     # men are not covered and never refresh a cover
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     out = c.update(0, img, [det(0.1, 0.1, 0.3, 0.5, kind=0)])
     check("a man is left clear", not out)
     c.update(0, img, [det(0.4, 0.4, 0.6, 0.8)])
     out = c.update(600, img, [det(0.4, 0.4, 0.6, 0.8, kind=0)])
     check("a flicker to 'man' does not keep or extend a cover past its hold", not covers(out, 0.5, 0.6))
     # motion lead
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     c.update(0, img, [det(0.2, 0.4, 0.3, 0.8)])
     out = c.update(100, img, [det(0.3, 0.4, 0.4, 0.8)])
     check("moving person: cover extends ahead", covers(out, 0.5, 0.6))
     # nudity: whole frame, held
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     c.update(0, img, [VRect(0, 0, 1, 1, 4, 0.9, -1)])
     check("nudity covers the whole frame", any(r[4] == "full" for r in c.update(1000, img, None)))
     check("nudity cover released after its hold", not any(r[4] == "full" for r in c.update(2000, img, None)))
 
     # outlines: strips that follow the person instead of the whole rectangle
-    c = Cover(covers_visible=False, bridge_gap=0, lead_ms=0)
+    c = Cover(covers_visible=False, static_level=0, bridge_gap=0, lead_ms=0)
     out = c.update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body()])
     check("outlined person: drawn as strips", len(out) > 1 and all(r[7] for r in out))
     check("strips cover the body", covers(out, 0.5, 0.31) and covers(out, 0.5, 0.5) and covers(out, 0.5, 0.69))
@@ -113,43 +113,57 @@ def main():
     out = c.update(80, img, [], None)
     check("a missed detection keeps the outline", len(out) == 2 and covers(out, 0.4, 0.75) and not covers(out, 0.3, 0.5))
     out = c.update(120, img, [det(0.3, 0.2, 0.6, 0.8)], [none()])
-    check("a detection without an outline: the whole rectangle again", len(out) == 1 and covers(out, 0.25, 0.5))
+    check("a still person without an outline this frame keeps the last one (no outline/rectangle flicker)",
+          len(out) == 2 and not covers(out, 0.25, 0.5))
+    out = c.update(160, img, [det(0.05, 0.2, 0.35, 0.8)], [none()])  # moved: a new place, no outline
+    check("a person who moved, without an outline: the whole rectangle again", len(out) == 1 and covers(out, 0.02, 0.5))
+
+    # still screen: detector noise must not make covers wobble
+    c = Cover(covers_visible=False, static_level=0, bridge_gap=0)
+    base = c.update(0, img, [det(0.40, 0.30, 0.60, 0.70)])
+    out = c.update(50, img, [det(0.41, 0.31, 0.59, 0.69)])  # a slightly smaller box of the same person
+    check("still person, slightly smaller box: the cover shrinks only a little",
+          abs(out[0][0] - base[0][0]) < 0.01 and abs(out[0][2] - base[0][2]) < 0.01)
+    out = c.update(100, img, [det(0.38, 0.30, 0.60, 0.70)])  # slightly wider to the left
+    check("still person, slightly bigger box: the cover grows at once", out[0][0] <= base[0][0] - 0.015)
+    out = c.update(150, img, [det(0.42, 0.30, 0.62, 0.70)])
+    check("still person: no motion lead from detector noise", out[0][2] < base[0][2] + 0.03)
     # fail closed
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     out = c.update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body()], max_out=1)
     check("no room for all strips: the whole rectangle, never part of an outline",
           len(out) == 1 and not out[0][7] and covers(out, 0.41, 0.31))
-    out = Cover(covers_visible=False).update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body(empty=(SHAPE_ROWS, 0))])
+    out = Cover(covers_visible=False, static_level=0).update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body(empty=(SHAPE_ROWS, 0))])
     check("an empty outline: the whole rectangle", len(out) == 1 and covers(out, 0.41, 0.31))
-    out = Cover(covers_visible=False).update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body(l=-100, r=100, empty=(0, 0),
+    out = Cover(covers_visible=False, static_level=0).update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body(l=-100, r=100, empty=(0, 0),
                                                                                    flags=3)])
     check("an outline open on every side reaches the rectangle's edges",
           covers(out, 0.365, 0.3) and covers(out, 0.635, 0.7) and covers(out, 0.5, 0.225))
-    out = Cover(covers_visible=False).update(0, img, [det(0.4, 0.3, 0.6, 0.6)], [body(empty=(1, 0), flags=2)])
+    out = Cover(covers_visible=False, static_level=0).update(0, img, [det(0.4, 0.3, 0.6, 0.6)], [body(empty=(1, 0), flags=2)])
     check("a body cut by the crop's bottom (box too short): the bottom strip reaches past the rectangle",
           covers(out, 0.5, 0.82) and not covers(out, 0.5, 0.86) and not covers(out, 0.41, 0.73))
     out = Cover(covers_visible=True).update(0, img, [det(0.4, 0.3, 0.6, 0.7)], [body()])
     check("covers visible in the capture: rectangles only", len(out) == 1 and covers(out, 0.41, 0.31))
     # one-to-one: overlapping outlined people keep their own strips; strips are not joined into a box
-    c = Cover(covers_visible=False, bridge_gap=0)
+    c = Cover(covers_visible=False, static_level=0, bridge_gap=0)
     people = [det(0.1, 0.2, 0.3, 0.8), det(0.25, 0.2, 0.45, 0.8), det(0.4, 0.2, 0.6, 0.8)]
     out = c.update(0, img, people, [body(), body(), body()])
     owners = [[k for k, p in enumerate(people) if p.x0 - 0.05 <= r[0] and r[2] <= p.x1 + 0.05] for r in out]
     check("one outline per track (each strip belongs to one person, each person has strips)",
           all(len(o) >= 1 for o in owners) and {o[0] for o in owners if len(o) == 1} == {0, 1, 2}
           and all(covers(out, (p.x0 + p.x1) / 2, 0.5) for p in people))
-    c = Cover(covers_visible=False, bridge_gap=0)
+    c = Cover(covers_visible=False, static_level=0, bridge_gap=0)
     out = c.update(0, img, [det(0.1, 0.3, 0.3, 0.7), det(0.35, 0.3, 0.55, 0.7)], [body(), body()])
     check("close outlined people are not joined into a box (merge_gap)", not covers(out, 0.325, 0.5)
           and not covers(out, 0.12, 0.31))
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     out = c.update(0, img, [det(0.1, 0.3, 0.3, 0.7), det(0.35, 0.3, 0.55, 0.7)], [body(), body()])
     check("a bridge covers the space between close outlined people at their height, not above them",
           covers(out, 0.325, 0.5) and covers(out, 0.325, 0.32) and not covers(out, 0.325, 0.2))
-    out = Cover(covers_visible=False).update(0, img, [det(0.05, 0.1, 0.15, 0.3), det(0.8, 0.6, 0.9, 0.8)],
+    out = Cover(covers_visible=False, static_level=0).update(0, img, [det(0.05, 0.1, 0.15, 0.3), det(0.8, 0.6, 0.9, 0.8)],
                                              [body(), body()])
     check("no bridge between people far apart", not covers(out, 0.5, 0.45))
-    c = Cover(covers_visible=False)
+    c = Cover(covers_visible=False, static_level=0)
     c.update(0, img, [det(0.2, 0.3, 0.3, 0.7)], [body()])
     out = c.update(100, img, [det(0.3, 0.3, 0.4, 0.7)], [body()])
     check("moving outlined person: strips extend ahead", covers(out, 0.47, 0.5))
@@ -163,6 +177,15 @@ def main():
     check("scroll moves the cover with the content", covers(out, 0.5, 0.31) and not covers(out, 0.5, 0.52))
     out = c.update(5200, texture(7), [])
     check("scene change releases the cover", not out)
+    # still screen (the same picture every frame): covers only grow and stay until the screen changes
+    c = Cover(covers_visible=False, bridge_gap=0)
+    c.update(0, img, [det(0.4, 0.4, 0.6, 0.8)])
+    out = c.update(50, img, [det(0.41, 0.41, 0.59, 0.79)])
+    check("still screen: a smaller box of the same person does not shrink the cover", covers(out, 0.38, 0.39))
+    check("still screen: a missed person stays covered past the hold time", covers(c.update(2000, img, []), 0.5, 0.6))
+    moved = texture(5)
+    c.update(2050, moved, [])
+    check("screen changed: the cover is released after the hold time", not covers(c.update(2700, moved, []), 0.5, 0.6))
     print("ALL PASS" if ok else "SOME FAILED")
     sys.exit(0 if ok else 1)
 
