@@ -277,6 +277,8 @@ class BlurOverlay(private val context: Context) {
         private val r = RectF()
         private val rb = RectF()
         private val path = android.graphics.Path()
+        private val parts = android.graphics.Region()  // strips of outlined people: tinted once, as one shape
+        private val partsPath = android.graphics.Path()
         private val dst = Rect()
         private val density = ctx.resources.displayMetrics.density
 
@@ -350,10 +352,11 @@ class BlurOverlay(private val context: Context) {
             for (i in 0 until count) {
                 r.set(rects[i * 5] * w, rects[i * 5 + 1] * h, rects[i * 5 + 2] * w, rects[i * 5 + 3] * h)
                 val full = rects[i * 5 + 4].toInt() == Vision.KIND_FULL
+                val part = (rects[i * 5 + 4].toInt() and Vision.KIND_PART) != 0
                 c.save()
-                if (!full) {
+                if (!full && !part) {
                     path.reset(); path.addRoundRect(r, radius, radius, android.graphics.Path.Direction.CW); c.clipPath(path)
-                } else c.clipRect(r)
+                } else c.clipRect(r) // strips: square, so the stack reads as one shape
                 if (full) {
                     c.drawRect(r, solid) // nudity: opaque, nothing of the picture shows
                 } else {
@@ -367,10 +370,19 @@ class BlurOverlay(private val context: Context) {
                         c.drawBitmap(cells, cellSrc, dst, bmp)
                         c.restore()
                     } else c.drawRect(r, solid)
-                    c.drawRect(r, tint)
+                    // strips overlap a little (no gaps): their tint is drawn once over their union, below
+                    if (part) parts.op(r.left.toInt(), r.top.toInt(), Math.ceil(r.right.toDouble()).toInt(),
+                        Math.ceil(r.bottom.toDouble()).toInt(), android.graphics.Region.Op.UNION)
+                    else c.drawRect(r, tint)
                 }
                 c.restore()
                 if (full) c.drawText(context.getString(R.string.blur_cover_full), w / 2, h / 2, text)
+            }
+            if (!parts.isEmpty) {
+                partsPath.rewind()
+                parts.getBoundaryPath(partsPath)
+                c.drawPath(partsPath, tint)
+                parts.setEmpty()
             }
             if (failMode == 2) {
                 val b = badgeRect(scr)

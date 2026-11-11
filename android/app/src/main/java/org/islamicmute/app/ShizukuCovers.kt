@@ -95,6 +95,11 @@ class ShizukuCovers(private val ctx: Context) {
  * methods are called by reflection; hidden-API checks do not apply to app_process processes.
  */
 class CoverService : ICoverService.Stub() {
+    private companion object {
+        /** Colour layers at most: the app's rects (Vision.MAX_RECTS, outlines as strips) plus badge and test square. */
+        const val MAX_LAYERS = Vision.MAX_RECTS + 2
+    }
+
     private val lock = Any()
     private var root: SurfaceControl? = null
     private val covers = ArrayList<SurfaceControl>()
@@ -142,7 +147,7 @@ class CoverService : ICoverService.Stub() {
     override fun update(rects: FloatArray, count: Int): Unit = synchronized(lock) {
         val r = root ?: return@synchronized
         last = SystemClock.uptimeMillis()
-        val n = count.coerceIn(0, rects.size / ShizukuCovers.RECORD).coerceAtMost(64)
+        val n = count.coerceIn(0, rects.size / ShizukuCovers.RECORD).coerceAtMost(MAX_LAYERS)
         val t = SurfaceControl.Transaction()
         try {
             while (covers.size < n) {
@@ -166,7 +171,10 @@ class CoverService : ICoverService.Stub() {
                 call(t, "setCrop", c, Rect(0, 0, w, h))
                 call(t, "setColor", c, rgb)
                 t.setAlpha(c, 1f)                         // opaque: nothing of what is under shows through
-                runCatching { call(t, "setCornerRadius", c, if (kind == Vision.KIND_FULL || kind == ShizukuCovers.KIND_FAIL_COVER) 0f else 24f) }
+                // square corners for the whole screen and for strips of an outline (they stack into one shape)
+                val square = kind == Vision.KIND_FULL || kind == ShizukuCovers.KIND_FAIL_COVER ||
+                    (kind < ShizukuCovers.KIND_FAIL_COVER && (kind and Vision.KIND_PART) != 0)
+                runCatching { call(t, "setCornerRadius", c, if (square) 0f else 24f) }
                 t.setLayer(c, if (kind == ShizukuCovers.KIND_BADGE || kind == ShizukuCovers.KIND_TEST) 10 else 1)
                 t.setVisibility(c, true)
             }

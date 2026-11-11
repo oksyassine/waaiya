@@ -1,4 +1,5 @@
-/* Screen blur models: person detector -> woman/man classifier, frame nudity classifier. See im_vision.h. */
+/* Screen blur models: person detector -> woman/man classifier -> person segmenter (outlines), frame nudity
+ * classifier. See im_vision.h. */
 #include "im_vision.h"
 
 #include <math.h>
@@ -15,6 +16,7 @@ typedef struct {
     OrtSession *sess;
     int in_w, in_h;
     float pad;
+    float ctx; /* segmenter: context around the person box, each side, fraction of its size (im.context) */
     int n_labels;
     char labels[MAX_LABELS][24];
     char in_name[32], out_name[32];
@@ -28,7 +30,7 @@ struct im_vision {
     const OrtApi *api;
     OrtEnv *env;
     OrtMemoryInfo *mem;
-    vmodel person, gender, nsfw;
+    vmodel person, gender, nsfw, seg;
     unsigned policy;
     im_vision_params prm;
     int male_idx[MAX_LABELS], n_male;
@@ -59,7 +61,7 @@ static int meta(im_vision *v, OrtModelMetadata *md, OrtAllocator *al, const char
     return 1;
 }
 
-/* Loads one contract model; kind = "detector" or "classifier". */
+/* Loads one contract model; kind = "detector", "classifier" or "segmenter". */
 static int load(im_vision *v, vmodel *m, const char *path, const char *kind, int threads) {
     const OrtApi *api = v->api;
     if (!path || !*path) return 0;
@@ -87,6 +89,9 @@ static int load(im_vision *v, vmodel *m, const char *path, const char *kind, int
     if (good && meta(v, md, al, "im.input_h", s, sizeof s)) m->in_h = atoi(s);
     m->pad = 0.5f;
     if (meta(v, md, al, "im.pad", s, sizeof s)) m->pad = (float)atof(s);
+    m->ctx = 0.1f;
+    if (meta(v, md, al, "im.context", s, sizeof s)) m->ctx = (float)atof(s);
+    if (!(m->ctx >= 0 && m->ctx <= 1)) good = 0;
     if (meta(v, md, al, "im.labels", s, sizeof s)) {
         char *save = NULL;
         for (char *t = strtok_r(s, ",", &save); t && m->n_labels < MAX_LABELS; t = strtok_r(NULL, ",", &save))
@@ -124,7 +129,7 @@ static void unload(im_vision *v, vmodel *m) {
 im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errlen) {
     im_vision *v = calloc(1, sizeof *v);
     if (!v) { if (err && errlen) snprintf(err, errlen, "out of memory"); return NULL; }
-    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0};
+    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0, 1, 0.25f, 0.25f};
     v->last_nsfw = -1;
     v->nsfw_idx = -1;
     v->policy = cfg ? cfg->policy : 0;
@@ -151,6 +156,7 @@ im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errle
             if (!strcmp(v->nsfw.labels[i], "nsfw")) v->nsfw_idx = i;
         if (v->nsfw_idx < 0) { seterr(v, "nudity model has no 'nsfw' label", NULL); unload(v, &v->nsfw); }
     }
+    load(v, &v->seg, cfg->seg_model, "segmenter", th); /* optional: without it, rectangles */
 done:
     if (err && errlen) snprintf(err, errlen, "%s", v->err);
     return v;
@@ -162,6 +168,7 @@ void im_vision_destroy(im_vision *v) {
         unload(v, &v->person);
         unload(v, &v->gender);
         unload(v, &v->nsfw);
+        unload(v, &v->seg);
         if (v->mem) v->api->ReleaseMemoryInfo(v->mem);
         if (v->env) v->api->ReleaseEnv(v->env);
     }
@@ -230,8 +237,8 @@ static void sample(const uint8_t *rgba, int w, int h, int stride, float sx0, flo
 }
 
 /* Runs a model on its filled input buffer. Returns a pointer into the output tensor (valid until *out_val is
- * released) and the element count. */
-static const float *run(im_vision *v, vmodel *m, OrtValue **out_val, size_t *count) {
+ * released) and the element count; dims (optional) gets the first 4 dimensions of the output (0 = absent). */
+static const float *run_dims(im_vision *v, vmodel *m, OrtValue **out_val, size_t *count, int64_t dims[4]) {
     const OrtApi *api = v->api;
     int64_t shape[4] = {1, 3, m->in_h, m->in_w};
     OrtValue *in = NULL;
@@ -252,8 +259,18 @@ static const float *run(im_vision *v, vmodel *m, OrtValue **out_val, size_t *cou
         return NULL;
     }
     quiet(v, api->GetTensorShapeElementCount(info, count));
+    if (dims) {
+        size_t nd = 0;
+        dims[0] = dims[1] = dims[2] = dims[3] = 0;
+        quiet(v, api->GetDimensionsCount(info, &nd));
+        if (nd >= 1 && nd <= 4) quiet(v, api->GetDimensions(info, dims, nd));
+    }
     api->ReleaseTensorTypeAndShapeInfo(info);
     return p;
+}
+
+static const float *run(im_vision *v, vmodel *m, OrtValue **out_val, size_t *count) {
+    return run_dims(v, m, out_val, count, NULL);
 }
 
 /* Letterbox a region of the frame into the model input (top-left, pad elsewhere). Returns the scale. */
@@ -388,8 +405,100 @@ static float classify(im_vision *v, const uint8_t *rgba, int w, int h, int strid
     return male;
 }
 
+/* p(person) map lookup, bilinear, at crop-normalised (u across, t down). */
+static float map_at(const float *p, int oh, int ow, float u, float t) {
+    float fx = u * ow - 0.5f, fy = t * oh - 0.5f;
+    fx = fminf(fmaxf(fx, 0), (float)(ow - 1));
+    fy = fminf(fmaxf(fy, 0), (float)(oh - 1));
+    int x0 = (int)fx, y0 = (int)fy, x1 = x0 + 1 < ow ? x0 + 1 : x0, y1 = y0 + 1 < oh ? y0 + 1 : y0;
+    float wx = fx - x0, wy = fy - y0;
+    return (p[y0 * ow + x0] * (1 - wx) + p[y0 * ow + x1] * wx) * (1 - wy) +
+           (p[y1 * ow + x0] * (1 - wx) + p[y1 * ow + x1] * wx) * wy;
+}
+
+/* Outline of one person (see im_vshape): the segmenter runs on the box plus its context (stretched, like the
+ * classifier); each of IM_SHAPE_ROWS rows of that crop keeps its leftmost and rightmost covered point. A row
+ * touching the crop's side (inside the frame) is left open to that side (the body may go on: the tracker then
+ * covers up to the rectangle's edge); same for the top and bottom rows. Empty rows between covered ones are
+ * filled, and each row is widened to its neighbours, so a stack of strips has no notches. Returns 0 (sh->rows = 0
+ * when the outline is not trusted), -1 on a model error. */
+static int segment(im_vision *v, const uint8_t *rgba, int w, int h, int stride, const im_vrect *r, im_vshape *sh) {
+    vmodel *m = &v->seg;
+    memset(sh, 0, sizeof *sh);
+    float bw = r->x1 - r->x0, bh = r->y1 - r->y0, c = m->ctx;
+    if (bw <= 0 || bh <= 0) return 0;
+    float cx0 = fmaxf(0, r->x0 - c * bw), cx1 = fminf(1, r->x1 + c * bw);
+    float cy0 = fmaxf(0, r->y0 - c * bh), cy1 = fminf(1, r->y1 + c * bh);
+    if ((cx1 - cx0) * w < 2 || (cy1 - cy0) * h < 2) return 0;
+    sample(rgba, w, h, stride, cx0 * w, cy0 * h, cx1 * w, cy1 * h, m->buf, m->in_w, m->in_h, 0, 0, m->in_w, m->in_h);
+    OrtValue *ov = NULL;
+    size_t cnt = 0;
+    int64_t d[4];
+    const float *p = run_dims(v, m, &ov, &cnt, d);
+    if (!p) return -1;
+    int oh = (int)d[2], ow = (int)d[3];
+    if (d[0] != 1 || d[1] != 1 || oh < 2 || ow < 2 || (size_t)oh * ow != cnt) {
+        seterr(v, "segmenter: output is not [1,1,H,W]", NULL);
+        v->api->ReleaseValue(ov);
+        return -1;
+    }
+    const int R = IM_SHAPE_ROWS, NX = 4 * ow, NY = (4 * oh + R - 1) / R; /* samples: about 4 per map cell */
+    const float thr = v->prm.seg_threshold, cw = cx1 - cx0, ch = cy1 - cy0;
+    /* the box inside the crop, crop-normalised */
+    float ub0 = (r->x0 - cx0) / cw, ub1 = (r->x1 - cx0) / cw, tb0 = (r->y0 - cy0) / ch, tb1 = (r->y1 - cy0) / ch;
+    float l[IM_SHAPE_ROWS], rr[IM_SHAPE_ROWS];
+    int in_box = 0, on_box = 0, any = 0;
+    for (int k = 0; k < R; k++) {
+        int lo = NX, hi = -1;
+        for (int j = 0; j < NY; j++) {
+            float t = (k + (j + 0.5f) / NY) / R;
+            int inb_y = t >= tb0 && t <= tb1;
+            for (int i = 0; i < NX; i++) {
+                float u = (i + 0.5f) / NX;
+                int on = map_at(p, oh, ow, u, t) >= thr;
+                if (inb_y && u >= ub0 && u <= ub1) { in_box++; on_box += on; }
+                if (on) { if (i < lo) lo = i; if (i > hi) hi = i; }
+            }
+        }
+        if (hi < 0) { l[k] = 1; rr[k] = 0; continue; }
+        any = 1;
+        /* to box units; a row reaching the crop's side inside the frame stays open to that side */
+        l[k] = lo == 0 && cx0 > 0 ? -100.0f : (cx0 + (float)lo / NX * cw - r->x0) / bw;
+        rr[k] = hi == NX - 1 && cx1 < 1 ? 100.0f : (cx0 + (float)(hi + 1) / NX * cw - r->x0) / bw;
+    }
+    v->api->ReleaseValue(ov);
+    if (!any || (float)on_box < v->prm.seg_min_fill * (float)(in_box ? in_box : 1)) return 0; /* not trusted */
+    /* fill empty rows between covered ones with the union of the nearest covered rows above and below */
+    for (int k = 0; k < R; k++) {
+        if (l[k] <= rr[k]) continue;
+        int a = k - 1, b = k + 1;
+        while (a >= 0 && l[a] > rr[a]) a--;
+        while (b < R && l[b] > rr[b]) b++;
+        if (a >= 0 && b < R) { l[k] = fminf(l[a], l[b]); rr[k] = fmaxf(rr[a], rr[b]); }
+    }
+    /* widen each row to its neighbours (vertical dilation by one row) */
+    for (int k = 0; k < R; k++) {
+        float a = l[k], b = rr[k];
+        for (int j = k - 1; j <= k + 1; j++)
+            if (j >= 0 && j < R && l[j] <= rr[j]) { a = fminf(a, l[j]); b = fmaxf(b, rr[j]); }
+        sh->l[k] = a;
+        sh->r[k] = b;
+    }
+    sh->rows = R;
+    sh->y0 = (cy0 - r->y0) / bh;
+    sh->y1 = (cy1 - r->y0) / bh;
+    if (sh->l[0] <= sh->r[0] && cy0 > 0) sh->flags |= IM_SHAPE_OPEN_TOP;
+    if (sh->l[R - 1] <= sh->r[R - 1] && cy1 < 1) sh->flags |= IM_SHAPE_OPEN_BOTTOM;
+    return 0;
+}
+
 int im_vision_detect(im_vision *v, const uint8_t *rgba, int w, int h, int stride, int run_nsfw, im_vrect *out,
                      int max) {
+    return im_vision_detect_shapes(v, rgba, w, h, stride, run_nsfw, out, NULL, max);
+}
+
+int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int stride, int run_nsfw, im_vrect *out,
+                            im_vshape *shapes, int max) {
     if (!v || !rgba || w < 8 || h < 8 || stride < w * 4 || !out || max < 1) return -1;
     v->err[0] = 0;
     int n = 0, failed = 0;
@@ -411,7 +520,14 @@ int im_vision_detect(im_vision *v, const uint8_t *rgba, int w, int h, int stride
                                                                                                       : IM_VK_UNSURE;
                     }
                 }
-                if (n < max) out[n++] = r;
+                if (n >= max) continue;
+                if (shapes) {
+                    shapes[n].rows = 0;
+                    /* an outline failing is not a model failure: that person gets the whole rectangle */
+                    if (v->seg.ok && v->prm.seg && r.kind != IM_VK_CLEAR && i < v->prm.max_people)
+                        segment(v, rgba, w, h, stride, &r, &shapes[n]);
+                }
+                out[n++] = r;
             }
         }
     }
@@ -424,8 +540,10 @@ int im_vision_detect(im_vision *v, const uint8_t *rgba, int w, int h, int stride
         else {
             v->last_nsfw = (size_t)v->nsfw_idx < cnt ? p[v->nsfw_idx] : 0;
             v->api->ReleaseValue(ov);
-            if (v->last_nsfw >= v->prm.nsfw_score && n < max)
+            if (v->last_nsfw >= v->prm.nsfw_score && n < max) {
+                if (shapes) shapes[n].rows = 0;
                 out[n++] = (im_vrect){0, 0, 1, 1, IM_VK_FULL, v->last_nsfw, -1};
+            }
         }
     }
     return failed ? -1 : n;

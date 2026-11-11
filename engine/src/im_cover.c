@@ -7,6 +7,12 @@
  *  - covers visible in the capture: what is under a cover cannot be seen any more. A cover then stays until the
  *    uncovered part of the screen shows a scene change, or a scroll moves it off screen; a person stepping out of
  *    a cover makes it grow. Over-covering is preferred to uncovering a woman to check whether she is still there.
+ *
+ * A person with an outline (im_vshape, from the segmenter) is drawn as strips that follow the body, each kept inside
+ * the rectangle they would get otherwise; in the second situation outlines are not used (the capture would show our
+ * own covers to the segmenter). Rectangles closer than merge_gap are drawn as their bounding box (a group); an
+ * outlined person instead gets a bridge to each close neighbour, so text beside a group stays readable but the space
+ * between two people (where a missed one may stand) is still covered.
  */
 #include <math.h>
 #include <stdlib.h>
@@ -17,15 +23,16 @@
 #define TW 32
 #define TH 48 /* thumbnail cells, portrait-ish; only used as a grid */
 #define MAX_TRACKS 48
-#define MAX_OUT 64
+#define MAX_OUT 256 /* rects remembered for the scene-change mask; callers' buffers are sized the same */
 #define SHIFT 6
 
 typedef struct {
     im_vrect r;
     double last_seen;
-    float vx, vy; /* centre velocity, frame units per ms */
-    int matched;  /* took a detection in this update: one detection per track per frame */
-    int nv;       /* has a velocity measurement */
+    float vx, vy;  /* centre velocity, frame units per ms */
+    int matched;   /* took a detection in this update: one detection per track per frame */
+    int nv;        /* has a velocity measurement */
+    im_vshape sh;  /* outline from the last detection (rows = 0: the whole rectangle) */
 } track;
 
 struct im_cover {
@@ -38,6 +45,11 @@ struct im_cover {
     int have_prev;
     im_vrect out_prev[MAX_OUT], out_last[MAX_OUT];
     int n_prev, n_last;
+    /* output scratch: outlined people's strips and rectangles, and every cover's extent for the bridges */
+    im_vrect strip[MAX_TRACKS][IM_SHAPE_ROWS], unit_rect[MAX_TRACKS];
+    int unit_n[MAX_TRACKS];
+    im_vrect ext[MAX_OUT + MAX_TRACKS], ext_rect[MAX_OUT + MAX_TRACKS]; /* drawn extent; rectangle (closeness) */
+    unsigned char ext_outlined[MAX_OUT + MAX_TRACKS];
     double full_until;
     double t_last;
 };
@@ -46,7 +58,7 @@ im_cover *im_cover_create(int covers_visible) {
     im_cover *c = calloc(1, sizeof *c);
     if (!c) return NULL;
     c->covers_visible = covers_visible;
-    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f};
+    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.05f, 0.30f};
     return c;
 }
 
@@ -155,8 +167,76 @@ static int merge_close(im_vrect *r, int n, float gap) {
     return n;
 }
 
+/* The strips of an outlined track (see im_vshape), in frame units: each row widened by the strip margin, the top and
+ * bottom rows extended by it (or to the rectangle's edge when the body goes on past the segmenter's crop), stretched
+ * by the motion lead (lx, ly) like the rectangle, and clipped to rect = the cover the person would get without an
+ * outline. Rows with the same span are joined. Returns the strip count (0 = draw rect). */
+static int strips_of(const im_cover_params *p, const im_vrect *b, const im_vshape *sh, float lx, float ly,
+                     const im_vrect *rect, im_vrect *s) {
+    if (sh->rows < 1 || sh->rows > IM_SHAPE_ROWS || !(sh->y1 > sh->y0)) return 0;
+    float bw = b->x1 - b->x0, bh = b->y1 - b->y0;
+    float mx = fmaxf(p->strip_margin * bw, 0.5f * p->margin_min), my = fmaxf(p->strip_margin * bh, 0.5f * p->margin_min);
+    float rh = (sh->y1 - sh->y0) / sh->rows * bh, seam = fminf(0.25f * rh, 0.003f); /* overlap: no hairline gaps */
+    int first = -1, last = -1, n = 0;
+    for (int k = 0; k < sh->rows; k++)
+        if (sh->l[k] <= sh->r[k]) { if (first < 0) first = k; last = k; }
+    if (first < 0) return 0;
+    for (int k = first; k <= last; k++) {
+        if (sh->l[k] > sh->r[k]) continue;
+        float ya = b->y0 + sh->y0 * bh + k * rh;
+        im_vrect r = *b;
+        r.kind |= IM_VK_PART;
+        r.x0 = b->x0 + sh->l[k] * bw - mx;
+        r.x1 = b->x0 + sh->r[k] * bw + mx;
+        r.y0 = ya - seam;
+        r.y1 = ya + rh + seam;
+        if (k == first) r.y0 = k == 0 && (sh->flags & IM_SHAPE_OPEN_TOP) ? rect->y0 : ya - my;
+        if (k == last) r.y1 = k == sh->rows - 1 && (sh->flags & IM_SHAPE_OPEN_BOTTOM) ? rect->y1 : ya + rh + my;
+        if (lx < 0) r.x0 += lx; else r.x1 += lx;
+        if (ly < 0) r.y0 += ly; else r.y1 += ly;
+        r.x0 = fmaxf(r.x0, rect->x0); r.x1 = fminf(r.x1, rect->x1);
+        r.y0 = fmaxf(r.y0, rect->y0); r.y1 = fminf(r.y1, rect->y1);
+        if (r.x1 <= r.x0 || r.y1 <= r.y0) continue;
+        if (n && fabsf(r.x0 - s[n - 1].x0) < 0.004f && fabsf(r.x1 - s[n - 1].x1) < 0.004f && r.y0 <= s[n - 1].y1) {
+            s[n - 1].x0 = fminf(s[n - 1].x0, r.x0); s[n - 1].x1 = fmaxf(s[n - 1].x1, r.x1);
+            s[n - 1].y1 = fmaxf(s[n - 1].y1, r.y1);
+        } else s[n++] = r;
+    }
+    return n;
+}
+
+/* A rect over the space between two covers (extents a, b): between their centres along the axis they are apart on,
+ * over the span they share on the other one (between the centres too when they share none). */
+static im_vrect bridge(const im_vrect *a, const im_vrect *b) {
+    float ax = (a->x0 + a->x1) / 2, ay = (a->y0 + a->y1) / 2, bx = (b->x0 + b->x1) / 2, by = (b->y0 + b->y1) / 2;
+    float sw = (a->x1 - a->x0 + b->x1 - b->x0) / 2, sh = (a->y1 - a->y0 + b->y1 - b->y0) / 2;
+    im_vrect r = *a;
+    r.kind = stricter(a->kind & ~IM_VK_PART, b->kind & ~IM_VK_PART) | IM_VK_PART;
+    r.score = fmaxf(a->score, b->score);
+    r.p_male = -1;
+    float ox0 = fmaxf(a->x0, b->x0), ox1 = fminf(a->x1, b->x1), oy0 = fmaxf(a->y0, b->y0), oy1 = fminf(a->y1, b->y1);
+    if (fabsf(ax - bx) / sw >= fabsf(ay - by) / sh) { /* side by side */
+        r.x0 = fminf(ax, bx); r.x1 = fmaxf(ax, bx);
+        if (oy1 > oy0) { r.y0 = oy0; r.y1 = oy1; } else { r.y0 = fminf(ay, by); r.y1 = fmaxf(ay, by); }
+    } else {                                          /* one above the other */
+        r.y0 = fminf(ay, by); r.y1 = fmaxf(ay, by);
+        if (ox1 > ox0) { r.x0 = ox0; r.x1 = ox1; } else { r.x0 = fminf(ax, bx); r.x1 = fmaxf(ax, bx); }
+    }
+    return r;
+}
+
+static int close_to(const im_vrect *a, const im_vrect *b, float gap) {
+    float g = gap * fminf(a->y1 - a->y0, b->y1 - b->y0);
+    return fmaxf(a->x0, b->x0) - fminf(a->x1, b->x1) <= g && fmaxf(a->y0, b->y0) - fminf(a->y1, b->y1) <= g;
+}
+
 int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h, int stride, const im_vrect *dets,
                     int n, im_vrect *out, int max) {
+    return im_cover_update_shapes(c, t_ms, rgba, w, h, stride, dets, NULL, n, out, max);
+}
+
+int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h, int stride,
+                           const im_vrect *dets, const im_vshape *shapes, int n, im_vrect *out, int max) {
     if (!c || !out || max < 1) return 0;
     const im_cover_params *p = &c->p;
 
@@ -243,14 +323,18 @@ int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h,
                 tr->r = *d;
                 tr->r.kind = stricter(kind, d->kind);
             }
+            /* the outline of this detection, or none (the whole rectangle) */
+            tr->sh.rows = 0;
+            if (shapes && !c->covers_visible) tr->sh = shapes[k];
             tr->last_seen = t_ms;
             tr->matched = 1;
-        } else if (c->nt < MAX_TRACKS) {
-            c->t[c->nt++] = (track){*d, t_ms, 0, 0, 1, 0};
-        } else { /* full: replace the oldest */
-            int o = 0;
-            for (int i = 1; i < c->nt; i++) if (c->t[i].last_seen < c->t[o].last_seen) o = i;
-            c->t[o] = (track){*d, t_ms, 0, 0, 1, 0};
+        } else {
+            int o = c->nt;
+            if (c->nt < MAX_TRACKS) c->nt++;
+            else /* full: replace the oldest */
+                for (int i = o = 0; i < c->nt; i++) if (c->t[i].last_seen < c->t[o].last_seen) o = i;
+            c->t[o] = (track){*d, t_ms, 0, 0, 1, 0, {0}};
+            if (shapes && !c->covers_visible) c->t[o].sh = shapes[k];
         }
     }
 
@@ -259,27 +343,68 @@ int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h,
         for (int i = c->nt - 1; i >= 0; i--)
             if (t_ms - c->t[i].last_seen > p->hold_ms) drop(c, i);
 
-    /* 4. output */
-    int m = 0;
+    /* 4. output: the whole-frame cover, then rectangle covers (close ones joined), then outlined people as strips
+     * (or their rectangle when out has no room for all of them), then bridges between outlined people and their
+     * close neighbours */
+    int m = 0, nu = 0;
     if (t_ms < c->full_until) out[m++] = (im_vrect){0, 0, 1, 1, IM_VK_FULL, 1, -1};
     for (int i = 0; i < c->nt && m < max; i++) {
-        im_vrect r = c->t[i].r;
-        float bw = r.x1 - r.x0, bh = r.y1 - r.y0;
+        im_vrect r = c->t[i].r, b = r;
+        float bw = r.x1 - r.x0, bh = r.y1 - r.y0, lx = 0, ly = 0;
         float mx = fmaxf(p->margin * bw, p->margin_min), my = fmaxf(p->margin * bh, p->margin_min);
         r.x0 -= mx; r.x1 += mx; r.y0 -= my; r.y1 += my;
         if (!c->covers_visible) {
             /* cover where the person is now (motion since the frame) and where they were */
-            float lx = c->t[i].vx * (float)(p->lead_ms + (t_ms - c->t[i].last_seen));
-            float ly = c->t[i].vy * (float)(p->lead_ms + (t_ms - c->t[i].last_seen));
+            lx = c->t[i].vx * (float)(p->lead_ms + (t_ms - c->t[i].last_seen));
+            ly = c->t[i].vy * (float)(p->lead_ms + (t_ms - c->t[i].last_seen));
             lx = fmaxf(-0.3f, fminf(0.3f, lx));
             ly = fmaxf(-0.3f, fminf(0.3f, ly));
             if (lx < 0) r.x0 += lx; else r.x1 += lx;
             if (ly < 0) r.y0 += ly; else r.y1 += ly;
         }
         r.x0 = fmaxf(0, r.x0); r.y0 = fmaxf(0, r.y0); r.x1 = fminf(1, r.x1); r.y1 = fminf(1, r.y1);
-        if (r.x1 > r.x0 && r.y1 > r.y0) out[m++] = r;
+        if (r.x1 <= r.x0 || r.y1 <= r.y0) continue;
+        int ns = c->covers_visible ? 0 : strips_of(p, &b, &c->t[i].sh, lx, ly, &r, c->strip[nu]);
+        if (ns > 0) {
+            c->unit_rect[nu] = r;
+            c->unit_n[nu++] = ns;
+        } else out[m++] = r;
     }
     m = merge_close(out, m, p->merge_gap);
+    int n_ext = 0;
+    for (int i = 0; i < m; i++)
+        if (out[i].kind != IM_VK_FULL) {
+            c->ext[n_ext] = c->ext_rect[n_ext] = out[i];
+            c->ext_outlined[n_ext++] = 0;
+        }
+    for (int u = 0; u < nu && m < max; u++) {
+        const im_vrect *s = c->strip[u];
+        int ns = c->unit_n[u];
+        if (m + ns > max) { /* no room for the whole outline: never a partial one */
+            out[m++] = c->unit_rect[u];
+            c->ext[n_ext] = c->ext_rect[n_ext] = c->unit_rect[u];
+            c->ext_outlined[n_ext++] = 0;
+            continue;
+        }
+        im_vrect e = s[0];
+        for (int k = 0; k < ns; k++) {
+            out[m++] = s[k];
+            e.x0 = fminf(e.x0, s[k].x0); e.y0 = fminf(e.y0, s[k].y0);
+            e.x1 = fmaxf(e.x1, s[k].x1); e.y1 = fmaxf(e.y1, s[k].y1);
+        }
+        c->ext[n_ext] = e;
+        c->ext_rect[n_ext] = c->unit_rect[u];
+        c->ext_outlined[n_ext++] = 1;
+    }
+    if (p->bridge_gap > 0)
+        for (int i = 0; i < n_ext && m < max; i++)
+            for (int j = i + 1; j < n_ext && m < max; j++) {
+                if (!c->ext_outlined[i] && !c->ext_outlined[j]) continue;
+                /* close as rectangles (as merge_gap judges them); the bridge spans what is drawn */
+                if (!close_to(&c->ext_rect[i], &c->ext_rect[j], p->bridge_gap)) continue;
+                im_vrect r = bridge(&c->ext[i], &c->ext[j]);
+                if (r.x1 > r.x0 && r.y1 > r.y0) out[m++] = r;
+            }
     memcpy(c->out_prev, c->out_last, sizeof c->out_prev);
     c->n_prev = c->n_last;
     c->n_last = m < MAX_OUT ? m : MAX_OUT;

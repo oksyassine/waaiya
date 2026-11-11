@@ -2,10 +2,12 @@
  *
  * Two parts, both plain C on the ONNX Runtime C API (same code on Android, Linux, desktop ports):
  *   im_vision  runs the models on one RGBA frame: person detector -> per-person woman/man classifier, and a
- *              frame-level nudity classifier. Models follow the `im.vision = 1` contract
- *              (models/vision/export_vision.py).
+ *              frame-level nudity classifier; optionally a person segmenter gives each covered person an outline
+ *              (im_vshape). Models follow the `im.vision = 1` contract (models/vision/export_vision.py).
  *   im_cover   turns detections over time into the rectangles to draw: margins, motion lead, hold times, and,
- *              when our own covers show up in the capture, keeps them until the scene changes.
+ *              when our own covers show up in the capture, keeps them until the scene changes. A person with an
+ *              outline is drawn as a stack of horizontal strips that follow the body, so text beside them stays
+ *              readable; without one (no segmenter, a model error, an implausible mask) as the whole rectangle.
  *
  * Fail-closed rules (the user's choice, see docs): a person the classifier cannot confidently call a man is
  * covered; without a gender model every person is covered; a model that fails to load is reported so the caller
@@ -33,6 +35,9 @@ extern "C" {
 
 /* rect kinds */
 enum { IM_VK_CLEAR = 0, IM_VK_WOMAN = 1, IM_VK_UNSURE = 2, IM_VK_NSFW = 3, IM_VK_FULL = 4 };
+/* flag OR-ed into the kind of an im_cover output rect that is one piece of a larger shape (a strip of an outline, or a
+ * bridge): draw it with square corners, so the pieces read as one shape */
+#define IM_VK_PART 16
 
 typedef struct {
     float x0, y0, x1, y1;
@@ -47,6 +52,7 @@ typedef struct {
     const char *nsfw_model;   /* required when policy has IM_VISION_NSFW */
     int threads;              /* ONNX Runtime intra-op threads per model (default 2) */
     unsigned policy;
+    const char *seg_model;    /* optional person segmenter: outlines instead of rectangles (NULL = rectangles) */
 } im_vision_config;
 
 typedef struct {
@@ -66,7 +72,24 @@ typedef struct {
                             it barely triggers, eval/results/blur_tiles.md) */
     float tile_score;    /* detector threshold inside tiles when above person_score (default 0 = person_score: higher
                             values leave more men clear but lose more small women, eval/results/blur_tiles.md) */
+    int seg;             /* 1 = outline the covered people with the segmenter (when loaded), 0 = rectangles (default 1) */
+    float seg_threshold; /* a pixel is part of the person when p(person) >= this: low, so covering wins (default 0.25) */
+    float seg_min_fill;  /* an outline covering less than this share of the person's box is not trusted: the whole
+                            rectangle is covered instead (default 0.25: eval/results/blur_silhouette.md) */
 } im_vision_params;
+
+/* Outline of one person, relative to their box (0,0 = box top-left, 1,1 = box bottom-right; values outside 0..1
+ * are outside the box, in the context the segmenter saw). rows = 0: no outline, cover the whole rectangle. */
+#define IM_SHAPE_ROWS 16
+#define IM_SHAPE_OPEN_TOP 1u    /* the body continues above the top row (cut by the segmenter's crop) */
+#define IM_SHAPE_OPEN_BOTTOM 2u /* ... below the bottom row */
+typedef struct {
+    int rows;
+    unsigned flags;
+    float y0, y1;                /* the rows split y0..y1 evenly */
+    float l[IM_SHAPE_ROWS];      /* per row: leftmost and rightmost covered x; l > r = nothing in that row */
+    float r[IM_SHAPE_ROWS];
+} im_vshape;
 
 typedef struct im_vision im_vision;
 
@@ -85,6 +108,10 @@ IM_VAPI const char *im_vision_error(const im_vision *v);
  * plus one IM_VK_FULL when the frame is judged immodest). Returns the count, or -1 on failure. */
 IM_VAPI int im_vision_detect(im_vision *v, const uint8_t *rgba, int w, int h, int stride, int run_nsfw,
                              im_vrect *out, int max);
+/* Same, and shapes[i] = the outline of out[i] (rows = 0 when it has none: men left clear, people past max_people, no
+ * segmenter, a model error, a mask that fills too little of the box). shapes = NULL: no segmentation is run. */
+IM_VAPI int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int stride, int run_nsfw,
+                                    im_vrect *out, im_vshape *shapes, int max);
 /* Last nudity probability (-1 = never run). */
 IM_VAPI float im_vision_last_nsfw(const im_vision *v);
 
@@ -99,7 +126,12 @@ typedef struct {
     float full_hold_ms;  /* same for a whole-frame (nudity) cover (default 1500) */
     float cut_level;     /* mean thumbnail change (0..1) that counts as a scene change (default 0.12) */
     float merge_gap;     /* covers closer than this fraction of the smaller one's height are drawn as one, so the
-                          * gaps in a group (where a missed person often is) are covered too (default 0.30: eval/results/blur.md; 0 = off) */
+                          * gaps in a group (where a missed person often is) are covered too (default 0.30: eval/results/blur.md; 0 = off).
+                          * Only rectangle covers are joined this way; outlined people are joined by bridges (bridge_gap) */
+    float strip_margin;  /* outlined people: border added around each strip, fraction of the person's size (default 0.05);
+                          * strips never reach past the rectangle the person would get without an outline */
+    float bridge_gap;    /* an outlined person and another cover closer than this fraction of the smaller one's height
+                          * get a bridge: a rect over the space between them, at the height they share (default 0.30; 0 = off) */
 } im_cover_params;
 
 /* covers_visible = 1 when our own covers appear in the captured frames (the overlay could not be excluded from
@@ -115,6 +147,11 @@ IM_VAPI void im_cover_reset(im_cover *c);
  * Writes the rects to draw now (kind WOMAN / UNSURE / NSFW / FULL). Returns their count. */
 IM_VAPI int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h, int stride,
                             const im_vrect *dets, int n, im_vrect *out, int max);
+/* Same, with an outline per detection (im_vision_detect_shapes; shapes may be NULL). An outlined person is written as
+ * up to IM_SHAPE_ROWS strip rects of their kind; when out has no room for all of a person's strips, their whole
+ * rectangle is written instead. Outlines are ignored when covers_visible (the capture shows our covers there). */
+IM_VAPI int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h, int stride,
+                                   const im_vrect *dets, const im_vshape *shapes, int n, im_vrect *out, int max);
 
 #ifdef __cplusplus
 }
