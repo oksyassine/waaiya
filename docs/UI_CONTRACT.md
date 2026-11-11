@@ -39,7 +39,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | Key | Type | Meaning |
 |---|---|---|
 | `platform` | String | `android`, `linux`, `windows`, `macos` |
-| `version` | String | App version name (`0.2.4`) |
+| `version` | String | App version name (`0.2.6`) |
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
 | `settings` | Map | The settings below, with their current values |
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM` (`FilterService.State`) |
@@ -89,6 +89,7 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `blur_women` | bool | false | live |
 | `blur_nudity` | bool | false | live |
 | `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` |
+| `blur_strictness` | int 0/1/2 | 0 | live (ScreenBlur watchdog). Who is left uncovered: 0 strict, 1 balanced, 2 relaxed = p(man) at least 0.999 / 0.99 / 0.98 (`Settings.blurMaleClear`). Desktop stores and shows it only |
 
 ## Methods (MethodChannel `waaiya/app`)
 

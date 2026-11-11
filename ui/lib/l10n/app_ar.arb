@@ -549,6 +549,47 @@
   "@guideBody": {
     "description": "Android string guide_body"
   },
+  "blurStrictTitle": "مَن يبقى دون تغطية",
+  "@blurStrictTitle": {
+    "description": "Android string blur_strict_title"
+  },
+  "blurStrictValue": "مَن يبقى دون تغطية: {level}",
+  "@blurStrictValue": {
+    "description": "Android string blur_strict_value",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "blurStrict0": "صارم: فقط من يكاد التطبيق يجزم أنه رجل",
+  "@blurStrict0": {
+    "description": "Android string blur_strict_0"
+  },
+  "blurStrict1": "متوازن: نحو ضعف عدد الرجال دون تغطية",
+  "@blurStrict1": {
+    "description": "Android string blur_strict_1"
+  },
+  "blurStrict2": "متساهل: رجال أكثر قليلًا من المتوازن",
+  "@blurStrict2": {
+    "description": "Android string blur_strict_2"
+  },
+  "blurStrict0Short": "صارم",
+  "@blurStrict0Short": {
+    "description": "Android string blur_strict_0_short"
+  },
+  "blurStrict1Short": "متوازن",
+  "@blurStrict1Short": {
+    "description": "Android string blur_strict_1_short"
+  },
+  "blurStrict2Short": "متساهل",
+  "@blurStrict2Short": {
+    "description": "Android string blur_strict_2_short"
+  },
+  "blurStrictHelp": "كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.",
+  "@blurStrictHelp": {
+    "description": "Android string blur_strict_help"
+  },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {
     "description": "Flutter only. Arabic not reviewed yet."

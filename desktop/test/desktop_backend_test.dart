@@ -21,15 +21,18 @@ void main() {
     await b.setSetting(SettingKeys.gender, 'man');
     await b.setSetting(SettingKeys.silenceUnfilterable, false);
     await b.setLanguage('en');
+    await b.setSetting(SettingKeys.blurStrictness, 1);
     final json = jsonDecode(file.readAsStringSync()) as Map;
     expect(json['gender'], 'man');
     expect(json['silence_unfilterable'], false);
     expect(json['lang'], 'en');
+    expect(json['blur_strictness'], 1);
 
     b = await DesktopBackend.open(file: file, licencesDir: dir);
     expect(b.state.settings.gender, 'man');
     expect(b.state.settings.silenceUnfilterable, isFalse);
     expect(b.state.language, 'en');
+    expect(b.state.settings.blurStrictness, 1);
     await expectLater(b.runSetupStep(0), throwsA(isA<BackendException>()));
   });
 
@@ -52,5 +55,7 @@ void main() {
     expect(Directionality.of(tester.element(find.text('التصفية متوقفة'))), TextDirection.rtl);
     expect(find.textContaining('معاينة'), findsOneWidget);
     expect(find.text('تمويه الشاشة'), findsNothing);
+    await tester.ensureVisible(find.byKey(const Key('blur_strict'))); // shown as a value in the settings card
+    expect(find.text('مَن يبقى دون تغطية: صارم'), findsOneWidget);
   });
 }

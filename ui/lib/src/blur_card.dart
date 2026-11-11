@@ -48,7 +48,7 @@ class BlurCard extends StatelessWidget {
   const BlurCard({super.key, required this.onChanged});
 
   /// A blur setting changed (key, value); the running blur follows it within half a second.
-  final void Function(String key, bool value) onChanged;
+  final void Function(String key, Object value) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +78,7 @@ class BlurCard extends StatelessWidget {
           value: st.blurNudity,
           onChanged: (v) => onChanged(SettingKeys.blurNudity, v),
         ),
+        BlurStrictnessRow(onChanged: (v) => onChanged(SettingKeys.blurStrictness, v)),
         SettingSwitch(
           title: l.blurFailTitle,
           body: l.blurFailBody,
@@ -113,6 +114,37 @@ class BlurCard extends StatelessWidget {
             ),
           ],
         ],
+      ],
+    );
+  }
+}
+
+/// "Who is left uncovered" (Settings.blurStrictness): value, Change button and help, as
+/// MainActivity.askBlurStrictness. In the blur card on Android; in the settings card on desktop, where it is only
+/// a stored value until a desktop blur exists.
+class BlurStrictnessRow extends StatelessWidget {
+  const BlurStrictnessRow({super.key, required this.onChanged});
+
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final level = WaaiyaScope.of(context).state.settings.blurStrictness;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ValueRow(
+          key: const Key('blur_strict'),
+          label: l.blurStrictValue([l.blurStrict0Short, l.blurStrict1Short, l.blurStrict2Short][level]),
+          action: l.change,
+          onPressed: () async {
+            final i = await chooseOne(context,
+                title: l.blurStrictTitle, options: [l.blurStrict0, l.blurStrict1, l.blurStrict2], selected: level);
+            if (i != null) onChanged(i);
+          },
+        ),
+        Text(l.blurStrictHelp, style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }

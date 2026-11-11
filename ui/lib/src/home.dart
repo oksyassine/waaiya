@@ -82,6 +82,8 @@ class HomeScreen extends StatelessWidget {
             value: st.muteWomenSinging,
             onChanged: (v) => _set(context, SettingKeys.muteWomenSinging, v),
           ),
+        if (!s.capabilities.screenBlur)
+          BlurStrictnessRow(onChanged: (v) => _set(context, SettingKeys.blurStrictness, v)),
         const Divider(),
         ValueRow(
           label: '${l.settingGenderTitle}: ${st.isMan ? l.genderMan : l.genderWoman}',

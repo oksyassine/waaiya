@@ -451,6 +451,37 @@ class AppLocalizationsEn extends AppLocalizations {
       'You need Wi-Fi and Android 11 or newer. Pairing is done once; after the phone restarts you only repeat step 7.\n\n1. Connect the phone to Wi-Fi.\n\n2. Turn on Developer options: Settings › About phone › Software information › tap “Build number” 7 times. (On other phones: Settings › About phone › Build number.)\n\n3. Open Shizuku. If it asks to show notifications, allow it: the pairing code is typed in a Shizuku notification.\n\n4. In Shizuku, under “Start via Wireless debugging”, tap “Pairing”. On the page that opens, tap “Developer options”, turn on “Wireless debugging” and confirm “Allow”.\n\n5. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n6. Keep that screen open and pull down the notifications. When Shizuku\'s notification says “Pairing service found”, tap “Enter pairing code” and type the code. Shizuku says pairing succeeded.\n\n7. Go back to Shizuku and tap “Start” under “Start via Wireless debugging”. Wait until it says “Shizuku is running”.\n\n8. Come back to Waaiya and tap “Give permission”, then “Allow”.\n\nAfter a phone restart Shizuku stops: connect to Wi-Fi, turn “Wireless debugging” back on if it is off, open Shizuku and tap “Start”. No new pairing.';
 
   @override
+  String get blurStrictTitle => 'Who is left uncovered';
+
+  @override
+  String blurStrictValue(String level) {
+    return 'Who is left uncovered: $level';
+  }
+
+  @override
+  String get blurStrict0 =>
+      'Strict: only people the app is almost certain are men';
+
+  @override
+  String get blurStrict1 => 'Balanced: about twice as many men left uncovered';
+
+  @override
+  String get blurStrict2 => 'Relaxed: a few more men than balanced';
+
+  @override
+  String get blurStrict0Short => 'strict';
+
+  @override
+  String get blurStrict1Short => 'balanced';
+
+  @override
+  String get blurStrict2Short => 'relaxed';
+
+  @override
+  String get blurStrictHelp =>
+      'Anyone the app is not sure is a man is covered. Strict leaves about 7 men in 100 uncovered; balanced about 14, relaxed about 16. Each step less strict also leaves about 1 more woman in 100 uncovered.';
+
+  @override
   String get desktopPreview =>
       'Preview: the filter engine is not connected on this computer yet. The button only shows how the app will work.';
 
