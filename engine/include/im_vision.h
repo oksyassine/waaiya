@@ -134,13 +134,23 @@ typedef struct {
     float merge_gap;     /* covers closer than this fraction of the smaller one's height are drawn as one, so the
                           * gaps in a group (where a missed person often is) are covered too (default 0.30: eval/results/blur.md; 0 = off).
                           * Only rectangle covers are joined this way; outlined people are joined by bridges (bridge_gap) */
-    float strip_margin;  /* outlined people: border added around each strip, fraction of the person's size (default 0.05);
+    float strip_margin;  /* outlined people: border added around each strip, fraction of the person's size (default 0.10;
+                          * each strip also spans its neighbours' width, so the cover does not trace the body's shape);
                           * strips never reach past the rectangle the person would get without an outline */
     float bridge_gap;    /* an outlined person and another cover closer than this fraction of the smaller one's height
                           * get a bridge: a rect over the space between them, at the height they share (default 0.30; 0 = off) */
     float open_reach;    /* outlined people whose body goes on past the top or bottom of the segmenter's crop (a box cut
                           * short by the detector): that end strip reaches this fraction of their height past the box,
                           * further than the rectangle would (default 0.80: eval/results/blur_silhouette.md) */
+    float still_frac;    /* a detection whose centre moved less than this fraction of the person's size (and whose size
+                          * changed less than twice that) is the same still person: the cover grows at once to take it
+                          * in but shrinks only slowly (shrink_rate), no motion lead is taken from it, and the last
+                          * outline is kept when this frame has none. Stops covers wobbling on a still screen
+                          * (default 0.08; 0 = off) */
+    float shrink_rate;   /* still people: fraction of the way a cover edge (or strip end) moves inwards per update (default 0.15) */
+    float static_level;  /* covers not in the capture: when no thumbnail cell changed by more than this (0..1) since the
+                          * last frame, the screen is still and every difference in the detections is noise: covers only
+                          * grow and none expires until the screen changes (default 0.03; 0 = off) */
 } im_cover_params;
 
 /* covers_visible = 1 when our own covers appear in the captured frames (the overlay could not be excluded from
