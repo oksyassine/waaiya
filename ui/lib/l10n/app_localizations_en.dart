@@ -265,6 +265,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get linkListen => 'Listen without music';
 
   @override
+  String get linkAudioOnly =>
+      'The video of this link cannot be opened yet: only its sound.';
+
+  @override
   String get linkDownloading => 'Downloading…';
 
   @override

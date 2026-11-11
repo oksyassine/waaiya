@@ -12,7 +12,7 @@
 #define IB_LONG_SIDE 640  /* analysed frame: long side in pixels (as Android) */
 #define IB_MAX_RECTS 512  /* covers per monitor (body-shaped covers give many thin rects) */
 #define IB_MAX_CELLS 8    /* blur cells per cover side (as Android) */
-#define IB_CELL_DP 90.0f  /* blur cell size (as Android's window hosts), dp = 1/160 inch */
+#define IB_CELL_DP 140.0f  /* blur cell size (as Android's window hosts), dp = 1/160 inch */
 #define IB_TEST_DP 24.0f  /* self-test square side */
 #define IB_THUMB_W 160    /* clean thumbnail width (cells averaged from it) */
 

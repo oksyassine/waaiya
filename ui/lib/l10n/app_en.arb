@@ -75,6 +75,7 @@
   "linkWatch": "Watch without music",
   "linkSave": "Save without music",
   "linkListen": "Listen without music",
+  "linkAudioOnly": "The video of this link cannot be opened yet: only its sound.",
   "linkDownloading": "Downloading…",
   "linkFiltering": "Removing music…",
   "linkCancel": "Cancel",
