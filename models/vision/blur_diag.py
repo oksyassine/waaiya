@@ -122,7 +122,7 @@ def cmd_run(a):
     v = Vision(person=a.person, gender=a.gender, policy=WOMEN, threads=a.threads)
     if v.status:
         sys.exit("vision: " + v.error)
-    v.params(male_clear=0.5)  # kinds are recomputed per threshold below from p_male
+    v.params(male_clear=0.5, **({"tiles": a.tiles} if a.tiles is not None else {}))  # kinds: recomputed below
     cover = Cover(covers_visible=False)
     rec = defaultdict(list)
     t0 = time.time()
@@ -161,7 +161,7 @@ def cmd_run(a):
                         group=np.array(rec["group"]), h=np.array(rec["h"], np.float32),
                         h_img=np.array(rec["h_img"], np.float32), frac=np.stack(rec["frac"]),
                         p_det=np.array(rec["p_det"], np.float32), thresh=np.array(THRESH),
-                        meta=json.dumps({"layout": a.layout, "gender": os.path.basename(a.gender or ""),
+                        meta=json.dumps({"layout": a.layout, "tiles": v.params()["tiles"], "long_side": a.long_side, "gender": os.path.basename(a.gender or ""),
                                          "person": os.path.basename(a.person), "n_images": len(ids)}))
     print("wrote", a.out)
 
@@ -191,7 +191,8 @@ def cmd_report(a):
         meta = json.loads(str(d["meta"]))
         hv = np.array([half(i) for i in d["image"]])
         tune, rep = hv == "tune", hv == "report"
-        lines += [f"## {meta['gender'] or 'no gender model'}, layout {meta['layout']} ({meta['n_images']} images)", ""]
+        lines += [f"## {meta['gender'] or 'no gender model'}, layout {meta['layout']}, long side {meta.get('long_side', 640)}, "
+                  f"tiles {meta.get('tiles', 0)} ({meta['n_images']} images)", ""]
         size = np.where(d["h_img"] >= 0.3, "large", np.where(d["h_img"] >= 0.1, "medium", "small"))  # height in the image
         lines += ["| measure (all images) | all | large (h>=30% of image) | medium | small (<10%) | group |", "|---|---|---|---|---|---|"]
         for c, name in [(0, "every person covered")] + [(list(d["thresh"]).index(0.98) + 1, "male_clear 0.98")]:
@@ -376,6 +377,7 @@ def main():
         if name == "run":
             p.add_argument("--layout", choices=["photo", "portrait"], default="photo")
             p.add_argument("--long-side", type=int, default=640)
+            p.add_argument("--tiles", type=int, help="detector tiles on elongated frames (engine default if unset)")
     p = sub.add_parser("report")
     p.add_argument("npz", nargs="+")
     p.add_argument("--md")
