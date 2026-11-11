@@ -158,6 +158,11 @@ class LinuxBlur {
     _restart?.cancel();
     exitDetail = null;
     _stderr.clear();
+    try {
+      tokenFile?.parent.createSync(recursive: true); // the helper keeps the Wayland screen-share permission there
+    } on FileSystemException {
+      // no token then: the share dialog shows at every start
+    }
     final Process p;
     try {
       p = await Process.start(
