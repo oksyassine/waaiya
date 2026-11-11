@@ -86,6 +86,7 @@
     <string name="link_watch">مشاهدة بلا موسيقى</string>
     <string name="link_save">حفظ بلا موسيقى</string>
     <string name="link_listen">استماع بلا موسيقى</string>
+    <string name="link_audio_only">لا يمكن فتح صورة هذا المقطع بعد: صوته فقط.</string>
     <string name="link_downloading">جارٍ التنزيل…</string>
     <string name="link_filtering">جارٍ إزالة الموسيقى…</string>
     <string name="link_cancel">إلغاء</string>
