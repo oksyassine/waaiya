@@ -479,6 +479,8 @@ ib_overlay *ib_x11_overlay_new(const char *display, char *err, size_t errlen) {
     o->vis = o->x.XDefaultVisual(o->d, o->scr);
     o->depth = o->x.XDefaultDepth(o->d, o->scr);
     o->shm = o->x.XShmQueryExtension(o->d);
+    o->base.root_w = o->x.XDisplayWidth(o->d, o->scr);
+    o->base.root_h = o->x.XDisplayHeight(o->d, o->scr);
     o->base.sync = ov_sync;
     o->base.draw = ov_draw;
     o->base.keep_on_top = ov_keep_on_top;

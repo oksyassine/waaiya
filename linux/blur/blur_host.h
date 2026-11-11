@@ -51,6 +51,8 @@ struct ib_overlay {
     int (*fd)(ib_overlay *);
     void (*dispatch)(ib_overlay *);
     void (*destroy)(ib_overlay *);
+    /* X11: the root window's size (0 for layer-shell), to map the portal's logical layout onto XWayland */
+    int root_w, root_h;
 };
 
 /* Backends. Each returns NULL with err filled when it cannot work here. */

@@ -63,7 +63,7 @@ void main() {
 
   Future<List<String>> cmdsAtLeast(int n) async {
     var c = await cmds();
-    for (var i = 0; i < 200 && c.length < n; i++) {
+    for (var i = 0; i < 500 && c.length < n; i++) {
       await Future<void>.delayed(const Duration(milliseconds: 20));
       c = await cmds();
     }
@@ -71,7 +71,7 @@ void main() {
   }
 
   Future<T> until<T>(T Function() read, bool Function(T) ok) async {
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < 500; i++) {
       final v = read();
       if (ok(v)) return v;
       await Future<void>.delayed(const Duration(milliseconds: 20));

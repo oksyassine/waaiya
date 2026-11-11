@@ -268,11 +268,27 @@ static void free_screens(void) {
 }
 
 /* (Re)reads the screens from the capture; the worker must be idle. */
+static int g_wayland;
+
 static int setup_screens(void) {
     int n = cap->count(cap);
     if (n > IB_MAX_SCREENS) n = IB_MAX_SCREENS;
     ib_geom g[IB_MAX_SCREENS];
     for (int i = 0; i < n; i++) cap->geometry(cap, i, &g[i]);
+    if (g_wayland && n > 0 && ov && ov->root_w > 0) {
+        /* XWayland overlay (GNOME): the portal gives logical positions; the X root may be in physical pixels
+         * (mutter's xwayland-native-scaling) */
+        int x1 = 0, y1 = 0;
+        for (int i = 0; i < n; i++) {
+            if (g[i].x + g[i].w > x1) x1 = g[i].x + g[i].w;
+            if (g[i].y + g[i].h > y1) y1 = g[i].y + g[i].h;
+        }
+        float sx = x1 > 0 ? (float)ov->root_w / x1 : 1, sy = y1 > 0 ? (float)ov->root_h / y1 : 1;
+        if (sx > 1.05f || sx < 0.95f || sy > 1.05f || sy < 0.95f)
+            for (int i = 0; i < n; i++)
+                g[i] = (ib_geom){(int)(g[i].x * sx), (int)(g[i].y * sy), (int)(g[i].w * sx), (int)(g[i].h * sy),
+                                 g[i].px_per_dp * sx};
+    }
     free_screens();
     B.n = n;
     for (int i = 0; i < n; i++) {
@@ -469,6 +485,7 @@ int main(int argc, char **argv) {
     char err[256] = "", oerr[256] = "";
     const char *wl = getenv("WAYLAND_DISPLAY"), *x = getenv("DISPLAY");
     int wayland = !strcmp(backend, "wayland") || (!strcmp(backend, "auto") && wl && *wl);
+    g_wayland = wayland;
     if (wayland) {
         g_backend = "wayland";
         /* the overlay first: without one, no share dialog is shown for nothing */
@@ -627,15 +644,22 @@ int main(int argc, char **argv) {
             if (seen || t >= test_until) {
                 g_test = 0;
                 redraw_all(1);
-                if (!seen) {
-                    /* our own window is not on screen: covers would not be seen by the user either */
-                    set_state(IB_ST_NO_OVERLAY, r < 0 ? cap->err
-                                                      : "self-test: the blur's window did not show up on screen "
-                                                        "(another window or the desktop stays above it?)");
+                if (r < 0) {
+                    set_state(IB_ST_NO_CAPTURE, cap->err);
                     phase = PH_DEAD;
                     continue;
                 }
-                covers_visible = 1;
+                if (!seen && !g_wayland) {
+                    /* X11: the root capture shows every mapped window, so our own window is not on screen and the
+                     * covers would not be seen by the user either */
+                    set_state(IB_ST_NO_OVERLAY, "self-test: the blur's window did not show up on screen "
+                                                "(another window or the desktop stays above it?)");
+                    phase = PH_DEAD;
+                    continue;
+                }
+                /* Wayland: not seen = the compositor leaves overlays out of the screen cast (the capture shows
+                 * what is under the covers), as Android's skip-screenshot layer */
+                covers_visible = seen;
                 pthread_mutex_lock(&B.mu);
                 B.covers_visible = covers_visible;
                 B.reset = 1;
