@@ -39,12 +39,10 @@ Common steps, every session:
 4. Click, scroll and select text **on a cover**: everything reaches the page under it.
 5. Scroll the page: the covers follow, or clear and come back within about a second.
 6. Turn on "Blur immodest images" and open a swimwear photo: the whole screen is covered (dark grey) and clicks
-   still go through. Turn it off: the cover goes away within 3 s.
-7. Fail mode: with "Cover the screen if the blur cannot keep up" on, run
-   `pkill -STOP -f engine/build/im-blur` for 3 s, then `pkill -CONT -f engine/build/im-blur`: nothing changes while it
-   is stopped (it cannot draw), but a slow frame later shows the full cover; turn the switch off for a red bar
-   at the top instead. (A missing model gives the same: rename `engine/models/vision/gender_v2.onnx`, toggle a
-   blur option, the status says the model is missing and the screen is covered.)
+   still go through. Turn it off: the cover goes away within 4 s.
+7. Fail mode: rename `engine/models/vision/person_yolox_nano.onnx` and toggle a blur option. The status says a model is
+   missing and, with "Cover the screen if the blur cannot keep up" on, the whole screen is covered (clicks still
+   go through). Turn the switch off: a red bar at the top instead. Rename the model back.
 8. Cost: `top -p $(pgrep -f engine/build/im-blur)` on a still page (about 1-3 %), then while a video plays.
    Command-line view of the same: `waaiya/engine/build/im-blur --policy 1` prints its state and, every 5 s,
    `ms` (model time per analysed frame), `cpu` (% of one core) and `fps`.
