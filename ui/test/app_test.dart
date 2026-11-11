@@ -183,6 +183,29 @@ void main() {
     expect(find.byKey(const Key('shizuku_guide')), findsOneWidget);
   });
 
+  testWidgets('blur card: "who is left uncovered" row and dialog', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        blur: BlurInfo(touchPassThrough: true),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    final row = find.byKey(const Key('blur_strict'));
+    await tester.ensureVisible(row);
+    await tester.pumpAndSettle();
+    expect(find.text('مَن يبقى دون تغطية: صارم'), findsOneWidget);
+    await tester.tap(find.descendant(of: row, matching: find.text('تغيير')));
+    await tester.pumpAndSettle();
+    expect(find.text('مَن يبقى دون تغطية'), findsOneWidget); // dialog title
+    await tester.tap(find.text('متوازن: نحو ضعف عدد الرجال دون تغطية'));
+    await tester.pumpAndSettle();
+    expect(backend.state.settings.blurStrictness, 1);
+    expect(find.text('مَن يبقى دون تغطية: متوازن'), findsOneWidget);
+  });
+
   test('snapshots: missing keys take defaults, names round-trip', () {
     final s = AppState.fromMap({
       'language': 'en',
@@ -207,6 +230,9 @@ void main() {
     expect(() => b.setSetting('lang', 'en'), throwsA(isA<BackendException>()));
     expect(() => b.setSetting(SettingKeys.gender, 'other'), throwsA(isA<BackendException>()));
     expect(() => b.setSetting(SettingKeys.blurWomen, 'yes'), throwsA(isA<BackendException>()));
+    expect(() => b.setSetting(SettingKeys.blurStrictness, 3), throwsA(isA<BackendException>()));
+    await b.setSetting(SettingKeys.blurStrictness, 2);
+    expect(b.state.settings.blurStrictness, 2);
   });
 
   test('ChannelBackend speaks the contract', () async {

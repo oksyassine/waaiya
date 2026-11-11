@@ -872,6 +872,60 @@ abstract class AppLocalizations {
   /// **'تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.'**
   String get guideBody;
 
+  /// Android string blur_strict_title
+  ///
+  /// In ar, this message translates to:
+  /// **'مَن يبقى دون تغطية'**
+  String get blurStrictTitle;
+
+  /// Android string blur_strict_value
+  ///
+  /// In ar, this message translates to:
+  /// **'مَن يبقى دون تغطية: {level}'**
+  String blurStrictValue(String level);
+
+  /// Android string blur_strict_0
+  ///
+  /// In ar, this message translates to:
+  /// **'صارم: فقط من يكاد التطبيق يجزم أنه رجل'**
+  String get blurStrict0;
+
+  /// Android string blur_strict_1
+  ///
+  /// In ar, this message translates to:
+  /// **'متوازن: نحو ضعف عدد الرجال دون تغطية'**
+  String get blurStrict1;
+
+  /// Android string blur_strict_2
+  ///
+  /// In ar, this message translates to:
+  /// **'متساهل: رجال أكثر قليلًا من المتوازن'**
+  String get blurStrict2;
+
+  /// Android string blur_strict_0_short
+  ///
+  /// In ar, this message translates to:
+  /// **'صارم'**
+  String get blurStrict0Short;
+
+  /// Android string blur_strict_1_short
+  ///
+  /// In ar, this message translates to:
+  /// **'متوازن'**
+  String get blurStrict1Short;
+
+  /// Android string blur_strict_2_short
+  ///
+  /// In ar, this message translates to:
+  /// **'متساهل'**
+  String get blurStrict2Short;
+
+  /// Android string blur_strict_help
+  ///
+  /// In ar, this message translates to:
+  /// **'كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.'**
+  String get blurStrictHelp;
+
   /// Flutter only. Arabic not reviewed yet.
   ///
   /// In ar, this message translates to:

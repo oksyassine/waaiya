@@ -31,6 +31,7 @@ PLACEHOLDERS = {
     "blur_setup_failed": [("details", "String")],
     "setting_language_title": [("language", "String")],
     "link_meta": [("first", "String"), ("second", "String")],
+    "blur_strict_value": [("level", "String")],
 }
 
 # Strings the Flutter screens need that the Android screens did not have. The Arabic here is NOT reviewed yet.

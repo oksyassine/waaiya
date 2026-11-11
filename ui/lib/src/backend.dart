@@ -10,6 +10,9 @@ abstract final class SettingKeys {
   static const blurNudity = 'blur_nudity';
   static const blurFailCover = 'blur_fail_cover';
 
+  /// Screen blur: who is left uncovered. 0 strict (default), 1 balanced, 2 relaxed (Settings.blurStrictness).
+  static const blurStrictness = 'blur_strictness';
+
   /// Key -> default value. The value's type is the key's type.
   static const Map<String, Object> defaults = {
     gender: '',
@@ -18,6 +21,7 @@ abstract final class SettingKeys {
     blurWomen: false,
     blurNudity: false,
     blurFailCover: true,
+    blurStrictness: 0,
   };
 
   /// Returns an error text when [key]/[value] is not a valid setting, else null.
@@ -25,6 +29,7 @@ abstract final class SettingKeys {
     final def = defaults[key];
     if (def == null) return 'unknown setting "$key"';
     if (def is bool && value is! bool) return '"$key" takes a bool';
+    if (def is int && (value is! int || value < 0 || value > 2)) return '"$key" takes 0, 1 or 2';
     if (def is String) {
       if (value is! String) return '"$key" takes a string';
       if (key == gender && !const {'', 'man', 'woman'}.contains(value)) return 'gender is "", "man" or "woman"';
@@ -42,6 +47,7 @@ class WaaiyaSettings {
     this.blurWomen = false,
     this.blurNudity = false,
     this.blurFailCover = true,
+    this.blurStrictness = 0,
   });
 
   factory WaaiyaSettings.fromMap(Map<Object?, Object?> m) => WaaiyaSettings(
@@ -51,6 +57,7 @@ class WaaiyaSettings {
         blurWomen: _bool(m[SettingKeys.blurWomen], false),
         blurNudity: _bool(m[SettingKeys.blurNudity], false),
         blurFailCover: _bool(m[SettingKeys.blurFailCover], true),
+        blurStrictness: _int(m[SettingKeys.blurStrictness]).clamp(0, 2),
       );
 
   /// "man", "woman" or "" (not answered yet: the onboarding is shown).
@@ -60,6 +67,9 @@ class WaaiyaSettings {
   final bool blurWomen;
   final bool blurNudity;
   final bool blurFailCover;
+
+  /// 0 strict (default), 1 balanced, 2 relaxed.
+  final int blurStrictness;
 
   bool get isMan => gender == 'man';
   bool get blurOn => blurWomen || blurNudity;
@@ -71,6 +81,7 @@ class WaaiyaSettings {
         SettingKeys.blurWomen: blurWomen,
         SettingKeys.blurNudity: blurNudity,
         SettingKeys.blurFailCover: blurFailCover,
+        SettingKeys.blurStrictness: blurStrictness,
       };
 }
 

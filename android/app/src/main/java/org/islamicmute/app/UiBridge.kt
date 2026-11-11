@@ -152,6 +152,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_women" to settings.blurWomen,
             "blur_nudity" to settings.blurNudity,
             "blur_fail_cover" to settings.blurFailCover,
+            "blur_strictness" to settings.blurStrictness,
         ),
         "filter" to mapOf(
             "state" to FilterService.state.name,
@@ -198,6 +199,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_women" -> settings.blurWomen = bool()
             "blur_nudity" -> settings.blurNudity = bool()
             "blur_fail_cover" -> settings.blurFailCover = bool()
+            "blur_strictness" -> settings.blurStrictness = (value as? Int)?.takeIf { it in 0..2 }
+                ?: throw BadArgs("blur_strictness takes 0, 1 or 2")
             else -> throw BadArgs("unknown setting $key")
         }
         // No restart: the running filter and blur re-read Settings every 0.5 s.
