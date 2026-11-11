@@ -55,6 +55,9 @@ typedef struct {
     float male_clear;    /* a person is left clear only when p(man or boy) >= this (default 0.999, for gender_v2.onnx: eval/results/blur_gender_v2.md) */
     float nsfw_score;    /* frame covered when p(nsfw) >= this (default 0.6) */
     int max_people;      /* people classified per frame, largest first; the rest are covered (default 12) */
+    int tiles;           /* elongated frames (a phone held upright): the person detector also runs on up to this many
+                            overlapping square tiles along the long side, where small people appear about twice as
+                            large as in the whole frame (0 = whole frame only; default 3: eval/results/blur_tiles.md) */
 } im_vision_params;
 
 typedef struct im_vision im_vision;
