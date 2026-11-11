@@ -98,6 +98,7 @@ class MainActivity : Activity() {
         findViewById<Button>(R.id.choose_man).setOnClickListener { setGender("man") }
         findViewById<Button>(R.id.choose_woman).setOnClickListener { setGender("woman") }
         findViewById<Button>(R.id.change_gender).setOnClickListener { askGender() }
+        findViewById<Button>(R.id.change_blur_strict).setOnClickListener { askBlurStrictness() }
         findViewById<Button>(R.id.change_language).setOnClickListener { askLanguage() }
         findViewById<Button>(R.id.onboard_language).apply {
             val other = if (Lang.current(this@MainActivity) == Lang.AR) Lang.EN else Lang.AR
@@ -265,6 +266,8 @@ class MainActivity : Activity() {
 
     /** Screen-blur card: what it needs, and its state while filtering runs. */
     private fun refreshBlur(on: Boolean) {
+        findViewById<TextView>(R.id.blur_strict_value).text = getString(R.string.blur_strict_value,
+            getString(STRICT_SHORT[settings.blurStrictness]))
         val a11y = blurAccessibilityEnabled()
         val overlay = android.provider.Settings.canDrawOverlays(this)
         // builds without the accessibility service (the default: Play Protect blocks it) need the overlay permission
@@ -346,9 +349,14 @@ class MainActivity : Activity() {
             .setMessage(R.string.guide_body)
             .setPositiveButton(R.string.guide_open_shizuku) { _, _ -> openShizuku() }
             .setNeutralButton(R.string.guide_open_dev) { _, _ ->
-                // Developer options, or About phone when they are not turned on yet (step 2 of the guide)
-                runCatching { startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
-                    .onFailure { runCatching { startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)) } }
+                // Developer options, or About phone when they are not turned on yet (step 2 of the guide): with them
+                // off, Android opens and closes the Developer options page at once, without an error
+                val devOn = android.provider.Settings.Global.getInt(contentResolver,
+                    android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+                val about = Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)
+                if (devOn) runCatching { startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                    .onFailure { runCatching { startActivity(about) } }
+                else runCatching { startActivity(about) }
             }
             .setNegativeButton(R.string.guide_close, null)
             .show()
@@ -476,6 +484,19 @@ class MainActivity : Activity() {
             .show()
     }
 
+    private fun askBlurStrictness() {
+        val choices = arrayOf(getString(R.string.blur_strict_0), getString(R.string.blur_strict_1),
+            getString(R.string.blur_strict_2))
+        AlertDialog.Builder(this)
+            .setTitle(R.string.blur_strict_title)
+            .setSingleChoiceItems(choices, settings.blurStrictness) { d, which ->
+                settings.blurStrictness = which
+                d.dismiss(); settingChanged()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
     /** The running filter and blur follow the settings within half a second: no restart needed. */
     private fun settingChanged() = refresh()
 
@@ -528,6 +549,7 @@ class MainActivity : Activity() {
     }
 
     private companion object {
+        val STRICT_SHORT = intArrayOf(R.string.blur_strict_0_short, R.string.blur_strict_1_short, R.string.blur_strict_2_short)
         const val REQ_PERMISSIONS = 1
         const val REQ_CAPTURE = 7
     }

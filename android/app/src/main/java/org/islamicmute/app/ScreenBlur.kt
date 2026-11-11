@@ -36,6 +36,9 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         private const val SELF_TEST_MS = 1000L
         private const val THUMB_W = 24              // blurred picture: the frame shrunk to 24 cells wide
         private const val MIN_INTERVAL_MS = 50L     // at most ~20 analysed frames a second (battery)
+        // Portrait screens: the person detector also runs on 3 tiles (small people). When a frame takes longer than
+        // this on average with all of them, they take turns, one per frame (the tracker holds people in between).
+        private const val SLOW_FRAME_MS = 60.0
         @Volatile var state: State? = null
             private set
         private val listeners = java.util.concurrent.CopyOnWriteArraySet<() -> Unit>()
@@ -60,6 +63,9 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     private val frame = Vision.Frame(FloatArray(64 * 5), 0, false)
     private var lastNsfw = -1e9
     private var failStreak = 0
+    private var frameMs = 0.0          // moving average of the model time per frame
+    private var tilesTakeTurns = false
+    private var maleClear = 0f         // main thread: the strictness last sent to the worker
     private var thumbW = THUMB_W
     private var thumbH = THUMB_W * 2
     private var thumbPx = IntArray(thumbW * thumbH)
@@ -124,6 +130,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             vision = Vision.open(context, p, coversVisible).also {
                 modelsBad = it.status != 0
                 if (modelsBad) Log.e(TAG, "blur models: ${it.error}")
+                if (tilesTakeTurns) it.setTilesPerFrame(1)
+                it.setMaleClear(settings.blurMaleClear)
             }
             failStreak = 0
             if (turningOn) runCatching { display?.surface = reader?.surface }
@@ -214,7 +222,15 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             val t = img.timestamp / 1e6
             val runNsfw = t - lastNsfw >= NSFW_EVERY_MS
             if (runNsfw) lastNsfw = t
+            val t0 = SystemClock.elapsedRealtimeNanos()
             v.frame(buf, capW, capH, plane.rowStride, t, true, runNsfw, frame, thumbPx, thumbW, thumbH)
+            val ms = (SystemClock.elapsedRealtimeNanos() - t0) / 1e6
+            frameMs = if (frameMs == 0.0) ms else frameMs * 0.9 + ms * 0.1
+            if (!tilesTakeTurns && frameMs > SLOW_FRAME_MS) {
+                tilesTakeTurns = true // for the rest of this session
+                v.setTilesPerFrame(1)
+                Log.i(TAG, "blur: frames take ${frameMs.toInt()} ms, detector tiles now take turns")
+            }
             failStreak = if (frame.failed) failStreak + 1 else 0
             if (!frame.failed) lastOk = SystemClock.uptimeMillis()
             val bm = Bitmap.createBitmap(thumbPx, thumbW, thumbH, Bitmap.Config.ARGB_8888)
@@ -242,6 +258,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         override fun run() {
             if (stopped) return
             apply(if (settings.blurOn) Vision.policy(settings) else 0) // settings apply live
+            val mc = settings.blurMaleClear
+            if (mc != maleClear) { maleClear = mc; worker.post { vision?.setMaleClear(mc) } }
             if (policy <= 0) { main.postDelayed(this, 500); return }
             if (overlay.host == null && overlay.attach()) {
                 Log.i(TAG, "blur overlay attached late (${overlay.host})")

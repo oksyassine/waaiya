@@ -39,8 +39,8 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 6
-        versionName = "0.2.4"
+        versionCode = 8
+        versionName = "0.2.6"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         if (blurA11y) versionNameSuffix = "-a11y"
@@ -136,7 +136,7 @@ val copyModel by tasks.registering(Copy::class) {
     // (no gender model = every person covered; no nudity model = the nudity option reports "not available").
     val vision = rootProject.file("../models/vision")
     from(providers.gradleProperty("imBlurPerson").orElse(vision.resolve("person_yolox_nano.onnx").path)) { rename { "blur_person.onnx" } }
-    from(providers.gradleProperty("imBlurGender").orElse(vision.resolve("gender.onnx").path)) { rename { "blur_gender.onnx" } }
+    from(providers.gradleProperty("imBlurGender").orElse(vision.resolve("gender_v2.onnx").path)) { rename { "blur_gender.onnx" } }
     from(providers.gradleProperty("imBlurNsfw").orElse(vision.resolve("nsfw_marqo_int8.onnx").path)) { rename { "blur_nsfw.onnx" } }
     into(modelAssets)
 }

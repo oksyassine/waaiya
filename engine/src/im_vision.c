@@ -22,6 +22,8 @@ typedef struct {
     int ok;
 } vmodel;
 
+#define MAX_CAND 512 /* person candidates per frame, whole frame and tiles together */
+
 struct im_vision {
     const OrtApi *api;
     OrtEnv *env;
@@ -33,6 +35,8 @@ struct im_vision {
     float last_nsfw;
     int nsfw_idx;
     char err[512];
+    im_vrect cand[MAX_CAND]; /* person candidates of the frame being detected (detect_people) */
+    int tile_next;           /* next tile to run when tiles take turns (prm.tiles_per_frame) */
 };
 
 static void seterr(im_vision *v, const char *what, OrtStatus *st) {
@@ -120,7 +124,7 @@ static void unload(im_vision *v, vmodel *m) {
 im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errlen) {
     im_vision *v = calloc(1, sizeof *v);
     if (!v) { if (err && errlen) snprintf(err, errlen, "out of memory"); return NULL; }
-    v->prm = (im_vision_params){0.10f, 0.5f, 0.98f, 0.6f, 12};
+    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0};
     v->last_nsfw = -1;
     v->nsfw_idx = -1;
     v->policy = cfg ? cfg->policy : 0;
@@ -252,18 +256,23 @@ static const float *run(im_vision *v, vmodel *m, OrtValue **out_val, size_t *cou
     return p;
 }
 
-/* Letterbox the whole frame into the model input (top-left, pad elsewhere). Returns the scale. */
-static float letterbox(vmodel *m, const uint8_t *rgba, int w, int h, int stride) {
-    float s = fminf((float)m->in_w / w, (float)m->in_h / h);
-    int dw = (int)lroundf(w * s), dh = (int)lroundf(h * s);
+/* Letterbox a region of the frame into the model input (top-left, pad elsewhere). Returns the scale. */
+static float letterbox_region(vmodel *m, const uint8_t *rgba, int w, int h, int stride, float rx, float ry, float rw,
+                              float rh) {
+    float s = fminf((float)m->in_w / rw, (float)m->in_h / rh);
+    int dw = (int)lroundf(rw * s), dh = (int)lroundf(rh * s);
     if (dw < 1) dw = 1;
     if (dh < 1) dh = 1;
     if (dw > m->in_w) dw = m->in_w;
     if (dh > m->in_h) dh = m->in_h;
     size_t n = 3 * (size_t)m->in_w * m->in_h;
     for (size_t i = 0; i < n; i++) m->buf[i] = m->pad;
-    sample(rgba, w, h, stride, 0, 0, (float)w, (float)h, m->buf, m->in_w, m->in_h, 0, 0, dw, dh);
+    sample(rgba, w, h, stride, rx, ry, rx + rw, ry + rh, m->buf, m->in_w, m->in_h, 0, 0, dw, dh);
     return s;
+}
+
+static float letterbox(vmodel *m, const uint8_t *rgba, int w, int h, int stride) {
+    return letterbox_region(m, rgba, w, h, stride, 0, 0, (float)w, (float)h);
 }
 
 static float iou(const im_vrect *a, const im_vrect *b) {
@@ -285,35 +294,76 @@ static int by_area(const void *a, const void *b) {
     return (d > 0) - (d < 0);
 }
 
-/* Person boxes, normalised to the frame, after threshold + NMS. */
-static int detect_people(im_vision *v, const uint8_t *rgba, int w, int h, int stride, im_vrect *out, int max) {
+/* Adds the detector's boxes for one region (frame pixels) to cand, normalised to the frame. Boxes touching an edge
+ * listed in cut (bit 1 top, 2 bottom, 4 left, 8 right: an edge inside the frame where a tile was cut) are dropped:
+ * the person is cut there, and the overlapping tile or the whole-frame pass sees them whole. */
+static int detect_region(im_vision *v, const uint8_t *rgba, int w, int h, int stride, float rx, float ry, float rw,
+                         float rh, unsigned cut, im_vrect *cand, int *nc) {
     vmodel *m = &v->person;
-    float s = letterbox(m, rgba, w, h, stride);
+    float s = letterbox_region(m, rgba, w, h, stride, rx, ry, rw, rh);
     OrtValue *ov = NULL;
     size_t cnt = 0;
     const float *d = run(v, m, &ov, &cnt);
     if (!d) return -1;
-    im_vrect cand[256];
-    int nc = 0;
+    const float edge = 2.0f; /* frame pixels */
     for (size_t i = 0; i + 5 <= cnt; i += 5) {
-        if (d[i + 4] < v->prm.person_score) continue;
-        im_vrect r = {d[i] / s / w, d[i + 1] / s / h, d[i + 2] / s / w, d[i + 3] / s / h, IM_VK_UNSURE, d[i + 4], -1};
+        /* tiles always have a cut edge (n >= 2), the whole frame never: cut != 0 means "a tile" */
+        if (d[i + 4] < (cut ? fmaxf(v->prm.person_score, v->prm.tile_score) : v->prm.person_score)) continue;
+        float x0 = rx + d[i] / s, y0 = ry + d[i + 1] / s, x1 = rx + d[i + 2] / s, y1 = ry + d[i + 3] / s;
+        if (((cut & 1) && y0 <= ry + edge) || ((cut & 2) && y1 >= ry + rh - edge) ||
+            ((cut & 4) && x0 <= rx + edge) || ((cut & 8) && x1 >= rx + rw - edge))
+            continue;
+        im_vrect r = {x0 / w, y0 / h, x1 / w, y1 / h, IM_VK_UNSURE, d[i + 4], -1};
         r.x0 = fmaxf(r.x0, 0); r.y0 = fmaxf(r.y0, 0); r.x1 = fminf(r.x1, 1); r.y1 = fminf(r.y1, 1);
         if (r.x1 <= r.x0 || r.y1 <= r.y0) continue;
-        if (nc < 256) cand[nc++] = r;
-        else { /* keep the best 256 */
+        if (*nc < MAX_CAND) cand[(*nc)++] = r;
+        else { /* keep the best */
             int lo = 0;
-            for (int j = 1; j < nc; j++) if (cand[j].score < cand[lo].score) lo = j;
+            for (int j = 1; j < *nc; j++) if (cand[j].score < cand[lo].score) lo = j;
             if (r.score > cand[lo].score) cand[lo] = r;
         }
     }
     v->api->ReleaseValue(ov);
+    return 0;
+}
+
+/* Person boxes, normalised to the frame, after threshold + NMS: the whole frame, plus square tiles along the long
+ * side of an elongated frame (prm.tiles), which see small people at about twice the size. */
+static int detect_people(im_vision *v, const uint8_t *rgba, int w, int h, int stride, im_vrect *out, int max) {
+    im_vrect *cand = v->cand;
+    int nc = 0;
+    if (detect_region(v, rgba, w, h, stride, 0, 0, (float)w, (float)h, 0, cand, &nc)) return -1;
+    float S = (float)(w < h ? w : h), L = (float)(w < h ? h : w);
+    if (v->prm.tiles >= 2 && L >= 1.4f * S) {
+        /* the fewest tiles (at most prm.tiles) that overlap by at least 30% of a tile; then spread them evenly */
+        int n = 2;
+        while (n < v->prm.tiles && (L - S) / (n - 1) > 0.7f * S) n++;
+        float step = (L - S) / (n - 1);
+        int k = v->prm.tiles_per_frame > 0 && v->prm.tiles_per_frame < n ? v->prm.tiles_per_frame : n;
+        int first = k < n ? v->tile_next % n : 0;
+        v->tile_next = (first + k) % n;
+        for (int j = 0; j < k; j++) {
+            int t = (first + j) % n;
+            float o = t * step;
+            unsigned cut = (t > 0 ? 1u : 0u) | (t < n - 1 ? 2u : 0u);
+            int r = w < h ? detect_region(v, rgba, w, h, stride, 0, o, S, S, cut, cand, &nc)
+                          : detect_region(v, rgba, w, h, stride, o, 0, S, S, ((cut & 1) ? 4u : 0u) | ((cut & 2) ? 8u : 0u),
+                                          cand, &nc);
+            if (r) return -1;
+        }
+    }
     qsort(cand, nc, sizeof cand[0], by_score);
     int n = 0;
     for (int i = 0; i < nc && n < max; i++) {
         int keep = 1;
-        for (int j = 0; j < n && keep; j++)
+        for (int j = 0; j < n && keep; j++) {
             if (iou(&cand[i], &out[j]) > v->prm.nms_iou) keep = 0;
+            else if (v->prm.nest > 0 && area(&out[j]) * 2 >= area(&cand[i])) {
+                const im_vrect *a = &cand[i], *b = &out[j];
+                float ix = fminf(a->x1, b->x1) - fmaxf(a->x0, b->x0), iy = fminf(a->y1, b->y1) - fmaxf(a->y0, b->y0);
+                if (ix > 0 && iy > 0 && ix * iy >= v->prm.nest * area(a) && area(b) <= 2 * area(a)) keep = 0;
+            }
+        }
         if (keep) out[n++] = cand[i];
     }
     return n;
