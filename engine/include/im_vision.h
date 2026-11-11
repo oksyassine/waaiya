@@ -73,11 +73,14 @@ typedef struct {
     float tile_score;    /* detector threshold inside tiles when above person_score (default 0 = person_score: higher
                             values leave more men clear but lose more small women, eval/results/blur_tiles.md) */
     int seg;             /* 1 = outline the covered people with the segmenter (when loaded), 0 = rectangles (default 1) */
-    float seg_threshold; /* a pixel is part of the person when p(person) >= this: low, so covering wins (default 0.25) */
+    float seg_threshold; /* a pixel is part of the person when p(person) >= this: low, so covering wins (default 0.15:
+                            eval/results/blur_silhouette.md) */
     float seg_min_fill;  /* an outline covering less than this share of the person's box is not trusted: the whole
                             rectangle is covered instead (default 0.25: eval/results/blur_silhouette.md) */
     int seg_max_people;  /* covered people outlined per frame, largest first; smaller ones get their rectangle (default
                             6: about 7-11 ms per person on one x86 core, eval/results/blur_silhouette.md) */
+    int seg_min_px;      /* people shorter than this (frame pixels) keep their rectangle: too few pixels to outline
+                            (default 48: eval/results/blur_silhouette.md) */
 } im_vision_params;
 
 /* Outline of one person, relative to their box (0,0 = box top-left, 1,1 = box bottom-right; values outside 0..1
@@ -134,6 +137,9 @@ typedef struct {
                           * strips never reach past the rectangle the person would get without an outline */
     float bridge_gap;    /* an outlined person and another cover closer than this fraction of the smaller one's height
                           * get a bridge: a rect over the space between them, at the height they share (default 0.30; 0 = off) */
+    float open_reach;    /* outlined people whose body goes on past the top or bottom of the segmenter's crop (a box cut
+                          * short by the detector): that end strip reaches this fraction of their height past the box,
+                          * further than the rectangle would (default 0.80: eval/results/blur_silhouette.md) */
 } im_cover_params;
 
 /* covers_visible = 1 when our own covers appear in the captured frames (the overlay could not be excluded from
