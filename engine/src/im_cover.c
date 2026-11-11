@@ -32,6 +32,7 @@ typedef struct {
     float vx, vy;  /* centre velocity, frame units per ms */
     int matched;   /* took a detection in this update: one detection per track per frame */
     int nv;        /* has a velocity measurement */
+    int seen_here; /* detected since the screen last changed: a still screen keeps this cover alive */
     im_vshape sh;  /* outline from the last detection (rows = 0: the whole rectangle) */
 } track;
 
@@ -43,6 +44,7 @@ struct im_cover {
     float thumb[TW * TH], prev[TW * TH];
     unsigned char mask[TW * TH];
     int have_prev;
+    int static_screen; /* this update: the screen did not change since the last one (static_level) */
     im_vrect out_prev[MAX_OUT], out_last[MAX_OUT];
     int n_prev, n_last;
     /* output scratch: outlined people's strips and rectangles, and every cover's extent for the bridges */
@@ -58,7 +60,7 @@ im_cover *im_cover_create(int covers_visible) {
     im_cover *c = calloc(1, sizeof *c);
     if (!c) return NULL;
     c->covers_visible = covers_visible;
-    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.05f, 0.30f, 0.80f};
+    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.10f, 0.30f, 0.80f, 0.08f, 0.15f, 0.03f};
     return c;
 }
 
@@ -182,13 +184,21 @@ static int strips_of(const im_cover_params *p, const im_vrect *b, const im_vshap
     for (int k = 0; k < sh->rows; k++)
         if (sh->l[k] <= sh->r[k]) { if (first < 0) first = k; last = k; }
     if (first < 0) return 0;
+    /* each row spans its filled neighbours too: a looser shape that does not trace the body */
+    float L[IM_SHAPE_ROWS], R[IM_SHAPE_ROWS];
+    for (int k = 0; k < sh->rows; k++) {
+        L[k] = sh->l[k]; R[k] = sh->r[k];
+        if (L[k] > R[k]) continue;
+        for (int j = k - 1; j <= k + 1; j++)
+            if (j >= 0 && j < sh->rows && sh->l[j] <= sh->r[j]) { L[k] = fminf(L[k], sh->l[j]); R[k] = fmaxf(R[k], sh->r[j]); }
+    }
     for (int k = first; k <= last; k++) {
         if (sh->l[k] > sh->r[k]) continue;
         float ya = b->y0 + sh->y0 * bh + k * rh;
         im_vrect r = *b;
         r.kind |= IM_VK_PART;
-        r.x0 = b->x0 + sh->l[k] * bw - mx;
-        r.x1 = b->x0 + sh->r[k] * bw + mx;
+        r.x0 = b->x0 + L[k] * bw - mx;
+        r.x1 = b->x0 + R[k] * bw + mx;
         r.y0 = ya - seam;
         r.y1 = ya + rh + seam;
         int open_top = k == first && k == 0 && (sh->flags & IM_SHAPE_OPEN_TOP);
@@ -235,6 +245,31 @@ static int close_to(const im_vrect *a, const im_vrect *b, float gap) {
     return fmaxf(a->x0, b->x0) - fminf(a->x1, b->x1) <= g && fmaxf(a->y0, b->y0) - fminf(a->y1, b->y1) <= g;
 }
 
+/* A detection of the same person standing still: centre moved less than still_frac of the size, size about the same. */
+static int still(const im_cover_params *p, const im_vrect *r, const im_vrect *d) {
+    if (p->still_frac <= 0) return 0;
+    float rw = r->x1 - r->x0, rh = r->y1 - r->y0, dw = d->x1 - d->x0, dh = d->y1 - d->y0;
+    float s = fmaxf(fmaxf(rw, rh), 1e-4f);
+    float dx = (d->x0 + d->x1 - r->x0 - r->x1) / 2, dy = (d->y0 + d->y1 - r->y0 - r->y1) / 2;
+    return sqrtf(dx * dx + dy * dy) < p->still_frac * s &&
+           fabsf(dw - rw) < 2 * p->still_frac * fmaxf(rw, 1e-4f) && fabsf(dh - rh) < 2 * p->still_frac * fmaxf(rh, 1e-4f);
+}
+
+/* Still person, new outline: each row widens at once and narrows slowly (rate k); a new row shape replaces the old one
+ * when the two do not line up (different rows or vertical span). */
+static void settle_shape(im_vshape *old, const im_vshape *nw, float k) {
+    if (old->rows != nw->rows || fabsf(old->y0 - nw->y0) > 0.1f || fabsf(old->y1 - nw->y1) > 0.1f) { *old = *nw; return; }
+    for (int i = 0; i < nw->rows; i++) {
+        int o = old->l[i] <= old->r[i], n = nw->l[i] <= nw->r[i];
+        if (!n) continue;                       /* an empty row in the new mask: keep the old row (never uncover at once) */
+        if (!o) { old->l[i] = nw->l[i]; old->r[i] = nw->r[i]; continue; }
+        old->l[i] = nw->l[i] < old->l[i] ? nw->l[i] : old->l[i] + k * (nw->l[i] - old->l[i]);
+        old->r[i] = nw->r[i] > old->r[i] ? nw->r[i] : old->r[i] + k * (nw->r[i] - old->r[i]);
+    }
+    old->y0 = fminf(old->y0, nw->y0); old->y1 = fmaxf(old->y1, nw->y1);
+    old->flags |= nw->flags;
+}
+
 int im_cover_update(im_cover *c, double t_ms, const uint8_t *rgba, int w, int h, int stride, const im_vrect *dets,
                     int n, im_vrect *out, int max) {
     return im_cover_update_shapes(c, t_ms, rgba, w, h, stride, dets, NULL, n, out, max);
@@ -275,13 +310,20 @@ int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w,
                 }
             }
         }
+        c->static_screen = 0;
+        if (!c->covers_visible && c->have_prev && p->static_level > 0) {
+            float mx = 0;
+            for (int i = 0; i < TW * TH; i++) mx = fmaxf(mx, fabsf(c->thumb[i] - c->prev[i]));
+            c->static_screen = mx < p->static_level;
+        }
         memcpy(c->prev, c->thumb, sizeof c->prev);
         c->have_prev = 1;
-    }
+    } else c->static_screen = 0;
 
     /* 2. detections -> tracks (one-to-one per frame: overlapping people must keep separate covers) */
     for (int i = 0; i < c->nt; i++) c->t[i].matched = 0;
-    for (int k = 0; k < n; k++) {
+    for (int k_det = 0; k_det < n; k_det++) {
+        const int k = k_det;
         const im_vrect *d = &dets[k];
         if (d->kind == IM_VK_FULL) {
             double hold = c->covers_visible ? 2 * p->full_hold_ms : p->full_hold_ms;
@@ -314,6 +356,23 @@ int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w,
             if (c->covers_visible) {
                 tr->r.x0 = fminf(tr->r.x0, d->x0); tr->r.y0 = fminf(tr->r.y0, d->y0);
                 tr->r.x1 = fmaxf(tr->r.x1, d->x1); tr->r.y1 = fmaxf(tr->r.y1, d->y1);
+            } else if (c->static_screen || still(p, &tr->r, d)) {
+                /* the same still person: grow at once to take the detection in, shrink slowly (not at all while the
+                 * screen is still: then the differences are only detector noise), no motion */
+                im_vrect *r = &tr->r;
+                float k = c->static_screen ? 0.0f : p->shrink_rate;
+                r->x0 = d->x0 < r->x0 ? d->x0 : r->x0 + k * (d->x0 - r->x0);
+                r->y0 = d->y0 < r->y0 ? d->y0 : r->y0 + k * (d->y0 - r->y0);
+                r->x1 = d->x1 > r->x1 ? d->x1 : r->x1 + k * (d->x1 - r->x1);
+                r->y1 = d->y1 > r->y1 ? d->y1 : r->y1 + k * (d->y1 - r->y1);
+                r->kind = stricter(r->kind, d->kind);
+                r->score = d->score;
+                tr->vx *= 0.5f; tr->vy *= 0.5f;
+                if (shapes && shapes[k_det].rows > 0) settle_shape(&tr->sh, &shapes[k_det], k);
+                tr->last_seen = t_ms;
+                tr->matched = 1;
+                tr->seen_here = 1;
+                continue;
             } else {
                 double dt = t_ms - tr->last_seen;
                 if (dt > 1 && dt < 1000) {
@@ -333,20 +392,27 @@ int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w,
             if (shapes && !c->covers_visible) tr->sh = shapes[k];
             tr->last_seen = t_ms;
             tr->matched = 1;
+            tr->seen_here = 1;
         } else {
             int o = c->nt;
             if (c->nt < MAX_TRACKS) c->nt++;
             else /* full: replace the oldest */
                 for (int i = o = 0; i < c->nt; i++) if (c->t[i].last_seen < c->t[o].last_seen) o = i;
-            c->t[o] = (track){*d, t_ms, 0, 0, 1, 0, {0}};
+            c->t[o] = (track){*d, t_ms, 0, 0, 1, 0, 1, {0}};
             if (shapes && !c->covers_visible) c->t[o].sh = shapes[k];
         }
     }
 
     /* 3. expiry (only when the capture shows what is under the covers) */
-    if (!c->covers_visible)
+    if (!c->covers_visible) {
+        /* nothing moved on screen: a person detected since the last change and missed this time is still there */
+        for (int i = 0; i < c->nt; i++) {
+            if (!c->static_screen) { if (!c->t[i].matched) c->t[i].seen_here = 0; continue; }
+            if (c->t[i].seen_here) { c->t[i].last_seen = t_ms; c->t[i].vx = c->t[i].vy = 0; }
+        }
         for (int i = c->nt - 1; i >= 0; i--)
             if (t_ms - c->t[i].last_seen > p->hold_ms) drop(c, i);
+    }
 
     /* 4. output: the whole-frame cover, then rectangle covers (close ones joined), then outlined people as strips
      * (or their rectangle when out has no room for all of them), then bridges between outlined people and their
