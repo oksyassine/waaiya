@@ -482,4 +482,43 @@ class AppLocalizationsAr extends AppLocalizations {
   String actionFailed(String details) {
     return 'تعذّر ذلك: $details';
   }
+
+  @override
+  String get stateOnDetailNoDelay => 'تُزال الآلات من كل التطبيقات.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'خادم الصوت لا يعمل (PulseAudio أو PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.';
+
+  @override
+  String get engineErrorNoOutput => 'لم يُعثر على مكبّرات صوت أو سماعات.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'تعذّر تثبيت التصفية. التفاصيل:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'لم تبدأ التصفية. التفاصيل:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'توقّفت التصفية بسبب خطأ. التفاصيل:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'التشغيل عند تسجيل الدخول';
+
+  @override
+  String get autostartBody => 'تصفية الصوت فور تسجيل الدخول.';
 }

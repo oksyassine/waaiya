@@ -45,7 +45,49 @@ EXTRA = {
         "تعذّر ذلك: {details}",
     ),
 }
-EXTRA_PLACEHOLDERS = {"action_failed": [("details", "String")]}
+EXTRA.update({
+    # Desktop engine host (DesktopBackend on Linux): filter.error codes, start at login, no measured delay.
+    "state_on_detail_no_delay": (
+        "Instruments are removed from all apps.",
+        "تُزال الآلات من كل التطبيقات.",  # first sentence of the reviewed state_on_detail
+    ),
+    "engine_error_no_pactl": (
+        "Sound tools not found (pactl). Waaiya needs PulseAudio, or PipeWire with pipewire-pulse.",
+        "لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.",
+    ),
+    "engine_error_no_sound_server": (
+        "The sound server is not running (PulseAudio or PipeWire).",
+        "خادم الصوت لا يعمل (PulseAudio أو PipeWire).",
+    ),
+    "engine_error_no_systemd": (
+        "This system has no systemd user session, which runs the filter in the background.",
+        "لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.",
+    ),
+    "engine_error_no_output": (
+        "No speakers or headphones found.",
+        "لم يُعثر على مكبّرات صوت أو سماعات.",
+    ),
+    "engine_error_install_failed": (
+        "Could not install the filter. Details:\n{details}",
+        "تعذّر تثبيت التصفية. التفاصيل:\n{details}",
+    ),
+    "engine_error_start_failed": (
+        "The filter did not start. Details:\n{details}",
+        "لم تبدأ التصفية. التفاصيل:\n{details}",
+    ),
+    "engine_error_service_failed": (
+        "The filter stopped with an error. Details:\n{details}",
+        "توقّفت التصفية بسبب خطأ. التفاصيل:\n{details}",
+    ),
+    "autostart_title": ("Start at login", "التشغيل عند تسجيل الدخول"),
+    "autostart_body": ("Filter the sound as soon as you log in.", "تصفية الصوت فور تسجيل الدخول."),
+})
+EXTRA_PLACEHOLDERS = {
+    "action_failed": [("details", "String")],
+    "engine_error_install_failed": [("details", "String")],
+    "engine_error_start_failed": [("details", "String")],
+    "engine_error_service_failed": [("details", "String")],
+}
 
 
 def camel(name: str) -> str:

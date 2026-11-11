@@ -70,6 +70,8 @@ install_cmd() {
     local det="$REPO/models/detector/detector_v1.onnx"
     [ -f "$det" ] && cp "$det" "$LIB/models/detector.onnx"
     install -m 755 "$HERE/islamic-mute" "$LIB/islamic-mute"
+    # engine version marker (desktop app bundle: engine/VERSION); the app reinstalls when it differs
+    if [ -f "$REPO/VERSION" ]; then cp "$REPO/VERSION" "$LIB/VERSION"; else rm -f "$LIB/VERSION"; fi
     # put the command on PATH (~/.local/bin is on PATH by default on Debian/Ubuntu/Fedora)
     mkdir -p "$HOME/.local/bin"
     ln -sfn "$LIB/islamic-mute" "$HOME/.local/bin/$APP"
@@ -177,6 +179,7 @@ run_cmd() {
 
 status_cmd() {
     echo "server:   $(pactl info 2>/dev/null | sed -n 's/^Server Name: //p')"
+    echo "version:  $(cat "$LIB/VERSION" 2>/dev/null || echo '?')"
     echo "model:    $(model_path)"
     if [ -n "$(policy_flags)" ]; then echo "women's singing: muted (detector $(detector_path))"; else echo "women's singing: not filtered"; fi
     echo "output:   $(cat "$STATE/master" 2>/dev/null || echo '?')"

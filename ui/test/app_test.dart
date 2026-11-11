@@ -206,6 +206,40 @@ void main() {
     expect(find.text('مَن يبقى دون تغطية: متوازن'), findsOneWidget);
   });
 
+  testWidgets('desktop engine: error text in Arabic, no delay figure, start-at-login switch', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'woman'),
+        capabilities: Capabilities(autostart: true),
+        filter: FilterInfo(error: BackendMessage('install_failed', 'cp: Text file busy')),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('تعذّر تثبيت التصفية'), findsOneWidget);
+    expect(find.textContaining('Text file busy'), findsOneWidget);
+    backend.emit(backend.state.copyWith(filter: const FilterInfo(state: FilterState.filtering)));
+    await tester.pumpAndSettle();
+    expect(find.text('تُزال الآلات من كل التطبيقات.'), findsOneWidget); // delay unknown: no "0 ms"
+    final sw = find.byKey(const Key('autostart'));
+    await tester.ensureVisible(sw);
+    await tester.pumpAndSettle();
+    await tester.tap(sw);
+    await tester.pumpAndSettle();
+    expect(backend.state.filter.autostart, isTrue);
+  });
+
+  test('every engine error code has its own text', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    final texts = {
+      for (final c in ['no_pactl', 'no_sound_server', 'no_systemd', 'no_output', 'install_failed', 'start_failed',
+        'service_failed'])
+        engineErrorText(l, BackendMessage(c, 'log')),
+    };
+    expect(texts.length, 7);
+    expect(engineErrorText(l, const BackendMessage('service_failed', 'log')), contains('log'));
+  });
+
   test('snapshots: missing keys take defaults, names round-trip', () {
     final s = AppState.fromMap({
       'language': 'en',

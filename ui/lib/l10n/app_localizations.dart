@@ -937,6 +937,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تعذّر ذلك: {details}'**
   String actionFailed(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'تُزال الآلات من كل التطبيقات.'**
+  String get stateOnDetailNoDelay;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.'**
+  String get engineErrorNoPactl;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'خادم الصوت لا يعمل (PulseAudio أو PipeWire).'**
+  String get engineErrorNoSoundServer;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.'**
+  String get engineErrorNoSystemd;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُعثر على مكبّرات صوت أو سماعات.'**
+  String get engineErrorNoOutput;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تثبيت التصفية. التفاصيل:\n{details}'**
+  String engineErrorInstallFailed(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تبدأ التصفية. التفاصيل:\n{details}'**
+  String engineErrorStartFailed(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'توقّفت التصفية بسبب خطأ. التفاصيل:\n{details}'**
+  String engineErrorServiceFailed(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'التشغيل عند تسجيل الدخول'**
+  String get autostartTitle;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'تصفية الصوت فور تسجيل الدخول.'**
+  String get autostartBody;
 }
 
 class _AppLocalizationsDelegate

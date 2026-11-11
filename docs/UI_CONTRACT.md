@@ -43,9 +43,11 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
 | `settings` | Map | The settings below, with their current values |
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM` (`FilterService.State`) |
-| `filter.delayMs` | int | Engine delay of the running filter |
+| `filter.delayMs` | int | Engine delay of the running filter; 0 = not measured (the screen then leaves the figure out) |
 | `filter.micDenied` | bool | The microphone permission was refused at the last start (until the next start) |
 | `filter.simulated` | bool | Desktop preview: start/stop are not connected to an engine yet (the screen says so) |
+| `filter.error` | Map? | `{code, detail}`: why the filter could not start or stopped (desktop engine host). Codes: `no_pactl`, `no_sound_server`, `no_systemd`, `no_output`, `install_failed`, `start_failed`, `service_failed` (detail = log lines). Kept until the next start; cleared once filtering |
+| `filter.autostart` | bool | The filter starts at login (capability `autostart`) |
 | `setup.originalsMuted` | bool | The originals can be silenced (Android: `DUMP` granted) |
 | `setup.consentSkipped` | bool | No screen-capture question at start (Android: app-op `PROJECT_MEDIA` = allow) |
 | `setup.shizuku` | String? | `NOT_INSTALLED`, `NOT_RUNNING`, `TOO_OLD`, `NEEDS_PERMISSION`, `DENIED_PERMANENTLY`, `READY` (`ShizukuSetup.State`); null off Android |
@@ -73,7 +75,8 @@ Capabilities (the UI hides what is false):
 | `captureConsent` (Android asks to share the screen at start) | true | false |
 | `screenBlur` | true | false (later: Windows capture + overlay) |
 | `links` (open/share a link screen) | true | false (later: `yt-dlp` + `cli/im-process`) |
-| `womenSinging` | true | true (the engine has the policy) |
+| `womenSinging` | true | only when the engine bundles the detector (without it the engine mutes all voice while the option is on) |
+| `autostart` (start at login) | false | Linux with the bundled engine |
 
 ## Settings
 
@@ -97,11 +100,12 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 |---|---|---|---|---|
 | `getState` | none | snapshot | | |
 | `setSetting` | `{key, value}` | null | `Settings` setters | JSON file |
-| `startFilter` | none | `started`, `mic_denied`, `consent_denied`, `already_running` | Asks RECORD_AUDIO (+ POST_NOTIFICATIONS once), then the MediaProjection consent (whole screen on 14+), then starts `FilterService`. The result arrives when the dialogs are done; the state then follows through events. | TODO(engine): start the audio host through `dart:ffi`; now simulated |
-| `stopFilter` | none | null | `FilterService.ACTION_STOP` | TODO(engine) |
+| `startFilter` | none | `started`, `mic_denied`, `consent_denied`, `already_running`, `failed` (see `filter.error`) | Asks RECORD_AUDIO (+ POST_NOTIFICATIONS once), then the MediaProjection consent (whole screen on 14+), then starts `FilterService`. The result arrives when the dialogs are done; the state then follows through events. | Linux: checks (`pactl`, sound server, `systemd --user`, a real output), installs or updates the bundled engine (`engine/VERSION`), sets `women-singing`, then `waaiya start`. Windows: TODO(engine), simulated |
+| `stopFilter` | none | null | `FilterService.ACTION_STOP` | Linux: `waaiya stop` (normal audio back, virtual output removed). Windows: TODO(engine) |
 | `runSetupStep` | `{step: 0,1,2}` | null | The checklist button: 0 = get Shizuku (store), 1 = update (TOO_OLD) or open Shizuku, 2 = grant through Shizuku (asks Shizuku's permission first if needed). Outcome in `setup.*` events. When Shizuku is installed but not running, Flutter shows the start guide for step 1 instead of calling this. | `unsupported` |
 | `blurSetup` | none | null | "Allow with Shizuku" and the button under the greyed-out "cover the screen" switch: `ShizukuSetup.grantBlur`, or the store / Shizuku's permission dialog / Shizuku first. Outcome in `blur.*` events. For NOT_RUNNING Flutter shows the guide instead. | `unsupported` |
 | `openShizuku` | none | null | Opens Shizuku (its store page when not installed). From the guide. | `unsupported` |
+| `setAutostart` | `{on}` | null | `unsupported` | Linux: `systemctl --user enable\|disable islamic-mute.service` (installs first; does not start or stop the filter now) |
 | `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS` when Developer options are on, else `ACTION_DEVICE_INFO_SETTINGS` (About phone, to turn them on). From the guide. | `unsupported` |
 | `openOverlaySettings` | none | null | Android's "Display over other apps" page | `unsupported` |
 | `setLanguage` | `{tag: "ar"\|"en"}` | null | Saved natively for the native screens, services and notifications (`Lang`); no activity restart, Flutter switches in place | JSON file |
@@ -119,14 +123,21 @@ Flutter's own `Clipboard`; it needs no backend method.
 - It is Dart, not a channel: `DesktopBackend implements WaaiyaBackend` in `desktop/lib/`. It stores settings and
   the language in a JSON file (`%APPDATA%\Waaiya\settings.json`, `$XDG_CONFIG_HOME/waaiya/settings.json`) with the
   same keys, so the engine host can read them the same way.
-- The filter state comes from the engine host. Until the Windows host exists (`reports/desktop_windows_macos_scope.md`
-  §2), start/stop is simulated and the screen says so. The hook points are marked `TODO(engine)`: load the engine
-  library with `dart:ffi` (`im_engine.h`), or talk to the host service.
+- Linux: the app bundle carries the engine (`engine/`, made by `desktop/tool/bundle_engine.sh`: `linux/bin/waaiya`,
+  the systemd unit template, `build/` binaries with ONNX Runtime, `models/dfn3/`, and `VERSION`). `LinuxEngine`
+  (`desktop/lib/linux_engine.dart`) installs it with the unchanged `waaiya install` when the installed
+  `~/.local/share/islamic-mute/VERSION` differs, then drives the systemd user service with `waaiya start|stop`,
+  `systemctl --user enable|disable` and `waaiya women-singing on|off` (plus a restart while running). The state is
+  polled every 3 s from `waaiya status` (`filter:`, `autostart:`) and `systemctl --user is-active`; a service
+  still starting after 20 s, or `failed`, gives `service_failed` with the journal's last lines. The filter keeps
+  running when the app is closed. The delay is not measured there (`delayMs` 0).
+- Windows: until its host exists (`reports/desktop_windows_macos_scope.md` §2), start/stop is simulated and the
+  screen says so (`TODO(engine)`: load the engine library with `dart:ffi` (`im_engine.h`), or talk to a host
+  service). A development run without the bundled engine is simulated too.
 - No Shizuku / adb setup, no capture consent, no screen blur and no link screen yet: their capabilities are false and
   their methods throw `unsupported`. A desktop setup checklist (for example the virtual audio device on Windows)
   will add its own `setup.*` keys and capability when it exists.
-- Linux already has a working host (`linux/bin/waaiya start|stop|status`); the desktop app can drive it later
-  through the same `TODO(engine)` points.
+- Manual audio checks (no sound server on the build machine): `desktop/TESTING.md`.
 
 ## Layout and building
 

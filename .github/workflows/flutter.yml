@@ -57,17 +57,22 @@ jobs:
           cache: true
       - name: Linux toolchain
         run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev
+      - name: Audio engine (ONNX Runtime + default model, checksummed; built on 22.04 like the app)
+        run: scripts/fetch_deps.sh && make -j"$(nproc)" all
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Build
         working-directory: desktop
         run: flutter build linux --release
-      - name: Licence texts next to the app
-        run: |
-          d=desktop/build/linux/x64/release/bundle/licences; mkdir -p "$d"
-          cp NOTICE "$d/NOTICE.txt"; cp LICENSE "$d/LICENSE-Apache-2.0.txt"; cp THIRD_PARTY_LICENSES.md "$d/THIRD_PARTY_LICENSES.txt"
+      - name: Engine and licence texts into the bundle
+        run: bash -n linux/bin/islamic-mute && bash desktop/tool/bundle_engine.sh desktop/build/linux/x64/release/bundle
+      # A tarball keeps the executable bits and symlinks (a plain artifact upload loses them).
+      - name: Package
+        run: tar czf waaiya-desktop-linux-x64.tar.gz -C desktop/build/linux/x64/release --transform 's,^bundle,waaiya,' bundle
       - uses: actions/upload-artifact@v4
         with:
           name: waaiya-desktop-linux-x64
-          path: desktop/build/linux/x64/release/bundle
+          path: waaiya-desktop-linux-x64.tar.gz
           retention-days: 14
 
   # Windows cannot be built on Linux: this job is the Windows build check.
