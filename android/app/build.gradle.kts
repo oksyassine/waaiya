@@ -133,6 +133,8 @@ val copyModel by tasks.registering(Copy::class) {
     from(providers.gradleProperty("imBlurPerson").orElse(vision.resolve("person_yolox_nano.onnx").path)) { rename { "blur_person.onnx" } }
     from(providers.gradleProperty("imBlurGender").orElse(vision.resolve("gender_v2.onnx").path)) { rename { "blur_gender.onnx" } }
     from(providers.gradleProperty("imBlurNsfw").orElse(vision.resolve("nsfw_marqo_int8.onnx").path)) { rename { "blur_nsfw.onnx" } }
+    // Person segmenter (-PimBlurSeg): covers follow each person's outline; without it, whole rectangles.
+    from(providers.gradleProperty("imBlurSeg").orElse(vision.resolve("seg.onnx").path)) { rename { "blur_seg.onnx" } }
     into(modelAssets)
 }
 android.sourceSets["main"].assets.srcDir(modelAssets)

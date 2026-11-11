@@ -75,7 +75,8 @@ object ModelStore {
     const val BLUR_PERSON = "blur_person.onnx"
     const val BLUR_GENDER = "blur_gender.onnx"
     const val BLUR_NSFW = "blur_nsfw.onnx"
-    private val BLUR_MODELS = listOf(BLUR_PERSON, BLUR_GENDER, BLUR_NSFW)
+    const val BLUR_SEG = "blur_seg.onnx"
+    private val BLUR_MODELS = listOf(BLUR_PERSON, BLUR_GENDER, BLUR_NSFW, BLUR_SEG)
 
     fun modelPath(context: Context): String {
         val dir = File(context.filesDir, "models").apply { mkdirs() }
