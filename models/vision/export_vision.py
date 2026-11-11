@@ -9,12 +9,18 @@ Detector  (im.kind = detector):   input  image float32 [1,3,H,W], RGB in 0..1, l
 Classifier (im.kind = classifier): input  image float32 [1,3,H,W], RGB in 0..1 (stretched crop, no letterbox
                                    unless im.letterbox = 1);
                                    output probs float32 [1,K], softmax; im.labels = comma-separated names.
+Segmenter (im.kind = segmenter):   input  image float32 [1,3,H,W], RGB in 0..1: one person's box plus im.context
+                                   (fraction of the box size, each side) of context, stretched;
+                                   output prob float32 [1,1,h,w], p(this person) on a grid over that input
+                                   (any h, w >= 2; the runtime interpolates).
 
 Usage:
   python models/vision/export_vision.py yolox  --src downloads/yolox_nano.onnx --out person_yolox_nano.onnx
   python models/vision/export_vision.py marqo  --src downloads/marqo --out nsfw_marqo.onnx
   python models/vision/export_vision.py gender --src gender.pt --arch mobilenetv3_small_100 --out gender.onnx
   python models/vision/export_vision.py int8   --src nsfw_marqo.onnx --out nsfw_marqo_int8.onnx
+  python models/vision/export_vision.py seg    --src seg_s192.pt --out seg.onnx   (train_seg.py output, or the
+                                               torchvision COCO lraspp_mobilenet_v3_large .pth with --size H W)
 """
 import argparse
 import json
@@ -152,6 +158,45 @@ def export_gender(src, arch, out):
                             "Waaiya person-crop classifier, trained on Open Images V7 boxes (CC BY 4.0)")
 
 
+def export_seg(src, out, size=None):
+    """Person segmenter: LR-ASPP MobileNetV3-large (torchvision, BSD-3), either fine-tuned by train_seg.py (a .pt with
+    state_dict/size/mean/std/context) or torchvision's COCO checkpoint as is (--src *.pth: person-minus-background
+    logit, input --size, context 0.2). Output: p(person) at the head's own 1/8 resolution."""
+    import torch
+
+    import train_seg
+
+    ck = torch.load(src, map_location="cpu", weights_only=True)
+    if "state_dict" in ck:
+        net = train_seg.build()
+        net.load_state_dict(ck["state_dict"])
+        hw, mean, std, ctx, name = tuple(ck["size"]), ck["mean"], ck["std"], ck["context"], "seg_lraspp_mnv3l_oi"
+        source = ("LR-ASPP MobileNetV3-large (torchvision, BSD-3, COCO weights) fine-tuned on Open Images V7 person "
+                  "masks (CC BY 4.0)")
+    else:
+        net = train_seg.build(src)
+        hw, mean, std, ctx, name = tuple(size or (192, 128)), train_seg.MEAN, train_seg.STD, train_seg.CONTEXT, \
+            "seg_lraspp_mnv3l_coco"
+        source = "LR-ASPP MobileNetV3-large, torchvision COCO_WITH_VOC_LABELS_V1 weights (BSD-3), person - background"
+
+    class Wrap(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.net = net
+            self.register_buffer("mean", torch.tensor(mean).view(1, 3, 1, 1))
+            self.register_buffer("std", torch.tensor(std).view(1, 3, 1, 1))
+
+        def forward(self, image):
+            return torch.sigmoid(train_seg.low_res(self.net, (image - self.mean) / self.std))
+
+    w = Wrap().eval()
+    torch.onnx.export(w, torch.rand(1, 3, *hw), out, input_names=["image"], output_names=["prob"], opset_version=OPSET)
+    m = onnx.load(out)
+    set_meta(m, **{"im.kind": "segmenter", "im.input_w": hw[1], "im.input_h": hw[0], "im.context": ctx,
+                   "im.model_name": name, "im.source": source})
+    onnx.save(m, out)
+
+
 def export_int8(src, out):
     """Dynamic int8 of MatMul/Gemm only (ONNX Runtime has no int8 ConvInteger kernel on CPU); keeps the metadata."""
     from onnxruntime.quantization import QuantType, quantize_dynamic
@@ -166,13 +211,15 @@ def export_int8(src, out):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("kind", choices=["yolox", "marqo", "gender", "int8"])
+    ap.add_argument("kind", choices=["yolox", "marqo", "gender", "int8", "seg"])
     ap.add_argument("--src", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--arch", default="mobilenetv3_small_100")
+    ap.add_argument("--size", type=int, nargs=2, metavar=("H", "W"), help="seg from the COCO checkpoint: input size")
     a = ap.parse_args()
     {"yolox": lambda: export_yolox(a.src, a.out), "marqo": lambda: export_marqo(a.src, a.out),
-     "gender": lambda: export_gender(a.src, a.arch, a.out), "int8": lambda: export_int8(a.src, a.out)}[a.kind]()
+     "gender": lambda: export_gender(a.src, a.arch, a.out), "int8": lambda: export_int8(a.src, a.out),
+     "seg": lambda: export_seg(a.src, a.out, a.size)}[a.kind]()
     print("wrote", a.out)
 
 

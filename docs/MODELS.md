@@ -12,6 +12,7 @@ Model weights are **not in git**. `.gitignore` excludes `*.onnx`, `*.state_init.
 | `models/vision/person_yolox_nano.onnx` | 3.6 MB | screen blur, people: `python models/vision/export_vision.py yolox --src yolox_nano.onnx --out ...` (official YOLOX ONNX, release 0.1.1rc0) |
 | `models/vision/gender_v2.onnx` | ~17 MB | screen blur (bundled), woman/man per person, MobileNetV3-large: `prep_train_crops.py` + `kaggle/blur-gender/` (2x T4, ~100 min), `train_gender_v2.py`; scores in `eval/results/blur_gender_v2.md` |
 | `models/vision/gender.onnx` (v1, comparison) | ~6 MB | screen blur, woman/man per person: `fetch_openimages.py` (both splits), `train_gender.py` (CPU, ~2 h), `export_vision.py gender` |
+| `models/vision/seg.onnx` | 12.9 MB | screen blur (bundled as `blur_seg.onnx` when present; without it covers are rectangles), person outlines: LR-ASPP MobileNetV3-large fine-tuned on Open Images V7 person masks: `kaggle/blur-seg/` (`prep_seg_crops.py` + `train_seg.py`, 2x T4), then `export_vision.py seg --src seg_s192.pt --out seg.onnx`; scores in `eval/results/blur_silhouette.md` |
 | `models/vision/nsfw_marqo_int8.onnx` | 6.7 MB | screen blur, immodest images: `export_vision.py marqo` (Marqo/nsfw-image-detection-384), then int8 (MatMul/Gemm only; see `models/vision/README.md`) |
 
 ## Distribution: release assets

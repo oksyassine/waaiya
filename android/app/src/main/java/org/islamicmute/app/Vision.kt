@@ -14,8 +14,8 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
             System.loadLibrary("imengine")
         }
 
-        @JvmStatic private external fun nativeCreate(person: String?, gender: String?, nsfw: String?, threads: Int,
-                                                     policy: Int, coversVisible: Boolean): Long
+        @JvmStatic private external fun nativeCreate(person: String?, gender: String?, nsfw: String?, seg: String?,
+                                                     threads: Int, policy: Int, coversVisible: Boolean): Long
         @JvmStatic private external fun nativeDestroy(h: Long)
         @JvmStatic private external fun nativeStatus(h: Long): Int
         @JvmStatic private external fun nativeError(h: Long): String
@@ -33,6 +33,10 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
         const val KIND_UNSURE = 2
         const val KIND_NSFW = 3
         const val KIND_FULL = 4
+        /** Flag in a rect's kind: one strip of an outlined person, or a bridge between people (square corners). */
+        const val KIND_PART = 16
+        /** Rects per frame (vision_jni.c MAX_RECTS): an outlined person is drawn as up to 16 strips. */
+        const val MAX_RECTS = 256
 
         fun policy(s: Settings): Int = (if (s.blurWomen) POLICY_WOMEN else 0) or (if (s.blurNudity) POLICY_NSFW else 0)
 
@@ -40,6 +44,7 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
             ModelStore.blurModel(context, ModelStore.BLUR_PERSON),
             ModelStore.blurModel(context, ModelStore.BLUR_GENDER),
             ModelStore.blurModel(context, ModelStore.BLUR_NSFW),
+            ModelStore.blurModel(context, ModelStore.BLUR_SEG), // optional: without it, whole rectangles
             2, policy, coversVisible))
     }
 
@@ -55,7 +60,8 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
     /** Portrait frames: person-detector tiles per frame (0 = all every frame, 1 = one, taking turns). */
     fun setTilesPerFrame(n: Int) { if (handle != 0L) nativeSetTilesPerFrame(handle, n) }
 
-    /** Result of one frame: rects as x0,y0,x1,y1 (0..1), kind; [failed] = the models failed (covers were held). */
+    /** Result of one frame: rects as x0,y0,x1,y1 (0..1), kind (maybe | [KIND_PART]); [failed] = the models failed
+     *  (covers were held). */
     class Frame(val rects: FloatArray, var count: Int, var failed: Boolean)
 
     fun frame(buf: ByteBuffer, w: Int, h: Int, stride: Int, tMs: Double, models: Boolean, nsfw: Boolean,

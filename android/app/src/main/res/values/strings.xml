@@ -86,6 +86,7 @@
     <string name="link_watch">Watch without music</string>
     <string name="link_save">Save without music</string>
     <string name="link_listen">Listen without music</string>
+    <string name="link_audio_only">The video of this link cannot be opened yet: only its sound.</string>
     <string name="link_downloading">Downloading…</string>
     <string name="link_filtering">Removing music…</string>
     <string name="link_cancel">Cancel</string>
