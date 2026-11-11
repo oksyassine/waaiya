@@ -129,7 +129,7 @@ static void unload(im_vision *v, vmodel *m) {
 im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errlen) {
     im_vision *v = calloc(1, sizeof *v);
     if (!v) { if (err && errlen) snprintf(err, errlen, "out of memory"); return NULL; }
-    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0, 1, 0.25f, 0.25f};
+    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0, 1, 0.25f, 0.25f, 6};
     v->last_nsfw = -1;
     v->nsfw_idx = -1;
     v->policy = cfg ? cfg->policy : 0;
@@ -501,7 +501,7 @@ int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int
                             im_vshape *shapes, int max) {
     if (!v || !rgba || w < 8 || h < 8 || stride < w * 4 || !out || max < 1) return -1;
     v->err[0] = 0;
-    int n = 0, failed = 0;
+    int n = 0, failed = 0, nseg = 0;
     if ((v->policy & IM_VISION_WOMEN) && v->person.ok) {
         im_vrect people[MAX_DETS];
         int np = detect_people(v, rgba, w, h, stride, people, MAX_DETS);
@@ -524,8 +524,11 @@ int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int
                 if (shapes) {
                     shapes[n].rows = 0;
                     /* an outline failing is not a model failure: that person gets the whole rectangle */
-                    if (v->seg.ok && v->prm.seg && r.kind != IM_VK_CLEAR && i < v->prm.max_people)
+                    if (v->seg.ok && v->prm.seg && r.kind != IM_VK_CLEAR && i < v->prm.max_people &&
+                        nseg < v->prm.seg_max_people) {
                         segment(v, rgba, w, h, stride, &r, &shapes[n]);
+                        nseg++;
+                    }
                 }
                 out[n++] = r;
             }

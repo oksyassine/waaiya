@@ -76,6 +76,8 @@ typedef struct {
     float seg_threshold; /* a pixel is part of the person when p(person) >= this: low, so covering wins (default 0.25) */
     float seg_min_fill;  /* an outline covering less than this share of the person's box is not trusted: the whole
                             rectangle is covered instead (default 0.25: eval/results/blur_silhouette.md) */
+    int seg_max_people;  /* covered people outlined per frame, largest first; smaller ones get their rectangle (default
+                            6: about 7-11 ms per person on one x86 core, eval/results/blur_silhouette.md) */
 } im_vision_params;
 
 /* Outline of one person, relative to their box (0,0 = box top-left, 1,1 = box bottom-right; values outside 0..1
