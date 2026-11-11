@@ -36,6 +36,7 @@ struct im_vision {
     int nsfw_idx;
     char err[512];
     im_vrect cand[MAX_CAND]; /* person candidates of the frame being detected (detect_people) */
+    int tile_next;           /* next tile to run when tiles take turns (prm.tiles_per_frame) */
 };
 
 static void seterr(im_vision *v, const char *what, OrtStatus *st) {
@@ -123,7 +124,7 @@ static void unload(im_vision *v, vmodel *m) {
 im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errlen) {
     im_vision *v = calloc(1, sizeof *v);
     if (!v) { if (err && errlen) snprintf(err, errlen, "out of memory"); return NULL; }
-    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3};
+    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0};
     v->last_nsfw = -1;
     v->nsfw_idx = -1;
     v->policy = cfg ? cfg->policy : 0;
@@ -306,7 +307,8 @@ static int detect_region(im_vision *v, const uint8_t *rgba, int w, int h, int st
     if (!d) return -1;
     const float edge = 2.0f; /* frame pixels */
     for (size_t i = 0; i + 5 <= cnt; i += 5) {
-        if (d[i + 4] < v->prm.person_score) continue;
+        /* tiles always have a cut edge (n >= 2), the whole frame never: cut != 0 means "a tile" */
+        if (d[i + 4] < (cut ? fmaxf(v->prm.person_score, v->prm.tile_score) : v->prm.person_score)) continue;
         float x0 = rx + d[i] / s, y0 = ry + d[i + 1] / s, x1 = rx + d[i + 2] / s, y1 = ry + d[i + 3] / s;
         if (((cut & 1) && y0 <= ry + edge) || ((cut & 2) && y1 >= ry + rh - edge) ||
             ((cut & 4) && x0 <= rx + edge) || ((cut & 8) && x1 >= rx + rw - edge))
@@ -337,7 +339,11 @@ static int detect_people(im_vision *v, const uint8_t *rgba, int w, int h, int st
         int n = 2;
         while (n < v->prm.tiles && (L - S) / (n - 1) > 0.7f * S) n++;
         float step = (L - S) / (n - 1);
-        for (int t = 0; t < n; t++) {
+        int k = v->prm.tiles_per_frame > 0 && v->prm.tiles_per_frame < n ? v->prm.tiles_per_frame : n;
+        int first = k < n ? v->tile_next % n : 0;
+        v->tile_next = (first + k) % n;
+        for (int j = 0; j < k; j++) {
+            int t = (first + j) % n;
             float o = t * step;
             unsigned cut = (t > 0 ? 1u : 0u) | (t < n - 1 ? 2u : 0u);
             int r = w < h ? detect_region(v, rgba, w, h, stride, 0, o, S, S, cut, cand, &nc)
@@ -350,8 +356,14 @@ static int detect_people(im_vision *v, const uint8_t *rgba, int w, int h, int st
     int n = 0;
     for (int i = 0; i < nc && n < max; i++) {
         int keep = 1;
-        for (int j = 0; j < n && keep; j++)
+        for (int j = 0; j < n && keep; j++) {
             if (iou(&cand[i], &out[j]) > v->prm.nms_iou) keep = 0;
+            else if (v->prm.nest > 0 && area(&out[j]) * 2 >= area(&cand[i])) {
+                const im_vrect *a = &cand[i], *b = &out[j];
+                float ix = fminf(a->x1, b->x1) - fmaxf(a->x0, b->x0), iy = fminf(a->y1, b->y1) - fmaxf(a->y0, b->y0);
+                if (ix > 0 && iy > 0 && ix * iy >= v->prm.nest * area(a) && area(b) <= 2 * area(a)) keep = 0;
+            }
+        }
         if (keep) out[n++] = cand[i];
     }
     return n;

@@ -58,6 +58,14 @@ typedef struct {
     int tiles;           /* elongated frames (a phone held upright): the person detector also runs on up to this many
                             overlapping square tiles along the long side, where small people appear about twice as
                             large as in the whole frame (0 = whole frame only; default 3: eval/results/blur_tiles.md) */
+    int tiles_per_frame; /* tiles run per call, taking turns (0 = all every call). Fewer is faster; the cover tracker
+                            holds a person between the frames that see them (hold_ms) */
+    float nest;          /* a box with at least this fraction inside a kept, higher-scoring box of at least half its
+                            area is the same person seen twice (whole frame and a tile, or a body part) and dropped;
+                            smaller boxes inside a big one (a child in front of an adult) are kept. 0 = off (default:
+                            it barely triggers, eval/results/blur_tiles.md) */
+    float tile_score;    /* detector threshold inside tiles when above person_score (default 0 = person_score: higher
+                            values leave more men clear but lose more small women, eval/results/blur_tiles.md) */
 } im_vision_params;
 
 typedef struct im_vision im_vision;
