@@ -2,10 +2,11 @@
 """End-to-end test of im-blur on a real X server (Xvfb, no compositor, no window manager).
 
     python3 linux/blur/test_x11.py [--im-blur build/im-blur] [--models models/vision] [--image woman.jpg ...]
-                                   [--xvfb Xvfb] [--xkbdir DIR] [--shot out.png]
+                                   [--xvfb Xvfb] [--xkbdir DIR] [--shot out.png] [--compositor "xcompmgr -a"]
 
-Starts its own Xvfb (abstract socket, so it needs no root and no /tmp/.X11-unix), shows a test picture in a
-window, runs im-blur against it and checks, through the X server itself:
+Starts its own Xvfb (abstract socket, so it needs no root and no /tmp/.X11-unix), optionally a compositing
+manager (--compositor: then every window, ours included, is drawn by it), shows a test picture in a window, runs
+im-blur against it and checks, through the X server itself:
   - the self-test runs and the state becomes on_covers_visible (the overlay shows in the root capture);
   - the colours reach the models the right way round (a red area is red in the analysed frame, not blue);
   - clicks pass through the overlay (empty input shape; an XTest click reaches the window underneath);
@@ -299,6 +300,7 @@ def main():
     ap.add_argument("--xkbdir")
     ap.add_argument("--display", default=":91")
     ap.add_argument("--extra", action="append", default=[], help="more im-blur arguments for the first run")
+    ap.add_argument("--compositor", help="compositing manager command to run first, e.g. 'xcompmgr -a'")
     ap.add_argument("--shot", help="save what the screen shows with the covers (PNG, needs Pillow)")
     a = ap.parse_args()
 
@@ -319,6 +321,11 @@ def main():
             sys.exit(f"Xvfb did not start: {xvfb.stderr.read().decode()[-500:]}")
         env = {**os.environ, "DISPLAY": a.display}
         env.pop("WAYLAND_DISPLAY", None)
+        comp = None
+        if a.compositor:
+            comp = subprocess.Popen(a.compositor.split(), env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            time.sleep(1.0)
+            check(comp.poll() is None, f"compositing manager running: {a.compositor}")
 
         rgb, boxes = canvas(a.image)
         bg = d.window(0, 0, W, H)
@@ -437,6 +444,9 @@ def main():
               f"fail_cover 0: only a red bar at the top {sh}")
         check(pixel(d.grab(), 640, 2) == (0xd3, 0x2f, 0x2f), "the bar is red")
         h.close()
+        if comp:
+            check(comp.poll() is None, "the compositing manager is still running")
+            comp.terminate()
         print("all X11 checks passed")
         return 0
     finally:

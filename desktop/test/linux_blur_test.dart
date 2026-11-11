@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 /// lines it is told to (FAKE_STATE / FAKE_ERROR), quits on "quit" or end of input; FAKE_CRASH=1 dies at once.
 const fakeHelper = r'''#!/bin/bash
 echo "$*" > "$LOG.args"
+echo $$ >> "$LOG.pids"
 /usr/bin/env > "$LOG.env"
 echo '{"state":"starting","error":"","backend":"x11","overlay":"x11","covers":0}'
 if [ "$FAKE_CRASH" = 1 ]; then echo "segfault in a driver" >&2; exit 3; fi
@@ -156,6 +158,33 @@ void main() {
     expect(b.exitDetail, contains('exit code 3'));
     expect(b.exitDetail, contains('segfault in a driver'));
     await b.dispose();
+  });
+
+  bool alive(String pid) => Process.runSync('kill', ['-0', pid]).exitCode == 0;
+
+  test('quick toggles never leave two helpers; a helper that gave up starts again on a change', () async {
+    final b = helper({'FAKE_STATE': 'no_capture', 'FAKE_ERROR': 'dialog cancelled'});
+    const on = BlurConfig(women: true, nudity: false, strictness: 0, failCover: true);
+    const off = BlurConfig(women: false, nudity: false, strictness: 0, failCover: true);
+    // not awaited, as fast clicks
+    unawaited(b.apply(on));
+    unawaited(b.apply(off));
+    unawaited(b.apply(on));
+    unawaited(b.apply(off));
+    await b.apply(on);
+    await until(() => b.last?.state, (s) => s == 'no_capture');
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    final pids = File('$log.pids').readAsLinesSync();
+    expect(pids.where(alive).length, 1, reason: 'started ${pids.length}, all but the last stopped');
+    // parked in no_capture: a change (strictness) starts it again
+    await b.apply(const BlurConfig(women: true, nudity: false, strictness: 1, failCover: true));
+    await until(() => File('$log.pids').readAsLinesSync().length, (n) => n == pids.length + 1);
+    final now = File('$log.pids').readAsLinesSync();
+    expect(now.length, pids.length + 1);
+    expect(now.where(alive).length, 1);
+    expect(File('$log.args').readAsStringSync(), contains('--strictness 1'));
+    await b.dispose();
+    expect(now.where(alive), isEmpty);
   });
 
   Future<DesktopBackend> backend(WidgetTester tester, String platform, {Map<String, String> extra = const {}}) async {

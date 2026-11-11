@@ -167,6 +167,10 @@ static void *worker(void *arg) {
             }
         }
         if (B.job < 0) continue;
+        if (B.reset) { /* asked for while the models loaded: before this job, never after it (it would wipe its covers) */
+            worker_reset_screens();
+            B.reset = 0;
+        }
         int i = B.job;
         screen *s = &B.s[i];
         float mc = ib_male_clear(B.set.strictness);
@@ -649,17 +653,18 @@ int main(int argc, char **argv) {
                     phase = PH_DEAD;
                     continue;
                 }
-                if (!seen && !g_wayland) {
-                    /* X11: the root capture shows every mapped window, so our own window is not on screen and the
-                     * covers would not be seen by the user either */
-                    set_state(IB_ST_NO_OVERLAY, "self-test: the blur's window did not show up on screen "
-                                                "(another window or the desktop stays above it?)");
+                if (!seen) {
+                    /* The capture shows what is on screen (X11 root, and the monitor casts of mutter, KWin and
+                     * xdg-desktop-portal-wlr), so our square not being there means it is not on screen: covers
+                     * would not be seen either. Said, rather than pretending to blur. */
+                    set_state(IB_ST_NO_OVERLAY, g_wayland ? "self-test: the blur's covers did not show up in the "
+                                                            "shared screen (not drawn above the windows?)"
+                                                          : "self-test: the blur's window did not show up on screen "
+                                                            "(another window or the desktop stays above it?)");
                     phase = PH_DEAD;
                     continue;
                 }
-                /* Wayland: not seen = the compositor leaves overlays out of the screen cast (the capture shows
-                 * what is under the covers), as Android's skip-screenshot layer */
-                covers_visible = seen;
+                covers_visible = 1;
                 pthread_mutex_lock(&B.mu);
                 B.covers_visible = covers_visible;
                 B.reset = 1;

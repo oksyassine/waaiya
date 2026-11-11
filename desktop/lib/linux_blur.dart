@@ -19,6 +19,17 @@ class BlurConfig {
   /// im-blur's policy bits: 1 women, 2 nudity.
   int get policy => (women ? 1 : 0) | (nudity ? 2 : 0);
   bool get on => policy != 0;
+
+  @override
+  bool operator ==(Object other) =>
+      other is BlurConfig &&
+      other.women == women &&
+      other.nudity == nudity &&
+      other.strictness == strictness &&
+      other.failCover == failCover;
+
+  @override
+  int get hashCode => Object.hash(women, nudity, strictness, failCover);
 }
 
 /// One line of the helper's state (stdout JSON).
@@ -138,10 +149,24 @@ class LinuxBlur {
   bool get running => _p != null;
 
   /// Starts the helper, or updates the running one, for [cfg]; stops it when no blur option is on.
-  Future<void> apply(BlurConfig cfg) async {
+  ///
+  /// Calls run one after the other (quick toggles never start two helpers). A helper that gave up
+  /// (`no_capture`, e.g. the share dialog was cancelled, or `no_overlay`) is started again on any change.
+  Future<void> apply(BlurConfig cfg) => _serial(() => _apply(cfg));
+
+  Future<void> _chain = Future<void>.value();
+
+  Future<void> _serial(Future<void> Function() f) {
+    final next = _chain.then((_) => f());
+    _chain = next.catchError((Object _) {});
+    return next;
+  }
+
+  Future<void> _apply(BlurConfig cfg) async {
     final old = _cfg;
     _cfg = cfg;
-    if (!cfg.on) return stop();
+    if (!cfg.on) return _stop();
+    if (_p != null && old != cfg && const {'no_capture', 'no_overlay'}.contains(last?.state)) await _stop();
     final p = _p;
     if (p == null) {
       _restarts = 0;
@@ -218,7 +243,7 @@ class LinuxBlur {
     _reports.add(null);
     if (_restarts < maxRestarts && (_cfg?.on ?? false)) {
       _restarts++;
-      _restart = Timer(restartDelay, () => _start());
+      _restart = Timer(restartDelay, () => _serial(_start));
     }
   }
 
@@ -231,7 +256,9 @@ class LinuxBlur {
   }
 
   /// Asks the helper to quit (stdin closed), then kills it if it does not within 3 s.
-  Future<void> stop() async {
+  Future<void> stop() => _serial(_stop);
+
+  Future<void> _stop() async {
     _restart?.cancel();
     final p = _p;
     if (p == null) return;
