@@ -323,6 +323,10 @@
   "@linkListen": {
     "description": "Android string link_listen"
   },
+  "linkAudioOnly": "لا يمكن فتح صورة هذا المقطع بعد: صوته فقط.",
+  "@linkAudioOnly": {
+    "description": "Android string link_audio_only"
+  },
   "linkDownloading": "جارٍ التنزيل…",
   "@linkDownloading": {
     "description": "Android string link_downloading"

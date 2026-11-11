@@ -548,6 +548,12 @@ abstract class AppLocalizations {
   /// **'استماع بلا موسيقى'**
   String get linkListen;
 
+  /// Android string link_audio_only
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن فتح صورة هذا المقطع بعد: صوته فقط.'**
+  String get linkAudioOnly;
+
   /// Android string link_downloading
   ///
   /// In ar, this message translates to:

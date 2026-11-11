@@ -103,12 +103,12 @@ static void test_draw(void) {
     uint32_t cells[2] = {0xff0000, 0x0000ff};
     ib_layout l = {16, 8, 0};
     ib_draw_cells(buf, 100, (ib_rect){0, 0, 100, 10}, cells, 2, 1, l, 0);
-    /* left end: red with Android's tint argb(120,30,30,30): 255*135/255 + 30*120/255 = 149; 30*120/255 = 14 */
-    CHECK_INT(buf[0], (149u << 16) | (14u << 8) | 14u);
-    CHECK_INT(buf[99], (14u << 16) | (14u << 8) | 149u);
+    /* left end: red with Android's tint argb(200,30,30,30): (255*55 + 30*200)/255 = 78; 30*200/255 = 23 */
+    CHECK_INT(buf[0], (78u << 16) | (23u << 8) | 23u);
+    CHECK_INT(buf[99], (23u << 16) | (23u << 8) | 78u);
     /* middle: half way between the two cell centres */
     uint32_t mid = buf[50];
-    CHECK((mid >> 16 & 255) > 70 && (mid >> 16 & 255) < 95 && (mid & 255) > 70 && (mid & 255) < 95);
+    CHECK((mid >> 16 & 255) > 40 && (mid >> 16 & 255) < 62 && (mid & 255) > 40 && (mid & 255) < 62);
     /* monotonic red fall-off from the left cell centre to the right one */
     int mono = 1;
     for (int x = 26; x < 75; x++) mono &= (buf[x] >> 16 & 255) <= (buf[x - 1] >> 16 & 255);
@@ -169,7 +169,7 @@ static void test_paint(void) {
     ib_render(buf, 40, q, 3, cs, (ib_layout){16, 8, 0}, 0xff000000u);
     CHECK_INT(buf[0], 0xff000000u | IB_COL_SURFACE);
     CHECK_INT(buf[22], 0xff000000u | IB_COL_TEST);
-    CHECK_INT(buf[31], 0xff000000u | (14u << 16) | (149u << 8) | 14u);
+    CHECK_INT(buf[31], 0xff000000u | (23u << 16) | (78u << 8) | 23u); /* green cell under the tint */
     CHECK_INT(buf[15], 0);
 }
 

@@ -261,6 +261,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkListen => 'استماع بلا موسيقى';
 
   @override
+  String get linkAudioOnly => 'لا يمكن فتح صورة هذا المقطع بعد: صوته فقط.';
+
+  @override
   String get linkDownloading => 'جارٍ التنزيل…';
 
   @override

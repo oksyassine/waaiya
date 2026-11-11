@@ -141,8 +141,8 @@ void ib_cells(const ib_thumb *t, const im_vrect *r, int nx, int ny, uint32_t *ce
         }
 }
 
-/* Android's tint: argb(120, 30, 30, 30) over the cells. */
-#define TINT_A 120u
+/* Android's tint: argb(200, 30, 30, 30) over the cells (mostly opaque: shapes and colours do not show through). */
+#define TINT_A 200u
 #define TINT_C 30u
 
 void ib_draw_cells(uint32_t *buf, int stride, ib_rect r, const uint32_t *cells, int nx, int ny, ib_layout lay,
