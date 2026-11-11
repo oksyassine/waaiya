@@ -123,8 +123,9 @@ class LinkActivity : Activity() {
             d >= 3600 -> "%d:%02d:%02d".format(d / 3600, d / 60 % 60, d % 60)
             else -> "%d:%02d".format(d / 60, d % 60)
         }
+        val meta = if (duration.isEmpty()) r.site else getString(R.string.link_meta, r.site, duration)
         findViewById<TextView>(R.id.result_meta).text =
-            if (duration.isEmpty()) r.site else getString(R.string.link_meta, r.site, duration)
+            if (r.videoUnavailable) meta + "\n" + getString(R.string.link_audio_only) else meta
         findViewById<Button>(R.id.watch).setText(if (r.hasVideo) R.string.link_watch else R.string.link_listen)
         result.visibility = View.VISIBLE
     }
