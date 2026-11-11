@@ -213,8 +213,9 @@ static int cap_grab(ib_capture *b, int i, const uint8_t **rgba, int *fw, int *fh
     if (i < 0 || i >= c->n || !c->s[i].rgba) return -1;
     xscreen *s = &c->s[i];
     double t = now_ms();
-    /* without XDamage, or as a safety net (a change XDamage did not report), grab at least every 2 s */
-    if (c->damage && !s->dirty && t - s->last < 2000) return 0;
+    /* without XDamage, or as a safety net (some GL compositors do not report changes on the root window), grab at
+     * least every 250 ms; an unchanged frame costs the grab, the shrink and a compare, not the models */
+    if (c->damage && !s->dirty && t - s->last < 250) return 0;
     s->dirty = 0;
     s->last = t;
     g_xerr = 0;
