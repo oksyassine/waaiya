@@ -19,7 +19,8 @@ Model weights are **not in git**. `.gitignore` excludes `*.onnx`, `*.state_init.
 Published models are attached to a tagged release (for example `models-v1`) as
 `<name>.onnx`, `<name>.state_init.bin` and a `SHA256SUMS` file, plus release notes that list each model's
 base model, training data and licences (from `THIRD_PARTY_LICENSES.md`). App and daemon releases bundle the
-model they were tested with.
+model they were tested with. `scripts/fetch_deps.sh` downloads and checks them: `models` (voice, `models-v1`),
+`vision` (the three screen-blur models, `models-vision-v1`, bundled in the Linux desktop app).
 
 Why not the alternatives:
 

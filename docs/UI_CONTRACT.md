@@ -54,7 +54,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `setup.busy` | bool | A Shizuku grant is running |
 | `setup.message` | Map? | `{code, detail}`: `failed` (detail = command log), `refused`, `done_restart`, `error` (detail = text) |
 | `setup.adbCommands` | String? | The two `adb shell ...` lines for this package |
-| `blur.state` | String? | `STARTING`, `ON`, `ON_COVERS_VISIBLE`, `NO_OVERLAY`, `MODELS_MISSING`, `FAILING` (`ScreenBlur.State`); null when not running (or not yet applied: shown as starting) |
+| `blur.state` | String? | `STARTING`, `ON`, `ON_COVERS_VISIBLE`, `NO_OVERLAY`, `MODELS_MISSING`, `FAILING` (`ScreenBlur.State`), and on desktop `NO_CAPTURE`; null when not running (or not yet applied: shown as starting) |
 | `blur.overlayAllowed` | bool | May draw over other apps |
 | `blur.a11yBuild` | bool | This build declares the blur accessibility service (`BuildConfig.BLUR_A11Y`) |
 | `blur.a11yEnabled` | bool | That service is on |
@@ -63,6 +63,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `blur.shizukuLayer` | bool | Shizuku is ready on Android 12+: the covers are a Shizuku shell layer (`ShizukuCovers`), nothing else to allow |
 | `blur.busy` | bool | A Shizuku blur grant is running |
 | `blur.message` | Map? | `{code: "setup_failed", detail}` |
+| `blur.error` | Map? | Desktop: `{code, detail}` from the blur helper. `no_capture`, `no_overlay`, `models_missing`, `failing` (detail = the helper's reason, English, shown under the translated status), `share_dialog` (Wayland: the screen-sharing dialog waits for the user; no detail), `exited` (the helper stopped by itself; detail = exit code and its last lines). Null otherwise |
 | `models.detector` | bool | The women's-singing detector is bundled |
 | `capabilities` | Map<String,bool> | What this platform offers, below |
 
@@ -73,7 +74,8 @@ Capabilities (the UI hides what is false):
 | `shizukuSetup` (setup checklist, Shizuku guide, `openShizuku`, `openDeveloperOptions`) | true | false |
 | `adbSetup` | true | false |
 | `captureConsent` (Android asks to share the screen at start) | true | false |
-| `screenBlur` | true | false (later: Windows capture + overlay) |
+| `screenBlur` (blur card, and "who is left uncovered" inside it, the only place it is shown) | true | Linux: true when the bundle has `engine/build/im-blur` and the three models. Windows: false (later: capture + overlay), so the strictness row is not shown anywhere |
+| `blurStandalone` (the blur runs while a blur option is on, filtering on or off; the card's texts say so) | false (the blur runs while filtering: it shares the screen capture) | Linux with the blur |
 | `links` (open/share a link screen) | true | false (later: `yt-dlp` + `cli/im-process`) |
 | `womenSinging` | true | only when the engine bundles the detector (without it the engine mutes all voice while the option is on) |
 | `autostart` (start at login) | false | Linux with the bundled engine |
@@ -91,8 +93,8 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `silence_unfilterable` | bool | true | live |
 | `blur_women` | bool | false | live |
 | `blur_nudity` | bool | false | live |
-| `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` |
-| `blur_strictness` | int 0/1/2 | 0 | live (ScreenBlur watchdog). Who is left uncovered: 0 strict, 1 balanced, 2 relaxed = p(man) at least 0.999 / 0.99 / 0.98 (`Settings.blurMaleClear`). Desktop stores and shows it only |
+| `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` (desktop: always true, clicks pass through the covers) |
+| `blur_strictness` | int 0/1/2 | 0 | live (ScreenBlur watchdog; desktop: sent to the helper). Who is left uncovered: 0 strict, 1 balanced, 2 relaxed = p(man) at least 0.999 / 0.99 / 0.98 (`Settings.blurMaleClear`, `ib_male_clear`). Desktop without a blur (Windows) stores it only and does not show it |
 
 ## Methods (MethodChannel `waaiya/app`)
 
@@ -134,8 +136,20 @@ Flutter's own `Clipboard`; it needs no backend method.
 - Windows: until its host exists (`reports/desktop_windows_macos_scope.md` §2), start/stop is simulated and the
   screen says so (`TODO(engine)`: load the engine library with `dart:ffi` (`im_engine.h`), or talk to a host
   service). A development run without the bundled engine is simulated too.
-- No Shizuku / adb setup, no capture consent, no screen blur and no link screen yet: their capabilities are false and
-  their methods throw `unsupported`. A desktop setup checklist (for example the virtual audio device on Windows)
+- Linux screen blur: `desktop/lib/linux_blur.dart` runs the bundled helper `engine/build/im-blur` (C,
+  `linux/blur/`, models in `engine/models/vision/`) as a child of the app while `blur_women` or `blur_nudity` is
+  on, whether filtering runs or not (capability `blurStandalone`). Being a child, it gets the session as it is
+  (`DISPLAY`, `WAYLAND_DISPLAY`, `DBUS_SESSION_BUS_ADDRESS`, `XDG_RUNTIME_DIR`, `XAUTHORITY`); a systemd user unit
+  would only have them if the desktop imported them. Closing the app stops the blur (the card says so). Protocol:
+  started as `im-blur --models DIR --policy N --strictness N --fail-cover 0|1 --token-file F`; settings changes
+  go to its stdin (`policy N`, `strictness N`, `fail_cover 0|1`, `quit`); it prints JSON lines `{"state",
+  "error", "backend", "overlay", "covers", "ms"?, "cpu"?, "fps"?}` with state `starting`, `on`,
+  `on_covers_visible`, `failing`, `models_missing`, `no_capture`, `no_overlay`, `idle`, mapped to `blur.state` /
+  `blur.error`. A helper that dies is restarted up to 3 times, then reported as `exited`. The Wayland
+  screen-sharing permission is kept in `$XDG_CONFIG_HOME/waaiya/screencast-restore-token`. `blur.touchPassThrough`
+  and `blur.overlayAllowed` are always true there (no permission to ask; clicks pass through the covers).
+- No Shizuku / adb setup, no capture consent, no link screen, and no screen blur on Windows yet: their capabilities
+  are false and their methods throw `unsupported`. A desktop setup checklist (for example the virtual audio device on Windows)
   will add its own `setup.*` keys and capability when it exists.
 - Manual audio checks (no sound server on the build machine): `desktop/TESTING.md`.
 
