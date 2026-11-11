@@ -65,6 +65,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     private var failStreak = 0
     private var frameMs = 0.0          // moving average of the model time per frame
     private var tilesTakeTurns = false
+    private var maleClear = 0f         // main thread: the strictness last sent to the worker
     private var thumbW = THUMB_W
     private var thumbH = THUMB_W * 2
     private var thumbPx = IntArray(thumbW * thumbH)
@@ -130,6 +131,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
                 modelsBad = it.status != 0
                 if (modelsBad) Log.e(TAG, "blur models: ${it.error}")
                 if (tilesTakeTurns) it.setTilesPerFrame(1)
+                it.setMaleClear(settings.blurMaleClear)
             }
             failStreak = 0
             if (turningOn) runCatching { display?.surface = reader?.surface }
@@ -256,6 +258,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         override fun run() {
             if (stopped) return
             apply(if (settings.blurOn) Vision.policy(settings) else 0) // settings apply live
+            val mc = settings.blurMaleClear
+            if (mc != maleClear) { maleClear = mc; worker.post { vision?.setMaleClear(mc) } }
             if (policy <= 0) { main.postDelayed(this, 500); return }
             if (overlay.host == null && overlay.attach()) {
                 Log.i(TAG, "blur overlay attached late (${overlay.host})")
