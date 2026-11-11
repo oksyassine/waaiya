@@ -58,7 +58,7 @@ im_cover *im_cover_create(int covers_visible) {
     im_cover *c = calloc(1, sizeof *c);
     if (!c) return NULL;
     c->covers_visible = covers_visible;
-    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.05f, 0.30f};
+    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.05f, 0.30f, 0.80f};
     return c;
 }
 
@@ -168,9 +168,10 @@ static int merge_close(im_vrect *r, int n, float gap) {
 }
 
 /* The strips of an outlined track (see im_vshape), in frame units: each row widened by the strip margin, the top and
- * bottom rows extended by it (or to the rectangle's edge when the body goes on past the segmenter's crop), stretched
- * by the motion lead (lx, ly) like the rectangle, and clipped to rect = the cover the person would get without an
- * outline. Rows with the same span are joined. Returns the strip count (0 = draw rect). */
+ * bottom rows extended by it, stretched by the motion lead (lx, ly) like the rectangle, and clipped to rect = the cover
+ * the person would get without an outline. Where the body goes on past the segmenter's crop (the detector's box was
+ * too short: legs, a long dress, hair), the top or bottom strip reaches open_reach of the person's height past the
+ * box instead, beyond the rectangle. Rows with the same span are joined. Returns the strip count (0 = draw rect). */
 static int strips_of(const im_cover_params *p, const im_vrect *b, const im_vshape *sh, float lx, float ly,
                      const im_vrect *rect, im_vrect *s) {
     if (sh->rows < 1 || sh->rows > IM_SHAPE_ROWS || !(sh->y1 > sh->y0)) return 0;
@@ -190,12 +191,16 @@ static int strips_of(const im_cover_params *p, const im_vrect *b, const im_vshap
         r.x1 = b->x0 + sh->r[k] * bw + mx;
         r.y0 = ya - seam;
         r.y1 = ya + rh + seam;
-        if (k == first) r.y0 = k == 0 && (sh->flags & IM_SHAPE_OPEN_TOP) ? rect->y0 : ya - my;
-        if (k == last) r.y1 = k == sh->rows - 1 && (sh->flags & IM_SHAPE_OPEN_BOTTOM) ? rect->y1 : ya + rh + my;
+        int open_top = k == first && k == 0 && (sh->flags & IM_SHAPE_OPEN_TOP);
+        int open_bottom = k == last && k == sh->rows - 1 && (sh->flags & IM_SHAPE_OPEN_BOTTOM);
+        float top = open_top ? fminf(rect->y0, b->y0 - p->open_reach * bh) : rect->y0;
+        float bottom = open_bottom ? fmaxf(rect->y1, b->y1 + p->open_reach * bh) : rect->y1;
+        if (k == first) r.y0 = open_top ? top : ya - my;
+        if (k == last) r.y1 = open_bottom ? bottom : ya + rh + my;
         if (lx < 0) r.x0 += lx; else r.x1 += lx;
         if (ly < 0) r.y0 += ly; else r.y1 += ly;
         r.x0 = fmaxf(r.x0, rect->x0); r.x1 = fminf(r.x1, rect->x1);
-        r.y0 = fmaxf(r.y0, rect->y0); r.y1 = fminf(r.y1, rect->y1);
+        r.y0 = fmaxf(r.y0, fmaxf(top, 0)); r.y1 = fminf(r.y1, fminf(bottom, 1));
         if (r.x1 <= r.x0 || r.y1 <= r.y0) continue;
         if (n && fabsf(r.x0 - s[n - 1].x0) < 0.004f && fabsf(r.x1 - s[n - 1].x1) < 0.004f && r.y0 <= s[n - 1].y1) {
             s[n - 1].x0 = fminf(s[n - 1].x0, r.x0); s[n - 1].x1 = fmaxf(s[n - 1].x1, r.x1);

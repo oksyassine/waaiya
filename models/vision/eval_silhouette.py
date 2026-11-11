@@ -16,7 +16,8 @@ by merge_gap) and with them (strips, bridges). Pixel measures, over all images:
 
     make build/libimvision.so
     python models/vision/eval_silhouette.py --seg models/vision/seg.onnx --split validation \
-        [--seg-threshold 0.25 0.4] [--seg-min-fill 0.25] [--strip-margin 0.05] [--bridge-gap 0 0.3] [--limit 0]
+        [--seg-threshold 0.25 0.4] [--seg-min-fill 0.25] [--strip-margin 0.05] [--bridge-gap 0 0.3]
+        [--open-reach 0.2 0.5] [--limit 0]
         [--md eval/results/x.md]
 """
 import argparse
@@ -140,6 +141,7 @@ def main():
     ap.add_argument("--seg-min-fill", type=float, nargs="+", default=[0.25])
     ap.add_argument("--strip-margin", type=float, nargs="+", default=[0.05])
     ap.add_argument("--bridge-gap", type=float, nargs="+", default=[0.3])
+    ap.add_argument("--open-reach", type=float, nargs="+", default=[0.8])
     ap.add_argument("--md")
     a = ap.parse_args()
 
@@ -153,7 +155,7 @@ def main():
     base = v.params()
     rect_cover = Cover(covers_visible=False)
     vis_cfgs = list(itertools.product(a.seg_threshold, a.seg_min_fill))
-    cov_cfgs = list(itertools.product(a.strip_margin, a.bridge_gap))
+    cov_cfgs = list(itertools.product(a.strip_margin, a.bridge_gap, a.open_reach))
     acc = defaultdict(Acc)
     fallback = defaultdict(lambda: [0, 0])
     t_seg, n_seg, t_base = [], 0, []
@@ -172,7 +174,10 @@ def main():
             t = time.perf_counter()
             dets, shapes = v.detect_shapes(rgba, run_nsfw=False)
             dt = time.perf_counter() - t
-            covered = [j for j, d in enumerate(dets) if d.kind in (1, 2) and j < base["max_people"]]
+            # the people the segmenter ran on: covered, among the max_people largest, tall enough, the first seg_max_people
+            covered = [j for j, d in enumerate(dets) if d.kind in (1, 2) and j < base["max_people"]
+                       and (d.y1 - d.y0) * H >= base["seg_min_px"]]
+            covered = covered[: base["seg_max_people"]]
             if k < a.timing_images and vc == vis_cfgs[0]:
                 t_seg.append(dt - t_base[-1])
                 n_seg += len(covered)
@@ -182,7 +187,7 @@ def main():
                 acc["rect"].add(paint(rect_cover.update(0.0, rgba, dets), W, H), gt)
                 rect_cover.reset()
             for cc in cov_cfgs:
-                c = Cover(covers_visible=False, strip_margin=cc[0], bridge_gap=cc[1])
+                c = Cover(covers_visible=False, strip_margin=cc[0], bridge_gap=cc[1], open_reach=cc[2])
                 acc[vc + cc].add(paint(c.update(0.0, rgba, dets, shapes), W, H), gt)
         if (k + 1) % 200 == 0:
             print(f"{k + 1}/{len(ids)} images, {time.time() - t0:.0f} s", flush=True)
@@ -206,7 +211,7 @@ def main():
         for cc in cov_cfgs:
             r = acc[vc + cc].row()
             lines.append(f"| strips: threshold {vc[0]:g}, min fill {vc[1]:g}, strip margin {cc[0]:g}, "
-                         f"bridge_gap {cc[1]:g} | {fmt(r)} | {fb[0] / max(1, fb[1]):.1%} of {fb[1]} |")
+                         f"bridge_gap {cc[1]:g}, open_reach {cc[2]:g} | {fmt(r)} | {fb[0] / max(1, fb[1]):.1%} of {fb[1]} |")
     if t_seg:
         lines += ["", f"- segmenter time per outlined person ({a.threads} thread{'s' if a.threads > 1 else ''}, "
                       f"this machine, {min(len(ids), a.timing_images)} images): "
