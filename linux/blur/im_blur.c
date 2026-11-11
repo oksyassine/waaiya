@@ -413,17 +413,17 @@ int main(int argc, char **argv) {
     int wayland = !strcmp(backend, "wayland") || (!strcmp(backend, "auto") && wl && *wl);
     if (wayland) {
         g_backend = "wayland";
-        cap = ib_portal_capture_new(token, err, sizeof err);
-        if (cap) {
-            ov = ib_layer_overlay_new(oerr, sizeof oerr);
-            if (!ov && x && *x) {
-                char e2[256] = "";
-                ov = ib_x11_overlay_new(NULL, e2, sizeof e2);
-                if (!ov) snprintf(oerr + strlen(oerr), sizeof oerr - strlen(oerr), "; XWayland: %s", e2);
-            } else if (!ov) {
-                snprintf(oerr + strlen(oerr), sizeof oerr - strlen(oerr), "; no XWayland (DISPLAY unset)");
-            }
+        /* the overlay first: without one, no share dialog is shown for nothing */
+        ov = ib_layer_overlay_new(oerr, sizeof oerr);
+        if (!ov && x && *x) {
+            /* GNOME: an override-redirect window through XWayland (mutter keeps those in its top layer) */
+            char e2[256] = "";
+            ov = ib_x11_overlay_new(NULL, e2, sizeof e2);
+            if (!ov) snprintf(oerr + strlen(oerr), sizeof oerr - strlen(oerr), "; XWayland: %s", e2);
+        } else if (!ov) {
+            snprintf(oerr + strlen(oerr), sizeof oerr - strlen(oerr), "; no XWayland (DISPLAY unset)");
         }
+        if (ov) cap = ib_portal_capture_new(token, err, sizeof err);
     } else if (x && *x) {
         g_backend = "x11";
         cap = ib_x11_capture_new(NULL, err, sizeof err);
@@ -433,7 +433,8 @@ int main(int argc, char **argv) {
     }
     g_overlay = ov ? ov->name : "";
 
-    if (!cap) set_state(IB_ST_NO_CAPTURE, err);
+    if (wayland && !ov) set_state(IB_ST_NO_OVERLAY, oerr);
+    else if (!cap) set_state(IB_ST_NO_CAPTURE, err);
     else if (!ov) set_state(IB_ST_NO_OVERLAY, oerr);
 
     pthread_mutex_init(&B.mu, NULL);
@@ -533,6 +534,7 @@ int main(int argc, char **argv) {
         /* ---- phases */
         if (phase == PH_WAIT_CAPTURE) {
             int r = cap->ready(cap);
+            if (r == 1) set_state(IB_ST_STARTING, cap->waiting_user ? "share_dialog" : "");
             if (r < 0) { set_state(IB_ST_NO_CAPTURE, cap->err); phase = PH_DEAD; continue; }
             if (r == 0) {
                 if (!setup_screens()) { set_state(IB_ST_NO_OVERLAY, ov->err); phase = PH_DEAD; continue; }
@@ -735,15 +737,4 @@ int main(int argc, char **argv) {
     if (cap) cap->destroy(cap);
     free_screens();
     return 0;
-}
-
-/* Wayland backends (portal.c, layer.c) replace these when built in. */
-__attribute__((weak)) ib_capture *ib_portal_capture_new(const char *token_file, char *err, size_t errlen) {
-    (void)token_file;
-    snprintf(err, errlen, "Wayland screen capture is not built into this im-blur");
-    return NULL;
-}
-__attribute__((weak)) ib_overlay *ib_layer_overlay_new(char *err, size_t errlen) {
-    snprintf(err, errlen, "no layer-shell overlay in this build");
-    return NULL;
 }
