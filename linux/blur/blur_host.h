@@ -31,6 +31,8 @@ struct ib_capture {
     int (*dispatch)(ib_capture *);
     /* 1 while setting up (Wayland: the share dialog is open), 0 ready, -1 failed for good (err). */
     int (*ready)(ib_capture *);
+    /* Wayland: the screen-share dialog is waiting for the user (read without locking: a hint for the state). */
+    volatile int waiting_user;
     void (*destroy)(ib_capture *);
 };
 
