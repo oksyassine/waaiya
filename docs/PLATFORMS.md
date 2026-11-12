@@ -25,7 +25,7 @@ shared. A model improvement reaches every platform without changing any host.
 
 | Platform | Host | Fail-closed | Status |
 |---|---|---|---|
-| Android 10+ | `android/`: AudioPlaybackCapture, sessions muted through `DUMP` (granted once with Shizuku or ADB), engine over JNI | A failed model gives silence. If Android ends the capture, filtering stops and a notification says so | Released (0.2.9) |
+| Android 10+ | `android/`: AudioPlaybackCapture, sessions muted through `DUMP` (granted once: on the phone with Wireless debugging on Android 11+, or with Shizuku or ADB; see `docs/SETUP.md`), engine over JNI | A failed model gives silence. If Android ends the capture, filtering stops and a notification says so | Released (0.2.9) |
 | Linux | `linux/`: apps play into a virtual sink; `im-pulse` filters its monitor into the real output; systemd user service | A dead filter means silence (apps still play into the virtual sink) | Works on PulseAudio and PipeWire-Pulse; the native PipeWire filter-chain is untested |
 | macOS 14.4+ | Core Audio process tap set to mute, read through a private aggregate device; engine runs in the IO callback | Risk: while the app restarts, sound is not filtered. A watchdog is needed | Scoped: `reports/desktop_windows_macos_scope.md` §3 |
 | Windows 10/11 | First try: turn every other app down to about −80 dB, capture them per process, restore the gain, filter, play. Otherwise: a virtual audio device (VB-CABLE at first) bridged like Linux | Depends on the route; the virtual device fails closed | Scoped, starting with a 1–2 day test: `reports/desktop_windows_macos_scope.md` §2 |
