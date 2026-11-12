@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SignPath artifact configuration for the Windows desktop app (paste it into the SignPath project as its default
+     artifact configuration; this copy is the reference). The artifact is the app folder as release.yml uploads it
+     (windows-desktop-unsigned): waaiya_desktop.exe at its root, the filter and the blur in engine\.
+     Only Waaiya's own programs are signed; the other DLLs (ONNX Runtime, Flutter) are upstream builds, shipped
+     as they are. Every signed program must say product "Waaiya" and the app's version (SignPath Foundation's
+     rules): Runner.rc and windows/common/version.rc set them; release.yml passes the version. -->
+<artifact-configuration xmlns="http://signpath.io/artifact-configuration/v1">
+  <parameters>
+    <parameter name="version" required="true" />
+  </parameters>
+  <zip-file>
+    <pe-file-set product-name="Waaiya" product-version="${version}" file-version="${version}">
+      <include path="waaiya_desktop.exe" />
+      <include path="engine/waaiya-filter.exe" />
+      <include path="engine/waaiya-blur.exe" />
+      <for-each>
+        <authenticode-sign />
+      </for-each>
+    </pe-file-set>
+  </zip-file>
+</artifact-configuration>

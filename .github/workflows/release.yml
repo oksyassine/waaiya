@@ -139,7 +139,10 @@ jobs:
   windows-desktop:
     needs: windows-programs
     runs-on: windows-latest
-    timeout-minutes: 30
+    timeout-minutes: 300 # the signing request waits for a person to approve it in SignPath
+    permissions:
+      contents: read
+      actions: read # SignPath's action reads the uploaded artifact
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -154,7 +157,42 @@ jobs:
         run: flutter build windows --release
       - name: Filter, blur, models and licence texts into the app
         shell: bash
-        run: bash desktop/tool/bundle_windows.sh desktop/build/windows/x64/runner/Release build-win
+        run: |
+          bash desktop/tool/bundle_windows.sh desktop/build/windows/x64/runner/Release build-win
+          echo "WAAIYA_VERSION=$(sed -n 's/^version: *//p' desktop/pubspec.yaml | tr -d '\r')" >> "$GITHUB_ENV"
+      # Code signing (docs: README "Code signing policy"): SignPath signs waaiya_desktop.exe, waaiya-filter.exe and
+      # waaiya-blur.exe (.signpath/artifact-configuration.xml) once an approver approves the request in SignPath.
+      # Skipped, and the app shipped unsigned, until the repository has the variables SIGNPATH_ORGANIZATION_ID,
+      # SIGNPATH_PROJECT_SLUG, SIGNPATH_SIGNING_POLICY_SLUG and the secret SIGNPATH_API_TOKEN.
+      - name: The unsigned app, as SignPath receives it
+        id: unsigned
+        uses: actions/upload-artifact@v4
+        with: { name: windows-desktop-unsigned, path: desktop/build/windows/x64/runner/Release }
+      - name: Sign (SignPath; waits for the approval in SignPath)
+        if: ${{ vars.SIGNPATH_ORGANIZATION_ID != '' }}
+        uses: signpath/github-action-submit-signing-request@v2
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG }}
+          github-artifact-id: ${{ steps.unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 14400
+          output-artifact-directory: signed
+          parameters: |
+            version: ${{ toJSON(env.WAAIYA_VERSION) }}
+      - name: The signed programs replace the unsigned ones; signatures checked
+        if: ${{ vars.SIGNPATH_ORGANIZATION_ID != '' }}
+        shell: pwsh
+        run: |
+          $app = "desktop/build/windows/x64/runner/Release"
+          Copy-Item -Recurse -Force signed/* $app/
+          foreach ($f in "waaiya_desktop.exe", "engine/waaiya-filter.exe", "engine/waaiya-blur.exe") {
+            $s = Get-AuthenticodeSignature (Join-Path $app $f)
+            Write-Host "$f : $($s.Status) $($s.SignerCertificate.Subject)"
+            if ($s.Status -ne "Valid") { throw "$f is not validly signed ($($s.Status))" }
+          }
       - name: Package
         shell: pwsh
         run: |
@@ -203,4 +241,6 @@ jobs:
       - name: Draft release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --draft --generate-notes --title "Waaiya $GITHUB_REF_NAME"
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* --repo "$GITHUB_REPOSITORY" --draft --generate-notes --title "Waaiya $GITHUB_REF_NAME" \
+            --notes "Windows: what the app changes and how to remove it, and the **Code signing policy**: https://github.com/$GITHUB_REPOSITORY#code-signing-policy"

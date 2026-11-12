@@ -1,0 +1,34 @@
+// Version information of waaiya-filter.exe and waaiya-blur.exe (Explorer's Details tab, and what SignPath checks
+// before signing: every signed program says product "Waaiya" and the app's version, as desktop/windows/runner/
+// Runner.rc does). windows/Makefile passes WAAIYA_VERSION ("0.2.10+12"), WAAIYA_VERSION_NUM (0,2,10,12),
+// WAAIYA_FILE ("waaiya-filter.exe") and WAAIYA_DESCRIPTION.
+#include <winver.h>
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION WAAIYA_VERSION_NUM
+ PRODUCTVERSION WAAIYA_VERSION_NUM
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+ FILEFLAGS 0x0L
+ FILEOS VOS__WINDOWS32
+ FILETYPE VFT_APP
+ FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "Waaiya contributors"
+            VALUE "FileDescription", WAAIYA_DESCRIPTION
+            VALUE "FileVersion", WAAIYA_VERSION
+            VALUE "InternalName", WAAIYA_FILE
+            VALUE "LegalCopyright", "Copyright (C) 2026 Waaiya contributors. Apache License 2.0."
+            VALUE "OriginalFilename", WAAIYA_FILE
+            VALUE "ProductName", "Waaiya"
+            VALUE "ProductVersion", WAAIYA_VERSION
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
