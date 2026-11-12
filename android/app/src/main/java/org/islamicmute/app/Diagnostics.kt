@@ -44,7 +44,8 @@ object Diagnostics {
         val h = FilterService.health
         if (h == null) appendLine("Not running: start filtering, play something for 20 seconds, then open this report again.")
         else {
-            appendLine("Model: ${h.model}, delay ${FilterService.delayMs} ms, mono ${yes(h.mono)}, too slow ${yes(h.tooSlow)}")
+            appendLine("Model: ${h.model}, delay ${FilterService.delayMs} ms, mono ${yes(h.mono)}" +
+                (if (h.monoForSpeed) " (stereo chosen, phone too slow for it)" else "") + ", too slow ${yes(h.tooSlow)}")
             appendLine("Speed (a hop must take under 10 ms): last 2 s avg %.1f ms, max %.1f ms, late %.0f%%"
                 .format(java.util.Locale.ROOT, h.avgHopMs, h.maxHopMs, h.lateShare * 100))
             appendLine("Speed since start: avg %.1f ms, peak %.1f ms, late %d of %d hops with sound (%d hops in all)"
@@ -55,7 +56,8 @@ object Diagnostics {
             appendLine("Capture: level ${h.captureDb} dB, read errors ${h.readErrors}, model errors ${h.engineErrors}")
             appendLine("Women's singing filter: " + if (h.gateShare < 0) "off" else "on, muting %.0f%% of the time".format(java.util.Locale.ROOT, h.gateShare * 100))
         }
-        appendLine("Starts in mono (learned on this phone): ${yes(s.audioMono)}")
+        appendLine("Stereo chosen: ${yes(s.audioStereo)}, starts in mono (learned on this phone): ${yes(s.audioMono)}")
+        appendLine("Keep apps silent if filtering stops by itself: ${yes(s.holdSilence)}")
         appendLine("Detector model bundled: ${yes(ModelStore.hasDetector(ctx))}")
         val am = ctx.getSystemService(AudioManager::class.java)
         appendLine("Media playing now (Waaiya's own output counts): ${yes(am.isMusicActive)}, media volume ${am.getStreamVolume(AudioManager.STREAM_MUSIC)}/" +
@@ -88,6 +90,7 @@ object Diagnostics {
             "cover when failing ${yes(s.blurFailCover)}")
         appendLine("State: ${ScreenBlur.state ?: "off"}, draw over apps ${yes(android.provider.Settings.canDrawOverlays(ctx))}, " +
             "accessibility build ${yes(BuildConfig.BLUR_A11Y)}")
+        ScreenBlur.coverInfo?.let { appendLine(it) }
         ScreenBlur.stats?.let { appendLine(it) }
     }
 

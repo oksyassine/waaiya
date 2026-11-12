@@ -27,6 +27,13 @@ class LoadMonitor(
     /** The channels are mixed and the model runs once per hop. */
     var mono = mono
         private set
+    /** The user switched between mono and stereo while filtering runs. Stereo is tried again; if this phone is too
+     *  slow for it, the next overloaded window switches back to mono (GO_MONO) as at any other time. */
+    fun choose(mono: Boolean) {
+        this.mono = mono
+        slowWindows = 0
+    }
+
     /** Even in mono the model does not finish its hops in time: the sound cuts and nothing here can fix it. */
     var tooSlow = false
         private set
