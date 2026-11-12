@@ -10,6 +10,15 @@ const GUID IM_VOLUME_CONTEXT = {0x6c1f3a52, 0x9d0e, 0x4b7a, {0xa7, 0xc4, 0x5a, 0
 
 namespace {
 
+// IAudioMeterInformation (endpointvolume.h): MinGW only declares it.
+const IID IID_ImMeter = {0xC02216F6, 0x8C67, 0x4B5B, {0x9D, 0x00, 0xD0, 0x08, 0xE7, 0x3E, 0x00, 0x64}};
+struct ImMeter : public IUnknown {
+    virtual HRESULT STDMETHODCALLTYPE GetPeakValue(float *peak) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetMeteringChannelCount(UINT *count) = 0;
+    virtual HRESULT STDMETHODCALLTYPE GetChannelsPeakValues(UINT32 count, float *peaks) = 0;
+    virtual HRESULT STDMETHODCALLTYPE QueryHardwareSupport(DWORD *mask) = 0;
+};
+
 const char *state_name(AudioSessionState s) {
     return s == AudioSessionStateActive ? "active" : (s == AudioSessionStateInactive ? "inactive" : "expired");
 }
@@ -309,8 +318,8 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         // experiment: does the meter tell a session that plays from one that only records (loopback)?
         UINT meter_ch = 99;
         float meter_peak = -1;
-        Com<IAudioMeterInformation> meter;
-        if (SUCCEEDED(ctl->QueryInterface(__uuidof(IAudioMeterInformation), reinterpret_cast<void **>(meter.put())))) {
+        Com<ImMeter> meter;
+        if (SUCCEEDED(ctl->QueryInterface(IID_ImMeter, reinterpret_cast<void **>(meter.put())))) {
             meter->GetMeteringChannelCount(&meter_ch);
             meter->GetPeakValue(&meter_peak);
         }
