@@ -437,19 +437,31 @@ def main():
         h = Helper(a.im_blur, env, "--models", a.models, "--policy", "2", "--fake-nudity", "1")
         h.wait(lambda m: m["state"] == "on_covers_visible" and m.get("covers", 0) >= 1, 30, "the (fake) nudity cover")
         ov = d.find("waaiya-blur")[0]
-        gaps, gap_start, end = [], None, time.time() + 12
+        # uncovered = the screen shows the picture (pixels; a compositing manager may keep painting a cover a
+        # moment after its window shape changed); the overlay's shape is printed alongside
+        gaps, gap_start, shape_gaps, shape_start, end = [], None, [], None, time.time() + 12
         while time.time() < end:
+            shown = pixel(d.grab(), 640, 400) == pixel(rgb, 640, 400)
             full = (0, 0, W, H) in d.shape(ov, ShapeBounding)
             now = time.time()
-            if not full and gap_start is None:
+            if shown and gap_start is None:
                 gap_start = now
-            elif full and gap_start is not None:
+            elif not shown and gap_start is not None:
                 gaps.append(now - gap_start)
                 gap_start = None
+            if not full and shape_start is None:
+                shape_start = now
+            elif full and shape_start is not None:
+                shape_gaps.append(now - shape_start)
+                shape_start = None
             time.sleep(0.05)
         if gap_start is not None:
             gaps.append(time.time() - gap_start)
-        print(f"     still screen: the cover was let go {len(gaps)} times, uncovered {[round(g, 2) for g in gaps]} s")
+        if shape_start is not None:
+            shape_gaps.append(time.time() - shape_start)
+        h.pump()
+        print(f"     still screen: the picture showed {len(gaps)} times {[round(g, 2) for g in gaps]} s; "
+              f"no full cover shape {[round(g, 2) for g in shape_gaps]} s; last state {h.last}")
         check(max(gaps, default=0) < 2.0, "still screen: an expired nudity cover comes back within 2 s")
         h.send("quit")
         check(h.p.wait(timeout=5) == 0, "'quit' -> im-blur exits")
