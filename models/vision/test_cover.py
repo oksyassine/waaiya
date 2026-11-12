@@ -186,6 +186,54 @@ def main():
     moved = texture(5)
     c.update(2050, moved, [])
     check("screen changed: the cover is released after the hold time", not covers(c.update(2700, moved, []), 0.5, 0.6))
+
+    # covers visible in the capture, whole-frame (nudity) cover over a video: while it is up the capture shows only
+    # the cover (no detection); when it lifts, the video is seen and detected again. Simulated for 2 minutes at
+    # 10 frames a second (the overlay draws the previous output).
+    cover_frame = np.full((H, W, 4), 40, np.uint8)
+    cover_frame[..., 3] = 255
+
+    def nude_video(cover, seconds, nude=lambda t: True, step=100):
+        shown, lifts, longest, run = 0, 0, 0, 0
+        out = []
+        for t in range(0, seconds * 1000, step):
+            up = any(r[4] == "full" for r in out)
+            if up:
+                frame, dets = cover_frame, []
+            else:
+                frame, dets = texture(11 + t // 2000), ([VRect(0, 0, 1, 1, 4, 0.9, -1)] if nude(t) else [])
+                shown += 1
+            out = cover.update(t, frame, dets)
+            now_up = any(r[4] == "full" for r in out)
+            run = run + step if now_up else 0
+            longest = max(longest, run)
+            lifts += up and not now_up
+        return shown, lifts, longest
+
+    _, lifts_before, _ = nude_video(Cover(covers_visible=True, full_max_hold_ms=0), 120)
+    shown, lifts, longest = nude_video(Cover(covers_visible=True), 120)
+    check("covers visible, nudity under the whole-frame cover: it lifted every 3 s before (%d lifts)" % lifts_before,
+          lifts_before >= 30)
+    check("covers visible, nudity again after each lift: the hold doubles, few lifts (%d, %d uncovered frames)"
+          % (lifts, shown), lifts <= 6 and shown <= 8)
+    _, _, longest = nude_video(Cover(covers_visible=True, full_max_hold_ms=12000), 120)
+    check("the doubled hold stops at full_max_hold_ms (longest %d ms of 12000)" % longest, 11900 <= longest <= 12100)
+    check("default full_max_hold_ms is 60 s", Cover(covers_visible=True).params()["full_max_hold_ms"] == 60000)
+    # clean content after the cover lifts: it stays off, and a later detection starts again at the short hold
+    c = Cover(covers_visible=True)
+    shown, lifts, _ = nude_video(c, 40, nude=lambda t: t < 20000)
+    out = c.update(40000, texture(3), [])
+    check("covers visible: clean picture after a lift, the cover stays off", not any(r[4] == "full" for r in out))
+    c.update(41000, texture(3), [VRect(0, 0, 1, 1, 4, 0.9, -1)])
+    check("a new detection long after: the short hold again (3 s)",
+          any(r[4] == "full" for r in c.update(43900, cover_frame, [])) and
+          not any(r[4] == "full" for r in c.update(44100, cover_frame, [])))
+    # not in the capture: unchanged, the plain hold
+    c = Cover(covers_visible=False, static_level=0)
+    for t in (0, 1600, 3200):
+        c.update(t, img, [VRect(0, 0, 1, 1, 4, 0.9, -1)])
+    check("covers not in the capture: nudity hold does not double",
+          not any(r[4] == "full" for r in c.update(3200 + 1600, img, None)))
     print("ALL PASS" if ok else "SOME FAILED")
     sys.exit(0 if ok else 1)
 

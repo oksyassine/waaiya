@@ -53,6 +53,11 @@ struct im_cover {
     im_vrect ext[MAX_OUT + MAX_TRACKS], ext_rect[MAX_OUT + MAX_TRACKS]; /* drawn extent; rectangle (closeness) */
     unsigned char ext_outlined[MAX_OUT + MAX_TRACKS];
     double full_until;
+    /* covers visible: hold doubling of the whole-frame cover (full_max_hold_ms). full_end is when the last full
+     * cover was due to end; unlike full_until it is not cleared by a scene change, because our own cover lifting
+     * looks like one. */
+    double full_end;
+    int full_level;
     double t_last;
 };
 
@@ -60,7 +65,7 @@ im_cover *im_cover_create(int covers_visible) {
     im_cover *c = calloc(1, sizeof *c);
     if (!c) return NULL;
     c->covers_visible = covers_visible;
-    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.10f, 0.30f, 0.80f, 0.08f, 0.15f, 0.03f};
+    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.10f, 0.30f, 0.80f, 0.08f, 0.15f, 0.03f, 60000.0f};
     return c;
 }
 
@@ -326,8 +331,26 @@ int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w,
         const int k = k_det;
         const im_vrect *d = &dets[k];
         if (d->kind == IM_VK_FULL) {
-            double hold = c->covers_visible ? 2 * p->full_hold_ms : p->full_hold_ms;
+            double hold = p->full_hold_ms;
+            if (c->covers_visible) {
+                /* The capture shows our cover, not the picture: the cover would expire after its hold, lift for a
+                 * frame, and be put back by the next detection, so a video under it shows through every few
+                 * seconds. Seen again right after a lift (or while up): the next hold doubles, up to
+                 * full_max_hold_ms. Fail-closed both ways: the cover never lifts earlier than before. */
+                hold = 2 * p->full_hold_ms;
+                if (p->full_max_hold_ms > 0) {
+                    if (t_ms >= c->full_until) { /* the cover is down: a new one */
+                        if (c->full_end > 0 && t_ms - c->full_end < 2 * p->full_hold_ms) {
+                            if (c->full_level < 16) c->full_level++;
+                        } else
+                            c->full_level = 0;
+                    }
+                    hold = ldexp(hold, c->full_level);
+                    if (hold > p->full_max_hold_ms) hold = fmax(p->full_max_hold_ms, 2 * p->full_hold_ms);
+                }
+            }
             if (t_ms + hold > c->full_until) c->full_until = t_ms + hold;
+            if (c->full_until > c->full_end) c->full_end = c->full_until;
             continue;
         }
         if (d->kind == IM_VK_CLEAR) continue; /* a man: never refreshes a cover, so flickering labels stay covered */
