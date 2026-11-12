@@ -76,10 +76,16 @@ attempt and a code that Settings shows on screen and discards).
   both grants given (`dump=0`, `project_media=0`, `DUMP: granted=true`, `PROJECT_MEDIA: allow`). A wrong code gives
   "That code was not accepted". With Wireless debugging off the notification says to turn it on. After a reboot the
   grants are still there; with them revoked, Start + Wireless debugging on connected and granted without a code.
-- Android 15 emulator (im_ui35): see the commit that adds the result.
+- Android 15 emulator (im_ui35), same build, grants absent, Developer options off: Start asked for notifications,
+  then showed the "Developer options are off" dialog and opened About phone; after "Build number" x7, Start opened
+  Developer options and the service ran in the foreground (dataSync) without error. The notification said to turn
+  on Wireless debugging, and to connect to Wi-Fi while Wi-Fi was off. The reply field stayed open for 13 s (no
+  re-posting). A wrong code gave "That code was not accepted"; the right code on the same pairing screen then paired
+  (public `SSLSockets` exporter) and both grants were given. With the grants revoked, Start connected and granted
+  without a code.
 
 Not verified: real phones (vendor Settings differ in names and in where "Build number" is), split screen with the
-in-app field, and Android 12-14.
+in-app field (adb could not put the emulator in split screen), and Android 12-14.
 
 Known limits:
 - The ports come only from mDNS. If a phone's mDNS never shows adbd's connect port to apps, the run waits and stops
