@@ -3,52 +3,16 @@ import 'dart:io';
 
 import 'package:waaiya_ui/waaiya_ui.dart';
 
-/// What `waaiya status` and systemd say about the Linux filter.
-class EngineStatus {
-  const EngineStatus({
-    required this.sinkUp,
-    required this.active,
-    required this.autostart,
-    this.filter = '',
-    this.engine = '',
-    this.raw = '',
-  });
+import 'filter_host.dart';
 
-  /// The daemon, its filter process and the virtual output "Waaiya" are all there (`filter:   running`).
-  final bool sinkUp;
-
-  /// `filter:` as the script says it: `running`, `restarting` (the filter process is being replaced),
-  /// `down (...)` (the daemon is gone but the virtual output stays: apps are silent), `stopped`.
-  final String filter;
-
-  /// `engine:`: `ok`, `model not loaded, ...`, `detector not loaded, ...`, `starting`; empty from an older script.
-  final String engine;
-
-  /// The whole `waaiya status` output (diagnostics report).
-  final String raw;
-
-  /// The filter runs but its voice model did not load: the output is silent (fail-closed).
-  bool get modelFailed => engine.startsWith('model not loaded');
-
-  /// The women's-singing detector did not load: voices are muted while that option is on (fail-closed).
-  bool get detectorFailed => engine.startsWith('detector not loaded');
-
-  /// The daemon is gone and the virtual output stayed: apps are silent until the filter is started again.
-  bool get down => filter.startsWith('down');
-
-  /// `systemctl --user is-active islamic-mute.service`: active, activating, inactive, failed, ...
-  final String active;
-
-  /// `autostart: on`.
-  final bool autostart;
-}
+export 'filter_host.dart';
 
 /// The Linux audio engine shipped in the desktop bundle (`<bundle>/engine`, desktop/tool/bundle_engine.sh) and
 /// driven through its `waaiya` script (linux/bin/islamic-mute): install, start, stop, status, women-singing.
 /// The filter runs as the systemd user service islamic-mute.service, so it keeps running when the app is closed.
 ///
 /// Every call returns facts or a [BackendMessage] code (docs/UI_CONTRACT.md, `filter.error`); no display text.
-class LinuxEngine {
+class LinuxEngine implements FilterHost {
   LinuxEngine(this.dir, {Map<String, String>? environment}) : env = environment ?? Platform.environment;
 
   static const service = 'islamic-mute.service';
@@ -84,7 +48,9 @@ class LinuxEngine {
   }
 
   /// What `waaiya stereo` / `waaiya keep-silent` last set (also by hand on the command line); null: never set.
+  @override
   bool? get stereoSet => _onOff('stereo');
+  @override
   bool? get keepSilentSet => _onOff('keep_silent');
 
   bool? _onOff(String name) => switch (_readTrim('$configDir/$name')) {
@@ -95,6 +61,7 @@ class LinuxEngine {
 
   /// The notice the daemon shows when it gives the normal sound back (`$CFG/notice`: title line, text line), in
   /// the app's language.
+  @override
   void writeNotice(String title, String text) {
     try {
       Directory(configDir).createSync(recursive: true);
@@ -104,14 +71,18 @@ class LinuxEngine {
     }
   }
 
+  @override
   String get bundledVersion => _readTrim('${dir.path}/VERSION') ?? '';
 
+  @override
   String? get installedVersion => File(_installedScript).existsSync() ? _readTrim('$libDir/VERSION') ?? '' : null;
 
   /// The women's-singing detector is bundled (the public models release has none yet).
+  @override
   bool get hasDetector => File('${dir.path}/models/detector/detector_v1.onnx').existsSync();
 
   /// Can the filter run here at all? Null when it can, else the reason.
+  @override
   Future<BackendMessage?> preflight() async {
     if (_which('pactl') == null) return const BackendMessage('no_pactl');
     if ((await _run('pactl', ['info'])).exitCode != 0) return const BackendMessage('no_sound_server');
@@ -127,6 +98,7 @@ class LinuxEngine {
 
   /// Installs the bundled engine when it is missing or another version (the filter must not be running: the
   /// install replaces its binaries). Null on success.
+  @override
   Future<BackendMessage?> installIfNeeded() async {
     final want = bundledVersion;
     if (installedVersion == want && want.isNotEmpty) return null;
@@ -136,6 +108,7 @@ class LinuxEngine {
   }
 
   /// `waaiya women-singing on|off` (applies at the next start, or at once with [reload]).
+  @override
   Future<BackendMessage?> setWomenSinging(bool on) async {
     if (installedVersion == null) return null;
     final r = await _run(_installedScript, ['women-singing', if (on) 'on' else 'off']);
@@ -143,10 +116,12 @@ class LinuxEngine {
   }
 
   /// `waaiya stereo on|off` (setting `audio_stereo`; applies at the next start, or at once with [reload]).
+  @override
   Future<BackendMessage?> setStereo(bool on) => _set('stereo', on);
 
   /// `waaiya keep-silent on|off` (setting `hold_silence`): when filtering stops by itself, apps stay silent (on)
   /// or get their normal sound back with a desktop notice (off). Read by the daemon when it happens.
+  @override
   Future<BackendMessage?> setKeepSilent(bool on) => _set('keep-silent', on);
 
   Future<BackendMessage?> _set(String cmd, bool on) async {
@@ -158,6 +133,7 @@ class LinuxEngine {
   /// A running filter takes the current settings: `waaiya reload` restarts only the filter process, the apps stay
   /// on the virtual output meanwhile (a moment of silence, never unfiltered sound). An engine installed before
   /// `reload` existed gets stop + start instead.
+  @override
   Future<BackendMessage?> reload() async {
     if (installedVersion == null) return null;
     final r = await _run(_installedScript, ['reload']);
@@ -165,12 +141,14 @@ class LinuxEngine {
     return await stop() ?? await start();
   }
 
+  @override
   Future<BackendMessage?> start() async {
     final r = await _run(_installedScript, ['start']);
     return r.exitCode == 0 ? null : BackendMessage('start_failed', _detail(r));
   }
 
   /// `waaiya stop`: the service restores normal audio and removes the virtual output.
+  @override
   Future<BackendMessage?> stop() async {
     if (installedVersion == null) return null;
     final r = await _run(_installedScript, ['stop']);
@@ -178,11 +156,13 @@ class LinuxEngine {
   }
 
   /// Start at login: `systemctl --user enable|disable` (not `waaiya enable|disable`, which also start / stop now).
+  @override
   Future<BackendMessage?> setAutostart(bool on) async {
     final r = await _run('systemctl', ['--user', if (on) 'enable' else 'disable', service]);
     return r.exitCode == 0 ? null : BackendMessage('start_failed', _detail(r));
   }
 
+  @override
   Future<EngineStatus> status() async {
     final active = (await _run('systemctl', ['--user', 'is-active', service])).stdout.toString().trim();
     if (installedVersion == null) return EngineStatus(sinkUp: false, active: active, autostart: false);
@@ -207,12 +187,14 @@ class LinuxEngine {
   }
 
   /// The service's last log lines, for `service_failed` ([lines] more for the diagnostics report).
+  @override
   Future<String> journal({int lines = 6}) async {
     final r = await _run('journalctl', ['--user', '-u', service, '-n', '$lines', '-o', 'cat', '--no-pager']);
     return r.exitCode == 0 ? r.stdout.toString().trim() : '';
   }
 
   /// The end of the filter's own log (`$XDG_STATE_HOME/islamic-mute/filter.log`), for the diagnostics report.
+  @override
   String filterLogTail({int maxBytes = 3000}) {
     final xdg = env['XDG_STATE_HOME'];
     final f = File('${xdg != null && xdg.isNotEmpty ? xdg : '${env['HOME'] ?? '.'}/.local/state'}/islamic-mute/filter.log');

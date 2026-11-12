@@ -306,8 +306,17 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
     float want = user * att_;
     if (std::fabs(cur - want) > want * 0.01f + 1e-9f) {
         HRESULT hr = vol->SetMasterVolume(want, &IM_VOLUME_CONTEXT);
-        if (log) log("sessions: pid %lu %s, level %.4f -> %.6f (user %.4f)%s%s", (unsigned long)pid, state_name(st),
-                     cur, want, user, track ? "" : ", from the notification", SUCCEEDED(hr) ? "" : im_hr(hr).c_str());
+        // experiment: does the meter tell a session that plays from one that only records (loopback)?
+        UINT meter_ch = 99;
+        float meter_peak = -1;
+        Com<IAudioMeterInformation> meter;
+        if (SUCCEEDED(ctl->QueryInterface(__uuidof(IAudioMeterInformation), reinterpret_cast<void **>(meter.put())))) {
+            meter->GetMeteringChannelCount(&meter_ch);
+            meter->GetPeakValue(&meter_peak);
+        }
+        if (log) log("sessions: pid %lu %s, level %.4f -> %.6f (user %.4f)%s%s, meter %u ch peak %.6f",
+                     (unsigned long)pid, state_name(st), cur, want, user, track ? "" : ", from the notification",
+                     SUCCEEDED(hr) ? "" : im_hr(hr).c_str(), meter_ch, meter_peak);
     }
 
     if (!t && track) {

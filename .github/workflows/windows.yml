@@ -77,6 +77,9 @@ jobs:
       - run: python -m pip install --quiet numpy
       - name: Sound filter end to end (route C2, bypass, filtering, new apps, crash, stop, restore)
         run: python windows/test/audio_test.py build-win
+      - name: Screen blur end to end (self-test, covers, click-through, fail-closed, models, GDI)
+        if: success() || failure()
+        run: python windows/test/blur_test.py build-win
       - name: Filter state and log
         if: always()
         shell: bash

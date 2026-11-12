@@ -93,7 +93,7 @@ class BlurReport {
   }
 }
 
-/// The Linux screen blur: the `im-blur` helper in the bundle (`engine/build/im-blur`, models in
+/// The desktop screen blur (Linux; Windows through [findWindows]): the `im-blur` helper in the bundle (`engine/build/im-blur`, models in
 /// `engine/models/vision`), started by the app while a blur option is on and stopped when both are off or the app
 /// quits. It is a child of the app on purpose: it inherits the graphical session as it is now (DISPLAY,
 /// WAYLAND_DISPLAY, DBUS_SESSION_BUS_ADDRESS, XDG_RUNTIME_DIR, XAUTHORITY), which a systemd user unit only has if
@@ -144,6 +144,15 @@ class LinuxBlur {
     final models = Directory('${engineDir.path}/models/vision');
     if (!exe.existsSync()) return null;
     return LinuxBlur(exe, models, environment: environment, tokenFile: tokenFile);
+  }
+
+  /// Windows: `<bundle>\\engine\\waaiya-blur.exe` with the models in `engine\\models\\vision` (windows/blur), the same
+  /// helper protocol; null when the bundle has no blur.
+  static LinuxBlur? findWindows({Directory? engineDir, Map<String, String>? environment}) {
+    engineDir ??= Directory('${File(Platform.resolvedExecutable).parent.path}\\engine');
+    final exe = File('${engineDir.path}\\waaiya-blur.exe');
+    if (!exe.existsSync()) return null;
+    return LinuxBlur(exe, Directory('${engineDir.path}\\models\\vision'), environment: environment);
   }
 
   /// Model files missing from the bundle (names), for the diagnostics report.
