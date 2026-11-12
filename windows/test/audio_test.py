@@ -132,7 +132,7 @@ def stop_filter(p, log):
     time.sleep(0.5)
     log.flush()
     with open(log.name, encoding="utf-8", errors="replace") as f:
-        print("  --- filter log\n" + "".join("  " + l for l in f.readlines()[-20:]), flush=True)
+        print("  --- filter log\n" + "".join("  " + l for l in f.readlines()[-80:]), flush=True)
 
 
 def main():

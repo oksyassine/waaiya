@@ -647,6 +647,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
             if (au.running && t - audio_since < 5000)
                 logf("audio: %llu frames in (peak %.7f), %llu out (peak %.4f), %lu underruns, queue %zu", st.cap_frames,
                      st.cap_peak, st.out_frames, st.out_peak, st.underruns, out.size() / CH);
+            if (au.running && t - audio_since < 10000) logf("meters: %s", ses.meters().c_str());
             st.cap_peak = st.out_peak = 0;
         }
     }

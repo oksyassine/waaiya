@@ -42,6 +42,9 @@ class Sessions {
     // Back to lowering every session (after restore_all, when the filter runs again).
     void lower_all();
 
+    // "pid 123 lowered 2ch peak 0.2100, ..." for every watched session (diagnostics)
+    std::string meters() const;
+
     int lowered() const;  // sessions lowered by us now
     int pending() const;  // levels in the store not given back (restore-only mode is done when this is 0)
     Mode mode() const { return mode_; }
