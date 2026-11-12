@@ -91,6 +91,10 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
 The app captures every app's audio (AudioPlaybackCapture), filters it and plays the filtered copy.
+It filters in mono by default (about half the battery; speech is almost always centred); **Stereo sound** in the
+settings keeps left and right apart, and a phone too slow for stereo drops back to mono by itself. If Android ends
+filtering by itself (the screen capture is stopped or dies), the other apps stay silent until the user starts again
+or taps Stop (**Keep apps silent if filtering stops by itself**, on by default; needs the one-time setup below).
 To mute the original sound it needs `android.permission.DUMP` (to list audio sessions, as RootlessJamesDSP does).
 Optionally, the app-op `PROJECT_MEDIA` = allow stops Android asking for screen-capture permission at every start.
 Both are granted once, in one of two ways:
