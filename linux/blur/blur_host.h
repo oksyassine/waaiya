@@ -57,6 +57,9 @@ struct ib_overlay {
     void (*update_root)(ib_overlay *);
     /* Monitors the overlay knows now (wl_output / RandR), to tell when the capture misses some; NULL: unknown */
     int (*outputs)(ib_overlay *);
+    /* Windows: the covers are kept out of the screen capture (WDA_EXCLUDEFROMCAPTURE), so the self-test square
+     * not showing up in the capture means "excluded", not "not drawn" (0 elsewhere) */
+    int excluded;
 };
 
 /* Backends. Each returns NULL with err filled when it cannot work here. */
@@ -64,5 +67,8 @@ ib_capture *ib_x11_capture_new(const char *display, char *err, size_t errlen);
 ib_overlay *ib_x11_overlay_new(const char *display, char *err, size_t errlen);
 ib_capture *ib_portal_capture_new(const char *token_file, char *err, size_t errlen);
 ib_overlay *ib_layer_overlay_new(char *err, size_t errlen);
+/* Windows (windows/blur): DXGI desktop duplication of every monitor; one click-through layered window per monitor */
+ib_capture *ib_win_capture_new(char *err, size_t errlen);
+ib_overlay *ib_win_overlay_new(char *err, size_t errlen);
 
 #endif

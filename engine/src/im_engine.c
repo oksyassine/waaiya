@@ -8,6 +8,7 @@
 
 #include "im_detector.h"
 #include "onnxruntime_c_api.h"
+#include "im_path.h"
 
 #define IM_MAX_CH 8
 /* Digital silence handling: after IM_SILENT_HOPS silent hops the model state is reset to its
@@ -98,7 +99,7 @@ static void load_state_init(im_engine *e, const char *model_path) {
     memcpy(p, model_path, n + 1);
     if (n > 5 && strcmp(p + n - 5, ".onnx") == 0) p[n - 5] = 0;
     strcat(p, ".state_init.bin");
-    FILE *f = fopen(p, "rb");
+    FILE *f = im_fopen(p, "rb");
     free(p);
     if (!f) return; /* zeros */
     size_t got = fread(e->state_init, sizeof(float), (size_t)e->state_size, f);
@@ -178,7 +179,7 @@ int im_engine_create(const im_config *cfg, im_engine **out, char *err, size_t er
         for (int i = 0; i < 4; i++)
             if (o[i]) api->ReleaseStatus(o[i]);
     }
-    OrtStatus *st = api->CreateSession(e->env, cfg->model_path, so, &e->sess);
+    OrtStatus *st = im_create_session(api, e->env, cfg->model_path, so, &e->sess);
     api->ReleaseSessionOptions(so);
     if (!ort_ok(api, st, err, errlen, "cannot load model")) goto fail_buffers;
 

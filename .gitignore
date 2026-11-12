@@ -6,6 +6,7 @@ android/.kotlin/
 android/app/.cxx/
 android/local.properties
 android/captures/
+build-win/
 *.apk
 *.aab
 *.o
@@ -14,6 +15,8 @@ android/captures/
 
 # --- Vendored binaries / toolchains (fetched locally, see README) ---
 third_party/onnxruntime/
+third_party/onnxruntime-win/
+third_party/llvm-mingw/
 third_party/sysroot/
 
 # --- Python ---

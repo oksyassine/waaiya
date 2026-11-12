@@ -285,8 +285,19 @@ void main() {
     await tester.runAsync(() => b.close());
   });
 
-  testWidgets('Windows: no blur, and no "who is left uncovered" anywhere', (tester) async {
-    final b = await backend(tester, 'windows');
+  testWidgets('Windows: the same blur card, driven by waaiya-blur.exe through the same helper protocol', (tester) async {
+    final b = await backend(tester, 'windows', extra: {'FAKE_STATE': 'on'});
+    expect(b.state.capabilities.screenBlur, isTrue);
+    expect(b.state.capabilities.blurStandalone, isTrue);
+    await tester.runAsync(() => until(() => b.state.blur.state, (s) => s == BlurState.on));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    expect(find.text('تمويه الشاشة'), findsOneWidget);
+    await tester.runAsync(() => b.close());
+  });
+
+  testWidgets('macOS: no blur, and no "who is left uncovered" anywhere', (tester) async {
+    final b = await backend(tester, 'macos');
     expect(b.state.capabilities.screenBlur, isFalse);
     expect(b.blur, isNull);
     await tester.pumpWidget(WaaiyaApp(backend: b));
