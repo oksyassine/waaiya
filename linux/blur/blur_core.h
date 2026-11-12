@@ -98,6 +98,39 @@ typedef struct { int nx, ny; uint32_t c[IB_MAX_CELLS * IB_MAX_CELLS]; } ib_cells
 void ib_render(uint32_t *buf, int stride, const ib_paint *p, int n, const ib_cellset *cells, ib_layout lay,
                uint32_t extra);
 
+/* ---- what to analyse when ---- */
+
+#define IB_NSFW_EVERY_MS 300.0       /* the nudity model is slower: a few times a second */
+#define IB_PERMANENT_COVER_MS 4000.0 /* a failure that does not go away by itself: covered this long, then the bar */
+
+/* Passes over one screen's frames. A frame is analysed when the screen changes, and one pass does not do
+ * everything: the nudity model runs a few times a second and the detector tiles may take turns. So the last frame
+ * is kept and analysed again until all of it was seen, unless a newer frame comes first (a still screen otherwise
+ * never gets the skipped parts: an immodest picture could stay uncovered). Android: ScreenBlur.process / again. */
+typedef struct {
+    double nsfw_at; /* last pass that ran the nudity model */
+    int nsfw_owed;  /* the last pass skipped the nudity model */
+    int tiles_owed; /* passes over the kept frame left before every detector tile has seen it */
+    int force;      /* the next new frame gets the nudity model (a whole-screen cover just went away) */
+    int rerun;      /* the kept frame is analysed again, nudity model included (the settings changed) */
+} ib_passes;
+
+void ib_passes_reset(ib_passes *p);
+/* A pass starts at t over a new frame (fresh) or the kept one. nsfw_on: the policy has the nudity model; tiles:
+ * detector tiles taking turns, one per pass (0 or 1: all of them every pass). Returns 1 when this pass runs the
+ * nudity model. */
+int ib_pass_begin(ib_passes *p, double t, int fresh, int nsfw_on, int tiles);
+/* No newer frame: is the kept frame due for another pass at t? */
+int ib_pass_due(const ib_passes *p, double t, int nsfw_on);
+/* After a pass: a whole-screen cover was shown before it / is shown after it. */
+void ib_pass_done(ib_passes *p, int full_before, int full_now);
+
+/* The fail display (IB_FAIL_*) while failing. permanent: the cause does not go away by itself (a model that cannot
+ * load, the screen capture ended); since_ms: how long it has been failing. fail_cover (the user's "cover when the
+ * blur fails") covers the screens for a passing failure; a permanent one is covered only for the first
+ * IB_PERMANENT_COVER_MS, then the warning bar: a cover held for good would hide every window, Waaiya's own too. */
+int ib_fail_mode(int failing, int permanent, double since_ms, int fail_cover);
+
 /* ---- protocol ---- */
 
 /* Live settings, from the command line or stdin. */
@@ -125,5 +158,9 @@ const char *ib_state_name(ib_state s);
  * "ms":31.5,"cpu":12.0,"fps":4.0}. ms / cpu / fps < 0 are left out. Returns the length (truncated to cap-1). */
 int ib_state_json(char *buf, size_t cap, ib_state st, const char *error, const char *backend, const char *overlay,
                   int covers, double ms, double cpu, double fps);
+/* Same, with "uncovered": monitors known to the overlay that the capture does not show (Wayland: not shared in the
+ * dialog, or plugged in later), left out when 0. */
+int ib_state_json2(char *buf, size_t cap, ib_state st, const char *error, const char *backend, const char *overlay,
+                   int covers, int uncovered, double ms, double cpu, double fps);
 
 #endif

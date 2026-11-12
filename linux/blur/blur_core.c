@@ -310,6 +310,11 @@ static size_t json_str(char *o, size_t cap, const char *s) {
 
 int ib_state_json(char *buf, size_t cap, ib_state st, const char *error, const char *backend, const char *overlay,
                   int covers, double ms, double cpu, double fps) {
+    return ib_state_json2(buf, cap, st, error, backend, overlay, covers, 0, ms, cpu, fps);
+}
+
+int ib_state_json2(char *buf, size_t cap, ib_state st, const char *error, const char *backend, const char *overlay,
+                   int covers, int uncovered, double ms, double cpu, double fps) {
     char e[512], b[64], ov[64];
     json_str(e, sizeof e, error);
     json_str(b, sizeof b, backend);
@@ -317,6 +322,8 @@ int ib_state_json(char *buf, size_t cap, ib_state st, const char *error, const c
     int k = snprintf(buf, cap, "{\"state\":\"%s\",\"error\":\"%s\",\"backend\":\"%s\",\"overlay\":\"%s\",\"covers\":%d",
                      ib_state_name(st), e, b, ov, covers);
     if (k < 0 || (size_t)k >= cap) k = (int)cap - 1;
+    if (uncovered > 0 && (size_t)k < cap) k += snprintf(buf + k, cap - k, ",\"uncovered\":%d", uncovered);
+    if ((size_t)k >= cap) k = (int)cap - 1;
     if (ms >= 0 && (size_t)k < cap) k += snprintf(buf + k, cap - k, ",\"ms\":%.1f", ms);
     if ((size_t)k >= cap) k = (int)cap - 1;
     if (cpu >= 0 && (size_t)k < cap) k += snprintf(buf + k, cap - k, ",\"cpu\":%.1f", cpu);
@@ -325,4 +332,36 @@ int ib_state_json(char *buf, size_t cap, ib_state st, const char *error, const c
     if ((size_t)k >= cap) k = (int)cap - 1;
     if ((size_t)k + 2 < cap) { buf[k++] = '}'; buf[k++] = '\n'; buf[k] = 0; }
     return k;
+}
+
+/* ---- what to analyse when ---- */
+
+void ib_passes_reset(ib_passes *p) { *p = (ib_passes){-1e9, 0, 0, 0, 0}; }
+
+int ib_pass_begin(ib_passes *p, double t, int fresh, int nsfw_on, int tiles) {
+    int nsfw = nsfw_on && (p->rerun || (fresh && p->force) || t - p->nsfw_at >= IB_NSFW_EVERY_MS);
+    if (nsfw) p->nsfw_at = t;
+    if (fresh) p->force = 0;
+    p->nsfw_owed = nsfw_on && !nsfw;
+    if (tiles <= 1) p->tiles_owed = 0;
+    else if (fresh || p->rerun) p->tiles_owed = tiles - 1;
+    else if (p->tiles_owed > 0) p->tiles_owed--;
+    p->rerun = 0;
+    return nsfw;
+}
+
+int ib_pass_due(const ib_passes *p, double t, int nsfw_on) {
+    if (p->rerun || p->tiles_owed > 0) return 1;
+    return nsfw_on && p->nsfw_owed && t - p->nsfw_at >= IB_NSFW_EVERY_MS;
+}
+
+void ib_pass_done(ib_passes *p, int full_before, int full_now) {
+    if (full_before && !full_now) p->force = 1;
+}
+
+int ib_fail_mode(int failing, int permanent, double since_ms, int fail_cover) {
+    if (!failing) return IB_FAIL_NONE;
+    if (!fail_cover) return IB_FAIL_WARN;
+    if (permanent && since_ms >= IB_PERMANENT_COVER_MS) return IB_FAIL_WARN;
+    return IB_FAIL_COVER;
 }

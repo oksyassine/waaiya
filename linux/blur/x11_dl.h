@@ -112,6 +112,8 @@ typedef int (*ibx_ErrorHandler)(ibx_Display *, ibx_XErrorEvent *);
     F(0, int, XDisplayWidth, (ibx_Display *, int))                                                                 \
     F(0, int, XDisplayHeight, (ibx_Display *, int))                                                                \
     F(0, int, XDisplayWidthMM, (ibx_Display *, int))                                                               \
+    F(0, int, XGetGeometry, (ibx_Display *, ibx_Drawable, ibx_Window *, int *, int *, unsigned *, unsigned *,      \
+                             unsigned *, unsigned *))                                                              \
     F(0, int, XConnectionNumber, (ibx_Display *))                                                                  \
     F(0, ibx_Window, XCreateWindow, (ibx_Display *, ibx_Window, int, int, unsigned, unsigned, unsigned, int,      \
                                      unsigned, ibx_Visual *, unsigned long, ibx_XSetWindowAttributes *))           \

@@ -204,10 +204,72 @@ static void test_protocol(void) {
     const char *names[] = {"starting", "on", "on_covers_visible", "failing", "models_missing", "no_capture",
                            "no_overlay", "idle"};
     for (int i = 0; i <= IB_ST_IDLE; i++) CHECK(!strcmp(ib_state_name((ib_state)i), names[i]));
+    ib_state_json2(line, sizeof line, IB_ST_ON, "", "wayland", "layer-shell", 1, 2, -1, -1, -1);
+    CHECK(!strcmp(line, "{\"state\":\"on\",\"error\":\"\",\"backend\":\"wayland\",\"overlay\":\"layer-shell\","
+                        "\"covers\":1,\"uncovered\":2}\n"));
     /* never longer than the buffer, always terminated */
     char small[20];
     int k = ib_state_json(small, sizeof small, IB_ST_ON, "a long error that does not fit", "x11", "x11", 0, 1, 1, 1);
     CHECK(k < (int)sizeof small && small[k] == 0);
+}
+
+/* A still screen still gets every part of the analysis (the kept frame is passed again). */
+static void test_passes(void) {
+    ib_passes p;
+    ib_passes_reset(&p);
+    /* first frame: everything due */
+    CHECK_INT(ib_pass_begin(&p, 1000, 1, 1, 0), 1);
+    CHECK(!ib_pass_due(&p, 1100, 1));
+    /* a new frame 100 ms later: the nudity model is skipped (it ran too recently) ... */
+    CHECK_INT(ib_pass_begin(&p, 1100, 1, 1, 0), 0);
+    /* ... then the screen stays still: the kept frame is due once the model is (300 ms after its last run) */
+    CHECK(!ib_pass_due(&p, 1200, 1));
+    CHECK(ib_pass_due(&p, 1300, 1));
+    CHECK_INT(ib_pass_begin(&p, 1300, 0, 1, 0), 1);
+    CHECK(!ib_pass_due(&p, 5000, 1)); /* all seen: nothing more on a still screen */
+    /* nudity off: never owed */
+    ib_passes_reset(&p);
+    CHECK_INT(ib_pass_begin(&p, 0, 1, 0, 0), 0);
+    CHECK(!ib_pass_due(&p, 10000, 0));
+    /* the bug this fixes: a whole-screen cover expires, the uncovered frame comes < 300 ms after the last nudity
+     * pass (made on the covered frame) -> the next new frame gets the model at once */
+    ib_passes_reset(&p);
+    ib_pass_begin(&p, 0, 1, 1, 0);
+    ib_pass_done(&p, 0, 1);
+    CHECK_INT(ib_pass_begin(&p, 3000, 0, 1, 0), 1); /* covered, kept frame: time moves on */
+    ib_pass_done(&p, 1, 0);                          /* the cover went away */
+    CHECK_INT(ib_pass_begin(&p, 3100, 0, 1, 0), 0);  /* the capture still showed the cover: not forced */
+    CHECK(!ib_pass_due(&p, 3200, 1));
+    CHECK_INT(ib_pass_begin(&p, 3150, 1, 1, 0), 1);  /* the uncovered frame: forced */
+    CHECK_INT(ib_pass_begin(&p, 3200, 1, 1, 0), 0);  /* forced once only */
+    CHECK(ib_pass_due(&p, 3450, 1));                 /* and still owed on a still screen */
+    /* detector tiles taking turns (3): two more passes over the kept frame */
+    ib_passes_reset(&p);
+    ib_pass_begin(&p, 0, 1, 0, 3);
+    CHECK(ib_pass_due(&p, 1, 0));
+    ib_pass_begin(&p, 50, 0, 0, 3);
+    CHECK(ib_pass_due(&p, 51, 0));
+    ib_pass_begin(&p, 100, 0, 0, 3);
+    CHECK(!ib_pass_due(&p, 101, 0));
+    /* a new frame starts over */
+    ib_pass_begin(&p, 150, 1, 0, 3);
+    CHECK(ib_pass_due(&p, 151, 0));
+    /* settings changed: the kept frame again, nudity included even if it just ran */
+    ib_passes_reset(&p);
+    ib_pass_begin(&p, 0, 1, 1, 0);
+    p.rerun = 1;
+    CHECK(ib_pass_due(&p, 10, 1));
+    CHECK_INT(ib_pass_begin(&p, 10, 0, 1, 0), 1);
+    CHECK(!ib_pass_due(&p, 20, 1));
+}
+
+static void test_fail_mode(void) {
+    CHECK_INT(ib_fail_mode(0, 0, 0, 1), IB_FAIL_NONE);
+    CHECK_INT(ib_fail_mode(1, 0, 60000, 1), IB_FAIL_COVER); /* passing failure: covered as long as it lasts */
+    CHECK_INT(ib_fail_mode(1, 0, 0, 0), IB_FAIL_WARN);
+    CHECK_INT(ib_fail_mode(1, 1, 0, 1), IB_FAIL_COVER);    /* permanent: covered at first ... */
+    CHECK_INT(ib_fail_mode(1, 1, IB_PERMANENT_COVER_MS, 1), IB_FAIL_WARN); /* ... then the bar, never for good */
+    CHECK_INT(ib_fail_mode(1, 1, 0, 0), IB_FAIL_WARN);
 }
 
 int main(void) {
@@ -219,6 +281,8 @@ int main(void) {
     test_rects();
     test_paint();
     test_protocol();
+    test_passes();
+    test_fail_mode();
     printf("%d/%d checks passed\n", checks - fails, checks);
     return fails != 0;
 }
