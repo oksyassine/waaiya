@@ -249,7 +249,7 @@ class FilterService : Service() {
                 val t0 = System.nanoTime()
                 engine.processHops(inBuf, outBuf, 1)
                 val work = System.nanoTime() - t0
-                hint?.let { h -> runCatching { h.reportActualWorkDuration(work.coerceAtLeast(1)) } }
+                if (Build.VERSION.SDK_INT >= 31) hint?.let { h -> runCatching { h.reportActualWorkDuration(work.coerceAtLeast(1)) } }
                 muter?.gate?.let { engine.setGate(it) }
                 // delay that is no longer needed is given back by skipping one hop that holds no sound
                 if (!monitor.takeTrim(isSilent(outBuf))) {
@@ -294,7 +294,7 @@ class FilterService : Service() {
             failState = State.CAPTURE_FAILED
             stopSelf()
         } finally {
-            runCatching { hint?.close() }
+            if (Build.VERSION.SDK_INT >= 31) runCatching { hint?.close() }
             runCatching { record.stop() }; record.release()
             runCatching { track.stop() }; track.release()
             engine.close()
