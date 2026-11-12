@@ -94,15 +94,21 @@ Android:
 - When Android ends the capture the original sound comes back (with the new notification). Silence until
   restarted would be stricter: owner's decision below.
 
-Linux and desktop (branch `flutter-ui`):
-- Nudity cover over a still image lasts 3 s, then stays off until a pixel changes (the same last-frame gap as
-  fixed on Android, plus the cover being part of the capture).
-- A second monitor that is not shared, or whose stream dies, has no covers while the state says on.
-- Switching the women's-singing setting restarts the service and plays unfiltered sound for a few seconds.
-- Streams that the sound server moves back to the real output are not moved again.
-- A permanent blur failure covers every monitor, the app's own window included.
-- A monitor rotated during a frame grab can crash the Wayland helper; GNOME ignores a resolution change.
-- `filter.log` grows without limit; "running" only means the virtual sink exists; the app shows version 0.2.6.
+Linux and desktop (branch `flutter-ui`): the 2026-11-12 audit's items are fixed there, not released yet:
+- Fixed: a nudity cover over a still image came back no more after 3 s (the last frame is now analysed again
+  until every pass ran; test_x11.py checks it with a fake nudity result).
+- Fixed: capture failure is counted per monitor, a closed screen-cast session is reported, and a monitor the
+  blur does not see is said in the app ("a monitor is not covered"). Still open: a monitor plugged in after the
+  share dialog is only reported, not added (turning a blur option off and on asks again).
+- Fixed: the women's-singing switch reloads the filter only (no unfiltered sound); streams the sound server puts
+  back on the real output are moved again every second.
+- Fixed: a permanent blur failure covers the screens for 4 s, then the red bar; the helper is restarted when its
+  capture ends or it hangs.
+- Fixed: the frame grab could read freed memory on a format change; GNOME/XWayland follows a resolution change.
+- Fixed: `filter.log` is bounded; "running" checks the daemon, the filter and its model; the version comes from
+  the build.
+- Not verified on real hardware yet: multi-monitor Wayland (portal) and a resolution change under GNOME are
+  covered by code review and unit tests only; CI runs Xvfb and sway headless with one output.
 
 CI: the tagged-release workflow builds an APK without the blur models and runs no tests; `test-detector` is built
 but not run; no test covers the fail-closed paths, the link updater, the blur loop or the export.
