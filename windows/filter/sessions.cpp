@@ -3,6 +3,7 @@
 #include <atomic>
 #include <cmath>
 #include <cstring>
+#include <cwctype>
 #include <cstdio>
 
 // {6c1f3a52-9d0e-4b7a-a7c4-5a1e0d2b8f31}
@@ -18,15 +19,6 @@ struct ImMeter : public IUnknown {
     virtual HRESULT STDMETHODCALLTYPE GetChannelsPeakValues(UINT32 count, float *peaks) = 0;
     virtual HRESULT STDMETHODCALLTYPE QueryHardwareSupport(DWORD *mask) = 0;
 };
-
-// Output channels of the session's streams: 0 when it has no output stream (it plays nothing: a recorder of the
-// speakers, or what is left of a closed app). The meter says so (tested on Windows Server 2022 and 2025).
-UINT out_channels(IUnknown *ctl) {
-    Com<ImMeter> meter;
-    UINT ch = 0;
-    if (SUCCEEDED(ctl->QueryInterface(IID_ImMeter, reinterpret_cast<void **>(meter.put())))) meter->GetMeteringChannelCount(&ch);
-    return ch;
-}
 
 const char *state_name(AudioSessionState s) {
     return s == AudioSessionStateActive ? "active" : (s == AudioSessionStateInactive ? "inactive" : "expired");
@@ -273,6 +265,7 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
     if (FAILED(c2->GetSessionIdentifier(&idw)) || !idw) return;
     std::wstring id = idw;
     CoTaskMemFree(idw);
+    if (left_alone(id)) return;
     Com<ISimpleAudioVolume> vol;
     if (FAILED(ctl->QueryInterface(__uuidof(ISimpleAudioVolume), reinterpret_cast<void **>(vol.put())))) return;
 
@@ -307,15 +300,12 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         return;
     }
 
-    // Plays nothing (no output stream) and not lowered before: left alone, only watched (poll_quiet). Lowering a
-    // session also lowers what its loopback recordings get (OBS, a call sharing the computer's sound).
-    UINT ch = out_channels(ctl);
-    bool quiet = ch == 0 && it == store_.end();
-    if (!quiet) lower(vol.p, id, pid, st, cur, track);
-    else if (log && !t) log("sessions: pid %lu %s plays nothing yet (no output stream): watched%s", (unsigned long)pid,
-                            state_name(st), track ? "" : ", from the notification");
+    // Every session is lowered at once, playing or not: a new app is lowered in Windows' notification, before its
+    // first sound. The meter cannot tell an app that plays from one that only records the speakers (a recorder's
+    // meter shows what it records after its own volume): recorders are lowered too, so they record the originals
+    // at -80 dB while filtering is on, unless they are on the leave-alone list.
+    lower(vol.p, id, pid, st, cur, track);
 
-    if (t) t->lowered = t->lowered || !quiet;
     if (!t && track) {
         Tracked n;
         n.ctl.p = c2.p;
@@ -324,7 +314,6 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         vol.p = nullptr;
         n.id = id;
         n.pid = pid;
-        n.lowered = !quiet;
         n.events = new SessionEvents(this);
         if (FAILED(n.ctl->RegisterAudioSessionNotification(n.events))) {
             n.events->Release();
@@ -340,7 +329,7 @@ void Sessions::on_volume(SessionEvents *s, float v, LPCGUID ctx) {
     std::lock_guard<std::recursive_mutex> l(mu_);
     if (mode_ != ATTENUATE) return;
     for (auto &t : tracked_) {
-        if (t.events != s || t.dead || !t.lowered) continue;
+        if (t.events != s || t.dead) continue;
         if (v > att_ * 1.5f) store_[t.id] = v; // else: someone set it near zero; keep the level we knew
         save();
         t.vol->SetMasterVolume(store_[t.id] * att_, &IM_VOLUME_CONTEXT);
@@ -380,20 +369,6 @@ void Sessions::lower(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid,
                  want, user, track ? "" : ", from the notification", SUCCEEDED(hr) ? "" : im_hr(hr).c_str());
 }
 
-void Sessions::poll_quiet() {
-    std::lock_guard<std::recursive_mutex> l(mu_);
-    if (mode_ != ATTENUATE) return;
-    for (auto &t : tracked_) {
-        if (t.lowered || t.dead || out_channels(t.ctl.p) == 0) continue;
-        float cur = 1.0f;
-        t.vol->GetMasterVolume(&cur);
-        AudioSessionState st = AudioSessionStateActive;
-        t.ctl->GetState(&st);
-        lower(t.vol.p, t.id, t.pid, st, cur, true);
-        t.lowered = true;
-    }
-}
-
 void Sessions::restore_all() {
     std::lock_guard<std::recursive_mutex> l(mu_);
     mode_ = RESTORE_ONLY;
@@ -418,10 +393,19 @@ void Sessions::lower_all() {
     scan();
 }
 
+// The identifier names the program: "...|\\Device\\HarddiskVolume3\\...\\obs64.exe%b{...}".
+bool Sessions::left_alone(const std::wstring &id) const {
+    std::wstring low = id;
+    for (auto &ch : low) ch = (wchar_t)towlower(ch);
+    for (const auto &name : leave_alone)
+        if (low.find(L"\\" + name + L"%b") != std::wstring::npos) return true;
+    return false;
+}
+
 int Sessions::lowered() const {
     std::lock_guard<std::recursive_mutex> l(mu_);
     int n = 0;
-    for (auto &t : tracked_) n += t.lowered && !t.dead;
+    for (auto &t : tracked_) n += !t.dead;
     return mode_ == ATTENUATE ? n : 0;
 }
 
@@ -440,8 +424,8 @@ std::string Sessions::meters() const {
             m->GetPeakValue(&peak);
         }
         char b[128];
-        snprintf(b, sizeof b, "%spid %lu %s %s %uch peak %.6f", s.empty() ? "" : ", ", (unsigned long)t.pid,
-                 state_name(st), t.lowered ? "lowered" : "watched", ch, peak);
+        snprintf(b, sizeof b, "%spid %lu %s %uch peak %.6f", s.empty() ? "" : ", ", (unsigned long)t.pid,
+                 state_name(st), ch, peak);
         s += b;
     }
     return s;

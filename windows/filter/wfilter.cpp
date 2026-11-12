@@ -1,6 +1,7 @@
 // waaiya-filter.exe: Waaiya's always-on sound filter for Windows 10 2004+ / 11. No driver, no admin rights.
 //
 //   waaiya-filter run [--bypass] [--model F] [--detector F] [--settings F] [--dir D] [--log-stderr]
+//                     [--leave-alone NAME.exe ...]   programs never lowered (they record the speakers: OBS)
 //   waaiya-filter stop        the running filter gives every app its level back (and keeps giving back the levels
 //                             of apps that are not running when they next play), or, with none running, that is
 //                             done here
@@ -32,6 +33,7 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cstring>
+#include <cwctype>
 #include <string>
 #include <vector>
 
@@ -332,6 +334,8 @@ struct Audio {
 
 // ---- commands
 
+std::vector<std::wstring> g_leave_alone; // --leave-alone NAME.exe (repeatable)
+
 struct Paths {
     std::wstring dir;      // %LOCALAPPDATA%\Waaiya\filter
     std::wstring settings; // %APPDATA%\Waaiya\settings.json
@@ -393,6 +397,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
 
     Sessions ses(ATT, p.store, GetCurrentProcessId());
     ses.log = logf;
+    ses.leave_alone = g_leave_alone;
     HRESULT hr = ses.start(restore_only ? Sessions::RESTORE_ONLY : Sessions::ATTENUATE);
     if (FAILED(hr)) {
         logf("sessions: %s", ses.last_error().c_str());
@@ -462,7 +467,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     std::vector<float> in, out, raw(4096 * CH);
     in.reserve(RATE * CH);
     out.reserve(RATE * CH);
-    double quiet_at = 0, audio_since = 0, fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
+    double audio_since = 0, fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
     bool restored = false; // hold_silence off and failing: levels given back
     int exit_code = 0;
 
@@ -508,12 +513,8 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
         if (i_set >= 0) hs[nh++] = setwatch;
         int i_cap = au.running ? nh : -1;
         if (i_cap >= 0) hs[nh++] = au.cap_event;
-        w = WaitForMultipleObjects((DWORD)nh, hs, FALSE, au.running ? 50 : 500);
+        w = WaitForMultipleObjects((DWORD)nh, hs, FALSE, au.running ? 200 : 500);
         t = now_ms();
-        if (t >= quiet_at) { // sessions that play nothing yet: lowered as soon as they do
-            quiet_at = t + 50;
-            ses.poll_quiet();
-        }
 
         if (w == WAIT_OBJECT_0) { // stop: levels back, then restore-only for the apps not running now
             logf("stop: giving the levels back");
@@ -602,7 +603,17 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
                 retry_at = t + 500;
                 continue;
             }
-            if (pad == 0 && !out.empty()) st.underruns++;
+            if (pad == 0 && !out.empty()) {
+                // ran dry (at the start, before the first hop came in, or after a stall): a cushion of silence
+                // first, so the next writes land ahead of the device again instead of just in time
+                st.underruns++;
+                UINT32 cushion = RATE * RENDER_TARGET_MS / 1000;
+                BYTE *sb = nullptr;
+                if (cushion < au.out_frames && SUCCEEDED(au.out->GetBuffer(cushion, &sb))) {
+                    au.out->ReleaseBuffer(cushion, AUDCLNT_BUFFERFLAGS_SILENT);
+                    pad = cushion;
+                }
+            }
             size_t have = out.size() / CH;
             size_t maxq = (size_t)RATE * RENDER_MAX_MS / 1000;
             if (have + pad > maxq) { // drift: the capture runs faster than the output
@@ -647,7 +658,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
             if (au.running && t - audio_since < 5000)
                 logf("audio: %llu frames in (peak %.7f), %llu out (peak %.4f), %lu underruns, queue %zu", st.cap_frames,
                      st.cap_peak, st.out_frames, st.out_peak, st.underruns, out.size() / CH);
-            if (au.running && t - audio_since < 10000) logf("meters: %s", ses.meters().c_str());
+            if (au.running && t - audio_since < 2000) logf("sessions: %s", ses.meters().c_str());
             st.cap_peak = st.out_peak = 0;
         }
     }
@@ -741,6 +752,11 @@ int wmain(int argc, wchar_t **argv) {
         const wchar_t *v = i + 1 < argc ? argv[i + 1] : nullptr;
         if (a == L"--bypass") bypass = true;
         else if (a == L"--log-stderr") g_log_stderr = true;
+        else if (a == L"--leave-alone" && v) {
+            std::wstring n = argv[++i];
+            for (auto &ch : n) ch = (wchar_t)towlower(ch);
+            g_leave_alone.push_back(n);
+        }
         else if (a == L"--model" && v) p.model = argv[++i];
         else if (a == L"--detector" && v) p.detector = argv[++i];
         else if (a == L"--settings" && v) p.settings = argv[++i];
