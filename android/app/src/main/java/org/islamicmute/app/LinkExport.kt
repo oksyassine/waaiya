@@ -127,6 +127,7 @@ class LinkExportService : Service() {
     /** Runs on the worker thread. */
     private fun run(title: String, st: Links.Streams) {
         val dir = File(cacheDir, "export").apply { deleteRecursively(); mkdirs() }
+        var done = false
         try {
             // 1. Download (progress over all parts by bytes)
             val parts = listOfNotNull(st.progressive, st.video, st.audio)
@@ -150,6 +151,7 @@ class LinkExportService : Service() {
             val uri = publishToGallery(out, title, isVideo)
             publish(Status(Phase.DONE, title, 1f, uri, isVideo))
             getSystemService(NotificationManager::class.java).notify(2, doneNotification(title, uri, isVideo))
+            done = true
         } catch (e: Throwable) {
             Log.w(TAG, "export failed", e)
             val msg = if (cancelled) getString(R.string.link_cancelled) else (e as? Links.LinkException)?.message ?: getString(R.string.link_export_failed)
@@ -157,7 +159,10 @@ class LinkExportService : Service() {
             getSystemService(NotificationManager::class.java).cancel(2)
         } finally {
             dir.deleteRecursively()  // the original-audio intermediates never leave the cache
-            main.post { stopForeground(STOP_FOREGROUND_DETACH); stopSelf() }
+            // done: the "saved" notification stays. Failed or cancelled: the progress notification must go
+            // (cancel() is ignored while the service is in the foreground).
+            val keep = done
+            main.post { stopForeground(if (keep) STOP_FOREGROUND_DETACH else STOP_FOREGROUND_REMOVE); stopSelf() }
         }
     }
 

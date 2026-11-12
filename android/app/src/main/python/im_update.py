@@ -196,8 +196,8 @@ def _extract(wheel, dest):
     return metadata
 
 
-def _due(files_dir, every_s):
-    stamp = os.path.join(_root(files_dir), "last_check")
+def _due(files_dir, every_s, name="last_check"):
+    stamp = os.path.join(_root(files_dir), name)
     try:
         if time.time() - os.path.getmtime(stamp) < every_s:
             return False
@@ -213,7 +213,9 @@ def download(files_dir, bundled, prerelease=False, every_s=20 * 3600):
     """If PyPI has a yt-dlp newer than the one in use, download and unpack it next to the current copy.
     Returns the staged directory name, or None (nothing newer, not due yet, or any failure).
     prerelease=True also takes yt-dlp's nightly builds, which follow site changes within a day."""
-    if not _due(files_dir, every_s):
+    # The check after a failed link has its own stamp: the daily check, made when the link screen opens, must
+    # not block it for an hour.
+    if not _due(files_dir, every_s, "last_check_nightly" if prerelease else "last_check"):
         return None
     staged = None
     try:
