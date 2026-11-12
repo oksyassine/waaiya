@@ -406,6 +406,7 @@ class DesktopBackend extends MemoryBackend {
   static const _blurDocs = [
     LicenceDoc('YOLOX person detector (Apache-2.0)', 'YOLOX-LICENSE.txt'),
     LicenceDoc('Marqo nudity classifier (Apache-2.0)', 'Marqo-nsfw-image-detection-384-NOTICE.txt'),
+    LicenceDoc('Apache License 2.0 (YOLOX and Marqo models)', 'Apache-2.0-LICENSE.txt'),
   ];
   static const _engineDocs = [
     LicenceDoc('ONNX Runtime (MIT)', 'onnxruntime-LICENSE.txt'),

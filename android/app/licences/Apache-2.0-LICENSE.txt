@@ -1,4 +1,5 @@
-Apache License 2.0: the licence of AndroidX, Media3, Kotlin and Guava, which the Android app includes.
+Apache License 2.0: the licence of third-party parts that Waaiya includes (on Android: AndroidX, Media3,
+Kotlin, Guava; the YOLOX person detector and the Marqo nudity model of the screen blur).
 (Waaiya itself is under the GNU AGPL v3 or later: LICENSE-AGPL-3.0.txt.)
 
 

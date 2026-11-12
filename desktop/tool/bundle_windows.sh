@@ -49,5 +49,6 @@ for f in LICENSE ThirdPartyNotices.txt; do
     cp "$ORT/$f" "$L/onnxruntime-${f%.txt}.txt"
 done
 cp "$REPO/models/vision/licences/YOLOX-LICENSE.txt" "$REPO/models/vision/licences/Marqo-nsfw-image-detection-384-NOTICE.txt" "$L/"
+cp "$REPO/android/app/licences/Apache-2.0-LICENSE.txt" "$L/"  # the Apache text of YOLOX and Marqo
 [ -f "$E/models/detector/detector_v1.onnx" ] && cp "$REPO/models/detector/efficientat/LICENSE" "$L/EfficientAT-LICENSE.txt"
 echo "engine $(cat "$E/VERSION") -> $E"
