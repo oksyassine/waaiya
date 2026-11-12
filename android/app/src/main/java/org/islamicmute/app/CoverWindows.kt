@@ -3,8 +3,9 @@ package org.islamicmute.app
 /**
  * App-overlay host of the screen blur (no Shizuku, no accessibility service): which windows to draw the covers in.
  *
- * Android 12+ drops every touch that lands inside an opaque app overlay, wherever the window is transparent. One
- * window spanning all covers therefore made the space between two people untouchable. So covers that touch or overlap
+ * App-overlay covers must take the touches that land on them to stay opaque (BlurOverlay), and a window takes them
+ * everywhere inside its bounds, transparent parts included. One window spanning all covers would therefore make the
+ * space between two people untouchable. So covers that touch or overlap
  * (the strips of one outlined person, a bridge, a group) share a window sized to them, and separate groups get their
  * own window. Windows cost memory and a relayout each, so there are at most `max`: beyond that the two groups whose
  * joined box grows least are joined. Pure functions on [l, t, r, b] boxes in screen pixels (JVM-testable).
