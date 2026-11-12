@@ -132,7 +132,7 @@ class LinkActivity : Activity() {
 
     private fun watch() {
         val r = resolved ?: return
-        startActivity(Intent(this, PlayerActivity::class.java)
+        startActivity(Intent(this, LinkPlayerActivity::class.java)
             .putExtra(PlayerActivity.EXTRA_STREAMS, Links.streamsJson(r.streams()))
             .putExtra(PlayerActivity.EXTRA_TITLE, r.title))
     }
