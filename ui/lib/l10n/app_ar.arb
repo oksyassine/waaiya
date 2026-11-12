@@ -69,6 +69,18 @@
   "@stateStoppedBySystem": {
     "description": "Android string state_stopped_by_system"
   },
+  "stateSilencedTitle": "توقفت التصفية",
+  "@stateSilencedTitle": {
+    "description": "Android string state_silenced_title"
+  },
+  "stateSilenced": "توقفت التصفية: التطبيقات الأخرى مكتومة. اضغط الزر للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.",
+  "@stateSilenced": {
+    "description": "Android string state_silenced"
+  },
+  "releaseSilence": "إيقاف: سماع التطبيقات دون تصفية",
+  "@releaseSilence": {
+    "description": "Android string release_silence"
+  },
   "powerStartCd": "تشغيل التصفية",
   "@powerStartCd": {
     "description": "Android string power_start_cd"
@@ -215,6 +227,22 @@
   "@settingSilenceBody": {
     "description": "Android string setting_silence_body"
   },
+  "settingHoldSilenceTitle": "إبقاء التطبيقات صامتة إذا توقفت التصفية من تلقاء نفسها",
+  "@settingHoldSilenceTitle": {
+    "description": "Android string setting_hold_silence_title"
+  },
+  "settingHoldSilenceBody": "مستحسن. إذا أنهى أندرويد التصفية (لا أنت)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية. يحتاج إلى الإعداد لمرة واحدة.",
+  "@settingHoldSilenceBody": {
+    "description": "Android string setting_hold_silence_body"
+  },
+  "settingStereoTitle": "صوت ستيريو",
+  "@settingStereoTitle": {
+    "description": "Android string setting_stereo_title"
+  },
+  "settingStereoBody": "مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.",
+  "@settingStereoBody": {
+    "description": "Android string setting_stereo_body"
+  },
   "settingSingingTitle": "كتم غناء النساء",
   "@settingSingingTitle": {
     "description": "Android string setting_singing_title"
@@ -342,6 +370,10 @@
   "linkCancelled": "أُلغي، ولم يُحفظ شيء.",
   "@linkCancelled": {
     "description": "Android string link_cancelled"
+  },
+  "linkTimedOut": "أوقف أندرويد الحفظ: فهو لا يسمح بهذا النوع من العمل إلا بضع ساعات في اليوم. لم يُحفظ شيء؛ افتح واعية وحاول من جديد.",
+  "@linkTimedOut": {
+    "description": "Android string link_timed_out"
   },
   "linkExportFailed": "تعذّر الحفظ، ولم يُحفظ شيء.",
   "@linkExportFailed": {
@@ -516,6 +548,15 @@
   "@blurStatusNoOverlay": {
     "description": "Android string blur_status_no_overlay"
   },
+  "blurStatusNoCapture": "لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}",
+  "@blurStatusNoCapture": {
+    "description": "Flutter only. Arabic not reviewed yet.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
   "blurSetupFailed": "تعذّر السماح عبر Shizuku:\n{details}",
   "@blurSetupFailed": {
     "description": "Android string blur_setup_failed",
@@ -552,6 +593,179 @@
   "guideBody": "تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.",
   "@guideBody": {
     "description": "Android string guide_body"
+  },
+  "wsetupRouteTitle": "الإعداد على هذا الهاتف (دون تطبيق إضافي)",
+  "@wsetupRouteTitle": {
+    "description": "Android string wsetup_route_title"
+  },
+  "wsetupRouteBody": "باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ الموجود في أندرويد نفسه. تحتاج إلى شبكة Wi‑Fi (لا يلزم الإنترنت). الإقران يكون مرة واحدة فقط.",
+  "@wsetupRouteBody": {
+    "description": "Android string wsetup_route_body"
+  },
+  "wsetupSteps": "1. اضغط ‏«ابدأ»‏. تفتح واعية ‏«خيارات المطور»‏ وتُظهر إشعارًا.\n\n2. إذا كانت ‏«خيارات المطور»‏ غير مفعّلة، تُفتح صفحة ‏«حول الهاتف»‏ بدلًا منها: اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.\n\n3. انزل في الصفحة إلى ‏«تصحيح الأخطاء اللاسلكي»‏ (ضمن قسم ‏«تصحيح الأخطاء»‏)، وفعّله وأكّد بالضغط على ‏«سماح»‏.\n\n4. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. يظهر رمز من 6 أرقام.\n\n5. اترك تلك الشاشة مفتوحة. اسحب الإشعارات إلى الأسفل، واضغط ‏«أدخل الرمز»‏ في إشعار واعية واكتب الرمز.\n\n6. تُكمل واعية الباقي وحدها وتقول ‏«اكتمل الإعداد»‏. بعدها يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.",
+  "@wsetupSteps": {
+    "description": "Android string wsetup_steps"
+  },
+  "wsetupStart": "ابدأ",
+  "@wsetupStart": {
+    "description": "Android string wsetup_start"
+  },
+  "wsetupEnterHere": "اكتب الرمز هنا",
+  "@wsetupEnterHere": {
+    "description": "Android string wsetup_enter_here"
+  },
+  "wsetupCancel": "إلغاء",
+  "@wsetupCancel": {
+    "description": "Android string wsetup_cancel"
+  },
+  "wsetupAndroid10": "أندرويد 10 لا يستطيع إتمام الإعداد وحده: يحتاج إلى حاسوب، إما مباشرة (في الأسفل) أو لتشغيل Shizuku مرة واحدة.",
+  "@wsetupAndroid10": {
+    "description": "Android string wsetup_android10"
+  },
+  "wsetupShizukuHeading": "أو باستخدام تطبيق Shizuku",
+  "@wsetupShizukuHeading": {
+    "description": "Android string wsetup_shizuku_heading"
+  },
+  "wsetupShizukuNote": "يسمح Shizuku أيضًا بمرور اللمس عبر أغطية الشاشة.",
+  "@wsetupShizukuNote": {
+    "description": "Android string wsetup_shizuku_note"
+  },
+  "wsetupChannel": "الإعداد لمرة واحدة",
+  "@wsetupChannel": {
+    "description": "Android string wsetup_channel"
+  },
+  "wsetupNotifTitle": "إعداد واعية: في انتظار رمز الإقران",
+  "@wsetupNotifTitle": {
+    "description": "Android string wsetup_notif_title"
+  },
+  "wsetupFoundTitle": "وُجدت شاشة الإقران",
+  "@wsetupFoundTitle": {
+    "description": "Android string wsetup_found_title"
+  },
+  "wsetupBusyTitle": "إعداد واعية",
+  "@wsetupBusyTitle": {
+    "description": "Android string wsetup_busy_title"
+  },
+  "wsetupDoneTitle": "اكتمل الإعداد",
+  "@wsetupDoneTitle": {
+    "description": "Android string wsetup_done_title"
+  },
+  "wsetupDoneBody": "تستطيع واعية الآن كتم الصوت الأصلي. يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.",
+  "@wsetupDoneBody": {
+    "description": "Android string wsetup_done_body"
+  },
+  "wsetupFailedTitle": "لم يكتمل الإعداد",
+  "@wsetupFailedTitle": {
+    "description": "Android string wsetup_failed_title"
+  },
+  "wsetupPairing": "جارٍ الإقران…",
+  "@wsetupPairing": {
+    "description": "Android string wsetup_pairing"
+  },
+  "wsetupConnecting": "جارٍ الاتصال ومنح الأذونات…",
+  "@wsetupConnecting": {
+    "description": "Android string wsetup_connecting"
+  },
+  "wsetupNeedWifi": "اتصل بشبكة Wi‑Fi أولًا (لا يلزم الإنترنت): ‏«تصحيح الأخطاء اللاسلكي»‏ لا يعمل إلا عبر Wi‑Fi.",
+  "@wsetupNeedWifi": {
+    "description": "Android string wsetup_need_wifi"
+  },
+  "wsetupNeedWirelessDebugging": "في ‏«خيارات المطور»‏، فعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط على اسمه ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏.",
+  "@wsetupNeedWirelessDebugging": {
+    "description": "Android string wsetup_need_wireless_debugging"
+  },
+  "wsetupOpenDialog": "في ‏«تصحيح الأخطاء اللاسلكي»‏، اضغط ‏«إقران الجهاز باستخدام رمز الإقران»‏. اترك الرمز ظاهرًا على الشاشة واضغط ‏«أدخل الرمز»‏ هنا.",
+  "@wsetupOpenDialog": {
+    "description": "Android string wsetup_open_dialog"
+  },
+  "wsetupEnterCodeBody": "اضغط ‏«أدخل الرمز»‏ واكتب الرمز المكوّن من 6 أرقام الظاهر في الإعدادات.",
+  "@wsetupEnterCodeBody": {
+    "description": "Android string wsetup_enter_code_body"
+  },
+  "wsetupCodeWaiting": "وصل الرمز. في انتظار شاشة ‏«إقران الجهاز باستخدام رمز الإقران»‏: اتركها مفتوحة.",
+  "@wsetupCodeWaiting": {
+    "description": "Android string wsetup_code_waiting"
+  },
+  "wsetupWrongCode": "لم يُقبل هذا الرمز. تحقّق من الأرقام الستة الظاهرة على الشاشة وأدخلها مرة أخرى. إذا أُغلقت شاشة الإقران فافتحها من جديد، فالرمز يتغيّر.",
+  "@wsetupWrongCode": {
+    "description": "Android string wsetup_wrong_code"
+  },
+  "wsetupPairingFailed": "لم ينجح الإقران. أغلق شاشة الإقران، وافتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ مرة أخرى وأدخل الرمز الجديد.",
+  "@wsetupPairingFailed": {
+    "description": "Android string wsetup_pairing_failed"
+  },
+  "wsetupWaitingConnect": "تم الإقران. أبقِ ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا: واعية تتصل الآن.",
+  "@wsetupWaitingConnect": {
+    "description": "Android string wsetup_waiting_connect"
+  },
+  "wsetupNotPaired": "لم يعد هذا الهاتف يعرف واعية (أُزيل الإقران أو انتهت مدته). افتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ وأدخل الرمز.",
+  "@wsetupNotPaired": {
+    "description": "Android string wsetup_not_paired"
+  },
+  "wsetupConnectFailed": "تعذّر الاتصال بـ ‏«تصحيح الأخطاء اللاسلكي»‏. أوقفه ثم فعّله مرة أخرى، وستعيد واعية المحاولة وحدها.",
+  "@wsetupConnectFailed": {
+    "description": "Android string wsetup_connect_failed"
+  },
+  "wsetupGrantFailed": "تم الاتصال، لكن الأذونات ما زالت ناقصة. استخدم Shizuku أو حاسوبًا (في الأسفل).",
+  "@wsetupGrantFailed": {
+    "description": "Android string wsetup_grant_failed"
+  },
+  "wsetupTimeout": "توقّف الإعداد بعد 10 دقائق دون أن يكتمل. اضغط ‏«ابدأ»‏ للمحاولة مرة أخرى.",
+  "@wsetupTimeout": {
+    "description": "Android string wsetup_timeout"
+  },
+  "wsetupCodeUnreadable": "اكتب الأرقام الستة لرمز الإقران.",
+  "@wsetupCodeUnreadable": {
+    "description": "Android string wsetup_code_unreadable"
+  },
+  "wsetupCodeHint": "رمز من 6 أرقام",
+  "@wsetupCodeHint": {
+    "description": "Android string wsetup_code_hint"
+  },
+  "wsetupEnterCode": "أدخل الرمز",
+  "@wsetupEnterCode": {
+    "description": "Android string wsetup_enter_code"
+  },
+  "wsetupDetail": "التفاصيل: {details}",
+  "@wsetupDetail": {
+    "description": "Android string wsetup_detail",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "wsetupErrTimeout": "لم يأتِ رد في الوقت المحدد",
+  "@wsetupErrTimeout": {
+    "description": "Android string wsetup_err_timeout"
+  },
+  "wsetupErrRefused": "رُفض الاتصال",
+  "@wsetupErrRefused": {
+    "description": "Android string wsetup_err_refused"
+  },
+  "wsetupDevOff": "‏«خيارات المطور»‏ غير مفعّلة. في ‏«حول الهاتف»‏ اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.",
+  "@wsetupDevOff": {
+    "description": "Android string wsetup_dev_off"
+  },
+  "wsetupOpenAbout": "حول الهاتف",
+  "@wsetupOpenAbout": {
+    "description": "Android string wsetup_open_about"
+  },
+  "wsetupNotifOff": "إشعارات واعية متوقفة، فلا يمكن كتابة الرمز في إشعار. استخدم تقسيم الشاشة (الإعدادات في نصف وواعية في النصف الآخر) واضغط ‏«اكتب الرمز هنا»‏.",
+  "@wsetupNotifOff": {
+    "description": "Android string wsetup_notif_off"
+  },
+  "wsetupCodeDialogTitle": "رمز الإقران",
+  "@wsetupCodeDialogTitle": {
+    "description": "Android string wsetup_code_dialog_title"
+  },
+  "wsetupCodeDialogBody": "مع تقسيم الشاشة فقط (الإعدادات في نصف وواعية في النصف الآخر): الخروج من الإعدادات يُغلق شاشة الإقران فيتوقف رمزها عن العمل. اكتب الرمز المكوّن من 6 أرقام الظاهر تحت ‏«إقران الجهاز باستخدام رمز الإقران»‏.",
+  "@wsetupCodeDialogBody": {
+    "description": "Android string wsetup_code_dialog_body"
+  },
+  "wsetupCodeOk": "إقران",
+  "@wsetupCodeOk": {
+    "description": "Android string wsetup_code_ok"
   },
   "blurStrictTitle": "مَن يبقى دون تغطية",
   "@blurStrictTitle": {
@@ -751,15 +965,6 @@
   "blurStatusOnVisibleDesktop": "التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.",
   "@blurStatusOnVisibleDesktop": {
     "description": "Flutter only. Arabic not reviewed yet."
-  },
-  "blurStatusNoCapture": "لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}",
-  "@blurStatusNoCapture": {
-    "description": "Flutter only. Arabic not reviewed yet.",
-    "placeholders": {
-      "details": {
-        "type": "String"
-      }
-    }
   },
   "blurStatusNoOverlayDesktop": "لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n{details}",
   "@blurStatusNoOverlayDesktop": {

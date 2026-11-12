@@ -65,6 +65,16 @@ class AppLocalizationsAr extends AppLocalizations {
       'أوقف أندرويد التصفية. اضغط الزر للتشغيل من جديد.';
 
   @override
+  String get stateSilencedTitle => 'توقفت التصفية';
+
+  @override
+  String get stateSilenced =>
+      'توقفت التصفية: التطبيقات الأخرى مكتومة. اضغط الزر للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.';
+
+  @override
+  String get releaseSilence => 'إيقاف: سماع التطبيقات دون تصفية';
+
+  @override
   String get powerStartCd => 'تشغيل التصفية';
 
   @override
@@ -180,6 +190,21 @@ class AppLocalizationsAr extends AppLocalizations {
       'مستحسن. بعض التطبيقات لا تسمح بتصفية صوتها، فيُكتم بدل أن تمرّ الموسيقى.';
 
   @override
+  String get settingHoldSilenceTitle =>
+      'إبقاء التطبيقات صامتة إذا توقفت التصفية من تلقاء نفسها';
+
+  @override
+  String get settingHoldSilenceBody =>
+      'مستحسن. إذا أنهى أندرويد التصفية (لا أنت)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية. يحتاج إلى الإعداد لمرة واحدة.';
+
+  @override
+  String get settingStereoTitle => 'صوت ستيريو';
+
+  @override
+  String get settingStereoBody =>
+      'مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.';
+
+  @override
   String get settingSingingTitle => 'كتم غناء النساء';
 
   @override
@@ -274,6 +299,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get linkCancelled => 'أُلغي، ولم يُحفظ شيء.';
+
+  @override
+  String get linkTimedOut =>
+      'أوقف أندرويد الحفظ: فهو لا يسمح بهذا النوع من العمل إلا بضع ساعات في اليوم. لم يُحفظ شيء؛ افتح واعية وحاول من جديد.';
 
   @override
   String get linkExportFailed => 'تعذّر الحفظ، ولم يُحفظ شيء.';
@@ -420,6 +449,11 @@ class AppLocalizationsAr extends AppLocalizations {
       'لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.';
 
   @override
+  String blurStatusNoCapture(String details) {
+    return 'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n$details';
+  }
+
+  @override
   String blurSetupFailed(String details) {
     return 'تعذّر السماح عبر Shizuku:\n$details';
   }
@@ -446,6 +480,154 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get guideBody =>
       'تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.';
+
+  @override
+  String get wsetupRouteTitle => 'الإعداد على هذا الهاتف (دون تطبيق إضافي)';
+
+  @override
+  String get wsetupRouteBody =>
+      'باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ الموجود في أندرويد نفسه. تحتاج إلى شبكة Wi‑Fi (لا يلزم الإنترنت). الإقران يكون مرة واحدة فقط.';
+
+  @override
+  String get wsetupSteps =>
+      '1. اضغط ‏«ابدأ»‏. تفتح واعية ‏«خيارات المطور»‏ وتُظهر إشعارًا.\n\n2. إذا كانت ‏«خيارات المطور»‏ غير مفعّلة، تُفتح صفحة ‏«حول الهاتف»‏ بدلًا منها: اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.\n\n3. انزل في الصفحة إلى ‏«تصحيح الأخطاء اللاسلكي»‏ (ضمن قسم ‏«تصحيح الأخطاء»‏)، وفعّله وأكّد بالضغط على ‏«سماح»‏.\n\n4. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. يظهر رمز من 6 أرقام.\n\n5. اترك تلك الشاشة مفتوحة. اسحب الإشعارات إلى الأسفل، واضغط ‏«أدخل الرمز»‏ في إشعار واعية واكتب الرمز.\n\n6. تُكمل واعية الباقي وحدها وتقول ‏«اكتمل الإعداد»‏. بعدها يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.';
+
+  @override
+  String get wsetupStart => 'ابدأ';
+
+  @override
+  String get wsetupEnterHere => 'اكتب الرمز هنا';
+
+  @override
+  String get wsetupCancel => 'إلغاء';
+
+  @override
+  String get wsetupAndroid10 =>
+      'أندرويد 10 لا يستطيع إتمام الإعداد وحده: يحتاج إلى حاسوب، إما مباشرة (في الأسفل) أو لتشغيل Shizuku مرة واحدة.';
+
+  @override
+  String get wsetupShizukuHeading => 'أو باستخدام تطبيق Shizuku';
+
+  @override
+  String get wsetupShizukuNote =>
+      'يسمح Shizuku أيضًا بمرور اللمس عبر أغطية الشاشة.';
+
+  @override
+  String get wsetupChannel => 'الإعداد لمرة واحدة';
+
+  @override
+  String get wsetupNotifTitle => 'إعداد واعية: في انتظار رمز الإقران';
+
+  @override
+  String get wsetupFoundTitle => 'وُجدت شاشة الإقران';
+
+  @override
+  String get wsetupBusyTitle => 'إعداد واعية';
+
+  @override
+  String get wsetupDoneTitle => 'اكتمل الإعداد';
+
+  @override
+  String get wsetupDoneBody =>
+      'تستطيع واعية الآن كتم الصوت الأصلي. يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.';
+
+  @override
+  String get wsetupFailedTitle => 'لم يكتمل الإعداد';
+
+  @override
+  String get wsetupPairing => 'جارٍ الإقران…';
+
+  @override
+  String get wsetupConnecting => 'جارٍ الاتصال ومنح الأذونات…';
+
+  @override
+  String get wsetupNeedWifi =>
+      'اتصل بشبكة Wi‑Fi أولًا (لا يلزم الإنترنت): ‏«تصحيح الأخطاء اللاسلكي»‏ لا يعمل إلا عبر Wi‑Fi.';
+
+  @override
+  String get wsetupNeedWirelessDebugging =>
+      'في ‏«خيارات المطور»‏، فعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط على اسمه ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏.';
+
+  @override
+  String get wsetupOpenDialog =>
+      'في ‏«تصحيح الأخطاء اللاسلكي»‏، اضغط ‏«إقران الجهاز باستخدام رمز الإقران»‏. اترك الرمز ظاهرًا على الشاشة واضغط ‏«أدخل الرمز»‏ هنا.';
+
+  @override
+  String get wsetupEnterCodeBody =>
+      'اضغط ‏«أدخل الرمز»‏ واكتب الرمز المكوّن من 6 أرقام الظاهر في الإعدادات.';
+
+  @override
+  String get wsetupCodeWaiting =>
+      'وصل الرمز. في انتظار شاشة ‏«إقران الجهاز باستخدام رمز الإقران»‏: اتركها مفتوحة.';
+
+  @override
+  String get wsetupWrongCode =>
+      'لم يُقبل هذا الرمز. تحقّق من الأرقام الستة الظاهرة على الشاشة وأدخلها مرة أخرى. إذا أُغلقت شاشة الإقران فافتحها من جديد، فالرمز يتغيّر.';
+
+  @override
+  String get wsetupPairingFailed =>
+      'لم ينجح الإقران. أغلق شاشة الإقران، وافتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ مرة أخرى وأدخل الرمز الجديد.';
+
+  @override
+  String get wsetupWaitingConnect =>
+      'تم الإقران. أبقِ ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا: واعية تتصل الآن.';
+
+  @override
+  String get wsetupNotPaired =>
+      'لم يعد هذا الهاتف يعرف واعية (أُزيل الإقران أو انتهت مدته). افتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ وأدخل الرمز.';
+
+  @override
+  String get wsetupConnectFailed =>
+      'تعذّر الاتصال بـ ‏«تصحيح الأخطاء اللاسلكي»‏. أوقفه ثم فعّله مرة أخرى، وستعيد واعية المحاولة وحدها.';
+
+  @override
+  String get wsetupGrantFailed =>
+      'تم الاتصال، لكن الأذونات ما زالت ناقصة. استخدم Shizuku أو حاسوبًا (في الأسفل).';
+
+  @override
+  String get wsetupTimeout =>
+      'توقّف الإعداد بعد 10 دقائق دون أن يكتمل. اضغط ‏«ابدأ»‏ للمحاولة مرة أخرى.';
+
+  @override
+  String get wsetupCodeUnreadable => 'اكتب الأرقام الستة لرمز الإقران.';
+
+  @override
+  String get wsetupCodeHint => 'رمز من 6 أرقام';
+
+  @override
+  String get wsetupEnterCode => 'أدخل الرمز';
+
+  @override
+  String wsetupDetail(String details) {
+    return 'التفاصيل: $details';
+  }
+
+  @override
+  String get wsetupErrTimeout => 'لم يأتِ رد في الوقت المحدد';
+
+  @override
+  String get wsetupErrRefused => 'رُفض الاتصال';
+
+  @override
+  String get wsetupDevOff =>
+      '‏«خيارات المطور»‏ غير مفعّلة. في ‏«حول الهاتف»‏ اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.';
+
+  @override
+  String get wsetupOpenAbout => 'حول الهاتف';
+
+  @override
+  String get wsetupNotifOff =>
+      'إشعارات واعية متوقفة، فلا يمكن كتابة الرمز في إشعار. استخدم تقسيم الشاشة (الإعدادات في نصف وواعية في النصف الآخر) واضغط ‏«اكتب الرمز هنا»‏.';
+
+  @override
+  String get wsetupCodeDialogTitle => 'رمز الإقران';
+
+  @override
+  String get wsetupCodeDialogBody =>
+      'مع تقسيم الشاشة فقط (الإعدادات في نصف وواعية في النصف الآخر): الخروج من الإعدادات يُغلق شاشة الإقران فيتوقف رمزها عن العمل. اكتب الرمز المكوّن من 6 أرقام الظاهر تحت ‏«إقران الجهاز باستخدام رمز الإقران»‏.';
+
+  @override
+  String get wsetupCodeOk => 'إقران';
 
   @override
   String get blurStrictTitle => 'مَن يبقى دون تغطية';
@@ -599,11 +781,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get blurStatusOnVisibleDesktop =>
       'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.';
-
-  @override
-  String blurStatusNoCapture(String details) {
-    return 'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n$details';
-  }
 
   @override
   String blurStatusNoOverlayDesktop(String details) {
