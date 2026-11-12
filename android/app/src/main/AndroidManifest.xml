@@ -75,6 +75,12 @@
             </intent-filter>
         </activity>
 
+        <!-- The same player for a resolved web link (stream URLs and the headers they need). Not exported: the
+             exported player above ignores a stream list, so no other app can make Waaiya fetch URLs with chosen
+             headers. -->
+        <activity android:name=".LinkPlayerActivity" android:exported="false" android:theme="@style/Theme.IslamicMute.Player"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
+
         <!-- Paste or share a link (YouTube, TikTok, ...): watch, save or share it without music. -->
         <activity android:name=".LinkActivity" android:exported="true" android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">

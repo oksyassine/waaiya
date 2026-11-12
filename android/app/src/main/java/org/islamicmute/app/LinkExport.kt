@@ -88,6 +88,8 @@ class LinkExportService : Service() {
 
     private var worker: Thread? = null
     @Volatile private var cancelled = false
+    /** Android ended the service at its time limit (see [onTimeout]). */
+    @Volatile private var timedOut = false
     private var lastNotify = 0L
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -110,6 +112,22 @@ class LinkExportService : Service() {
     override fun onDestroy() {
         cancelled = true
         super.onDestroy()
+    }
+
+    /**
+     * Android 15: dataSync and mediaProcessing services get about 6 hours a day; at the limit Android calls this and
+     * the service must stop within seconds or the app is stopped with an error. The save is cancelled the usual
+     * way (the worker deletes the cache files, a half-written gallery entry is removed: no partial file is ever
+     * kept), and the service stops now instead of waiting for the worker, which may sit in a 30 s network read.
+     */
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        Log.w(TAG, "export: Android's time limit for this service was reached, cancelling")
+        timedOut = true
+        cancelled = true
+        val title = status.title
+        if (busy) publish(Status(Phase.FAILED, title, error = getString(R.string.link_timed_out)))
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 
     private fun publish(s: Status) {
@@ -154,7 +172,7 @@ class LinkExportService : Service() {
             done = true
         } catch (e: Throwable) {
             Log.w(TAG, "export failed", e)
-            val msg = if (cancelled) getString(R.string.link_cancelled) else (e as? Links.LinkException)?.message ?: getString(R.string.link_export_failed)
+            val msg = if (timedOut) getString(R.string.link_timed_out) else if (cancelled) getString(R.string.link_cancelled) else (e as? Links.LinkException)?.message ?: getString(R.string.link_export_failed)
             publish(Status(Phase.FAILED, title, error = msg))
             getSystemService(NotificationManager::class.java).cancel(2)
         } finally {
@@ -277,7 +295,19 @@ class LinkExportService : Service() {
         }
         val uri = contentResolver.insert(collection, values) ?: throw IOException("cannot create the gallery entry")
         try {
-            contentResolver.openOutputStream(uri)!!.use { o -> file.inputStream().use { it.copyTo(o) } }
+            // checks [cancelled]: a cancel or the time limit during the copy must not publish a partial file
+            contentResolver.openOutputStream(uri)!!.use { o ->
+                file.inputStream().use { i ->
+                    val buf = ByteArray(256 shl 10)
+                    while (true) {
+                        if (cancelled) throw IOException("cancelled")
+                        val n = i.read(buf)
+                        if (n < 0) break
+                        o.write(buf, 0, n)
+                    }
+                }
+            }
+            if (cancelled) throw IOException("cancelled")
             contentResolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
         } catch (e: Throwable) { contentResolver.delete(uri, null, null); throw e }
         return uri
