@@ -99,7 +99,21 @@ class AudioDumpTest {
             assertFalse(u, AudioDump.blocked(s(u, false)))
         }
         assertTrue(AudioDump.blocked(s("USAGE_MEDIA", false)))
-        assertFalse("unknown sound that cannot be captured is left alone", AudioDump.blocked(s("USAGE_UNKNOWN", false)))
+        assertTrue("sound with no declared usage may be music: silenced like media when it refuses capture",
+            AudioDump.blocked(s("USAGE_UNKNOWN", false)))
+    }
+
+    @Test fun bothListsTogether() {
+        val policy = AudioDump.parsePolicy(dump("api35_audio_policy.txt"))
+        val service = AudioDump.parseService(dump("api35_audio.txt"))
+        val all = AudioDump.merge(policy, service)
+        assertEquals("each session once", all.size, all.map { it.id }.toSet().size)
+        assertTrue("nothing from either list is lost", all.map { it.id }.containsAll(policy.map { it.id } + service.map { it.id }))
+        assertFalse("the policy dump's 'refuses capture' wins over the Java flags", all.single { it.id == 177 }.capturable)
+        // a phone whose policy dump cannot be read keeps the list that earlier versions used
+        assertEquals(service, AudioDump.merge(emptyList(), service))
+        val a = AudioSession(5, 10001, "USAGE_MEDIA", true, false)
+        assertTrue(AudioDump.merge(listOf(a), listOf(a.copy(active = true))).single().active)
     }
 
     @Test fun garbage() {

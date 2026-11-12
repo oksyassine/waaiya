@@ -276,6 +276,8 @@ def main():
     c.check("State: FILTERING" in report and "Speed since start" in report, "report has the live numbers")
     if a.setup == "done":
         c.check("Muter: OK, list from audio_policy" in report, "report: the muter reads the session list", report[-600:])
+        if int(e.sh("getprop ro.build.version.sdk").strip() or 0) >= 31:
+            c.check("list from audio_policy+audio" in report, "Android 12+: both session lists are read", report[-600:])
     if a.blur:
         m = re.search(r"\[Screen blur\].*?State: (\w+).*?(Frames: [^\n]*)?$", report, re.S)
         c.check(m is not None and m.group(1) in ("ON", "ON_COVERS_VISIBLE"), "blur is on", report[-400:])

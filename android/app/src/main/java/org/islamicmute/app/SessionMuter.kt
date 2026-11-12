@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.AudioManager
 import android.media.AudioPlaybackConfiguration
 import android.media.audiofx.DynamicsProcessing
+import android.os.Build
 import android.os.IBinder
 import android.os.ParcelFileDescriptor
 import android.os.Process
@@ -107,13 +108,18 @@ class SessionMuter(private val context: Context, private val settings: Settings)
 
     private fun poll() {
         polls++
-        // The policy dump works on every Android version; `dumpsys audio` only helps where the policy dump's
-        // layout is one this app does not know yet.
-        var list = AudioDump.parsePolicy(dump("media.audio_policy"))
-        source = "audio_policy"
-        if (list.isEmpty()) {
-            val fromService = AudioDump.parseService(dump("audio"))
-            if (fromService.isNotEmpty()) { list = fromService; source = "audio" }
+        // The policy dump has session ids on every Android version and the real "refuses capture" flag.
+        // `dumpsys audio` has session ids from Android 12: read there too, so a phone whose policy dump has a
+        // layout this app does not know still gets the list that earlier versions used.
+        val policy = runCatching { AudioDump.parsePolicy(dump("media.audio_policy")) }
+            .onFailure { lastError = "audio_policy: $it" }.getOrDefault(emptyList())
+        val service = if (Build.VERSION.SDK_INT >= 31 || policy.isEmpty()) AudioDump.parseService(dump("audio")) else emptyList()
+        var list = AudioDump.merge(policy, service)
+        source = when {
+            policy.isNotEmpty() && service.isNotEmpty() -> "audio_policy+audio (${policy.size}+${service.size})"
+            policy.isNotEmpty() -> "audio_policy"
+            service.isNotEmpty() -> "audio"
+            else -> "none"
         }
         val me = Process.myUid()
         list = list.filter { it.uid != me && it.id > 0 }

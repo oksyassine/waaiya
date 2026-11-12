@@ -94,11 +94,28 @@ object AudioDump {
     }
 
     private val filterableUsages = setOf("USAGE_MEDIA", "USAGE_GAME", "USAGE_UNKNOWN")
-    private val mediaUsages = setOf("USAGE_MEDIA", "USAGE_GAME")
 
     /** The app's sound reaches the filter (we play the filtered copy, so the original is muted). */
     fun filterable(s: AudioSession): Boolean = s.capturable && s.usage in filterableUsages
 
-    /** Media of an app that refuses capture: it cannot be filtered, only silenced or left as it is. */
-    fun blocked(s: AudioSession): Boolean = !s.capturable && s.usage in mediaUsages
+    /**
+     * Sound of an app that refuses capture: it cannot be filtered, only silenced or left as it is. The same
+     * usages as [filterable] (sound with no declared usage may be music): what would be filtered is never
+     * let through unfiltered just because the app refuses.
+     */
+    fun blocked(s: AudioSession): Boolean = !s.capturable && s.usage in filterableUsages
+
+    /**
+     * Both lists as one. The policy dump knows the real "refuses capture" flag; `dumpsys audio` is the list
+     * this app used before, kept so that a phone whose policy dump has a layout unknown here loses nothing.
+     */
+    fun merge(policy: List<AudioSession>, service: List<AudioSession>): List<AudioSession> {
+        val out = LinkedHashMap<Int, AudioSession>()
+        for (s in policy) out[s.id] = s
+        for (s in service) {
+            val p = out[s.id]
+            out[s.id] = if (p == null) s else p.copy(active = p.active || s.active, capturable = p.capturable && s.capturable)
+        }
+        return out.values.toList()
+    }
 }
