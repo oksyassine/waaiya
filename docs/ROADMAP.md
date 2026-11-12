@@ -40,7 +40,7 @@ Owner decisions, 2026-11-12:
 | Mono is the default for the live filter | A "Stereo sound" setting, off by default: mono uses about half the battery and keeps up on more phones. It switches live both ways (the engine is always built with one model state per channel). With stereo chosen, a phone that is too slow still drops to mono by itself, and only then does the screen say so |
 | When Android ends filtering, other apps stay silent | "Keep apps silent if filtering stops by itself", on by default. When the capture stops or dies (not the user's Stop), the capture, filter and blur end but the service and its muter keep running: the screen and the notification say "Filtering stopped: other apps are silenced", with start again and Stop. Off, or without the one-time setup (nothing can be muted then): as before, the sound comes back with the "Waaiya stopped" notification |
 
-Checked without a phone: 33 JVM tests (now with `CoverWindowsTest`), the tracker tests (`models/vision/test_cover.py`,
+Checked without a phone: 27 JVM tests (now with `CoverWindowsTest`), the tracker tests (`models/vision/test_cover.py`,
 the 3 s lift reproduced and gone), `build/test-failclosed`, 28 link-updater tests, and `emu_check.py --setup done
 --blur --end-capture --blur-fail` on the Android 15 emulator: covers opaque, one window per group, a tap between
 covers reaches the app and a tap on a cover does not, the service stays in the foreground 73 s after the capture
