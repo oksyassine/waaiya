@@ -39,8 +39,8 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 11
-        versionName = "0.2.9"
+        versionCode = 12
+        versionName = "0.2.10"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         if (blurA11y) versionNameSuffix = "-a11y"
@@ -125,24 +125,51 @@ tasks.matching { it.name.startsWith("configureCMake") || it.name.startsWith("bui
 }
 
 // Bundle the voice model: -PimModel=/path/model.onnx (default: the int8 DeepFilterNet3 streaming export).
+// A release build fails if any model in requiredModels is missing; a debug build warns and leaves that part out.
 val modelAssets = layout.buildDirectory.dir("modelAssets")
-val copyModel by tasks.registering(Copy::class) {
-    val model = providers.gradleProperty("imModel").orElse(rootProject.file("../models/dfn3/dfn3_stream_int8.onnx").path)
-    from(model) { rename { "voice.onnx" } }
-    from(model.map { it.removeSuffix(".onnx") + ".state_init.bin" }) { rename { "voice.state_init.bin" } }
-    // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
-    val detector = providers.gradleProperty("imDetector").orElse(rootProject.file("../models/detector/detector_v1.onnx").path)
-    from(detector) { rename { "detector.onnx" } }
+val modelVoice = providers.gradleProperty("imModel").getOrElse(rootProject.file("../models/dfn3/dfn3_stream_int8.onnx").path)
+val modelVision = rootProject.file("../models/vision")
+fun modelFile(prop: String, default: File): File = file(providers.gradleProperty(prop).getOrElse(default.path))
+// asset name in the APK -> source file
+val requiredModels = linkedMapOf(
+    "voice.onnx" to file(modelVoice),
+    "voice.state_init.bin" to file(modelVoice.removeSuffix(".onnx") + ".state_init.bin"),
     // Screen blur (models/vision/export_vision.py): person detector, woman/man classifier, nudity classifier.
-    // -PimBlurPerson / -PimBlurGender / -PimBlurNsfw override; a missing file just leaves that part out
+    // -PimBlurPerson / -PimBlurGender / -PimBlurNsfw override; in a debug build a missing file just leaves that part out
     // (no gender model = every person covered; no nudity model = the nudity option reports "not available").
-    val vision = rootProject.file("../models/vision")
-    from(providers.gradleProperty("imBlurPerson").orElse(vision.resolve("person_yolox_nano.onnx").path)) { rename { "blur_person.onnx" } }
-    from(providers.gradleProperty("imBlurGender").orElse(vision.resolve("gender_v2.onnx").path)) { rename { "blur_gender.onnx" } }
-    from(providers.gradleProperty("imBlurNsfw").orElse(vision.resolve("nsfw_marqo_int8.onnx").path)) { rename { "blur_nsfw.onnx" } }
+    "blur_person.onnx" to modelFile("imBlurPerson", modelVision.resolve("person_yolox_nano.onnx")),
+    "blur_gender.onnx" to modelFile("imBlurGender", modelVision.resolve("gender_v2.onnx")),
+    "blur_nsfw.onnx" to modelFile("imBlurNsfw", modelVision.resolve("nsfw_marqo_int8.onnx")),
     // Person segmenter (-PimBlurSeg): covers follow each person's outline; without it, whole rectangles.
-    from(providers.gradleProperty("imBlurSeg").orElse(vision.resolve("seg.onnx").path)) { rename { "blur_seg.onnx" } }
+    "blur_seg.onnx" to modelFile("imBlurSeg", modelVision.resolve("seg.onnx")),
+)
+// Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
+// Optional in every build: no release asset has it yet (scripts/fetch_deps.sh detector), so a build without it warns.
+val detectorModel = modelFile("imDetector", rootProject.file("../models/detector/detector_v1.onnx"))
+// Sync, not Copy: build/modelAssets ends up holding exactly the files found now, so a model whose source is gone
+// cannot ship from a stale copy left there by an older build.
+val copyModel by tasks.registering(Sync::class) {
+    requiredModels.forEach { (asset, src) -> from(src) { rename { asset } } }
+    from(detectorModel) { rename { "detector.onnx" } }
     into(modelAssets)
+}
+// The check runs once the task graph is known, not as an action of copyModel: Gradle skips a copy task's actions
+// when it is UP-TO-DATE, or NO-SOURCE when every model is missing, so a doFirst there could be bypassed.
+// Same release test as copyLicences below: any task with "Release" in its name.
+gradle.taskGraph.whenReady {
+    if (!hasTask("${project.path}:copyModel")) return@whenReady
+    val release = allTasks.any { it.name.contains("Release") }
+    val missing = requiredModels.filterValues { !it.isFile }
+    if (missing.isNotEmpty()) {
+        val msg = "models missing: " + missing.entries.joinToString { (asset, src) -> "$asset (from $src)" } +
+            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg."
+        if (release) throw GradleException("Release build: $msg")
+        logger.warn("warning: $msg Debug build continues without them.")
+    }
+    if (!detectorModel.isFile) {
+        logger.warn("warning: no women's-singing detector at $detectorModel (-PimDetector=...): this " +
+            (if (release) "release" else "debug") + " build has no women's-singing filter.")
+    }
 }
 android.sourceSets["main"].assets.srcDir(modelAssets)
 

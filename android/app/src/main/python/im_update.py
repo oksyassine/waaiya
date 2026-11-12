@@ -8,6 +8,12 @@ Safety:
 - Only PyPI over HTTPS, only pure-Python wheels (py3-none-any) hosted on files.pythonhosted.org, checked
   against the SHA-256 that PyPI publishes; size capped; zip paths checked; only the yt_dlp / yt_dlp_ejs packages
   are extracted. The trust is the same as `pip install -U yt-dlp`.
+- A release is taken only once it has been on PyPI for a while (its wheel's upload time): 3 days for a stable
+  release, 1 day for a nightly. A bad or hijacked upload is usually found and yanked within that time. The newest
+  release that is old enough is taken, so a fresh release only delays the update, it does not block it.
+- Stable releases only, except after a link failed (prerelease=True): then yt-dlp's nightly builds are also taken,
+  with their own 1-day wait.
+- Requests carry no app name: urllib's default User-Agent, the same as any Python script.
 - A new copy goes live only after it imports and reports the expected version. Otherwise it is deleted, and the
   previous copy (or the bundled one) is restored.
 - At start, a downloaded copy is used only if it is newer than the bundled one, so an APK update that bundles
@@ -26,6 +32,7 @@ import sys
 import time
 import urllib.request
 import zipfile
+from datetime import datetime, timezone
 
 PYPI = "https://pypi.org/pypi/{}/json"
 PYPI_VERSION = "https://pypi.org/pypi/{}/{}/json"
@@ -33,6 +40,8 @@ FILES_HOST = "https://files.pythonhosted.org/"
 MAX_WHEEL = 16 << 20
 TIMEOUT = 20
 PACKAGES = ("yt_dlp", "yt_dlp_ejs")
+MIN_AGE_STABLE = 3 * 86400  # seconds a stable release must have been on PyPI before it is taken
+MIN_AGE_PRE = 1 * 86400  # the same for a nightly (only taken after a link failed)
 
 _active_dir = None  # sys.path entry of the downloaded copy in use, or None for the bundled one
 _active_version = None  # its version (None: the bundled one)
@@ -131,9 +140,17 @@ def active_version(bundled):
     return _active_version or bundled
 
 
+def _now():
+    """The clock for the release-age rule (tests replace it)."""
+    return time.time()
+
+
 def _get(url, limit=1 << 20):
     ctx = ssl.create_default_context()
-    req = urllib.request.Request(url, headers={"User-Agent": "waaiya-updater", "Accept": "application/json"})
+    # No User-Agent of our own: urllib then sends its default ('Python-urllib/3.x'), the same as countless scripts
+    # and tools, so PyPI cannot tell these requests come from this app. A browser or pip User-Agent would be a lie
+    # about the client, and an app name would mark every user of the app in PyPI's and the CDN's logs.
+    req = urllib.request.Request(url)
     with urllib.request.urlopen(req, timeout=TIMEOUT, context=ctx) as r:
         data = r.read(limit + 1)
     if len(data) > limit:
@@ -160,12 +177,77 @@ def _python_ok(spec):
 
 def _wheel(meta):
     """The pure-Python wheel of a PyPI JSON release, or None."""
-    for u in meta.get("urls") or []:
+    return _wheel_in(meta.get("urls"))
+
+
+def _wheel_in(files):
+    """The pure-Python wheel among a release's file entries, or None."""
+    for u in files or []:
         name = u.get("filename", "")
         if (u.get("packagetype") == "bdist_wheel" and name.endswith("-py3-none-any.whl")
                 and u.get("url", "").startswith(FILES_HOST) and (u.get("digests") or {}).get("sha256")
                 and not u.get("yanked")):
             return u
+    return None
+
+
+def _is_stable(version):
+    """True for a final release ('2026.10.26'); False for nightlies ('2026.11.4.232659.dev0') and any other
+    pre-release or unusual version (rc, alpha, post...)."""
+    return re.fullmatch(r"\d+(\.\d+)*", str(version or "")) is not None
+
+
+def _uploaded(u):
+    """Upload time (Unix seconds, UTC) of a PyPI file entry, or None if missing or unparseable. 'upload_time' is
+    read only when 'upload_time_iso_8601' is absent: a garbled ISO time rejects the file."""
+    t = u.get("upload_time_iso_8601")
+    if t is None:
+        t = u.get("upload_time")
+    if not isinstance(t, str) or not t:
+        return None
+    try:
+        d = datetime.fromisoformat(t.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if d.tzinfo is None:
+        d = d.replace(tzinfo=timezone.utc)  # PyPI's 'upload_time' is UTC without an offset
+    return d.timestamp()
+
+
+def _old_enough(u, min_age):
+    """True if the file entry `u` has been on PyPI for at least `min_age` seconds. A missing, unparseable or
+    future upload time fails."""
+    t = _uploaded(u)
+    if t is None:
+        return False
+    age = _now() - t
+    return 0 <= age and age >= min_age
+
+
+def _min_age(version):
+    return MIN_AGE_STABLE if _is_stable(version) else MIN_AGE_PRE
+
+
+def _choose(meta, current, bundled, prerelease=False):
+    """The yt-dlp release to take from the project's PyPI JSON: the newest one that is newer than both `current`
+    and `bundled`, stable (or also a pre-release when `prerelease`), with a usable wheel for this Python that has
+    been on PyPI long enough. Returns (version, wheel file entry) or None. The age is judged on the very file entry
+    that is then downloaded."""
+    releases = meta.get("releases")
+    if not isinstance(releases, dict):  # PyPI has dropped 'releases' from some JSON views: use the latest only
+        latest = (meta.get("info") or {}).get("version")
+        releases = {latest: meta.get("urls") or []} if latest else {}
+    floor = max(_vt(current), _vt(bundled))
+    for version in sorted(releases, key=_vt, reverse=True):
+        if _vt(version) <= floor:
+            break
+        if not (_is_stable(version) or prerelease):
+            continue
+        u = _wheel_in(releases[version])
+        if not u or not _python_ok(u.get("requires_python")):
+            continue
+        if _old_enough(u, _min_age(version)):
+            return version, u
     return None
 
 
@@ -197,6 +279,7 @@ def _extract(wheel, dest):
 
 
 def _due(files_dir, every_s, name="last_check"):
+    # Real clock on purpose (not _now()): it is compared with a file's mtime, which the file system sets.
     stamp = os.path.join(_root(files_dir), name)
     try:
         if time.time() - os.path.getmtime(stamp) < every_s:
@@ -212,28 +295,21 @@ def _due(files_dir, every_s, name="last_check"):
 def download(files_dir, bundled, prerelease=False, every_s=20 * 3600):
     """If PyPI has a yt-dlp newer than the one in use, download and unpack it next to the current copy.
     Returns the staged directory name, or None (nothing newer, not due yet, or any failure).
+    Only a release that has been on PyPI for MIN_AGE_STABLE (nightly: MIN_AGE_PRE) is taken; the newest such one.
     prerelease=True also takes yt-dlp's nightly builds, which follow site changes within a day."""
     # The check after a failed link has its own stamp: the daily check, made when the link screen opens, must
     # not block it for an hour.
     if not _due(files_dir, every_s, "last_check_nightly" if prerelease else "last_check"):
         return None
     staged = None
+    root = _root(files_dir)
     try:
         current = active_version(bundled)
         meta = json.loads(_get(PYPI.format("yt-dlp"), 8 << 20))
-        candidates = [meta["info"]["version"]]  # latest stable
-        if prerelease:
-            candidates += [v for v, files in meta.get("releases", {}).items() if files]
-        version = max(candidates, key=_vt)
-        if _vt(version) <= _vt(current) or _vt(version) <= _vt(bundled):
+        chosen = _choose(meta, current, bundled, prerelease)
+        if not chosen:
             return None
-        rel = meta if version == meta["info"]["version"] else json.loads(_get(PYPI_VERSION.format("yt-dlp", version)))
-        if not _python_ok(rel["info"].get("requires_python")):
-            return None
-        u = _wheel(rel)
-        if not u:
-            return None
-        root = _root(files_dir)
+        version, u = chosen
         staged = re.sub(r"[^\w.]", "_", version)
         dest = os.path.join(root, staged)
         shutil.rmtree(dest, ignore_errors=True)
@@ -246,17 +322,28 @@ def download(files_dir, bundled, prerelease=False, every_s=20 * 3600):
             w = _wheel(ejs)
             if not w:
                 raise ValueError("no yt-dlp-ejs wheel " + m.group(1))
+            # Same wait as the yt-dlp release that pins it: yt-dlp publishes the EJS version it needs together with
+            # (or just before) the release, so a 3-day rule here would hold back a 1-day-old nightly for two more
+            # days on exactly the path meant to fix a broken link. The pin is exact, so the EJS wheel is as
+            # trusted as the yt-dlp release that names it.
+            if not _old_enough(w, _min_age(version)):
+                raise ValueError("yt-dlp-ejs too new: " + m.group(1))
             _extract(_fetch_wheel(w, root), dest)
-        for f in os.listdir(root):
-            if f.endswith(".whl"):
-                os.remove(os.path.join(root, f))
         with open(os.path.join(dest, "VERSION"), "w") as f:
             f.write(version)
         return staged
     except Exception:
         if staged:
-            shutil.rmtree(os.path.join(_root(files_dir), staged), ignore_errors=True)
+            shutil.rmtree(os.path.join(root, staged), ignore_errors=True)
+            staged = None
         return None
+    finally:
+        try:
+            for f in os.listdir(root):
+                if f.endswith(".whl"):
+                    os.remove(os.path.join(root, f))
+        except OSError:
+            pass
 
 
 def install(files_dir, staged, bundled):

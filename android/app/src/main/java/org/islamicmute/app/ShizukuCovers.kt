@@ -44,6 +44,12 @@ class ShizukuCovers(private val ctx: Context) {
 
     val alive: Boolean get() = svc?.asBinder()?.isBinderAlive == true
 
+    /** Set (from the health thread) when the shell process reported a draw error or the health call threw: the
+     *  covers may not be on screen, so the caller falls back to a window. */
+    @Volatile var failed = false
+        private set
+    @Volatile private var checking = false
+
     /** Binds the service and creates the layer. [done] runs on the main thread: true = covers can be drawn. */
     fun connect(done: (Boolean) -> Unit) {
         var finished = false
@@ -69,6 +75,21 @@ class ShizukuCovers(private val ctx: Context) {
     /** rects: count records of 8 floats (x0, y0, x1, y1 in display pixels, kind, r, g, b). One-way: never blocks. */
     fun update(rects: FloatArray, count: Int) {
         runCatching { svc?.update(rects, count) }.onFailure { svc = null }
+    }
+
+    /**
+     * Asks the shell process whether the last updates were drawn ([failed] turns true if not). Called twice a
+     * second; the two-way call runs on its own thread so the main thread never waits on the shell.
+     */
+    fun checkHealth() {
+        val s = svc ?: return
+        if (checking || failed) return
+        checking = true
+        thread(name = "im-covers-health") {
+            val h = runCatching { s.health() }.onFailure { Log.w(TAG, "covers: health call failed", it) }.getOrDefault(-1)
+            if (h != 0) { Log.w(TAG, "covers: shell layer reports $h"); failed = true }
+            checking = false
+        }
     }
 
     fun stop() {
@@ -106,6 +127,8 @@ class CoverService : ICoverService.Stub() {
     private var app: IBinder? = null
     @Volatile private var last = 0L
     @Volatile private var shown = false
+    /** An update failed since the last health() call. */
+    @Volatile private var updateFailed = false
     private val death = IBinder.DeathRecipient { clear() }
 
     init {
@@ -133,9 +156,18 @@ class CoverService : ICoverService.Stub() {
             t.setVisibility(r, true)
             t.apply()
             root = r
+            // Probe: one cover through every call update() makes, left hidden. update() is one-way, so an error
+            // there never reaches the app; here it does, and the app then draws with a window instead.
+            val probe = newCover(r)
+            covers += probe
+            val pt = SurfaceControl.Transaction()
+            configure(pt, probe, 0, 0, 1, 1, Vision.KIND_WOMAN, floatArrayOf(0f, 0f, 0f))
+            pt.setVisibility(probe, false)
+            pt.apply()
             this.app = app
             app.linkToDeath(death, 0)
             last = SystemClock.uptimeMillis()
+            updateFailed = false
             true
         } catch (e: Throwable) {
             Log.e("IslamicMute", "covers: cannot create the layer", e)
@@ -150,11 +182,7 @@ class CoverService : ICoverService.Stub() {
         val n = count.coerceIn(0, rects.size / ShizukuCovers.RECORD).coerceAtMost(MAX_LAYERS)
         val t = SurfaceControl.Transaction()
         try {
-            while (covers.size < n) {
-                val b = SurfaceControl.Builder().setName("waaiya-cover").setParent(r)
-                call(b, "setEffectLayer")
-                covers += b.build()
-            }
+            while (covers.size < n) covers += newCover(r)
             for ((i, c) in covers.withIndex()) {
                 if (i >= n) { t.setVisibility(c, false); continue }
                 val o = i * ShizukuCovers.RECORD
@@ -167,22 +195,42 @@ class CoverService : ICoverService.Stub() {
                     ShizukuCovers.KIND_BADGE -> floatArrayOf(0.8f, 0.15f, 0.15f)
                     else -> floatArrayOf(rects[o + 5], rects[o + 6], rects[o + 7])
                 }
-                call(t, "setPosition", c, x0.toFloat(), y0.toFloat()) // public from API 33, hidden on 31-32
-                call(t, "setCrop", c, Rect(0, 0, w, h))
-                call(t, "setColor", c, rgb)
-                t.setAlpha(c, 1f)                         // opaque: nothing of what is under shows through
-                // square corners for the whole screen and for strips of an outline (they stack into one shape)
-                val square = kind == Vision.KIND_FULL || kind == ShizukuCovers.KIND_FAIL_COVER ||
-                    (kind < ShizukuCovers.KIND_FAIL_COVER && (kind and Vision.KIND_PART) != 0)
-                runCatching { call(t, "setCornerRadius", c, if (square) 0f else 24f) }
-                t.setLayer(c, if (kind == ShizukuCovers.KIND_BADGE || kind == ShizukuCovers.KIND_TEST) 10 else 1)
+                configure(t, c, x0, y0, w, h, kind, rgb)
                 t.setVisibility(c, true)
             }
             t.apply()
             shown = n > 0
         } catch (e: Throwable) {
+            // one-way call: the app learns of this through health()
+            updateFailed = true
             Log.e("IslamicMute", "covers: update failed", e)
         }
+    }
+
+    override fun health(): Int = synchronized(lock) {
+        val r = when { root == null -> 1; updateFailed -> 2; else -> 0 }
+        updateFailed = false
+        r
+    }
+
+    private fun newCover(parent: SurfaceControl): SurfaceControl {
+        val b = SurfaceControl.Builder().setName("waaiya-cover").setParent(parent)
+        call(b, "setEffectLayer")
+        return b.build()
+    }
+
+    /** Position, size, colour and corners of one cover (the same calls for the start() probe and update()). */
+    private fun configure(t: SurfaceControl.Transaction, c: SurfaceControl, x0: Int, y0: Int, w: Int, h: Int, kind: Int,
+                          rgb: FloatArray) {
+        call(t, "setPosition", c, x0.toFloat(), y0.toFloat()) // public from API 33, hidden on 31-32
+        call(t, "setCrop", c, Rect(0, 0, w, h))
+        call(t, "setColor", c, rgb)
+        t.setAlpha(c, 1f)                         // opaque: nothing of what is under shows through
+        // square corners for the whole screen and for strips of an outline (they stack into one shape)
+        val square = kind == Vision.KIND_FULL || kind == ShizukuCovers.KIND_FAIL_COVER ||
+            (kind < ShizukuCovers.KIND_FAIL_COVER && (kind and Vision.KIND_PART) != 0)
+        runCatching { call(t, "setCornerRadius", c, if (square) 0f else 24f) }
+        t.setLayer(c, if (kind == ShizukuCovers.KIND_BADGE || kind == ShizukuCovers.KIND_TEST) 10 else 1)
     }
 
     override fun stop(): Unit = clear()
