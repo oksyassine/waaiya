@@ -123,6 +123,7 @@ class LicencesActivity : Activity() {
             "ONNX Runtime (MIT)" to "onnxruntime-LICENSE.txt",
             "ONNX Runtime third-party notices" to "onnxruntime-ThirdPartyNotices.txt",
             "Shizuku-API (MIT)" to "Shizuku-API-LICENSE.txt",
+            "Wireless debugging setup: ported from BoringSSL and AOSP adb (Apache-2.0)" to "adb-wireless-pairing-NOTICE.txt",
             "DeepFilterNet (MIT; also available under Apache-2.0)" to "DeepFilterNet-LICENSE-MIT.txt",
             "EfficientAT detector backbone (MIT)" to "EfficientAT-LICENSE.txt",
             "Chaquopy, Python in the app (MIT)" to "Chaquopy-LICENSE.txt",

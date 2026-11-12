@@ -1,4 +1,4 @@
-# Status (2026-11-12)
+# Status (2026-11-12, 0.2.10)
 
 What comes next, and why: `docs/ROADMAP.md`.
 
@@ -7,10 +7,10 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Test set + scoring | done | `testset/`, `eval/results/summary.md` |
 | Engine (C, ONNX Runtime) | done | parity >100 dB vs PyTorch, 30 ms delay on the hop-aligned path; stereo about 7 ms and mono about 3 ms per 10 ms hop on a loaded desktop core (`build/test-mono`); mono can be switched on a running engine |
 | Linux always-on | done, live-tested on PulseAudio | `linux/test_run.sh`: 24 dB suppression, crash restarts fail-closed; delay in `eval/results/latency.md` |
-| Android live filter | released (0.2.9), used on a Galaxy S24 | Adapts to the phone (mono fallback, dropout counting), says when the original is not silenced or the phone is too slow, diagnostics report. Checked on Android 11 and 15 emulators with `android/tools/emu_check.py`; 19 JVM tests |
+| Android live filter | released (0.2.9), used on a Galaxy S24; 0.2.10 built, not published | Mono by default with a stereo setting (0.2.10); adapts to the phone (mono fallback, dropout counting), says when the original is not silenced or the phone is too slow, diagnostics report. When Android ends filtering, other apps stay silent by default (0.2.10). Checked on emulators with `android/tools/emu_check.py`; 27 JVM tests |
 | Android: silence the originals | done | Session list from the audio policy dump (Android 10+); one-time grant with Shizuku or ADB |
 | Open a link (YouTube, TikTok, Instagram) | done | Video links stay video; saved files keep the original picture with filtered sound |
-| Screen blur (Android) | released | Person detector with tiles, woman/man classifier v2, outlines, steady covers: `eval/results/blur_*.md`. Speed on phones not measured |
+| Screen blur (Android) | released | Person detector with tiles, woman/man classifier v2, outlines, steady covers: `eval/results/blur_*.md`. 0.2.10: one window per cover group without Shizuku, checked Shizuku layer, self-test on every host change. Speed on phones not measured |
 | Women's-singing detector | engine + Linux + Android wired; model v1 bundled | `models/detector/test_detector_engine.py` |
 | Model shrink | done: int8 weights 2.4 MB, within 0.2 dB | `eval/results/shrink.md` |
 | Own voice model (keeps singing) | trained on Kaggle, not the default | roadmap item 6 |
@@ -21,7 +21,8 @@ Baseline DeepFilterNet3: speech kept (-2.6 dB) with 21-24 dB instrument suppress
 
 ## Not verified on a real phone yet
 - How many phones need the mono fallback, and how it sounds there (the diagnostics report will tell).
-- Blur speed with outlines and tiles; the Shizuku cover layer.
+- Blur speed with outlines and tiles; the Shizuku cover layer (its probe and health call are untested on a device:
+  the emulators have no Shizuku).
 - Bluetooth output delay.
 
 ## Done earlier (approved list)
