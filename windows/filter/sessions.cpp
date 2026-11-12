@@ -19,6 +19,15 @@ struct ImMeter : public IUnknown {
     virtual HRESULT STDMETHODCALLTYPE QueryHardwareSupport(DWORD *mask) = 0;
 };
 
+// Output channels of the session's streams: 0 when it has no output stream (it plays nothing: a recorder of the
+// speakers, or what is left of a closed app). The meter says so (tested on Windows Server 2022 and 2025).
+UINT out_channels(IUnknown *ctl) {
+    Com<ImMeter> meter;
+    UINT ch = 0;
+    if (SUCCEEDED(ctl->QueryInterface(IID_ImMeter, reinterpret_cast<void **>(meter.put())))) meter->GetMeteringChannelCount(&ch);
+    return ch;
+}
+
 const char *state_name(AudioSessionState s) {
     return s == AudioSessionStateActive ? "active" : (s == AudioSessionStateInactive ? "inactive" : "expired");
 }
@@ -298,36 +307,15 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         return;
     }
 
-    // the user's level: the stored one (we lowered this app before, maybe in an earlier run that Windows
-    // remembered), else what the session has now
-    float user;
-    if (it != store_.end()) {
-        user = it->second;
-    } else if (cur <= att_ * 1.01f && cur > 0) {
-        user = 1.0f; // lowered by us in a run whose store was lost: no level of the user's to go back to but full
-    } else {
-        user = cur;
-    }
-    if (it == store_.end() || it->second != user) {
-        store_[id] = user;
-        save();
-    }
-    float want = user * att_;
-    if (std::fabs(cur - want) > want * 0.01f + 1e-9f) {
-        HRESULT hr = vol->SetMasterVolume(want, &IM_VOLUME_CONTEXT);
-        // experiment: does the meter tell a session that plays from one that only records (loopback)?
-        UINT meter_ch = 99;
-        float meter_peak = -1;
-        Com<ImMeter> meter;
-        if (SUCCEEDED(ctl->QueryInterface(IID_ImMeter, reinterpret_cast<void **>(meter.put())))) {
-            meter->GetMeteringChannelCount(&meter_ch);
-            meter->GetPeakValue(&meter_peak);
-        }
-        if (log) log("sessions: pid %lu %s, level %.4f -> %.6f (user %.4f)%s%s, meter %u ch peak %.6f",
-                     (unsigned long)pid, state_name(st), cur, want, user, track ? "" : ", from the notification",
-                     SUCCEEDED(hr) ? "" : im_hr(hr).c_str(), meter_ch, meter_peak);
-    }
+    // Plays nothing (no output stream) and not lowered before: left alone, only watched (poll_quiet). Lowering a
+    // session also lowers what its loopback recordings get (OBS, a call sharing the computer's sound).
+    UINT ch = out_channels(ctl);
+    bool quiet = ch == 0 && it == store_.end();
+    if (!quiet) lower(vol.p, id, pid, st, cur, track);
+    else if (log && !t) log("sessions: pid %lu %s plays nothing yet (no output stream): watched%s", (unsigned long)pid,
+                            state_name(st), track ? "" : ", from the notification");
 
+    if (t) t->lowered = t->lowered || !quiet;
     if (!t && track) {
         Tracked n;
         n.ctl.p = c2.p;
@@ -336,6 +324,7 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         vol.p = nullptr;
         n.id = id;
         n.pid = pid;
+        n.lowered = !quiet;
         n.events = new SessionEvents(this);
         if (FAILED(n.ctl->RegisterAudioSessionNotification(n.events))) {
             n.events->Release();
@@ -351,7 +340,7 @@ void Sessions::on_volume(SessionEvents *s, float v, LPCGUID ctx) {
     std::lock_guard<std::recursive_mutex> l(mu_);
     if (mode_ != ATTENUATE) return;
     for (auto &t : tracked_) {
-        if (t.events != s || t.dead) continue;
+        if (t.events != s || t.dead || !t.lowered) continue;
         if (v > att_ * 1.5f) store_[t.id] = v; // else: someone set it near zero; keep the level we knew
         save();
         t.vol->SetMasterVolume(store_[t.id] * att_, &IM_VOLUME_CONTEXT);
@@ -365,6 +354,44 @@ void Sessions::on_gone(SessionEvents *s) {
     for (auto &t : tracked_)
         if (t.events == s) t.dead = true;
     SetEvent(wake);
+}
+
+// Lowers one session to att x the user's level; the user's level is the stored one (we lowered this app before,
+// maybe in an earlier run that Windows remembered), else what the session has now.
+void Sessions::lower(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid, AudioSessionState st, float cur,
+                     bool track) {
+    auto it = store_.find(id);
+    float user;
+    if (it != store_.end()) {
+        user = it->second;
+    } else if (cur <= att_ * 1.01f && cur > 0) {
+        user = 1.0f; // lowered by us in a run whose store was lost: no level of the user's to go back to but full
+    } else {
+        user = cur;
+    }
+    if (it == store_.end() || it->second != user) {
+        store_[id] = user;
+        save();
+    }
+    float want = user * att_;
+    if (std::fabs(cur - want) <= want * 0.01f + 1e-9f) return;
+    HRESULT hr = vol->SetMasterVolume(want, &IM_VOLUME_CONTEXT);
+    if (log) log("sessions: pid %lu %s, level %.4f -> %.6f (user %.4f)%s%s", (unsigned long)pid, state_name(st), cur,
+                 want, user, track ? "" : ", from the notification", SUCCEEDED(hr) ? "" : im_hr(hr).c_str());
+}
+
+void Sessions::poll_quiet() {
+    std::lock_guard<std::recursive_mutex> l(mu_);
+    if (mode_ != ATTENUATE) return;
+    for (auto &t : tracked_) {
+        if (t.lowered || t.dead || out_channels(t.ctl.p) == 0) continue;
+        float cur = 1.0f;
+        t.vol->GetMasterVolume(&cur);
+        AudioSessionState st = AudioSessionStateActive;
+        t.ctl->GetState(&st);
+        lower(t.vol.p, t.id, t.pid, st, cur, true);
+        t.lowered = true;
+    }
 }
 
 void Sessions::restore_all() {
@@ -393,7 +420,9 @@ void Sessions::lower_all() {
 
 int Sessions::lowered() const {
     std::lock_guard<std::recursive_mutex> l(mu_);
-    return mode_ == ATTENUATE ? (int)tracked_.size() : 0;
+    int n = 0;
+    for (auto &t : tracked_) n += t.lowered && !t.dead;
+    return mode_ == ATTENUATE ? n : 0;
 }
 
 int Sessions::pending() const {

@@ -152,7 +152,11 @@ def main():
     r = h.wait(lambda r: r.get("state") in ("on", "on_covers_visible", "no_capture", "no_overlay", "models_missing"), 20)
     print(f"  state: {r or h.last}", flush=True)
     check(r is not None and r["state"] in ("on", "on_covers_visible"), "the blur runs")
-    check(r is not None and r["state"] == "on", "the covers are kept out of the screen capture (state on)")
+    build = sys.getwindowsversion().build
+    if build >= 26100:  # Windows 11 24H2 / Server 2025
+        check(r is not None and r["state"] == "on", "the covers are kept out of the screen capture (state on)")
+    else:  # Server 2022 shows them in the capture: the helper works in its "covers visible" mode then
+        print(f"  build {build}: covers kept out of the capture: {r is not None and r['state'] == 'on'}", flush=True)
     time.sleep(1.5)
     c = covers()
     print(f"  cover windows: {c}", flush=True)
