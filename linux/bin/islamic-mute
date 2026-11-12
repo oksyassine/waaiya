@@ -251,6 +251,24 @@ run_cmd() {
     done
 }
 
+# 'stop' when the daemon is already gone (it died with keep-silent on): the virtual output it left behind keeps
+# the apps silent, and 'systemctl stop' has nothing to stop. Normal sound back here, as the daemon's own stop.
+release_cmd() {
+    local pid; pid="$(cat "$STATE/run.pid" 2>/dev/null || true)"
+    [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null && return 0
+    sink_exists "$SINK" || return 0
+    local master; master="$(cat "$STATE/master" 2>/dev/null || true)"
+    [ -n "$master" ] && sink_exists "$master" || master="$(pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -vx "$SINK" | head -1)"
+    if [ -n "$master" ]; then
+        [ "$(current_default)" = "$SINK" ] && pactl set-default-sink "$master"
+        move_all_to "$master"
+    fi
+    local id; id="$(cat "$STATE/module_id" 2>/dev/null || true)"
+    [ -n "$id" ] && pactl unload-module "$id" 2>/dev/null
+    rm -f "$STATE/module_id" "$STATE/run.pid" "$STATE/filter.pid" "$STATE/filter.status"
+    log "the filter was not running: audio restored to ${master:-?}"
+}
+
 # ExecStopPost of the service: the daemon ended. Not stopped by the user (SERVICE_RESULT is not "success": it
 # crashed or was killed) and 'keep-silent off': normal sound back, with a notice. Else apps stay on the silent
 # virtual output (fail-closed) until the service is back.
@@ -297,7 +315,7 @@ case "${1:-}" in
     install) shift; install_cmd "$@" ;;
     run) shift; run_cmd "$@" ;;
     start) systemctl --user start islamic-mute.service && status_cmd ;;
-    stop) systemctl --user stop islamic-mute.service; status_cmd ;;
+    stop) systemctl --user stop islamic-mute.service; release_cmd; status_cmd ;;
     enable) systemctl --user enable --now islamic-mute.service ;;
     disable) systemctl --user disable --now islamic-mute.service ;;
     status) status_cmd ;;

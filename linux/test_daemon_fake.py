@@ -13,6 +13,7 @@ im-pulse. Checks:
   - `status`: running and what the engine loaded (ok / model not loaded), mono by default, stereo on request;
   - filter.log is cut down at start when it has grown large;
   - the filter's model did not load and keep-silent is off: the daemon gives the normal sound back and exits;
+  - the daemon killed: apps stay silent; `waaiya stop` then gives the normal sound back;
   - stop (SIGTERM): the normal sound back, the virtual output removed.
 """
 import json
@@ -230,6 +231,20 @@ def main():
         check(d.returncode == 0, "keep-silent off + model failed: the daemon gives up")
         check(sink_of("10") == "speakers" and pa_state()["default"] == "speakers", "... and the sound is normal again")
         check("islamic_mute" not in pa_state()["sinks"], "... and the virtual output is gone")
+
+        # the daemon dies (keep-silent on): the apps stay silent; 'waaiya stop' still gives the normal sound back
+        d = subprocess.Popen([SCRIPT, "run", "--default"], env=env, stderr=subprocess.PIPE, text=True)
+        wait(lambda: sink_of("10") == "islamic_mute", 10, "the stream on the virtual output again")
+        d.kill()
+        d.wait(timeout=10)
+        subprocess.run(["pkill", "-f", os.path.join(lib, "im-")], check=False)
+        time.sleep(0.3)
+        check(sink_of("10") == "islamic_mute", "daemon killed, keep-silent on: apps stay on the silent output")
+        check("down" in waaiya("status").stdout, "status: filter down, apps silent")
+        waaiya("stop")
+        check(sink_of("10") == "speakers" and pa_state()["default"] == "speakers",
+              "stop with the daemon gone: the normal sound is back")
+        check("islamic_mute" not in pa_state()["sinks"], "... and the virtual output is removed")
 
         # a normal run again, then stop
         waaiya("keep-silent", "on")
