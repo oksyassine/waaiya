@@ -13,6 +13,42 @@ the code audit, or a measurement in `eval/results/`.
 - Arabic first, with an English switch. No root.
 - Current features come before new ones.
 
+## Done in 0.2.10: audit fixes, mono by default, silence when filtering ends by itself
+
+| Problem | Cause | Fix |
+|---|---|---|
+| Without Shizuku, covers let a fifth of the picture show through, and taps went through them (Android 12+) | Android forces a non-touchable app overlay to 80% opacity so that touches can pass (`alpha=0.8` in `dumpsys window` on the API 35 emulator); the code assumed opaque covers that hold touches back | App-overlay covers are touchable windows, so Android keeps them fully opaque; a tap on a cover stays on the cover |
+| ...and then the space between two covers could not be tapped or scrolled | One app-overlay window spanned all covers, and a touchable window takes every touch inside its bounds | One window per group of touching covers, at most 8, reused from frame to frame; every window gets the skip-screenshot flag before it shows a cover (`CoverWindows`, `BlurOverlay`) |
+| Shizuku cover layer could say "on" with nothing drawn | Drawing calls are one-way, and an error in the shell process was only logged there; the host counted as Shizuku during the whole bind | `start()` draws a hidden probe cover through the same calls and fails on any error; a two-way `health()` call twice a second reports draw errors; on failure the covers move to a window. "Starting" until the layer is confirmed |
+| A fallback from the Shizuku layer to a window kept "covers not in the capture" | The self-test ran only when the blur was switched on | Any change of the drawing host re-runs the self-test |
+| A foldable that unfolds without rotating kept the old capture shape | Only a portrait/landscape flip resized the capture | Resized whenever the shape differs, also checked twice a second |
+| Accessibility build: a switched-off service was not noticed | Nothing checked it after attach | The watchdog moves the covers to another host or reports that none is left |
+| Android 10/11 window covers (and Linux): the whole-screen nudity cover lifted every 3 s over a video | The capture shows the cover, not the picture, so the detection stops and the cover expires | In the shared tracker, each re-detection right after a lift doubles the next hold, up to 60 s (`full_max_hold_ms`) |
+| A failed blur start said "starting" for the whole session | An exception from the capture setup was swallowed and leaked its thread | Caught and cleaned up; the blur line says Android did not let it see the screen (state `NO_CAPTURE`) |
+| Player: AC-3 / E-AC-3 / DTS could reach a TV or soundbar unfiltered | Media3 sends such tracks encoded ("passthrough") to an output that takes them, around the filter | The audio sink only accepts PCM, so every track is decoded and filtered |
+| Player: any app could make Waaiya fetch chosen URLs with chosen headers | The exported player read a stream list from any intent | Stream lists are read only by a non-exported `LinkPlayerActivity` |
+| Player played on in the background with no control | No `onStop` | Pauses when left |
+| Link saving: no handler for Android 15's time limit on its service | `onTimeout` missing | Cancels (no partial file, gallery entry removed), says why, stops at once |
+| yt-dlp self-update named the app to PyPI and took nightlies after any failure | Custom User-Agent; no age check | Python's default User-Agent; stable releases only once 3 days on PyPI, nightlies only after a failed link and 1 day old, the pinned yt-dlp-ejs too |
+| A long press on selected text in the diagnostics report crashed the app (Android 15) | Android throws "Drag shadow dimensions must be positive" when dragging some selections | That drag is ignored; copying still works |
+| Release APKs built by CI had no blur models; no tests ran there | `fetch_deps.sh` fetched only the voice model; the workflow only built | Blur models fetched and checked; a release build fails if a bundled model is missing; JVM and C tests run first; fail-closed engine tests added |
+
+Owner decisions, 2026-11-12:
+
+| Decision | What the app does |
+|---|---|
+| Mono is the default for the live filter | A "Stereo sound" setting, off by default: mono uses about half the battery and keeps up on more phones. It switches live both ways (the engine is always built with one model state per channel). With stereo chosen, a phone that is too slow still drops to mono by itself, and only then does the screen say so |
+| When Android ends filtering, other apps stay silent | "Keep apps silent if filtering stops by itself", on by default. When the capture stops or dies (not the user's Stop), the capture, filter and blur end but the service and its muter keep running: the screen and the notification say "Filtering stopped: other apps are silenced", with start again and Stop. Off, or without the one-time setup (nothing can be muted then): as before, the sound comes back with the "Waaiya stopped" notification |
+
+Checked without a phone: 33 JVM tests (now with `CoverWindowsTest`), the tracker tests (`models/vision/test_cover.py`,
+the 3 s lift reproduced and gone), `build/test-failclosed`, 28 link-updater tests, and `emu_check.py --setup done
+--blur --end-capture --blur-fail` on the Android 15 emulator: covers opaque, one window per group, a tap between
+covers reaches the app and a tap on a cover does not, the service stays in the foreground 73 s after the capture
+ended with the other app's session still muted, start again and Stop from there, the blur capture failure shown.
+The exported player closes on a stream list, `LinkPlayerActivity` cannot be started from outside, and the player
+pauses when left. Not checked: the Shizuku probe and health call (no Shizuku on the emulators), passthrough on a
+real TV output, the export time limit (needs hours of saving or a system override), a real foldable.
+
 ## Done in 0.2.9: the live filter says what is wrong and adapts to the phone
 
 Found by running the app on emulators in the state of a phone that never installed Shizuku
@@ -48,8 +84,8 @@ The diagnostics report is how those answers will come back.
      Shizuku stays optional, for the touch-through blur layer. Large: needs the ADB pairing protocol in the app.
    - b. A "use a computer" page that does the grant from Chrome over USB (WebUSB), no ADB install. Medium.
 2. **A lighter live model, and measured battery and heat** (need 3: the most common complaint about every similar
-   tool). Benchmark model variants on ARM through the diagnostics numbers; try the two channels on two threads;
-   consider mono as the default with stereo as an option; publish per-phone figures.
+   tool). Benchmark model variants on ARM through the diagnostics numbers; try the two channels on two threads
+   for those who choose stereo (mono is the default since 0.2.10); publish per-phone figures.
 3. **Blur quality where users judge it** (need 2, finding 3.1, 3.2): shorten the first-frame gap, small
    thumbnails, drawn and 3D figures (anime, games: need 10). Evaluate before changing models.
 4. **Protection that survives a weak moment** (need 4, [C1] [C3]): a waiting period, chosen in advance, before
@@ -78,25 +114,15 @@ The diagnostics report is how those answers will come back.
 ## Known defects, not fixed yet (code audit, 2026-11-12)
 
 Android:
-- Without Shizuku the covers are one window spanning all of them; on Android 12+ taps between two covers are
-  lost, not only taps on a cover. Fix: one window per cover.
-- Shizuku cover layer: an error inside the shell process never reaches the app, so the blur can say "on" with
-  nothing drawn. Fix: probe one cover at start and a two-way health call.
-- Falling back from the Shizuku layer to a window does not repeat the "are my covers in the capture" test.
-- A foldable that unfolds without rotating keeps the old capture shape (covers misplaced).
-- Accessibility build: a switched-off accessibility service is not noticed.
-- Android 10/11 window covers: the whole-screen nudity cover lifts for a moment every 3 s over a video.
-- A failed blur start shows "starting" for the whole session.
-- Player: a file with AC-3/DTS sound on an output that takes it encoded may bypass the filter (unconfirmed);
-  the exported player accepts a stream list from any app; playback goes on in the background with no control.
-- Link saving: no handler for Android 15's 6-hour limit on its service.
-- yt-dlp self-update trusts PyPI's TLS and hash only, and takes nightlies after any failure.
-- When Android ends the capture the original sound comes back (with the new notification). Silence until
-  restarted would be stricter: owner's decision below.
+- When the capture ends by itself the blur stops too, so the screen is uncovered while the sound stays silent
+  (see "Done in 0.2.10"). Keeping a cover would need its own decision: nothing can be analysed then.
+- `im_engine_set_enabled(e, 0)` (the Linux LADSPA plugin's A/B switch) passes the original through even on an
+  engine whose model failed to load. Android never calls it.
 
 Linux and desktop (branch `flutter-ui`):
 - Nudity cover over a still image lasts 3 s, then stays off until a pixel changes (the same last-frame gap as
-  fixed on Android, plus the cover being part of the capture).
+  fixed on Android). The other half, the cover lifting every 3 s because it is part of the capture, is fixed in
+  the shared tracker (`full_max_hold_ms`, 0.2.10); the desktop app still has to take that engine.
 - A second monitor that is not shared, or whose stream dies, has no covers while the state says on.
 - Switching the women's-singing setting restarts the service and plays unfiltered sound for a few seconds.
 - Streams that the sound server moves back to the real output are not moved again.
@@ -104,8 +130,9 @@ Linux and desktop (branch `flutter-ui`):
 - A monitor rotated during a frame grab can crash the Wayland helper; GNOME ignores a resolution change.
 - `filter.log` grows without limit; "running" only means the virtual sink exists; the app shows version 0.2.6.
 
-CI: the tagged-release workflow builds an APK without the blur models and runs no tests; `test-detector` is built
-but not run; no test covers the fail-closed paths, the link updater, the blur loop or the export.
+CI: no release asset holds the women's-singing detector, so release APKs built by CI have no women's-singing
+filter (the build warns) and `test-detector` is skipped there with a notice. The owner decides whether to publish
+`detector_v1.onnx` as a release asset. No test yet covers the blur loop on a device or the link export.
 
 ## Not building
 
@@ -122,8 +149,6 @@ but not run; no test covers the fail-closed paths, the link updater, the blur lo
 ## Decisions that belong to the owner
 
 - Developer verification: register (identity check) or rely on the advanced install flow.
-- Mono as the default for the live filter (half the battery, voice is almost always centred) or stereo with
-  automatic fallback as now.
 - Whether the waiting period (item 4) may delay switching the filter off, or only weakening the blur.
-- When Android itself ends the capture: let the sound through with a notification (now), or keep everything
-  silent until the user starts again (stricter, but a silent phone).
+- Whether to publish the women's-singing detector (`detector_v1.onnx`) as a release asset, so CI-built APKs
+  include it.
