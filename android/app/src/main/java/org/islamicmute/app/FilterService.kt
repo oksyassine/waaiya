@@ -32,11 +32,19 @@ class FilterService : Service() {
         STOPPED, STARTING, FILTERING, MODEL_FAILED, NO_CAPTURE_PERMISSION, STOPPED_BY_SYSTEM,
         /** Android refused the screen-capture token, or stopped handing over the other apps' sound. */
         CAPTURE_FAILED,
+        /**
+         * Android ended filtering (not the user) and [Settings.holdSilence] is on: nothing is filtered, but the
+         * service keeps running only to keep the other apps' original sound muted, until the user starts again
+         * (the muter is kept, so there is no gap) or taps Stop.
+         */
+        SILENCED,
     }
 
     /** Live numbers of the running filter, for the screen and the diagnostics report. Null when stopped. */
     data class Health(
         val model: String, val mono: Boolean, val tooSlow: Boolean,
+        /** Mono although the user chose stereo: this phone is too slow for stereo (now or within the last week). */
+        val monoForSpeed: Boolean,
         val avgHopMs: Double, val maxHopMs: Double, val overallAvgMs: Double, val peakHopMs: Double,
         val lateShare: Double, val lateHops: Long, val busyHops: Long, val hops: Long,
         val underruns: Int, val extraBufferHops: Int, val trimmedHops: Int, val keepHops: Int, val bufferedMs: Int,
@@ -51,6 +59,11 @@ class FilterService : Service() {
         const val EXTRA_CODE = "code"
         const val EXTRA_DATA = "data"
         const val ACTION_STOP = "stop"
+        /** Debug builds only: ends the capture as Android does (adb shell am broadcast -a <this> -p <package>),
+         *  to test what follows without a way to make Android itself stop it. */
+        const val ACTION_DEBUG_END_CAPTURE = "org.islamicmute.app.DEBUG_END_CAPTURE"
+        const val ACTION_DEBUG_COVERS = "org.islamicmute.app.DEBUG_COVERS"
+        const val ACTION_DEBUG_FAIL_BLUR = "org.islamicmute.app.DEBUG_FAIL_BLUR"
         private const val CHANNEL = "filter"
         private const val TAG = "IslamicMute"
         @Volatile var state = State.STOPPED
@@ -83,12 +96,42 @@ class FilterService : Service() {
     @Volatile private var stoppedBySystem = false
     /** Set by the audio thread when it gives up: the state to show after the service has stopped. */
     @Volatile private var failState: State? = null
+    /** Main thread: filtering ended by itself and the originals are kept muted (State.SILENCED). */
+    private var holding = false
+    private var debugReceiver: android.content.BroadcastReceiver? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        if (BuildConfig.DEBUG) {
+            val r = object : android.content.BroadcastReceiver() {
+                override fun onReceive(c: Context?, i: Intent?) {
+                    when (i?.action) {
+                        ACTION_DEBUG_END_CAPTURE -> { Log.i(TAG, "debug: ending the capture as Android would"); projection?.stop() }
+                        // --es covers "x0,y0,x1,y1,kind;..." (0..1 of the screen), or no extra to go back to detections
+                        ACTION_DEBUG_COVERS -> ScreenBlur.debugCovers = i.getStringExtra("covers")?.split(';')
+                            ?.flatMap { c -> c.split(',').map { it.trim().toFloat() } }?.toFloatArray()
+                        // --ez fail true: the next blur start cannot create its capture
+                        ACTION_DEBUG_FAIL_BLUR -> ScreenBlur.debugFailCapture = i.getBooleanExtra("fail", true)
+                    }
+                }
+            }
+            debugReceiver = r
+            val f = android.content.IntentFilter(ACTION_DEBUG_END_CAPTURE).apply {
+                addAction(ACTION_DEBUG_COVERS); addAction(ACTION_DEBUG_FAIL_BLUR)
+            }
+            if (Build.VERSION.SDK_INT >= 33) registerReceiver(r, f, Context.RECEIVER_EXPORTED)
+            else @Suppress("UnspecifiedRegisterReceiverFlag") registerReceiver(r, f)
+        }
+    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) { stopSelf(); return START_NOT_STICKY }
         if (running) return START_NOT_STICKY
+        // Starting again from SILENCED: the muter keeps running throughout, so the originals never come back.
+        val wasHolding = holding
+        holding = false
         // Android 14+: the foreground service must be running before getMediaProjection().
         startForeground(1, notification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
         val code = intent?.getIntExtra(EXTRA_CODE, 0) ?: 0
@@ -96,16 +139,16 @@ class FilterService : Service() {
                             else @Suppress("DEPRECATION") intent?.getParcelableExtra(EXTRA_DATA)
         failState = null
         runCatching { getSystemService(NotificationManager::class.java).cancel(3) }  // an old "stopped" notice
-        if (data == null) { failState = State.CAPTURE_FAILED; stopSelf(); return START_NOT_STICKY }
+        if (data == null) { noCapture(wasHolding); return START_NOT_STICKY }
         val mpm = getSystemService(MediaProjectionManager::class.java)
         val mp = runCatching { mpm.getMediaProjection(code, data) }
             .onFailure { Log.e(TAG, "no screen-capture token", it) }.getOrNull()
-            ?: run { failState = State.CAPTURE_FAILED; stopSelf(); return START_NOT_STICKY }
+            ?: run { noCapture(wasHolding); return START_NOT_STICKY }
         mp.registerCallback(object : MediaProjection.Callback() {
             override fun onStop() {
+                if (stop) return  // our own stop: the user's, or entering SILENCED
                 Log.i(TAG, "projection stopped by the system")
-                if (!stop) stoppedBySystem = true
-                stopSelf()
+                endedBySystem(null)
             }
         }, null)
         projection = mp
@@ -113,11 +156,10 @@ class FilterService : Service() {
         stoppedBySystem = false
         publish(State.STARTING)
         val settings = Settings(this)
-        muter = SessionMuter(this, settings).also { m ->
+        muter = (muter ?: SessionMuter(this, settings).also { m ->
             m.onChange = { muterChanged(m) }
             m.start()
-            muterChanged(m)
-        }
+        }).also { muterChanged(it) }
         // the first notification was built before the muter existed: now it can say whether originals are silenced
         runCatching { getSystemService(NotificationManager::class.java).notify(1, notification()) }
         // Screen blur shares this projection; its virtual display must be created now (Android 14+ time limit),
@@ -126,6 +168,12 @@ class FilterService : Service() {
             .onFailure { Log.e(TAG, "screen blur did not start", it) }.getOrNull()
         worker = Thread({ loop(mp) }, "im-filter").apply { start() }
         return START_NOT_STICKY
+    }
+
+    /** No capture at start: back to the silence that was kept, or (first start) stop with the reason. */
+    private fun noCapture(wasHolding: Boolean) {
+        if (wasHolding) { holding = true; publish(State.SILENCED); updateNotification() }
+        else { failState = State.CAPTURE_FAILED; stopSelf() }
     }
 
     /** The muter's state for the screen and the notification; app names instead of uids. */
@@ -139,9 +187,45 @@ class FilterService : Service() {
             }.getOrNull()
         }.distinct().sorted()
         if (before != muterStatus to blockedApps) {
-            runCatching { getSystemService(NotificationManager::class.java).notify(1, notification()) }
+            updateNotification()
             notifyListeners()
         }
+    }
+
+    private fun updateNotification() {
+        runCatching { getSystemService(NotificationManager::class.java).notify(1, notification()) }
+    }
+
+    /**
+     * Android ended filtering: the projection stopped, or the capture died or failed. [fail] = the state to show
+     * (null: STOPPED_BY_SYSTEM). By default ([Settings.holdSilence]) the other apps stay muted: the capture, the
+     * filter and the blur end, but this service and its muter keep running (State.SILENCED) until the user starts
+     * again or taps Stop. Otherwise, or without the setup (nothing can be muted), the service stops and the
+     * original sound comes back, with the "stopped" notification. Any thread.
+     *
+     * Foreground service type: the service stays in the foreground under the mediaProjection type it was started
+     * with; the notification is only updated (notify), never re-posted with startForeground, which would check the
+     * type's conditions again (a projection that no longer exists). Checked on the API 35 emulator: the service
+     * stays foreground with the projection gone. dataSync and shortService would bring a time limit, and
+     * mediaPlayback would claim playback this service does not do.
+     */
+    private fun endedBySystem(fail: State?) = main.post {
+        if (stop || holding) return@post
+        val m = muter
+        if (!Settings(this).holdSilence || m == null || m.status == SessionMuter.Status.NO_PERMISSION) {
+            if (fail != null) failState = fail else stoppedBySystem = true
+            stopSelf()
+            return@post
+        }
+        Log.i(TAG, "filtering ended by Android (${fail ?: State.STOPPED_BY_SYSTEM}): other apps stay muted")
+        stop = true
+        worker?.join(500); worker = null
+        blur?.stop(); blur = null
+        projection?.stop(); projection = null
+        health = null
+        holding = true
+        publish(State.SILENCED)
+        updateNotification()
     }
 
     private fun loop(mp: MediaProjection) {
@@ -162,7 +246,7 @@ class FilterService : Service() {
             AudioRecord.Builder().setAudioFormat(fmt).setAudioPlaybackCaptureConfig(cap)
                 .setBufferSizeInBytes(maxOf(minIn, hop * frameBytes * 4)).build()
         } catch (e: SecurityException) { publish(State.NO_CAPTURE_PERMISSION); stopSelf(); return
-        } catch (e: Exception) { Log.e(TAG, "capture did not open", e); failState = State.CAPTURE_FAILED; stopSelf(); return }
+        } catch (e: Exception) { Log.e(TAG, "capture did not open", e); endedBySystem(State.CAPTURE_FAILED); return }
         val outFmt = AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
             .setSampleRate(Engine.SAMPLE_RATE).setChannelMask(AudioFormat.CHANNEL_OUT_STEREO).build()
         val minOut = AudioTrack.getMinBufferSize(Engine.SAMPLE_RATE, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_FLOAT)
@@ -178,9 +262,13 @@ class FilterService : Service() {
             .build()
         runCatching { track.setBufferSizeInFrames(minOutFrames) }
         val settings = Settings(this)
+        // Always created with one model instance per channel, then switched to mono: only such an engine can go
+        // back to stereo, so the user's mono / stereo choice applies live in both directions.
         val engine = Engine.open(this, ch)
-        // a phone that needed mono last time starts in mono: no second round of cuts
-        val monitor = LoadMonitor(hopMs = hop * 1000.0 / Engine.SAMPLE_RATE, mono = settings.audioMono, hopFrames = hop)
+        // Mono unless the user chose stereo; a phone that needed mono last time starts in mono: no second round of cuts
+        var stereoChosen = settings.audioStereo
+        val monitor = LoadMonitor(hopMs = hop * 1000.0 / Engine.SAMPLE_RATE, mono = !stereoChosen || settings.audioMono,
+            hopFrames = hop)
         if (monitor.mono) engine.setMono(true)
         delayMs = engine.alignedLatency * 1000 / Engine.SAMPLE_RATE  // the loop uses the hop-aligned path
         publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING)
@@ -205,6 +293,7 @@ class FilterService : Service() {
             val buffered = (written - (track.playbackHeadPosition.toLong() and 0xFFFFFFFFL)).coerceAtLeast(0)
             health = Health(
                 model = engine.modelName, mono = monitor.mono, tooSlow = monitor.tooSlow,
+                monoForSpeed = monitor.mono && stereoChosen,
                 avgHopMs = monitor.avgMs, maxHopMs = monitor.maxMs, overallAvgMs = monitor.overallAvgMs,
                 peakHopMs = monitor.peakMs, lateShare = monitor.lateShare, lateHops = monitor.lateHops,
                 busyHops = monitor.busyHops, hops = monitor.hops, underruns = monitor.underruns,
@@ -231,7 +320,7 @@ class FilterService : Service() {
                         readErrors++
                         Log.w(TAG, "capture read failed: $n")
                         if (n == AudioRecord.ERROR_DEAD_OBJECT || ++readErrorsInARow >= 20) {
-                            failState = State.CAPTURE_FAILED; stopSelf(); return
+                            endedBySystem(State.CAPTURE_FAILED); return
                         }
                         Thread.sleep(10)
                         continue
@@ -243,6 +332,17 @@ class FilterService : Service() {
                 if (++hops % 50 == 0) {  // every 0.5 s: settings changed in the app apply live
                     val p = Engine.policy(settings)
                     if (p != policy) { policy = p; engine.setPolicy(p); gateOn = 0; gateSamples = 0 }
+                    val st = settings.audioStereo
+                    if (st != stereoChosen) {
+                        // the user's choice is a fresh start: stereo is tried again even on a phone that needed mono
+                        // before; LoadMonitor switches back to mono if it still cannot keep up
+                        stereoChosen = st
+                        if (st) settings.audioMono = false
+                        monitor.choose(!st)
+                        engine.setMono(!st)
+                        Log.i(TAG, "filter: ${if (st) "stereo" else "mono"} chosen")
+                        report(); notifyListeners()
+                    }
                     if (policy != 0) { gateSamples++; if (engine.detectorStatus() == 1) gateOn++ }
                 }
                 for (x in inBuf) { val a = if (x < 0) -x else x; if (a > peak) peak = a }
@@ -291,8 +391,7 @@ class FilterService : Service() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "filter loop failed", e)
-            failState = State.CAPTURE_FAILED
-            stopSelf()
+            endedBySystem(State.CAPTURE_FAILED)
         } finally {
             if (Build.VERSION.SDK_INT >= 31) runCatching { hint?.close() }
             runCatching { record.stop() }; record.release()
@@ -308,6 +407,8 @@ class FilterService : Service() {
 
     override fun onDestroy() {
         stop = true
+        holding = false
+        debugReceiver?.let { runCatching { unregisterReceiver(it) } }
         worker?.join(500)
         blur?.stop(); blur = null
         muter?.stop()           // un-mutes the original sessions: an explicit stop restores normal audio
@@ -337,6 +438,16 @@ class FilterService : Service() {
         val stopIntent = PendingIntent.getService(this, 1, Intent(this, FilterService::class.java).setAction(ACTION_STOP),
             PendingIntent.FLAG_IMMUTABLE)
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+        if (holding) return Notification.Builder(this, CHANNEL)
+            .setContentTitle(getString(R.string.notif_silenced_title))
+            .setContentText(getString(R.string.notif_silenced_text))
+            .setStyle(Notification.BigTextStyle().bigText(getString(R.string.notif_silenced_text)))
+            .setSmallIcon(R.drawable.ic_notification)
+            .setColor(getColor(R.color.error))
+            .setContentIntent(open)
+            .addAction(Notification.Action.Builder(null, getString(R.string.notif_stop), stopIntent).build())
+            .setOngoing(true)
+            .build()
         return Notification.Builder(this, CHANNEL)
             .setContentTitle(getString(R.string.notif_title))
             .setContentText(getString(when {

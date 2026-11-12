@@ -110,6 +110,17 @@ class MainActivity : Activity() {
 
         power.setOnClickListener { if (FilterService.running) stopFilter() else startFilter() }
 
+        findViewById<Button>(R.id.release_silence).setOnClickListener { stopFilter() }
+        findViewById<Switch>(R.id.switch_hold_silence).apply {
+            isChecked = settings.holdSilence
+            // read when Android ends filtering: applies at once
+            setOnCheckedChangeListener { _, v -> settings.holdSilence = v }
+        }
+        findViewById<Switch>(R.id.switch_stereo).apply {
+            isChecked = settings.audioStereo
+            // the running filter checks it twice a second and switches both ways without a restart
+            setOnCheckedChangeListener { _, v -> settings.audioStereo = v }
+        }
         findViewById<Switch>(R.id.switch_silence).apply {
             isChecked = settings.silenceUnfilterable
             // Read by the running muter on every poll: applies at once, no restart needed.
@@ -227,6 +238,7 @@ class MainActivity : Activity() {
         stateTitle.setText(when (st) {
             FilterService.State.STARTING -> R.string.state_starting
             FilterService.State.FILTERING, FilterService.State.MODEL_FAILED -> R.string.state_on_title
+            FilterService.State.SILENCED -> R.string.state_silenced_title
             else -> R.string.state_off_title
         })
         // While filtering, the line under the title says what the user actually hears: a problem first (in the
@@ -240,7 +252,8 @@ class MainActivity : Activity() {
         stateDetail.text = when (st) {
             FilterService.State.FILTERING -> problem ?: buildString {
                 append(getString(R.string.state_on_detail, FilterService.delayMs))
-                if (FilterService.health?.mono == true) append('\n').append(getString(R.string.state_mono_note))
+                // mono is the default: the note is only for a phone too slow for the stereo the user chose
+                if (FilterService.health?.monoForSpeed == true) append('\n').append(getString(R.string.state_mono_note))
                 val blocked = FilterService.blockedApps
                 if (blocked.isNotEmpty()) append('\n').append(getString(
                     if (settings.silenceUnfilterable) R.string.state_blocked_silenced else R.string.state_blocked_unfiltered,
@@ -250,13 +263,16 @@ class MainActivity : Activity() {
             FilterService.State.NO_CAPTURE_PERMISSION -> getString(R.string.state_capture_denied)
             FilterService.State.STOPPED_BY_SYSTEM -> getString(R.string.state_stopped_by_system)
             FilterService.State.CAPTURE_FAILED -> getString(R.string.state_capture_failed)
+            FilterService.State.SILENCED -> getString(R.string.state_silenced)
             FilterService.State.STARTING -> ""
             FilterService.State.STOPPED -> getString(R.string.state_off_detail)
         }
         stateDetail.setTextColor(getColor(
             if (problem != null || st == FilterService.State.MODEL_FAILED || st == FilterService.State.NO_CAPTURE_PERMISSION ||
-                st == FilterService.State.CAPTURE_FAILED) R.color.error
+                st == FilterService.State.CAPTURE_FAILED || st == FilterService.State.SILENCED) R.color.error
             else R.color.text_secondary))
+        findViewById<View>(R.id.release_silence).visibility =
+            if (st == FilterService.State.SILENCED) View.VISIBLE else View.GONE
         if (!on && (micDenied || captureCancelled)) {
             stateDetail.setText(if (micDenied) R.string.need_record_audio else R.string.state_capture_cancelled)
             stateDetail.setTextColor(getColor(R.color.error))
@@ -330,6 +346,7 @@ class MainActivity : Activity() {
             bs == ScreenBlur.State.ON_COVERS_VISIBLE -> getString(R.string.blur_status_on_visible) to false
             bs == ScreenBlur.State.MODELS_MISSING -> getString(R.string.blur_status_models) to true
             bs == ScreenBlur.State.FAILING -> getString(R.string.blur_status_failing) to true
+            bs == ScreenBlur.State.NO_CAPTURE -> getString(R.string.blur_status_no_capture) to true
             else -> getString(R.string.blur_status_no_overlay) to true
         }
         blurStatus.visibility = if (msg == null) View.GONE else View.VISIBLE
@@ -542,7 +559,12 @@ class MainActivity : Activity() {
     private fun showDiagnostics() {
         val report = Diagnostics.report(this)
         val dp = resources.displayMetrics.density
-        val text = TextView(this).apply {
+        // A long press on selected text starts a drag; Android 15 throws "Drag shadow dimensions must be positive"
+        // for some selections and the app crashed (seen on the API 35 emulator). Ignoring that drag keeps the copy.
+        val text = object : TextView(this) {
+            override fun performLongClick(): Boolean =
+                try { super.performLongClick() } catch (e: IllegalStateException) { true }
+        }.apply {
             text = getString(R.string.diag_note) + "\n\n" + report
             textSize = 12f
             setTextIsSelectable(true)

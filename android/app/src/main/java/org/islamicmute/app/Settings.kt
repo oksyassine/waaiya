@@ -50,6 +50,24 @@ class Settings(context: Context) {
     val blurOn: Boolean get() = blurWomen || blurNudity
 
     /**
+     * Live filter in stereo (left and right kept apart). Off by default (owner's decision, 0.2.10): mono runs the model
+     * once per hop instead of twice, so about half the battery, and keeps up on more phones; speech is almost always
+     * centred. Even with stereo chosen, a phone too slow for it switches to mono by itself ([audioMono]).
+     */
+    var audioStereo: Boolean
+        get() = p.getBoolean("audio_stereo", false)
+        set(v) = p.edit().putBoolean("audio_stereo", v).apply()
+
+    /**
+     * When Android ends filtering (the capture is stopped or dies, not the user's Stop), keep the other apps' original
+     * sound muted until the user starts again or taps Stop, instead of letting it play unfiltered. On by default
+     * (owner's decision, 0.2.10). Needs the one-time setup (DUMP): without it nothing can be muted.
+     */
+    var holdSilence: Boolean
+        get() = p.getBoolean("hold_silence", true)
+        set(v) = p.edit().putBoolean("hold_silence", v).apply()
+
+    /**
      * This phone needed mono to filter live sound in time (set by FilterService), so the next start begins in
      * mono instead of cutting again. Forgotten after a week or an app update: the phone may only have been hot
      * or busy that day, and an update may bring a faster model, so stereo gets another try.
