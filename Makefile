@@ -39,6 +39,10 @@ $(BUILD)/test-detector: engine/test/test_detector.c $(ENGINE_OBJ)
 $(BUILD)/test-mono: engine/test/test_mono.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -D_GNU_SOURCE $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
 
+# make build/test-failclosed && build/test-failclosed models/dfn3/dfn3_stream_int8.onnx
+$(BUILD)/test-failclosed: engine/test/test_failclosed.c $(ENGINE_OBJ)
+	$(CC) $(CFLAGS) -D_GNU_SOURCE $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
+
 $(BUILD)/im-process: cli/im_process.c cli/wav.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -Icli $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
 
