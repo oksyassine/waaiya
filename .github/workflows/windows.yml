@@ -1,0 +1,85 @@
+name: Windows
+
+# The Windows sound filter and screen blur: cross-compiled on Linux (llvm-mingw, windows/Makefile), then run on real
+# Windows runners: engine tests, and the filter end to end on the Windows audio stack with a virtual output
+# (windows/test/audio_test.py). Real speakers, Bluetooth and DRM players need a PC (docs/PLATFORMS.md).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: third_party/llvm-mingw
+          key: llvm-mingw-${{ hashFiles('scripts/fetch_deps.sh') }}
+      - name: Fetch llvm-mingw, ONNX Runtime for Windows and the models (checksummed)
+        run: |
+          scripts/fetch_deps.sh mingw
+          scripts/fetch_deps.sh ort-win
+          scripts/fetch_deps.sh models
+          scripts/fetch_deps.sh vision
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Build
+        run: make -j"$(nproc)" -f windows/Makefile CROSS="$PWD/third_party/llvm-mingw/bin/x86_64-w64-mingw32-" ORT=third_party/onnxruntime-win
+      - name: Models next to the programs
+        run: |
+          mkdir -p build-win/models/dfn3 build-win/models/vision
+          cp models/dfn3/dfn3_stream_int8.* build-win/models/dfn3/
+          cp models/vision/*.onnx build-win/models/vision/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: waaiya-windows-x64-programs
+          path: build-win
+          retention-days: 7
+
+  test:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, windows-2025]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: windows/test
+      - uses: actions/download-artifact@v4
+        with:
+          name: waaiya-windows-x64-programs
+          path: build-win
+      - name: Engine tests (mono switch, fail-closed) on Windows
+        shell: bash
+        run: |
+          build-win/test-mono.exe build-win/models/dfn3/dfn3_stream_int8.onnx
+          build-win/test-failclosed.exe build-win/models/dfn3/dfn3_stream_int8.onnx
+      - name: An audio output for the runner (Scream virtual driver)
+        shell: pwsh
+        run: windows/test/audio_device.ps1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet numpy
+      - name: Sound filter end to end (route C2, bypass, filtering, new apps, crash, stop, restore)
+        run: python windows/test/audio_test.py build-win
+      - name: Filter state and log
+        if: always()
+        shell: bash
+        run: |
+          cat "$LOCALAPPDATA/Waaiya/filter/state.json" 2>/dev/null || true
+          for f in "$TEMP"/waaiya-audio-*/filter/filter.log; do echo "== $f"; tail -n 60 "$f"; done 2>/dev/null || true
