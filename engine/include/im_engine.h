@@ -63,6 +63,11 @@ void im_engine_set_enabled(im_engine *e, int enabled);
 void im_engine_set_gate(im_engine *e, float gain);
 /* Clears all model state and buffers (call on seek or stream restart). */
 void im_engine_reset(im_engine *e);
+/* Switches channel mixing (im_config.mono_mix) on a running engine: 1 = mix the channels, run the model once and
+ * copy the result to every channel (half the CPU for stereo), for phones too slow for one run per channel.
+ * Going back to 0 works only if the engine was created without mono_mix. The model state restarts, the
+ * delay stays the same. Returns the mode now in effect (0 or 1). */
+int im_engine_set_mono(im_engine *e, int mono);
 
 /* Voice policy (needs im_config.detector_path). The detector watches the separated voice and the
  * output is muted while the policy matches, for at least the model's im.det_release_s afterwards.

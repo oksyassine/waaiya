@@ -36,8 +36,8 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 10
-        versionName = "0.2.8"
+        versionCode = 11
+        versionName = "0.2.9"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         if (blurA11y) versionNameSuffix = "-a11y"
@@ -104,6 +104,8 @@ dependencies {
     implementation("dev.rikka.shizuku:provider:$shizukuVersion")
     // Screen blur: sets the hidden "skip screenshot" flag on our overlay so the screen capture shows what is under it.
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+    // JVM tests of the parts with no Android classes (LoadMonitor, AudioDump): ./gradlew testDebugUnitTest
+    testImplementation("junit:junit:4.13.2")
 }
 
 // The engine links ONNX Runtime's C API: unpack headers and .so files from the AAR for CMake.
