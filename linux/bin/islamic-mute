@@ -52,8 +52,9 @@ notify() { command -v notify-send >/dev/null && notify-send -a Waaiya -i audio-v
 trim_log() {
     local f="$STATE/filter.log" size
     size="$(stat -c %s "$f" 2>/dev/null || echo 0)"
-    [ "$size" -gt 524288 ] && tail -c 131072 "$f" > "$f.tmp" && mv "$f.tmp" "$f"
-    true
+    # rewritten in place (not replaced): a running filter keeps appending to the same file (O_APPEND)
+    if [ "$size" -gt 524288 ] && tail -c 131072 "$f" > "$f.tmp"; then cat "$f.tmp" > "$f"; fi
+    rm -f "$f.tmp"
 }
 stream_bin() { [ -x "$LIB/lib/im-stream" ] && echo "$LIB/lib/im-stream" || echo "$REPO/build/im-stream"; }
 # im-pulse next to the im-stream in use (installed or build), unless the backend is "pipe"
