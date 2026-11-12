@@ -174,6 +174,8 @@ class WirelessSetupService : Service() {
     private val seenNames = mutableMapOf<String, MutableSet<String>>()
     private var detail: String? = null
     private var key: AdbKey? = null
+    /** What the notification shows now: re-posting the same one would close a reply field the user is typing in. */
+    private var shown: List<Any?>? = null
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -224,6 +226,7 @@ class WirelessSetupService : Service() {
 
     private fun onCode(raw: String?) {
         val f = flow ?: return
+        shown = null  // after a notification reply Android shows a spinner until the notification is posted again
         val parsed = raw?.let { PairingInput.parse(it) }
         if (parsed == null) {
             detail = getString(R.string.wsetup_code_unreadable)
@@ -366,7 +369,11 @@ class WirelessSetupService : Service() {
 
     private fun update() {
         publish()
-        if (flow != null) runCatching { getSystemService(NotificationManager::class.java).notify(NOTIFICATION_ID, notification()) }
+        val f = flow ?: return
+        val now = listOf(texts(), f.phase, f.note)
+        if (now == shown) return
+        shown = now
+        runCatching { getSystemService(NotificationManager::class.java).notify(NOTIFICATION_ID, notification()) }
     }
 
     /** The text for the current state; also used by the app's setup card. */
