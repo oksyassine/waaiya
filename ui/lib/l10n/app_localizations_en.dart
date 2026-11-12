@@ -65,6 +65,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Android stopped filtering. Tap the button to start again.';
 
   @override
+  String get stateSilencedTitle => 'Filtering stopped';
+
+  @override
+  String get stateSilenced =>
+      'Filtering stopped: other apps are silenced. Tap the button to start again, or Stop to hear them unfiltered.';
+
+  @override
+  String get releaseSilence => 'Stop: hear apps unfiltered';
+
+  @override
   String get powerStartCd => 'Start filtering';
 
   @override
@@ -183,6 +193,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'Recommended. Some apps do not allow their sound to be filtered; this mutes them instead of letting music through.';
 
   @override
+  String get settingHoldSilenceTitle =>
+      'Keep apps silent if filtering stops by itself';
+
+  @override
+  String get settingHoldSilenceBody =>
+      'Recommended. If Android ends filtering (not you), other apps stay silent until you start again or tap Stop, instead of playing music unfiltered. Needs the one-time setup.';
+
+  @override
+  String get settingStereoTitle => 'Stereo sound';
+
+  @override
+  String get settingStereoBody =>
+      'Off: mono, which uses about half the battery and keeps up on more phones. On: keeps the left and right sides apart. If the phone is too slow for stereo, it still switches to mono by itself.';
+
+  @override
   String get settingSingingTitle => 'Mute women\'s singing';
 
   @override
@@ -279,6 +304,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get linkCancelled => 'Cancelled. Nothing was saved.';
+
+  @override
+  String get linkTimedOut =>
+      'Android stopped the save: it allows this kind of work only a few hours a day. Nothing was saved; open Waaiya and try again.';
 
   @override
   String get linkExportFailed => 'Could not save this one. Nothing was saved.';
@@ -427,6 +456,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'The blur cannot draw over other apps: allow it above.';
 
   @override
+  String blurStatusNoCapture(String details) {
+    return 'The blur cannot see the screen. Details:\n$details';
+  }
+
+  @override
   String blurSetupFailed(String details) {
     return 'Shizuku could not allow it:\n$details';
   }
@@ -453,6 +487,154 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get guideBody =>
       'You need Wi-Fi and Android 11 or newer. Pairing is done once; after the phone restarts you only repeat step 7.\n\n1. Connect the phone to Wi-Fi.\n\n2. Turn on Developer options: Settings › About phone › Software information › tap “Build number” 7 times. (On other phones: Settings › About phone › Build number.)\n\n3. Open Shizuku. If it asks to show notifications, allow it: the pairing code is typed in a Shizuku notification.\n\n4. In Shizuku, under “Start via Wireless debugging”, tap “Pairing”. On the page that opens, tap “Developer options”, turn on “Wireless debugging” and confirm “Allow”.\n\n5. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n6. Keep that screen open and pull down the notifications. When Shizuku\'s notification says “Pairing service found”, tap “Enter pairing code” and type the code. Shizuku says pairing succeeded.\n\n7. Go back to Shizuku and tap “Start” under “Start via Wireless debugging”. Wait until it says “Shizuku is running”.\n\n8. Come back to Waaiya and tap “Give permission”, then “Allow”.\n\nAfter a phone restart Shizuku stops: connect to Wi-Fi, turn “Wireless debugging” back on if it is off, open Shizuku and tap “Start”. No new pairing.';
+
+  @override
+  String get wsetupRouteTitle => 'Set up on this phone (no extra app)';
+
+  @override
+  String get wsetupRouteBody =>
+      'With Android\'s own Wireless debugging. You need Wi-Fi (internet is not needed). Pairing is done once.';
+
+  @override
+  String get wsetupSteps =>
+      '1. Tap “Start”. Waaiya opens Developer options and shows a notification.\n\n2. If Developer options are off, About phone opens instead: tap “Build number” 7 times (on some phones it is under Software information), come back and tap “Start” again.\n\n3. Scroll down to “Wireless debugging” (under Debugging), turn it on and confirm “Allow”.\n\n4. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n5. Keep that screen open. Pull down the notifications, tap “Enter code” in Waaiya\'s notification and type the code.\n\n6. Waaiya finishes by itself and says “Setup done”. You can then turn Wireless debugging off.';
+
+  @override
+  String get wsetupStart => 'Start';
+
+  @override
+  String get wsetupEnterHere => 'Type the code here';
+
+  @override
+  String get wsetupCancel => 'Cancel';
+
+  @override
+  String get wsetupAndroid10 =>
+      'Android 10 cannot do the setup on its own: it needs a computer, directly (below) or to start Shizuku once.';
+
+  @override
+  String get wsetupShizukuHeading => 'Or with the Shizuku app';
+
+  @override
+  String get wsetupShizukuNote =>
+      'Shizuku also lets touches pass through the screen covers.';
+
+  @override
+  String get wsetupChannel => 'One-time setup';
+
+  @override
+  String get wsetupNotifTitle => 'Waaiya setup: waiting for the pairing code';
+
+  @override
+  String get wsetupFoundTitle => 'Pairing screen found';
+
+  @override
+  String get wsetupBusyTitle => 'Waaiya setup';
+
+  @override
+  String get wsetupDoneTitle => 'Setup done';
+
+  @override
+  String get wsetupDoneBody =>
+      'Waaiya can now silence the original sound. You can turn Wireless debugging off.';
+
+  @override
+  String get wsetupFailedTitle => 'Setup did not finish';
+
+  @override
+  String get wsetupPairing => 'Pairing…';
+
+  @override
+  String get wsetupConnecting => 'Connecting and giving the permissions…';
+
+  @override
+  String get wsetupNeedWifi =>
+      'Connect to a Wi-Fi network first (internet is not needed): Wireless debugging works only on Wi-Fi.';
+
+  @override
+  String get wsetupNeedWirelessDebugging =>
+      'In Developer options, turn on “Wireless debugging”, then tap its name and “Pair device with pairing code”.';
+
+  @override
+  String get wsetupOpenDialog =>
+      'In Wireless debugging, tap “Pair device with pairing code”. Keep the code on screen and tap “Enter code” here.';
+
+  @override
+  String get wsetupEnterCodeBody =>
+      'Tap “Enter code” and type the 6-digit code shown in Settings.';
+
+  @override
+  String get wsetupCodeWaiting =>
+      'Got the code. Waiting for the “Pair device with pairing code” screen: keep it open.';
+
+  @override
+  String get wsetupWrongCode =>
+      'That code was not accepted. Check the 6 digits on screen and enter them again. If the pairing screen closed, open it again: the code changes.';
+
+  @override
+  String get wsetupPairingFailed =>
+      'Pairing did not work. Close the pairing screen, open “Pair device with pairing code” again and enter the new code.';
+
+  @override
+  String get wsetupWaitingConnect =>
+      'Paired. Keep “Wireless debugging” on: Waaiya is connecting.';
+
+  @override
+  String get wsetupNotPaired =>
+      'This phone no longer knows Waaiya (the pairing was removed or expired). Open “Pair device with pairing code” and enter the code.';
+
+  @override
+  String get wsetupConnectFailed =>
+      'Could not connect to Wireless debugging. Turn it off and on again: Waaiya tries again by itself.';
+
+  @override
+  String get wsetupGrantFailed =>
+      'Connected, but the permissions are still missing. Use Shizuku or a computer below.';
+
+  @override
+  String get wsetupTimeout =>
+      'Stopped after 10 minutes without finishing. Tap “Start” to try again.';
+
+  @override
+  String get wsetupCodeUnreadable => 'Type the 6 digits of the pairing code.';
+
+  @override
+  String get wsetupCodeHint => '6-digit code';
+
+  @override
+  String get wsetupEnterCode => 'Enter code';
+
+  @override
+  String wsetupDetail(String details) {
+    return 'Details: $details';
+  }
+
+  @override
+  String get wsetupErrTimeout => 'no answer in time';
+
+  @override
+  String get wsetupErrRefused => 'connection refused';
+
+  @override
+  String get wsetupDevOff =>
+      'Developer options are off. In About phone, tap “Build number” 7 times (on some phones it is under Software information), then come back and tap “Start” again.';
+
+  @override
+  String get wsetupOpenAbout => 'About phone';
+
+  @override
+  String get wsetupNotifOff =>
+      'Notifications are off for Waaiya, so the code cannot be typed in a notification. Use split screen (Settings in one half, Waaiya in the other) and tap “Type the code here”.';
+
+  @override
+  String get wsetupCodeDialogTitle => 'Pairing code';
+
+  @override
+  String get wsetupCodeDialogBody =>
+      'Only with split screen (Settings in one half, Waaiya in the other): leaving Settings closes the pairing screen and its code stops working. Type the 6-digit code shown under “Pair device with pairing code”.';
+
+  @override
+  String get wsetupCodeOk => 'Pair';
 
   @override
   String get blurStrictTitle => 'Who is left uncovered';
@@ -608,11 +790,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get blurStatusOnVisibleDesktop =>
       'Blur on. This desktop shows the blur in its own screen capture, so a blurred area stays blurred until the scene changes.';
-
-  @override
-  String blurStatusNoCapture(String details) {
-    return 'The blur cannot see the screen. Details:\n$details';
-  }
 
   @override
   String blurStatusNoOverlayDesktop(String details) {

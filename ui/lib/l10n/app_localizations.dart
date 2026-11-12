@@ -194,6 +194,24 @@ abstract class AppLocalizations {
   /// **'أوقف أندرويد التصفية. اضغط الزر للتشغيل من جديد.'**
   String get stateStoppedBySystem;
 
+  /// Android string state_silenced_title
+  ///
+  /// In ar, this message translates to:
+  /// **'توقفت التصفية'**
+  String get stateSilencedTitle;
+
+  /// Android string state_silenced
+  ///
+  /// In ar, this message translates to:
+  /// **'توقفت التصفية: التطبيقات الأخرى مكتومة. اضغط الزر للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.'**
+  String get stateSilenced;
+
+  /// Android string release_silence
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف: سماع التطبيقات دون تصفية'**
+  String get releaseSilence;
+
   /// Android string power_start_cd
   ///
   /// In ar, this message translates to:
@@ -398,6 +416,30 @@ abstract class AppLocalizations {
   /// **'مستحسن. بعض التطبيقات لا تسمح بتصفية صوتها، فيُكتم بدل أن تمرّ الموسيقى.'**
   String get settingSilenceBody;
 
+  /// Android string setting_hold_silence_title
+  ///
+  /// In ar, this message translates to:
+  /// **'إبقاء التطبيقات صامتة إذا توقفت التصفية من تلقاء نفسها'**
+  String get settingHoldSilenceTitle;
+
+  /// Android string setting_hold_silence_body
+  ///
+  /// In ar, this message translates to:
+  /// **'مستحسن. إذا أنهى أندرويد التصفية (لا أنت)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية. يحتاج إلى الإعداد لمرة واحدة.'**
+  String get settingHoldSilenceBody;
+
+  /// Android string setting_stereo_title
+  ///
+  /// In ar, this message translates to:
+  /// **'صوت ستيريو'**
+  String get settingStereoTitle;
+
+  /// Android string setting_stereo_body
+  ///
+  /// In ar, this message translates to:
+  /// **'مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.'**
+  String get settingStereoBody;
+
   /// Android string setting_singing_title
   ///
   /// In ar, this message translates to:
@@ -577,6 +619,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'أُلغي، ولم يُحفظ شيء.'**
   String get linkCancelled;
+
+  /// Android string link_timed_out
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقف أندرويد الحفظ: فهو لا يسمح بهذا النوع من العمل إلا بضع ساعات في اليوم. لم يُحفظ شيء؛ افتح واعية وحاول من جديد.'**
+  String get linkTimedOut;
 
   /// Android string link_export_failed
   ///
@@ -830,6 +878,12 @@ abstract class AppLocalizations {
   /// **'لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.'**
   String get blurStatusNoOverlay;
 
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
+  String blurStatusNoCapture(String details);
+
   /// Android string blur_setup_failed
   ///
   /// In ar, this message translates to:
@@ -877,6 +931,258 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.'**
   String get guideBody;
+
+  /// Android string wsetup_route_title
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعداد على هذا الهاتف (دون تطبيق إضافي)'**
+  String get wsetupRouteTitle;
+
+  /// Android string wsetup_route_body
+  ///
+  /// In ar, this message translates to:
+  /// **'باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ الموجود في أندرويد نفسه. تحتاج إلى شبكة Wi‑Fi (لا يلزم الإنترنت). الإقران يكون مرة واحدة فقط.'**
+  String get wsetupRouteBody;
+
+  /// Android string wsetup_steps
+  ///
+  /// In ar, this message translates to:
+  /// **'1. اضغط ‏«ابدأ»‏. تفتح واعية ‏«خيارات المطور»‏ وتُظهر إشعارًا.\n\n2. إذا كانت ‏«خيارات المطور»‏ غير مفعّلة، تُفتح صفحة ‏«حول الهاتف»‏ بدلًا منها: اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.\n\n3. انزل في الصفحة إلى ‏«تصحيح الأخطاء اللاسلكي»‏ (ضمن قسم ‏«تصحيح الأخطاء»‏)، وفعّله وأكّد بالضغط على ‏«سماح»‏.\n\n4. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. يظهر رمز من 6 أرقام.\n\n5. اترك تلك الشاشة مفتوحة. اسحب الإشعارات إلى الأسفل، واضغط ‏«أدخل الرمز»‏ في إشعار واعية واكتب الرمز.\n\n6. تُكمل واعية الباقي وحدها وتقول ‏«اكتمل الإعداد»‏. بعدها يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.'**
+  String get wsetupSteps;
+
+  /// Android string wsetup_start
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ'**
+  String get wsetupStart;
+
+  /// Android string wsetup_enter_here
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب الرمز هنا'**
+  String get wsetupEnterHere;
+
+  /// Android string wsetup_cancel
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get wsetupCancel;
+
+  /// Android string wsetup_android10
+  ///
+  /// In ar, this message translates to:
+  /// **'أندرويد 10 لا يستطيع إتمام الإعداد وحده: يحتاج إلى حاسوب، إما مباشرة (في الأسفل) أو لتشغيل Shizuku مرة واحدة.'**
+  String get wsetupAndroid10;
+
+  /// Android string wsetup_shizuku_heading
+  ///
+  /// In ar, this message translates to:
+  /// **'أو باستخدام تطبيق Shizuku'**
+  String get wsetupShizukuHeading;
+
+  /// Android string wsetup_shizuku_note
+  ///
+  /// In ar, this message translates to:
+  /// **'يسمح Shizuku أيضًا بمرور اللمس عبر أغطية الشاشة.'**
+  String get wsetupShizukuNote;
+
+  /// Android string wsetup_channel
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعداد لمرة واحدة'**
+  String get wsetupChannel;
+
+  /// Android string wsetup_notif_title
+  ///
+  /// In ar, this message translates to:
+  /// **'إعداد واعية: في انتظار رمز الإقران'**
+  String get wsetupNotifTitle;
+
+  /// Android string wsetup_found_title
+  ///
+  /// In ar, this message translates to:
+  /// **'وُجدت شاشة الإقران'**
+  String get wsetupFoundTitle;
+
+  /// Android string wsetup_busy_title
+  ///
+  /// In ar, this message translates to:
+  /// **'إعداد واعية'**
+  String get wsetupBusyTitle;
+
+  /// Android string wsetup_done_title
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتمل الإعداد'**
+  String get wsetupDoneTitle;
+
+  /// Android string wsetup_done_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تستطيع واعية الآن كتم الصوت الأصلي. يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.'**
+  String get wsetupDoneBody;
+
+  /// Android string wsetup_failed_title
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يكتمل الإعداد'**
+  String get wsetupFailedTitle;
+
+  /// Android string wsetup_pairing
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الإقران…'**
+  String get wsetupPairing;
+
+  /// Android string wsetup_connecting
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ الاتصال ومنح الأذونات…'**
+  String get wsetupConnecting;
+
+  /// Android string wsetup_need_wifi
+  ///
+  /// In ar, this message translates to:
+  /// **'اتصل بشبكة Wi‑Fi أولًا (لا يلزم الإنترنت): ‏«تصحيح الأخطاء اللاسلكي»‏ لا يعمل إلا عبر Wi‑Fi.'**
+  String get wsetupNeedWifi;
+
+  /// Android string wsetup_need_wireless_debugging
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«خيارات المطور»‏، فعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط على اسمه ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏.'**
+  String get wsetupNeedWirelessDebugging;
+
+  /// Android string wsetup_open_dialog
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«تصحيح الأخطاء اللاسلكي»‏، اضغط ‏«إقران الجهاز باستخدام رمز الإقران»‏. اترك الرمز ظاهرًا على الشاشة واضغط ‏«أدخل الرمز»‏ هنا.'**
+  String get wsetupOpenDialog;
+
+  /// Android string wsetup_enter_code_body
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط ‏«أدخل الرمز»‏ واكتب الرمز المكوّن من 6 أرقام الظاهر في الإعدادات.'**
+  String get wsetupEnterCodeBody;
+
+  /// Android string wsetup_code_waiting
+  ///
+  /// In ar, this message translates to:
+  /// **'وصل الرمز. في انتظار شاشة ‏«إقران الجهاز باستخدام رمز الإقران»‏: اتركها مفتوحة.'**
+  String get wsetupCodeWaiting;
+
+  /// Android string wsetup_wrong_code
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُقبل هذا الرمز. تحقّق من الأرقام الستة الظاهرة على الشاشة وأدخلها مرة أخرى. إذا أُغلقت شاشة الإقران فافتحها من جديد، فالرمز يتغيّر.'**
+  String get wsetupWrongCode;
+
+  /// Android string wsetup_pairing_failed
+  ///
+  /// In ar, this message translates to:
+  /// **'لم ينجح الإقران. أغلق شاشة الإقران، وافتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ مرة أخرى وأدخل الرمز الجديد.'**
+  String get wsetupPairingFailed;
+
+  /// Android string wsetup_waiting_connect
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الإقران. أبقِ ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا: واعية تتصل الآن.'**
+  String get wsetupWaitingConnect;
+
+  /// Android string wsetup_not_paired
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يعد هذا الهاتف يعرف واعية (أُزيل الإقران أو انتهت مدته). افتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ وأدخل الرمز.'**
+  String get wsetupNotPaired;
+
+  /// Android string wsetup_connect_failed
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر الاتصال بـ ‏«تصحيح الأخطاء اللاسلكي»‏. أوقفه ثم فعّله مرة أخرى، وستعيد واعية المحاولة وحدها.'**
+  String get wsetupConnectFailed;
+
+  /// Android string wsetup_grant_failed
+  ///
+  /// In ar, this message translates to:
+  /// **'تم الاتصال، لكن الأذونات ما زالت ناقصة. استخدم Shizuku أو حاسوبًا (في الأسفل).'**
+  String get wsetupGrantFailed;
+
+  /// Android string wsetup_timeout
+  ///
+  /// In ar, this message translates to:
+  /// **'توقّف الإعداد بعد 10 دقائق دون أن يكتمل. اضغط ‏«ابدأ»‏ للمحاولة مرة أخرى.'**
+  String get wsetupTimeout;
+
+  /// Android string wsetup_code_unreadable
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب الأرقام الستة لرمز الإقران.'**
+  String get wsetupCodeUnreadable;
+
+  /// Android string wsetup_code_hint
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز من 6 أرقام'**
+  String get wsetupCodeHint;
+
+  /// Android string wsetup_enter_code
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل الرمز'**
+  String get wsetupEnterCode;
+
+  /// Android string wsetup_detail
+  ///
+  /// In ar, this message translates to:
+  /// **'التفاصيل: {details}'**
+  String wsetupDetail(String details);
+
+  /// Android string wsetup_err_timeout
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يأتِ رد في الوقت المحدد'**
+  String get wsetupErrTimeout;
+
+  /// Android string wsetup_err_refused
+  ///
+  /// In ar, this message translates to:
+  /// **'رُفض الاتصال'**
+  String get wsetupErrRefused;
+
+  /// Android string wsetup_dev_off
+  ///
+  /// In ar, this message translates to:
+  /// **'‏«خيارات المطور»‏ غير مفعّلة. في ‏«حول الهاتف»‏ اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.'**
+  String get wsetupDevOff;
+
+  /// Android string wsetup_open_about
+  ///
+  /// In ar, this message translates to:
+  /// **'حول الهاتف'**
+  String get wsetupOpenAbout;
+
+  /// Android string wsetup_notif_off
+  ///
+  /// In ar, this message translates to:
+  /// **'إشعارات واعية متوقفة، فلا يمكن كتابة الرمز في إشعار. استخدم تقسيم الشاشة (الإعدادات في نصف وواعية في النصف الآخر) واضغط ‏«اكتب الرمز هنا»‏.'**
+  String get wsetupNotifOff;
+
+  /// Android string wsetup_code_dialog_title
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز الإقران'**
+  String get wsetupCodeDialogTitle;
+
+  /// Android string wsetup_code_dialog_body
+  ///
+  /// In ar, this message translates to:
+  /// **'مع تقسيم الشاشة فقط (الإعدادات في نصف وواعية في النصف الآخر): الخروج من الإعدادات يُغلق شاشة الإقران فيتوقف رمزها عن العمل. اكتب الرمز المكوّن من 6 أرقام الظاهر تحت ‏«إقران الجهاز باستخدام رمز الإقران»‏.'**
+  String get wsetupCodeDialogBody;
+
+  /// Android string wsetup_code_ok
+  ///
+  /// In ar, this message translates to:
+  /// **'إقران'**
+  String get wsetupCodeOk;
 
   /// Android string blur_strict_title
   ///
@@ -1123,12 +1429,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.'**
   String get blurStatusOnVisibleDesktop;
-
-  /// Flutter only. Arabic not reviewed yet.
-  ///
-  /// In ar, this message translates to:
-  /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
-  String blurStatusNoCapture(String details);
 
   /// Flutter only. Arabic not reviewed yet.
   ///
