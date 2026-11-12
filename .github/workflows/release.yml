@@ -108,13 +108,98 @@ jobs:
       - uses: actions/upload-artifact@v4
         with: { name: android, path: out/*.apk }
 
+  # Windows desktop app (sound filter + screen blur): programs cross-compiled with llvm-mingw, then the Flutter app
+  # built and bundled on Windows (as windows.yml, which also tests them on Windows runners)
+  windows-programs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch llvm-mingw, ONNX Runtime for Windows and the models (checksummed)
+        run: |
+          scripts/fetch_deps.sh mingw
+          scripts/fetch_deps.sh ort-win
+          scripts/fetch_deps.sh models
+          scripts/fetch_deps.sh vision
+          scripts/fetch_deps.sh detector
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - run: make -j"$(nproc)" -f windows/Makefile CROSS="$PWD/third_party/llvm-mingw/bin/x86_64-w64-mingw32-" ORT=third_party/onnxruntime-win
+      - name: Models next to the programs
+        run: |
+          mkdir -p build-win/models/dfn3 build-win/models/vision
+          cp models/dfn3/dfn3_stream_int8.* build-win/models/dfn3/
+          cp models/vision/*.onnx build-win/models/vision/
+          if [ -f models/detector/detector_v1.onnx ]; then
+            mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
+          fi
+      - uses: actions/upload-artifact@v4
+        with: { name: windows-programs, path: build-win }
+
+  windows-desktop:
+    needs: windows-programs
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: "3.41.5", cache: true }
+      - uses: actions/download-artifact@v4
+        with: { name: windows-programs, path: build-win }
+      - name: ONNX Runtime licence texts (checksummed)
+        shell: bash
+        run: scripts/fetch_deps.sh ort-win
+      - name: Build
+        working-directory: desktop
+        run: flutter build windows --release
+      - name: Filter, blur, models and licence texts into the app
+        shell: bash
+        run: bash desktop/tool/bundle_windows.sh desktop/build/windows/x64/runner/Release build-win
+      - name: Package
+        shell: pwsh
+        run: |
+          Rename-Item desktop/build/windows/x64/runner/Release waaiya
+          Compress-Archive -Path desktop/build/windows/x64/runner/waaiya -DestinationPath "waaiya-desktop-windows-x64-$env:GITHUB_REF_NAME.zip"
+      - uses: actions/upload-artifact@v4
+        with: { name: windows-desktop, path: "waaiya-desktop-windows-x64-*.zip" }
+
+  # Linux desktop app: built on 22.04 (GLib 2.72) like flutter.yml, so it starts on older systems
+  linux-desktop:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: "3.41.5", cache: true }
+      - run: sudo apt-get update && sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev
+      - name: Engines and models (checksummed)
+        run: scripts/fetch_deps.sh && make -j"$(nproc)" all
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Build
+        working-directory: desktop
+        run: flutter build linux --release
+      - name: Engine and licence texts into the bundle
+        run: bash desktop/tool/bundle_engine.sh desktop/build/linux/x64/release/bundle
+      - name: Package
+        run: tar czf "waaiya-desktop-linux-x64-${GITHUB_REF_NAME}.tar.gz" -C desktop/build/linux/x64/release --transform 's,^bundle,waaiya,' bundle
+      - uses: actions/upload-artifact@v4
+        with: { name: linux-desktop, path: "waaiya-desktop-linux-x64-*.tar.gz" }
+
   publish:
-    needs: [linux, android]
+    needs: [linux, android, windows-desktop, linux-desktop]
     runs-on: ubuntu-24.04
     steps:
+      # only the release files (not the intermediate windows-programs artifact)
       - uses: actions/download-artifact@v4
-        with: { path: dist, merge-multiple: true }
-      - run: cd dist && sha256sum * > SHA256SUMS
+        with: { name: linux, path: dist }
+      - uses: actions/download-artifact@v4
+        with: { name: android, path: dist }
+      - uses: actions/download-artifact@v4
+        with: { name: windows-desktop, path: dist }
+      - uses: actions/download-artifact@v4
+        with: { name: linux-desktop, path: dist }
+      - run: cd dist && ls -la && sha256sum * > SHA256SUMS
       - name: Draft release
         env:
           GH_TOKEN: ${{ github.token }}
