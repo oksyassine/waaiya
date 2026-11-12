@@ -425,6 +425,28 @@ int Sessions::lowered() const {
     return mode_ == ATTENUATE ? n : 0;
 }
 
+std::string Sessions::meters() const {
+    std::lock_guard<std::recursive_mutex> l(mu_);
+    std::string s;
+    for (auto &t : tracked_) {
+        if (t.dead) continue;
+        Com<ImMeter> m;
+        UINT ch = 0;
+        float peak = -1;
+        AudioSessionState st = AudioSessionStateInactive;
+        t.ctl->GetState(&st);
+        if (SUCCEEDED(t.ctl->QueryInterface(IID_ImMeter, reinterpret_cast<void **>(m.put())))) {
+            m->GetMeteringChannelCount(&ch);
+            m->GetPeakValue(&peak);
+        }
+        char b[128];
+        snprintf(b, sizeof b, "%spid %lu %s %s %uch peak %.6f", s.empty() ? "" : ", ", (unsigned long)t.pid,
+                 state_name(st), t.lowered ? "lowered" : "watched", ch, peak);
+        s += b;
+    }
+    return s;
+}
+
 int Sessions::pending() const {
     std::lock_guard<std::recursive_mutex> l(mu_);
     return (int)store_.size();
