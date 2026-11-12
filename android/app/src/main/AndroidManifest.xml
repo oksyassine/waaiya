@@ -18,6 +18,11 @@
     <!-- Android 11+ package visibility: detect "Shizuku installed but not running" and open it. -->
     <queries>
         <package android:name="moe.shizuku.privileged.api" />
+        <!-- Apps with a launcher icon: to name the app whose sound cannot be filtered ("X does not allow filtering"). -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
     </queries>
 
     <!-- Our own filtered output must never be captured again (no feedback loop). -->

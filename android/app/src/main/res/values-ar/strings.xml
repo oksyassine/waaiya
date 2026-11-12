@@ -156,4 +156,23 @@
     <string name="blur_strict_1_short">متوازن</string>
     <string name="blur_strict_2_short">متساهل</string>
     <string name="blur_strict_help">كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.</string>
+    <!-- Live filter: problems said in words, the diagnostics report -->
+    <string name="state_on_not_muted">الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.</string>
+    <string name="state_on_mute_failing">لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).</string>
+    <string name="state_too_slow">هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.</string>
+    <string name="state_mono_note">الصوت أحادي (مونو) ليتمكن هذا الهاتف من المتابعة.</string>
+    <string name="state_blocked_silenced">كُتم صوته لأنه لا يسمح بالتصفية: %1$s.</string>
+    <string name="state_blocked_unfiltered">يُسمع دون تصفية لأنه لا يسمح بها: %1$s.</string>
+    <string name="state_capture_failed">لم يُعطِ أندرويد واعية صوت التطبيقات الأخرى. اضغط الزر للتشغيل من جديد.</string>
+    <string name="state_capture_cancelled">أُلغي التشغيل عند سؤال أندرويد عن مشاركة الشاشة. تحتاج واعية أن تختار «بدء» هناك لاستقبال الصوت. لا يُسجَّل شيء ولا يُرسَل.</string>
+    <string name="start_no_setup_title">ستبقى الموسيقى مسموعة</string>
+    <string name="start_no_setup_body">الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.</string>
+    <string name="start_no_setup_setup">أكمل الإعداد</string>
+    <string name="start_no_setup_anyway">شغّل على أي حال</string>
+    <string name="notif_not_muted">تعمل، لكن الموسيقى ما زالت مسموعة: أكمل الإعداد في واعية</string>
+    <string name="notif_mute_failing">تعذّر كتم الصوت الأصلي للتطبيق الذي يعمل الآن</string>
+    <string name="notif_too_slow">هذا الهاتف أبطأ من التصفية المباشرة: الصوت يتقطّع</string>
+    <string name="diag_button">مشكلة؟ تقرير التشخيص</string>
+    <string name="diag_title">تقرير التشخيص</string>
+    <string name="diag_note">ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.</string>
 </resources>

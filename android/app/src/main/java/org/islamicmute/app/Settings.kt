@@ -49,6 +49,17 @@ class Settings(context: Context) {
 
     val blurOn: Boolean get() = blurWomen || blurNudity
 
+    /**
+     * This phone needed mono to filter live sound in time (set by FilterService), so the next start begins in
+     * mono instead of cutting again. Forgotten after a week or an app update: the phone may only have been hot
+     * or busy that day, and an update may bring a faster model, so stereo gets another try.
+     */
+    var audioMono: Boolean
+        get() = p.getInt("audio_mono_version", -1) == BuildConfig.VERSION_CODE &&
+            System.currentTimeMillis() < p.getLong("audio_mono_until", 0)
+        set(v) = p.edit().putInt("audio_mono_version", if (v) BuildConfig.VERSION_CODE else -1)
+            .putLong("audio_mono_until", if (v) System.currentTimeMillis() + 7 * 24 * 3600 * 1000L else 0).apply()
+
     companion object {
         val MALE_CLEAR = floatArrayOf(0.999f, 0.99f, 0.98f)
     }
