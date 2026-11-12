@@ -9,6 +9,7 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 import 'linux_blur.dart';
 import 'linux_engine.dart';
 import 'version.dart';
+import 'windows_engine.dart';
 
 /// Desktop backend (docs/UI_CONTRACT.md, "Where the desktop backend differs").
 ///
@@ -16,11 +17,14 @@ import 'version.dart';
 ///
 /// Linux, with the engine in the bundle ([LinuxEngine]): Start checks the system, installs or updates the engine,
 /// then starts the systemd user service; Stop stops it (normal audio comes back); the state is polled from
-/// `waaiya status` and systemd. Elsewhere (Windows for now, or a development run without the engine) start/stop
-/// only change the reported state, and the screen says it is a preview (`filter.simulated`).
+/// `waaiya status` and systemd. Windows ([WindowsEngine]): Start runs `waaiya-filter.exe` from the bundle, detached;
+/// Stop gives every app its level back; the state is polled from `waaiya-filter status`. Without the engine (a
+/// development run) start/stop only change the reported state, and the screen says it is a preview
+/// (`filter.simulated`).
 ///
-/// Linux screen blur ([LinuxBlur], when the bundle has it): runs while the app is open and a blur option is on,
-/// whether the sound filter runs or not (capability `blurStandalone`); its state is `blur.state` / `blur.error`.
+/// Screen blur ([LinuxBlur]: `im-blur` on Linux, `waaiya-blur.exe` on Windows, when the bundle has it): runs while the
+/// app is open and a blur option is on, whether the sound filter runs or not (capability `blurStandalone`); its
+/// state is `blur.state` / `blur.error`.
 class DesktopBackend extends MemoryBackend {
   DesktopBackend._(this.settingsFile, this.licencesDir, this.engine, this.blur, this.startTimeout, AppState initial,
       Duration? poll)
@@ -35,10 +39,10 @@ class DesktopBackend extends MemoryBackend {
   /// Licence texts shipped next to the app (desktop/tool/bundle_engine.sh copies them there).
   final Directory licencesDir;
 
-  /// The Linux engine host; null: simulated.
-  final LinuxEngine? engine;
+  /// The sound filter host (Linux or Windows); null: simulated.
+  final FilterHost? engine;
 
-  /// The Linux screen blur; null: no blur here (capability `screenBlur` false).
+  /// The screen blur; null: no blur here (capability `screenBlur` false).
   final LinuxBlur? blur;
   StreamSubscription<BlurReport?>? _blurSub;
 
@@ -64,13 +68,13 @@ class DesktopBackend extends MemoryBackend {
 
   static const _langKey = 'lang';
 
-  /// [engine]: Linux engine host; by default the one next to the app on Linux. [blur]: Linux screen blur; by
-  /// default the helper next to the app on Linux. [platform]: `linux`, `windows`, ... (tests; default: this
+  /// [engine]: filter host; by default the one next to the app on Linux and Windows. [blur]: screen blur; by
+  /// default the helper next to the app on Linux and Windows. [platform]: `linux`, `windows`, ... (tests; default: this
   /// system). [poll]: state refresh period (null: only after actions and [refresh] calls).
   static Future<DesktopBackend> open({
     File? file,
     Directory? licencesDir,
-    LinuxEngine? engine,
+    FilterHost? engine,
     bool findEngine = true,
     LinuxBlur? blur,
     bool findBlur = true,
@@ -81,12 +85,14 @@ class DesktopBackend extends MemoryBackend {
     file ??= defaultSettingsFile();
     platform ??= Platform.operatingSystem;
     licencesDir ??= Directory('${File(Platform.resolvedExecutable).parent.path}${Platform.pathSeparator}licences');
-    final linux = platform == 'linux';
+    final linux = platform == 'linux', windows = platform == 'windows';
     if (engine == null && findEngine && linux) engine = LinuxEngine.find();
-    if (!linux) blur = null; // TODO(blur): Windows capture + overlay
+    if (engine == null && findEngine && windows) engine = WindowsEngine.find();
+    if (!linux && !windows) blur = null; // macOS: not yet
     if (blur == null && findBlur && linux) {
       blur = LinuxBlur.find(tokenFile: File('${file.parent.path}/screencast-restore-token'));
     }
+    if (blur == null && findBlur && windows) blur = LinuxBlur.findWindows();
     var saved = <String, Object?>{};
     try {
       saved = (jsonDecode(await file.readAsString()) as Map).cast<String, Object?>();
@@ -110,7 +116,6 @@ class DesktopBackend extends MemoryBackend {
       filter: FilterInfo(simulated: engine == null),
       detectorModel: detector,
       // Women's singing only with a bundled detector: without one the engine mutes all voice while it is on.
-      // TODO(engine): Windows host.
       capabilities: Capabilities(
         womenSinging: engine == null || detector,
         autostart: engine != null,
@@ -229,7 +234,7 @@ class DesktopBackend extends MemoryBackend {
 
   /// `waaiya stereo on|off` / `keep-silent on|off` typed on the command line: the app shows them and keeps them
   /// (Start writes the app's values, so the app adopts the engine's first instead of overriding them).
-  Future<void> _adoptEngineSettings(LinuxEngine e) async {
+  Future<void> _adoptEngineSettings(FilterHost e) async {
     final stereo = e.stereoSet, keep = e.keepSilentSet;
     final st = state.settings;
     if ((stereo == null || stereo == st.audioStereo) && (keep == null || keep == st.holdSilence)) return;
@@ -256,7 +261,7 @@ class DesktopBackend extends MemoryBackend {
   }
 
   /// Runs [action] with polling paused; a returned problem becomes `filter.error`.
-  Future<bool> _act(Future<BackendMessage?> Function(LinuxEngine e) action) async {
+  Future<bool> _act(Future<BackendMessage?> Function(FilterHost e) action) async {
     _busy = true;
     try {
       final err = await action(engine!);

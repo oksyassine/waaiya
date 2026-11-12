@@ -10,6 +10,8 @@
 
 #include "../common/wasapi.h"
 
+#include <endpointvolume.h>
+
 #include <map>
 #include <mutex>
 #include <string>
