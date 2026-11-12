@@ -80,3 +80,11 @@ attempt and a code that Settings shows on screen and discards).
 
 Not verified: real phones (vendor Settings differ in names and in where "Build number" is), split screen with the
 in-app field, and Android 12-14.
+
+Known limits:
+- The ports come only from mDNS. If a phone's mDNS never shows adbd's connect port to apps, the run waits and stops
+  after 10 minutes (a typed port is accepted for pairing only). The service name filter keeps other phones out.
+- Developer options' "Wireless debugging" row cannot be opened directly: Waaiya opens Developer options, and the
+  steps say to scroll down to it.
+- Android 11 needs the hidden Conscrypt exporter (reflection); a vendor that changed Conscrypt would break pairing
+  there (the error is shown as the detail of "Pairing did not work").
