@@ -352,10 +352,14 @@ def main():
                 e.sh("input swipe 540 600 540 2000 150")
 
     # --- diagnostics report
-    for _ in range(6):
-        if e.find(rid="diagnostics"):
+    # the button must be clear of the navigation bar: a tap on its visible edge would land on the bar
+    m = re.search(r"(\d+)x(\d+)", e.sh("wm size").splitlines()[-1])
+    screen_h = int(m.group(2)) if m else 2280
+    for _ in range(10):
+        hit = e.find(rid="diagnostics")
+        if hit and hit[2][1] < screen_h * 0.8:
             break
-        e.sh("input swipe 540 1800 540 500 200")
+        e.sh("input swipe 540 1500 540 700 200")
     e.tap(rid="diagnostics")
     time.sleep(1)
     report = "\n".join(t for _, t, _ in e.nodes() if "Waaiya" in t and "[Setup]" in t)
