@@ -462,7 +462,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     std::vector<float> in, out, raw(4096 * CH);
     in.reserve(RATE * CH);
     out.reserve(RATE * CH);
-    double audio_since = 0, fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
+    double quiet_at = 0, audio_since = 0, fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
     bool restored = false; // hold_silence off and failing: levels given back
     int exit_code = 0;
 
@@ -508,8 +508,12 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
         if (i_set >= 0) hs[nh++] = setwatch;
         int i_cap = au.running ? nh : -1;
         if (i_cap >= 0) hs[nh++] = au.cap_event;
-        w = WaitForMultipleObjects((DWORD)nh, hs, FALSE, au.running ? 200 : 500);
+        w = WaitForMultipleObjects((DWORD)nh, hs, FALSE, au.running ? 50 : 500);
         t = now_ms();
+        if (t >= quiet_at) { // sessions that play nothing yet: lowered as soon as they do
+            quiet_at = t + 50;
+            ses.poll_quiet();
+        }
 
         if (w == WAIT_OBJECT_0) { // stop: levels back, then restore-only for the apps not running now
             logf("stop: giving the levels back");

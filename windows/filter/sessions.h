@@ -32,6 +32,10 @@ class Sessions {
     // Applies the mode to every session again (also picks up new outputs). Called by the main loop when `wake` is
     // signalled, and on a timer.
     void scan();
+    // Sessions that play nothing yet (no output stream: an app that only records the speakers, a closed app's
+    // leftover session) are watched, not lowered: lowering one would lower what it records. This lowers those that
+    // started playing since. Cheap; the main loop calls it every 50 ms.
+    void poll_quiet();
     // Gives every running app its level back; the levels of apps not running stay in the store (restore-only mode
     // gives them back later). Switches to restore-only mode.
     void restore_all();
@@ -61,7 +65,8 @@ class Sessions {
         Com<ISimpleAudioVolume> vol;
         std::wstring id;
         DWORD pid = 0;
-        bool dead = false; // the session ended; unwatched by the next scan
+        bool dead = false;    // the session ended; unwatched by the next scan
+        bool lowered = false; // false: it plays nothing yet (see poll_quiet)
     };
     struct Output {
         std::wstring id;
@@ -71,6 +76,8 @@ class Sessions {
 
     void add_outputs();
     void apply(IAudioSessionControl *ctl, bool track); // mutex held
+    void lower(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid, AudioSessionState st, float cur,
+               bool track); // mutex held
     void save();                            // mutex held
     void load();
     void drop(Tracked &t);
