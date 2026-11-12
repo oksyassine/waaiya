@@ -116,9 +116,14 @@ the AAC encoder's start delay is measured once per phone and compensated, so lip
 audio the filter cannot take (e.g. 5.1) means no file, never an unfiltered one. Private posts, and public posts
 when a site refuses anonymous visitors for a while (Instagram does this at times), cannot be opened.
 
-yt-dlp keeps itself current: once a day the app checks PyPI for a newer release, and after a link fails it
-also takes yt-dlp's nightly build (checked at most once an hour) and retries once (`im_update.py`: PyPI SHA-256 checked, pure-Python wheels
-only, used only after it imports correctly, and a newer yt-dlp in an APK update always wins). Because the app
+yt-dlp keeps itself current (`im_update.py`): once a day the app checks PyPI for a newer stable release. A
+release is taken only after its wheel has been on PyPI for 3 days, and the newest release that old is taken, so
+a bad upload has time to be found and yanked first. After a link fails, the app also considers yt-dlp's nightly
+builds (checked at most once an hour; a nightly must be 1 day old) and retries once. The yt-dlp-ejs version that
+yt-dlp pins gets the same wait. Each wheel is checked: pure-Python only, from files.pythonhosted.org, SHA-256 as
+published by PyPI, not yanked, size capped, only the yt_dlp / yt_dlp_ejs packages unpacked. A new copy is used
+only after it imports correctly, and a newer yt-dlp in an APK update always wins. Requests to PyPI carry no app
+name (Python's default User-Agent). Because the app
 downloads code, this build is meant for direct download (GitHub releases); stores that forbid downloading code
 (Google Play, F-Droid's main repository) would need a build with the self-update turned off.
 Code: `android/app/src/main/python/im_links.py`, `im_update.py`, `Links.kt`, `LinkExport.kt`.
