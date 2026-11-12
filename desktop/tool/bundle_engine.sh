@@ -47,7 +47,7 @@ echo "$version-$hash" > "$E/VERSION"
 L="$BUNDLE/licences"
 mkdir -p "$L"
 cp "$REPO/NOTICE" "$L/NOTICE.txt"
-cp "$REPO/LICENSE" "$L/LICENSE-Apache-2.0.txt"
+cp "$REPO/LICENSE" "$L/LICENSE-AGPL-3.0.txt"
 cp "$REPO/THIRD_PARTY_LICENSES.md" "$L/THIRD_PARTY_LICENSES.txt"
 cp "$REPO/android/app/licences/DeepFilterNet-LICENSE-MIT.txt" "$L/"
 for f in LICENSE ThirdPartyNotices.txt; do
@@ -56,5 +56,6 @@ for f in LICENSE ThirdPartyNotices.txt; do
 done
 # screen blur models: YOLOX (Apache-2.0, Megvii), Marqo nudity classifier (Apache-2.0, model card); gender_v2 is ours
 cp "$REPO/models/vision/licences/YOLOX-LICENSE.txt" "$REPO/models/vision/licences/Marqo-nsfw-image-detection-384-NOTICE.txt" "$L/"
+cp "$REPO/android/app/licences/Apache-2.0-LICENSE.txt" "$L/"  # the Apache text of YOLOX and Marqo
 [ -f "$E/models/detector/detector_v1.onnx" ] && cp "$REPO/models/detector/efficientat/LICENSE" "$L/EfficientAT-LICENSE.txt"
 echo "engine $(cat "$E/VERSION") -> $E"

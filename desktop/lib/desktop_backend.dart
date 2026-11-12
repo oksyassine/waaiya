@@ -279,12 +279,13 @@ class DesktopBackend extends MemoryBackend {
   // --- licences ---
 
   static const _baseDocs = [
-    LicenceDoc('GNU Affero General Public License v3 or later (Waaiya)', 'LICENSE-Apache-2.0.txt'),
+    LicenceDoc('GNU Affero General Public License v3 or later (Waaiya)', 'LICENSE-AGPL-3.0.txt'),
     LicenceDoc('Third-party components, models and training data', 'THIRD_PARTY_LICENSES.txt'),
   ];
   static const _blurDocs = [
     LicenceDoc('YOLOX person detector (Apache-2.0)', 'YOLOX-LICENSE.txt'),
     LicenceDoc('Marqo nudity classifier (Apache-2.0)', 'Marqo-nsfw-image-detection-384-NOTICE.txt'),
+    LicenceDoc('Apache License 2.0 (YOLOX and Marqo models)', 'Apache-2.0-LICENSE.txt'),
   ];
   static const _engineDocs = [
     LicenceDoc('ONNX Runtime (MIT)', 'onnxruntime-LICENSE.txt'),
