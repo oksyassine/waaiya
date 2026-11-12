@@ -18,6 +18,9 @@
     <string name="state_model_failed">The sound model could not load, so the sound is muted for safety.</string>
     <string name="state_capture_denied">The microphone permission is needed to receive other apps\' sound.</string>
     <string name="state_stopped_by_system">Android stopped filtering. Tap the button to start again.</string>
+    <string name="state_silenced_title">Filtering stopped</string>
+    <string name="state_silenced">Filtering stopped: other apps are silenced. Tap the button to start again, or Stop to hear them unfiltered.</string>
+    <string name="release_silence">Stop: hear apps unfiltered</string>
     <string name="power_start_cd">Start filtering</string>
     <string name="power_stop_cd">Stop filtering</string>
     <string name="capture_hint">Android will ask to share your screen. Only the sound is used: nothing is recorded or sent.</string>
@@ -54,6 +57,10 @@
     <string name="settings_title">Settings</string>
     <string name="setting_silence_title">Silence apps that block filtering</string>
     <string name="setting_silence_body">Recommended. Some apps do not allow their sound to be filtered; this mutes them instead of letting music through.</string>
+    <string name="setting_hold_silence_title">Keep apps silent if filtering stops by itself</string>
+    <string name="setting_hold_silence_body">Recommended. If Android ends filtering (not you), other apps stay silent until you start again or tap Stop, instead of playing music unfiltered. Needs the one-time setup.</string>
+    <string name="setting_stereo_title">Stereo sound</string>
+    <string name="setting_stereo_body">Off: mono, which uses about half the battery and keeps up on more phones. On: keeps the left and right sides apart. If the phone is too slow for stereo, it still switches to mono by itself.</string>
     <string name="setting_singing_title">Mute women\'s singing</string>
     <string name="setting_singing_body">Women\'s speech and recitation are kept.</string>
     <string name="setting_singing_no_model">This version has no singing detector, so all voices are muted while this is on.</string>
@@ -91,6 +98,7 @@
     <string name="link_filtering">Removing music…</string>
     <string name="link_cancel">Cancel</string>
     <string name="link_cancelled">Cancelled. Nothing was saved.</string>
+    <string name="link_timed_out">Android stopped the save: it allows this kind of work only a few hours a day. Nothing was saved; open Waaiya and try again.</string>
     <string name="link_export_failed">Could not save this one. Nothing was saved.</string>
     <string name="link_saved">Saved without music</string>
     <string name="link_saved_video">In your gallery: Movies › Waaiya</string>
@@ -136,6 +144,7 @@
     <string name="blur_status_models">This version lacks a blur model for the chosen option.</string>
     <string name="blur_status_failing">The blur cannot keep up right now.</string>
     <string name="blur_status_no_overlay">The blur cannot draw over other apps: allow it above.</string>
+    <string name="blur_status_no_capture">Android did not let the blur see the screen, so nothing is blurred. Stop and start filtering to try again.</string>
     <string name="blur_setup_failed">Shizuku could not allow it:\n%1$s</string>
     <string name="blur_cover_slow">Waaiya: blur paused (cannot keep up)</string>
     <string name="blur_cover_full">Covered by Waaiya</string>
@@ -179,4 +188,6 @@
     <string name="diag_note">What Waaiya sees on this phone. Copy it or share it with whoever helps you. The app itself sends nothing.</string>
     <string name="notif_stopped_title">Waaiya stopped</string>
     <string name="notif_stopped_text">The sound is not filtered any more. Tap to start again.</string>
+    <string name="notif_silenced_title">Filtering stopped: other apps are silenced</string>
+    <string name="notif_silenced_text">Tap to start again, or Stop to hear them unfiltered.</string>
 </resources>
