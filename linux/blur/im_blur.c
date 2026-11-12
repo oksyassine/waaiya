@@ -717,6 +717,7 @@ int main(int argc, char **argv) {
         while (read(B.wake[0], drain, sizeof drain) > 0) {}
         if (B.done >= 0) {
             int i = B.done;
+            if (!B.set.policy) B.rn = 0; /* finished after the blur was turned off: nothing to cover */
             if (i < B.n) {
                 int before = has_full(B.s[i].covers, B.s[i].ncovers), now = has_full(B.rcov, B.rn);
                 ib_pass_done(&B.s[i].pass, before, now); /* a whole-screen cover gone: the next new frame gets nudity */
