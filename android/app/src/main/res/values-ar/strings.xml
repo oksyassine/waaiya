@@ -18,6 +18,9 @@
     <string name="state_model_failed">تعذّر تحميل نموذج الصوت، فكُتم الصوت احتياطًا.</string>
     <string name="state_capture_denied">يلزم إذن الميكروفون لاستقبال صوت التطبيقات الأخرى.</string>
     <string name="state_stopped_by_system">أوقف أندرويد التصفية. اضغط الزر للتشغيل من جديد.</string>
+    <string name="state_silenced_title">توقفت التصفية</string>
+    <string name="state_silenced">توقفت التصفية: التطبيقات الأخرى مكتومة. اضغط الزر للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.</string>
+    <string name="release_silence">إيقاف: سماع التطبيقات دون تصفية</string>
     <string name="power_start_cd">تشغيل التصفية</string>
     <string name="power_stop_cd">إيقاف التصفية</string>
     <string name="capture_hint">سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.</string>
@@ -54,6 +57,10 @@
     <string name="settings_title">الإعدادات</string>
     <string name="setting_silence_title">كتم التطبيقات التي تمنع التصفية</string>
     <string name="setting_silence_body">مستحسن. بعض التطبيقات لا تسمح بتصفية صوتها، فيُكتم بدل أن تمرّ الموسيقى.</string>
+    <string name="setting_hold_silence_title">إبقاء التطبيقات صامتة إذا توقفت التصفية من تلقاء نفسها</string>
+    <string name="setting_hold_silence_body">مستحسن. إذا أنهى أندرويد التصفية (لا أنت)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية. يحتاج إلى الإعداد لمرة واحدة.</string>
+    <string name="setting_stereo_title">صوت ستيريو</string>
+    <string name="setting_stereo_body">مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.</string>
     <string name="setting_singing_title">كتم غناء النساء</string>
     <string name="setting_singing_body">يُبقي كلام النساء وتلاوتهن.</string>
     <string name="setting_singing_no_model">هذه النسخة بلا كاشف للغناء، لذا تُكتم كل الأصوات ما دام هذا الخيار مفعّلًا.</string>
@@ -91,6 +98,7 @@
     <string name="link_filtering">جارٍ إزالة الموسيقى…</string>
     <string name="link_cancel">إلغاء</string>
     <string name="link_cancelled">أُلغي، ولم يُحفظ شيء.</string>
+    <string name="link_timed_out">أوقف أندرويد الحفظ: فهو لا يسمح بهذا النوع من العمل إلا بضع ساعات في اليوم. لم يُحفظ شيء؛ افتح واعية وحاول من جديد.</string>
     <string name="link_export_failed">تعذّر الحفظ، ولم يُحفظ شيء.</string>
     <string name="link_saved">حُفظ بلا موسيقى</string>
     <string name="link_saved_video">في المعرض: الأفلام › Waaiya</string>
@@ -134,6 +142,7 @@
     <string name="blur_status_models">هذه النسخة تفتقد نموذج التمويه للخيار المختار.</string>
     <string name="blur_status_failing">التمويه عاجز عن المتابعة الآن.</string>
     <string name="blur_status_no_overlay">لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.</string>
+    <string name="blur_status_no_capture">لم يسمح أندرويد للتمويه برؤية الشاشة، فلا شيء يُموَّه الآن. أوقف التصفية ثم شغّلها لتحاول من جديد.</string>
     <string name="blur_setup_failed">تعذّر السماح عبر Shizuku:\n%1$s</string>
     <string name="blur_cover_slow">واعية: التمويه متوقف (عاجز عن المتابعة)</string>
     <string name="blur_cover_full">غطّته واعية</string>
@@ -177,4 +186,6 @@
     <string name="diag_note">ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.</string>
     <string name="notif_stopped_title">توقفت واعية</string>
     <string name="notif_stopped_text">الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.</string>
+    <string name="notif_silenced_title">توقفت التصفية: التطبيقات الأخرى مكتومة</string>
+    <string name="notif_silenced_text">اضغط للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.</string>
 </resources>
