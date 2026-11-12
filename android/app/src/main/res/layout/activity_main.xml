@@ -74,6 +74,7 @@
                     android:text="@string/setup_title" android:accessibilityHeading="true" />
                 <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="4dp" android:text="@string/setup_body" />
+                <include android:id="@+id/wsetup" layout="@layout/setup_wireless" />
                 <include android:id="@+id/step1" layout="@layout/item_step" />
                 <include android:id="@+id/step2" layout="@layout/item_step" />
                 <include android:id="@+id/step3" layout="@layout/item_step" />
