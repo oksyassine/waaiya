@@ -151,6 +151,13 @@ typedef struct {
     float static_level;  /* covers not in the capture: when no thumbnail cell changed by more than this (0..1) since the
                           * last frame, the screen is still and every difference in the detections is noise: covers only
                           * grow and none expires until the screen changes (default 0.03; 0 = off) */
+    float full_max_hold_ms; /* covers visible in the capture: a whole-frame (nudity) cover hides everything the tracker
+                          * would need to see to know the picture under it changed, so it can only lift to look. Each
+                          * time it is detected again within 2 x full_hold_ms of lifting, its next hold doubles
+                          * (2 x full_hold_ms, then 4x, 8x ...) up to this; a lift with no new detection for that long
+                          * starts again at 2 x full_hold_ms. A video under the cover then shows through a few times
+                          * a minute at first, then about once a minute, instead of every 3 s (default 60000;
+                          * 0 = no doubling). Appended last: older callers' structs stay a valid prefix. */
 } im_cover_params;
 
 /* covers_visible = 1 when our own covers appear in the captured frames (the overlay could not be excluded from
