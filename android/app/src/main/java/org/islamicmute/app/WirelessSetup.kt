@@ -197,8 +197,12 @@ class WirelessSetupService : Service() {
         val f = SetupFlow(WirelessSetup.pairedBefore(this) && AdbKey.load(WirelessSetup.keyDir(this)) != null)
         flow = f
         detail = null
-        if (Build.VERSION.SDK_INT >= 34) startForeground(NOTIFICATION_ID, notification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-        else startForeground(NOTIFICATION_ID, notification())
+        // Can be refused when started from the background (a reply to a notification of a run whose process died).
+        val fg = runCatching {
+            if (Build.VERSION.SDK_INT >= 34) startForeground(NOTIFICATION_ID, notification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            else startForeground(NOTIFICATION_ID, notification())
+        }
+        if (fg.isFailure) { WirelessSetup.log("cannot run in the foreground", fg.exceptionOrNull()); flow = null; stopSelf(); return }
         publish()
         // The key: made now, while the user is still on the way to the pairing dialog (RSA takes a moment).
         worker.execute { runCatching { key = AdbKey.loadOrCreate(WirelessSetup.keyDir(this)) }
