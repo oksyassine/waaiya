@@ -165,8 +165,9 @@ class LinuxBlur {
   int _restarts = 0;
   Timer? _restart;
   Timer? _watch;
-  DateTime _lastLine = DateTime.now();
-  DateTime? _onSince;
+  // monotonic clocks (a suspend or a clock change must not make a healthy helper look hung)
+  final _sinceLine = Stopwatch();
+  final _onFor = Stopwatch();
   final _stderr = <String>[];
 
   bool get running => _p != null;
@@ -238,21 +239,27 @@ class LinuxBlur {
     }
     _p = p;
     _stopping = false;
-    _onSince = null;
-    _lastLine = DateTime.now();
+    _onFor
+      ..stop()
+      ..reset();
+    _sinceLine
+      ..reset()
+      ..start();
     last = const BlurReport(state: 'starting');
     _reports.add(last);
     p.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
       final r = BlurReport.parse(line);
       if (r == null || _p != p) return;
-      _lastLine = DateTime.now();
+      _sinceLine.reset();
       final wasOn = last?.state == 'on' || last?.state == 'on_covers_visible';
       if (r.state == 'on' || r.state == 'on_covers_visible') {
         // it works: after a while, a later crash may be restarted again
-        _onSince ??= DateTime.now();
-        if (DateTime.now().difference(_onSince!) >= stableAfter) _restarts = 0;
+        _onFor.start();
+        if (_onFor.elapsed >= stableAfter) _restarts = 0;
       } else {
-        _onSince = null;
+        _onFor
+          ..stop()
+          ..reset();
       }
       last = r;
       _reports.add(r);
@@ -263,7 +270,7 @@ class LinuxBlur {
     // hung (no line for a while: it prints one at least every 5 s): reported, killed, restarted
     _watch?.cancel();
     _watch = Timer.periodic(silenceTimeout ~/ 3, (_) {
-      if (_p != p || DateTime.now().difference(_lastLine) < silenceTimeout) return;
+      if (_p != p || _sinceLine.elapsed < silenceTimeout) return;
       unawaited(_serial(() => _restartHung(p, 'the blur helper has not answered for ${silenceTimeout.inSeconds} s')));
     });
     p.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen((l) {
