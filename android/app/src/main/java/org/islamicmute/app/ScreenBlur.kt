@@ -27,7 +27,11 @@ import java.nio.ByteBuffer
  * that long: covers are widened and moved ahead by the measured motion to limit it.
  */
 class ScreenBlur(private val context: Context, private val projection: MediaProjection, private val settings: Settings) {
-    enum class State { STARTING, ON, ON_COVERS_VISIBLE, NO_OVERLAY, MODELS_MISSING, FAILING }
+    enum class State {
+        STARTING, ON, ON_COVERS_VISIBLE, NO_OVERLAY, MODELS_MISSING, FAILING,
+        /** Android refused the screen capture for the blur (its virtual display could not be created). */
+        NO_CAPTURE,
+    }
 
     companion object {
         private const val TAG = "IslamicMute"
@@ -46,6 +50,13 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         /** One line for the diagnostics report: the model time per frame. Null until a frame was analysed. */
         @Volatile var stats: String? = null
             private set
+        /** One line for the diagnostics report: who draws the covers and what the self-test found. */
+        @Volatile var coverInfo: String? = null
+            private set
+        /** Debug builds only (FilterService's debug receiver): covers drawn instead of the detections (x0, y0, x1, y1,
+         *  kind per cover), to test the windows and touches without the models; and a forced capture failure. */
+        @Volatile var debugCovers: FloatArray? = null
+        @Volatile var debugFailCapture = false
         private val listeners = java.util.concurrent.CopyOnWriteArraySet<() -> Unit>()
         private val mainH = Handler(Looper.getMainLooper())
         fun addListener(l: () -> Unit) { listeners += l }
@@ -63,6 +74,10 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     private var capW = 0
     private var capH = 0
     @Volatile private var stopped = false
+    /** start() could not create the capture: nothing is analysed; the watchdog only reports it. */
+    private var captureFailed = false
+    /** Main thread: the overlay host the self-test last ran for (a new host needs a new test). */
+    private var testedHost: BlurOverlay.Host? = null
 
     // worker-thread state
     private val frame = Vision.Frame(FloatArray(Vision.MAX_RECTS * 5), 0, false)
@@ -106,13 +121,23 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
      * without a surface while the blur is off. The settings are then followed live (watchdog -> [apply]).
      */
     fun start() {
-        size(overlay.screen())
-        val r = ImageReader.newInstance(capW, capH, PixelFormat.RGBA_8888, 3)
-        r.setOnImageAvailableListener({ schedule() }, worker)
-        reader = r
-        display = projection.createVirtualDisplay("waaiya-blur", capW, capH, context.resources.displayMetrics.densityDpi,
-            DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, null, null, worker)
-        dm.registerDisplayListener(displayListener, worker)
+        try {
+            if (BuildConfig.DEBUG && debugFailCapture) throw SecurityException("debug: capture refused")
+            size(overlay.screen())
+            val r = ImageReader.newInstance(capW, capH, PixelFormat.RGBA_8888, 3)
+            reader = r
+            r.setOnImageAvailableListener({ schedule() }, worker)
+            display = projection.createVirtualDisplay("waaiya-blur", capW, capH, context.resources.displayMetrics.densityDpi,
+                DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, null, null, worker)
+            dm.registerDisplayListener(displayListener, worker)
+        } catch (e: Exception) {
+            // e.g. a SecurityException when the projection was already stopped or Android refuses a second display.
+            // Without this the thread and reader leaked and the screen said "starting" for the whole session.
+            Log.e(TAG, "blur: cannot create the capture", e)
+            captureFailed = true
+            runCatching { reader?.close() }; reader = null
+            thread.quitSafely()
+        }
         main.post(watchdog)
     }
 
@@ -123,6 +148,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         policy = p
         if (p == 0) {
             overlay.detach()
+            testedHost = null
             worker.post {
                 gen++
                 runCatching { display?.surface = null }
@@ -136,6 +162,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         if (turningOn) {
             publish(State.STARTING)
             if (overlay.attach()) overlay.show(FloatArray(0), 0, null, 0, true) // self-test square
+            testedHost = overlay.host // null while the Shizuku layer connects: the watchdog tests it once it draws
         }
         worker.post {
             if (policy != p) return@post // changed again meanwhile
@@ -155,6 +182,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     fun stop() {
         stopped = true
         stats = null
+        coverInfo = null
         main.removeCallbacks(watchdog)
         runCatching { dm.unregisterDisplayListener(displayListener) }
         worker.post {
@@ -168,20 +196,21 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     }
 
     private fun size(scr: Rect) {
-        val w = scr.width().coerceAtLeast(1); val h = scr.height().coerceAtLeast(1)
-        val s = LONG_SIDE.toFloat() / maxOf(w, h)
-        capW = (w * s).toInt() / 2 * 2; capH = (h * s).toInt() / 2 * 2
+        val (cw, ch) = captureSize(scr.width(), scr.height())
+        capW = cw; capH = ch
         thumbW = if (capW <= capH) THUMB_W else THUMB_W * capW / capH
         thumbH = maxOf(1, thumbW * capH / capW)
         thumbPx = IntArray(thumbW * thumbH)
     }
 
-    /** Rotation: the virtual display keeps the screen's shape, otherwise the capture is letterboxed. */
+    /** The virtual display keeps the screen's shape (rotation, a foldable unfolding without rotating, a resolution
+     *  change), otherwise the capture is letterboxed and the covers land in the wrong place. Worker thread. */
     private fun resizeIfNeeded() {
-        if (stopped) return
+        if (stopped || captureFailed) return
         val scr = overlay.screen()
-        val landscape = scr.width() > scr.height()
-        if (landscape == (capW > capH)) return
+        val (w, h) = captureSize(scr.width(), scr.height())
+        if (w == capW && h == capH) return
+        Log.i(TAG, "blur: screen ${scr.width()}x${scr.height()}, capture ${capW}x$capH -> ${w}x$h")
         gen++ // the kept frame has the old shape
         size(scr)
         val r = ImageReader.newInstance(capW, capH, PixelFormat.RGBA_8888, 3)
@@ -190,6 +219,13 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         if (policy > 0) display?.surface = r.surface
         reader?.close()
         reader = r
+    }
+
+    /** Capture size for a screen: long side [LONG_SIDE], same shape, even sizes. */
+    private fun captureSize(sw: Int, sh: Int): Pair<Int, Int> {
+        val w = sw.coerceAtLeast(1); val h = sh.coerceAtLeast(1)
+        val s = LONG_SIDE.toFloat() / maxOf(w, h)
+        return ((w * s).toInt() / 2 * 2).coerceAtLeast(2) to ((h * s).toInt() / 2 * 2).coerceAtLeast(2)
     }
 
     /** A new frame: analyse it now, or (frame-rate cap) the newest frame as soon as the interval is over. Never
@@ -268,8 +304,9 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         failStreak = if (frame.failed) failStreak + 1 else 0
         if (!frame.failed) lastOk = SystemClock.uptimeMillis()
         val bm = Bitmap.createBitmap(thumbPx, thumbW, thumbH, Bitmap.Config.ARGB_8888)
-        val rects = frame.rects.copyOf(frame.count * 5)
-        val n = frame.count
+        val dbg = if (BuildConfig.DEBUG) debugCovers else null
+        val rects = dbg ?: frame.rects.copyOf(frame.count * 5)
+        val n = dbg?.let { it.size / 5 } ?: frame.count
         main.post { if (!stopped) overlay.show(rects, n, bm, failMode(), false) }
 
         // what this pass skipped: the nudity model (it ran too recently), the other detector tiles
@@ -300,6 +337,16 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         }, delayMs)
     }
 
+    /** start() failed: with the blur on, say so and show the warning badge (a whole-screen cover could never lift,
+     *  since nothing is analysed); with it off, nothing. */
+    private fun reportNoCapture() {
+        if (!settings.blurOn) { overlay.detach(); publish(null); return }
+        if (overlay.host == null && !overlay.connecting) overlay.attach()
+        overlay.setFailMode(2)
+        overlay.heartbeat()
+        publish(State.NO_CAPTURE)
+    }
+
     /** 0 fine, 1 cover the screen, 2 warning badge (Settings.blurFailCover decides between 1 and 2). */
     private fun failMode(): Int {
         val now = SystemClock.uptimeMillis()
@@ -317,19 +364,37 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     private val watchdog = object : Runnable {
         override fun run() {
             if (stopped) return
+            if (captureFailed) { reportNoCapture(); main.postDelayed(this, 500); return }
             apply(if (settings.blurOn) Vision.policy(settings) else 0) // settings apply live
             val mc = settings.blurMaleClear
             if (mc != maleClear) { maleClear = mc; worker.post { vision?.setMaleClear(mc) } }
             if (policy <= 0) { main.postDelayed(this, 500); return }
-            if (overlay.host == null && overlay.attach()) {
-                Log.i(TAG, "blur overlay attached late (${overlay.host})")
-                overlay.show(FloatArray(0), 0, null, 0, true)
-                worker.post { testDone = false; coversVisible = false; testUntil = SystemClock.uptimeMillis() + SELF_TEST_MS }
-            }
+            if (overlay.host == null && !overlay.connecting && overlay.attach())
+                Log.i(TAG, "blur overlay attached late (${overlay.host ?: "Shizuku layer connecting"})")
             val fm = failMode()
             overlay.setFailMode(fm)
-            overlay.heartbeat()
+            overlay.heartbeat()           // may replace a host that stopped drawing
+            // A new host (attached late, the Shizuku layer confirmed, or a fallback from it to a window, or from a
+            // switched-off accessibility service): whether its covers show in the capture is not known, so the
+            // self-test runs again. Without this a window that replaced the Shizuku layer on Android 10/11-like
+            // behaviour kept "covers not visible", and the tracker uncovered whatever its own covers hid.
+            val h = overlay.host
+            if (h != testedHost) {
+                testedHost = h
+                if (h != null) {
+                    Log.i(TAG, "blur: covers now drawn by $h, testing the capture again")
+                    overlay.show(FloatArray(0), 0, null, 0, true)
+                    worker.post { testDone = false; coversVisible = false; testUntil = SystemClock.uptimeMillis() + SELF_TEST_MS }
+                }
+            }
+            // Shizuku layer: "drawing" only means its calls did not fail (the layer is left out of the capture, so
+            // the app cannot see it on screen)
+            coverInfo = "Covers drawn by: ${overlay.host ?: if (overlay.connecting) "Shizuku layer (connecting)" else "nothing"}" +
+                ", skip-screenshot flag ${if (overlay.skipApplied) "on" else "off"}, covers in the capture " +
+                (if (!testDone) "being tested" else if (coversVisible) "yes" else "no")
+            worker.post { resizeIfNeeded() } // a shape change that sent no display event (e.g. some foldables)
             publish(when {
+                overlay.connecting -> State.STARTING
                 overlay.host == null -> State.NO_OVERLAY
                 modelsBad -> State.MODELS_MISSING
                 fm != 0 -> State.FAILING

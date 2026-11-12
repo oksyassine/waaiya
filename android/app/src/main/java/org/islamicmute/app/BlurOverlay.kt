@@ -10,8 +10,6 @@ import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.graphics.RectF
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.SurfaceControl
@@ -25,49 +23,60 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
  * Best host (Android 12+, Shizuku running): [ShizukuCovers], a layer owned by the shell, which touches pass through
  * and which is left out of the screen capture, with no accessibility service and no overlay permission.
  *
- * Otherwise a window: an accessibility overlay when [BlurAccessibilityService] runs (full screen; Android lets touches pass
- * through accessibility overlays), otherwise an app overlay ("display over other apps") sized to the covers only,
- * because Android 12+ drops touches that land on an opaque app overlay.
+ * Otherwise windows: an accessibility overlay when [BlurAccessibilityService] runs (one, full screen; Android lets
+ * touches pass through accessibility overlays), otherwise app overlays ("display over other apps"): Android 12+ drops
+ * every touch that lands inside an opaque app overlay, so there is one window per group of touching covers (at most
+ * [MAX_WINDOWS], see [CoverWindows]), each sized to its group, and the space between groups stays touchable.
  *
- * Capture: the overlay's surface gets the hidden "skip screenshot" flag, so the screen capture (and so the
+ * Capture: each overlay surface gets the hidden "skip screenshot" flag, so the screen capture (and so the
  * detector) sees what is under the covers. Whether that worked is measured by ScreenBlur's self-test, not assumed.
  * All calls on the main thread.
  */
 class BlurOverlay(private val context: Context) {
     enum class Host { SHIZUKU, ACCESSIBILITY, APP_OVERLAY }
 
-    private val main = Handler(Looper.getMainLooper())
     private var wm: WindowManager? = null
-    private var view: CoverView? = null
-    private var params: WindowManager.LayoutParams? = null
-    var host: Host? = null
+    /** One window, its layout and whether the skip-screenshot flag is on its current surface. */
+    private class Win(val v: CoverView, val p: WindowManager.LayoutParams) { var skip = false }
+    private val wins = ArrayList<Win>()
+    /** The host that is drawing now; null while nothing draws, including while the Shizuku layer is still being
+     *  set up and checked (up to 8 s): the blur must not say "on" before covers can appear. Read by ScreenBlur's
+     *  worker thread too. */
+    @Volatile var host: Host? = null
         private set
-    /** True once the skip-screenshot flag was applied without error (the self-test still decides). */
-    var skipApplied = false
-        private set
+    /** True once the skip-screenshot flag was applied without error on every window (the self-test still decides).
+     *  Shizuku layer: true once its start() and probe cover worked. */
+    val skipApplied: Boolean
+        get() = when (host) {
+            null -> false
+            Host.SHIZUKU -> true
+            else -> wins.isNotEmpty() && wins.all { it.skip }
+        }
 
     private var layer: ShizukuCovers? = null
     /** After the Shizuku layer failed, windows are used for a while instead of retrying every watchdog tick. */
     private var layerFailedAt = -1_000_000L
 
-    /** Picks the host: the Shizuku layer when possible (decided asynchronously, falling back to a window), else a
-     *  window. Returns false when nothing can draw (no Shizuku, no accessibility service, no overlay permission). */
+    /** The Shizuku layer is being bound and probed: nothing draws yet, and attach() must not start another. */
+    val connecting: Boolean get() = layer != null && host == null
+
+    /** Picks the host: the Shizuku layer when possible (decided asynchronously, falling back to windows), else
+     *  windows. Returns false when nothing can draw (no Shizuku, no accessibility service, no overlay permission). */
     fun attach(): Boolean {
-        if (view != null || layer != null) return true
+        if (wins.isNotEmpty() || layer != null) return true
         if (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(context) == ShizukuSetup.State.READY &&
             android.os.SystemClock.uptimeMillis() - layerFailedAt > 30_000) {
             val l = ShizukuCovers(context)
             layer = l
-            host = Host.SHIZUKU
             l.connect { ok ->
                 if (layer !== l) return@connect                 // detached meanwhile
                 if (ok) {
-                    skipApplied = true
+                    host = Host.SHIZUKU
                     show(lastRects, lastCount, lastThumb, lastFail, lastTest)
                 } else {
                     Log.w(TAG, "blur: Shizuku layer unavailable, using a window")
                     layerFailedAt = android.os.SystemClock.uptimeMillis()
-                    layer = null; host = null
+                    layer = null
                     attachWindow()
                 }
             }
@@ -77,7 +86,7 @@ class BlurOverlay(private val context: Context) {
     }
 
     private fun attachWindow(): Boolean {
-        if (view != null) return true
+        if (wins.isNotEmpty()) return true
         val a11y = BlurAccessibilityService.instance
         val (ctx, type, h) = when {
             a11y != null -> Triple<Context, Int, Host>(a11y, WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY, Host.ACCESSIBILITY)
@@ -86,36 +95,45 @@ class BlurOverlay(private val context: Context) {
             else -> return false
         }
         val w = ctx.getSystemService(WindowManager::class.java)
-        val p = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, type,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
-                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-            PixelFormat.TRANSLUCENT)
-        p.gravity = Gravity.TOP or Gravity.START
-        p.title = "Waaiya blur"
-        p.layoutInDisplayCutoutMode = if (Build.VERSION.SDK_INT >= 30) WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
-                                      else WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
-        if (Build.VERSION.SDK_INT >= 30) p.fitInsetsTypes = 0
-        if (h == Host.APP_OVERLAY) { p.width = 1; p.height = 1 } // grows to the covers in show()
-        val v = CoverView(ctx)
-        try {
-            w.addView(v, p)
-        } catch (e: Exception) {
-            Log.w(TAG, "blur overlay: addView failed", e)
-            return false
+        // App overlays: the whole pool is added now, each 1x1 until it gets a group of covers, so every surface has
+        // its skip-screenshot flag before it first shows a cover (a window added on demand would be in the capture
+        // until its flag lands).
+        val n = if (h == Host.APP_OVERLAY) MAX_WINDOWS else 1
+        for (i in 0 until n) {
+            val p = WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, type,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
+                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                PixelFormat.TRANSLUCENT)
+            p.gravity = Gravity.TOP or Gravity.START
+            p.title = "Waaiya blur"
+            p.layoutInDisplayCutoutMode = if (Build.VERSION.SDK_INT >= 30) WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+                                          else WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            if (Build.VERSION.SDK_INT >= 30) p.fitInsetsTypes = 0
+            if (h == Host.APP_OVERLAY) { p.x = 0; p.y = 0; p.width = 1; p.height = 1 } // sized to its group in show()
+            val v = CoverView(ctx)
+            try {
+                w.addView(v, p)
+            } catch (e: Exception) {
+                Log.w(TAG, "blur overlay: addView failed", e)
+                wins.forEach { runCatching { w.removeViewImmediate(it.v) } }
+                wins.clear()
+                return false
+            }
+            val win = Win(v, p)
+            wins += win
+            v.post { applySkipScreenshot(win) }
         }
-        wm = w; view = v; params = p; host = h
-        v.post { applySkipScreenshot() }
+        wm = w; host = h
         return true
     }
 
     fun detach() {
         layer?.stop(); layer = null
-        if (host == Host.SHIZUKU) { host = null; skipApplied = false }
-        val v = view ?: return
-        runCatching { wm?.removeViewImmediate(v) }
-        view = null; wm = null; params = null; host = null; skipApplied = false
+        wins.forEach { runCatching { wm?.removeViewImmediate(it.v) } }
+        wins.clear()
+        wm = null; host = null
     }
 
     /** The real display size: covers arrive normalised to it. */
@@ -133,17 +151,28 @@ class BlurOverlay(private val context: Context) {
     private var lastFail = 0
     private var lastTest = false
 
-    /** Called twice a second: keeps the Shizuku layer's covers alive (it hides them when the app goes quiet), and
-     *  drops a dead Shizuku layer so the next attach() falls back to a window. */
+    /** Called twice a second: keeps the Shizuku layer's covers alive (it hides them when the app goes quiet), asks
+     *  it whether they were drawn, and replaces a host that stopped working: a dead or failing Shizuku layer by
+     *  windows, a switched-off accessibility service by an app overlay (or nothing, which ScreenBlur reports).
+     *  ScreenBlur sees the host change and runs its "are covers in the capture" self-test again. */
     fun heartbeat() {
-        val l = layer ?: return
-        if (!l.alive && host == Host.SHIZUKU && skipApplied) {
-            Log.w(TAG, "blur: Shizuku layer died (Shizuku stopped?)")
-            layerFailedAt = android.os.SystemClock.uptimeMillis()
-            layer = null; host = null; skipApplied = false
+        if (host == Host.ACCESSIBILITY && BlurAccessibilityService.instance == null) {
+            Log.w(TAG, "blur: accessibility service turned off, changing host")
+            detach()
+            if (attach()) show(lastRects, lastCount, lastThumb, lastFail, lastTest)
             return
         }
-        if (skipApplied) show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+        val l = layer ?: return
+        if (host != Host.SHIZUKU) return               // still connecting
+        if (!l.alive || l.failed) {
+            Log.w(TAG, "blur: Shizuku layer ${if (l.failed) "cannot draw" else "died (Shizuku stopped?)"}, using a window")
+            layerFailedAt = android.os.SystemClock.uptimeMillis()
+            l.stop(); layer = null; host = null
+            if (attachWindow()) show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+            return
+        }
+        show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+        l.checkHealth()
     }
 
     /** Changes only the failure display, keeping the current covers. */
@@ -159,28 +188,44 @@ class BlurOverlay(private val context: Context) {
         lastRects = rects; lastCount = count; lastThumb = thumb; lastFail = failMode; lastTest = testSquare
         val scr = screen()
         if (host == Host.SHIZUKU) { layer?.let { showOnLayer(it, rects, count, thumb, failMode, testSquare, scr) }; return }
-        val v = view ?: return
-        var rs = rects
-        if (host == Host.APP_OVERLAY) {
-            // here a cover swallows touches: a whole-screen (nudity) cover leaves the bottom free so people can
-            // still scroll or leave
-            rs = rects.copyOf(count * 5)
-            for (i in 0 until count) if (rs[i * 5 + 4].toInt() == Vision.KIND_FULL) rs[i * 5 + 3] = minOf(rs[i * 5 + 3], FULL_COVER_BOTTOM)
+        if (wins.isEmpty()) return
+        if (host != Host.APP_OVERLAY) {
+            wins[0].v.set(rects, count, thumb, failMode, testSquare, scr)
+            wins[0].v.invalidate()
+            return
         }
-        v.set(rs, count, thumb, failMode, testSquare, scr)
-        if (host == Host.APP_OVERLAY) {
-            // window = union of the covers (touches elsewhere reach the app); hidden when there is nothing to draw
-            val u = v.union(scr)
-            val p = params ?: return
-            val want = if (u.isEmpty) Rect(0, 0, 1, 1) else u
-            if (p.x != want.left || p.y != want.top || p.width != want.width() || p.height != want.height()) {
-                p.x = want.left; p.y = want.top; p.width = want.width(); p.height = want.height()
-                v.origin(want.left, want.top)
-                runCatching { wm?.updateViewLayout(v, p) }
-                v.post { applySkipScreenshot() } // a relayout may give the window a new surface
+        // here a cover swallows touches: a whole-screen (nudity) cover leaves the bottom free so people can
+        // still scroll or leave
+        val rs = rects.copyOf(count * 5)
+        for (i in 0 until count) if (rs[i * 5 + 4].toInt() == Vision.KIND_FULL) rs[i * 5 + 3] = minOf(rs[i * 5 + 3], FULL_COVER_BOTTOM)
+        // one window per group of touching covers (touches between groups reach the app)
+        val d = context.resources.displayMetrics.density
+        val boxes = ArrayList<IntArray>()
+        if (failMode == 1) boxes += intArrayOf(0, 0, scr.width(), scr.height())
+        else for (i in 0 until count) boxes += intArrayOf((rs[i * 5] * scr.width()).toInt(), (rs[i * 5 + 1] * scr.height()).toInt(),
+            Math.ceil((rs[i * 5 + 2] * scr.width()).toDouble()).toInt(), Math.ceil((rs[i * 5 + 3] * scr.height()).toDouble()).toInt())
+        if (failMode == 2) boxes += CoverView.badgeRect(scr, d).let { intArrayOf(it.left, it.top, it.right, it.bottom) }
+        if (testSquare) {
+            val sq = (TEST_SQUARE_DP * d).toInt() + 1
+            boxes += intArrayOf(0, scr.height() / 2, sq, scr.height() / 2 + sq)
+        }
+        val groups = CoverWindows.group(boxes, wins.size)
+        val slot = CoverWindows.assign(groups, wins.map { intArrayOf(it.p.x, it.p.y, it.p.x + it.p.width, it.p.y + it.p.height) })
+        for ((k, win) in wins.withIndex()) {
+            val g = slot[k]
+            val want = g ?: PARKED
+            val p = win.p
+            if (p.x != want[0] || p.y != want[1] || p.width != want[2] - want[0] || p.height != want[3] - want[1]) {
+                p.x = want[0]; p.y = want[1]; p.width = want[2] - want[0]; p.height = want[3] - want[1]
+                win.v.origin(want[0], want[1])
+                runCatching { wm?.updateViewLayout(win.v, p) }
+                win.v.post { applySkipScreenshot(win) } // a relayout may give the window a new surface
             }
+            // every window draws all covers that reach into it, so overlapping groups still look like one cover
+            if (g != null) win.v.set(rs, count, thumb, failMode, testSquare, scr)
+            else win.v.set(rs, 0, null, 0, false, scr)
+            win.v.invalidate()
         }
-        v.invalidate()
     }
 
     private var layerBuf = FloatArray(0)
@@ -226,22 +271,22 @@ class BlurOverlay(private val context: Context) {
         return Color.rgb((r / n * 0.8).toInt(), (g / n * 0.8).toInt(), (bl / n * 0.8).toInt())
     }
 
-    /** Hidden API: SurfaceControl.Transaction#setSkipScreenshot on the overlay window's surface (Android 12+). */
-    private fun applySkipScreenshot() {
-        val v = view ?: return
-        if (Build.VERSION.SDK_INT < 31) return
+    /** Hidden API: SurfaceControl.Transaction#setSkipScreenshot on an overlay window's surface (Android 12+). */
+    private fun applySkipScreenshot(win: Win) {
+        val v = win.v
+        if (Build.VERSION.SDK_INT < 31 || wins.none { it === win }) return
         try {
             HiddenApiBypass.addHiddenApiExemptions("Landroid/view/")
             val vri = HiddenApiBypass.invoke(View::class.java, v, "getViewRootImpl") ?: return
             val sc = HiddenApiBypass.invoke(vri.javaClass, vri, "getSurfaceControl") as? SurfaceControl ?: return
-            if (!sc.isValid) { v.postDelayed({ applySkipScreenshot() }, 100); return }
+            if (!sc.isValid) { v.postDelayed({ applySkipScreenshot(win) }, 100); return }
             val tx = SurfaceControl.Transaction()
             HiddenApiBypass.invoke(SurfaceControl.Transaction::class.java, tx, "setSkipScreenshot", sc, true)
             tx.apply()
-            skipApplied = true
+            win.skip = true
         } catch (t: Throwable) {
             Log.w(TAG, "blur overlay: skip-screenshot not available: $t")
-            skipApplied = false
+            win.skip = false
         }
     }
 
@@ -317,26 +362,12 @@ class BlurOverlay(private val context: Context) {
 
         fun origin(x: Int, y: Int) { ox = x; oy = y }
 
-        fun union(scr: Rect): Rect {
-            if (failMode == 1) return Rect(scr)
-            val u = Rect()
-            for (i in 0 until count) {
-                u.union((rects[i * 5] * scr.width()).toInt(), (rects[i * 5 + 1] * scr.height()).toInt(),
-                    Math.ceil((rects[i * 5 + 2] * scr.width()).toDouble()).toInt(),
-                    Math.ceil((rects[i * 5 + 3] * scr.height()).toDouble()).toInt())
+        companion object {
+            fun badgeRect(scr: Rect, density: Float): Rect {
+                val w = (180 * density).toInt(); val h = (28 * density).toInt()
+                val top = (40 * density).toInt()
+                return Rect(scr.centerX() - w / 2, top, scr.centerX() + w / 2, top + h)
             }
-            if (failMode == 2) u.union(badgeRect(scr))
-            if (testSquare) {
-                val sq = (TEST_SQUARE_DP * density).toInt() + 1
-                u.union(0, scr.height() / 2, sq, scr.height() / 2 + sq)
-            }
-            return u
-        }
-
-        private fun badgeRect(scr: Rect): Rect {
-            val w = (180 * density).toInt(); val h = (28 * density).toInt()
-            val top = (40 * density).toInt()
-            return Rect(scr.centerX() - w / 2, top, scr.centerX() + w / 2, top + h)
         }
 
         override fun onDraw(c: Canvas) {
@@ -351,6 +382,8 @@ class BlurOverlay(private val context: Context) {
             val cell = BLUR_CELL_DP * density
             for (i in 0 until count) {
                 r.set(rects[i * 5] * w, rects[i * 5 + 1] * h, rects[i * 5 + 2] * w, rects[i * 5 + 3] * h)
+                // outside this window (another window of the pool draws it): skip the cell averaging
+                if (r.right < ox || r.bottom < oy || r.left > ox + width || r.top > oy + height) continue
                 val full = rects[i * 5 + 4].toInt() == Vision.KIND_FULL
                 val part = (rects[i * 5 + 4].toInt() and Vision.KIND_PART) != 0
                 c.save()
@@ -385,7 +418,7 @@ class BlurOverlay(private val context: Context) {
                 parts.setEmpty()
             }
             if (failMode == 2) {
-                val b = badgeRect(scr)
+                val b = badgeRect(scr, density)
                 rb.set(b)
                 c.drawRoundRect(rb, b.height() / 2f, b.height() / 2f, badge)
                 c.drawText(context.getString(R.string.blur_not_working), b.exactCenterX(),
@@ -405,6 +438,10 @@ class BlurOverlay(private val context: Context) {
         const val MAX_CELLS = 8
         /** App-overlay host: a whole-screen cover stops here (fraction of the height), leaving the bottom touchable. */
         const val FULL_COVER_BOTTOM = 0.88f
+        /** App-overlay host: windows in the pool (groups beyond this are joined, see [CoverWindows]). */
+        const val MAX_WINDOWS = 8
+        /** An idle pool window: 1x1 at the corner, drawing nothing. */
+        private val PARKED = intArrayOf(0, 0, 1, 1)
     }
 }
 
