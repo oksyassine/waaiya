@@ -60,5 +60,7 @@ jobs:
         run: |
           python3 -m venv /tmp/venv && /tmp/venv/bin/pip install --quiet numpy
           /tmp/venv/bin/python models/vision/test_cover.py
+      - name: Daemon against a fake sound server (reload, stray streams, status, keep-silent, stop)
+        run: python3 linux/test_daemon_fake.py
       - name: Shell scripts parse
         run: for f in linux/bin/islamic-mute linux/*.sh scripts/*.sh; do bash -n "$f"; done
