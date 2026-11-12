@@ -17,7 +17,7 @@ the code audit, or a measurement in `eval/results/`.
 
 | Problem | Cause | Fix |
 |---|---|---|
-| Without Shizuku, covers let a fifth of the picture show through, and taps went through them (Android 12+) | Android forces a non-touchable app overlay to 80% opacity so that touches can pass (`alpha=0.8` in `dumpsys window` on the API 35 emulator); the code assumed opaque covers that hold touches back | App-overlay covers are touchable windows, so Android keeps them fully opaque; a tap on a cover stays on the cover |
+| Without Shizuku, covers let a fifth of the picture show through, and taps went through them (Android 12+) | Android forces a non-touchable app overlay to 80% opacity so that touches can pass (`alpha=0.8` in `dumpsys window` on the API 35 emulator); the code assumed opaque covers that hold touches back | From Android 12, app-overlay covers are touchable windows, so Android keeps them fully opaque; a tap on a cover stays on the cover. Android 10/11 have no such rule: covers there stay opaque and let taps through, as before |
 | ...and then the space between two covers could not be tapped or scrolled | One app-overlay window spanned all covers, and a touchable window takes every touch inside its bounds | One window per group of touching covers, at most 8, reused from frame to frame; every window gets the skip-screenshot flag before it shows a cover (`CoverWindows`, `BlurOverlay`) |
 | Shizuku cover layer could say "on" with nothing drawn | Drawing calls are one-way, and an error in the shell process was only logged there; the host counted as Shizuku during the whole bind | `start()` draws a hidden probe cover through the same calls and fails on any error; a two-way `health()` call twice a second reports draw errors; on failure the covers move to a window. "Starting" until the layer is confirmed |
 | A fallback from the Shizuku layer to a window kept "covers not in the capture" | The self-test ran only when the blur was switched on | Any change of the drawing host re-runs the self-test |
@@ -45,9 +45,13 @@ the 3 s lift reproduced and gone), `build/test-failclosed`, 28 link-updater test
 --blur --end-capture --blur-fail` on the Android 15 emulator: covers opaque, one window per group, a tap between
 covers reaches the app and a tap on a cover does not, the service stays in the foreground 73 s after the capture
 ended with the other app's session still muted, start again and Stop from there, the blur capture failure shown.
-The exported player closes on a stream list, `LinkPlayerActivity` cannot be started from outside, and the player
+The same on the Android 11 emulator (covers in the capture there, so the cautious mode). By hand on Android 11: a
+screen size change without rotation (`wm size`) resizes the capture both ways; the accessibility build moves the
+covers to an app overlay when the service is switched off and runs the capture test again; "Stereo sound" applies
+while filtering, both ways (the loaded emulator then fell back to mono by itself, as designed). On Android 15:
+the exported player closes on a stream list, `LinkPlayerActivity` cannot be started from outside, and the player
 pauses when left. Not checked: the Shizuku probe and health call (no Shizuku on the emulators), passthrough on a
-real TV output, the export time limit (needs hours of saving or a system override), a real foldable.
+real TV output, the export time limit (needs hours of saving or a system override), a real foldable, sound by ear.
 
 ## Done in 0.2.9: the live filter says what is wrong and adapts to the phone
 
