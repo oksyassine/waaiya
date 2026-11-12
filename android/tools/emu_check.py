@@ -307,8 +307,8 @@ def main():
         time.sleep(2)
         shizuku = "READY" in e.sh(f"dumpsys activity service {PKG}") and False  # no Shizuku on these emulators
         if not shizuku:
-            # App-overlay host: two covers, left and right; a tap in the gap must reach the app, a tap on a cover
-            # must not (the cover windows take their touches so that Android keeps them fully opaque).
+            # App-overlay host: two covers, left and right; a tap in the gap must reach the app; a tap on a cover
+            # must not on Android 12+ (the cover windows take their touches so that Android keeps them opaque).
             e.scroll_to("switch_hold_silence")
             e.broadcast("DEBUG_COVERS", "--es covers '0.0,0.0,0.3,1.0,1;0.7,0.0,1.0,1.0,1'")
             e.sh("input swipe 540 1200 540 1150 300")   # a small scroll: a new frame carries the covers
@@ -332,11 +332,15 @@ def main():
                 c.check(e.checked("switch_hold_silence") == (not before), "a tap between two covers reaches the app")
                 e.sh(f"input tap {w // 2} {hit[2][1]}")     # back as it was
                 time.sleep(1)
+                # Android 12+: cover windows take their taps (that keeps them opaque); 10/11: taps go through
+                api = int(e.sh("getprop ro.build.version.sdk").strip() or 0)
                 e.sh(f"input tap {w // 8} {hit[2][1]}")
                 time.sleep(1)
-                c.check(e.checked("switch_hold_silence") == before, "a tap on a cover is held back")
-                if e.checked("switch_hold_silence") != before:
-                    e.sh(f"input tap {w // 2} {hit[2][1]}")
+                held = e.checked("switch_hold_silence") == before
+                c.check(held == (api >= 31), "Android 12+: a tap on a cover is held back" if api >= 31
+                        else "Android 10/11: a tap on a cover goes through, as before")
+                if not held:
+                    e.sh(f"input tap {w // 8} {hit[2][1]}")
             else:
                 c.check(False, "the hold-silence switch is on screen for the touch test")
             e.broadcast("DEBUG_COVERS")

@@ -27,9 +27,10 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
  * touches pass through accessibility overlays), otherwise app overlays ("display over other apps"). An app overlay
  * cannot be both opaque and let touches through: Android 12+ forces a non-touchable app overlay to 80% opacity (so
  * that touches may pass), which let a fifth of the picture show through every cover (seen in `dumpsys window` on the
- * API 35 emulator: alpha=0.8). So app-overlay covers are touchable windows, fully opaque, that take the touches
- * landing on them; one window per group of touching covers (at most [MAX_WINDOWS], see [CoverWindows]), each sized
- * to its group, so the space between groups still reaches the app.
+ * API 35 emulator: alpha=0.8). So from Android 12 app-overlay covers are touchable windows, fully opaque, that take
+ * the touches landing on them; one window per group of touching covers (at most [MAX_WINDOWS], see [CoverWindows]),
+ * each sized to its group, so the space between groups still reaches the app. Android 10 and 11 have no such rule:
+ * there covers stay non-touchable (opaque, and taps go through them).
  *
  * Capture: each overlay surface gets the hidden "skip screenshot" flag, so the screen capture (and so the
  * detector) sees what is under the covers. Whether that worked is measured by ScreenBlur's self-test, not assumed.
@@ -103,9 +104,9 @@ class BlurOverlay(private val context: Context) {
         // until its flag lands).
         val n = if (h == Host.APP_OVERLAY) MAX_WINDOWS else 1
         for (i in 0 until n) {
-            // accessibility overlay: not touchable (trusted, so it stays opaque); app overlay: touchable, see above,
-            // NOT_TOUCH_MODAL so touches outside the window go to the app below
-            val touch = if (h == Host.APP_OVERLAY) WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+            // accessibility overlay, and app overlay before Android 12: not touchable (stays opaque); app overlay from
+            // Android 12: touchable, see above, NOT_TOUCH_MODAL so touches outside the window go to the app below
+            val touch = if (h == Host.APP_OVERLAY && Build.VERSION.SDK_INT >= 31) WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                         else WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             val p = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, type,
