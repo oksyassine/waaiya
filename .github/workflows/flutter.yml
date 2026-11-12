@@ -109,7 +109,7 @@ jobs:
         shell: bash
         run: |
           d=desktop/build/windows/x64/runner/Release/licences; mkdir -p "$d"
-          cp NOTICE "$d/NOTICE.txt"; cp LICENSE "$d/LICENSE-Apache-2.0.txt"; cp THIRD_PARTY_LICENSES.md "$d/THIRD_PARTY_LICENSES.txt"
+          cp NOTICE "$d/NOTICE.txt"; cp LICENSE "$d/LICENSE-AGPL-3.0.txt"; cp THIRD_PARTY_LICENSES.md "$d/THIRD_PARTY_LICENSES.txt"
       - uses: actions/upload-artifact@v4
         with:
           name: waaiya-desktop-windows-x64
