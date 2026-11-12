@@ -1,0 +1,22 @@
+Waaiya's setup over Wireless debugging (android/app/src/main/java/org/islamicmute/app/adb/) is Waaiya's own Kotlin
+code, written from these Apache-2.0 sources. No code or binary from them is bundled; the protocol constants,
+data layouts and algorithms below were ported. The Apache License 2.0 text is the "Apache License 2.0" entry of
+this screen.
+
+BoringSSL, crypto/curve25519/spake25519.cc
+  Copyright 2016 The BoringSSL Authors. Licensed under the Apache License, Version 2.0.
+  https://boringssl.googlesource.com/boringssl/+/refs/heads/master/crypto/curve25519/spake25519.cc
+  Ported: SPAKE2 over edwards25519 (the M and N points, scalar handling, transcript) -> adb/Spake2.kt
+
+Android Open Source Project, packages/modules/adb (pairing_auth, pairing_connection, tls, adb.h)
+  Copyright (C) 2020 The Android Open Source Project. Licensed under the Apache License, Version 2.0.
+  https://android.googlesource.com/platform/packages/modules/adb/
+  Ported: the pairing packet format, PeerInfo, the AES-128-GCM pairing cipher and its HKDF info string, the TLS
+  exporter label, the adb transport messages (CNXN, STLS, OPEN, WRTE, OKAY, CLSE)
+  -> adb/AdbProtocol.kt, adb/PairingCipher.kt, adb/AdbPairingClient.kt, adb/AdbShell.kt
+
+Android Open Source Project, system/core/libcrypto_utils/android_pubkey.cpp
+  Copyright (C) 2016 The Android Open Source Project. Licensed under the Apache License, Version 2.0.
+  Ported: the adb RSA public key layout (android_pubkey_encode) -> adb/AdbKey.kt
+
+Edwards-curve arithmetic follows RFC 8032 (section 5.1); the code is Waaiya's own.

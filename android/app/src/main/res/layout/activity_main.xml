@@ -47,6 +47,10 @@
             <TextView android:id="@+id/state_detail" style="@style/Text.Secondary" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center" android:textAlignment="center"
                 android:accessibilityLiveRegion="polite" />
+            <!-- Filtering stopped by itself while other apps stay silenced: the way to hear them unfiltered. -->
+            <Button android:id="@+id/release_silence" style="@style/Button.Tonal" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:minHeight="48dp" android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp" android:text="@string/release_silence" android:visibility="gone" />
             <TextView android:id="@+id/capture_hint" style="@style/Text.Secondary" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_marginTop="12dp" android:gravity="center" android:textAlignment="center"
                 android:text="@string/capture_hint" />
@@ -74,6 +78,7 @@
                     android:text="@string/setup_title" android:accessibilityHeading="true" />
                 <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="4dp" android:text="@string/setup_body" />
+                <include android:id="@+id/wsetup" layout="@layout/setup_wireless" />
                 <include android:id="@+id/step1" layout="@layout/item_step" />
                 <include android:id="@+id/step2" layout="@layout/item_step" />
                 <include android:id="@+id/step3" layout="@layout/item_step" />
@@ -165,6 +170,16 @@
                     android:textColor="@color/text_primary" android:text="@string/setting_silence_title" />
                 <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:paddingEnd="56dp" android:text="@string/setting_silence_body" />
+                <Switch android:id="@+id/switch_hold_silence" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:layout_marginTop="16dp" android:textSize="16sp"
+                    android:textColor="@color/text_primary" android:text="@string/setting_hold_silence_title" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingEnd="56dp" android:text="@string/setting_hold_silence_body" />
+                <Switch android:id="@+id/switch_stereo" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:minHeight="48dp" android:layout_marginTop="16dp" android:textSize="16sp"
+                    android:textColor="@color/text_primary" android:text="@string/setting_stereo_title" />
+                <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingEnd="56dp" android:text="@string/setting_stereo_body" />
                 <LinearLayout android:id="@+id/singing_row" android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="vertical" android:layout_marginTop="16dp">
                     <Switch android:id="@+id/switch_singing" android:layout_width="match_parent" android:layout_height="wrap_content"
