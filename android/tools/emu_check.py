@@ -7,6 +7,10 @@ dropout numbers (the "stats:" log line) and the diagnostics report.
 
   android/tools/emu_check.py --apk app-debug.apk --setup none          # a phone without Shizuku or a computer
   android/tools/emu_check.py --apk app-release.apk --setup done --expect-slow
+  android/tools/emu_check.py --apk app-debug.apk --setup done --blur --end-capture --blur-fail   # debug hooks
+
+--end-capture, --blur (covers and touches) and --blur-fail use debug-only broadcasts of FilterService
+(ACTION_DEBUG_*): they need a debug APK.
 
 A release APK has no x86 code, so the emulator translates it: that is this script's "slow phone". A debug APK
 built with -PimX86 runs natively: the "fast phone".
@@ -65,8 +69,33 @@ class Emu:
                 if m:
                     x1, y1, x2, y2 = map(int, m.groups())
                     out.append((n.get("resource-id", ""), n.get("text", ""), ((x1 + x2) // 2, (y1 + y2) // 2)))
+            # another app (or the system UI) is slow on a loaded host: Android's "isn't responding" dialog hides
+            # the screen under test; answer "Wait" and look again
+            if any(re.search(r"isn't responding|لا يستجيب", t) for _, t, _ in out):
+                w = next((c for _, t, c in out if re.fullmatch(r"Wait|انتظار", t)), None)
+                if w:
+                    self.sh(f"input tap {w[0]} {w[1]}")
+                    time.sleep(1)
+                    continue
             return out
         raise SystemExit("could not read the screen")
+
+    def checked(self, rid):
+        """The 'checked' state of a view by resource id, or None when it is not on screen."""
+        self.sh("uiautomator dump /sdcard/emu_check.xml")
+        xml = self.sh("cat /sdcard/emu_check.xml")
+        m = re.search(r'resource-id="[^"]*:id/%s"[^>]*checked="(\w+)"' % rid, xml)
+        return None if not m else m.group(1) == "true"
+
+    def scroll_to(self, rid, down=True):
+        for _ in range(8):
+            if self.find(rid=rid):
+                return True
+            self.sh("input swipe 540 1500 540 900 200" if down else "input swipe 540 600 540 2000 150")
+        return self.find(rid=rid) is not None
+
+    def broadcast(self, action, extra=""):
+        return self.sh(f"am broadcast -a {PKG}.{action} -p {PKG} {extra}")
 
     def find(self, rid=None, text=None):
         for r, t, c in self.nodes():
@@ -141,6 +170,11 @@ def main():
     ap.add_argument("--shots", help="folder for screenshots")
     ap.add_argument("--keep", action="store_true", help="keep the app data (default: start from a fresh install)")
     ap.add_argument("--blur", action="store_true", help="also turn the screen blur on (women and immodest images)")
+    ap.add_argument("--stereo", action="store_true", help="choose stereo in the settings first (mono is the default)")
+    ap.add_argument("--end-capture", action="store_true",
+                    help="debug APK: end the capture as Android does and check the other apps stay silent")
+    ap.add_argument("--blur-fail", action="store_true",
+                    help="debug APK: make the blur's capture fail and check the screen says so")
     a = ap.parse_args()
     e, c, ar = Emu(a.serial), Checks(), strings("ar")
     shot = (lambda name: e.screenshot(os.path.join(a.shots, name + ".png"))) if a.shots else (lambda name: None)
@@ -175,6 +209,12 @@ def main():
     banner = e.find(text=re.escape(ar["setup_banner_title"]))
     c.check((banner is not None) == (a.setup == "none"), "setup banner shown only when the setup is missing")
     shot("1_idle")
+    if a.stereo:
+        e.scroll_to("switch_stereo")
+        e.tap(rid="switch_stereo")
+        c.check(e.checked("switch_stereo") is True, "stereo chosen")
+        for _ in range(4):
+            e.sh("input swipe 540 600 540 2000 150")
 
     # --- start
     e.tap(rid="power")
@@ -229,9 +269,9 @@ def main():
               f"mono {mono}, too slow {slow}, capture {cap} dB, muter {muter}")
         c.check(int(cap) > -60, "the other app's sound reaches the filter", f"capture {cap} dB")
         c.check(muter == ("OK" if a.setup == "done" else "NO_PERMISSION"), "muter state matches the setup", muter)
-        if a.expect_slow:
-            c.check(mono == "true", "slow build: switched to mono")
-        else:
+        if a.expect_slow or not a.stereo:
+            c.check(mono == "true", "slow build or the default: mono" if not a.stereo else "slow build: switched to mono")
+        if not a.expect_slow:
             # stereo or mono depends on the host's speed; either way the hops must finish in time
             c.check(slow == "false", "fast build: not flagged too slow")
             c.check(float(avg) < 7.5, "fast build: hops finish in time", f"avg {avg} ms")
@@ -243,9 +283,12 @@ def main():
     if a.setup == "done":
         ok_line = ar["state_on_detail"].split("%1$d")[0]
         slow_line = ar["state_too_slow"]
-        c.check(detail.startswith(ok_line) or detail == slow_line, "state line: delay, or the too-slow message", detail)
-        if a.expect_slow and stats and stats[-1][5] == "true" and stats[-1][6] == "false":
-            c.check(ar["state_mono_note"] in detail, "state line says the sound is in mono", detail)
+        c.check(detail.startswith(ok_line) or detail == slow_line, "state line: delay, or the too-slow message",
+                repr(detail))
+        if a.stereo and a.expect_slow and stats and stats[-1][5] == "true" and stats[-1][6] == "false":
+            c.check(ar["state_mono_note"] in detail, "stereo chosen, too slow: the state line says it went mono", detail)
+        if not a.stereo:
+            c.check(ar["state_mono_note"] not in detail, "mono by default: no 'too slow, mono' note", detail)
     shot("4_while_playing")
 
     # --- screen blur: on, over a still screen, and the last frame gets its extra passes
@@ -262,6 +305,43 @@ def main():
         time.sleep(5)
         e.sh(f"am start -n {PKG}/.MainActivity")
         time.sleep(2)
+        shizuku = "READY" in e.sh(f"dumpsys activity service {PKG}") and False  # no Shizuku on these emulators
+        if not shizuku:
+            # App-overlay host: two covers, left and right; a tap in the gap must reach the app, a tap on a cover
+            # must not (the cover windows take their touches so that Android keeps them fully opaque).
+            e.scroll_to("switch_hold_silence")
+            e.broadcast("DEBUG_COVERS", "--es covers '0.0,0.0,0.3,1.0,1;0.7,0.0,1.0,1.0,1'")
+            e.sh("input swipe 540 1200 540 1150 300")   # a small scroll: a new frame carries the covers
+            time.sleep(3)
+            hit = e.find(rid="switch_hold_silence")
+            wins = e.sh("dumpsys window windows")
+            blocks = [b for b in re.split(r"\n  Window #", wins) if re.match(r"\d+ Window\{[^}]*Waaiya blur\}", b)]
+            frames = [m.groups() for b in blocks
+                      for m in [re.search(r"\bframe=\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]", b)] if m]
+            # mAttrs prints alpha only when it is not 1: Android lowers it on a non-touchable app overlay
+            alphas = [m.group(1) for b in blocks for m in [re.search(r"\balpha=([\d.]+)", b)] if m]
+            c.check(bool(blocks) and not alphas, "app overlay covers are fully opaque", str(alphas))
+            big = [f for f in frames if int(f[2]) - int(f[0]) > 1]
+            c.check(len(big) >= 2, "app overlay: one window per cover group", str(frames))
+            shot("6_blur_two_covers")
+            if hit:
+                before = e.checked("switch_hold_silence")
+                w = int(re.search(r"(\d+)x(\d+)", e.sh("wm size")).group(1))
+                e.sh(f"input tap {w // 2} {hit[2][1]}")
+                time.sleep(1)
+                c.check(e.checked("switch_hold_silence") == (not before), "a tap between two covers reaches the app")
+                e.sh(f"input tap {w // 2} {hit[2][1]}")     # back as it was
+                time.sleep(1)
+                e.sh(f"input tap {w // 8} {hit[2][1]}")
+                time.sleep(1)
+                c.check(e.checked("switch_hold_silence") == before, "a tap on a cover is held back")
+                if e.checked("switch_hold_silence") != before:
+                    e.sh(f"input tap {w // 2} {hit[2][1]}")
+            else:
+                c.check(False, "the hold-silence switch is on screen for the touch test")
+            e.broadcast("DEBUG_COVERS")
+            for _ in range(4):
+                e.sh("input swipe 540 600 540 2000 150")
 
     # --- diagnostics report
     for _ in range(6):
@@ -289,6 +369,68 @@ def main():
         with open(os.path.join(a.shots, "report.txt"), "w") as f:
             f.write(report)
     e.sh("input keyevent KEYCODE_BACK")
+
+    # --- Android ends the capture (debug hook): the other apps stay silent, the service stays in the foreground
+    if a.end_capture and a.setup == "done":
+        e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
+             "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
+        time.sleep(5)
+        e.adb("logcat", "-c")
+        e.broadcast("DEBUG_END_CAPTURE")
+        time.sleep(3)
+        log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check("other apps stay muted" in log, "capture ended: the app keeps the other apps muted", log[-300:])
+        notif = e.sh("dumpsys notification --noredact")
+        c.check(ar["notif_silenced_title"] in notif, "notification: filtering stopped, other apps silenced")
+        e.sh(f"am start -n {PKG}/.MainActivity")
+        for _ in range(4):
+            e.sh("input swipe 540 600 540 2000 150")   # the top of the screen: state and buttons
+        c.check(e.wait(text=re.escape(ar["state_silenced_title"]), seconds=10) is not None, "screen: filtering stopped")
+        detail = (e.find(rid="state_detail") or ("", "", None))[1]
+        c.check(detail == ar["state_silenced"], "screen: other apps are silenced, start again or stop", detail)
+        c.check(e.find(rid="release_silence") is not None, "screen: a Stop button to hear apps unfiltered")
+        shot("7_silenced")
+        for wait_s in (0, 70):
+            time.sleep(wait_s)
+            svc = e.sh(f"dumpsys activity services {PKG}/.FilterService")
+            c.check("isForeground=true" in svc, f"service still in the foreground after {wait_s + 3} s", svc[-400:])
+            flinger = e.sh("dumpsys media.audio_flinger")
+            sessions = re.findall(r"muter: original of session (\d+)", e.adb("logcat", "-d", "-s", "IslamicMute:V") + log)
+            c.check(any(re.search(r"session %s\b" % sid, flinger, re.I) for sid in sessions) or not sessions,
+                    "the other app's session still carries the silencing effect")
+        # start again from the silence: back to filtering, no question (setup done)
+        e.scroll_to("power", down=False)
+        e.tap(rid="power")
+        c.check(e.wait(text=re.escape(ar["state_on_title"]), seconds=30) is not None, "start again from the silence")
+        # and the Stop button releases everything
+        e.broadcast("DEBUG_END_CAPTURE")
+        e.scroll_to("power", down=False)
+        c.check(e.wait(rid="release_silence", seconds=10) is not None, "silenced again")
+        e.tap(rid="release_silence")
+        c.check(e.wait(text=re.escape(ar["state_off_title"]), seconds=10) is not None, "Stop: filtering off")
+        svc = e.sh(f"dumpsys activity services {PKG}/.FilterService")
+        c.check("ServiceRecord" not in svc, "Stop: the service is gone", svc[-300:])
+        e.sh("am force-stop com.google.android.apps.youtube.music")
+        e.scroll_to("power", down=False)
+        e.tap(rid="power")   # running again for the steps below
+        e.wait(text=re.escape(ar["state_on_title"]), seconds=30)
+
+    # --- the blur's capture fails (debug hook): the blur line says so instead of "starting" for ever
+    if a.blur_fail:
+        e.broadcast("DEBUG_FAIL_BLUR", "--ez fail true")
+        e.scroll_to("power", down=False)
+        e.tap(rid="power")
+        e.wait(text=re.escape(ar["state_off_title"]), seconds=10)
+        e.tap(rid="power")
+        e.wait(text=re.escape(ar["state_on_title"]), seconds=30)
+        e.broadcast("DEBUG_FAIL_BLUR", "--ez fail false")
+        e.scroll_to("blur_status")
+        time.sleep(2)
+        st = (e.find(rid="blur_status") or ("", "", None))[1]
+        c.check(st == ar["blur_status_no_capture"], "blur capture failed: the screen says so", st)
+        shot("8_blur_no_capture")
+        for _ in range(4):
+            e.sh("input swipe 540 600 540 2000 150")
 
     # --- stop
     for _ in range(4):
