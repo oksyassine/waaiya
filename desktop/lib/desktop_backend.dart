@@ -247,6 +247,8 @@ class DesktopBackend extends MemoryBackend {
         await e.installIfNeeded() ??
         // fail-safe: never leave women's singing on without a detector (all voice would be muted)
         await e.setWomenSinging(e.hasDetector && state.settings.muteWomenSinging) ??
+        await e.setStereo(state.settings.audioStereo) ??
+        await e.setKeepSilent(state.settings.holdSilence) ??
         await e.start());
     if (!ok) {
       _emitFilter(FilterState.stopped);
@@ -270,7 +272,21 @@ class DesktopBackend extends MemoryBackend {
     await super.setSetting(key, value);
     if (_blurKeys.contains(key)) await _applyBlur();
     final e = engine;
-    if (e == null || key != SettingKeys.muteWomenSinging || !e.hasDetector) return;
+    if (e == null) return;
+    if (key == SettingKeys.holdSilence) {
+      // read by the daemon when the filter stops by itself: nothing to restart
+      final ok = await _act((e) => e.setKeepSilent(value == true));
+      if (!ok) _emitFilter(state.filter.state);
+      return;
+    }
+    if (key == SettingKeys.audioStereo) {
+      final running = state.filter.running;
+      final ok = await _act((e) async => await e.setStereo(value == true) ?? (running ? await e.reload() : null));
+      if (!ok) _emitFilter(state.filter.state);
+      await refresh();
+      return;
+    }
+    if (key != SettingKeys.muteWomenSinging || !e.hasDetector) return;
     // `waaiya women-singing on|off`, then a running filter reloads: only the filter process restarts, the apps
     // stay on the virtual output (never stop + start, which gave 2-4 s of unfiltered sound).
     final running = state.filter.running;

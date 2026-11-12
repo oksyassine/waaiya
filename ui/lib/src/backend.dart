@@ -13,6 +13,15 @@ abstract final class SettingKeys {
   /// Screen blur: who is left uncovered. 0 strict (default), 1 balanced, 2 relaxed (Settings.blurStrictness).
   static const blurStrictness = 'blur_strictness';
 
+  /// Live filter in stereo; off = mono (owner's decision 0.2.10: about half the battery, keeps up on more
+  /// devices). Settings.audioStereo.
+  static const audioStereo = 'audio_stereo';
+
+  /// When filtering stops by itself (not the user's Stop), other apps stay silent until the user starts again or
+  /// stops (owner's decision 0.2.10). Settings.holdSilence. Linux: off = streams go back to the real output with a
+  /// desktop notice.
+  static const holdSilence = 'hold_silence';
+
   /// Key -> default value. The value's type is the key's type.
   static const Map<String, Object> defaults = {
     gender: '',
@@ -22,6 +31,8 @@ abstract final class SettingKeys {
     blurNudity: false,
     blurFailCover: true,
     blurStrictness: 0,
+    audioStereo: false,
+    holdSilence: true,
   };
 
   /// Returns an error text when [key]/[value] is not a valid setting, else null.
@@ -48,6 +59,8 @@ class WaaiyaSettings {
     this.blurNudity = false,
     this.blurFailCover = true,
     this.blurStrictness = 0,
+    this.audioStereo = false,
+    this.holdSilence = true,
   });
 
   factory WaaiyaSettings.fromMap(Map<Object?, Object?> m) => WaaiyaSettings(
@@ -58,6 +71,8 @@ class WaaiyaSettings {
         blurNudity: _bool(m[SettingKeys.blurNudity], false),
         blurFailCover: _bool(m[SettingKeys.blurFailCover], true),
         blurStrictness: _int(m[SettingKeys.blurStrictness]).clamp(0, 2),
+        audioStereo: _bool(m[SettingKeys.audioStereo], false),
+        holdSilence: _bool(m[SettingKeys.holdSilence], true),
       );
 
   /// "man", "woman" or "" (not answered yet: the onboarding is shown).
@@ -70,6 +85,8 @@ class WaaiyaSettings {
 
   /// 0 strict (default), 1 balanced, 2 relaxed.
   final int blurStrictness;
+  final bool audioStereo;
+  final bool holdSilence;
 
   bool get isMan => gender == 'man';
   bool get blurOn => blurWomen || blurNudity;
@@ -82,6 +99,8 @@ class WaaiyaSettings {
         SettingKeys.blurNudity: blurNudity,
         SettingKeys.blurFailCover: blurFailCover,
         SettingKeys.blurStrictness: blurStrictness,
+        SettingKeys.audioStereo: audioStereo,
+        SettingKeys.holdSilence: holdSilence,
       };
 }
 

@@ -115,6 +115,19 @@ class LinuxEngine {
     return r.exitCode == 0 ? null : BackendMessage('start_failed', _detail(r));
   }
 
+  /// `waaiya stereo on|off` (setting `audio_stereo`; applies at the next start, or at once with [reload]).
+  Future<BackendMessage?> setStereo(bool on) => _set('stereo', on);
+
+  /// `waaiya keep-silent on|off` (setting `hold_silence`): when filtering stops by itself, apps stay silent (on)
+  /// or get their normal sound back with a desktop notice (off). Read by the daemon when it happens.
+  Future<BackendMessage?> setKeepSilent(bool on) => _set('keep-silent', on);
+
+  Future<BackendMessage?> _set(String cmd, bool on) async {
+    if (installedVersion == null) return null;
+    final r = await _run(_installedScript, [cmd, if (on) 'on' else 'off']);
+    return r.exitCode == 0 ? null : BackendMessage('start_failed', _detail(r));
+  }
+
   /// A running filter takes the current settings: `waaiya reload` restarts only the filter process, the apps stay
   /// on the virtual output meanwhile (a moment of silence, never unfiltered sound). An engine installed before
   /// `reload` existed gets stop + start instead.

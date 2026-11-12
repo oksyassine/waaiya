@@ -100,6 +100,8 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `blur_nudity` | bool | false | live |
 | `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` (desktop: always true, clicks pass through the covers) |
 | `blur_strictness` | int 0/1/2 | 0 | live (ScreenBlur watchdog; desktop: sent to the helper). Who is left uncovered: 0 strict, 1 balanced, 2 relaxed = p(man) at least 0.999 / 0.99 / 0.98 (`Settings.blurMaleClear`, `ib_male_clear`). Desktop without a blur (Windows) stores it only and does not show it |
+| `audio_stereo` | bool | false | Live filter in stereo; off = mono (owner's decision, 0.2.10). Desktop: `waaiya stereo on\|off` then `waaiya reload` while running. Android: `Settings.audioStereo` (UiBridge and the switch row follow with the 0.2.10 strings) |
+| `hold_silence` | bool | true | When filtering stops by itself, other apps stay silent until the user starts again or stops (owner's decision, 0.2.10). Linux: `waaiya keep-silent on\|off`; off = the daemon moves the streams back to the real output with a desktop notice (filter keeps failing, model not loaded, daemon died: `ExecStopPost`). Android: `Settings.holdSilence` (as above) |
 
 ## Methods (MethodChannel `waaiya/app`)
 

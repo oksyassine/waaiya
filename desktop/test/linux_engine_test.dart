@@ -27,6 +27,8 @@ case "$1" in
           if [ -f "$FAKE/engine" ]; then echo "engine:   $(cat "$FAKE/engine")"; else echo "engine:   ok"; fi
           if [ -f "$FAKE/enabled" ]; then echo "autostart: on"; else echo "autostart: off"; fi ;;
   women-singing) echo "$2" > "$FAKE/women" ;;
+  stereo) echo "$2" > "$FAKE/stereo" ;;
+  keep-silent) echo "$2" > "$FAKE/keep_silent" ;;
   reload) [ -f "$FAKE/no_reload" ] && { echo "usage: islamic-mute ..." >&2; exit 1; }; true ;;
 esac
 ''';
@@ -129,7 +131,7 @@ void main() {
     expect(b.state.capabilities.womenSinging, isFalse, reason: 'no detector bundled');
 
     expect(await b.startFilter(), StartResult.started);
-    expect(w.calls, ['install', 'women-singing off', 'start', 'status']);
+    expect(w.calls, ['install', 'women-singing off', 'stereo off', 'keep-silent on', 'start', 'status']);
     expect(File(w.p('data/islamic-mute/VERSION')).readAsStringSync().trim(), '0.2.6-aaaa');
     expect(b.state.filter.state, FilterState.filtering);
     expect(b.state.filter.error, isNull);
@@ -257,6 +259,20 @@ void main() {
     final before2 = w.calls.length;
     await b.setSetting(SettingKeys.muteWomenSinging, false);
     expect(w.calls.sublist(before2), ['women-singing off', 'reload', 'stop', 'start', 'status']);
+  });
+
+  test('owner settings: stereo reloads a running filter, keep-silent is only stored for the daemon', () async {
+    final b = await w.backend();
+    await b.startFilter();
+    expect(File(w.p('fake/stereo')).readAsStringSync().trim(), 'off'); // mono by default
+    expect(File(w.p('fake/keep_silent')).readAsStringSync().trim(), 'on');
+    var before = w.calls.length;
+    await b.setSetting(SettingKeys.audioStereo, true);
+    expect(w.calls.sublist(before), ['stereo on', 'reload', 'status']);
+    before = w.calls.length;
+    await b.setSetting(SettingKeys.holdSilence, false);
+    expect(w.calls.sublist(before), ['keep-silent off']);
+    expect(b.state.filter.state, FilterState.filtering);
   });
 
   test('running is not enough: a model that did not load is reported, a failed detector too', () async {
