@@ -156,6 +156,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_nudity" to settings.blurNudity,
             "blur_fail_cover" to settings.blurFailCover,
             "blur_strictness" to settings.blurStrictness,
+            "audio_stereo" to settings.audioStereo,
+            "hold_silence" to settings.holdSilence,
         ),
         "filter" to mapOf(
             "state" to FilterService.state.name,
@@ -214,6 +216,9 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_fail_cover" -> settings.blurFailCover = bool()
             "blur_strictness" -> settings.blurStrictness = (value as? Int)?.takeIf { it in 0..2 }
                 ?: throw BadArgs("blur_strictness takes 0, 1 or 2")
+            // read by the running filter (stereo) and when Android ends filtering (hold): apply at once
+            "audio_stereo" -> settings.audioStereo = bool()
+            "hold_silence" -> settings.holdSilence = bool()
             else -> throw BadArgs("unknown setting $key")
         }
         // No restart: the running filter and blur re-read Settings every 0.5 s.

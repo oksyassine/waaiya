@@ -88,6 +88,20 @@ class HomeScreen extends StatelessWidget {
             value: s.filter.autostart,
             onChanged: (v) => runAction(context, (b) => b.setAutostart(v)),
           ),
+        SettingSwitch(
+          key: const Key('hold_silence'),
+          title: l.settingHoldSilenceTitle,
+          body: l.settingHoldSilenceBody,
+          value: st.holdSilence,
+          onChanged: (v) => _set(context, SettingKeys.holdSilence, v),
+        ),
+        SettingSwitch(
+          key: const Key('audio_stereo'),
+          title: l.settingStereoTitle,
+          body: l.settingStereoBody,
+          value: st.audioStereo,
+          onChanged: (v) => _set(context, SettingKeys.audioStereo, v),
+        ),
         if (st.isMan && s.capabilities.womenSinging)
           SettingSwitch(
             title: l.settingSingingTitle,
@@ -237,6 +251,7 @@ class PowerSection extends StatelessWidget {
     final title = switch (f.state) {
       FilterState.starting => l.stateStarting,
       FilterState.filtering || FilterState.modelFailed => l.stateOnTitle,
+      FilterState.silenced => l.stateSilencedTitle,
       // desktop: the service died or failed by itself ("Waaiya stopped", as Android's notification)
       FilterState.stoppedBySystem when !android => l.notifStoppedTitle,
       _ => l.stateOffTitle,
@@ -248,6 +263,7 @@ class PowerSection extends StatelessWidget {
       FilterState.noCapturePermission => l.stateCaptureDenied,
       FilterState.stoppedBySystem => android ? l.stateStoppedBySystem : l.notifStoppedText,
       FilterState.captureFailed => l.stateCaptureFailed,
+      FilterState.silenced => l.stateSilenced,
       FilterState.starting => '',
       FilterState.stopped => l.stateOffDetail,
     };
@@ -255,6 +271,7 @@ class PowerSection extends StatelessWidget {
         f.state == FilterState.modelFailed ||
         f.state == FilterState.noCapturePermission ||
         f.state == FilterState.captureFailed ||
+        f.state == FilterState.silenced ||
         (f.state == FilterState.stoppedBySystem && !android);
     if (!on && (f.micDenied || f.captureCancelled)) {
       detail = f.micDenied ? l.needRecordAudio : l.stateCaptureCancelled;
@@ -292,6 +309,15 @@ class PowerSection extends StatelessWidget {
           const SizedBox(height: 6),
           Text(detail,
               textAlign: TextAlign.center, style: text.bodyMedium?.copyWith(color: detailIsError ? c.error : null)),
+        ],
+        // apps are held silent: the power button starts again, this gives them back unfiltered (MainActivity)
+        if (f.state == FilterState.silenced) ...[
+          const SizedBox(height: 12),
+          OutlinedButton(
+            key: const Key('release_silence'),
+            onPressed: () => runAction(context, (b) => b.stopFilter()),
+            child: Text(l.releaseSilence),
+          ),
         ],
         if (s.capabilities.captureConsent && !on && !s.setup.consentSkipped) ...[
           const SizedBox(height: 12),

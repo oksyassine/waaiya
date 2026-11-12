@@ -50,11 +50,15 @@ void main() {
     expect(find.textContaining('40'), findsOneWidget); // delay in words
 
     // Settings apply live: no "stop and start" note.
+    await tester.ensureVisible(find.text('كتم غناء النساء'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('كتم غناء النساء'));
     await tester.pumpAndSettle();
     expect(backend.state.settings.muteWomenSinging, isTrue);
     expect(find.text('أوقف التصفية ثم شغّلها لتطبيق التغييرات.'), findsNothing);
 
+    await tester.ensureVisible(find.byKey(const Key('power')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('power')));
     await tester.pumpAndSettle();
     expect(backend.state.filter.running, isFalse);

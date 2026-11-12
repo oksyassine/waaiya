@@ -185,4 +185,52 @@ void main() {
         channel, (call) async => call.method == 'diagnosticsReport' ? 'report text' : null);
     expect(await ChannelBackend().diagnosticsReport(), 'report text');
   });
+
+  testWidgets('0.2.10: apps held silent: title, error line, "Stop: hear apps unfiltered" stops', (tester) async {
+    final b = MemoryBackend(initial: const AppState(
+      settings: WaaiyaSettings(gender: 'man'),
+      capabilities: Capabilities.android,
+      setup: SetupInfo(shizuku: ShizukuState.ready),
+      filter: FilterInfo(state: FilterState.silenced),
+    ));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    expect(find.text(ar.stateSilencedTitle), findsOneWidget);
+    expect(find.text(ar.stateSilenced), findsOneWidget);
+    expect(b.state.filter.running, isFalse); // the power button starts again
+    await tester.tap(find.byKey(const Key('release_silence')));
+    await tester.pumpAndSettle();
+    expect(b.state.filter.state, FilterState.stopped);
+    expect(find.byKey(const Key('release_silence')), findsNothing);
+  });
+
+  testWidgets('0.2.10: stereo and keep-silent switches (defaults mono, keep silent)', (tester) async {
+    final b = MemoryBackend(initial: const AppState(settings: WaaiyaSettings(gender: 'woman')));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    expect(b.state.settings.audioStereo, isFalse);
+    expect(b.state.settings.holdSilence, isTrue);
+    for (final k in ['audio_stereo', 'hold_silence']) {
+      await tester.ensureVisible(find.byKey(Key(k)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(Key(k)));
+      await tester.pumpAndSettle();
+    }
+    expect(b.state.settings.audioStereo, isTrue);
+    expect(b.state.settings.holdSilence, isFalse);
+    expect(AppState.fromMap({'filter': {'state': 'SILENCED'}}).filter.state, FilterState.silenced);
+  });
+
+  testWidgets('desktop screens show no wireless-debugging setup (wsetup_*, Android only)', (tester) async {
+    final b = MemoryBackend(initial: const AppState(
+        platform: 'linux', settings: WaaiyaSettings(gender: 'man'), capabilities: Capabilities(autostart: true)));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    for (final lang in ['ar', 'en']) {
+      final l = await AppLocalizations.delegate.load(Locale(lang));
+      final texts = tester.widgetList<Text>(find.byType(Text)).map((t) => t.data ?? '').toSet();
+      expect(texts.intersection({l.wsetupRouteTitle, l.wsetupRouteBody, l.wsetupSteps}), isEmpty);
+    }
+  });
 }

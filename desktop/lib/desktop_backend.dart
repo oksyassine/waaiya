@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/widgets.dart' show Locale;
+
 import 'package:waaiya_ui/waaiya_ui.dart';
 
 import 'linux_blur.dart';
@@ -214,11 +216,43 @@ class DesktopBackend extends MemoryBackend {
       }
     } else {
       _startingSince = null;
-      // it ran and stopped without the user's stop (the daemon died or failed): "Waaiya stopped"
-      s = _ranSinceAction || st.down ? FilterState.stoppedBySystem : FilterState.stopped;
+      // the daemon is gone but its virtual output stayed (hold_silence): apps are held silent until Start or Stop;
+      // it ran and stopped otherwise without the user's stop: "Waaiya stopped"
+      s = st.down
+          ? FilterState.silenced
+          : (_ranSinceAction ? FilterState.stoppedBySystem : FilterState.stopped);
       if (st.active == 'failed' && _error == null) _error = BackendMessage('service_failed', await e.journal());
     }
     _emitFilter(s, autostart: st.autostart, problem: problem);
+    await _adoptEngineSettings(e);
+  }
+
+  /// `waaiya stereo on|off` / `keep-silent on|off` typed on the command line: the app shows them and keeps them
+  /// (Start writes the app's values, so the app adopts the engine's first instead of overriding them).
+  Future<void> _adoptEngineSettings(LinuxEngine e) async {
+    final stereo = e.stereoSet, keep = e.keepSilentSet;
+    final st = state.settings;
+    if ((stereo == null || stereo == st.audioStereo) && (keep == null || keep == st.holdSilence)) return;
+    emit(state.copyWith(
+      settings: WaaiyaSettings.fromMap({
+        ...st.toMap(),
+        SettingKeys.audioStereo: ?stereo,
+        SettingKeys.holdSilence: ?keep,
+      }),
+    ));
+    await saved();
+  }
+
+  /// The daemon's notice, in the app's language.
+  void _writeNotice() {
+    final l = lookupAppLocalizations(Locale(state.language));
+    engine?.writeNotice(l.notifStoppedTitle, l.notifStoppedText);
+  }
+
+  @override
+  Future<void> setLanguage(String tag) async {
+    await super.setLanguage(tag);
+    _writeNotice();
   }
 
   /// Runs [action] with polling paused; a returned problem becomes `filter.error`.
@@ -242,6 +276,7 @@ class DesktopBackend extends MemoryBackend {
     _startingSince = null;
     _ranSinceAction = false;
     _emitFilter(FilterState.starting);
+    _writeNotice();
     final ok = await _act((e) async =>
         await e.preflight() ??
         await e.installIfNeeded() ??
