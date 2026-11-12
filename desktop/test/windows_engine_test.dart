@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waaiya_desktop/windows_engine.dart';
 
@@ -43,6 +45,26 @@ void main() {
     final s = WindowsEngine.parseStatus(out('running', 'filtering', engine: 'model not loaded, no file'),
         autostart: false, now: now);
     expect(s.modelFailed, isTrue);
+  });
+
+  test('state.json alone (as the app reads it): fresh = running, stale = not', () {
+    String js(String state, int age) => '{"pid":1,"t":${now.millisecondsSinceEpoch - age},"state":"$state","engine":"ok"}';
+    expect(WindowsEngine.parseStatus(js('filtering', 500), autostart: false, now: now).sinkUp, isTrue);
+    final stale = WindowsEngine.parseStatus(js('filtering', 9000), autostart: false, now: now);
+    expect(stale.sinkUp, isFalse);
+    expect(stale.down, isTrue); // stuck or gone while apps were lowered: silenced until Start or Stop
+    expect(WindowsEngine.parseStatus('', autostart: false, now: now).filter, 'stopped');
+  });
+
+  test('status() reads %LOCALAPPDATA%\\Waaiya\\filter\\state.json', () async {
+    final tmp = Directory.systemTemp.createTempSync('waaiya-win-');
+    final dir = Directory('${tmp.path}\\Waaiya\\filter')..createSync(recursive: true);
+    File('${dir.path}\\state.json').writeAsStringSync(
+        '{"pid":1,"t":${DateTime.now().millisecondsSinceEpoch},"state":"filtering","engine":"ok"}');
+    final e = WindowsEngine(tmp, environment: {'LOCALAPPDATA': tmp.path});
+    expect(e.stateDir, '${tmp.path}\\Waaiya\\filter');
+    expect((await e.status()).sinkUp, isTrue);
+    tmp.deleteSync(recursive: true);
   });
 
   test('Windows build from the OS version string', () {
