@@ -194,6 +194,8 @@ struct State {
     std::string device;
     int lowered = 0, pending = 0;
     unsigned long leaks = 0, underruns = 0, dropped = 0;
+    unsigned long long cap_frames = 0, out_frames = 0; // since the audio opened
+    float cap_peak = 0, out_peak = 0;                  // over the last state period (raw capture, before the gain)
     double delay_ms = 0, cpu = 0;
     bool mono = true, women_singing = false, bypass = false;
 };
@@ -220,10 +222,11 @@ void write_state(const std::wstring &dir, const State &s) {
     snprintf(buf, sizeof buf,
              "{\"pid\":%lu,\"t\":%lld,\"state\":\"%s\",\"engine\":%s,\"error\":%s,\"device\":%s,\"lowered\":%d,"
              "\"pending\":%d,\"leaks\":%lu,\"underruns\":%lu,\"dropped\":%lu,\"delay_ms\":%.1f,\"cpu\":%.1f,"
+             "\"cap_frames\":%llu,\"out_frames\":%llu,\"cap_peak\":%.7f,\"out_peak\":%.5f,"
              "\"mono\":%s,\"women_singing\":%s,\"bypass\":%s}\n",
              (unsigned long)GetCurrentProcessId(), unix_ms(), s.state, json_str(s.engine).c_str(),
              json_str(s.error).c_str(), json_str(s.device).c_str(), s.lowered, s.pending, s.leaks, s.underruns,
-             s.dropped, s.delay_ms, s.cpu, s.mono ? "true" : "false", s.women_singing ? "true" : "false",
+             s.dropped, s.delay_ms, s.cpu, s.cap_frames, s.out_frames, s.cap_peak, s.out_peak, s.mono ? "true" : "false", s.women_singing ? "true" : "false",
              s.bypass ? "true" : "false");
     std::wstring p = dir + L"\\state.json", tmp = p + L".tmp";
     FILE *f = _wfopen(tmp.c_str(), L"wb");
@@ -389,6 +392,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     open_log(p.dir);
 
     Sessions ses(ATT, p.store, GetCurrentProcessId());
+    ses.log = logf;
     HRESULT hr = ses.start(restore_only ? Sessions::RESTORE_ONLY : Sessions::ATTENUATE);
     if (FAILED(hr)) {
         logf("sessions: %s", ses.last_error().c_str());
@@ -458,7 +462,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     std::vector<float> in, out, raw(4096 * CH);
     in.reserve(RATE * CH);
     out.reserve(RATE * CH);
-    double fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
+    double audio_since = 0, fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
     bool restored = false; // hold_silence off and failing: levels given back
     int exit_code = 0;
 
@@ -468,7 +472,9 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
         if (!au.running && t >= retry_at) {
             std::string e = au.open();
             if (e.empty()) {
-                logf("audio: playing to \"%s\"", au.out_name.c_str());
+                logf("audio: playing to \"%s\" (output buffer %u frames)", au.out_name.c_str(), au.out_frames);
+                audio_since = t;
+                st.cap_frames = st.out_frames = 0;
                 st.error.clear();
                 st.device = au.out_name;
                 fail_since = 0;
@@ -550,6 +556,8 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
                     in[base + k] = x * (1.0f / ATT);
                 }
                 au.cap->ReleaseBuffer(frames);
+                st.cap_frames += frames;
+                if (peak > st.cap_peak) st.cap_peak = peak;
                 if (peak > LEAK_RAW) {
                     // louder than any lowered app: an app not lowered (yet). Never played amplified.
                     if (t >= leak_until) {
@@ -603,10 +611,20 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
             UINT32 space = au.out_frames - pad;
             UINT32 wr = (UINT32)std::min<size_t>(have, space);
             BYTE *buf = nullptr;
-            if (wr > 0 && SUCCEEDED(au.out->GetBuffer(wr, &buf))) {
-                memcpy(buf, out.data(), (size_t)wr * CH * sizeof(float));
-                au.out->ReleaseBuffer(wr, 0);
-                out.erase(out.begin(), out.begin() + (long)wr * CH);
+            if (wr > 0) {
+                HRESULT ghr = au.out->GetBuffer(wr, &buf);
+                if (SUCCEEDED(ghr)) {
+                    for (size_t k = 0; k < (size_t)wr * CH; k++) {
+                        float a = std::fabs(out[k]);
+                        if (a > st.out_peak) st.out_peak = a;
+                    }
+                    memcpy(buf, out.data(), (size_t)wr * CH * sizeof(float));
+                    au.out->ReleaseBuffer(wr, 0);
+                    out.erase(out.begin(), out.begin() + (long)wr * CH);
+                    st.out_frames += wr;
+                } else if (st.out_frames == 0) {
+                    logf("output: GetBuffer(%u): %s", wr, im_hr(ghr).c_str());
+                }
             }
             st.delay_ms = (im_engine_aligned_latency(eng) + (double)pad + (double)out.size() / CH) * 1000.0 / RATE;
         }
@@ -622,6 +640,10 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
                 wall0 = t;
             }
             write_state(p.dir, st);
+            if (au.running && t - audio_since < 5000)
+                logf("audio: %llu frames in (peak %.7f), %llu out (peak %.4f), %lu underruns, queue %zu", st.cap_frames,
+                     st.cap_peak, st.out_frames, st.out_peak, st.underruns, out.size() / CH);
+            st.cap_peak = st.out_peak = 0;
         }
     }
 

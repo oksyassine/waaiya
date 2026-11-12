@@ -10,6 +10,10 @@ const GUID IM_VOLUME_CONTEXT = {0x6c1f3a52, 0x9d0e, 0x4b7a, {0xa7, 0xc4, 0x5a, 0
 
 namespace {
 
+const char *state_name(AudioSessionState s) {
+    return s == AudioSessionStateActive ? "active" : (s == AudioSessionStateInactive ? "inactive" : "expired");
+}
+
 template <class Self, class... Ifaces> class Unknown : public Ifaces... {
   public:
     STDMETHODIMP_(ULONG) AddRef() override { return (ULONG)InterlockedIncrement(&refs_); }
@@ -242,7 +246,7 @@ void Sessions::on_session(IAudioSessionControl *ctl) {
 void Sessions::apply(IAudioSessionControl *ctl, bool track) {
     Com<IAudioSessionControl2> c2;
     if (FAILED(ctl->QueryInterface(__uuidof(IAudioSessionControl2), reinterpret_cast<void **>(c2.put())))) return;
-    AudioSessionState st;
+    AudioSessionState st = AudioSessionStateInactive;
     if (SUCCEEDED(c2->GetState(&st)) && st == AudioSessionStateExpired) return;
     DWORD pid = 0;
     c2->GetProcessId(&pid); // fails (AUDCLNT_S_NO_SINGLE_PROCESS) for some shared sessions: pid stays 0
@@ -274,9 +278,13 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
     auto it = store_.find(id);
     if (mode_ == RESTORE_ONLY) {
         if (it != store_.end()) {
-            vol->SetMasterVolume(it->second, &IM_VOLUME_CONTEXT);
-            store_.erase(it);
-            save();
+            HRESULT hr = vol->SetMasterVolume(it->second, &IM_VOLUME_CONTEXT);
+            if (log) log("sessions: pid %lu %s, level %.4f -> %.4f: %s", (unsigned long)pid, state_name(st), cur,
+                         it->second, SUCCEEDED(hr) ? "given back" : im_hr(hr).c_str());
+            if (SUCCEEDED(hr)) {
+                store_.erase(it);
+                save();
+            }
         }
         return;
     }
@@ -296,7 +304,11 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         save();
     }
     float want = user * att_;
-    if (std::fabs(cur - want) > want * 0.01f + 1e-9f) vol->SetMasterVolume(want, &IM_VOLUME_CONTEXT);
+    if (std::fabs(cur - want) > want * 0.01f + 1e-9f) {
+        HRESULT hr = vol->SetMasterVolume(want, &IM_VOLUME_CONTEXT);
+        if (log) log("sessions: pid %lu %s, level %.4f -> %.6f (user %.4f)%s%s", (unsigned long)pid, state_name(st),
+                     cur, want, user, track ? "" : ", from the notification", SUCCEEDED(hr) ? "" : im_hr(hr).c_str());
+    }
 
     if (!t && track) {
         Tracked n;
@@ -342,8 +354,12 @@ void Sessions::restore_all() {
     mode_ = RESTORE_ONLY;
     for (auto &t : tracked_) {
         auto it = store_.find(t.id);
-        if (!t.dead && it != store_.end() && SUCCEEDED(t.vol->SetMasterVolume(it->second, &IM_VOLUME_CONTEXT)))
-            store_.erase(it);
+        if (!t.dead && it != store_.end()) {
+            HRESULT hr = t.vol->SetMasterVolume(it->second, &IM_VOLUME_CONTEXT);
+            if (log) log("sessions: pid %lu given back %.4f: %s", (unsigned long)t.pid, it->second,
+                         SUCCEEDED(hr) ? "ok" : im_hr(hr).c_str());
+            if (SUCCEEDED(hr)) store_.erase(it);
+        }
         drop(t);
     }
     tracked_.clear();
