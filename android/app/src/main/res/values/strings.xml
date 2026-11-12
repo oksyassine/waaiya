@@ -177,4 +177,6 @@
     <string name="diag_button">Problem? Diagnostics report</string>
     <string name="diag_title">Diagnostics report</string>
     <string name="diag_note">What Waaiya sees on this phone. Copy it or share it with whoever helps you. The app itself sends nothing.</string>
+    <string name="notif_stopped_title">Waaiya stopped</string>
+    <string name="notif_stopped_text">The sound is not filtered any more. Tap to start again.</string>
 </resources>

@@ -543,7 +543,7 @@ int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int
         else {
             v->last_nsfw = (size_t)v->nsfw_idx < cnt ? p[v->nsfw_idx] : 0;
             v->api->ReleaseValue(ov);
-            if (v->last_nsfw >= v->prm.nsfw_score && n < max) {
+            if (!(v->last_nsfw < v->prm.nsfw_score) && n < max) { /* a NaN score counts as "cover" */
                 if (shapes) shapes[n].rows = 0;
                 out[n++] = (im_vrect){0, 0, 1, 1, IM_VK_FULL, v->last_nsfw, -1};
             }

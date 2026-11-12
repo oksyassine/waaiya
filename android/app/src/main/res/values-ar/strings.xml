@@ -175,4 +175,6 @@
     <string name="diag_button">مشكلة؟ تقرير التشخيص</string>
     <string name="diag_title">تقرير التشخيص</string>
     <string name="diag_note">ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.</string>
+    <string name="notif_stopped_title">توقفت واعية</string>
+    <string name="notif_stopped_text">الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.</string>
 </resources>
