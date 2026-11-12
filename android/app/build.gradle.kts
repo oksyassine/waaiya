@@ -26,6 +26,9 @@ val signingProps = Properties().apply {
 
 // Screen blur: declare the accessibility service only on request (Play Protect blocks sideloaded apps that have one).
 val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
+// Main screen: the shared Flutter screens (../ui, UiActivity) by default; -PimNativeUi builds the old native
+// MainActivity screen instead (kept as a fallback until the Flutter one has replaced it everywhere).
+val nativeUi = providers.gradleProperty("imNativeUi").isPresent
 
 android {
     namespace = "org.islamicmute.app"
@@ -104,6 +107,8 @@ dependencies {
     implementation("dev.rikka.shizuku:provider:$shizukuVersion")
     // Screen blur: sets the hidden "skip screenshot" flag on our overlay so the screen capture shows what is under it.
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+    // Shared Flutter screens: ../ui_module (add-to-app, from source; included in settings.gradle.kts).
+    implementation(project(":flutter"))
     // JVM tests of the parts with no Android classes (LoadMonitor, AudioDump): ./gradlew testDebugUnitTest
     testImplementation("junit:junit:4.13.2")
     // Host-side check of the Wireless debugging client against a real adbd (AdbInteropTest, skipped unless asked):
@@ -172,8 +177,12 @@ gradle.taskGraph.whenReady {
 android.sourceSets["main"].assets.srcDir(modelAssets)
 
 // -PimBlurA11y: also declare the screen blur's accessibility service (touches pass through the covers).
+// -PimNativeUi: launch the native MainActivity instead of the Flutter screens.
 androidComponents {
-    onVariants { v -> if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml") }
+    onVariants { v ->
+        if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml")
+        if (nativeUi) v.sources.manifests.addStaticManifestFile("src/nativeUi/AndroidManifest.xml")
+    }
 }
 
 // Link feature: yt-dlp (+ EJS scripts) under Python 3.11, and QuickJS shipped as an executable named lib*.so so it

@@ -8,8 +8,13 @@
 #   islamic-mute model <file.onnx>      switch model (restart to apply)
 #   islamic-mute backend pipe | pulse   pipe = parec | im-stream | pacat; pulse = im-pulse (restart to apply)
 #   islamic-mute women-singing on [detector.onnx] | off
-#                                       for men: also mute women's singing (restart to apply). Fail-closed:
+#                                       for men: also mute women's singing (then 'reload'). Fail-closed:
 #                                       if the detector cannot load, voice is muted while this is on.
+#   islamic-mute stereo on | off        stereo sound (default off: mono, lighter on slow computers; then 'reload')
+#   islamic-mute keep-silent on | off   when filtering stops by itself, apps stay silent (default on) or get
+#                                       their normal sound back with a desktop notice (off)
+#   islamic-mute reload                 apply the settings above: restarts only the filter, apps stay on the
+#                                       virtual output meanwhile (a moment of silence, never unfiltered sound)
 #
 # How it works: apps play into a virtual output "Waaiya". The filter reads it, removes
 # instruments, and plays the result to the real speakers or headphones.
@@ -39,11 +44,44 @@ sink_exists() { pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -qx
 model_path() { cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"; }
 detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.onnx"; }
 policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
+mono_flag() { [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ] || echo "--mono"; }
+keep_silent() { [ "$(cat "$CFG/keep_silent" 2>/dev/null)" != off ]; }
+# a desktop notice (notify-send, when installed); never fails. The app writes $CFG/notice (title line, text line)
+# in the user's language (Arabic or English); without it the English below.
+notify() {
+    local title="$1" text="$2"
+    if [ -s "$CFG/notice" ]; then title="$(sed -n 1p "$CFG/notice")"; text="$(sed -n 2p "$CFG/notice")"; fi
+    command -v notify-send >/dev/null && notify-send -a Waaiya -i audio-volume-muted "$title" "$text" 2>/dev/null || true
+}
+# filter.log: kept to its last 128 KiB once it passes 512 KiB
+trim_log() {
+    local f="$STATE/filter.log" size
+    size="$(stat -c %s "$f" 2>/dev/null || echo 0)"
+    # rewritten in place (not replaced): a running filter keeps appending to the same file (O_APPEND)
+    if [ "$size" -gt 524288 ] && tail -c 131072 "$f" > "$f.tmp"; then cat "$f.tmp" > "$f"; fi
+    rm -f "$f.tmp"
+}
 stream_bin() { [ -x "$LIB/lib/im-stream" ] && echo "$LIB/lib/im-stream" || echo "$REPO/build/im-stream"; }
 # im-pulse next to the im-stream in use (installed or build), unless the backend is "pipe"
 # (IM_BACKEND, else "$APP backend pipe|pulse" saved in $CFG/backend)
 backend() { echo "${IM_BACKEND:-$(cat "$CFG/backend" 2>/dev/null)}"; }
 pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "$(backend)" != pipe ] && [ -x "$b" ] && echo "$b"; }
+
+# Sink inputs that should be filtered but play elsewhere (the sound server restored an app's last device, an app
+# picked one itself): moved to the virtual output. Never our own output: pacat (client "islamic-mute") or
+# im-pulse (client "Islamic Mute", which also asks not to be moved); moving it in would loop the filter into itself.
+move_strays() {
+    local sid; sid="$(pactl list short sinks 2>/dev/null | awk -v s="$SINK" '$2 == s {print $1}')"
+    [ -n "$sid" ] || return 0
+    LC_ALL=C pactl list sink-inputs 2>/dev/null | awk -v sid="$sid" '
+        function out() { if (id != "" && !own && sink != "" && sink != sid) print id }
+        /^Sink Input #/ { out(); id = substr($3, 2); sink = ""; own = 0 }
+        /^[ \t]*Sink: / { sink = $2 }
+        /application.name = "(islamic-mute|Islamic Mute)"/ { own = 1 }
+        END { out() }' | while read -r i; do
+        pactl move-sink-input "$i" "$SINK" 2>/dev/null || true
+    done
+}
 
 move_all_to() {
     # never move our own output stream (pacat runs as client "islamic-mute"): moving it into the
@@ -70,6 +108,8 @@ install_cmd() {
     local det="$REPO/models/detector/detector_v1.onnx"
     [ -f "$det" ] && cp "$det" "$LIB/models/detector.onnx"
     install -m 755 "$HERE/islamic-mute" "$LIB/islamic-mute"
+    # engine version marker (desktop app bundle: engine/VERSION); the app reinstalls when it differs
+    if [ -f "$REPO/VERSION" ]; then cp "$REPO/VERSION" "$LIB/VERSION"; else rm -f "$LIB/VERSION"; fi
     # put the command on PATH (~/.local/bin is on PATH by default on Debian/Ubuntu/Fedora)
     mkdir -p "$HOME/.local/bin"
     ln -sfn "$LIB/islamic-mute" "$HOME/.local/bin/$APP"
@@ -83,11 +123,13 @@ install_cmd() {
 }
 
 run_cmd() {
-    local make_default=0 stopping=0 pipe_pid="" module="" master="" backend=pipe started=0 quick_fails=0
+    local make_default=0 stopping=0 pipe_pid="" module="" master="" backend=pipe started=0 quick_fails=0 reload=0
+    local fails=() tick=0
     [ -n "$(pulse_bin)" ] && backend=pulse
     [ "${1:-}" = "--default" ] && make_default=1
     command -v pactl >/dev/null || die "pactl not found (PulseAudio or pipewire-pulse required)"
     mkdir -p "$STATE"
+    trim_log
     master="${IM_MASTER:-$(current_default)}"
     [ "$master" = "$SINK" ] && master="$(cat "$STATE/master" 2>/dev/null || true)"
     [ -n "$master" ] && sink_exists "$master" || die "no real output device found"
@@ -100,47 +142,74 @@ run_cmd() {
 
     start_pipe() {
         echo "$master" > "$STATE/master"
+        # the engine writes its state there once loaded (ok / model_failed / detector_failed): 'status' reads it
+        rm -f "$STATE/filter.status"
         # args: 1 virtual sink, 2 filter binary, 3 model, 4 input latency, 5 real output, 6 output latency,
-        #       7 detector ("" = none), 8 policy flags, 9.. format
-        local det="" flags; flags="$(policy_flags)"
+        #       7 detector ("" = none), 8 policy flags, 9 mono flag, 10 status file, 11.. format
+        local det="" flags mono; flags="$(policy_flags)"; mono="$(mono_flag)"
         [ -n "$flags" ] && det="$(detector_path)"
         started=$SECONDS
         if [ "$backend" = pulse ]; then
             # own process group (setsid), like the pipeline, so stop_pipe can signal it the same way
             # shellcheck disable=SC2086
-            setsid "$(pulse_bin)" -m "$(model_path)" ${flags:+-d "$det" $flags} --source "$SINK.monitor" --sink "$master" \
-                --target-ms "$TARGET_MS" --max-target-ms "${IM_MAX_TARGET_MS:-0}" 2>>"$STATE/filter.log" &
+            setsid "$(pulse_bin)" -m "$(model_path)" ${flags:+-d "$det" $flags} $mono --source "$SINK.monitor" --sink "$master" \
+                --target-ms "$TARGET_MS" --max-target-ms "${IM_MAX_TARGET_MS:-0}" --stats-s 300 \
+                --status-file "$STATE/filter.status" 2>>"$STATE/filter.log" &
             pipe_pid=$!
-            log "filtering -> $master (im-pulse, model $(basename "$(model_path)")${flags:+, women singing muted})"
+            echo "$pipe_pid" > "$STATE/filter.pid"
+            log "filtering -> $master (im-pulse, model $(basename "$(model_path)")${flags:+, women singing muted}${mono:+, mono})"
             return
         fi
         setsid bash -c 'd=(); [ -n "$8" ] && d=(-d "$7" $8)
-            parec -d "$1.monitor" "${@:9}" --latency-msec="$4" | "$2" -m "$3" "${d[@]}" | pacat --client-name=islamic-mute -d "$5" "${@:9}" --latency-msec="$6"' \
-            _ "$SINK" "$(stream_bin)" "$(model_path)" "$IN_LAT" "$master" "$OUT_LAT" "$det" "$flags" "${FMT[@]}" \
-            2>>"$STATE/filter.log" &
+            parec -d "$1.monitor" "${@:11}" --latency-msec="$4" | "$2" -m "$3" "${d[@]}" $9 --status-file "${10}" | pacat --client-name=islamic-mute -d "$5" "${@:11}" --latency-msec="$6"' \
+            _ "$SINK" "$(stream_bin)" "$(model_path)" "$IN_LAT" "$master" "$OUT_LAT" "$det" "$flags" "$mono" \
+            "$STATE/filter.status" "${FMT[@]}" 2>>"$STATE/filter.log" &
         pipe_pid=$!
-        log "filtering -> $master (model $(basename "$(model_path)")${flags:+, women singing muted})"
+        echo "$pipe_pid" > "$STATE/filter.pid"
+        log "filtering -> $master (model $(basename "$(model_path)")${flags:+, women singing muted}${mono:+, mono})"
     }
-    stop_pipe() { [ -n "$pipe_pid" ] && kill -TERM -- "-$pipe_pid" 2>/dev/null; wait "$pipe_pid" 2>/dev/null; pipe_pid=""; }
-    shutdown() {
-        stopping=1
-        stop_pipe
-        # explicit stop: give the user normal audio back
+    stop_pipe() { [ -n "$pipe_pid" ] && kill -TERM -- "-$pipe_pid" 2>/dev/null; wait "$pipe_pid" 2>/dev/null; pipe_pid=""; rm -f "$STATE/filter.pid"; }
+    restore() {
+        # normal (unfiltered) audio back: default output, every stream, the virtual output removed
         if [ "$(current_default)" = "$SINK" ] && sink_exists "$master"; then pactl set-default-sink "$master"; fi
         sink_exists "$master" && move_all_to "$master"
         local id; id="$(cat "$STATE/module_id" 2>/dev/null || true)"
         [ -n "$id" ] && pactl unload-module "$id" 2>/dev/null
-        rm -f "$STATE/module_id" "$STATE/run.pid"
+        rm -f "$STATE/module_id" "$STATE/run.pid" "$STATE/filter.status"
+    }
+    shutdown() {
+        stopping=1
+        stop_pipe
+        # explicit stop: give the user normal audio back
+        restore
         log "stopped, audio restored to $master"
         exit 0
     }
+    give_up() {
+        # filtering stopped by itself and the user chose normal sound over silence ('keep-silent off')
+        stopping=1
+        stop_pipe
+        restore
+        log "filtering failed ($1): audio restored to $master (keep-silent is off)"
+        notify "Waaiya stopped" "The sound is not filtered any more ($1). Open Waaiya to start again."
+        exit 0
+    }
     trap shutdown TERM INT
+    # 'reload': a new filter with the current settings; the virtual output and every stream on it stay
+    trap 'reload=1' HUP
     echo $$ > "$STATE/run.pid"
     start_pipe
     if [ $make_default = 1 ]; then pactl set-default-sink "$SINK"; move_all_to "$SINK"; fi
 
     while [ $stopping = 0 ]; do
         sleep 1 & wait $!
+        tick=$((tick + 1))
+        if [ $reload = 1 ]; then
+            reload=0
+            log "reload: restarting the filter with the current settings"
+            stop_pipe; start_pipe
+            continue
+        fi
         # filter died: restart it; apps stay on the silent virtual output meanwhile (fail-closed)
         if ! kill -0 "$pipe_pid" 2>/dev/null; then
             wait "$pipe_pid" 2>/dev/null; local rc=$?
@@ -151,7 +220,16 @@ run_cmd() {
                     log "im-pulse failed (exit $rc), falling back to parec | im-stream | pacat"; backend=pipe
                 fi
             fi
+            # five failures within a minute: filtering has stopped by itself
+            fails+=("$SECONDS"); local recent=() f
+            for f in "${fails[@]}"; do [ $((SECONDS - f)) -le 60 ] && recent+=("$f"); done
+            fails=("${recent[@]}")
+            if [ ${#fails[@]} -ge 5 ] && ! keep_silent; then give_up "the filter keeps stopping"; fi
             log "filter stopped unexpectedly, restarting"; stop_pipe; start_pipe
+        fi
+        # the model did not load: the filter runs silent (fail-closed)
+        if ! keep_silent && grep -q '^model_failed' "$STATE/filter.status" 2>/dev/null; then
+            give_up "the voice model did not load"
         fi
         # the virtual output vanished (sound server restart): recreate it
         if ! sink_exists "$SINK"; then
@@ -172,16 +250,68 @@ run_cmd() {
             local next; next="$(pactl list short sinks | awk '{print $2}' | grep -vx "$SINK" | head -1)"
             if [ -n "$next" ]; then log "output $master gone, using $next"; master="$next"; stop_pipe; start_pipe; fi
         fi
+        # streams the sound server put on a real output (its saved per-app device) are filtered too
+        [ $make_default = 1 ] && move_strays
+        [ $((tick % 300)) = 0 ] && trim_log
     done
+}
+
+# 'stop' when the daemon is already gone (it died with keep-silent on): the virtual output it left behind keeps
+# the apps silent, and 'systemctl stop' has nothing to stop. Normal sound back here, as the daemon's own stop.
+release_cmd() {
+    local pid; pid="$(cat "$STATE/run.pid" 2>/dev/null || true)"
+    [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null && return 0
+    sink_exists "$SINK" || return 0
+    local master; master="$(cat "$STATE/master" 2>/dev/null || true)"
+    [ -n "$master" ] && sink_exists "$master" || master="$(pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -vx "$SINK" | head -1)"
+    if [ -n "$master" ]; then
+        [ "$(current_default)" = "$SINK" ] && pactl set-default-sink "$master"
+        move_all_to "$master"
+    fi
+    local id; id="$(cat "$STATE/module_id" 2>/dev/null || true)"
+    [ -n "$id" ] && pactl unload-module "$id" 2>/dev/null
+    rm -f "$STATE/module_id" "$STATE/run.pid" "$STATE/filter.pid" "$STATE/filter.status"
+    log "the filter was not running: audio restored to ${master:-?}"
+}
+
+# ExecStopPost of the service: the daemon ended. Not stopped by the user (SERVICE_RESULT is not "success": it
+# crashed or was killed) and 'keep-silent off': normal sound back, with a notice. Else apps stay on the silent
+# virtual output (fail-closed) until the service is back.
+stopped_cmd() {
+    [ "${SERVICE_RESULT:-success}" = success ] && return 0
+    keep_silent && return 0
+    local master; master="$(cat "$STATE/master" 2>/dev/null || true)"
+    if [ -n "$master" ] && sink_exists "$master"; then
+        [ "$(current_default)" = "$SINK" ] && pactl set-default-sink "$master"
+        move_all_to "$master"
+    fi
+    notify "Waaiya stopped" "The sound is not filtered any more. Open Waaiya to start again."
 }
 
 status_cmd() {
     echo "server:   $(pactl info 2>/dev/null | sed -n 's/^Server Name: //p')"
+    echo "version:  $(cat "$LIB/VERSION" 2>/dev/null || echo '?')"
     echo "model:    $(model_path)"
     if [ -n "$(policy_flags)" ]; then echo "women's singing: muted (detector $(detector_path))"; else echo "women's singing: not filtered"; fi
     echo "output:   $(cat "$STATE/master" 2>/dev/null || echo '?')"
     if [ -n "$(pulse_bin)" ]; then echo "backend:  im-pulse (target ${TARGET_MS} ms)"; else echo "backend:  parec | im-stream | pacat"; fi
-    if sink_exists "$SINK"; then echo "filter:   running"; else echo "filter:   stopped"; fi
+    # running = the daemon, its filter process and the virtual output are all there; engine = what the filter
+    # loaded (it writes filter.status: ok, model_failed <why>, detector_failed <why>)
+    local rp fp st
+    rp="$(cat "$STATE/run.pid" 2>/dev/null || true)"; fp="$(cat "$STATE/filter.pid" 2>/dev/null || true)"
+    if [ -n "$rp" ] && kill -0 "$rp" 2>/dev/null && sink_exists "$SINK"; then
+        if [ -n "$fp" ] && kill -0 "$fp" 2>/dev/null; then echo "filter:   running"; else echo "filter:   restarting"; fi
+    elif sink_exists "$SINK"; then echo "filter:   down (virtual output kept: apps are silent)"
+    else echo "filter:   stopped"; fi
+    st="$(head -1 "$STATE/filter.status" 2>/dev/null || true)"
+    case "$st" in
+        ok) echo "engine:   ok" ;;
+        model_failed*) echo "engine:   model not loaded, output silent: ${st#model_failed }" ;;
+        detector_failed*) echo "engine:   detector not loaded, voice muted: ${st#detector_failed }" ;;
+        *) echo "engine:   starting" ;;
+    esac
+    if [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ]; then echo "sound:    stereo"; else echo "sound:    mono"; fi
+    if keep_silent; then echo "if the filter stops: apps stay silent"; else echo "if the filter stops: normal sound"; fi
     echo "default:  $(current_default)"
     systemctl --user is-enabled islamic-mute.service >/dev/null 2>&1 && echo "autostart: on" || echo "autostart: off"
 }
@@ -190,10 +320,20 @@ case "${1:-}" in
     install) shift; install_cmd "$@" ;;
     run) shift; run_cmd "$@" ;;
     start) systemctl --user start islamic-mute.service && status_cmd ;;
-    stop) systemctl --user stop islamic-mute.service; status_cmd ;;
+    stop) systemctl --user stop islamic-mute.service; release_cmd; status_cmd ;;
     enable) systemctl --user enable --now islamic-mute.service ;;
     disable) systemctl --user disable --now islamic-mute.service ;;
     status) status_cmd ;;
+    reload)
+        pid="$(cat "$STATE/run.pid" 2>/dev/null || true)"
+        if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then kill -HUP "$pid"; else log "not running (settings apply at the next start)"; fi ;;
+    stopped) stopped_cmd ;;
+    stereo)
+        case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/stereo"; log "stereo $2; run '$APP reload'" ;;
+            *) die "usage: $APP stereo on|off" ;; esac ;;
+    keep-silent)
+        case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/keep_silent"; log "keep-silent $2" ;;
+            *) die "usage: $APP keep-silent on|off" ;; esac ;;
     backend)
         case "${2:-}" in pipe|pulse) echo "$2" > "$CFG/backend"; log "backend set to $2; run '$APP stop; $APP start'" ;;
             *) die "usage: $APP backend pipe|pulse   (now: $(backend || true))" ;; esac ;;
@@ -203,9 +343,9 @@ case "${1:-}" in
             on) [ -n "${3:-}" ] && { [ -f "$3" ] || die "detector not found: $3"; readlink -f "$3" > "$CFG/detector"; }
                 mkdir -p "$CFG"; echo on > "$CFG/women_singing"
                 [ -f "$(detector_path)" ] || log "warning: no detector at $(detector_path): voice will be muted while this is on (fail-closed)"
-                log "women's singing will be muted; run '$APP stop; $APP start'" ;;
-            off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP stop; $APP start'" ;;
+                log "women's singing will be muted; run '$APP reload'" ;;
+            off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP reload'" ;;
             *) die "usage: $APP women-singing on [detector.onnx] | off" ;;
         esac ;;
-    *) sed -n '2,20p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+    *) sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac
