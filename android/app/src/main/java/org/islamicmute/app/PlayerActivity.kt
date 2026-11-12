@@ -16,6 +16,7 @@ import androidx.media3.common.audio.SonicAudioProcessor
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.audio.AudioCapabilities
 import androidx.media3.exoplayer.audio.AudioSink
 import androidx.media3.exoplayer.audio.DefaultAudioSink
 import androidx.media3.exoplayer.audio.SilenceSkippingAudioProcessor
@@ -33,20 +34,23 @@ import java.nio.ByteOrder
  * any output (speaker, wired, Bluetooth).
  */
 @OptIn(UnstableApi::class)
-class PlayerActivity : Activity() {
+open class PlayerActivity : Activity() {
     override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(Lang.wrap(base)) }
 
     private var player: ExoPlayer? = null
 
     companion object {
-        /** Streams from [Links.resolve], as JSON (see [Links.streamsJson]): plays a web link instead of a file. */
+        /** Streams from [Links.resolve], as JSON (see [Links.streamsJson]): plays a web link instead of a file.
+         *  Read only by [LinkPlayerActivity] (not exported), never from another app's intent. */
         const val EXTRA_STREAMS = "streams"
         const val EXTRA_TITLE = "title"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val streams = intent?.getStringExtra(EXTRA_STREAMS)
+        // This activity is exported (share / open with): another app could otherwise hand it any URLs with any
+        // request headers to fetch in Waaiya's name. A stream list is taken only through the non-exported entry.
+        val streams = if (this is LinkPlayerActivity) intent?.getStringExtra(EXTRA_STREAMS) else null
         val uri: Uri? = when (intent?.action) {
             Intent.ACTION_SEND -> if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
                                   else @Suppress("DEPRECATION") intent.getParcelableExtra(Intent.EXTRA_STREAM)
@@ -59,7 +63,13 @@ class PlayerActivity : Activity() {
                 val to48k = SonicAudioProcessor().apply { setOutputSampleRateHz(Engine.SAMPLE_RATE) }
                 val chain = DefaultAudioSink.DefaultAudioProcessorChain(
                     arrayOf(to48k, VoiceFilterProcessor(context)), SilenceSkippingAudioProcessor(), SonicAudioProcessor())
-                return DefaultAudioSink.Builder(context).setAudioProcessorChain(chain).build()
+                // No Context: with one, the sink reads the output's capabilities and plays AC-3 / E-AC-3 / DTS
+                // tracks encoded ("passthrough") to a TV or soundbar that takes them, around the processor chain,
+                // so the sound would be unfiltered. Without one it uses the given capabilities: PCM only, so every
+                // track is decoded and filtered (a phone with no decoder for it fails to play, which is safe).
+                @Suppress("DEPRECATION")
+                return DefaultAudioSink.Builder().setAudioCapabilities(AudioCapabilities.DEFAULT_AUDIO_CAPABILITIES)
+                    .setAudioProcessorChain(chain).build()
             }
         }
         val p = ExoPlayer.Builder(this, renderers).build()
@@ -87,6 +97,9 @@ class PlayerActivity : Activity() {
         p.play()
     }
 
+    /** Leaving the player (home, another app, screen off) pauses it: there is no background playback control. */
+    override fun onStop() { player?.pause(); super.onStop() }
+
     override fun onDestroy() { player?.release(); player = null; super.onDestroy() }
 
     /** Separate video + audio streams are merged; each request carries the headers the site expects. */
@@ -101,6 +114,9 @@ class PlayerActivity : Activity() {
         return if (parts.size == 1) parts[0] else MergingMediaSource(*parts.toTypedArray())
     }
 }
+
+/** The player for a resolved web link, started only by [LinkActivity] (not exported: see the manifest). */
+class LinkPlayerActivity : PlayerActivity()
 
 /** Media3 audio processor running the engine with exact delay compensation. Fail-closed on unsupported formats. */
 @OptIn(UnstableApi::class)
