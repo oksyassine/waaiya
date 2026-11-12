@@ -486,6 +486,70 @@ class AppLocalizationsEn extends AppLocalizations {
       'Anyone the app is not sure is a man is covered. Strict leaves about 7 men in 100 uncovered; balanced about 14, relaxed about 16. Each step less strict also leaves about 1 more woman in 100 uncovered.';
 
   @override
+  String get stateOnNotMuted =>
+      'The original sound is not silenced yet, so you hear the music together with the filtered sound. Finish the one-time setup below.';
+
+  @override
+  String get stateOnMuteFailing =>
+      'Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (at the bottom of this screen).';
+
+  @override
+  String get stateTooSlow =>
+      'This phone is too slow to filter live sound, so the sound cuts. \"Open a link\" below still works: it filters the video before playing it.';
+
+  @override
+  String get stateMonoNote =>
+      'The sound is in mono so that this phone keeps up.';
+
+  @override
+  String stateBlockedSilenced(String apps) {
+    return 'Silenced, because it does not allow filtering: $apps.';
+  }
+
+  @override
+  String stateBlockedUnfiltered(String apps) {
+    return 'Playing unfiltered, because it does not allow filtering: $apps.';
+  }
+
+  @override
+  String get stateCaptureFailed =>
+      'Android did not give Waaiya the sound of other apps. Tap the button to start again.';
+
+  @override
+  String get stateCaptureCancelled =>
+      'Starting was cancelled at Android\'s screen-sharing question. Waaiya needs \"Start\" there to receive the sound. Nothing is recorded or sent.';
+
+  @override
+  String get startNoSetupTitle => 'The music will still be heard';
+
+  @override
+  String get startNoSetupBody =>
+      'The one-time setup is not done yet. Without it Waaiya cannot silence the original sound: you will hear the music and the filtered sound together.\n\n\"Open a link\" works without any setup.';
+
+  @override
+  String get startNoSetupSetup => 'Do the setup';
+
+  @override
+  String get startNoSetupAnyway => 'Start anyway';
+
+  @override
+  String get diagButton => 'Problem? Diagnostics report';
+
+  @override
+  String get diagTitle => 'Diagnostics report';
+
+  @override
+  String get diagNote =>
+      'What Waaiya sees on this phone. Copy it or share it with whoever helps you. The app itself sends nothing.';
+
+  @override
+  String get notifStoppedTitle => 'Waaiya stopped';
+
+  @override
+  String get notifStoppedText =>
+      'The sound is not filtered any more. Tap to start again.';
+
+  @override
   String get desktopPreview =>
       'Preview: the filter engine is not connected on this computer yet. The button only shows how the app will work.';
 
@@ -563,4 +627,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String blurStatusExited(String details) {
     return 'The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n$details';
   }
+
+  @override
+  String get engineDetectorFailed =>
+      'The women\'s singing detector did not load, so voices are muted while that option is on.';
+
+  @override
+  String get blurStatusUncovered =>
+      'A monitor is not covered by the blur: it was not shared with it, or it was plugged in later. Turn a blur option off and on, and choose every screen in the screen-sharing window.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'The blur\'s models are missing from this installation, so it cannot cover anything; a red bar stays at the top of the screen. Reinstall Waaiya.';
+
+  @override
+  String get diagNoteDesktop =>
+      'What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.';
 }

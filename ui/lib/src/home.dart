@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import 'app.dart';
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             const AppHeader(),
             const SizedBox(height: 24),
             const PowerSection(),
-            if (caps.shizukuSetup || caps.adbSetup) const SetupSection(),
+            if (caps.shizukuSetup || caps.adbSetup) SetupSection(key: setupSectionKey),
             if (caps.links)
               SectionCard(
                 title: l.linkEntryTitle,
@@ -49,6 +50,11 @@ class HomeScreen extends StatelessWidget {
             _settings(context, s),
             if (caps.links) SectionCard(title: l.playerTitle, body: l.playerBody),
             const SizedBox(height: 16),
+            TextButton(
+              key: const Key('diagnostics'),
+              onPressed: () => showDiagnostics(context),
+              child: Text(l.diagButton),
+            ),
             TextButton(
               onPressed: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const LicencesScreen())),
               child: Text(l.licences),
@@ -117,6 +123,103 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+/// The one-time setup card, for "Do the setup" in the start dialog.
+final setupSectionKey = GlobalKey();
+
+/// The diagnostics report (MainActivity.showDiagnostics): what the app sees, to copy and give to whoever helps.
+Future<void> showDiagnostics(BuildContext context) async {
+  final l = AppLocalizations.of(context);
+  final s = WaaiyaScope.of(context).state;
+  final report = await runAction(context, (b) => b.diagnosticsReport());
+  if (report == null || !context.mounted) return;
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  await showDialog<void>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text(l.diagTitle),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(s.platform == 'android' ? l.diagNote : l.diagNoteDesktop),
+            const SizedBox(height: 12),
+            // the report is technical English: read left to right whatever the language
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: SelectableText(report, key: const Key('diag_report'), style: const TextStyle(fontSize: 12)),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.guideClose)),
+        FilledButton(
+          onPressed: () async {
+            await Clipboard.setData(ClipboardData(text: report));
+            if (ctx.mounted) Navigator.pop(ctx);
+            messenger?.showSnackBar(SnackBar(content: Text(l.copied)));
+          },
+          child: Text(l.copy),
+        ),
+      ],
+    ),
+  );
+}
+
+/// Start was tapped (MainActivity.startFilter): without the one-time setup the original sound cannot be silenced,
+/// so say so before starting, not only in the setup card.
+Future<void> _start(BuildContext context) async {
+  final l = AppLocalizations.of(context);
+  final s = WaaiyaScope.of(context).state;
+  if (s.capabilities.shizukuSetup && !s.setup.originalsMuted) {
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.startNoSetupTitle),
+        content: Text(l.startNoSetupBody),
+        actions: [
+          TextButton(key: const Key('start_anyway'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.startNoSetupAnyway)),
+          FilledButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.startNoSetupSetup)),
+        ],
+      ),
+    );
+    if (!context.mounted || go == null) return;
+    if (!go) {
+      final setup = setupSectionKey.currentContext;
+      if (setup != null) await Scrollable.ensureVisible(setup, duration: const Duration(milliseconds: 300));
+      return;
+    }
+  }
+  await runAction(context, (b) => b.startFilter());
+}
+
+/// The line under the title while filtering (MainActivity.refresh): a problem first, else the delay and what was
+/// adapted for this device or silenced. Returns the text and whether it is a problem.
+(String, bool) filteringDetail(AppLocalizations l, AppState s) {
+  final f = s.filter;
+  final problem = switch (f.problem) {
+    FilterProblem.tooSlow => l.stateTooSlow,
+    FilterProblem.notMuted => l.stateOnNotMuted,
+    FilterProblem.muteFailing => l.stateOnMuteFailing,
+    FilterProblem.detectorFailed => l.engineDetectorFailed,
+    _ => null,
+  };
+  if (problem != null) return (problem, true);
+  return (
+    [
+      // no measured delay (desktop host): the sentence without it
+      f.delayMs > 0 ? l.stateOnDetail(f.delayMs) : l.stateOnDetailNoDelay,
+      if (f.mono) l.stateMonoNote,
+      if (f.blockedApps.isNotEmpty)
+        s.settings.silenceUnfilterable
+            ? l.stateBlockedSilenced(f.blockedApps.join('، '))
+            : l.stateBlockedUnfiltered(f.blockedApps.join('، ')),
+    ].join('\n'),
+    false
+  );
+}
+
 /// The on/off control (state shown by its fill AND in words) and the state texts.
 class PowerSection extends StatelessWidget {
   const PowerSection({super.key});
@@ -130,23 +233,31 @@ class PowerSection extends StatelessWidget {
     final f = s.filter;
     final on = f.running;
 
+    final android = s.platform == 'android';
     final title = switch (f.state) {
       FilterState.starting => l.stateStarting,
       FilterState.filtering || FilterState.modelFailed => l.stateOnTitle,
+      // desktop: the service died or failed by itself ("Waaiya stopped", as Android's notification)
+      FilterState.stoppedBySystem when !android => l.notifStoppedTitle,
       _ => l.stateOffTitle,
     };
+    final filtering = f.state == FilterState.filtering ? filteringDetail(l, s) : null;
     var detail = switch (f.state) {
-      // no measured delay (desktop host): the sentence without it
-      FilterState.filtering => f.delayMs > 0 ? l.stateOnDetail(f.delayMs) : l.stateOnDetailNoDelay,
+      FilterState.filtering => filtering!.$1,
       FilterState.modelFailed => l.stateModelFailed,
       FilterState.noCapturePermission => l.stateCaptureDenied,
-      FilterState.stoppedBySystem => l.stateStoppedBySystem,
+      FilterState.stoppedBySystem => android ? l.stateStoppedBySystem : l.notifStoppedText,
+      FilterState.captureFailed => l.stateCaptureFailed,
       FilterState.starting => '',
       FilterState.stopped => l.stateOffDetail,
     };
-    var detailIsError = f.state == FilterState.modelFailed || f.state == FilterState.noCapturePermission;
-    if (f.micDenied && !on) {
-      detail = l.needRecordAudio;
+    var detailIsError = (filtering?.$2 ?? false) ||
+        f.state == FilterState.modelFailed ||
+        f.state == FilterState.noCapturePermission ||
+        f.state == FilterState.captureFailed ||
+        (f.state == FilterState.stoppedBySystem && !android);
+    if (!on && (f.micDenied || f.captureCancelled)) {
+      detail = f.micDenied ? l.needRecordAudio : l.stateCaptureCancelled;
       detailIsError = true;
     }
     final error = f.error;
@@ -169,7 +280,7 @@ class PowerSection extends StatelessWidget {
               shape: CircleBorder(side: on ? BorderSide.none : BorderSide(color: c.offRing, width: 3)),
               child: InkWell(
                 customBorder: const CircleBorder(),
-                onTap: () => runAction(context, (b) => on ? b.stopFilter() : b.startFilter()),
+                onTap: () => on ? runAction(context, (b) => b.stopFilter()) : _start(context),
                 child: Icon(Icons.power_settings_new_rounded, size: 72, color: on ? c.onPrimary : c.textPrimary),
               ),
             ),
@@ -204,5 +315,6 @@ String engineErrorText(AppLocalizations l, BackendMessage e) => switch (e.code) 
       'install_failed' => l.engineErrorInstallFailed(e.detail),
       'start_failed' => l.engineErrorStartFailed(e.detail),
       'service_failed' => l.engineErrorServiceFailed(e.detail),
+      'model_failed' => l.stateModelFailed,
       _ => l.actionFailed(e.detail.isEmpty ? e.code : e.detail),
     };

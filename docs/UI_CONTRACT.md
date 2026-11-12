@@ -39,10 +39,14 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | Key | Type | Meaning |
 |---|---|---|
 | `platform` | String | `android`, `linux`, `windows`, `macos` |
-| `version` | String | App version name (`0.2.6`) |
+| `version` | String | App version name (`0.2.9`; desktop: from the bundle's `engine/VERSION`, else `desktop/lib/version.dart`, checked against `desktop/pubspec.yaml` by a test) |
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
 | `settings` | Map | The settings below, with their current values |
-| `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM` (`FilterService.State`) |
+| `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM`, `CAPTURE_FAILED` (`FilterService.State`). Desktop: `STOPPED_BY_SYSTEM` = the filter stopped by itself (the service died or failed; the screen says "Waaiya stopped"), `MODEL_FAILED` = running but its voice model did not load (silent, fail-closed) |
+| `filter.problem` | String? | While `FILTERING`, what the user hears is not what filtering promises (shown instead of the "on" line, in the error colour): `too_slow` (the device cannot filter live in time), `not_muted` (the original sound is not silenced: setup missing), `mute_failing` (silencing the playing app fails), desktop `detector_failed` (women's singing on, its detector did not load: voices muted). Null: none |
+| `filter.mono` | bool | The live sound was made mono so the device keeps up (a note under the "on" line) |
+| `filter.blockedApps` | List<String> | Apps playing now that do not allow filtering (names); said as silenced or unfiltered according to `silence_unfilterable` |
+| `filter.captureCancelled` | bool | Android's screen-sharing question was cancelled at the last start (until the next start) |
 | `filter.delayMs` | int | Engine delay of the running filter; 0 = not measured (the screen then leaves the figure out) |
 | `filter.micDenied` | bool | The microphone permission was refused at the last start (until the next start) |
 | `filter.simulated` | bool | Desktop preview: start/stop are not connected to an engine yet (the screen says so) |
@@ -63,6 +67,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `blur.shizukuLayer` | bool | Shizuku is ready on Android 12+: the covers are a Shizuku shell layer (`ShizukuCovers`), nothing else to allow |
 | `blur.busy` | bool | A Shizuku blur grant is running |
 | `blur.message` | Map? | `{code: "setup_failed", detail}` |
+| `blur.uncovered` | int | Desktop: monitors the blur does not cover (Wayland: not shared in the screen-sharing dialog, or plugged in later); the card says so in the error colour. 0 otherwise |
 | `blur.error` | Map? | Desktop: `{code, detail}` from the blur helper. `no_capture`, `no_overlay`, `models_missing`, `failing` (detail = the helper's reason, English, shown under the translated status), `share_dialog` (Wayland: the screen-sharing dialog waits for the user; no detail), `exited` (the helper stopped by itself; detail = exit code and its last lines). Null otherwise |
 | `models.detector` | bool | The women's-singing detector is bundled |
 | `capabilities` | Map<String,bool> | What this platform offers, below |
@@ -114,6 +119,12 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` (later) |
 | `getLicences` | none | `{notice, docs: [{label, file}]}` | Assets copied at build time (`copyLicences`) | Files next to the app, else a link to the repository |
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
+| `diagnosticsReport` | none | String | `Diagnostics.report`: what the app sees on this phone (plain text, English) | Linux: version, session, settings, filter and blur state, `waaiya status`, the service journal and the end of `filter.log` |
+
+Screens (0.2.9, as `MainActivity`): Start without the one-time setup (`capabilities.shizukuSetup` and not
+`setup.originalsMuted`) first asks "The music will still be heard" (`start_no_setup_*`: "Do the setup" scrolls to
+the setup card, "Start anyway" starts); a "Problem? Diagnostics report" button at the bottom shows
+`diagnosticsReport` with Copy (nothing is sent).
 
 Reading: there is no per-key getter. Every setting and the language are in the snapshot (`getState`, and every
 event), which is the getter; `setSetting` and `setLanguage` are the setters. The Shizuku start guide (wireless debugging, `guide_*` texts) is a Flutter dialog, shown from setup step 2 and from
@@ -129,10 +140,13 @@ Flutter's own `Clipboard`; it needs no backend method.
   the systemd unit template, `build/` binaries with ONNX Runtime, `models/dfn3/`, and `VERSION`). `LinuxEngine`
   (`desktop/lib/linux_engine.dart`) installs it with the unchanged `waaiya install` when the installed
   `~/.local/share/islamic-mute/VERSION` differs, then drives the systemd user service with `waaiya start|stop`,
-  `systemctl --user enable|disable` and `waaiya women-singing on|off` (plus a restart while running). The state is
-  polled every 3 s from `waaiya status` (`filter:`, `autostart:`) and `systemctl --user is-active`; a service
-  still starting after 20 s, or `failed`, gives `service_failed` with the journal's last lines. The filter keeps
-  running when the app is closed. The delay is not measured there (`delayMs` 0).
+  `systemctl --user enable|disable` and `waaiya women-singing on|off` (plus `waaiya reload` while running: only
+  the filter process restarts, the apps stay on the virtual output, so a change never plays unfiltered sound; an
+  older installed engine without `reload` gets stop + start). The state is polled every 3 s from `waaiya status`
+  (`filter:` running / restarting / down / stopped, `engine:` ok / model not loaded / detector not loaded,
+  `autostart:`) and `systemctl --user is-active`; a service still starting after 20 s, or `failed`, gives
+  `service_failed` with the journal's last lines. The filter keeps running when the app is closed. The delay is
+  not measured there (`delayMs` 0).
 - Windows: until its host exists (`reports/desktop_windows_macos_scope.md` §2), start/stop is simulated and the
   screen says so (`TODO(engine)`: load the engine library with `dart:ffi` (`im_engine.h`), or talk to a host
   service). A development run without the bundled engine is simulated too.
@@ -145,7 +159,12 @@ Flutter's own `Clipboard`; it needs no backend method.
   go to its stdin (`policy N`, `strictness N`, `fail_cover 0|1`, `quit`); it prints JSON lines `{"state",
   "error", "backend", "overlay", "covers", "ms"?, "cpu"?, "fps"?}` with state `starting`, `on`,
   `on_covers_visible`, `failing`, `models_missing`, `no_capture`, `no_overlay`, `idle`, mapped to `blur.state` /
-  `blur.error`. A helper that dies is restarted up to 3 times, then reported as `exited`. The Wayland
+  `blur.error`, and `"uncovered": n` to `blur.uncovered`. A helper that dies is restarted up to 3 times (the
+  count goes back to 0 only after 60 s "on"), then reported as `exited`; one silent for 15 s (it prints a line at
+  least every 5 s) is reported `failing` and restarted; one whose capture ended while on (`no_capture`) is
+  started again; one that gave up or fails (`no_capture`, `no_overlay`, `failing`) is restarted on any change.
+  Models missing from the bundle keep the card (`models_missing`, then a red bar: a permanent failure covers the
+  screens for 4 s only). The Wayland
   screen-sharing permission is kept in `$XDG_CONFIG_HOME/waaiya/screencast-restore-token`. `blur.touchPassThrough`
   and `blur.overlayAllowed` are always true there (no permission to ask; clicks pass through the covers).
 - No Shizuku / adb setup, no capture consent, no link screen, and no screen blur on Windows yet: their capabilities

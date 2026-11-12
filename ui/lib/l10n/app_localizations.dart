@@ -932,6 +932,108 @@ abstract class AppLocalizations {
   /// **'كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.'**
   String get blurStrictHelp;
 
+  /// Android string state_on_not_muted
+  ///
+  /// In ar, this message translates to:
+  /// **'الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.'**
+  String get stateOnNotMuted;
+
+  /// Android string state_on_mute_failing
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).'**
+  String get stateOnMuteFailing;
+
+  /// Android string state_too_slow
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.'**
+  String get stateTooSlow;
+
+  /// Android string state_mono_note
+  ///
+  /// In ar, this message translates to:
+  /// **'الصوت أحادي (مونو) ليتمكن هذا الهاتف من المتابعة.'**
+  String get stateMonoNote;
+
+  /// Android string state_blocked_silenced
+  ///
+  /// In ar, this message translates to:
+  /// **'كُتم صوته لأنه لا يسمح بالتصفية: {apps}.'**
+  String stateBlockedSilenced(String apps);
+
+  /// Android string state_blocked_unfiltered
+  ///
+  /// In ar, this message translates to:
+  /// **'يُسمع دون تصفية لأنه لا يسمح بها: {apps}.'**
+  String stateBlockedUnfiltered(String apps);
+
+  /// Android string state_capture_failed
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُعطِ أندرويد واعية صوت التطبيقات الأخرى. اضغط الزر للتشغيل من جديد.'**
+  String get stateCaptureFailed;
+
+  /// Android string state_capture_cancelled
+  ///
+  /// In ar, this message translates to:
+  /// **'أُلغي التشغيل عند سؤال أندرويد عن مشاركة الشاشة. تحتاج واعية أن تختار «بدء» هناك لاستقبال الصوت. لا يُسجَّل شيء ولا يُرسَل.'**
+  String get stateCaptureCancelled;
+
+  /// Android string start_no_setup_title
+  ///
+  /// In ar, this message translates to:
+  /// **'ستبقى الموسيقى مسموعة'**
+  String get startNoSetupTitle;
+
+  /// Android string start_no_setup_body
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.'**
+  String get startNoSetupBody;
+
+  /// Android string start_no_setup_setup
+  ///
+  /// In ar, this message translates to:
+  /// **'أكمل الإعداد'**
+  String get startNoSetupSetup;
+
+  /// Android string start_no_setup_anyway
+  ///
+  /// In ar, this message translates to:
+  /// **'شغّل على أي حال'**
+  String get startNoSetupAnyway;
+
+  /// Android string diag_button
+  ///
+  /// In ar, this message translates to:
+  /// **'مشكلة؟ تقرير التشخيص'**
+  String get diagButton;
+
+  /// Android string diag_title
+  ///
+  /// In ar, this message translates to:
+  /// **'تقرير التشخيص'**
+  String get diagTitle;
+
+  /// Android string diag_note
+  ///
+  /// In ar, this message translates to:
+  /// **'ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
+  String get diagNote;
+
+  /// Android string notif_stopped_title
+  ///
+  /// In ar, this message translates to:
+  /// **'توقفت واعية'**
+  String get notifStoppedTitle;
+
+  /// Android string notif_stopped_text
+  ///
+  /// In ar, this message translates to:
+  /// **'الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.'**
+  String get notifStoppedText;
+
   /// Flutter only. Arabic not reviewed yet.
   ///
   /// In ar, this message translates to:
@@ -1045,6 +1147,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}'**
   String blurStatusExited(String details);
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.'**
+  String get engineDetectorFailed;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.'**
+  String get blurStatusUncovered;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.'**
+  String get blurStatusModelsMissingDesktop;
+
+  /// Flutter only. Arabic not reviewed yet.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
+  String get diagNoteDesktop;
 }
 
 class _AppLocalizationsDelegate

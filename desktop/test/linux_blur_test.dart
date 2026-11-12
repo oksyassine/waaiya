@@ -15,8 +15,11 @@ echo $$ >> "$LOG.pids"
 /usr/bin/env > "$LOG.env"
 echo '{"state":"starting","error":"","backend":"x11","overlay":"x11","covers":0}'
 if [ "$FAKE_CRASH" = 1 ]; then echo "segfault in a driver" >&2; exit 3; fi
+if [ "$FAKE_HANG" = 1 ]; then exec sleep 30; fi
 echo "{\"state\":\"${FAKE_STATE:-on_covers_visible}\",\"error\":\"${FAKE_ERROR:-}\",\"backend\":\"x11\",\"overlay\":\"x11\",\"covers\":1,\"ms\":40.5,\"cpu\":12.0,\"fps\":5.0}"
 echo 'not json'
+if [ "$FAKE_CRASH_LATER" = 1 ]; then sleep 0.1; exit 3; fi
+if [ -n "$FAKE_THEN" ]; then sleep 0.2; echo "{\"state\":\"$FAKE_THEN\",\"error\":\"sharing stopped\",\"covers\":0}"; fi
 while read -r line; do
   echo "$line" >> "$LOG.cmds"
   [ "$line" = quit ] && exit 0
@@ -103,11 +106,51 @@ void main() {
     expect(const BlurConfig(women: false, nudity: false, strictness: 0, failCover: true).on, isFalse);
   });
 
-  test('found only with the helper and all three models', () {
-    expect(LinuxBlur.find(engineDir: engine), isNotNull);
+  test('found with the helper; a missing model keeps the blur (the helper says models_missing), not hidden', () {
+    expect(LinuxBlur.find(engineDir: engine)!.missingModels, isEmpty);
     File('${engine.path}/models/vision/gender_v2.onnx').deleteSync();
-    expect(LinuxBlur.find(engineDir: engine), isNull);
+    expect(LinuxBlur.find(engineDir: engine)!.missingModels, ['gender_v2.onnx']);
     expect(LinuxBlur.find(engineDir: Directory('${dir.path}/nowhere')), isNull);
+    expect(BlurReport.parse('{"state":"on","error":"","uncovered":2}')!.uncovered, 2);
+    expect(BlurReport.parse('{"state":"on","error":""}')!.uncovered, 0);
+  });
+
+  LinuxBlur quick(Map<String, String> extra) => LinuxBlur(
+        File('${engine.path}/build/im-blur'),
+        Directory('${engine.path}/models/vision'),
+        environment: env(extra),
+        restartDelay: const Duration(milliseconds: 50),
+        silenceTimeout: const Duration(milliseconds: 600),
+      );
+  const cfgOn = BlurConfig(women: true, nudity: false, strictness: 0, failCover: true);
+
+  test('a helper that says nothing for a while is reported failing and restarted', () async {
+    final b = quick({'FAKE_HANG': '1'});
+    final seen = <BlurReport?>[];
+    b.reports.listen(seen.add);
+    await b.apply(cfgOn);
+    await until(() => seen, (s) => s.any((r) => r?.state == 'failing'));
+    expect(seen.firstWhere((r) => r?.state == 'failing')!.error, contains('has not answered'));
+    await until(() => File('$log.pids').readAsLinesSync().length, (n) => n >= 2);
+    await b.dispose();
+  });
+
+  test('the capture ended while on: the helper is started again', () async {
+    final b = quick({'FAKE_THEN': 'no_capture'});
+    await b.apply(cfgOn);
+    await until(() => File('$log.pids').existsSync() ? File('$log.pids').readAsLinesSync().length : 0, (n) => n >= 2);
+    await b.dispose();
+  });
+
+  test('a helper that crashes soon after every "on" is not restarted for ever', () async {
+    final b = quick({'FAKE_CRASH_LATER': '1'});
+    final seen = <BlurReport?>[];
+    b.reports.listen(seen.add);
+    await b.apply(cfgOn);
+    await until(() => seen.where((r) => r == null).length, (n) => n >= LinuxBlur.maxRestarts + 1);
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    expect(File('$log.pids').readAsLinesSync().length, LinuxBlur.maxRestarts + 1);
+    await b.dispose();
   });
 
   test('started with the settings and the session environment; changes go to stdin live; off stops it', () async {

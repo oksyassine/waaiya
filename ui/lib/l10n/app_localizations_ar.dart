@@ -478,6 +478,69 @@ class AppLocalizationsAr extends AppLocalizations {
       'كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.';
 
   @override
+  String get stateOnNotMuted =>
+      'الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.';
+
+  @override
+  String get stateOnMuteFailing =>
+      'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).';
+
+  @override
+  String get stateTooSlow =>
+      'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.';
+
+  @override
+  String get stateMonoNote =>
+      'الصوت أحادي (مونو) ليتمكن هذا الهاتف من المتابعة.';
+
+  @override
+  String stateBlockedSilenced(String apps) {
+    return 'كُتم صوته لأنه لا يسمح بالتصفية: $apps.';
+  }
+
+  @override
+  String stateBlockedUnfiltered(String apps) {
+    return 'يُسمع دون تصفية لأنه لا يسمح بها: $apps.';
+  }
+
+  @override
+  String get stateCaptureFailed =>
+      'لم يُعطِ أندرويد واعية صوت التطبيقات الأخرى. اضغط الزر للتشغيل من جديد.';
+
+  @override
+  String get stateCaptureCancelled =>
+      'أُلغي التشغيل عند سؤال أندرويد عن مشاركة الشاشة. تحتاج واعية أن تختار «بدء» هناك لاستقبال الصوت. لا يُسجَّل شيء ولا يُرسَل.';
+
+  @override
+  String get startNoSetupTitle => 'ستبقى الموسيقى مسموعة';
+
+  @override
+  String get startNoSetupBody =>
+      'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.';
+
+  @override
+  String get startNoSetupSetup => 'أكمل الإعداد';
+
+  @override
+  String get startNoSetupAnyway => 'شغّل على أي حال';
+
+  @override
+  String get diagButton => 'مشكلة؟ تقرير التشخيص';
+
+  @override
+  String get diagTitle => 'تقرير التشخيص';
+
+  @override
+  String get diagNote =>
+      'ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+
+  @override
+  String get notifStoppedTitle => 'توقفت واعية';
+
+  @override
+  String get notifStoppedText => 'الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.';
+
+  @override
   String get desktopPreview =>
       'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
 
@@ -555,4 +618,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String blurStatusExited(String details) {
     return 'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n$details';
   }
+
+  @override
+  String get engineDetectorFailed =>
+      'لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.';
+
+  @override
+  String get blurStatusUncovered =>
+      'إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.';
+
+  @override
+  String get diagNoteDesktop =>
+      'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
 }

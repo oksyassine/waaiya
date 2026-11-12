@@ -6,6 +6,7 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 
 import 'linux_blur.dart';
 import 'linux_engine.dart';
+import 'version.dart';
 
 /// Desktop backend (docs/UI_CONTRACT.md, "Where the desktop backend differs").
 ///
@@ -47,6 +48,13 @@ class DesktopBackend extends MemoryBackend {
   /// When the service was first seen starting without the virtual output yet.
   DateTime? _startingSince;
   bool _busy = false;
+
+  /// The filter ran since the last start or stop from this app: a later "not running" is the filter stopping by
+  /// itself ("Waaiya stopped"), not the user's stop.
+  bool _ranSinceAction = false;
+
+  /// The last `waaiya status` (diagnostics report).
+  EngineStatus? _lastStatus;
 
   /// A service still starting after this long is reported as failing (it keeps restarting).
   final Duration startTimeout;
@@ -91,7 +99,10 @@ class DesktopBackend extends MemoryBackend {
     final detector = engine?.hasDetector ?? false;
     final initial = AppState(
       platform: platform,
-      version: '0.2.6',
+      // the bundle's engine/VERSION is "<app version>-<hash of the engine files>"
+      version: (engine?.bundledVersion ?? '').split('-').first.isNotEmpty
+          ? engine!.bundledVersion.split('-').first
+          : appVersion,
       language: saved[_langKey] == 'en' ? 'en' : 'ar', // Arabic first, whatever the system language
       settings: WaaiyaSettings.fromMap(settings),
       filter: FilterInfo(simulated: engine == null),
@@ -166,14 +177,15 @@ class DesktopBackend extends MemoryBackend {
         overlayAllowed: true,
         touchPassThrough: true,
         error: exited != null ? BackendMessage('exited', exited) : r?.blurError,
+        uncovered: r?.uncovered ?? 0,
       ),
     ));
   }
 
   // --- Linux engine host ---
 
-  void _emitFilter(FilterState s, {bool? autostart}) => emit(state.copyWith(
-        filter: FilterInfo(state: s, error: _error, autostart: autostart ?? state.filter.autostart),
+  void _emitFilter(FilterState s, {bool? autostart, String? problem}) => emit(state.copyWith(
+        filter: FilterInfo(state: s, error: _error, autostart: autostart ?? state.filter.autostart, problem: problem),
       ));
 
   /// Reads the engine's state (polled; also after every action).
@@ -182,23 +194,31 @@ class DesktopBackend extends MemoryBackend {
     if (e == null || _busy) return;
     final st = await e.status();
     if (_busy) return; // an action started meanwhile; it refreshes when done
-    final FilterState s;
+    _lastStatus = st;
+    FilterState s;
+    String? problem;
+    final starting = const {'active', 'activating', 'reloading'}.contains(st.active);
     if (st.sinkUp) {
-      s = FilterState.filtering;
+      // running: but is the sound actually filtered? (the engine says what it loaded)
+      s = st.modelFailed ? FilterState.modelFailed : FilterState.filtering;
+      if (st.detectorFailed && state.settings.muteWomenSinging) problem = FilterProblem.detectorFailed;
       _error = null;
       _startingSince = null;
-    } else if (const {'active', 'activating', 'reloading'}.contains(st.active)) {
-      s = FilterState.starting;
+      _ranSinceAction = true;
+    } else if (starting) {
+      // the service is up but its filter is not (yet): starting, or being replaced ('restarting', a reload)
+      s = st.filter == 'restarting' ? FilterState.filtering : FilterState.starting;
       _startingSince ??= DateTime.now();
       if (_error == null && DateTime.now().difference(_startingSince!) > startTimeout) {
         _error = BackendMessage('service_failed', await e.journal());
       }
     } else {
-      s = FilterState.stopped;
       _startingSince = null;
+      // it ran and stopped without the user's stop (the daemon died or failed): "Waaiya stopped"
+      s = _ranSinceAction || st.down ? FilterState.stoppedBySystem : FilterState.stopped;
       if (st.active == 'failed' && _error == null) _error = BackendMessage('service_failed', await e.journal());
     }
-    _emitFilter(s, autostart: st.autostart);
+    _emitFilter(s, autostart: st.autostart, problem: problem);
   }
 
   /// Runs [action] with polling paused; a returned problem becomes `filter.error`.
@@ -220,6 +240,7 @@ class DesktopBackend extends MemoryBackend {
     if (state.filter.running) return StartResult.alreadyRunning;
     _error = null;
     _startingSince = null;
+    _ranSinceAction = false;
     _emitFilter(FilterState.starting);
     final ok = await _act((e) async =>
         await e.preflight() ??
@@ -239,6 +260,7 @@ class DesktopBackend extends MemoryBackend {
   Future<void> stopFilter() async {
     if (engine == null) return super.stopFilter();
     _error = null;
+    _ranSinceAction = false;
     await _act((e) => e.stop());
     await refresh();
   }
@@ -249,10 +271,10 @@ class DesktopBackend extends MemoryBackend {
     if (_blurKeys.contains(key)) await _applyBlur();
     final e = engine;
     if (e == null || key != SettingKeys.muteWomenSinging || !e.hasDetector) return;
-    // `waaiya women-singing on|off` applies at the next start: restart a running filter.
+    // `waaiya women-singing on|off`, then a running filter reloads: only the filter process restarts, the apps
+    // stay on the virtual output (never stop + start, which gave 2-4 s of unfiltered sound).
     final running = state.filter.running;
-    final ok = await _act((e) async =>
-        await e.setWomenSinging(value == true) ?? (running ? await e.stop() ?? await e.start() : null));
+    final ok = await _act((e) async => await e.setWomenSinging(value == true) ?? (running ? await e.reload() : null));
     if (!ok) _emitFilter(state.filter.state);
     await refresh();
   }
@@ -274,6 +296,49 @@ class DesktopBackend extends MemoryBackend {
     });
     if (!ok) _emitFilter(state.filter.state);
     await refresh();
+  }
+
+  // --- diagnostics ---
+
+  @override
+  Future<String> diagnosticsReport() async {
+    final s = state;
+    final b = StringBuffer()
+      ..writeln('Waaiya ${s.version} (${s.platform}, ${Platform.operatingSystemVersion})')
+      ..writeln('Session: ${['XDG_SESSION_TYPE', 'XDG_CURRENT_DESKTOP', 'WAYLAND_DISPLAY', 'DISPLAY'].map((k) => '$k=${Platform.environment[k] ?? ''}').join(' ')}')
+      ..writeln('Settings: ${s.settings.toMap()}')
+      ..writeln('Filter: ${s.filter.state.name}${s.filter.problem != null ? ', ${s.filter.problem}' : ''}'
+          '${s.filter.error != null ? ', error ${s.filter.error!.code}' : ''}')
+      ..writeln('Blur: ${s.blur.state?.name ?? 'off'}${s.blur.error != null ? ', ${s.blur.error!.code}: ${s.blur.error!.detail}' : ''}'
+          '${s.blur.uncovered > 0 ? ', ${s.blur.uncovered} monitor(s) not covered' : ''}');
+    final bl = blur;
+    if (bl != null) {
+      final r = bl.last;
+      if (r != null) {
+        b.writeln('Blur helper: backend ${r.backend}, covers ${r.covers}'
+            '${r.ms != null ? ', ${r.ms!.toStringAsFixed(0)} ms per frame, ${r.cpu?.toStringAsFixed(0)}% CPU' : ''}');
+      }
+      if (bl.exitDetail != null) b.writeln('Blur helper exited: ${bl.exitDetail}');
+      if (bl.missingModels.isNotEmpty) b.writeln('Blur models missing: ${bl.missingModels.join(', ')}');
+    }
+    final e = engine;
+    if (e == null) {
+      b.writeln('Engine: not in this build (preview)');
+    } else {
+      final st = _lastStatus ?? await e.status();
+      b
+        ..writeln('Engine: bundled ${e.bundledVersion}, installed ${e.installedVersion ?? 'no'}, service ${st.active}')
+        ..writeln()
+        ..writeln('waaiya status:')
+        ..writeln(st.raw)
+        ..writeln()
+        ..writeln('Service log:')
+        ..writeln(await e.journal(lines: 20))
+        ..writeln()
+        ..writeln('Filter log (end):')
+        ..writeln(e.filterLogTail());
+    }
+    return b.toString().trim();
   }
 
   // --- licences ---
