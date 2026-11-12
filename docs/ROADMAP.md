@@ -7,7 +7,8 @@ the code audit, or a measurement in `eval/results/`.
 ## Rules that do not change
 
 - The app applies the user's choice. It never decides a religious ruling: where scholars differ, it is a setting.
-- Everything runs on the device. Nothing is sent anywhere, no account, no analytics.
+- The filter and the blur run on the device and send nothing. No account, no analytics. Only "Open a link" goes
+  online: to the site of the link, and to PyPI for yt-dlp updates.
 - Fail-closed: when the app is unsure or broken, the user gets silence or a cover, never unfiltered content.
 - Arabic first, with an English switch. No root.
 - Current features come before new ones.
@@ -26,6 +27,11 @@ Found by running the app on emulators in the state of a phone that never install
 | Nobody could tell which of these a phone had | No numbers were kept | "Problem? Diagnostics report" at the bottom of the screen: setup state, speed per hop, dropouts, what is silenced, blur speed. Copy or share; the app sends nothing |
 | Delay grew after a slow start or a stall and never came back | Late sound stays in the output buffer as extra delay | Delay that the phone's slowest recent hop does not need is given back during silence |
 | Apps that refuse capture went silent without explanation | Not shown | The state line names the app: silenced, or playing unfiltered, by the user's setting |
+| Filtering ended by Android left no trace | The "on" notification just disappeared | A "Waaiya stopped: the sound is not filtered any more" notification |
+| Blur: an immodest image could stay uncovered on a still screen | Android sends a frame only when the screen changes; the nudity model runs a few times a second and the detector tiles may take turns, so the last frame could miss both | The last frame is kept and passed again until every model and tile has seen it (`ScreenBlur.process`) |
+| Blur: a build without blur models covered the whole screen for good | A missing model was treated like a passing failure | Badge and status line instead of a cover |
+| Links: the retry with yt-dlp's nightly build was blocked for an hour by the daily check; a failed save left its progress notification; a killed save left the downloaded original in the cache | Shared time stamp; wrong stop mode; cleanup only on a clean exit | Separate stamp; notification removed; cache cleared at app start |
+| Settings and the downloaded yt-dlp could leave the phone in Android's backup | Backup was not switched off | No cloud backup, no device transfer |
 
 Checks that run without a phone: 19 JVM tests (load monitor, session list parser), an engine test for the mono
 switch, and `emu_check.py` on Android 11 and 15 emulators with the setup missing and done, with a native build
@@ -69,6 +75,38 @@ The diagnostics report is how those answers will come back.
 12. **Other platforms**: Windows engine and blur; Linux blur on real Wayland sessions; Android TV (need 8,
     [G6]); iPhone in-app player and Safari extension (need 12).
 
+## Known defects, not fixed yet (code audit, 2026-11-12)
+
+Android:
+- Without Shizuku the covers are one window spanning all of them; on Android 12+ taps between two covers are
+  lost, not only taps on a cover. Fix: one window per cover.
+- Shizuku cover layer: an error inside the shell process never reaches the app, so the blur can say "on" with
+  nothing drawn. Fix: probe one cover at start and a two-way health call.
+- Falling back from the Shizuku layer to a window does not repeat the "are my covers in the capture" test.
+- A foldable that unfolds without rotating keeps the old capture shape (covers misplaced).
+- Accessibility build: a switched-off accessibility service is not noticed.
+- Android 10/11 window covers: the whole-screen nudity cover lifts for a moment every 3 s over a video.
+- A failed blur start shows "starting" for the whole session.
+- Player: a file with AC-3/DTS sound on an output that takes it encoded may bypass the filter (unconfirmed);
+  the exported player accepts a stream list from any app; playback goes on in the background with no control.
+- Link saving: no handler for Android 15's 6-hour limit on its service.
+- yt-dlp self-update trusts PyPI's TLS and hash only, and takes nightlies after any failure.
+- When Android ends the capture the original sound comes back (with the new notification). Silence until
+  restarted would be stricter: owner's decision below.
+
+Linux and desktop (branch `flutter-ui`):
+- Nudity cover over a still image lasts 3 s, then stays off until a pixel changes (the same last-frame gap as
+  fixed on Android, plus the cover being part of the capture).
+- A second monitor that is not shared, or whose stream dies, has no covers while the state says on.
+- Switching the women's-singing setting restarts the service and plays unfiltered sound for a few seconds.
+- Streams that the sound server moves back to the real output are not moved again.
+- A permanent blur failure covers every monitor, the app's own window included.
+- A monitor rotated during a frame grab can crash the Wayland helper; GNOME ignores a resolution change.
+- `filter.log` grows without limit; "running" only means the virtual sink exists; the app shows version 0.2.6.
+
+CI: the tagged-release workflow builds an APK without the blur models and runs no tests; `test-detector` is built
+but not run; no test covers the fail-closed paths, the link updater, the blur loop or the export.
+
 ## Not building
 
 | Idea | Why not |
@@ -87,3 +125,5 @@ The diagnostics report is how those answers will come back.
 - Mono as the default for the live filter (half the battery, voice is almost always centred) or stereo with
   automatic fallback as now.
 - Whether the waiting period (item 4) may delay switching the filter off, or only weakening the blur.
+- When Android itself ends the capture: let the sound through with a notification (now), or keep everything
+  silent until the user starts again (stricter, but a silent phone).

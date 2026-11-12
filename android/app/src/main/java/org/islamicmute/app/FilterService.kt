@@ -95,6 +95,7 @@ class FilterService : Service() {
         val data: Intent? = if (Build.VERSION.SDK_INT >= 33) intent?.getParcelableExtra(EXTRA_DATA, Intent::class.java)
                             else @Suppress("DEPRECATION") intent?.getParcelableExtra(EXTRA_DATA)
         failState = null
+        runCatching { getSystemService(NotificationManager::class.java).cancel(3) }  // an old "stopped" notice
         if (data == null) { failState = State.CAPTURE_FAILED; stopSelf(); return START_NOT_STICKY }
         val mpm = getSystemService(MediaProjectionManager::class.java)
         val mp = runCatching { mpm.getMediaProjection(code, data) }
@@ -316,6 +317,17 @@ class FilterService : Service() {
         blockedApps = emptyList()
         if (state != State.NO_CAPTURE_PERMISSION)
             publish(failState ?: if (stoppedBySystem) State.STOPPED_BY_SYSTEM else State.STOPPED)
+        // Not stopped by the user: the sound is unfiltered again from now on, and the "on" notification is gone.
+        // Say so where it will be seen.
+        if (failState != null || stoppedBySystem) runCatching {
+            val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+            getSystemService(NotificationManager::class.java).notify(3, Notification.Builder(this, CHANNEL)
+                .setContentTitle(getString(R.string.notif_stopped_title))
+                .setContentText(getString(R.string.notif_stopped_text))
+                .setStyle(Notification.BigTextStyle().bigText(getString(R.string.notif_stopped_text)))
+                .setSmallIcon(R.drawable.ic_notification).setColor(getColor(R.color.error))
+                .setContentIntent(open).setAutoCancel(true).build())
+        }
         super.onDestroy()
     }
 

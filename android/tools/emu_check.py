@@ -140,6 +140,7 @@ def main():
     ap.add_argument("--seconds", type=int, default=45, help="how long to play before reading the numbers")
     ap.add_argument("--shots", help="folder for screenshots")
     ap.add_argument("--keep", action="store_true", help="keep the app data (default: start from a fresh install)")
+    ap.add_argument("--blur", action="store_true", help="also turn the screen blur on (women and immodest images)")
     a = ap.parse_args()
     e, c, ar = Emu(a.serial), Checks(), strings("ar")
     shot = (lambda name: e.screenshot(os.path.join(a.shots, name + ".png"))) if a.shots else (lambda name: None)
@@ -247,6 +248,21 @@ def main():
             c.check(ar["state_mono_note"] in detail, "state line says the sound is in mono", detail)
     shot("4_while_playing")
 
+    # --- screen blur: on, over a still screen, and the last frame gets its extra passes
+    if a.blur:
+        e.sh(f"appops set {PKG} SYSTEM_ALERT_WINDOW allow")
+        for rid in ("switch_blur_women", "switch_blur_nudity"):
+            for _ in range(6):
+                if e.find(rid=rid):
+                    break
+                e.sh("input swipe 540 1500 540 900 200")
+            e.tap(rid=rid)
+        time.sleep(6)
+        e.sh("input keyevent KEYCODE_HOME")   # the launcher: a still screen
+        time.sleep(5)
+        e.sh(f"am start -n {PKG}/.MainActivity")
+        time.sleep(2)
+
     # --- diagnostics report
     for _ in range(6):
         if e.find(rid="diagnostics"):
@@ -260,6 +276,12 @@ def main():
     c.check("State: FILTERING" in report and "Speed since start" in report, "report has the live numbers")
     if a.setup == "done":
         c.check("Muter: OK, list from audio_policy" in report, "report: the muter reads the session list", report[-600:])
+    if a.blur:
+        m = re.search(r"\[Screen blur\].*?State: (\w+).*?(Frames: [^\n]*)?$", report, re.S)
+        c.check(m is not None and m.group(1) in ("ON", "ON_COVERS_VISIBLE"), "blur is on", report[-400:])
+        p = re.search(r"still-screen passes (\d+)", report)
+        c.check(p is not None and int(p.group(1)) > 0, "the last frame of a still screen was analysed again",
+                report[-300:])
     shot("5_diagnostics")
     if a.shots:
         with open(os.path.join(a.shots, "report.txt"), "w") as f:
