@@ -255,6 +255,14 @@ static void reg_remove(void *data, struct wl_proxy *reg, uint32_t name) {
     for (int i = 0; i < o->nout; i++)
         if (o->out[i].name == name) o->out[i].proxy = NULL; /* its surfaces get "closed" */
 }
+/* Monitors now: wl_outputs not removed since */
+static int lo_outputs(ib_overlay *b) {
+    layerov *o = (layerov *)b;
+    int n = 0;
+    for (int i = 0; i < o->nout; i++) n += o->out[i].proxy != NULL;
+    return n;
+}
+
 static void (*const registry_listener[])(void) = {(void (*)(void))reg_global, (void (*)(void))reg_remove};
 
 static void ls_configure(void *data, struct wl_proxy *ls, uint32_t serial, uint32_t w, uint32_t h) {
@@ -491,5 +499,6 @@ ib_overlay *ib_layer_overlay_new(char *err, size_t errlen) {
     o->base.fd = lo_fd;
     o->base.dispatch = lo_dispatch;
     o->base.destroy = lo_destroy;
+    o->base.outputs = lo_outputs;
     return &o->base;
 }

@@ -51,8 +51,12 @@ struct ib_overlay {
     int (*fd)(ib_overlay *);
     void (*dispatch)(ib_overlay *);
     void (*destroy)(ib_overlay *);
-    /* X11: the root window's size (0 for layer-shell), to map the portal's logical layout onto XWayland */
+    /* X11: the root window's size (0 for layer-shell), to map the portal's logical layout onto XWayland;
+     * update_root reads it again (a resolution change), NULL for layer-shell */
     int root_w, root_h;
+    void (*update_root)(ib_overlay *);
+    /* Monitors the overlay knows now (wl_output / RandR), to tell when the capture misses some; NULL: unknown */
+    int (*outputs)(ib_overlay *);
 };
 
 /* Backends. Each returns NULL with err filled when it cannot work here. */

@@ -14,7 +14,9 @@ im-blur against it and checks, through the X server itself:
     shape covers each woman, and the screen there shows the blur, not the picture;
   - the nudity cover (FULL, forced with a zero threshold) covers the whole screen, opaque, clicks still pass,
     and clears when the nudity option is turned off;
-  - fail closed: models missing -> models_missing and a full-screen cover (fail_cover 1), a red bar (fail_cover 0);
+  - a nudity cover that expires over a still screen comes back (--fake-nudity: no test picture needed);
+  - fail closed: models missing -> models_missing and a full-screen cover (fail_cover 1) for a few seconds, then
+    the red bar (it never comes back by itself), a red bar at once with fail_cover 0;
   - stdin closed -> the helper exits;
   - cost: ms per analysed frame and CPU, on a still screen and on a changing one (printed).
 Images need Pillow; everything else only the standard library and the X client libraries.
@@ -426,6 +428,32 @@ def main():
         h.send("quit")
         check(h.p.wait(timeout=5) == 0, "'quit' -> im-blur exits")
 
+        # 2b. a nudity cover over a still screen. In covers-visible mode the capture shows the cover, not the picture,
+        #     so the tracker lets the cover go after a few seconds; the uncovered picture then reaches the helper less
+        #     than 300 ms after the last nudity pass and a still screen sends nothing newer: it must still get the
+        #     nudity model (the kept frame is analysed again). --fake-nudity says "nude" whenever a nudity pass sees
+        #     anything but the cover, so this needs no test picture (the forced --nsfw-score above also flags the
+        #     cover itself, which hides the bug). The 0.2.8 helper left the screen uncovered for good here.
+        h = Helper(a.im_blur, env, "--models", a.models, "--policy", "2", "--fake-nudity", "1")
+        h.wait(lambda m: m["state"] == "on_covers_visible" and m.get("covers", 0) >= 1, 30, "the (fake) nudity cover")
+        ov = d.find("waaiya-blur")[0]
+        gaps, gap_start, end = [], None, time.time() + 12
+        while time.time() < end:
+            full = (0, 0, W, H) in d.shape(ov, ShapeBounding)
+            now = time.time()
+            if not full and gap_start is None:
+                gap_start = now
+            elif full and gap_start is not None:
+                gaps.append(now - gap_start)
+                gap_start = None
+            time.sleep(0.05)
+        if gap_start is not None:
+            gaps.append(time.time() - gap_start)
+        print(f"     still screen: the cover was let go {len(gaps)} times, uncovered {[round(g, 2) for g in gaps]} s")
+        check(max(gaps, default=0) < 2.0, "still screen: an expired nudity cover comes back within 2 s")
+        h.send("quit")
+        check(h.p.wait(timeout=5) == 0, "'quit' -> im-blur exits")
+
         # 3. fail closed: no models
         h = Helper(a.im_blur, env, "--models", "/nonexistent", "--policy", "1", "--fail-cover", "1")
         st = h.wait(lambda m: m["state"] == "models_missing", 30, "models_missing")
@@ -437,6 +465,12 @@ def main():
         d.click(500, 500)
         time.sleep(0.2)
         check((bg, 500, 500) in d.presses(), "fail cover: clicks still reach the window underneath")
+        # a model that cannot load never comes back: the cover holds a few seconds only, then the bar (a cover held
+        # for good would hide every window, the app's own switch too)
+        time.sleep(4.5)
+        sh = d.shape(ov, ShapeBounding)
+        check(len(sh) == 1 and sh[0][1] == 0 and sh[0][2] == W and sh[0][3] <= 12,
+              f"models missing for good: after a few seconds only the red bar {sh}")
         h.send("fail_cover 0")
         time.sleep(1.2)
         sh = d.shape(ov, ShapeBounding)

@@ -214,8 +214,11 @@ typedef struct {
     int state; /* pw_stream_state */
     char err[160];
     /* analysed frame (under c->mu) */
-    uint8_t *rgba, *front;
+    uint8_t *rgba;
     int fw, fh, fresh;
+    /* the copy handed out by pc_grab: main thread only (PipeWire's thread never frees it under the caller) */
+    uint8_t *front;
+    size_t front_cap;
 } pstream;
 
 struct portalcap {
@@ -225,6 +228,7 @@ struct portalcap {
     pthread_mutex_t mu;
     volatile int quit;
     int ready; /* 1 setting up, 0 streaming, -1 failed (base.err) */
+    int resized; /* a stream's size changed (resolution change): pc_dispatch reports it once */
     double ready_at;
     /* D-Bus (portal thread) */
     GDBusConnection *conn;
@@ -272,6 +276,14 @@ static void on_param(void *data, uint32_t id, const struct ibp_spa_pod *param) {
     ib_layout lay = fmt == IBP_VIDEO_FORMAT_RGBx || fmt == IBP_VIDEO_FORMAT_RGBA ? (ib_layout){0, 8, 16}
                                                                                  : (ib_layout){16, 8, 0};
     pthread_mutex_lock(&s->c->mu);
+    if (s->w > 0 && (w != s->w || h != s->h)) {
+        /* resolution changed: the portal's logical size (from Start) is stale, scale it the same way */
+        if (s->have_size) {
+            s->pw = (int)((long long)s->pw * w / s->w);
+            s->ph = (int)((long long)s->ph * h / s->h);
+        }
+        s->c->resized = 1;
+    }
     s->w = w;
     s->h = h;
     s->lay = lay;
@@ -279,11 +291,9 @@ static void on_param(void *data, uint32_t id, const struct ibp_spa_pod *param) {
     ib_scale_size(w, h, IB_LONG_SIDE, &fw, &fh);
     if (fw != s->fw || fh != s->fh || !s->rgba) {
         free(s->rgba);
-        free(s->front);
         s->rgba = malloc((size_t)fw * fh * 4);
-        s->front = malloc((size_t)fw * fh * 4);
-        s->fw = fw;
-        s->fh = fh;
+        s->fw = s->rgba ? fw : 0;
+        s->fh = s->rgba ? fh : 0;
         s->fresh = 0;
     }
     pthread_mutex_unlock(&s->c->mu);
@@ -535,6 +545,16 @@ static int share(portalcap *c, uint32_t version, uint32_t cursors, const char *r
     return 1;
 }
 
+static void on_closed(GDBusConnection *conn, const char *sender, const char *path, const char *iface,
+                      const char *signal, GVariant *params, void *ud) {
+    (void)conn; (void)sender; (void)path; (void)iface; (void)signal; (void)params;
+    portalcap *c = ud;
+    fail(c, "%s", "screen sharing was stopped (the screen-cast session was closed)");
+    pthread_mutex_lock(&c->mu);
+    c->session[0] = 0; /* closed already: nothing to close at the end */
+    pthread_mutex_unlock(&c->mu);
+}
+
 static void *portal_thread(void *arg) {
     portalcap *c = arg;
     c->ctx = G.g_main_context_new();
@@ -572,11 +592,16 @@ static void *portal_thread(void *arg) {
     pthread_mutex_lock(&c->mu);
     c->ready_at = mono_ms();
     pthread_mutex_unlock(&c->mu);
+    /* the session ends when the user stops the sharing (GNOME's top-bar indicator, KDE's tray) or the compositor
+     * does: reported as no_capture, never as "on" */
+    unsigned closed_sub = G.g_dbus_connection_signal_subscribe(c->conn, DEST, "org.freedesktop.portal.Session",
+                                                               "Closed", c->session, NULL, 0, on_closed, c, NULL);
     /* keep the D-Bus connection (and so the session) alive */
     while (!c->quit) {
         while (G.g_main_context_iteration(c->ctx, 0)) {}
         usleep(100000);
     }
+    G.g_dbus_connection_signal_unsubscribe(c->conn, closed_sub);
 out:
     G.g_main_context_pop_thread_default(c->ctx);
     return NULL;
@@ -604,20 +629,37 @@ static int pc_grab(ib_capture *b, int i, const uint8_t **rgba, int *fw, int *fh)
     if (s->state == IBP_STREAM_STATE_ERROR || (s->state == IBP_STREAM_STATE_UNCONNECTED && c->ready_at > 0)) {
         snprintf(b->err, sizeof b->err, "screen sharing stopped (%s)", s->err[0] ? s->err : "the stream ended");
         r = -1;
-    } else if (s->fresh && s->front) {
-        memcpy(s->front, s->rgba, (size_t)s->fw * s->fh * 4);
-        s->fresh = 0;
-        *rgba = s->front;
-        *fw = s->fw;
-        *fh = s->fh;
-        r = 1;
+    } else if (s->fresh && s->rgba) {
+        /* copied under the lock into a buffer only this (the main) thread allocates and frees: a format change on
+         * PipeWire's thread replaces s->rgba, never what the caller is still reading */
+        size_t sz = (size_t)s->fw * s->fh * 4;
+        if (sz > s->front_cap) {
+            uint8_t *nb = realloc(s->front, sz);
+            if (nb) { s->front = nb; s->front_cap = sz; }
+        }
+        if (sz <= s->front_cap) {
+            memcpy(s->front, s->rgba, sz);
+            s->fresh = 0;
+            *rgba = s->front;
+            *fw = s->fw;
+            *fh = s->fh;
+            r = 1;
+        }
     }
     pthread_mutex_unlock(&c->mu);
     return r;
 }
 
 static int pc_fd(ib_capture *b) { (void)b; return -1; }
-static int pc_dispatch(ib_capture *b) { (void)b; return 0; }
+/* 1 once after a stream changed size (the overlay and the analysed sizes follow) */
+static int pc_dispatch(ib_capture *b) {
+    portalcap *c = (portalcap *)b;
+    pthread_mutex_lock(&c->mu);
+    int r = c->resized;
+    c->resized = 0;
+    pthread_mutex_unlock(&c->mu);
+    return r;
+}
 
 static int pc_ready(ib_capture *b) {
     portalcap *c = (portalcap *)b;

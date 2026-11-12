@@ -454,6 +454,29 @@ static void ov_dispatch(ib_overlay *b) {
         }
 }
 
+/* The root window's size now. XDisplayWidth is Xlib's copy from the connection setup (RandR changes do not update
+ * it without XRRUpdateConfiguration): asked from the server. */
+static void ov_update_root(ib_overlay *b) {
+    x11ov *o = (x11ov *)b;
+    ibx_Window r;
+    int x, y;
+    unsigned w = 0, h = 0, bw, depth;
+    if (o->x.XGetGeometry(o->d, o->root, &r, &x, &y, &w, &h, &bw, &depth) && w > 0 && h > 0) {
+        b->root_w = (int)w;
+        b->root_h = (int)h;
+    } else {
+        b->root_w = o->x.XDisplayWidth(o->d, o->scr);
+        b->root_h = o->x.XDisplayHeight(o->d, o->scr);
+    }
+}
+
+/* Monitors on this X screen (RandR; XWayland lists the Wayland outputs) */
+static int ov_outputs(ib_overlay *b) {
+    x11ov *o = (x11ov *)b;
+    ib_geom g[IB_MAX_SCREENS];
+    return monitors(&o->x, o->d, o->scr, o->root, g, IB_MAX_SCREENS);
+}
+
 static void ov_destroy(ib_overlay *b) {
     x11ov *o = (x11ov *)b;
     if (o->d) {
@@ -480,8 +503,9 @@ ib_overlay *ib_x11_overlay_new(const char *display, char *err, size_t errlen) {
     o->vis = o->x.XDefaultVisual(o->d, o->scr);
     o->depth = o->x.XDefaultDepth(o->d, o->scr);
     o->shm = o->x.XShmQueryExtension(o->d);
-    o->base.root_w = o->x.XDisplayWidth(o->d, o->scr);
-    o->base.root_h = o->x.XDisplayHeight(o->d, o->scr);
+    ov_update_root(&o->base);
+    o->base.update_root = ov_update_root;
+    o->base.outputs = ov_outputs;
     o->base.sync = ov_sync;
     o->base.draw = ov_draw;
     o->base.keep_on_top = ov_keep_on_top;

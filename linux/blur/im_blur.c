@@ -32,7 +32,6 @@
 
 #define MIN_INTERVAL_MS 50.0   /* at most ~20 analysed frames a second */
 #define IDLE_INTERVAL_MS 250.0 /* screen unchanged (or no damage events): look less often */
-#define NSFW_EVERY_MS 300.0    /* the nudity model is slower: a few times a second */
 #define STALL_MS 1500.0        /* a frame analysed longer than this = "cannot keep up" */
 #define SLOW_FRAME_MS 60.0     /* above this (average), the detector tiles take turns */
 
@@ -63,8 +62,9 @@ typedef struct {
     ib_paint *paints;   /* IB_MAX_RECTS + 8 */
     ib_cellset *pcells; /* copy of the cells drawn */
     int npaints;
-    double nsfw_at;
+    ib_passes pass;     /* what the kept frame (prev) still needs: nudity model, detector tiles (blur_core.h) */
     double job_at;      /* last time this screen was analysed */
+    int cap_fail;       /* grabs of this screen failed in a row (each monitor on its own) */
     /* worker-owned */
     im_cover *cov;
     ib_thumb thumb;
@@ -74,6 +74,7 @@ typedef struct {
     /* settings (main writes, worker reads under lock) */
     ib_settings set;
     float nsfw_score; /* <= 0: engine default */
+    int fake_nudity;  /* tests: the nudity pass says "nude" unless the frame shows our opaque cover, no models */
     int threads;
     char person[PATH_MAX], gender[PATH_MAX], nsfw[PATH_MAX];
 
@@ -107,6 +108,8 @@ typedef struct {
     int loading;
     int models_bad;
     char model_err[256];
+    int tiles;         /* detector tiles (im_vision_params.tiles) and whether they take turns, one per frame */
+    int tiles_turns;
     double frame_ms;   /* average model time */
     int frames;        /* analysed frames since the last stats line */
     double ms_sum;
@@ -126,6 +129,17 @@ static void worker_reset_screens(void) {
         s->cov = NULL;
         ib_thumb_free(&s->thumb);
     }
+}
+
+/* tests (--fake-nudity): does the frame show our opaque cover (IB_COL_SURFACE) almost everywhere? */
+static int mostly_cover(const uint8_t *rgba, int w, int h) {
+    long n = 0, same = 0;
+    for (int y = 0; y < h; y += 8)
+        for (int x = 0; x < w; x += 8, n++) {
+            const uint8_t *p = rgba + ((size_t)y * w + x) * 4;
+            same += abs(p[0] - 0x2b) < 12 && abs(p[1] - 0x2d) < 12 && abs(p[2] - 0x31) < 12;
+        }
+    return n > 0 && same * 10 >= n * 9;
 }
 
 static void *worker(void *arg) {
@@ -164,6 +178,7 @@ static void *worker(void *arg) {
                 if (B.nsfw_score > 0) p.nsfw_score = B.nsfw_score;
                 if (tiles_turns) p.tiles_per_frame = 1;
                 im_vision_set_params(v, &p);
+                B.tiles = p.tiles;
             }
         }
         if (B.job < 0) continue;
@@ -194,7 +209,10 @@ static void *worker(void *arg) {
         double t0 = now_ms();
         struct timespec c0, c1;
         clock_gettime(CLOCK_THREAD_CPUTIME_ID, &c0);
-        if (run_models) {
+        if (run_models && B.fake_nudity) {
+            n = 0;
+            if (B.jnsfw && !mostly_cover(B.jframe, B.jw, B.jh)) det[n++] = (im_vrect){0, 0, 1, 1, IM_VK_FULL, 1, -1};
+        } else if (run_models) {
             n = im_vision_detect(v, B.jframe, B.jw, B.jh, B.jw * 4, B.jnsfw, det, IB_MAX_RECTS);
             if (n < 0) failed = 1;
         }
@@ -217,6 +235,7 @@ static void *worker(void *arg) {
         B.frames++;
         if (!tiles_turns && v && B.frame_ms > SLOW_FRAME_MS) {
             tiles_turns = 1; /* for the rest of this run, as Android */
+            B.tiles_turns = 1;
             im_vision_params p;
             im_vision_get_params(v, &p);
             p.tiles_per_frame = 1;
@@ -242,12 +261,12 @@ static void *worker(void *arg) {
 static ib_state g_state = IB_ST_STARTING;
 static char g_error[256];
 static const char *g_backend = "", *g_overlay = "";
-static int g_covers;
+static int g_covers, g_uncovered;
 
 static void emit(int with_stats, double ms, double cpu, double fps) {
     char line[1024];
-    int k = ib_state_json(line, sizeof line, g_state, g_error, g_backend, g_overlay, g_covers,
-                          with_stats ? ms : -1, with_stats ? cpu : -1, with_stats ? fps : -1);
+    int k = ib_state_json2(line, sizeof line, g_state, g_error, g_backend, g_overlay, g_covers, g_uncovered,
+                           with_stats ? ms : -1, with_stats ? cpu : -1, with_stats ? fps : -1);
     if (fwrite(line, 1, (size_t)k, stdout) != (size_t)k || fflush(stdout) != 0) g_quit = 1; /* the app is gone */
 }
 
@@ -279,6 +298,7 @@ static int setup_screens(void) {
     if (n > IB_MAX_SCREENS) n = IB_MAX_SCREENS;
     ib_geom g[IB_MAX_SCREENS];
     for (int i = 0; i < n; i++) cap->geometry(cap, i, &g[i]);
+    if (g_wayland && ov && ov->update_root) ov->update_root(ov); /* the X root may have changed size since */
     if (g_wayland && n > 0 && ov && ov->root_w > 0) {
         /* XWayland overlay (GNOME): the portal gives logical positions; the X root may be in physical pixels
          * (mutter's xwayland-native-scaling) */
@@ -303,8 +323,9 @@ static int setup_screens(void) {
         s->ndrawn[0] = s->ndrawn[1] = 0;
         s->ncovers = 0;
         s->npaints = 0;
-        s->nsfw_at = -1e9;
+        ib_passes_reset(&s->pass);
         s->job_at = 0;
+        s->cap_fail = 0;
         s->cells = calloc(IB_MAX_RECTS, sizeof *s->cells);
         s->paints = calloc(IB_MAX_RECTS + 8, sizeof *s->paints);
         s->pcells = calloc(IB_MAX_RECTS + 8, sizeof *s->pcells);
@@ -359,6 +380,12 @@ static void redraw(int i, int force) {
     if (g_test && i == 0 && m <= IB_MAX_RECTS)
         s->drawn[0][m++] = (im_vrect){0, 0.5f, (float)sq / s->g.w, 0.5f + (float)sq / s->g.h, IM_VK_FULL, 1, -1};
     s->ndrawn[0] = m;
+}
+
+static int has_full(const im_vrect *r, int n) {
+    for (int k = 0; k < n; k++)
+        if (r[k].kind == IM_VK_FULL) return 1;
+    return 0;
 }
 
 static void redraw_all(int force) {
@@ -463,6 +490,7 @@ int main(int argc, char **argv) {
         else if (!strcmp(a, "--token-file")) token = v;
         else if (!strcmp(a, "--threads")) B.threads = atoi(v) > 0 ? atoi(v) : 1;
         else if (!strcmp(a, "--nsfw-score")) B.nsfw_score = (float)atof(v);
+        else if (!strcmp(a, "--fake-nudity")) B.fake_nudity = atoi(v) != 0; /* tests: linux/blur/test_x11.py */
         else if (!strcmp(a, "--stats-ms")) stats_ms = atof(v) > 100 ? atof(v) : 100;
         else if (!strcmp(a, "--duty")) duty = atof(v) >= 0.05 && atof(v) <= 1 ? atof(v) : 0.5;
         else if (!strcmp(a, "--capture-ppm")) ppm = v; /* tests: a still picture (P6) as the only screen */
@@ -529,7 +557,8 @@ int main(int argc, char **argv) {
     /* capture ready (the Wayland share dialog may still be open) -> screens -> self-test -> analysing */
     enum { PH_WAIT_CAPTURE, PH_SELFTEST, PH_RUN, PH_DEAD } phase = running ? PH_WAIT_CAPTURE : PH_DEAD;
     double test_until = 0, next_grab = 0, next_watch = 0, stats_at = now_ms() + stats_ms;
-    int covers_visible = 1, rr = 0, idle_grabs = 0, cap_fail = 0, fail_streak = 0;
+    int covers_visible = 1, rr = 0, idle_grabs = 0, fail_streak = 0;
+    double fail_since = 0, beat_at = 0;
     double job_t0 = 0;
     int job_screen = -1;
     struct rusage ru0;
@@ -581,6 +610,8 @@ int main(int argc, char **argv) {
                         B.set = ns;
                         pthread_cond_signal(&B.cv);
                         pthread_mutex_unlock(&B.mu);
+                        /* a still screen shows nothing new: analyse what it shows again with the new settings */
+                        for (int i = 0; i < B.n; i++) B.s[i].pass.rerun = 1;
                     }
                     memmove(inbuf, nl + 1, inlen - (size_t)(nl + 1 - inbuf) + 1);
                     inlen -= (size_t)(nl + 1 - inbuf);
@@ -591,6 +622,11 @@ int main(int argc, char **argv) {
         }
         if (phase == PH_DEAD) {
             next_watch = t + 500;
+            /* given up (no capture, no overlay): the state again now and then, so the app knows the helper is alive */
+            if (t >= beat_at) {
+                if (beat_at > 0) emit(0, 0, 0, 0);
+                beat_at = t + stats_ms;
+            }
             continue;
         }
 
@@ -682,6 +718,8 @@ int main(int argc, char **argv) {
         if (B.done >= 0) {
             int i = B.done;
             if (i < B.n) {
+                int before = has_full(B.s[i].covers, B.s[i].ncovers), now = has_full(B.rcov, B.rn);
+                ib_pass_done(&B.s[i].pass, before, now); /* a whole-screen cover gone: the next new frame gets nudity */
                 memcpy(B.s[i].covers, B.rcov, sizeof *B.rcov * (size_t)B.rn);
                 memcpy(B.s[i].cells, B.rcells, sizeof *B.rcells * (size_t)B.rn);
                 B.s[i].ncovers = B.rn;
@@ -710,35 +748,41 @@ int main(int argc, char **argv) {
 
         /* ---- next frame */
         if (phase == PH_RUN && job_screen < 0 && t >= next_grab && B.set.policy) {
-            int submitted = 0;
+            int submitted = 0, nsfw_on = (B.set.policy & IM_VISION_NSFW) != 0;
             for (int k = 0; k < B.n && !submitted; k++) {
                 int i = (rr + k) % B.n;
                 screen *s = &B.s[i];
                 const uint8_t *f;
                 int fw, fh;
                 int r = cap->grab(cap, i, &f, &fw, &fh);
-                if (r < 0) { cap_fail++; continue; }
-                cap_fail = 0;
-                /* A nudity cover is held for a while (im_cover full_hold_ms): the tracker must see time pass, even
-                 * on a still screen, to let it go. Twice a second while one is shown. */
-                int full = 0;
-                for (int k2 = 0; k2 < s->ncovers && !full; k2++) full = s->covers[k2].kind == IM_VK_FULL;
-                int refresh = full && s->have_prev && t - s->job_at > 500;
-                if (r == 0 && refresh) { f = s->prev; fw = s->fw; fh = s->fh; r = 1; }
-                if (r == 0) continue;
-                size_t sz = (size_t)fw * fh * 4;
-                if (!refresh && s->have_prev && fw == s->fw && fh == s->fh && !memcmp(f, s->prev, sz))
-                    continue; /* unchanged */
-                if (!s->prev || fw != s->fw || fh != s->fh) {
-                    free(s->prev);
-                    s->prev = malloc(sz);
-                    if (!s->prev) continue;
-                    s->fw = fw; s->fh = fh;
+                if (r < 0) { s->cap_fail++; continue; }
+                s->cap_fail = 0;
+                int fresh = r > 0;
+                if (fresh && s->have_prev && fw == s->fw && fh == s->fh && !memcmp(f, s->prev, (size_t)fw * fh * 4))
+                    fresh = 0; /* unchanged */
+                if (!fresh) {
+                    /* Nothing new on screen: the kept frame again when a pass skipped part of it (nudity model,
+                     * detector tiles) or the settings changed; and twice a second while a nudity cover is held
+                     * (im_cover full_hold_ms), so the tracker sees time pass on a still screen and lets it go. */
+                    int full = has_full(s->covers, s->ncovers);
+                    if (!s->have_prev || !(ib_pass_due(&s->pass, t, nsfw_on) || (full && t - s->job_at > 500)))
+                        continue;
+                    f = s->prev; fw = s->fw; fh = s->fh;
                 }
-                if (f != s->prev) memcpy(s->prev, f, sz);
-                s->have_prev = 1;
+                size_t sz = (size_t)fw * fh * 4;
+                if (fresh) {
+                    if (!s->prev || fw != s->fw || fh != s->fh) {
+                        free(s->prev);
+                        s->prev = malloc(sz);
+                        s->have_prev = 0;
+                        if (!s->prev) continue;
+                        s->fw = fw; s->fh = fh;
+                    }
+                    memcpy(s->prev, f, sz);
+                    s->have_prev = 1;
+                }
                 s->job_at = t;
-                if (dump && i == 0) {
+                if (dump && i == 0 && fresh) {
                     FILE *df = fopen(dump, "wb");
                     if (df) {
                         fprintf(df, "P6\n%d %d\n255\n", fw, fh);
@@ -751,8 +795,7 @@ int main(int argc, char **argv) {
                 memcpy(B.jframe, f, sz);
                 B.jw = fw; B.jh = fh;
                 B.jt = t;
-                B.jnsfw = t - s->nsfw_at >= NSFW_EVERY_MS;
-                if (B.jnsfw) s->nsfw_at = t;
+                B.jnsfw = ib_pass_begin(&s->pass, t, fresh, nsfw_on, B.tiles_turns ? B.tiles : 0);
                 B.jnmask = 0;
                 for (int d = 0; d < 2; d++)
                     for (int k2 = 0; k2 < s->ndrawn[d]; k2++) B.jmask[B.jnmask++] = s->drawn[d][k2];
@@ -784,8 +827,18 @@ int main(int argc, char **argv) {
                 snprintf(merr, sizeof merr, "%s", B.model_err);
                 pthread_mutex_unlock(&B.mu);
                 int stalled = busy > 0 && t - busy > STALL_MS;
-                int failing = B.set.policy && (bad || fail_streak >= 3 || stalled || cap_fail >= 3);
-                int fm = failing ? (B.set.fail_cover ? IB_FAIL_COVER : IB_FAIL_WARN) : IB_FAIL_NONE;
+                /* capture: each monitor on its own (a healthy one must not hide a failing one); the portal session
+                 * closed (by the user, the compositor) never comes back */
+                int capbad = -1, ended = cap->ready(cap) < 0;
+                for (int i = 0; i < B.n && capbad < 0; i++)
+                    if (B.s[i].cap_fail >= 3) capbad = i;
+                int failing = B.set.policy && (bad || fail_streak >= 3 || stalled || capbad >= 0 || ended);
+                /* models that cannot load and a capture that is gone do not come back by themselves: the user's
+                 * "cover when failing" holds only a few seconds for them, then the warning bar (blur_core.h) */
+                int permanent = bad || capbad >= 0 || ended;
+                if (!failing) fail_since = 0;
+                else if (fail_since == 0) fail_since = t;
+                int fm = ib_fail_mode(failing, permanent, failing ? t - fail_since : 0, B.set.fail_cover);
                 if (fm != g_fail) {
                     g_fail = fm;
                     redraw_all(0);
@@ -794,12 +847,25 @@ int main(int argc, char **argv) {
                 int nc = 0;
                 for (int i = 0; i < B.n; i++) nc += B.s[i].ncovers;
                 g_covers = nc;
+                /* monitors the overlay knows that the capture does not show (Wayland: not picked in the share
+                 * dialog, or plugged in after it): nothing is covered there, and the app says so */
+                int unc = 0;
+                if (g_wayland && ov->outputs) {
+                    int no = ov->outputs(ov);
+                    unc = no > B.n ? no - B.n : 0;
+                }
                 char why[300] = "";
                 if (stalled) snprintf(why, sizeof why, "a frame has taken %.0f ms", t - busy);
                 else if (fail_streak >= 3) snprintf(why, sizeof why, "the models failed on %d frames", fail_streak);
-                else if (cap_fail >= 3) snprintf(why, sizeof why, "screen capture failing: %s", cap->err);
+                else if (capbad >= 0)
+                    snprintf(why, sizeof why, "screen capture failing on monitor %d: %s", capbad + 1, cap->err);
+                if (unc != g_uncovered) {
+                    g_uncovered = unc;
+                    if (g_state != IB_ST_STARTING) emit(0, 0, 0, 0);
+                }
                 if (!B.set.policy) set_state(IB_ST_IDLE, "");
                 else if (bad) set_state(IB_ST_MODELS_MISSING, merr);
+                else if (ended) set_state(IB_ST_NO_CAPTURE, cap->err);
                 else if (failing) set_state(IB_ST_FAILING, why);
                 else if (phase == PH_SELFTEST || loading) set_state(IB_ST_STARTING, "");
                 else set_state(covers_visible ? IB_ST_ON_COVERS_VISIBLE : IB_ST_ON, "");
