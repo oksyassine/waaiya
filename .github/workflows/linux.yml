@@ -88,6 +88,8 @@ jobs:
         run: |
           python3 -m venv /tmp/venv && /tmp/venv/bin/pip install --quiet numpy
           /tmp/venv/bin/python models/vision/test_cover.py
+      - name: Daemon against a fake sound server (reload, stray streams, status, keep-silent, stop)
+        run: python3 linux/test_daemon_fake.py
       - name: Link updater tests (im_update.py, standard library only, no network)
         run: python3 android/app/src/test/python/test_im_update.py
       - name: Shell scripts parse

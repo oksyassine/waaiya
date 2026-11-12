@@ -1,0 +1,21 @@
+name: waaiya_desktop
+description: Waaiya for Windows and Linux (later macOS), with the shared screens of ../ui (docs/UI_CONTRACT.md).
+publish_to: none
+version: 0.2.10+12
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  waaiya_ui:
+    path: ../ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

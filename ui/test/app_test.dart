@@ -1,0 +1,326 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:waaiya_ui/waaiya_ui.dart';
+
+TextDirection directionOf(WidgetTester tester, Finder f) => Directionality.of(tester.element(f));
+
+void main() {
+  testWidgets('starts in Arabic, right to left, and switches to English', (tester) async {
+    final backend = MemoryBackend();
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+
+    // First launch: onboarding in Arabic.
+    expect(find.text('أهلًا بك'), findsOneWidget);
+    expect(find.text('Welcome'), findsNothing);
+    expect(directionOf(tester, find.text('أهلًا بك')), TextDirection.rtl);
+
+    // The language button names the other language and goes through the backend.
+    await tester.tap(find.byKey(const Key('onboard_language')));
+    await tester.pumpAndSettle();
+    expect(backend.state.language, 'en');
+    expect(find.text('Welcome'), findsOneWidget);
+    expect(find.text('أهلًا بك'), findsNothing);
+    expect(directionOf(tester, find.text('Welcome')), TextDirection.ltr);
+    expect(find.text('العربية'), findsOneWidget);
+
+    // And back.
+    await tester.tap(find.byKey(const Key('onboard_language')));
+    await tester.pumpAndSettle();
+    expect(backend.state.language, 'ar');
+    expect(directionOf(tester, find.text('أهلًا بك')), TextDirection.rtl);
+  });
+
+  testWidgets('choosing "a man" opens the main screen; the button starts and stops filtering', (tester) async {
+    final backend = MemoryBackend(initial: const AppState(capabilities: Capabilities(womenSinging: true)));
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('choose_man')));
+    await tester.pumpAndSettle();
+    expect(backend.state.settings.gender, 'man');
+    expect(find.text('التصفية متوقفة'), findsOneWidget);
+    expect(find.text('كتم غناء النساء'), findsOneWidget); // men only
+
+    await tester.tap(find.byKey(const Key('power')));
+    await tester.pumpAndSettle();
+    expect(backend.state.filter.running, isTrue);
+    expect(find.text('التصفية تعمل'), findsOneWidget);
+    expect(find.textContaining('40'), findsOneWidget); // delay in words
+
+    // Settings apply live: no "stop and start" note.
+    await tester.ensureVisible(find.text('كتم غناء النساء'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('كتم غناء النساء'));
+    await tester.pumpAndSettle();
+    expect(backend.state.settings.muteWomenSinging, isTrue);
+    expect(find.text('أوقف التصفية ثم شغّلها لتطبيق التغييرات.'), findsNothing);
+
+    await tester.ensureVisible(find.byKey(const Key('power')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('power')));
+    await tester.pumpAndSettle();
+    expect(backend.state.filter.running, isFalse);
+  });
+
+  testWidgets('women do not see the singing option; Android-only cards follow the capabilities', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'woman'),
+        capabilities: Capabilities(womenSinging: true),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    expect(find.text('كتم غناء النساء'), findsNothing);
+    expect(find.text('تمويه الشاشة'), findsNothing);
+    expect(find.text('إعداد لمرة واحدة'), findsNothing);
+  });
+
+  testWidgets('Android: setup checklist with the current step and the adb commands', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(
+          originalsMuted: false,
+          consentSkipped: false,
+          shizuku: ShizukuState.notRunning,
+          adbCommands: 'adb shell pm grant org.islamicmute.app android.permission.DUMP',
+        ),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    expect(find.text('بقيت خطوة واحدة'), findsOneWidget);
+    expect(find.text('إعداد لمرة واحدة'), findsOneWidget);
+    expect(find.text('كيف أشغّل Shizuku؟'), findsOneWidget); // step 2 is current: the guide
+    expect(find.text('تحميل Shizuku'), findsNothing); // step 1 done
+    await tester.ensureVisible(find.text('كيف أشغّل Shizuku؟'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('كيف أشغّل Shizuku؟'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('shizuku_guide')), findsOneWidget);
+    expect(find.text('تشغيل Shizuku خطوة بخطوة'), findsOneWidget);
+    expect(find.text('خيارات المطور'), findsOneWidget);
+    await tester.tap(find.text('إغلاق'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('shizuku_guide')), findsNothing);
+    await tester.ensureVisible(find.text('استخدم حاسوبًا بدلًا من ذلك'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('استخدم حاسوبًا بدلًا من ذلك'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('pm grant'), findsOneWidget);
+    expect(directionOf(tester, find.textContaining('pm grant')), TextDirection.ltr);
+  });
+
+  test('setup steps follow MainActivity.refreshSteps', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    var (steps, current) = setupSteps(l, const SetupInfo(originalsMuted: false, shizuku: ShizukuState.notInstalled));
+    expect(current, 0);
+    (steps, current) = setupSteps(l, const SetupInfo(originalsMuted: false, shizuku: ShizukuState.tooOld));
+    expect(current, 1);
+    expect(steps[1].action, l.step2Update);
+    (steps, current) =
+        setupSteps(l, const SetupInfo(originalsMuted: false, shizuku: ShizukuState.deniedPermanently));
+    expect(current, 2);
+    expect(steps[2].body, l.step2Denied);
+    (steps, current) = setupSteps(l, const SetupInfo(originalsMuted: true, shizuku: ShizukuState.ready));
+    expect(current, -1);
+  });
+
+  test('blur status follows MainActivity.refreshBlur', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    const off = AppState();
+    expect(blurStatus(l, off), isNull);
+    final needsOverlay = off.copyWith(settings: const WaaiyaSettings(blurWomen: true));
+    expect(blurStatus(l, needsOverlay), (l.blurStatusNeedsOverlay, true));
+    final running = needsOverlay.copyWith(
+      filter: const FilterInfo(state: FilterState.filtering),
+      blur: const BlurInfo(overlayAllowed: true, state: BlurState.failing),
+    );
+    expect(blurStatus(l, running), (l.blurStatusFailing, true));
+    // Shizuku layer (Android 12+): nothing to allow; not applied yet = starting.
+    final layer = needsOverlay.copyWith(
+      filter: const FilterInfo(state: FilterState.filtering),
+      blur: const BlurInfo(shizukuLayer: true),
+    );
+    expect(blurStatus(l, layer), (l.blurStatusStarting, false));
+    final failed = running.copyWith(blur: const BlurInfo(message: BackendMessage('setup_failed', 'log')));
+    expect(blurStatus(l, failed), (l.blurSetupFailed('log'), true));
+  });
+
+  test('greyed-out cover switch: note and next Shizuku step (MainActivity 0.2.4)', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    AppState with_(ShizukuState? s, {bool layer = true, bool pass = false}) => AppState(
+          setup: SetupInfo(shizuku: s),
+          blur: BlurInfo(layerSupported: layer, touchPassThrough: pass),
+        );
+    expect(blurFailFix(l, with_(ShizukuState.notInstalled)), l.step1Action);
+    expect(blurFailFix(l, with_(ShizukuState.tooOld)), l.step2Update);
+    expect(blurFailFix(l, with_(ShizukuState.notRunning)), l.step2Guide);
+    expect(blurFailFix(l, with_(ShizukuState.needsPermission)), l.step3Action);
+    expect(blurFailFix(l, with_(ShizukuState.deniedPermanently)), l.step2Action);
+    expect(blurFailFix(l, with_(ShizukuState.ready)), isNull);
+    expect(blurFailFix(l, with_(ShizukuState.notRunning, pass: true)), isNull); // taps already pass through
+    expect(blurFailFix(l, with_(ShizukuState.notRunning, layer: false)), isNull); // Android < 12
+  });
+
+  testWidgets('blur card: greyed-out switch shows the note and opens the guide', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man', blurWomen: true),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(shizuku: ShizukuState.notRunning),
+        blur: BlurInfo(layerSupported: true, overlayAllowed: true),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    final fix = find.byKey(const Key('blur_fail_fix'));
+    await tester.ensureVisible(fix);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('معطّل مؤقتًا'), findsOneWidget); // blur_fail_unavailable note
+    await tester.tap(fix);
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('shizuku_guide')), findsOneWidget);
+  });
+
+  testWidgets('blur card: "who is left uncovered" row and dialog', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        blur: BlurInfo(touchPassThrough: true),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    final row = find.byKey(const Key('blur_strict'));
+    await tester.ensureVisible(row);
+    await tester.pumpAndSettle();
+    expect(find.text('مَن يبقى دون تغطية: صارم'), findsOneWidget);
+    await tester.tap(find.descendant(of: row, matching: find.text('تغيير')));
+    await tester.pumpAndSettle();
+    expect(find.text('مَن يبقى دون تغطية'), findsOneWidget); // dialog title
+    await tester.tap(find.text('متوازن: نحو ضعف عدد الرجال دون تغطية'));
+    await tester.pumpAndSettle();
+    expect(backend.state.settings.blurStrictness, 1);
+    expect(find.text('مَن يبقى دون تغطية: متوازن'), findsOneWidget);
+  });
+
+  testWidgets('desktop engine: error text in Arabic, no delay figure, start-at-login switch', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'woman'),
+        capabilities: Capabilities(autostart: true),
+        filter: FilterInfo(error: BackendMessage('install_failed', 'cp: Text file busy')),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('تعذّر تثبيت التصفية'), findsOneWidget);
+    expect(find.textContaining('Text file busy'), findsOneWidget);
+    backend.emit(backend.state.copyWith(filter: const FilterInfo(state: FilterState.filtering)));
+    await tester.pumpAndSettle();
+    expect(find.text('تُزال الآلات من كل التطبيقات.'), findsOneWidget); // delay unknown: no "0 ms"
+    final sw = find.byKey(const Key('autostart'));
+    await tester.ensureVisible(sw);
+    await tester.pumpAndSettle();
+    await tester.tap(sw);
+    await tester.pumpAndSettle();
+    expect(backend.state.filter.autostart, isTrue);
+  });
+
+  test('every engine error code has its own text', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    final texts = {
+      for (final c in ['no_pactl', 'no_sound_server', 'no_systemd', 'no_output', 'install_failed', 'start_failed',
+        'service_failed'])
+        engineErrorText(l, BackendMessage(c, 'log')),
+    };
+    expect(texts.length, 7);
+    expect(engineErrorText(l, const BackendMessage('service_failed', 'log')), contains('log'));
+  });
+
+  test('desktop blur (blurStandalone): runs without filtering; helper states and reasons have their texts', () async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    (String, bool)? status(BlurState? st, [BackendMessage? e, bool on = true]) => blurStatus(
+        l,
+        AppState(
+          settings: WaaiyaSettings(blurWomen: on),
+          capabilities: const Capabilities(screenBlur: true, blurStandalone: true),
+          blur: BlurInfo(state: st, error: e, overlayAllowed: true, touchPassThrough: true),
+        ));
+    expect(status(BlurState.onCoversVisible), (l.blurStatusOnVisibleDesktop, false)); // filter off, blur on
+    expect(status(null), (l.blurStatusStarting, false));
+    expect(status(BlurState.starting, const BackendMessage('share_dialog')), (l.blurStatusShareDialog, false));
+    expect(status(BlurState.noCapture, const BackendMessage('no_capture', 'portal refused'))!.$1,
+        contains('portal refused'));
+    expect(status(BlurState.noOverlay, const BackendMessage('no_overlay', 'no layer-shell'))!.$1,
+        l.blurStatusNoOverlayDesktop('no layer-shell'));
+    expect(status(BlurState.failing, const BackendMessage('failing', 'a frame has taken 1600 ms'))!.$1,
+        contains('1600 ms'));
+    expect(status(null, const BackendMessage('exited', 'exit code 3'))!.$1, l.blurStatusExited('exit code 3'));
+    expect(status(BlurState.on, null, false), isNull); // both options off: nothing to say
+    final snap = AppState.fromMap({
+      'blur': {'state': 'NO_CAPTURE', 'error': {'code': 'no_capture', 'detail': 'x'}},
+      'capabilities': {'blurStandalone': true},
+    });
+    expect(snap.blur.state, BlurState.noCapture);
+    expect(snap.blur.error!.detail, 'x');
+    expect(snap.capabilities.blurStandalone, isTrue);
+    expect(AppState.fromMap(snap.toMap()).blur.error!.code, 'no_capture');
+  });
+
+  test('snapshots: missing keys take defaults, names round-trip', () {
+    final s = AppState.fromMap({
+      'language': 'en',
+      'filter': {'state': 'MODEL_FAILED', 'delayMs': 42},
+      'setup': {'shizuku': 'DENIED_PERMANENTLY'},
+      'blur': {'state': 'ON_COVERS_VISIBLE'},
+      'unknown_key': 1,
+    });
+    expect(s.language, 'en');
+    expect(s.filter.state, FilterState.modelFailed);
+    expect(s.filter.running, isTrue);
+    expect(s.setup.shizuku, ShizukuState.deniedPermanently);
+    expect(s.blur.state, BlurState.onCoversVisible);
+    expect(s.settings.silenceUnfilterable, isTrue);
+    expect(AppState.fromMap(s.toMap()).toMap(), s.toMap());
+  });
+
+  test('only the Settings.kt keys are accepted', () async {
+    final b = MemoryBackend();
+    await b.setSetting(SettingKeys.blurNudity, true);
+    expect(b.state.settings.blurNudity, isTrue);
+    expect(() => b.setSetting('lang', 'en'), throwsA(isA<BackendException>()));
+    expect(() => b.setSetting(SettingKeys.gender, 'other'), throwsA(isA<BackendException>()));
+    expect(() => b.setSetting(SettingKeys.blurWomen, 'yes'), throwsA(isA<BackendException>()));
+    expect(() => b.setSetting(SettingKeys.blurStrictness, 3), throwsA(isA<BackendException>()));
+    await b.setSetting(SettingKeys.blurStrictness, 2);
+    expect(b.state.settings.blurStrictness, 2);
+  });
+
+  test('ChannelBackend speaks the contract', () async {
+    TestWidgetsFlutterBinding.ensureInitialized();
+    final calls = <MethodCall>[];
+    const channel = MethodChannel('waaiya/app');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (call) async {
+      calls.add(call);
+      return switch (call.method) {
+        'getState' => {'language': 'en', 'platform': 'android'},
+        'startFilter' => 'mic_denied',
+        'setSetting' => throw PlatformException(code: 'bad_args'),
+        _ => null,
+      };
+    });
+    final b = ChannelBackend();
+    expect((await b.getState()).language, 'en');
+    expect(await b.startFilter(), StartResult.micDenied);
+    await b.runSetupStep(2);
+    expect(calls.last.arguments, {'step': 2});
+    expect(() => b.setSetting('gender', 'man'), throwsA(isA<BackendException>()));
+  });
+}

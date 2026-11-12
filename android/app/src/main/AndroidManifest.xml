@@ -39,12 +39,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IslamicMute">
 
-        <activity android:name=".MainActivity" android:exported="true">
+        <!-- Main screen: the shared Flutter screens (ui/, docs/UI_CONTRACT.md). The launcher entry keeps the name
+             ".MainActivity" so existing home-screen icons and the notification keep working. With -PimNativeUi,
+             src/nativeUi/AndroidManifest.xml makes the old native MainActivity the launcher instead.
+             configChanges: Flutter redraws itself, and a language switch must not restart the screen. -->
+        <activity android:name=".UiActivity" android:exported="false"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity-alias android:name=".MainActivity" android:targetActivity=".UiActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
 
         <activity android:name=".LicencesActivity" android:exported="false" />
 

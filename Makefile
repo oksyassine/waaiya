@@ -9,7 +9,8 @@ CFLAGS  += $(SYSFLAG) -Iengine/include -I$(ORT)/include -fvisibility=hidden -fPI
 LDLIBS   = -L$(ORT)/lib -lonnxruntime -lm
 BUILD    = build
 
-all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so
+all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so \
+     $(BUILD)/im-blur
 
 # im-pulse loads libpulse.so.0 at run time (cli/pulse_dl.h), so it builds without libpulse-dev.
 pulse: $(BUILD)/im-pulse
@@ -31,6 +32,24 @@ VISION_SRC = engine/src/im_vision.c engine/src/im_cover.c
 # Screen blur (models/vision): shared library, used by the Python scorer (models/vision/eval_blur.py) via ctypes.
 $(BUILD)/libimvision.so: $(VISION_SRC) engine/include/im_vision.h | $(BUILD)
 	$(CC) $(CFLAGS) -shared $(VISION_SRC) -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN' -Wl,--no-undefined
+
+# Desktop screen blur (linux/blur): X11 / Wayland libraries are loaded at run time (dlopen), so it builds without
+# their -dev packages and starts on systems without them.
+BLUR_SRC = linux/blur/im_blur.c linux/blur/blur_core.c linux/blur/blur_sys_posix.c linux/blur/x11.c linux/blur/portal.c linux/blur/layer.c
+BLUR_HDR = $(wildcard linux/blur/*.h) engine/include/im_vision.h
+
+$(BUILD)/im-blur: $(BLUR_SRC) $(VISION_SRC) $(BLUR_HDR) | $(BUILD)
+	$(CC) $(CFLAGS) -pthread -Ilinux/blur $(BLUR_SRC) $(VISION_SRC) -o $@ $(LDLIBS) -ldl -Wl,-rpath,'$$ORIGIN'
+
+$(BUILD)/test-blur-core: linux/blur/test_blur_core.c linux/blur/blur_core.c $(BLUR_HDR) | $(BUILD)
+	$(CC) $(CFLAGS) -Ilinux/blur linux/blur/test_blur_core.c linux/blur/blur_core.c -o $@ -lm
+
+test-blur: $(BUILD)/test-blur-core
+	$(BUILD)/test-blur-core
+
+# The hand-written X11 / PipeWire / Wayland declarations against the real headers (needs the -dev packages: CI).
+check-blur-abi:
+	$(CC) $(CFLAGS) -Wno-enum-compare -Ilinux/blur $(BLUR_ABI_CFLAGS) -fsyntax-only linux/blur/abi_check.c
 
 $(BUILD)/test-detector: engine/test/test_detector.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -Iengine/src -Icli $^ cli/wav.c -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
@@ -58,4 +77,4 @@ $(BUILD)/islamic_mute_ladspa.so: linux/ladspa/im_ladspa.c $(ENGINE_OBJ)
 clean:
 	rm -rf $(BUILD)
 
-.PHONY: all clean pulse
+.PHONY: all clean pulse test-blur check-blur-abi

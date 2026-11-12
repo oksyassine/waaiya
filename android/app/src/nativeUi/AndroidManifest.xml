@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Added only with -PimNativeUi (build.gradle.kts): the old native main screen is the launcher, in place of the
+     Flutter screens. Fallback while the Flutter UI replaces it. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application>
+        <activity-alias android:name="org.islamicmute.app.MainActivity" tools:node="remove" />
+        <activity android:name="org.islamicmute.app.MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

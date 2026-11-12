@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "onnxruntime_c_api.h"
+#include "im_path.h"
 
 #define MAX_DETS 64
 #define MAX_LABELS 8
@@ -72,7 +73,7 @@ static int load(im_vision *v, vmodel *m, const char *path, const char *kind, int
                        api->SetSessionGraphOptimizationLevel(so, ORT_ENABLE_ALL)};
     for (int i = 0; i < 3; i++)
         if (o[i]) api->ReleaseStatus(o[i]);
-    st = api->CreateSession(v->env, path, so, &m->sess);
+    st = im_create_session(api, v->env, path, so, &m->sess);
     api->ReleaseSessionOptions(so);
     if (st) { seterr(v, path, st); m->sess = NULL; return 0; }
 
