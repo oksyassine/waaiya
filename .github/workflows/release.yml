@@ -17,10 +17,32 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - run: scripts/fetch_deps.sh
+      - name: Fetch ONNX Runtime and the models (checksummed)
+        run: scripts/fetch_deps.sh
         env:
           GH_TOKEN: ${{ github.token }}
-      - run: make -j"$(nproc)" all
+      - run: make -j"$(nproc)" all build/test-mono build/test-failclosed build/test-detector
+      - name: Engine tests (C) before packaging
+        run: |
+          build/test-mono models/dfn3/dfn3_stream_int8.onnx
+          build/test-failclosed models/dfn3/dfn3_stream_int8.onnx
+          m=models/detector/detector_v1.onnx
+          if [ ! -f "$m" ]; then
+            echo "::notice::Detector test skipped, not passed: $m is in no release yet (scripts/fetch_deps.sh detector)"
+          else
+            python3 - "$RUNNER_TEMP/det.wav" <<'PY'
+          import math, struct, sys, wave
+          sr = 48000
+          with wave.open(sys.argv[1], "wb") as w:  # mono 48 kHz, 6 s of a voiced sound
+              w.setnchannels(1); w.setsampwidth(2); w.setframerate(sr)
+              w.writeframes(b"".join(struct.pack("<h", int(32767 * 0.15 * sum(
+                  math.sin(2 * math.pi * 220 * h * n / sr) / h for h in range(1, 9)))) for n in range(sr * 6)))
+          PY
+            out="$(build/test-detector "$m" "$RUNNER_TEMP/det.wav" "$RUNNER_TEMP/det_power.bin")"
+            echo "$out"
+            # test-detector exits 0 even if no window ran or a run failed: check its counts
+            echo "$out" | grep -Eq '^runs=[1-9][0-9]* fails=0 ' || { echo "::error::detector did not run cleanly"; exit 1; }
+          fi
       - name: Package
         run: |
           d="waaiya-linux-x64-${GITHUB_REF_NAME}"
@@ -45,7 +67,8 @@ jobs:
       - run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "ndk;27.1.12297006" "cmake;3.22.1" > /dev/null
       - uses: gradle/actions/setup-gradle@v4
         with: { cache-read-only: true }
-      - run: scripts/fetch_deps.sh
+      - name: Fetch the voice and screen-blur models and the ONNX Runtime licence texts (checksummed)
+        run: scripts/fetch_deps.sh
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Signing config (only when the secrets exist)
@@ -64,6 +87,9 @@ jobs:
           else
             echo "::warning::No signing secrets: the APK will be unsigned."
           fi
+      - name: JVM unit tests (release variant)
+        working-directory: android
+        run: ./gradlew --no-daemon testReleaseUnitTest -PimAbiSplit -PimBuildPython="$(which python3.11)"
       - name: Build release APKs (per ABI + universal)
         working-directory: android
         run: ./gradlew --no-daemon assembleRelease -PimAbiSplit -PimBuildPython="$(which python3.11)" ${SIGNING:-}
