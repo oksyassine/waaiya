@@ -17,7 +17,7 @@ ORTLIB   = -lonnxruntime
 ENGINE_OBJ = $(OUT)/im_engine.o $(OUT)/im_detector.o
 VISION_OBJ = $(OUT)/im_vision.o $(OUT)/im_cover.o
 
-all: $(OUT)/waaiya-filter.exe $(OUT)/waaiya-wtest.exe $(OUT)/im-process.exe $(OUT)/test-mono.exe \
+all: $(OUT)/waaiya-filter.exe $(OUT)/waaiya-blur.exe $(OUT)/waaiya-wtest.exe $(OUT)/im-process.exe $(OUT)/test-mono.exe \
      $(OUT)/test-failclosed.exe $(OUT)/test-detector.exe $(OUT)/onnxruntime.dll
 
 $(OUT):
@@ -32,8 +32,26 @@ $(OUT)/%.o: engine/src/%.c $(wildcard engine/src/*.h) $(wildcard engine/include/
 FILTER_SRC = windows/filter/wfilter.cpp windows/filter/sessions.cpp windows/common/wasapi.cpp
 WIN_LIBS   = -lole32 -loleaut32 -luuid -lmmdevapi -lavrt -lshell32 -lpropsys
 
+# GUI subsystem (-mwindows): started by the desktop app with pipes, never with a console window of its own
 $(OUT)/waaiya-filter.exe: $(FILTER_SRC) $(wildcard windows/filter/*.h windows/common/*.h) $(ENGINE_OBJ)
-	$(CXX) $(CXXFLAGS) -municode $(FILTER_SRC) $(ENGINE_OBJ) -o $@ $(LDFLAGS) $(ORTLIB) $(WIN_LIBS)
+	$(CXX) $(CXXFLAGS) -municode -mwindows $(FILTER_SRC) $(ENGINE_OBJ) -o $@ $(LDFLAGS) $(ORTLIB) $(WIN_LIBS)
+
+# Screen blur: the main loop and pure parts shared with Linux (linux/blur), the Windows capture, overlay and system
+# layer (windows/blur)
+BLUR_C    = linux/blur/im_blur.c linux/blur/blur_core.c windows/blur/sys_win.c
+BLUR_CXX  = windows/blur/capture.cpp windows/blur/overlay.cpp
+BLUR_OBJ  = $(patsubst %,$(OUT)/blur_%.o,$(basename $(notdir $(BLUR_C) $(BLUR_CXX))))
+BLUR_HDR  = $(wildcard linux/blur/*.h windows/common/*.h) engine/include/im_vision.h
+
+$(OUT)/blur_%.o: linux/blur/%.c $(BLUR_HDR) | $(OUT)
+	$(CC) $(CFLAGS) -Ilinux/blur -c $< -o $@
+$(OUT)/blur_%.o: windows/blur/%.c $(BLUR_HDR) | $(OUT)
+	$(CC) $(CFLAGS) -Ilinux/blur -c $< -o $@
+$(OUT)/blur_%.o: windows/blur/%.cpp $(BLUR_HDR) | $(OUT)
+	$(CXX) $(CXXFLAGS) -Ilinux/blur -c $< -o $@
+
+$(OUT)/waaiya-blur.exe: $(BLUR_OBJ) $(VISION_OBJ)
+	$(CXX) -mwindows $^ -o $@ $(LDFLAGS) $(ORTLIB) -ld3d11 -ldxgi -lshcore -lgdi32 -luser32 -lpthread
 
 $(OUT)/waaiya-wtest.exe: windows/test/wtest.cpp windows/common/wasapi.cpp windows/common/wasapi.h | $(OUT)
 	$(CXX) $(CXXFLAGS) -municode windows/test/wtest.cpp windows/common/wasapi.cpp -o $@ $(LDFLAGS) $(WIN_LIBS)

@@ -46,6 +46,9 @@ class Sessions {
     // Signalled when a session or an output appears (the main loop then calls scan()).
     HANDLE wake = CreateEventW(nullptr, FALSE, FALSE, nullptr);
 
+    // Log lines (wfilter.cpp's logf); may be null.
+    void (*log)(const char *fmt, ...) = nullptr;
+
     // called by the watchers (any thread)
     void on_session(IAudioSessionControl *ctl);
     void on_volume(SessionEvents *s, float v, LPCGUID ctx);

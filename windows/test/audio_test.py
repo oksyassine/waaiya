@@ -162,9 +162,11 @@ def main():
     f, flog = start_filter("--bypass")
     v = volume(apid)
     check(v is not None and abs(v - 1e-4) < 1e-6, f"the tone's session is lowered to 1e-4 ({v})")
+    print(f"  volumes: tone {volume(apid)}, the filter's own output {volume(f.pid, wait=1)}")
     byp = db(capture("output-bypass", seconds=4))
     check(abs(byp - end_ref_db) < 1.5, f"bypass: the output matches the tone alone ({byp - end_ref_db:+.2f} dB)")
     s = state()
+    print(f"  state: {s}")
     check(s.get("leaks") == 0, f"no leak ({s.get('leaks')})")
     print(f"  delay {s.get('delay_ms')} ms, cpu {s.get('cpu')} %, underruns {s.get('underruns')}, dropped {s.get('dropped')}")
 
@@ -177,9 +179,11 @@ def main():
 
     print("=== 4. filtering: the instrument-like tone is suppressed", flush=True)
     f, flog = start_filter()
+    print(f"  volumes: tone {volume(apid)}, the filter's own output {volume(f.pid, wait=1)}")
     filt = db(capture("output-filtered", seconds=5))
     check(filt < end_ref_db - 10, f"the tone is suppressed by {end_ref_db - filt:.1f} dB (>= 10)")
     s = state()
+    print(f"  state: {s}")
     check(s.get("engine") == "ok", f"engine ok ({s.get('engine')})")
     check(s.get("leaks") == 0, f"no leak ({s.get('leaks')})")
 
