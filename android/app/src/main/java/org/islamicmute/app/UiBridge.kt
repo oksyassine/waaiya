@@ -41,6 +41,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private var askedNotifications = false
     /** The microphone permission was refused at the last Start. */
     private var micDenied = false
+    /** Android's screen-sharing question was cancelled at the last Start (MainActivity.captureCancelled). */
+    private var captureCancelled = false
 
     private val changed: () -> Unit = { refresh() }
     private val shizukuChanged = Shizuku.OnBinderReceivedListener { activity.runOnUiThread { refresh() } }
@@ -126,6 +128,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "getLicences" -> result.success(mapOf(
                     "notice" to licenceAsset("NOTICE.txt"),
                     "docs" to LicencesActivity.DOCS.map { (label, file) -> mapOf("label" to label, "file" to file) }))
+                "diagnosticsReport" -> result.success(Diagnostics.report(activity))
                 "getLicenceText" -> {
                     val file = call.argument<String>("file")
                     if (LicencesActivity.DOCS.none { it.second == file }) throw BadArgs("licence file $file")
@@ -159,6 +162,16 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "delayMs" to FilterService.delayMs,
             "micDenied" to micDenied,
             "simulated" to false,
+            // what the user actually hears while filtering (MainActivity.refresh): a problem first
+            "problem" to if (FilterService.state != FilterService.State.FILTERING) null else when {
+                FilterService.health?.tooSlow == true -> "too_slow"
+                FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION -> "not_muted"
+                FilterService.muterStatus == SessionMuter.Status.FAILING -> "mute_failing"
+                else -> null
+            },
+            "mono" to (FilterService.health?.mono == true),
+            "blockedApps" to FilterService.blockedApps,
+            "captureCancelled" to captureCancelled,
         ),
         "setup" to mapOf(
             "originalsMuted" to activity.hasDumpPermission(),
@@ -215,6 +228,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         if (pendingStart != null) { result.error("busy", "a start is waiting for a dialog", null); return }
         pendingStart = result
         micDenied = false
+        captureCancelled = false
         askOrConsent()
     }
 
@@ -249,7 +263,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             activity.startForegroundService(Intent(activity, FilterService::class.java)
                 .putExtra(FilterService.EXTRA_CODE, resultCode).putExtra(FilterService.EXTRA_DATA, data))
             finishStart("started")
-        } else finishStart("consent_denied")
+        } else {
+            captureCancelled = true  // "Cancel" or back at Android's question: nothing started, say why it is asked
+            finishStart("consent_denied")
+        }
     }
 
     private fun finishStart(code: String) {

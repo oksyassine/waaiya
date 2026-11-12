@@ -20,8 +20,9 @@ REPO = Path(__file__).resolve().parents[2]
 RES = REPO / "android/app/src/main/res"
 OUT = REPO / "ui/lib/l10n"
 
-# Native-only strings (notification, blur covers drawn by the service, accessibility service).
-SKIP = re.compile(r"^(notif_.*|blur_cover_.*|blur_not_working|blur_a11y_.*|link_channel)$")
+# Native-only strings (notification, blur covers drawn by the service, accessibility service). The "Waaiya
+# stopped" notice is also the desktop screen's text when the filter stopped by itself.
+SKIP = re.compile(r"^(notif_(?!stopped_).*|blur_cover_.*|blur_not_working|blur_a11y_.*|link_channel)$")
 
 # Android format arguments -> named placeholders, per string.
 PLACEHOLDERS = {
@@ -32,6 +33,8 @@ PLACEHOLDERS = {
     "setting_language_title": [("language", "String")],
     "link_meta": [("first", "String"), ("second", "String")],
     "blur_strict_value": [("level", "String")],
+    "state_blocked_silenced": [("apps", "String")],
+    "state_blocked_unfiltered": [("apps", "String")],
 }
 
 # Strings the Flutter screens need that the Android screens did not have. The Arabic here is NOT reviewed yet.
@@ -118,6 +121,29 @@ EXTRA.update({
     "blur_status_exited": (
         "The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n{details}",
         "توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}",
+    ),
+})
+EXTRA.update({
+    # 0.2.9 parity on the desktop: what the daemon and the blur helper report.
+    "engine_detector_failed": (
+        "The women's singing detector did not load, so voices are muted while that option is on.",
+        "لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.",
+    ),
+    "blur_status_uncovered": (
+        "A monitor is not covered by the blur: it was not shared with it, or it was plugged in later. Turn a blur "
+        "option off and on, and choose every screen in the screen-sharing window.",
+        "إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، "
+        "واختر كل الشاشات في نافذة مشاركة الشاشة.",
+    ),
+    "blur_status_models_missing_desktop": (
+        "The blur's models are missing from this installation, so it cannot cover anything; a red bar stays at the "
+        "top of the screen. Reinstall Waaiya.",
+        "نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد "
+        "تثبيت واعية.",
+    ),
+    "diag_note_desktop": (
+        "What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.",
+        "ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.",
     ),
 })
 EXTRA_PLACEHOLDERS = {

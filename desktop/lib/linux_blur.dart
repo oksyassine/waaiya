@@ -34,7 +34,8 @@ class BlurConfig {
 
 /// One line of the helper's state (stdout JSON).
 class BlurReport {
-  const BlurReport({required this.state, this.error = '', this.ms, this.cpu, this.covers = 0, this.backend = ''});
+  const BlurReport(
+      {required this.state, this.error = '', this.ms, this.cpu, this.covers = 0, this.backend = '', this.uncovered = 0});
 
   /// [line]: `{"state": ..., "error": ..., "backend": ..., "overlay": ..., "covers": n, "ms"?, "cpu"?, "fps"?}`.
   /// Null when the line is not a state line.
@@ -50,6 +51,7 @@ class BlurReport {
         cpu: n(m['cpu'])?.toDouble(),
         covers: n(m['covers'])?.toInt() ?? 0,
         backend: m['backend'] is String ? m['backend'] as String : '',
+        uncovered: n(m['uncovered'])?.toInt() ?? 0,
       );
     } on FormatException {
       return null;
@@ -65,6 +67,9 @@ class BlurReport {
   final double? cpu;
   final int covers;
   final String backend;
+
+  /// Monitors the overlay knows that the capture does not show (Wayland: not shared, or plugged in later).
+  final int uncovered;
 
   /// The snapshot's `blur.state`.
   BlurState? get blurState => switch (state) {
@@ -104,6 +109,8 @@ class LinuxBlur {
     Map<String, String>? environment,
     this.tokenFile,
     this.restartDelay = const Duration(seconds: 3),
+    this.silenceTimeout = const Duration(seconds: 15),
+    this.stableAfter = const Duration(seconds: 60),
   }) : env = environment ?? Platform.environment;
 
   /// `<bundle>/engine/build/im-blur`.
@@ -118,16 +125,29 @@ class LinuxBlur {
   final Duration restartDelay;
   static const maxRestarts = 3;
 
+  /// The helper prints a line at least every 5 s (state or stats, also when it gave up): this long without one,
+  /// it is hung; it is reported as failing and restarted.
+  final Duration silenceTimeout;
+
+  /// The restart count goes back to 0 only after the helper has been "on" this long (a helper that crashes a
+  /// few seconds after every start must not be restarted for ever).
+  final Duration stableAfter;
+
   static const _models = ['person_yolox_nano.onnx', 'gender_v2.onnx', 'nsfw_marqo_int8.onnx'];
 
-  /// The helper and its models next to the app, or null (a development run, or a bundle without the blur).
+  /// The helper next to the app, or null (a development run, or a bundle without the blur). Models missing from
+  /// the bundle still give a blur: the card stays and says so (the helper reports `models_missing`), never a blur
+  /// that silently disappears.
   static LinuxBlur? find({Directory? engineDir, Map<String, String>? environment, File? tokenFile}) {
     engineDir ??= Directory('${File(Platform.resolvedExecutable).parent.path}/engine');
     final exe = File('${engineDir.path}/build/im-blur');
     final models = Directory('${engineDir.path}/models/vision');
-    if (!exe.existsSync() || _models.any((m) => !File('${models.path}/$m').existsSync())) return null;
+    if (!exe.existsSync()) return null;
     return LinuxBlur(exe, models, environment: environment, tokenFile: tokenFile);
   }
+
+  /// Model files missing from the bundle (names), for the diagnostics report.
+  List<String> get missingModels => _models.where((m) => !File('${models.path}/$m').existsSync()).toList();
 
   final _reports = StreamController<BlurReport?>.broadcast();
 
@@ -144,14 +164,18 @@ class LinuxBlur {
   bool _stopping = false;
   int _restarts = 0;
   Timer? _restart;
+  Timer? _watch;
+  DateTime _lastLine = DateTime.now();
+  DateTime? _onSince;
   final _stderr = <String>[];
 
   bool get running => _p != null;
 
   /// Starts the helper, or updates the running one, for [cfg]; stops it when no blur option is on.
   ///
-  /// Calls run one after the other (quick toggles never start two helpers). A helper that gave up
-  /// (`no_capture`, e.g. the share dialog was cancelled, or `no_overlay`) is started again on any change.
+  /// Calls run one after the other (quick toggles never start two helpers). A helper that gave up or whose
+  /// capture fails (`no_capture`, e.g. the share dialog was cancelled, `no_overlay`, `failing`) is started again
+  /// on any change.
   Future<void> apply(BlurConfig cfg) => _serial(() => _apply(cfg));
 
   Future<void> _chain = Future<void>.value();
@@ -166,7 +190,7 @@ class LinuxBlur {
     final old = _cfg;
     _cfg = cfg;
     if (!cfg.on) return _stop();
-    if (_p != null && old != cfg && const {'no_capture', 'no_overlay'}.contains(last?.state)) await _stop();
+    if (_p != null && old != cfg && const {'no_capture', 'no_overlay', 'failing'}.contains(last?.state)) await _stop();
     final p = _p;
     if (p == null) {
       _restarts = 0;
@@ -214,14 +238,33 @@ class LinuxBlur {
     }
     _p = p;
     _stopping = false;
+    _onSince = null;
+    _lastLine = DateTime.now();
     last = const BlurReport(state: 'starting');
     _reports.add(last);
     p.stdout.transform(utf8.decoder).transform(const LineSplitter()).listen((line) {
       final r = BlurReport.parse(line);
       if (r == null || _p != p) return;
-      if (r.state == 'on' || r.state == 'on_covers_visible') _restarts = 0; // it works: a later crash restarts again
+      _lastLine = DateTime.now();
+      final wasOn = last?.state == 'on' || last?.state == 'on_covers_visible';
+      if (r.state == 'on' || r.state == 'on_covers_visible') {
+        // it works: after a while, a later crash may be restarted again
+        _onSince ??= DateTime.now();
+        if (DateTime.now().difference(_onSince!) >= stableAfter) _restarts = 0;
+      } else {
+        _onSince = null;
+      }
       last = r;
       _reports.add(r);
+      // the screen capture ended while it was on (the user stopped the sharing, the compositor restarted): a new
+      // helper asks for it again (silently with the saved permission)
+      if (wasOn && r.state == 'no_capture') unawaited(_serial(() => _restartHung(p, null)));
+    });
+    // hung (no line for a while: it prints one at least every 5 s): reported, killed, restarted
+    _watch?.cancel();
+    _watch = Timer.periodic(silenceTimeout ~/ 3, (_) {
+      if (_p != p || DateTime.now().difference(_lastLine) < silenceTimeout) return;
+      unawaited(_serial(() => _restartHung(p, 'the blur helper has not answered for ${silenceTimeout.inSeconds} s')));
     });
     p.stderr.transform(utf8.decoder).transform(const LineSplitter()).listen((l) {
       _stderr.add(l);
@@ -230,9 +273,22 @@ class LinuxBlur {
     unawaited(p.exitCode.then((code) => _exited(p, code)));
   }
 
+  /// Ends helper [p] as if it had died (restarted by [_exited] within [maxRestarts]); [why]: reported first as
+  /// `failing`.
+  Future<void> _restartHung(Process p, String? why) async {
+    if (_p != p) return;
+    if (why != null) {
+      last = BlurReport(state: 'failing', error: why);
+      _reports.add(last);
+    }
+    p.kill(ProcessSignal.sigkill);
+    await p.exitCode;
+  }
+
   Future<void> _exited(Process p, int code) async {
     if (_p != p) return;
     _p = null;
+    _watch?.cancel();
     last = null;
     if (_stopping) {
       _reports.add(null);
@@ -260,6 +316,7 @@ class LinuxBlur {
 
   Future<void> _stop() async {
     _restart?.cancel();
+    _watch?.cancel();
     final p = _p;
     if (p == null) return;
     _stopping = true;

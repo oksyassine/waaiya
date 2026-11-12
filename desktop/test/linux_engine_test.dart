@@ -21,9 +21,13 @@ case "$1" in
   start) [ -f "$FAKE/start_fails" ] && { echo "Job for islamic-mute.service failed." >&2; exit 1; }
          touch "$FAKE/running" ;;
   stop) rm -f "$FAKE/running" ;;
-  status) if [ -f "$FAKE/running" ]; then echo "filter:   running"; else echo "filter:   stopped"; fi
+  status) if [ -f "$FAKE/running" ]; then echo "filter:   running"
+          elif [ -f "$FAKE/down" ]; then echo "filter:   down (virtual output kept: apps are silent)"
+          else echo "filter:   stopped"; fi
+          if [ -f "$FAKE/engine" ]; then echo "engine:   $(cat "$FAKE/engine")"; else echo "engine:   ok"; fi
           if [ -f "$FAKE/enabled" ]; then echo "autostart: on"; else echo "autostart: off"; fi ;;
   women-singing) echo "$2" > "$FAKE/women" ;;
+  reload) [ -f "$FAKE/no_reload" ] && { echo "usage: islamic-mute ..." >&2; exit 1; }; true ;;
 esac
 ''';
 
@@ -244,8 +248,59 @@ void main() {
     expect(b.state.detectorModel, isTrue);
     final before = w.calls.length;
     await b.setSetting(SettingKeys.muteWomenSinging, true);
-    expect(w.calls.sublist(before), ['women-singing on', 'stop', 'start', 'status']);
+    // a reload restarts only the filter: no stop, which would move the apps to the real output (unfiltered)
+    expect(w.calls.sublist(before), ['women-singing on', 'reload', 'status']);
     expect(b.state.filter.state, FilterState.filtering);
+
+    // an engine installed before 'reload' existed: stop + start as before
+    w.flag('no_reload');
+    final before2 = w.calls.length;
+    await b.setSetting(SettingKeys.muteWomenSinging, false);
+    expect(w.calls.sublist(before2), ['women-singing off', 'reload', 'stop', 'start', 'status']);
+  });
+
+  test('running is not enough: a model that did not load is reported, a failed detector too', () async {
+    await w.engine.installIfNeeded();
+    w.flag('running');
+    File(w.p('fake/engine')).writeAsStringSync('model not loaded, output silent: cannot load model');
+    final b = await w.backend();
+    expect(b.state.filter.state, FilterState.modelFailed);
+    expect(b.state.filter.running, isTrue);
+    File(w.p('fake/engine')).writeAsStringSync('detector not loaded, voice muted: no file');
+    await b.refresh();
+    expect(b.state.filter.state, FilterState.filtering);
+    expect(b.state.filter.problem, isNull, reason: "women's singing is off: the detector does not matter");
+    Directory(w.p('engine/models/detector')).createSync(recursive: true);
+    File(w.p('engine/models/detector/detector_v1.onnx')).writeAsStringSync('x');
+    final b2 = await w.backend();
+    await b2.setSetting(SettingKeys.muteWomenSinging, true);
+    expect(b2.state.filter.problem, FilterProblem.detectorFailed);
+  });
+
+  test('a filter that stops by itself is "stopped by the system", the user\'s stop is not', () async {
+    final b = await w.backend();
+    await b.startFilter();
+    expect(b.state.filter.state, FilterState.filtering);
+    w.flag('running', false); // the daemon died
+    w.flag('down');
+    await b.refresh();
+    expect(b.state.filter.state, FilterState.stoppedBySystem);
+    expect(b.state.filter.running, isFalse);
+    w.flag('down', false);
+    await b.startFilter();
+    await b.stopFilter();
+    expect(b.state.filter.state, FilterState.stopped);
+  });
+
+  test('diagnostics report: version, waaiya status, logs', () async {
+    final b = await w.backend();
+    await b.startFilter();
+    final r = await b.diagnosticsReport();
+    expect(r, startsWith('Waaiya 0.2.6 (linux'));
+    expect(r, contains('filter:   running'));
+    expect(r, contains('engine:   ok'));
+    expect(r, contains('no real output device found')); // the journal
+    expect(r, contains('Filter: filtering'));
   });
 
   test('without the engine in the bundle, start/stop stay simulated', () async {

@@ -1,13 +1,40 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:waaiya_ui/waaiya_ui.dart';
 
 /// What `waaiya status` and systemd say about the Linux filter.
 class EngineStatus {
-  const EngineStatus({required this.sinkUp, required this.active, required this.autostart});
+  const EngineStatus({
+    required this.sinkUp,
+    required this.active,
+    required this.autostart,
+    this.filter = '',
+    this.engine = '',
+    this.raw = '',
+  });
 
-  /// The virtual output "Waaiya" exists: the filter is running (`filter:   running`).
+  /// The daemon, its filter process and the virtual output "Waaiya" are all there (`filter:   running`).
   final bool sinkUp;
+
+  /// `filter:` as the script says it: `running`, `restarting` (the filter process is being replaced),
+  /// `down (...)` (the daemon is gone but the virtual output stays: apps are silent), `stopped`.
+  final String filter;
+
+  /// `engine:`: `ok`, `model not loaded, ...`, `detector not loaded, ...`, `starting`; empty from an older script.
+  final String engine;
+
+  /// The whole `waaiya status` output (diagnostics report).
+  final String raw;
+
+  /// The filter runs but its voice model did not load: the output is silent (fail-closed).
+  bool get modelFailed => engine.startsWith('model not loaded');
+
+  /// The women's-singing detector did not load: voices are muted while that option is on (fail-closed).
+  bool get detectorFailed => engine.startsWith('detector not loaded');
+
+  /// The daemon is gone and the virtual output stayed: apps are silent until the filter is started again.
+  bool get down => filter.startsWith('down');
 
   /// `systemctl --user is-active islamic-mute.service`: active, activating, inactive, failed, ...
   final String active;
@@ -81,11 +108,21 @@ class LinuxEngine {
     return null;
   }
 
-  /// `waaiya women-singing on|off` (applies at the next start).
+  /// `waaiya women-singing on|off` (applies at the next start, or at once with [reload]).
   Future<BackendMessage?> setWomenSinging(bool on) async {
     if (installedVersion == null) return null;
     final r = await _run(_installedScript, ['women-singing', if (on) 'on' else 'off']);
     return r.exitCode == 0 ? null : BackendMessage('start_failed', _detail(r));
+  }
+
+  /// A running filter takes the current settings: `waaiya reload` restarts only the filter process, the apps stay
+  /// on the virtual output meanwhile (a moment of silence, never unfiltered sound). An engine installed before
+  /// `reload` existed gets stop + start instead.
+  Future<BackendMessage?> reload() async {
+    if (installedVersion == null) return null;
+    final r = await _run(_installedScript, ['reload']);
+    if (r.exitCode == 0) return null;
+    return await stop() ?? await start();
   }
 
   Future<BackendMessage?> start() async {
@@ -118,13 +155,33 @@ class LinuxEngine {
       return null;
     }
 
-    return EngineStatus(sinkUp: field('filter') == 'running', active: active, autostart: field('autostart') == 'on');
+    final filter = field('filter') ?? '';
+    return EngineStatus(
+      sinkUp: filter == 'running',
+      active: active,
+      autostart: field('autostart') == 'on',
+      filter: filter,
+      engine: field('engine') ?? '',
+      raw: out.trim(),
+    );
   }
 
-  /// The service's last log lines, for `service_failed`.
-  Future<String> journal() async {
-    final r = await _run('journalctl', ['--user', '-u', service, '-n', '6', '-o', 'cat', '--no-pager']);
+  /// The service's last log lines, for `service_failed` ([lines] more for the diagnostics report).
+  Future<String> journal({int lines = 6}) async {
+    final r = await _run('journalctl', ['--user', '-u', service, '-n', '$lines', '-o', 'cat', '--no-pager']);
     return r.exitCode == 0 ? r.stdout.toString().trim() : '';
+  }
+
+  /// The end of the filter's own log (`$XDG_STATE_HOME/islamic-mute/filter.log`), for the diagnostics report.
+  String filterLogTail({int maxBytes = 3000}) {
+    final xdg = env['XDG_STATE_HOME'];
+    final f = File('${xdg != null && xdg.isNotEmpty ? xdg : '${env['HOME'] ?? '.'}/.local/state'}/islamic-mute/filter.log');
+    try {
+      final b = f.readAsBytesSync();
+      return utf8.decode(b.length > maxBytes ? b.sublist(b.length - maxBytes) : b, allowMalformed: true).trim();
+    } on IOException {
+      return '';
+    }
   }
 
   // --- helpers ---

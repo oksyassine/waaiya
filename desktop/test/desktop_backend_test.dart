@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waaiya_desktop/desktop_backend.dart';
+import 'package:waaiya_desktop/version.dart';
 import 'package:waaiya_ui/waaiya_ui.dart';
 
 void main() {
@@ -34,6 +35,15 @@ void main() {
     expect(b.state.language, 'en');
     expect(b.state.settings.blurStrictness, 1);
     await expectLater(b.runSetupStep(0), throwsA(isA<BackendException>()));
+  });
+
+  test('the version shown is the build\'s (pubspec), not a constant left behind', () async {
+    final pubspec = File('pubspec.yaml').readAsStringSync();
+    final v = RegExp(r'^version: *([0-9.]+)', multiLine: true).firstMatch(pubspec)!.group(1);
+    expect(appVersion, v);
+    final b = await DesktopBackend.open(
+        file: File('${dir.path}/s.json'), licencesDir: dir, findEngine: false, findBlur: false, poll: null);
+    expect(b.state.version, appVersion);
   });
 
   test('licence texts come from the folder next to the app', () async {

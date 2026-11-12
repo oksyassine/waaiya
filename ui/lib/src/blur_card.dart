@@ -38,12 +38,16 @@ import 'widgets.dart';
   final e = b.error;
   if (e?.code == 'exited') return (l.blurStatusExited(e!.detail), true);
   final detail = e?.detail ?? '';
+  final on = b.state == BlurState.on || b.state == BlurState.onCoversVisible;
+  // on, but a monitor is left out (not shared, plugged in later): said first, in the error colour
+  if (on && b.uncovered > 0) return (l.blurStatusUncovered, true);
   return switch (b.state) {
     null || BlurState.starting =>
       e?.code == 'share_dialog' ? (l.blurStatusShareDialog, false) : (l.blurStatusStarting, false),
     BlurState.on => (l.blurStatusOn, false),
     BlurState.onCoversVisible => (l.blurStatusOnVisibleDesktop, false),
-    BlurState.modelsMissing => (l.blurStatusModels, true),
+    BlurState.modelsMissing =>
+      (detail.isEmpty ? l.blurStatusModelsMissingDesktop : '${l.blurStatusModelsMissingDesktop}\n$detail', true),
     BlurState.failing => (detail.isEmpty ? l.blurStatusFailing : '${l.blurStatusFailing}\n$detail', true),
     BlurState.noOverlay => (l.blurStatusNoOverlayDesktop(detail), true),
     BlurState.noCapture => (l.blurStatusNoCapture(detail), true),

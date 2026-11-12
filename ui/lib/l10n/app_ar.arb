@@ -594,6 +594,84 @@
   "@blurStrictHelp": {
     "description": "Android string blur_strict_help"
   },
+  "stateOnNotMuted": "الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.",
+  "@stateOnNotMuted": {
+    "description": "Android string state_on_not_muted"
+  },
+  "stateOnMuteFailing": "لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).",
+  "@stateOnMuteFailing": {
+    "description": "Android string state_on_mute_failing"
+  },
+  "stateTooSlow": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.",
+  "@stateTooSlow": {
+    "description": "Android string state_too_slow"
+  },
+  "stateMonoNote": "الصوت أحادي (مونو) ليتمكن هذا الهاتف من المتابعة.",
+  "@stateMonoNote": {
+    "description": "Android string state_mono_note"
+  },
+  "stateBlockedSilenced": "كُتم صوته لأنه لا يسمح بالتصفية: {apps}.",
+  "@stateBlockedSilenced": {
+    "description": "Android string state_blocked_silenced",
+    "placeholders": {
+      "apps": {
+        "type": "String"
+      }
+    }
+  },
+  "stateBlockedUnfiltered": "يُسمع دون تصفية لأنه لا يسمح بها: {apps}.",
+  "@stateBlockedUnfiltered": {
+    "description": "Android string state_blocked_unfiltered",
+    "placeholders": {
+      "apps": {
+        "type": "String"
+      }
+    }
+  },
+  "stateCaptureFailed": "لم يُعطِ أندرويد واعية صوت التطبيقات الأخرى. اضغط الزر للتشغيل من جديد.",
+  "@stateCaptureFailed": {
+    "description": "Android string state_capture_failed"
+  },
+  "stateCaptureCancelled": "أُلغي التشغيل عند سؤال أندرويد عن مشاركة الشاشة. تحتاج واعية أن تختار «بدء» هناك لاستقبال الصوت. لا يُسجَّل شيء ولا يُرسَل.",
+  "@stateCaptureCancelled": {
+    "description": "Android string state_capture_cancelled"
+  },
+  "startNoSetupTitle": "ستبقى الموسيقى مسموعة",
+  "@startNoSetupTitle": {
+    "description": "Android string start_no_setup_title"
+  },
+  "startNoSetupBody": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.",
+  "@startNoSetupBody": {
+    "description": "Android string start_no_setup_body"
+  },
+  "startNoSetupSetup": "أكمل الإعداد",
+  "@startNoSetupSetup": {
+    "description": "Android string start_no_setup_setup"
+  },
+  "startNoSetupAnyway": "شغّل على أي حال",
+  "@startNoSetupAnyway": {
+    "description": "Android string start_no_setup_anyway"
+  },
+  "diagButton": "مشكلة؟ تقرير التشخيص",
+  "@diagButton": {
+    "description": "Android string diag_button"
+  },
+  "diagTitle": "تقرير التشخيص",
+  "@diagTitle": {
+    "description": "Android string diag_title"
+  },
+  "diagNote": "ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.",
+  "@diagNote": {
+    "description": "Android string diag_note"
+  },
+  "notifStoppedTitle": "توقفت واعية",
+  "@notifStoppedTitle": {
+    "description": "Android string notif_stopped_title"
+  },
+  "notifStoppedText": "الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.",
+  "@notifStoppedText": {
+    "description": "Android string notif_stopped_text"
+  },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {
     "description": "Flutter only. Arabic not reviewed yet."
@@ -704,5 +782,21 @@
         "type": "String"
       }
     }
+  },
+  "engineDetectorFailed": "لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.",
+  "@engineDetectorFailed": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "blurStatusUncovered": "إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.",
+  "@blurStatusUncovered": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "blurStatusModelsMissingDesktop": "نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.",
+  "@blurStatusModelsMissingDesktop": {
+    "description": "Flutter only. Arabic not reviewed yet."
+  },
+  "diagNoteDesktop": "ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.",
+  "@diagNoteDesktop": {
+    "description": "Flutter only. Arabic not reviewed yet."
   }
 }

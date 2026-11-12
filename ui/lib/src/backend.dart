@@ -85,8 +85,23 @@ class WaaiyaSettings {
       };
 }
 
-/// FilterService.State.
-enum FilterState { stopped, starting, filtering, modelFailed, noCapturePermission, stoppedBySystem }
+/// FilterService.State. `stoppedBySystem` on desktop: the filter stopped by itself (the service died or failed).
+enum FilterState { stopped, starting, filtering, modelFailed, noCapturePermission, stoppedBySystem, captureFailed }
+
+/// `filter.problem`: what the user hears is not what filtering promises (shown instead of the "on" detail).
+abstract final class FilterProblem {
+  /// The phone cannot filter live in time: the sound cuts (FilterService.health.tooSlow).
+  static const tooSlow = 'too_slow';
+
+  /// The original sound is not silenced yet: the one-time setup is missing (SessionMuter NO_PERMISSION).
+  static const notMuted = 'not_muted';
+
+  /// Silencing the playing app's original sound fails (SessionMuter FAILING).
+  static const muteFailing = 'mute_failing';
+
+  /// Desktop: the women's-singing detector did not load; voices are muted while that option is on (fail-closed).
+  static const detectorFailed = 'detector_failed';
+}
 
 /// ShizukuSetup.State.
 enum ShizukuState { notInstalled, notRunning, tooOld, needsPermission, deniedPermanently, ready }
@@ -114,6 +129,10 @@ class FilterInfo {
     this.simulated = false,
     this.error,
     this.autostart = false,
+    this.problem,
+    this.mono = false,
+    this.blockedApps = const [],
+    this.captureCancelled = false,
   });
 
   factory FilterInfo.fromMap(Map<Object?, Object?> m) => FilterInfo(
@@ -123,6 +142,10 @@ class FilterInfo {
         simulated: _bool(m['simulated'], false),
         error: BackendMessage.fromMap(m['error']),
         autostart: _bool(m['autostart'], false),
+        problem: _str(m['problem']),
+        mono: _bool(m['mono'], false),
+        blockedApps: (m['blockedApps'] is List ? m['blockedApps'] as List : const []).whereType<String>().toList(),
+        captureCancelled: _bool(m['captureCancelled'], false),
       );
 
   final FilterState state;
@@ -141,6 +164,19 @@ class FilterInfo {
   /// The filter starts at login (capability `autostart`).
   final bool autostart;
 
+  /// While filtering: a [FilterProblem] code, or null.
+  final String? problem;
+
+  /// The live sound was made mono so this device keeps up (Android: FilterService.health.mono).
+  final bool mono;
+
+  /// Apps playing now that do not allow their sound to be filtered (names); silenced or unfiltered according to
+  /// `silence_unfilterable`.
+  final List<String> blockedApps;
+
+  /// Android's screen-sharing question was cancelled at the last start (until the next start).
+  final bool captureCancelled;
+
   bool get running =>
       state == FilterState.starting || state == FilterState.filtering || state == FilterState.modelFailed;
 
@@ -151,6 +187,10 @@ class FilterInfo {
         'simulated': simulated,
         'error': error?.toMap(),
         'autostart': autostart,
+        'problem': problem,
+        'mono': mono,
+        'blockedApps': blockedApps,
+        'captureCancelled': captureCancelled,
       };
 }
 
@@ -207,6 +247,7 @@ class BlurInfo {
     this.busy = false,
     this.message,
     this.error,
+    this.uncovered = 0,
   });
 
   factory BlurInfo.fromMap(Map<Object?, Object?> m) => BlurInfo(
@@ -220,6 +261,7 @@ class BlurInfo {
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
         error: BackendMessage.fromMap(m['error']),
+        uncovered: _int(m['uncovered']),
       );
 
   /// Null when the blur is not running.
@@ -244,6 +286,10 @@ class BlurInfo {
   /// screen-share dialog is open), `exited` (the helper stopped; detail = its last output). Null: nothing to say.
   final BackendMessage? error;
 
+  /// Desktop: monitors the blur does not cover (Wayland: not shared in the screen-sharing dialog, or plugged in
+  /// after it). 0: every monitor is covered.
+  final int uncovered;
+
   Map<String, Object?> toMap() => {
         'state': state == null ? null : _enumName(state!),
         'overlayAllowed': overlayAllowed,
@@ -255,6 +301,7 @@ class BlurInfo {
         'busy': busy,
         'message': message?.toMap(),
         'error': error?.toMap(),
+        'uncovered': uncovered,
       };
 }
 
@@ -461,6 +508,10 @@ abstract interface class WaaiyaBackend {
   Future<Licences> getLicences();
 
   Future<String> getLicenceText(String file);
+
+  /// A plain-text report of what the app sees on this device (Android: Diagnostics.report; desktop: the daemon,
+  /// filter and blur state), for the user to copy and give to whoever helps. Nothing is sent anywhere.
+  Future<String> diagnosticsReport();
 }
 
 // --- tolerant readers ---

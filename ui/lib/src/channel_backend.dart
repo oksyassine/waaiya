@@ -74,4 +74,7 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<String> getLicenceText(String file) async => await _call<String>('getLicenceText', {'file': file}) ?? '';
+
+  @override
+  Future<String> diagnosticsReport() async => await _call<String>('diagnosticsReport') ?? '';
 }

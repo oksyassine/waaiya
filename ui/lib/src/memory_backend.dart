@@ -93,5 +93,9 @@ class MemoryBackend implements WaaiyaBackend {
   @override
   Future<String> getLicenceText(String file) async => '';
 
+  @override
+  Future<String> diagnosticsReport() async => 'Waaiya ${_state.version} (${_state.platform})\n'
+      'Filter: ${_state.filter.state.name}\nBlur: ${_state.blur.state?.name ?? 'off'}';
+
   Future<void> close() => _controller.close();
 }
