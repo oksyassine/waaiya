@@ -73,8 +73,16 @@ class PlayerActivity : Activity() {
                 finish()
             }
         })
-        if (streams != null) p.setMediaSource(webSource(Links.streamsFromJson(streams)))
-        else p.setMediaItem(MediaItem.fromUri(uri!!))
+        // the activity is exported (share / open with): a malformed or empty request closes it instead of crashing
+        val ok = runCatching {
+            if (streams != null) p.setMediaSource(webSource(Links.streamsFromJson(streams)))
+            else p.setMediaItem(MediaItem.fromUri(uri!!))
+        }.isSuccess
+        if (!ok) {
+            android.widget.Toast.makeText(this, R.string.link_play_failed, android.widget.Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
         p.prepare()
         p.play()
     }

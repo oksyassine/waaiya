@@ -54,6 +54,10 @@ check-blur-abi:
 $(BUILD)/test-detector: engine/test/test_detector.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -Iengine/src -Icli $^ cli/wav.c -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
 
+# make build/test-mono && build/test-mono models/dfn3/dfn3_stream_int8.onnx
+$(BUILD)/test-mono: engine/test/test_mono.c $(ENGINE_OBJ)
+	$(CC) $(CFLAGS) -D_GNU_SOURCE $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
+
 $(BUILD)/im-process: cli/im_process.c cli/wav.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -Icli $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
 

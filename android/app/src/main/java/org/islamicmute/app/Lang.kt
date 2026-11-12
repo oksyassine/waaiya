@@ -75,5 +75,8 @@ class WaaiyaApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Lang.init(this)
+        // "Save without music" keeps the downloaded original in the cache while it works. If the app was killed
+        // in the middle, remove what is left: unfiltered sound must not stay on the phone.
+        kotlin.concurrent.thread(name = "im-clean") { runCatching { java.io.File(cacheDir, "export").deleteRecursively() } }
     }
 }

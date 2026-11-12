@@ -92,6 +92,23 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeSetGate(JNIEnv *env
     im_engine_set_gate((im_engine *)(intptr_t)h, g);
 }
 
+/* 1 = mix the channels and run the model once (slow phones). Returns the mode now in effect. */
+JNIEXPORT jboolean JNICALL Java_org_islamicmute_app_Engine_nativeSetMono(JNIEnv *env, jclass cls, jlong h, jboolean mono) {
+    (void)env; (void)cls;
+    return im_engine_set_mono((im_engine *)(intptr_t)h, mono ? 1 : 0) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT jstring JNICALL Java_org_islamicmute_app_Engine_nativeModelName(JNIEnv *env, jclass cls, jlong h) {
+    (void)cls;
+    const char *n = im_engine_model_name((im_engine *)(intptr_t)h);
+    return n ? (*env)->NewStringUTF(env, n) : NULL;
+}
+
+JNIEXPORT jlong JNICALL Java_org_islamicmute_app_Engine_nativeRunErrors(JNIEnv *env, jclass cls, jlong h) {
+    (void)env; (void)cls;
+    return (jlong)im_engine_run_errors((im_engine *)(intptr_t)h);
+}
+
 JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeReset(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     im_engine_reset((im_engine *)(intptr_t)h);

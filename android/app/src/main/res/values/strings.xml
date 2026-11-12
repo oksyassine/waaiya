@@ -158,4 +158,25 @@
     <string name="blur_strict_1_short">balanced</string>
     <string name="blur_strict_2_short">relaxed</string>
     <string name="blur_strict_help">Anyone the app is not sure is a man is covered. Strict leaves about 7 men in 100 uncovered; balanced about 14, relaxed about 16. Each step less strict also leaves about 1 more woman in 100 uncovered.</string>
+    <!-- Live filter: problems said in words, the diagnostics report -->
+    <string name="state_on_not_muted">The original sound is not silenced yet, so you hear the music together with the filtered sound. Finish the one-time setup below.</string>
+    <string name="state_on_mute_failing">Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (at the bottom of this screen).</string>
+    <string name="state_too_slow">This phone is too slow to filter live sound, so the sound cuts. \"Open a link\" below still works: it filters the video before playing it.</string>
+    <string name="state_mono_note">The sound is in mono so that this phone keeps up.</string>
+    <string name="state_blocked_silenced">Silenced, because it does not allow filtering: %1$s.</string>
+    <string name="state_blocked_unfiltered">Playing unfiltered, because it does not allow filtering: %1$s.</string>
+    <string name="state_capture_failed">Android did not give Waaiya the sound of other apps. Tap the button to start again.</string>
+    <string name="state_capture_cancelled">Starting was cancelled at Android\'s screen-sharing question. Waaiya needs \"Start\" there to receive the sound. Nothing is recorded or sent.</string>
+    <string name="start_no_setup_title">The music will still be heard</string>
+    <string name="start_no_setup_body">The one-time setup is not done yet. Without it Waaiya cannot silence the original sound: you will hear the music and the filtered sound together.\n\n\"Open a link\" works without any setup.</string>
+    <string name="start_no_setup_setup">Do the setup</string>
+    <string name="start_no_setup_anyway">Start anyway</string>
+    <string name="notif_not_muted">On, but the music is still heard: finish the setup in Waaiya</string>
+    <string name="notif_mute_failing">Cannot silence the original sound of the app playing now</string>
+    <string name="notif_too_slow">This phone is too slow for live filtering: the sound cuts</string>
+    <string name="diag_button">Problem? Diagnostics report</string>
+    <string name="diag_title">Diagnostics report</string>
+    <string name="diag_note">What Waaiya sees on this phone. Copy it or share it with whoever helps you. The app itself sends nothing.</string>
+    <string name="notif_stopped_title">Waaiya stopped</string>
+    <string name="notif_stopped_text">The sound is not filtered any more. Tap to start again.</string>
 </resources>

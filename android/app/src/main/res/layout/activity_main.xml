@@ -199,8 +199,11 @@
                     android:layout_marginTop="4dp" android:text="@string/player_body" />
             </LinearLayout>
 
-            <Button android:id="@+id/licences" style="@style/Button.Text" android:layout_width="wrap_content"
+            <Button android:id="@+id/diagnostics" style="@style/Button.Text" android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_marginTop="16dp"
+                android:text="@string/diag_button" />
+            <Button android:id="@+id/licences" style="@style/Button.Text" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
                 android:text="@string/licences" />
         </LinearLayout>
     </LinearLayout>
