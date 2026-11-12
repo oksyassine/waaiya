@@ -85,8 +85,8 @@ class AdbKeyTest {
 
     /** The same public key as `adb keygen` wrote it (fixture: a throwaway key's public half and its adbkey.pub). */
     @Test fun androidPublicKeyMatchesAdbKeygen() {
-        val pem = resource("public.pem").lines().filter { !it.startsWith("-----") }.joinToString("")
-        val pub = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(Base64.getDecoder().decode(pem))) as RSAPublicKey
+        val spki = Base64.getDecoder().decode(resource("public_spki.b64").trim())  // SubjectPublicKeyInfo, DER
+        val pub = KeyFactory.getInstance("RSA").generatePublic(X509EncodedKeySpec(spki)) as RSAPublicKey
         assertEquals(resource("adbkey.pub.b64").trim(), Base64.getEncoder().encodeToString(AdbKey.androidPublicKey(pub)))
     }
 
