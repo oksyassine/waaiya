@@ -109,6 +109,9 @@ Linux and desktop (branch `flutter-ui`): the 2026-11-12 audit's items are fixed 
   the build.
 - Not verified on real hardware yet: multi-monitor Wayland (portal) and a resolution change under GNOME are
   covered by code review and unit tests only; CI runs Xvfb and sway headless with one output.
+- Open: a filter that keeps crashing between two status polls still reads as filtering; the app has no "Stop:
+  hear apps unfiltered" button yet while apps are held silent (comes with the 0.2.10 strings; `waaiya stop`
+  works); mono by default (0.2.10) not yet heard on a real sound server; the desktop notice is English only.
 
 CI: the tagged-release workflow builds an APK without the blur models and runs no tests; `test-detector` is built
 but not run; no test covers the fail-closed paths, the link updater, the blur loop or the export.
