@@ -126,6 +126,7 @@ object WirelessSetup {
      * calls on 12+) but not in the SDK yet, so it is called through reflection (with the hidden-API exemption the
      * screen blur already uses). Fallback: the socket's own package-private method.
      */
+    @android.annotation.SuppressLint("PrivateApi")  // Android 11 only; Android 12+ uses the public API
     internal fun exportKeyingMaterial(socket: SSLSocket, label: String, length: Int): ByteArray {
         if (Build.VERSION.SDK_INT >= 31) return android.net.ssl.SSLSockets.exportKeyingMaterial(socket, label, null, length)
             ?: throw javax.net.ssl.SSLException("no keying material")
