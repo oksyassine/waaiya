@@ -117,7 +117,8 @@ class LicencesActivity : Activity() {
     companion object {
         private const val DIR = "licences"
         private val DOCS = listOf(
-            "GNU Affero General Public License v3 or later (Waaiya)" to "LICENSE-Apache-2.0.txt",
+            "GNU Affero General Public License v3 or later (Waaiya)" to "LICENSE-AGPL-3.0.txt",
+            "Apache License 2.0 (AndroidX, Media3, Kotlin, Guava)" to "Apache-2.0-LICENSE.txt",
             "Third-party components, models and training data" to "THIRD_PARTY_LICENSES.txt",
             "ONNX Runtime (MIT)" to "onnxruntime-LICENSE.txt",
             "ONNX Runtime third-party notices" to "onnxruntime-ThirdPartyNotices.txt",
