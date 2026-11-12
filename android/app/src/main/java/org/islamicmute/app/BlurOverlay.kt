@@ -24,9 +24,12 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
  * and which is left out of the screen capture, with no accessibility service and no overlay permission.
  *
  * Otherwise windows: an accessibility overlay when [BlurAccessibilityService] runs (one, full screen; Android lets
- * touches pass through accessibility overlays), otherwise app overlays ("display over other apps"): Android 12+ drops
- * every touch that lands inside an opaque app overlay, so there is one window per group of touching covers (at most
- * [MAX_WINDOWS], see [CoverWindows]), each sized to its group, and the space between groups stays touchable.
+ * touches pass through accessibility overlays), otherwise app overlays ("display over other apps"). An app overlay
+ * cannot be both opaque and let touches through: Android 12+ forces a non-touchable app overlay to 80% opacity (so
+ * that touches may pass), which let a fifth of the picture show through every cover (seen in `dumpsys window` on the
+ * API 35 emulator: alpha=0.8). So app-overlay covers are touchable windows, fully opaque, that take the touches
+ * landing on them; one window per group of touching covers (at most [MAX_WINDOWS], see [CoverWindows]), each sized
+ * to its group, so the space between groups still reaches the app.
  *
  * Capture: each overlay surface gets the hidden "skip screenshot" flag, so the screen capture (and so the
  * detector) sees what is under the covers. Whether that worked is measured by ScreenBlur's self-test, not assumed.
@@ -100,9 +103,13 @@ class BlurOverlay(private val context: Context) {
         // until its flag lands).
         val n = if (h == Host.APP_OVERLAY) MAX_WINDOWS else 1
         for (i in 0 until n) {
+            // accessibility overlay: not touchable (trusted, so it stays opaque); app overlay: touchable, see above,
+            // NOT_TOUCH_MODAL so touches outside the window go to the app below
+            val touch = if (h == Host.APP_OVERLAY) WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                        else WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
             val p = WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT, type,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                touch or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or
                     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                 PixelFormat.TRANSLUCENT)
@@ -111,7 +118,7 @@ class BlurOverlay(private val context: Context) {
             p.layoutInDisplayCutoutMode = if (Build.VERSION.SDK_INT >= 30) WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
                                           else WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
             if (Build.VERSION.SDK_INT >= 30) p.fitInsetsTypes = 0
-            if (h == Host.APP_OVERLAY) { p.x = 0; p.y = 0; p.width = 1; p.height = 1 } // sized to its group in show()
+            if (h == Host.APP_OVERLAY) { p.x = PARKED[0]; p.y = PARKED[1]; p.width = 1; p.height = 1 } // sized to its group in show()
             val v = CoverView(ctx)
             try {
                 w.addView(v, p)
@@ -440,8 +447,8 @@ class BlurOverlay(private val context: Context) {
         const val FULL_COVER_BOTTOM = 0.88f
         /** App-overlay host: windows in the pool (groups beyond this are joined, see [CoverWindows]). */
         const val MAX_WINDOWS = 8
-        /** An idle pool window: 1x1 at the corner, drawing nothing. */
-        private val PARKED = intArrayOf(0, 0, 1, 1)
+        /** An idle pool window: 1x1 just off the screen's corner (it takes touches), drawing nothing. */
+        private val PARKED = intArrayOf(-2, -2, -1, -1)
     }
 }
 
