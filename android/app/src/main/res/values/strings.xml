@@ -71,7 +71,7 @@
     <string name="player_title">Videos in perfect sync</string>
     <string name="player_body">Share a video to Waaiya (or use \"Open with\") to watch it filtered with no delay.</string>
     <string name="licences">Open-source licences</string>
-    <string name="licences_intro">Waaiya is free software under the GNU Affero General Public License v3 or later.</string>
+    <string name="licences_intro">Waaiya is free software under the GNU Affero General Public License v3 or later. Source code: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (training data): https://creativecommons.org/licenses/by/4.0/</string>
     <string name="licences_full">Full texts</string>
     <string name="back">Back</string>

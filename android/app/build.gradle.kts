@@ -225,7 +225,7 @@ val copyLicences by tasks.registering(Sync::class) {
     val ortDir = file(providers.gradleProperty("imOrtDir").getOrElse(repo.resolve("third_party/onnxruntime").path))
     val rootTexts = mapOf(
         "NOTICE" to "NOTICE.txt",
-        "LICENSE" to "LICENSE-Apache-2.0.txt",
+        "LICENSE" to "LICENSE-AGPL-3.0.txt",
         "THIRD_PARTY_LICENSES.md" to "THIRD_PARTY_LICENSES.txt",  // .txt: WebView shows it as plain text
         "models/detector/efficientat/LICENSE" to "EfficientAT-LICENSE.txt",
     )

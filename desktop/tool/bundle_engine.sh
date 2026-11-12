@@ -47,7 +47,7 @@ echo "$version-$hash" > "$E/VERSION"
 L="$BUNDLE/licences"
 mkdir -p "$L"
 cp "$REPO/NOTICE" "$L/NOTICE.txt"
-cp "$REPO/LICENSE" "$L/LICENSE-Apache-2.0.txt"
+cp "$REPO/LICENSE" "$L/LICENSE-AGPL-3.0.txt"
 cp "$REPO/THIRD_PARTY_LICENSES.md" "$L/THIRD_PARTY_LICENSES.txt"
 cp "$REPO/android/app/licences/DeepFilterNet-LICENSE-MIT.txt" "$L/"
 for f in LICENSE ThirdPartyNotices.txt; do

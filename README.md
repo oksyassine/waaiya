@@ -233,5 +233,8 @@ link you open, and the bundled yt-dlp downloads its own updates from PyPI.)
 
 ## License
 
-GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later): see `LICENSE` and `NOTICE`. Third-party code, models and datasets, with their licences and
+GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later): see `LICENSE` and `NOTICE`. Anyone may use,
+change and share Waaiya, also for money, but whoever distributes it, or offers a changed version to others over
+a network, must give their users the complete source code under the same licence. The name "Waaiya" is
+reserved: see `TRADEMARKS.md`. Third-party code, models and datasets, with their licences and
 open questions (notably the Quran recitation training data), are listed in `THIRD_PARTY_LICENSES.md`.

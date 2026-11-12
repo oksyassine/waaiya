@@ -400,7 +400,7 @@ class DesktopBackend extends MemoryBackend {
   // --- licences ---
 
   static const _baseDocs = [
-    LicenceDoc('GNU Affero General Public License v3 or later (Waaiya)', 'LICENSE-Apache-2.0.txt'),
+    LicenceDoc('GNU Affero General Public License v3 or later (Waaiya)', 'LICENSE-AGPL-3.0.txt'),
     LicenceDoc('Third-party components, models and training data', 'THIRD_PARTY_LICENSES.txt'),
   ];
   static const _blurDocs = [

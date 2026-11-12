@@ -1,6 +1,6 @@
 # Third-party components, models and data
 
-Islamic Mute itself is licensed under AGPL-3.0-or-later (`LICENSE`, `NOTICE`). This file lists everything it builds on,
+Waaiya (formerly Islamic Mute) itself is licensed under AGPL-3.0-or-later (`LICENSE`, `NOTICE`). This file lists everything it builds on,
 where the licence was read, and what each licence requires. Audit date: 2026-11-09.
 
 Status: **OK** = permissive, attribution only. **Flag** = needs a decision or restricts redistribution.

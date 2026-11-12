@@ -38,4 +38,5 @@ cd android && ./gradlew assembleDebug # Android (JDK 17, Android SDK + NDK 27.1,
 - Keep each pull request to one change, and say how you tested it: which device or OS, and what you heard or
   measured.
 - CI (Android build and lint, Linux engine build and smoke test) must pass.
-- By contributing you agree that your contribution is licensed under the GNU Affero General Public License, version 3 or any later version (`LICENSE`).
+- By contributing you agree that your contribution is licensed under the GNU Affero General Public License,
+  version 3 or any later version (`LICENSE`).

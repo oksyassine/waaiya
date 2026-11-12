@@ -21,7 +21,7 @@ BEGIN
             VALUE "FileDescription", WAAIYA_DESCRIPTION
             VALUE "FileVersion", WAAIYA_VERSION
             VALUE "InternalName", WAAIYA_FILE
-            VALUE "LegalCopyright", "Copyright (C) 2026 Waaiya contributors. Apache License 2.0."
+            VALUE "LegalCopyright", "Copyright (C) 2026 Waaiya contributors. AGPL-3.0-or-later."
             VALUE "OriginalFilename", WAAIYA_FILE
             VALUE "ProductName", "Waaiya"
             VALUE "ProductVersion", WAAIYA_VERSION

@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "Waaiya" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "waaiya_desktop" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 Waaiya contributors. Apache License 2.0." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Waaiya contributors. AGPL-3.0-or-later." "\0"
             VALUE "OriginalFilename", "waaiya_desktop.exe" "\0"
             VALUE "ProductName", "Waaiya" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

@@ -279,7 +279,7 @@
   "@licences": {
     "description": "Android string licences"
   },
-  "licencesIntro": "واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.",
+  "licencesIntro": "واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث. الشيفرة المصدرية: https://github.com/oksyassine/waaiya",
   "@licencesIntro": {
     "description": "Android string licences_intro"
   },

@@ -234,7 +234,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get licences => 'تراخيص المصادر المفتوحة';
 
   @override
-  String get licencesIntro => 'واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.';
+  String get licencesIntro =>
+      'واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث. الشيفرة المصدرية: https://github.com/oksyassine/waaiya';
 
   @override
   String get licencesCc =>

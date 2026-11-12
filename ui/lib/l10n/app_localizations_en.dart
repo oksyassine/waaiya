@@ -238,7 +238,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get licencesIntro =>
-      'Waaiya is free software under the GNU Affero General Public License v3 or later.';
+      'Waaiya is free software under the GNU Affero General Public License v3 or later. Source code: https://github.com/oksyassine/waaiya';
 
   @override
   String get licencesCc =>

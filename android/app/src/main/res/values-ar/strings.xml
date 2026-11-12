@@ -71,7 +71,7 @@
     <string name="player_title">فيديو بتزامن تام</string>
     <string name="player_body">شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.</string>
     <string name="licences">تراخيص المصادر المفتوحة</string>
-    <string name="licences_intro">واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.</string>
+    <string name="licences_intro">واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث. الشيفرة المصدرية: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">رخصة المشاع الإبداعي - النسبة 4.0 (بيانات التدريب): https://creativecommons.org/licenses/by/4.0/</string>
     <string name="licences_full">النصوص الكاملة</string>
     <string name="back">رجوع</string>

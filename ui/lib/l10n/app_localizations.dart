@@ -497,7 +497,7 @@ abstract class AppLocalizations {
   /// Android string licences_intro
   ///
   /// In ar, this message translates to:
-  /// **'واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث.'**
+  /// **'واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث. الشيفرة المصدرية: https://github.com/oksyassine/waaiya'**
   String get licencesIntro;
 
   /// Android string licences_cc
