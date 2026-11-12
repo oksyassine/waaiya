@@ -17,7 +17,7 @@ shared. A model improvement reaches every platform without changing any host.
  app sound → │ host (per OS) → engine (C) + model.onnx │ → speakers
             └──────────────────────────────────────────┘
    Android: AudioPlaybackCapture + mute sessions    Linux: virtual sink + im-pulse
-   macOS:   Core Audio process tap (planned)        Windows: loopback or virtual device (planned)
+   macOS:   Core Audio process tap (planned)        Windows: apps lowered + process loopback
    Browser: Web Audio in the page (planned)         iOS: in-app player only (planned)
 ```
 
@@ -28,7 +28,7 @@ shared. A model improvement reaches every platform without changing any host.
 | Android 10+ | `android/`: AudioPlaybackCapture, sessions muted through `DUMP` (granted once: on the phone with Wireless debugging on Android 11+, or with Shizuku or ADB; see `docs/SETUP.md`), engine over JNI | A failed model gives silence. If Android ends the capture, filtering stops and a notification says so | Released (0.2.9) |
 | Linux | `linux/`: apps play into a virtual sink; `im-pulse` filters its monitor into the real output; systemd user service | A dead filter means silence (apps still play into the virtual sink) | Works on PulseAudio and PipeWire-Pulse; the native PipeWire filter-chain is untested |
 | macOS 14.4+ | Core Audio process tap set to mute, read through a private aggregate device; engine runs in the IO callback | Risk: while the app restarts, sound is not filtered. A watchdog is needed | Scoped: `reports/desktop_windows_macos_scope.md` §3 |
-| Windows 10/11 | First try: turn every other app down to about −80 dB, capture them per process, restore the gain, filter, play. Otherwise: a virtual audio device (VB-CABLE at first) bridged like Linux | Depends on the route; the virtual device fails closed | Scoped, starting with a 1–2 day test: `reports/desktop_windows_macos_scope.md` §2 |
+| Windows 10 2004+ / 11 | `windows/filter` (`waaiya-filter.exe`): every other app's audio session is turned down to 1e-4 (−80 dB) of the user's level; one process-loopback capture of every process but ours reads their mix in float, ×1e4, through the engine, to the default output. Screen blur: `windows/blur` (`waaiya-blur.exe`): DXGI capture, click-through layered covers kept out of captures | Windows keeps the lowered levels when the filter dies: apps stay silent until Start or Stop. A capture louder than a lowered app can be is never played amplified (silence, and the sessions are looked at again). Apps that record the speakers (OBS) record the originals at −80 dB while it runs, unless left alone | Preview. CI on Windows Server 2022 and 2025 with a virtual output (`windows/test/audio_test.py`, `blur_test.py`): the −80 dB route gives the level back within 0.03 dB, clean (HNR > 120 dB); an instrument-like tone suppressed by about 47 dB at about 50 ms delay; new apps lowered before their first sound; crash, stop and restore. Not yet run on a real PC (speakers, Bluetooth, DRM players, exclusive-mode apps, several monitors) |
 | iOS / iPadOS | Apple does not let an app capture or silence other apps' sound, so system-wide filtering is impossible. Possible: an in-app player for links and files, and a Safari web extension (as in the browser row) | — | Not started |
 | Browsers (Chrome, Firefox, Edge, Safari) | Extension: route the page's `<video>`/`<audio>` through Web Audio and an AudioWorklet that runs the engine compiled to WebAssembly (or ONNX Runtime Web) | Media the extension cannot route is muted, never played unfiltered | Not started; covers desktops and ChromeOS without a native app |
 
@@ -47,8 +47,9 @@ and QuickJS. Desktop hosts can call the `yt-dlp` command and the CLI in `cli/` (
   through the real C engine. Every host must pass the same checks before release: no leak when the filter
   stops, measured end-to-end delay, and a crash restart.
 - **CI per platform.** Linux (engine build plus a smoke test through the engine) and Android (APK build plus
-  lint) run on every push and pull request. When a port starts, it adds its own job: a macOS runner for the
-  engine and the tap host, and a Windows runner (MSVC) for the engine and the Windows host. A tag `v*` builds
+  lint) run on every push and pull request. Windows (`windows.yml`): the engine, filter and blur are
+  cross-compiled with llvm-mingw (`windows/Makefile`), then tested on Windows runners. When the macOS port
+  starts, it adds a macOS runner for the engine and the tap host. A tag `v*` builds
   the release files for every platform that has a job and attaches them, with `SHA256SUMS`, to a draft
   release.
 - **Models as release assets** (`docs/MODELS.md`). Every platform downloads the same checksummed files
@@ -58,8 +59,7 @@ and QuickJS. Desktop hosts can call the `yt-dlp` command and the CLI in `cli/` (
 
 1. Android and Linux: keep them solid (real-phone tests, low-delay model, Shizuku path).
 2. macOS host (the path is clear, about 18–27 developer-days to a first version).
-3. Windows: run the attenuation-plus-loopback test first; then build either that host or the
-   virtual-device bridge.
+3. Windows: done as a preview (route C2, the attenuation-plus-loopback test passed in CI); next, a real PC.
 4. Browser extension (reaches every desktop at once), then the iOS player and Safari extension.
 
 Order and estimates come from `reports/desktop_windows_macos_scope.md`.

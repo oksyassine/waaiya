@@ -5,7 +5,10 @@
 #   scripts/fetch_deps.sh vision    screen-blur models (people, woman/man, nudity, person outline) -> models/vision/
 #   scripts/fetch_deps.sh detector  women's-singing detector -> models/detector/, only if a release has it (none yet);
 #                                   otherwise a notice, never an error (builds work without it)
-#   scripts/fetch_deps.sh           all of the above
+#   scripts/fetch_deps.sh ort-win   ONNX Runtime 1.19.2 for Windows x64 -> third_party/onnxruntime-win/ (Windows builds)
+#   scripts/fetch_deps.sh mingw     llvm-mingw (Linux x64 host) -> third_party/llvm-mingw/: cross-compiles the Windows
+#                                   programs (windows/Makefile); not part of "all"
+#   scripts/fetch_deps.sh           ort, models, vision, detector
 # Models are release assets (docs/MODELS.md), not git files. Set WAAIYA_REPO=owner/name to fetch from a fork.
 # A model file already in place is kept if it matches the release's SHA256SUMS; otherwise it is downloaded again.
 set -euo pipefail
@@ -18,6 +21,9 @@ VISION_FILES=(person_yolox_nano.onnx gender_v2.onnx nsfw_marqo_int8.onnx seg.onn
 DETECTOR=detector_v1.onnx
 ORT_VERSION=1.19.2
 ORT_SHA256=eb00c64e0041f719913c4080e0fed7d9963dc3aa9b54664df6036d8308dbcd33
+ORT_WIN_SHA256=dc4f841e511977c0a4f02e5066c3d9a58427644010ab4f89b918614a1cd4c2b0
+MINGW_VERSION=20261104
+MINGW_SHA256=919380403de87dca3c581c2053230cd298af5e891286628ba0613b7fed370926
 
 # One scratch directory for the whole run (a `trap ... RETURN` per function is global in bash and nested calls
 # would remove each other's directories).
@@ -77,6 +83,33 @@ release_files() {
     echo "$tag -> $dir/: $kept already there and matching, ${#need[@]} downloaded"
 }
 
+ort_win() {
+    if [ "$(cat third_party/onnxruntime-win/VERSION_NUMBER 2>/dev/null)" = "$ORT_VERSION" ]; then
+        echo "onnxruntime $ORT_VERSION (Windows) already in third_party/onnxruntime-win"; return
+    fi
+    local tmp name="onnxruntime-win-x64-$ORT_VERSION"
+    tmp="$(mktemp -d -p "$WORK")"
+    fetch "https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$name.zip" "$tmp/ort.zip"
+    echo "$ORT_WIN_SHA256  $tmp/ort.zip" | sha256sum -c --quiet
+    python3 -c 'import sys, zipfile; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])' "$tmp/ort.zip" "$tmp"
+    rm -rf third_party/onnxruntime-win && mkdir -p third_party && mv "$tmp/$name" third_party/onnxruntime-win
+    echo "onnxruntime $ORT_VERSION (Windows) -> third_party/onnxruntime-win"
+}
+
+mingw() {
+    if [ "$(cat third_party/llvm-mingw/VERSION 2>/dev/null)" = "$MINGW_VERSION" ]; then
+        echo "llvm-mingw $MINGW_VERSION already in third_party/llvm-mingw"; return
+    fi
+    local tmp name="llvm-mingw-$MINGW_VERSION-ucrt-ubuntu-22.04-x86_64"
+    tmp="$(mktemp -d -p "$WORK")"
+    fetch "https://github.com/mstorsjo/llvm-mingw/releases/download/$MINGW_VERSION/$name.tar.xz" "$tmp/m.tar.xz"
+    echo "$MINGW_SHA256  $tmp/m.tar.xz" | sha256sum -c --quiet
+    tar -C "$tmp" -xJf "$tmp/m.tar.xz"
+    rm -rf third_party/llvm-mingw && mkdir -p third_party && mv "$tmp/$name" third_party/llvm-mingw
+    echo "$MINGW_VERSION" > third_party/llvm-mingw/VERSION
+    echo "llvm-mingw $MINGW_VERSION -> third_party/llvm-mingw"
+}
+
 models() { release_files "$MODELS_TAG" models/dfn3 dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin; }
 
 vision() { release_files "$VISION_TAG" models/vision "${VISION_FILES[@]}"; }
@@ -117,9 +150,11 @@ detector() {
 
 case "${1:-all}" in
     ort) ort ;;
+    ort-win) ort_win ;;
+    mingw) mingw ;;
     models) models ;;
     vision) vision ;;
     detector) detector ;;
     all) ort; models; vision; detector ;;
-    *) echo "usage: $0 [ort|models|vision|detector|all]" >&2; exit 2 ;;
+    *) echo "usage: $0 [ort|ort-win|mingw|models|vision|detector|all]" >&2; exit 2 ;;
 esac

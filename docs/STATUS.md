@@ -15,7 +15,8 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Model shrink | done: int8 weights 2.4 MB, within 0.2 dB | `eval/results/shrink.md` |
 | Own voice model (keeps singing) | trained on Kaggle, not the default | roadmap item 6 |
 | Flutter UI, Linux desktop app | preview (branch `flutter-ui`) | Sound filter and X11 blur work; Wayland blur untested on real sessions |
-| macOS, Windows engine, iOS | not started | `docs/PLATFORMS.md` |
+| Windows desktop app (filter + blur) | preview (branch `windows-filter`) | CI on Windows Server 2022 and 2025 with a virtual output: `windows/test/audio_test.py` (route C2 measured: level back within 0.03 dB, HNR > 120 dB; tone suppressed about 47 dB, about 50 ms delay; new apps lowered before their first sound; crash, stop, restore), `windows/test/blur_test.py` (covers out of the capture on 2025, in it on 2022; click-through; fail-closed; models). Not yet on a real PC |
+| macOS, iOS | not started | `docs/PLATFORMS.md`; macOS needs an Apple Developer ID (the capture permission is tied to the signature) |
 
 Baseline DeepFilterNet3: speech kept (-2.6 dB) with 21-24 dB instrument suppression; recitation (-13 dB) and singing (-25 dB) are lost, hence the own voice model.
 

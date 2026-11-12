@@ -35,7 +35,7 @@ $(BUILD)/libimvision.so: $(VISION_SRC) engine/include/im_vision.h | $(BUILD)
 
 # Desktop screen blur (linux/blur): X11 / Wayland libraries are loaded at run time (dlopen), so it builds without
 # their -dev packages and starts on systems without them.
-BLUR_SRC = linux/blur/im_blur.c linux/blur/blur_core.c linux/blur/x11.c linux/blur/portal.c linux/blur/layer.c
+BLUR_SRC = linux/blur/im_blur.c linux/blur/blur_core.c linux/blur/blur_sys_posix.c linux/blur/x11.c linux/blur/portal.c linux/blur/layer.c
 BLUR_HDR = $(wildcard linux/blur/*.h) engine/include/im_vision.h
 
 $(BUILD)/im-blur: $(BLUR_SRC) $(VISION_SRC) $(BLUR_HDR) | $(BUILD)

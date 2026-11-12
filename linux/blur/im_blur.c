@@ -1,4 +1,4 @@
-/* im-blur: Waaiya's screen blur for the Linux desktop. Captures every monitor, finds women / people not
+/* im-blur: Waaiya's screen blur for the Linux and Windows desktops (waaiya-blur.exe on Windows). Captures every monitor, finds women / people not
  * confidently men / immodest images (engine/src/im_vision.c), and draws covers over every app (im_cover.c for the
  * tracking). Started and stopped by the desktop app (desktop/lib/linux_blur.dart); same behaviour as Android's
  * ScreenBlur.kt + BlurOverlay.kt.
@@ -13,22 +13,26 @@
  * analysed frame), "cpu" (% of one core, whole process), "fps" (analysed frames per second)}.
  *
  * Fail closed (the user's blur_fail_cover): when the models are missing or failing, or a frame takes too long,
- * the whole screen is covered (clicks still pass through) or a red bar warns at the top. */
+ * the whole screen is covered (clicks still pass through) or a red bar warns at the top.
+ *
+ * Backends: X11, or on Wayland the screen-cast portal + layer-shell (or XWayland) overlay; on Windows, DXGI
+ * desktop duplication + layered windows (windows/blur). What else differs per system is in blur_sys.h. */
 #define _GNU_SOURCE
-#include <errno.h>
-#include <fcntl.h>
 #include <limits.h>
-#include <poll.h>
 #include <pthread.h>
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/resource.h>
 #include <time.h>
-#include <unistd.h>
 
 #include "blur_host.h"
+#include "blur_sys.h"
+
+#if !defined(PATH_MAX) || PATH_MAX < 1024
+#undef PATH_MAX
+#define PATH_MAX 1024
+#endif
+#define g_quit ib_quit
 
 #define MIN_INTERVAL_MS 50.0   /* at most ~20 analysed frames a second */
 #define IDLE_INTERVAL_MS 250.0 /* screen unchanged (or no damage events): look less often */
@@ -41,8 +45,6 @@ static double now_ms(void) {
     return ts.tv_sec * 1e3 + ts.tv_nsec / 1e6;
 }
 
-static volatile sig_atomic_t g_quit;
-static void on_signal(int s) { (void)s; g_quit = 1; }
 
 /* ------------------------------------------------------------------------------------------------ state */
 
@@ -81,7 +83,6 @@ typedef struct {
     pthread_mutex_t mu;
     pthread_cond_t cv;
     pthread_t th;
-    int wake[2]; /* worker -> main */
 
     /* job (main -> worker) */
     int job;          /* screen index, -1 none */
@@ -164,7 +165,7 @@ static void *worker(void *arg) {
             pthread_mutex_unlock(&B.mu);
             if (v) im_vision_destroy(v);
             char err[256] = "";
-            im_vision_config cfg = {B.person, B.gender, B.nsfw, B.threads, want};
+            im_vision_config cfg = {B.person, B.gender, B.nsfw, B.threads, want, NULL}; /* rectangles: no outlines yet on the desktop */
             v = im_vision_create(&cfg, err, sizeof err);
             pthread_mutex_lock(&B.mu);
             B.loading = 0;
@@ -206,9 +207,7 @@ static void *worker(void *arg) {
 
         im_vrect det[IB_MAX_RECTS], out[IB_MAX_RECTS];
         int n = -1, failed = 0;
-        double t0 = now_ms();
-        struct timespec c0, c1;
-        clock_gettime(CLOCK_THREAD_CPUTIME_ID, &c0);
+        double t0 = now_ms(), c0 = ib_sys_thread_cpu_ms();
         if (run_models && B.fake_nudity) {
             n = 0;
             if (B.jnsfw && !mostly_cover(B.jframe, B.jw, B.jh)) det[n++] = (im_vrect){0, 0, 1, 1, IM_VK_FULL, 1, -1};
@@ -218,8 +217,7 @@ static void *worker(void *arg) {
         }
         int m = s->cov ? im_cover_update(s->cov, B.jt, B.jframe, B.jw, B.jh, B.jw * 4, det, n, out, IB_MAX_RECTS) : 0;
         double ms = now_ms() - t0;
-        clock_gettime(CLOCK_THREAD_CPUTIME_ID, &c1);
-        double cpu_ms = (c1.tv_sec - c0.tv_sec) * 1e3 + (c1.tv_nsec - c0.tv_nsec) / 1e6;
+        double cpu_ms = ib_sys_thread_cpu_ms() - c0;
         if (getenv("IM_BLUR_DEBUG")) fprintf(stderr, "frame %.1f ms wall, %.1f ms worker cpu, %d dets\n", ms, cpu_ms, n);
         ib_thumb_update(&s->thumb, B.jframe, B.jw, B.jh, B.jw * 4, B.jmask, B.jnmask);
         float cell = IB_CELL_DP * (B.jg.px_per_dp > 0 ? B.jg.px_per_dp : 0.6f);
@@ -247,8 +245,7 @@ static void *worker(void *arg) {
         B.done = i;
         B.job = -1;
         B.busy_since = 0;
-        char one = 1;
-        if (write(B.wake[1], &one, 1) < 0) { /* full pipe: main wakes anyway */ }
+        ib_sys_wake();
     }
     pthread_mutex_unlock(&B.mu);
     if (v) im_vision_destroy(v);
@@ -339,7 +336,7 @@ static void wait_worker_idle(void) {
     pthread_mutex_lock(&B.mu);
     while (B.job >= 0 || B.loading) {
         pthread_mutex_unlock(&B.mu);
-        usleep(5000);
+        ib_sys_sleep_ms(5);
         pthread_mutex_lock(&B.mu);
     }
     pthread_mutex_unlock(&B.mu);
@@ -457,18 +454,15 @@ static void usage(void) {
 
 static void default_models_dir(char *out, size_t cap) {
     char exe[PATH_MAX];
-    ssize_t k = readlink("/proc/self/exe", exe, sizeof exe - 1);
-    if (k <= 0) { snprintf(out, cap, "models/vision"); return; }
-    exe[k] = 0;
-    char *slash = strrchr(exe, '/');
-    if (slash) *slash = 0;
-    /* <bundle>/engine/build/im-blur -> <bundle>/engine/models/vision; repo build/ -> models/vision */
-    if (strlen(exe) + 20 < cap) {
-        strcpy(out, exe);
-        strcat(out, "/../models/vision");
-    } else {
-        snprintf(out, cap, "models/vision");
-    }
+    ib_sys_exe_dir(exe, sizeof exe);
+    if (!exe[0] || strlen(exe) + 20 >= cap) { snprintf(out, cap, "models/vision"); return; }
+    /* Windows: <bundle>\engine\waaiya-blur.exe -> <bundle>\engine\models\vision (also build-win in CI);
+     * Linux: <bundle>/engine/build/im-blur -> <bundle>/engine/models/vision; repo build/ -> models/vision */
+    char probe[PATH_MAX + 64];
+    snprintf(probe, sizeof probe, "%s/models/vision/person_yolox_nano.onnx", exe);
+    FILE *f = fopen(probe, "rb");
+    if (f) fclose(f);
+    snprintf(out, cap, f ? "%s/models/vision" : "%s/../models/vision", exe);
 }
 
 int main(int argc, char **argv) {
@@ -502,19 +496,24 @@ int main(int argc, char **argv) {
     snprintf(B.gender, sizeof B.gender, "%s/gender_v2.onnx", models);
     snprintf(B.nsfw, sizeof B.nsfw, "%s/nsfw_marqo_int8.onnx", models);
 
-    signal(SIGPIPE, SIG_IGN);
-    struct sigaction sa;
-    memset(&sa, 0, sizeof sa);
-    sa.sa_handler = on_signal;
-    sigaction(SIGTERM, &sa, NULL);
-    sigaction(SIGINT, &sa, NULL);
-    sigaction(SIGHUP, &sa, NULL);
-    fcntl(0, F_SETFL, fcntl(0, F_GETFL) | O_NONBLOCK);
+    if (!ib_sys_init()) return 1;
 
     emit(0, 0, 0, 0); /* starting */
 
-    /* backends: Wayland session -> portal capture (never the X11 grab: under XWayland it shows only X clients) */
     char err[256] = "", oerr[256] = "";
+#ifdef _WIN32
+    (void)backend;
+    (void)token;
+    const int wayland = 0;
+    g_wayland = 0;
+    g_backend = "windows";
+    cap = ppm ? ppm_capture_new(ppm, err, sizeof err) : ib_win_capture_new(err, sizeof err);
+    if (cap) ov = ib_win_overlay_new(oerr, sizeof oerr);
+    g_overlay = ov ? ov->name : "";
+    if (!cap) set_state(IB_ST_NO_CAPTURE, err);
+    else if (!ov) set_state(IB_ST_NO_OVERLAY, oerr);
+#else
+    /* backends: Wayland session -> portal capture (never the X11 grab: under XWayland it shows only X clients) */
     const char *wl = getenv("WAYLAND_DISPLAY"), *x = getenv("DISPLAY");
     int wayland = !strcmp(backend, "wayland") || (!strcmp(backend, "auto") && wl && *wl);
     g_wayland = wayland;
@@ -543,6 +542,7 @@ int main(int argc, char **argv) {
     if (wayland && !ov) set_state(IB_ST_NO_OVERLAY, oerr);
     else if (!cap) set_state(IB_ST_NO_CAPTURE, err);
     else if (!ov) set_state(IB_ST_NO_OVERLAY, oerr);
+#endif
 
     pthread_mutex_init(&B.mu, NULL);
     pthread_cond_init(&B.cv, NULL);
@@ -550,7 +550,7 @@ int main(int argc, char **argv) {
     B.done = -1;
     B.rcells = calloc(IB_MAX_RECTS, sizeof *B.rcells);
     B.jframe = malloc((size_t)IB_LONG_SIDE * IB_LONG_SIDE * 4);
-    if (pipe2(B.wake, O_NONBLOCK | O_CLOEXEC) != 0 || !B.rcells || !B.jframe) return 1;
+    if (!B.rcells || !B.jframe) return 1;
     int running = cap && ov;
     if (running) pthread_create(&B.th, NULL, worker, NULL);
 
@@ -561,8 +561,7 @@ int main(int argc, char **argv) {
     double fail_since = 0, beat_at = 0;
     double job_t0 = 0;
     int job_screen = -1;
-    struct rusage ru0;
-    getrusage(RUSAGE_SELF, &ru0);
+    double cpu0 = ib_sys_cpu_ms();
     double wall0 = now_ms();
     char inbuf[512];
     size_t inlen = 0;
@@ -571,13 +570,7 @@ int main(int argc, char **argv) {
     while (!g_quit) {
         double t = now_ms();
         /* ---- wait */
-        struct pollfd pf[4];
-        int np = 0;
-        pf[np++] = (struct pollfd){0, POLLIN, 0};
-        pf[np++] = (struct pollfd){B.wake[0], POLLIN, 0};
         int cfd = running && cap ? cap->fd(cap) : -1, ofd = running && ov ? ov->fd(ov) : -1;
-        if (cfd >= 0) pf[np++] = (struct pollfd){cfd, POLLIN, 0};
-        if (ofd >= 0 && ofd != cfd) pf[np++] = (struct pollfd){ofd, POLLIN, 0};
         double until = next_watch;
         /* the next grab only matters when no frame is being analysed (a finished job wakes us through the pipe) */
         int grab_due = phase == PH_SELFTEST || (phase == PH_RUN && job_screen < 0 && B.set.policy);
@@ -585,13 +578,14 @@ int main(int argc, char **argv) {
         int timeout = (int)(until - t);
         if (timeout < 0) timeout = 0;
         if (timeout > 500) timeout = 500;
-        if (poll(pf, (nfds_t)np, timeout) < 0 && errno != EINTR) break;
+        int stdin_ready = 0;
+        if (ib_sys_wait(cfd, ofd, timeout, &stdin_ready) < 0) break;
         t = now_ms();
 
         /* ---- stdin commands */
-        if (pf[0].revents) {
+        if (stdin_ready) {
             for (;;) {
-                ssize_t k = read(0, inbuf + inlen, sizeof inbuf - 1 - inlen);
+                long k = ib_sys_read_stdin(inbuf + inlen, sizeof inbuf - 1 - inlen);
                 if (k == 0) { g_quit = 1; break; } /* the app is gone */
                 if (k < 0) break;
                 inlen += (size_t)k;
@@ -689,6 +683,20 @@ int main(int argc, char **argv) {
                     phase = PH_DEAD;
                     continue;
                 }
+                if (!seen && ov->excluded) {
+                    /* Windows: the covers are kept out of the capture (WDA_EXCLUDEFROMCAPTURE), and the square not
+                     * showing up says that works: the capture shows what is under the covers. The overlay itself
+                     * checked that its windows are on screen. */
+                    covers_visible = 0;
+                    pthread_mutex_lock(&B.mu);
+                    B.covers_visible = 0;
+                    B.reset = 1;
+                    pthread_cond_signal(&B.cv);
+                    pthread_mutex_unlock(&B.mu);
+                    phase = PH_RUN;
+                    next_grab = t;
+                    continue;
+                }
                 if (!seen) {
                     /* The capture shows what is on screen (X11 root, and the monitor casts of mutter, KWin and
                      * xdg-desktop-portal-wlr), so our square not being there means it is not on screen: covers
@@ -713,8 +721,7 @@ int main(int argc, char **argv) {
 
         /* ---- a finished job */
         pthread_mutex_lock(&B.mu);
-        char drain[64];
-        while (read(B.wake[0], drain, sizeof drain) > 0) {}
+        ib_sys_drain();
         if (B.done >= 0) {
             int i = B.done;
             if (!B.set.policy) B.rn = 0; /* finished after the blur was turned off: nothing to cover */
@@ -872,10 +879,7 @@ int main(int argc, char **argv) {
                 else set_state(covers_visible ? IB_ST_ON_COVERS_VISIBLE : IB_ST_ON, "");
             }
             if (t >= stats_at) {
-                struct rusage ru;
-                getrusage(RUSAGE_SELF, &ru);
-                double cpu_ms = (ru.ru_utime.tv_sec - ru0.ru_utime.tv_sec + ru.ru_stime.tv_sec - ru0.ru_stime.tv_sec) * 1e3 +
-                                (ru.ru_utime.tv_usec - ru0.ru_utime.tv_usec + ru.ru_stime.tv_usec - ru0.ru_stime.tv_usec) / 1e3;
+                double cpu1 = ib_sys_cpu_ms(), cpu_ms = cpu1 - cpu0;
                 double wall = t - wall0;
                 pthread_mutex_lock(&B.mu);
                 double ms = B.frames ? B.ms_sum / B.frames : 0, fps = B.frames * 1000.0 / (wall > 1 ? wall : 1);
@@ -883,7 +887,7 @@ int main(int argc, char **argv) {
                 B.ms_sum = 0;
                 pthread_mutex_unlock(&B.mu);
                 emit(1, ms, wall > 1 ? 100.0 * cpu_ms / wall : 0, fps);
-                ru0 = ru;
+                cpu0 = cpu1;
                 wall0 = t;
                 stats_at = t + stats_ms;
             }

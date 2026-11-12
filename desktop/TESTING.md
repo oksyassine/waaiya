@@ -30,8 +30,7 @@ Which session you are in: `echo $XDG_SESSION_TYPE` (`x11` or `wayland`) and `ech
 
 Common steps, every session:
 
-1. Unpack the CI artifact and run `waaiya/waaiya_desktop`. The "Screen blur" card is there (on Windows it is not,
-   and "Who is left uncovered" appears nowhere).
+1. Unpack the CI artifact and run `waaiya/waaiya_desktop`. The "Screen blur" card is there.
 2. Open a page with photos of women and men (an image search for "family photo", or a news site).
 3. Turn on "Blur women". Filtering does not need to be on. Within a few seconds the status line reads "Blur on…"
    and the women are covered by soft blurred blocks; men may stay clear (more of them with "Who is left
@@ -90,3 +89,31 @@ Common steps, every session:
 
 Report back: the session (`$XDG_SESSION_TYPE`, `$XDG_CURRENT_DESKTOP`), the status line text, a screenshot of a
 covered page, and `top`'s CPU figure for `im-blur`.
+
+# Desktop app: manual test (Windows)
+
+What runs without a PC (`.github/workflows/windows.yml`, Windows Server 2022 and 2025 with the Scream virtual
+output): `windows/test/audio_test.py` (the -80 dB route, bypass, filtering, new apps, crash, stop, restore) and
+`windows/test/blur_test.py` (self-test, whole-screen cover, click-through, fail modes, models, GDI capture). Not
+tested by the machine: real speakers and Bluetooth, DRM players (Netflix, Spotify), exclusive-mode apps, several
+monitors, HiDPI, a rotated screen, sleep and wake. Checked by hand:
+
+1. Unzip the CI artifact `waaiya-desktop-windows-x64.zip` and run `waaiya\waaiya_desktop.exe` (Windows 10 2004 or
+   newer; SmartScreen may ask: "More info", "Run anyway", the app is not signed yet).
+2. Play a song with instruments and a voice in a browser. Tap the power button: "Filtering is on" within a few
+   seconds; the instruments go, the voice stays (a short delay is normal). In the Volume Mixer every app is near
+   zero: that is how the originals are silenced.
+3. Change the browser's volume in the Volume Mixer: what you hear follows; the slider springs back near zero.
+4. Start another app with sound while filtering (a video player): no burst of unfiltered sound at its start.
+5. End `waaiya-filter.exe` in Task Manager: apps go silent (not unfiltered). Open the app: it says apps are held
+   silent; Stop gives every app its level back.
+6. Tap Stop: the music comes back unfiltered, every app at its own level again. Close an app while filtering,
+   tap Stop, open the app again: it has its normal level.
+7. Turn on "Start at login", sign out and in: the filter runs without opening the app. Turn it off again.
+8. Screen blur: turn on "Blur women" and open photos of people. Click, scroll and type on a cover: it reaches the
+   window under it. Take a screenshot (Win+Shift+S): the covers are not in it (Windows 10 2004+ keeps them out of
+   captures; the status line says "Blur on").
+9. Diagnostics (Settings): the report includes the filter's state and log (`%LOCALAPPDATA%\Waaiya\filter`).
+
+Command line: `engine\waaiya-filter.exe status` from a script that reads its output (it is a GUI program and
+prints nothing in a console window).
