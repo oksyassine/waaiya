@@ -470,6 +470,22 @@ int im_engine_failed(const im_engine *e) { return e ? e->failed : 1; }
 unsigned long im_engine_run_errors(const im_engine *e) { return e ? e->run_errors : 0; }
 const char *im_engine_model_name(const im_engine *e) { return e ? e->model_name : ""; }
 void im_engine_set_enabled(im_engine *e, int enabled) { if (e) e->enabled = enabled ? 1 : 0; }
+
+int im_engine_set_mono(im_engine *e, int mono) {
+    if (!e) return 0;
+    mono = mono && e->channels > 1;
+    /* one instance per channel exists only when the engine was created without mono_mix */
+    if (e->failed || mono == e->mono_mix || (!mono && e->nmodel < e->channels)) return e->mono_mix;
+    e->mono_mix = mono;
+    /* same as a stream restart for the model (instance 0 now sees the mix); the audio buffers keep their place,
+     * so the delay does not move */
+    for (int m = 0; m < e->nmodel; m++) {
+        if (e->state[m][0]) memcpy(e->state[m][0], e->state_init, sizeof(float) * e->state_size);
+        e->cur[m] = 0;
+        e->silent[m] = 0;
+    }
+    return e->mono_mix;
+}
 void im_engine_set_gate(im_engine *e, float gain) {
     if (!e) return;
     if (gain < 0) gain = 0;

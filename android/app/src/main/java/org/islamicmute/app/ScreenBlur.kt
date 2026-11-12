@@ -41,6 +41,9 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         private const val SLOW_FRAME_MS = 60.0
         @Volatile var state: State? = null
             private set
+        /** One line for the diagnostics report: the model time per frame. Null until a frame was analysed. */
+        @Volatile var stats: String? = null
+            private set
         private val listeners = java.util.concurrent.CopyOnWriteArraySet<() -> Unit>()
         private val mainH = Handler(Looper.getMainLooper())
         fun addListener(l: () -> Unit) { listeners += l }
@@ -140,6 +143,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
 
     fun stop() {
         stopped = true
+        stats = null
         main.removeCallbacks(watchdog)
         runCatching { dm.unregisterDisplayListener(displayListener) }
         worker.post {
@@ -231,6 +235,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
                 v.setTilesPerFrame(1)
                 Log.i(TAG, "blur: frames take ${frameMs.toInt()} ms, detector tiles now take turns")
             }
+            stats = "Frames: %.0f ms each on average (last %.0f ms), tiles take turns %s, capture %dx%d"
+                .format(java.util.Locale.ROOT, frameMs, ms, if (tilesTakeTurns) "yes" else "no", capW, capH)
             failStreak = if (frame.failed) failStreak + 1 else 0
             if (!frame.failed) lastOk = SystemClock.uptimeMillis()
             val bm = Bitmap.createBitmap(thumbPx, thumbW, thumbH, Bitmap.Config.ARGB_8888)

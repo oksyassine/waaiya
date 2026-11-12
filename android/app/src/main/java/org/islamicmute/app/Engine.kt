@@ -23,6 +23,9 @@ class Engine private constructor(private var handle: Long) : AutoCloseable {
         @JvmStatic private external fun nativeFailed(h: Long): Boolean
         @JvmStatic private external fun nativeSetGate(h: Long, gain: Float)
         @JvmStatic private external fun nativeReset(h: Long)
+        @JvmStatic private external fun nativeSetMono(h: Long, mono: Boolean): Boolean
+        @JvmStatic private external fun nativeRunErrors(h: Long): Long
+        @JvmStatic private external fun nativeModelName(h: Long): String?
         @JvmStatic private external fun nativeDestroy(h: Long)
 
         const val SAMPLE_RATE = 48000
@@ -61,6 +64,12 @@ class Engine private constructor(private var handle: Long) : AutoCloseable {
     /** 1 = the women's-singing filter is muting now, 0 = not, -1 = no detector. probs: female, speech, singing, recitation. */
     fun detectorStatus(probs: FloatArray? = null): Int = nativeDetectorStatus(handle, probs)
     fun reset() = nativeReset(handle)
+
+    /** True = mix the channels and run the model once per hop (half the work). Returns the mode now in effect. */
+    fun setMono(mono: Boolean): Boolean = nativeSetMono(handle, mono)
+    /** Hops the model failed on (their output was silence). */
+    val runErrors: Long get() = nativeRunErrors(handle)
+    val modelName: String get() = nativeModelName(handle) ?: "?"
 
     override fun close() {
         if (handle != 0L) { nativeDestroy(handle); handle = 0L }

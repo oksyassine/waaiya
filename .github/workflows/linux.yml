@@ -24,7 +24,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Build engine, CLI, LADSPA plugin and im-pulse
-        run: make -j"$(nproc)" all build/test-detector
+        run: make -j"$(nproc)" all build/test-detector build/test-mono
+      - name: Engine test, mono switch on a running engine (slow phones)
+        run: build/test-mono models/dfn3/dfn3_stream_int8.onnx
       - name: Smoke test, filter a generated file through the C engine
         run: |
           python3 - <<'PY'

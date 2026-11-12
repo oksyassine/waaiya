@@ -61,6 +61,8 @@ class MainActivity : Activity() {
     private var askedNotifications = false
     /** The microphone permission was refused at the last Start: keep saying why until the next tap. */
     private var micDenied = false
+    /** Android's screen-sharing question was cancelled at the last Start: say what it is for until the next tap. */
+    private var captureCancelled = false
 
     private val serviceChanged: () -> Unit = { refresh() }
     private val shizukuChanged = Shizuku.OnBinderReceivedListener { runOnUiThread { refresh() } }
@@ -157,6 +159,7 @@ class MainActivity : Activity() {
                 Uri.parse("package:$packageName"))) }
         }
         findViewById<Button>(R.id.open_link).setOnClickListener { startActivity(Intent(this, LinkActivity::class.java)) }
+        findViewById<Button>(R.id.diagnostics).setOnClickListener { showDiagnostics() }
         findViewById<Button>(R.id.licences).setOnClickListener {
             startActivity(Intent(this, LicencesActivity::class.java))
         }
@@ -226,19 +229,36 @@ class MainActivity : Activity() {
             FilterService.State.FILTERING, FilterService.State.MODEL_FAILED -> R.string.state_on_title
             else -> R.string.state_off_title
         })
+        // While filtering, the line under the title says what the user actually hears: a problem first (in the
+        // error colour), else the delay and what was adapted for this phone or silenced.
+        val problem: String? = if (st != FilterService.State.FILTERING) null else when {
+            FilterService.health?.tooSlow == true -> getString(R.string.state_too_slow)
+            FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION -> getString(R.string.state_on_not_muted)
+            FilterService.muterStatus == SessionMuter.Status.FAILING -> getString(R.string.state_on_mute_failing)
+            else -> null
+        }
         stateDetail.text = when (st) {
-            FilterService.State.FILTERING -> getString(R.string.state_on_detail, FilterService.delayMs)
+            FilterService.State.FILTERING -> problem ?: buildString {
+                append(getString(R.string.state_on_detail, FilterService.delayMs))
+                if (FilterService.health?.mono == true) append('\n').append(getString(R.string.state_mono_note))
+                val blocked = FilterService.blockedApps
+                if (blocked.isNotEmpty()) append('\n').append(getString(
+                    if (settings.silenceUnfilterable) R.string.state_blocked_silenced else R.string.state_blocked_unfiltered,
+                    blocked.joinToString("، ")))
+            }
             FilterService.State.MODEL_FAILED -> getString(R.string.state_model_failed)
             FilterService.State.NO_CAPTURE_PERMISSION -> getString(R.string.state_capture_denied)
             FilterService.State.STOPPED_BY_SYSTEM -> getString(R.string.state_stopped_by_system)
+            FilterService.State.CAPTURE_FAILED -> getString(R.string.state_capture_failed)
             FilterService.State.STARTING -> ""
             FilterService.State.STOPPED -> getString(R.string.state_off_detail)
         }
         stateDetail.setTextColor(getColor(
-            if (st == FilterService.State.MODEL_FAILED || st == FilterService.State.NO_CAPTURE_PERMISSION) R.color.error
+            if (problem != null || st == FilterService.State.MODEL_FAILED || st == FilterService.State.NO_CAPTURE_PERMISSION ||
+                st == FilterService.State.CAPTURE_FAILED) R.color.error
             else R.color.text_secondary))
-        if (micDenied && !on) {
-            stateDetail.setText(R.string.need_record_audio)
+        if (!on && (micDenied || captureCancelled)) {
+            stateDetail.setText(if (micDenied) R.string.need_record_audio else R.string.state_capture_cancelled)
             stateDetail.setTextColor(getColor(R.color.error))
         }
 
@@ -500,8 +520,53 @@ class MainActivity : Activity() {
     /** The running filter and blur follow the settings within half a second: no restart needed. */
     private fun settingChanged() = refresh()
 
+    /**
+     * Start was tapped. Without the one-time setup the original sound cannot be silenced: say so before starting,
+     * not only in the banner, so nobody runs the filter thinking the music is gone.
+     */
     private fun startFilter() {
+        if (hasDumpPermission()) { startCapture(); return }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.start_no_setup_title)
+            .setMessage(R.string.start_no_setup_body)
+            .setPositiveButton(R.string.start_no_setup_setup) { _, _ ->
+                setupCard.post {
+                    val r = android.graphics.Rect(); setupCard.getDrawingRect(r); setupCard.requestRectangleOnScreen(r)
+                }
+            }
+            .setNegativeButton(R.string.start_no_setup_anyway) { _, _ -> startCapture() }
+            .show()
+    }
+
+    /** The report of what the app sees on this phone, to copy or share with whoever helps. Nothing is sent. */
+    private fun showDiagnostics() {
+        val report = Diagnostics.report(this)
+        val dp = resources.displayMetrics.density
+        val text = TextView(this).apply {
+            text = getString(R.string.diag_note) + "\n\n" + report
+            textSize = 12f
+            setTextIsSelectable(true)
+            textDirection = View.TEXT_DIRECTION_FIRST_STRONG
+            setPadding((24 * dp).toInt(), (12 * dp).toInt(), (24 * dp).toInt(), 0)
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.diag_title)
+            .setView(android.widget.ScrollView(this).apply { addView(text) })
+            .setPositiveButton(R.string.copy) { _, _ ->
+                getSystemService(ClipboardManager::class.java).setPrimaryClip(ClipData.newPlainText("Waaiya", report))
+                android.widget.Toast.makeText(this, R.string.copied, android.widget.Toast.LENGTH_SHORT).show()
+            }
+            .setNeutralButton(R.string.link_share) { _, _ ->
+                runCatching { startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain")
+                    .putExtra(Intent.EXTRA_TEXT, report), null)) }
+            }
+            .setNegativeButton(R.string.guide_close, null)
+            .show()
+    }
+
+    private fun startCapture() {
         micDenied = false
+        captureCancelled = false
         // Ask for the runtime permissions only now, when their purpose is clear (capture needs RECORD_AUDIO).
         // Only RECORD_AUDIO gates Start; the notification permission is optional and asked once.
         val wanted = buildList {
@@ -531,7 +596,7 @@ class MainActivity : Activity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode != REQ_PERMISSIONS || !startAfterPermission) return
         startAfterPermission = false
-        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) startFilter()
+        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) startCapture()
         else { micDenied = true; refresh() }
     }
 
@@ -542,9 +607,13 @@ class MainActivity : Activity() {
     @Deprecated("framework Activity API")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQ_CAPTURE && resultCode == RESULT_OK && data != null) {
+        if (requestCode != REQ_CAPTURE) return
+        if (resultCode == RESULT_OK && data != null) {
             startForegroundService(Intent(this, FilterService::class.java)
                 .putExtra(FilterService.EXTRA_CODE, resultCode).putExtra(FilterService.EXTRA_DATA, data))
+        } else {
+            captureCancelled = true  // "Cancel" or back at Android's question: nothing started, say why it is asked
+            refresh()
         }
     }
 
