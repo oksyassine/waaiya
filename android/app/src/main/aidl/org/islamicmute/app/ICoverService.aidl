@@ -6,7 +6,9 @@ interface ICoverService {
     // Transaction id reserved by Shizuku: called when the service is removed; must exit the process.
     void destroy() = 16777114;
 
-    // Creates the layer. `app` is any binder of the app: when the app dies, the covers are removed.
+    // Creates the layer and draws one hidden test cover with the same calls as update(), so a device whose
+    // SurfaceControl lacks one of them fails here (false) instead of later in the one-way update().
+    // `app` is any binder of the app: when the app dies, the covers are removed.
     boolean start(IBinder app) = 1;
 
     // The covers to show now, in display pixels: count records of 8 floats
@@ -16,4 +18,8 @@ interface ICoverService {
 
     // Removes the layer and all covers.
     void stop() = 3;
+
+    // Two-way health check (update() is one-way and cannot report): 0 = the layer exists and every update since
+    // the last call was drawn; 1 = no layer; 2 = an update failed (the error is in the shell's logcat).
+    int health() = 4;
 }
