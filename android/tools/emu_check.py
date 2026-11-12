@@ -313,14 +313,18 @@ def main():
             e.broadcast("DEBUG_COVERS", "--es covers '0.0,0.0,0.3,1.0,1;0.7,0.0,1.0,1.0,1'")
             e.sh("input swipe 540 1200 540 1150 300")   # a small scroll: a new frame carries the covers
             time.sleep(3)
+            time.sleep(2)                               # let the scroll settle before reading positions
             hit = e.find(rid="switch_hold_silence")
             wins = e.sh("dumpsys window windows")
             blocks = [b for b in re.split(r"\n  Window #", wins) if re.match(r"\d+ Window\{[^}]*Waaiya blur\}", b)]
+            # Android 15 prints "frame=[..]", Android 11 "mFrame=[..]"
             frames = [m.groups() for b in blocks
-                      for m in [re.search(r"\bframe=\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]", b)] if m]
-            # mAttrs prints alpha only when it is not 1: Android lowers it on a non-touchable app overlay
+                      for m in [re.search(r"\b(?:m|)[Ff]rame=\[(-?\d+),(-?\d+)\]\[(-?\d+),(-?\d+)\]", b)] if m]
+            # Android 15's mAttrs prints alpha only when it is not 1 (it lowers it on a non-touchable app overlay);
+            # Android 11 prints the surface's alpha
             alphas = [m.group(1) for b in blocks for m in [re.search(r"\balpha=([\d.]+)", b)] if m]
-            c.check(bool(blocks) and not alphas, "app overlay covers are fully opaque", str(alphas))
+            c.check(bool(blocks) and all(float(a) == 1.0 for a in alphas), "app overlay covers are fully opaque",
+                    str(alphas))
             big = [f for f in frames if int(f[2]) - int(f[0]) > 1]
             c.check(len(big) >= 2, "app overlay: one window per cover group", str(frames))
             shot("6_blur_two_covers")
