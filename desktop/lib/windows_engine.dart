@@ -11,7 +11,7 @@ import 'filter_host.dart';
 /// It runs from the bundle, detached from the app, so it keeps filtering when the app is closed; "Start at login"
 /// is a value under the user's Run key. It reads the app's own settings file (%APPDATA%\Waaiya\settings.json) and
 /// applies changes while it runs, so the setting calls here have nothing to do: the app has saved the file first.
-/// Its state is %LOCALAPPDATA%\Waaiya\filter\state.json, read through `waaiya-filter status`.
+/// Its state is %LOCALAPPDATA%\Waaiya\filter\state.json, read directly ([status]).
 ///
 /// How it filters: every other app is turned down to -80 dB, their mix is read by process loopback, brought back up,
 /// filtered and played. When it dies, Windows keeps the apps turned down (silent) until Start or Stop.
@@ -126,16 +126,22 @@ class WindowsEngine implements FilterHost {
 
   Future<bool> _autostart() async => (await _run('reg', ['query', _runKey, '/v', runValue])).exitCode == 0;
 
+  /// Read from state.json directly (the filter rewrites it at least every 2 s; older than 5 s, it is not running or
+  /// stuck), not from `waaiya-filter status`: no process per poll, and no reliance on a GUI program's console output.
   @override
   Future<EngineStatus> status() async {
-    final r = await _run(exe.path, ['status']);
-    final out = '${r.stdout}';
-    return parseStatus(out, autostart: await _autostart(), now: DateTime.now());
+    String json = '';
+    try {
+      json = await File('$stateDir\\state.json').readAsString();
+    } on IOException {
+      // never ran
+    }
+    return parseStatus(json, autostart: await _autostart(), now: DateTime.now());
   }
 
-  /// `waaiya-filter status` output: "process: running|none", then state.json.
+  /// state.json (optionally after a "process: running|none" line, as `waaiya-filter status` prints it). Without that
+  /// line, the filter counts as running while its state is fresh.
   static EngineStatus parseStatus(String out, {required bool autostart, required DateTime now}) {
-    final alive = RegExp(r'^process: running', multiLine: true).hasMatch(out);
     Map<String, Object?> j = const {};
     final brace = out.indexOf('{');
     if (brace >= 0) {
@@ -147,8 +153,10 @@ class WindowsEngine implements FilterHost {
     }
     final state = j['state'] is String ? j['state'] as String : '';
     final t = j['t'] is num ? (j['t'] as num).toInt() : 0;
-    // the filter rewrites its state twice a second: older than 5 s, it is hung or gone
+    // the filter rewrites its state at least every 2 s: older than 5 s, it is stuck or gone
     final fresh = now.millisecondsSinceEpoch - t < 5000;
+    final processLine = RegExp(r'^process: (running|none)', multiLine: true).firstMatch(out);
+    final alive = processLine != null ? processLine.group(1) == 'running' && fresh : fresh;
     final engine = j['engine'] is String ? j['engine'] as String : '';
     String active, filter;
     if (alive && fresh && state == 'filtering') {

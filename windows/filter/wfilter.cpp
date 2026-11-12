@@ -335,6 +335,68 @@ struct Audio {
 // ---- commands
 
 std::vector<std::wstring> g_leave_alone; // --leave-alone NAME.exe (repeatable)
+bool g_test_hang = false;                 // tests: the main loop stops once the audio runs (the watchdog must act)
+
+// ---- watchdog: the main loop ticks at least every 0.5 s. Stuck for 10 s, the process ends itself: Windows keeps
+// the apps lowered (silent, fail-closed) and the app or a new start takes over (a stuck filter would otherwise hold
+// the single-instance lock and make every Start fail).
+std::atomic<long long> g_tick{0};
+
+DWORD WINAPI watchdog(LPVOID) {
+    for (;;) {
+        Sleep(2000);
+        long long last = g_tick.load();
+        if (last != 0 && unix_ms() - last > 10000) {
+            logf("watchdog: the main loop has been stuck for %lld s; ending (apps stay lowered until Start or Stop)",
+                 (unix_ms() - last) / 1000);
+            TerminateProcess(GetCurrentProcess(), 3);
+        }
+    }
+}
+
+// state.json: its pid and time ("t"), 0 when unreadable
+void read_state_head(const std::wstring &dir, unsigned long *pid, long long *t) {
+    *pid = 0;
+    *t = 0;
+    FILE *f = _wfopen((dir + L"\\state.json").c_str(), L"rb");
+    if (!f) return;
+    char buf[2048] = "";
+    size_t k = fread(buf, 1, sizeof buf - 1, f);
+    buf[k] = 0;
+    fclose(f);
+    const char *p = strstr(buf, "\"pid\":"), *q = strstr(buf, "\"t\":");
+    if (p) *pid = strtoul(p + 6, nullptr, 10);
+    if (q) *t = strtoll(q + 4, nullptr, 10);
+}
+
+// The process holding the lock has not written its state for over 5 s (it rewrites it at least every 2 s): it is
+// stuck. Ended, so that this one can take over.
+bool end_stuck(const std::wstring &dir) {
+    unsigned long pid;
+    long long t;
+    read_state_head(dir, &pid, &t);
+    if (pid == 0 || pid == GetCurrentProcessId() || unix_ms() - t < 5000) return false;
+    HANDLE h = OpenProcess(PROCESS_TERMINATE | SYNCHRONIZE, FALSE, pid);
+    if (!h) return false;
+    wchar_t name[MAX_PATH] = L"";
+    DWORD n = MAX_PATH;
+    HANDLE q = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+    bool ours = false;
+    if (q) { // only a waaiya-filter.exe, never another program that got the same pid
+        if (QueryFullProcessImageNameW(q, 0, name, &n)) {
+            std::wstring s = name;
+            for (auto &ch : s) ch = (wchar_t)towlower(ch);
+            ours = s.size() >= 17 && s.compare(s.size() - 17, 17, L"waaiya-filter.exe") == 0;
+        }
+        CloseHandle(q);
+    }
+    if (ours) {
+        TerminateProcess(h, 3);
+        WaitForSingleObject(h, 3000);
+    }
+    CloseHandle(h);
+    return ours;
+}
 
 struct Paths {
     std::wstring dir;      // %LOCALAPPDATA%\Waaiya\filter
@@ -361,6 +423,7 @@ int restore_loop(Sessions &ses, const Paths &p, HANDLE quit) {
     st.state = "restoring";
     st.engine = "";
     while (ses.pending() > 0) {
+        g_tick.store(unix_ms());
         st.pending = ses.pending();
         write_state(p.dir, st);
         HANDLE hs[2] = {ses.wake, quit};
@@ -386,6 +449,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
         // a running restorer quits (SetEvent on QUIT); a running filter does not listen to QUIT
         SetEvent(quit);
         w = WaitForSingleObject(mtx, 3000);
+        if (w == WAIT_TIMEOUT && end_stuck(p.dir)) w = WaitForSingleObject(mtx, 3000); // abandoned: ours now
         if (w == WAIT_TIMEOUT) {
             fprintf(stderr, "waaiya-filter: already running\n");
             return 0;
@@ -394,6 +458,9 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     ResetEvent(stop);
     ResetEvent(quit);
     open_log(p.dir);
+    if (w == WAIT_ABANDONED) logf("run: the previous filter ended without stopping; taking over");
+    g_tick.store(unix_ms());
+    CloseHandle(CreateThread(nullptr, 0, watchdog, nullptr, 0, nullptr));
 
     Sessions ses(ATT, p.store, GetCurrentProcessId());
     ses.log = logf;
@@ -472,6 +539,11 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     int exit_code = 0;
 
     for (;;) {
+        g_tick.store(unix_ms());
+        if (g_test_hang && au.running) {
+            logf("test: the main loop stops here (--test-hang)");
+            for (;;) Sleep(1000);
+        }
         double t = now_ms();
         // (re)open the audio when it is not running (start, a lost device, the audio service restarted)
         if (!au.running && t >= retry_at) {
@@ -692,10 +764,14 @@ int cmd_stop(const Paths &p) {
                 buf[k] = 0;
                 fclose(f);
             }
-            if (strstr(buf, "\"restoring\"") || strstr(buf, "\"stopped\"")) break;
+            if (strstr(buf, "\"restoring\"") || strstr(buf, "\"stopped\"")) {
+                CloseHandle(mtx);
+                return 0;
+            }
         }
         CloseHandle(mtx);
-        return 0;
+        // it did not answer: stuck (no state for over 5 s) -> ended, and the levels given back below
+        if (!end_stuck(p.dir)) return 0;
     }
     // no filter running (it crashed, or the computer restarted while filtering): a restorer in the background
     // gives back what it can now and the rest as those apps play again
@@ -752,6 +828,7 @@ int wmain(int argc, wchar_t **argv) {
         const wchar_t *v = i + 1 < argc ? argv[i + 1] : nullptr;
         if (a == L"--bypass") bypass = true;
         else if (a == L"--log-stderr") g_log_stderr = true;
+        else if (a == L"--test-hang") g_test_hang = true;
         else if (a == L"--leave-alone" && v) {
             std::wstring n = argv[++i];
             for (auto &ch : n) ch = (wchar_t)towlower(ch);

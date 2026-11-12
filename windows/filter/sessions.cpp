@@ -41,12 +41,23 @@ template <class Self, class... Ifaces> class Unknown : public Ifaces... {
 } // namespace
 
 // Volume changes and the end of one session.
-// Windows calls these on its own threads. They never register or unregister anything (not allowed from inside a
-// session callback): the main loop does that in Sessions::scan.
+//
+// Windows calls these (and SessionWatch) on its own threads, possibly while holding locks of its own that the main
+// thread's calls into the audio service also need. So a callback never waits for the main thread's lock (mu_): it
+// carries its session's identifier and volume, takes only the store's lock (never held during an audio call), and
+// leaves registering, unregistering and the session list to the main loop (Sessions::scan). A first version took
+// mu_ here and hung on a real PC after a stop and a start.
 class SessionEvents final : public Unknown<SessionEvents, IAudioSessionEvents> {
   public:
-    explicit SessionEvents(Sessions *owner) : owner_(owner) {}
+    SessionEvents(Sessions *owner, std::wstring id, DWORD pid, ISimpleAudioVolume *vol)
+        : id(std::move(id)), pid(pid), owner_(owner) {
+        vol_.p = vol;
+        vol->AddRef();
+    }
     void detach() { owner_.store(nullptr); }
+    const std::wstring id;
+    const DWORD pid;
+    std::atomic<bool> dead{false}; // the session ended; unwatched by the next scan
 
     STDMETHODIMP QueryInterface(REFIID riid, void **out) override {
         if (riid == __uuidof(IUnknown) || riid == __uuidof(IAudioSessionEvents)) {
@@ -58,7 +69,8 @@ class SessionEvents final : public Unknown<SessionEvents, IAudioSessionEvents> {
         return E_NOINTERFACE;
     }
     STDMETHODIMP OnSimpleVolumeChanged(float v, BOOL, LPCGUID ctx) override {
-        if (Sessions *o = owner_.load()) o->on_volume(this, v, ctx);
+        if (ctx && IsEqualGUID(*ctx, IM_VOLUME_CONTEXT)) return S_OK; // ours
+        if (Sessions *o = owner_.load()) o->on_volume(id, vol_.p, v);
         return S_OK;
     }
     STDMETHODIMP OnStateChanged(AudioSessionState st) override {
@@ -76,9 +88,11 @@ class SessionEvents final : public Unknown<SessionEvents, IAudioSessionEvents> {
 
   private:
     void gone() {
-        if (Sessions *o = owner_.load()) o->on_gone(this);
+        dead.store(true);
+        if (Sessions *o = owner_.load()) SetEvent(o->wake);
     }
     std::atomic<Sessions *> owner_;
+    Com<ISimpleAudioVolume> vol_;
 };
 
 // New sessions on one output.
@@ -139,6 +153,7 @@ Sessions::Sessions(float att, std::wstring store_path, DWORD self_pid)
 
 Sessions::~Sessions() {
     std::lock_guard<std::recursive_mutex> l(mu_);
+    mode_.store(RESTORE_ONLY); // a callback still running does nothing more
     for (auto &t : tracked_) drop(t);
     tracked_.clear();
     for (auto &o : outputs_) {
@@ -167,7 +182,7 @@ void Sessions::drop(Tracked &t) {
 
 HRESULT Sessions::start(Mode mode) {
     std::lock_guard<std::recursive_mutex> l(mu_);
-    mode_ = mode;
+    mode_.store(mode);
     load();
     HRESULT hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator),
                                   reinterpret_cast<void **>(devices_.put()));
@@ -225,7 +240,7 @@ void Sessions::scan() {
     if (!devices_) return;
     // sessions that ended (marked by their callback): unwatched here, outside Windows' callbacks
     for (size_t k = 0; k < tracked_.size();) {
-        if (tracked_[k].dead) {
+        if (tracked_[k].events && tracked_[k].events->dead.load()) {
             drop(tracked_[k]);
             tracked_.erase(tracked_.begin() + (long)k);
         } else {
@@ -245,14 +260,16 @@ void Sessions::scan() {
     }
 }
 
+// In Windows' notification thread: lowered (or given back) at once, without the main lock; watched from the next
+// scan (main loop).
 void Sessions::on_session(IAudioSessionControl *ctl) {
-    std::lock_guard<std::recursive_mutex> l(mu_);
-    apply(ctl, false); // lowered now; watched from the next scan (main loop)
+    apply(ctl, false);
     SetEvent(wake);
 }
 
-// One session: lowered (ATTENUATE) or given its stored level back (RESTORE_ONLY). With track (main loop only),
-// the session is also watched for the user's volume changes and its end.
+// One session: lowered (ATTENUATE) or given its stored level back (RESTORE_ONLY). With track (main loop only, mu_
+// held), the session is also watched for the user's volume changes and its end. Without (a notification), only
+// the store's lock is taken.
 void Sessions::apply(IAudioSessionControl *ctl, bool track) {
     Com<IAudioSessionControl2> c2;
     if (FAILED(ctl->QueryInterface(__uuidof(IAudioSessionControl2), reinterpret_cast<void **>(c2.put())))) return;
@@ -271,7 +288,7 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
 
     // the same session seen again (scan): only check its level
     Tracked *t = nullptr;
-    for (auto &x : tracked_) {
+    for (auto &x : track ? tracked_ : no_tracked_) {
         IUnknown *a = nullptr, *b = nullptr;
         x.ctl->QueryInterface(__uuidof(IUnknown), reinterpret_cast<void **>(&a));
         c2->QueryInterface(__uuidof(IUnknown), reinterpret_cast<void **>(&b));
@@ -286,17 +303,8 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
 
     float cur = 1.0f;
     vol->GetMasterVolume(&cur);
-    auto it = store_.find(id);
-    if (mode_ == RESTORE_ONLY) {
-        if (it != store_.end()) {
-            HRESULT hr = vol->SetMasterVolume(it->second, &IM_VOLUME_CONTEXT);
-            if (log) log("sessions: pid %lu %s, level %.4f -> %.4f: %s", (unsigned long)pid, state_name(st), cur,
-                         it->second, SUCCEEDED(hr) ? "given back" : im_hr(hr).c_str());
-            if (SUCCEEDED(hr)) {
-                store_.erase(it);
-                save();
-            }
-        }
+    if (mode_.load() == RESTORE_ONLY) {
+        give_back(vol.p, id, pid, st, cur);
         return;
     }
 
@@ -314,7 +322,7 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
         vol.p = nullptr;
         n.id = id;
         n.pid = pid;
-        n.events = new SessionEvents(this);
+        n.events = new SessionEvents(this, id, pid, n.vol.p);
         if (FAILED(n.ctl->RegisterAudioSessionNotification(n.events))) {
             n.events->Release();
             n.events = nullptr;
@@ -324,43 +332,39 @@ void Sessions::apply(IAudioSessionControl *ctl, bool track) {
 }
 
 // The user (or the app itself) changed a lowered app's volume: that is the user's new level, lowered again.
-void Sessions::on_volume(SessionEvents *s, float v, LPCGUID ctx) {
-    if (ctx && IsEqualGUID(*ctx, IM_VOLUME_CONTEXT)) return;
-    std::lock_guard<std::recursive_mutex> l(mu_);
-    if (mode_ != ATTENUATE) return;
-    for (auto &t : tracked_) {
-        if (t.events != s || t.dead) continue;
-        if (v > att_ * 1.5f) store_[t.id] = v; // else: someone set it near zero; keep the level we knew
+// (Notification thread: the store's lock only.)
+void Sessions::on_volume(const std::wstring &id, ISimpleAudioVolume *vol, float v) {
+    if (mode_.load() != ATTENUATE) return;
+    float user;
+    {
+        std::lock_guard<std::mutex> l(store_mu_);
+        if (v > att_ * 1.5f || !store_.count(id)) store_[id] = v > att_ * 1.5f ? v : 1.0f;
+        // else: someone set it near zero; keep the level we knew
+        user = store_[id];
         save();
-        t.vol->SetMasterVolume(store_[t.id] * att_, &IM_VOLUME_CONTEXT);
-        return;
     }
-}
-
-// Keeps its stored level: Windows remembers the lowered one for the app's next run.
-void Sessions::on_gone(SessionEvents *s) {
-    std::lock_guard<std::recursive_mutex> l(mu_);
-    for (auto &t : tracked_)
-        if (t.events == s) t.dead = true;
-    SetEvent(wake);
+    vol->SetMasterVolume(user * att_, &IM_VOLUME_CONTEXT);
 }
 
 // Lowers one session to att x the user's level; the user's level is the stored one (we lowered this app before,
 // maybe in an earlier run that Windows remembered), else what the session has now.
 void Sessions::lower(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid, AudioSessionState st, float cur,
                      bool track) {
-    auto it = store_.find(id);
     float user;
-    if (it != store_.end()) {
-        user = it->second;
-    } else if (cur <= att_ * 1.01f && cur > 0) {
-        user = 1.0f; // lowered by us in a run whose store was lost: no level of the user's to go back to but full
-    } else {
-        user = cur;
-    }
-    if (it == store_.end() || it->second != user) {
-        store_[id] = user;
-        save();
+    {
+        std::lock_guard<std::mutex> l(store_mu_);
+        auto it = store_.find(id);
+        if (it != store_.end()) {
+            user = it->second;
+        } else if (cur <= att_ * 1.01f && cur > 0) {
+            user = 1.0f; // lowered by us in a run whose store was lost: no level of the user's to go back to but full
+        } else {
+            user = cur;
+        }
+        if (it == store_.end() || it->second != user) {
+            store_[id] = user;
+            save();
+        }
     }
     float want = user * att_;
     if (std::fabs(cur - want) <= want * 0.01f + 1e-9f) return;
@@ -369,27 +373,42 @@ void Sessions::lower(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid,
                  want, user, track ? "" : ", from the notification", SUCCEEDED(hr) ? "" : im_hr(hr).c_str());
 }
 
+// Gives a session its stored level back, if it has one (the store's lock only, not during the audio call).
+void Sessions::give_back(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid, AudioSessionState st, float cur) {
+    float v;
+    {
+        std::lock_guard<std::mutex> l(store_mu_);
+        auto it = store_.find(id);
+        if (it == store_.end()) return;
+        v = it->second;
+    }
+    HRESULT hr = vol->SetMasterVolume(v, &IM_VOLUME_CONTEXT);
+    if (log) log("sessions: pid %lu %s, level %.4f -> %.4f: %s", (unsigned long)pid, state_name(st), cur, v,
+                 SUCCEEDED(hr) ? "given back" : im_hr(hr).c_str());
+    if (FAILED(hr)) return;
+    std::lock_guard<std::mutex> l(store_mu_);
+    store_.erase(id);
+    save();
+}
+
 void Sessions::restore_all() {
     std::lock_guard<std::recursive_mutex> l(mu_);
-    mode_ = RESTORE_ONLY;
+    mode_.store(RESTORE_ONLY);
     for (auto &t : tracked_) {
-        auto it = store_.find(t.id);
-        if (!t.dead && it != store_.end()) {
-            HRESULT hr = t.vol->SetMasterVolume(it->second, &IM_VOLUME_CONTEXT);
-            if (log) log("sessions: pid %lu given back %.4f: %s", (unsigned long)t.pid, it->second,
-                         SUCCEEDED(hr) ? "ok" : im_hr(hr).c_str());
-            if (SUCCEEDED(hr)) store_.erase(it);
+        if (!(t.events && t.events->dead.load())) {
+            float cur = 1.0f;
+            t.vol->GetMasterVolume(&cur);
+            give_back(t.vol.p, t.id, t.pid, AudioSessionStateActive, cur);
         }
         drop(t);
     }
     tracked_.clear();
-    save();
     scan(); // sessions not tracked yet (started a moment ago)
 }
 
 void Sessions::lower_all() {
     std::lock_guard<std::recursive_mutex> l(mu_);
-    mode_ = ATTENUATE;
+    mode_.store(ATTENUATE);
     scan();
 }
 
@@ -405,15 +424,15 @@ bool Sessions::left_alone(const std::wstring &id) const {
 int Sessions::lowered() const {
     std::lock_guard<std::recursive_mutex> l(mu_);
     int n = 0;
-    for (auto &t : tracked_) n += !t.dead;
-    return mode_ == ATTENUATE ? n : 0;
+    for (auto &t : tracked_) n += !(t.events && t.events->dead.load());
+    return mode_.load() == ATTENUATE ? n : 0;
 }
 
 std::string Sessions::meters() const {
     std::lock_guard<std::recursive_mutex> l(mu_);
     std::string s;
     for (auto &t : tracked_) {
-        if (t.dead) continue;
+        if (t.events && t.events->dead.load()) continue;
         Com<ImMeter> m;
         UINT ch = 0;
         float peak = -1;
@@ -432,7 +451,7 @@ std::string Sessions::meters() const {
 }
 
 int Sessions::pending() const {
-    std::lock_guard<std::recursive_mutex> l(mu_);
+    std::lock_guard<std::mutex> l(store_mu_);
     return (int)store_.size();
 }
 
@@ -453,6 +472,7 @@ void Sessions::save() {
 }
 
 void Sessions::load() {
+    std::lock_guard<std::mutex> l(store_mu_);
     store_.clear();
     FILE *f = _wfopen(store_path_.c_str(), L"rb");
     if (!f) return;

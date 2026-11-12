@@ -10,6 +10,7 @@
 
 #include "../common/wasapi.h"
 
+#include <atomic>
 #include <map>
 #include <mutex>
 #include <string>
@@ -43,7 +44,7 @@ class Sessions {
 
     int lowered() const;  // sessions lowered by us now
     int pending() const;  // levels in the store not given back (restore-only mode is done when this is 0)
-    Mode mode() const { return mode_; }
+    Mode mode() const { return (Mode)mode_.load(); }
     std::string last_error() const;
 
     // Signalled when a session or an output appears (the main loop then calls scan()).
@@ -56,10 +57,9 @@ class Sessions {
     // Log lines (wfilter.cpp's logf); may be null.
     void (*log)(const char *fmt, ...) = nullptr;
 
-    // called by the watchers (any thread)
+    // called by the watchers on Windows' threads: never take mu_ (see SessionEvents)
     void on_session(IAudioSessionControl *ctl);
-    void on_volume(SessionEvents *s, float v, LPCGUID ctx);
-    void on_gone(SessionEvents *s);
+    void on_volume(const std::wstring &id, ISimpleAudioVolume *vol, float v);
 
   private:
     struct Tracked {
@@ -68,7 +68,6 @@ class Sessions {
         Com<ISimpleAudioVolume> vol;
         std::wstring id;
         DWORD pid = 0;
-        bool dead = false; // the session ended; unwatched by the next scan
     };
     struct Output {
         std::wstring id;
@@ -78,22 +77,25 @@ class Sessions {
 
     void add_outputs();
     bool left_alone(const std::wstring &id) const;
-    void apply(IAudioSessionControl *ctl, bool track); // mutex held
+    void apply(IAudioSessionControl *ctl, bool track); // track: main thread, mu_ held
     void lower(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid, AudioSessionState st, float cur,
-               bool track); // mutex held
-    void save();                            // mutex held
+               bool track); // any thread; takes store_mu_
+    void give_back(ISimpleAudioVolume *vol, const std::wstring &id, DWORD pid, AudioSessionState st, float cur);
+    void save(); // store_mu_ held
     void load();
     void drop(Tracked &t);
 
     const float att_;
     const std::wstring store_path_;
     const DWORD self_;
-    Mode mode_ = ATTENUATE;
-    mutable std::recursive_mutex mu_;
+    std::atomic<int> mode_{ATTENUATE};
+    mutable std::recursive_mutex mu_; // main thread only: outputs_, tracked_, devices_
+    mutable std::mutex store_mu_;     // store_ (any thread); never held during an audio call
     Com<IMMDeviceEnumerator> devices_;
     DeviceWatch *device_watch_ = nullptr;
     std::vector<Output> outputs_;
     std::vector<Tracked> tracked_;
+    std::vector<Tracked> no_tracked_; // what a notification looks through instead of tracked_ (always empty)
     std::map<std::wstring, float> store_; // session identifier -> the user's level
     std::string error_;
 };

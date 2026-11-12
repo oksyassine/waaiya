@@ -113,6 +113,14 @@ def state():
         return {}
 
 
+def flowing(seconds=2.0):
+    """The audio runs: frames keep coming in and the state stays fresh."""
+    a = state().get("cap_frames", 0)
+    time.sleep(seconds)
+    s = state()
+    return s.get("cap_frames", 0) > a + RATE * seconds / 2 and time.time() * 1000 - s.get("t", 0) < 2000
+
+
 def start_filter(*extra):
     log = open(os.path.join(TMP, "filter-%d.log" % int(time.time() * 1000)), "w")
     # the test's own recorder (endpoint loopback) is left alone: lowered, it would record at -80 dB
@@ -232,6 +240,59 @@ def main():
     time.sleep(1.0)
     s = state()
     check(s.get("state") == "stopped", f"the restorer ends when nothing is left ({s.get('state')})")
+
+    print("=== 8. stop and start again while apps open and close sessions", flush=True)
+    import threading
+    churning = [True]
+    churn_apps = []
+
+    def churn():
+        k = 0
+        while churning[0]:
+            p, _ = tone(f"waaiya-test-churn{k % 3}", seconds=2, freq=500 + 50 * (k % 3))
+            churn_apps.append(p)
+            time.sleep(0.3)
+            k += 1
+
+    a, apid = tone("waaiya-test-a")
+    th = threading.Thread(target=churn, daemon=True)
+    th.start()
+    for cycle in range(3):
+        f, flog = start_filter()
+        s = state()
+        check(s.get("pid") == f.pid and s.get("state") == "filtering", f"cycle {cycle + 1}: filtering ({s.get('state')})")
+        check(flowing(), f"cycle {cycle + 1}: the audio runs")
+        stop_filter(f, flog)
+    churning[0] = False
+    th.join()
+    for p in churn_apps:
+        p.kill()
+
+    print("=== 9. a stuck filter holding the lock: the next start takes over", flush=True)
+    f, flog = start_filter("--test-hang")
+    time.sleep(6.5)  # its state is now over 5 s old; its watchdog has not acted yet (10 s)
+    g, glog = start_filter()
+    s = state()
+    check(s.get("pid") == g.pid and s.get("state") == "filtering", f"the new filter runs ({s.get('pid')} vs {g.pid})")
+    check(f.poll() is not None, "the stuck one was ended")
+    check(flowing(), "the audio runs")
+    stop_filter(g, glog)
+    time.sleep(1)
+
+    print("=== 10. a stuck filter ends itself (watchdog)", flush=True)
+    f, flog = start_filter("--test-hang")
+    try:
+        code = f.wait(timeout=20)
+    except subprocess.TimeoutExpired:
+        code = None
+    check(code == 3, f"the watchdog ended it (exit {code})")
+    va = volume(apid)
+    check(va is not None and abs(va - 1e-4) < 1e-6, f"apps stay silent ({va})")
+    subprocess.run([FILTER, "stop", "--dir", STATE_DIR], timeout=30)
+    time.sleep(1.5)
+    va = volume(apid)
+    check(va is not None and abs(va - 1) < 1e-4, f"stop gives the level back ({va})")
+    a.kill()
 
     print()
     if failures:
