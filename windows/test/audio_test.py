@@ -115,7 +115,9 @@ def state():
 
 def start_filter(*extra):
     log = open(os.path.join(TMP, "filter-%d.log" % int(time.time() * 1000)), "w")
-    p = subprocess.Popen([FILTER, "run", "--dir", STATE_DIR, "--settings", SETTINGS, "--log-stderr", *extra],
+    # the test's own recorder (endpoint loopback) is left alone: lowered, it would record at -80 dB
+    p = subprocess.Popen([FILTER, "run", "--dir", STATE_DIR, "--settings", SETTINGS, "--log-stderr",
+                          "--leave-alone", "waaiya-wtest.exe", *extra],
                          stdout=log, stderr=subprocess.STDOUT)
     for _ in range(100):
         s = state()
@@ -169,6 +171,7 @@ def main():
     print(f"  state: {s}")
     check(s.get("leaks") == 0, f"no leak ({s.get('leaks')})")
     print(f"  delay {s.get('delay_ms')} ms, cpu {s.get('cpu')} %, underruns {s.get('underruns')}, dropped {s.get('dropped')}")
+    check(s.get("underruns", 99) <= 3, f"the output does not run dry ({s.get('underruns')} underruns in 5 s)")
 
     print("=== 3. stop gives the level back", flush=True)
     stop_filter(f, flog)
