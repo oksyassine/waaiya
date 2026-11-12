@@ -17,7 +17,7 @@ the Android package `org.islamicmute.app` and the Linux service, keep the old na
 | **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. Optional screen blur (women, immodest images) over every app. |
 | **Linux** (PulseAudio, PipeWire-Pulse) | Works | Virtual output + always-on user service (`waaiya install`, `waaiya start`). |
 | **macOS** 14.4+ | Planned | Core Audio process tap; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
-| **Windows** 10/11 | Planned | Per-app loopback capture or a virtual device; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
+| **Windows** 10 (2004+) / 11 | Preview (desktop app) | Every other app turned down to −80 dB, their mix captured per process, brought back up, filtered and played; no driver, no admin rights. Optional screen blur with covers every click passes through. Tested on Windows Server 2022 and 2025 CI runners, not yet on a real PC: [docs/PLATFORMS.md](docs/PLATFORMS.md). |
 | **iOS / iPadOS** | Limited by Apple | No app may change other apps' sound. Planned: in-app player for links, Safari extension. |
 | **Browsers** | Planned | Extension filtering the tab's media (desktop Chrome, Firefox, Edge, Safari). |
 
