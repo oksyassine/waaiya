@@ -15,6 +15,7 @@ import android.os.Process
 import android.os.SystemClock
 import android.util.Log
 import android.view.Display
+import java.nio.ByteBuffer
 
 /**
  * System-wide screen blur: captures the screen (same MediaProjection as the audio filter, small size), finds women /
@@ -39,7 +40,11 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         // Portrait screens: the person detector also runs on 3 tiles (small people). When a frame takes longer than
         // this on average with all of them, they take turns, one per frame (the tracker holds people in between).
         private const val SLOW_FRAME_MS = 60.0
+        private const val TILES = 3                 // im_vision_params.tiles: passes for all tiles to have run once
         @Volatile var state: State? = null
+            private set
+        /** One line for the diagnostics report: the model time per frame. Null until a frame was analysed. */
+        @Volatile var stats: String? = null
             private set
         private val listeners = java.util.concurrent.CopyOnWriteArraySet<() -> Unit>()
         private val mainH = Handler(Looper.getMainLooper())
@@ -77,6 +82,14 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     @Volatile private var modelsBad = false
     private var lastStart = 0L
     private var pending = false
+    // the last frame, kept for the passes a still screen would never get (worker thread)
+    private var gen = 0
+    private var stillBuf: ByteBuffer? = null
+    private var stillStride = 0
+    private var stillT = 0.0
+    private var stillAt = 0L
+    private var tilePasses = 0
+    private var stillPasses = 0
     /** Policy in force (main thread writes): 0 = blur off, the virtual display is parked (no surface, no cost). */
     @Volatile private var policy = -1
 
@@ -111,6 +124,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         if (p == 0) {
             overlay.detach()
             worker.post {
+                gen++
                 runCatching { display?.surface = null }
                 vision?.close(); vision = null
                 modelsBad = false; failStreak = 0
@@ -140,6 +154,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
 
     fun stop() {
         stopped = true
+        stats = null
         main.removeCallbacks(watchdog)
         runCatching { dm.unregisterDisplayListener(displayListener) }
         worker.post {
@@ -167,6 +182,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val scr = overlay.screen()
         val landscape = scr.width() > scr.height()
         if (landscape == (capW > capH)) return
+        gen++ // the kept frame has the old shape
         size(scr)
         val r = ImageReader.newInstance(capW, capH, PixelFormat.RGBA_8888, 3)
         r.setOnImageAvailableListener({ schedule() }, worker)
@@ -193,61 +209,105 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             val v = vision ?: return
             if (img.width != capW || img.height != capH) return // a frame from before a resize
             val plane = img.planes[0]
-            val buf = plane.buffer
-            val now = SystemClock.uptimeMillis()
-            busySince = now
-
-            if (!testDone) {
-                // Self-test: is our overlay in the capture? Look for the magenta square at the top-left corner.
-                if (overlay.host == null) { testDone = true } else {
-                    val px = (BlurOverlay.TEST_SQUARE_DP * context.resources.displayMetrics.density * capW /
-                        overlay.screen().width()).toInt().coerceAtLeast(2)
-                    val p = px / 2
-                    val off = (capH / 2 + p) * plane.rowStride + p * 4
-                    val rr = buf.get(off).toInt() and 255; val gg = buf.get(off + 1).toInt() and 255
-                    val bb = buf.get(off + 2).toInt() and 255
-                    if (rr > 200 && gg < 60 && bb > 200) { coversVisible = true; testDone = true }
-                    else if (now >= testUntil) testDone = true
-                    if (testDone) {
-                        v.setCoversVisible(coversVisible)
-                        Log.i(TAG, "blur: covers ${if (coversVisible) "VISIBLE" else "not visible"} in the capture " +
-                            "(host ${overlay.host}, skip flag applied ${overlay.skipApplied})")
-                    } else {
-                        main.post { overlay.show(frame.rects, 0, null, 0, true) }
-                        return
-                    }
-                }
-            }
-
-            val t = img.timestamp / 1e6
-            val runNsfw = t - lastNsfw >= NSFW_EVERY_MS
-            if (runNsfw) lastNsfw = t
-            val t0 = SystemClock.elapsedRealtimeNanos()
-            v.frame(buf, capW, capH, plane.rowStride, t, true, runNsfw, frame, thumbPx, thumbW, thumbH)
-            val ms = (SystemClock.elapsedRealtimeNanos() - t0) / 1e6
-            frameMs = if (frameMs == 0.0) ms else frameMs * 0.9 + ms * 0.1
-            if (!tilesTakeTurns && frameMs > SLOW_FRAME_MS) {
-                tilesTakeTurns = true // for the rest of this session
-                v.setTilesPerFrame(1)
-                Log.i(TAG, "blur: frames take ${frameMs.toInt()} ms, detector tiles now take turns")
-            }
-            failStreak = if (frame.failed) failStreak + 1 else 0
-            if (!frame.failed) lastOk = SystemClock.uptimeMillis()
-            val bm = Bitmap.createBitmap(thumbPx, thumbW, thumbH, Bitmap.Config.ARGB_8888)
-            val rects = frame.rects.copyOf(frame.count * 5)
-            val n = frame.count
-            main.post { if (!stopped) overlay.show(rects, n, bm, failMode(), false) }
+            gen++ // a newer frame: passes still planned on the previous one are dropped
+            busySince = SystemClock.uptimeMillis()
+            process(v, plane.buffer, plane.rowStride, img.timestamp / 1e6, false)
         } finally {
             busySince = 0
             img.close()
         }
     }
 
+    /**
+     * Analyses one frame. [still] = it is the kept copy of the last frame (the screen sent nothing newer).
+     *
+     * Android sends a frame only when the screen changes, and one pass does not do everything: the nudity model
+     * runs a few times a second, the detector tiles may take turns, and the self-test only looks for its square.
+     * So when a pass skipped something, the frame is kept and passed again shortly after, unless a newer frame
+     * came: the last frame before the screen goes still is always analysed in full.
+     */
+    private fun process(v: Vision, buf: ByteBuffer, stride: Int, t: Double, still: Boolean) {
+        val now = SystemClock.uptimeMillis()
+        if (!testDone) {
+            // Self-test: is our overlay in the capture? Look for the magenta square at the top-left corner.
+            if (overlay.host == null) { testDone = true } else {
+                val px = (BlurOverlay.TEST_SQUARE_DP * context.resources.displayMetrics.density * capW /
+                    overlay.screen().width()).toInt().coerceAtLeast(2)
+                val p = px / 2
+                val off = (capH / 2 + p) * stride + p * 4
+                val rr = buf.get(off).toInt() and 255; val gg = buf.get(off + 1).toInt() and 255
+                val bb = buf.get(off + 2).toInt() and 255
+                if (rr > 200 && gg < 60 && bb > 200) { coversVisible = true; testDone = true }
+                else if (now >= testUntil) testDone = true
+                if (testDone) {
+                    v.setCoversVisible(coversVisible)
+                    Log.i(TAG, "blur: covers ${if (coversVisible) "VISIBLE" else "not visible"} in the capture " +
+                        "(host ${overlay.host}, skip flag applied ${overlay.skipApplied})")
+                } else {
+                    main.post { overlay.show(frame.rects, 0, null, 0, true) }
+                    again(buf, stride, t, still, (testUntil - now).coerceAtLeast(0) + 20)
+                    return
+                }
+            }
+        }
+
+        val runNsfw = t - lastNsfw >= NSFW_EVERY_MS
+        if (runNsfw) lastNsfw = t
+        val t0 = SystemClock.elapsedRealtimeNanos()
+        v.frame(buf, capW, capH, stride, t, true, runNsfw, frame, thumbPx, thumbW, thumbH)
+        val ms = (SystemClock.elapsedRealtimeNanos() - t0) / 1e6
+        frameMs = if (frameMs == 0.0) ms else frameMs * 0.9 + ms * 0.1
+        if (!tilesTakeTurns && frameMs > SLOW_FRAME_MS) {
+            tilesTakeTurns = true // for the rest of this session
+            v.setTilesPerFrame(1)
+            Log.i(TAG, "blur: frames take ${frameMs.toInt()} ms, detector tiles now take turns")
+        }
+        if (still) stillPasses++
+        stats = "Frames: %.0f ms each on average (last %.0f ms), tiles take turns %s, capture %dx%d, still-screen passes %d"
+            .format(java.util.Locale.ROOT, frameMs, ms, if (tilesTakeTurns) "yes" else "no", capW, capH, stillPasses)
+        failStreak = if (frame.failed) failStreak + 1 else 0
+        if (!frame.failed) lastOk = SystemClock.uptimeMillis()
+        val bm = Bitmap.createBitmap(thumbPx, thumbW, thumbH, Bitmap.Config.ARGB_8888)
+        val rects = frame.rects.copyOf(frame.count * 5)
+        val n = frame.count
+        main.post { if (!stopped) overlay.show(rects, n, bm, failMode(), false) }
+
+        // what this pass skipped: the nudity model (it ran too recently), the other detector tiles
+        val needNsfw = !runNsfw && policy and Vision.POLICY_NSFW != 0
+        tilePasses = if (!tilesTakeTurns) 0 else if (still) tilePasses - 1 else TILES - 1
+        if (needNsfw) again(buf, stride, t, still, (NSFW_EVERY_MS - (t - lastNsfw)).toLong().coerceAtLeast(MIN_INTERVAL_MS))
+        else if (tilePasses > 0) again(buf, stride, t, still, MIN_INTERVAL_MS)
+    }
+
+    /** Keeps the frame and passes it through [process] again after [delayMs], unless a newer frame arrives first. */
+    private fun again(buf: ByteBuffer, stride: Int, t: Double, still: Boolean, delayMs: Long) {
+        if (!still) {
+            val copy = stillBuf?.takeIf { it.capacity() == buf.capacity() }
+                ?: ByteBuffer.allocateDirect(buf.capacity()).also { stillBuf = it }
+            copy.clear(); buf.rewind(); copy.put(buf); copy.rewind()
+            stillStride = stride; stillT = t; stillAt = SystemClock.uptimeMillis()
+        }
+        val g = gen
+        worker.postDelayed({
+            val v = vision
+            val b = stillBuf
+            if (!stopped && g == gen && v != null && b != null && policy > 0) {
+                busySince = SystemClock.uptimeMillis()
+                // the kept frame's time moves on with the clock: covers and tracks age as on a live frame
+                try { process(v, b, stillStride, stillT + (SystemClock.uptimeMillis() - stillAt), true) }
+                finally { busySince = 0 }
+            }
+        }, delayMs)
+    }
+
     /** 0 fine, 1 cover the screen, 2 warning badge (Settings.blurFailCover decides between 1 and 2). */
     private fun failMode(): Int {
         val now = SystemClock.uptimeMillis()
         val busy = busySince
-        val failing = modelsBad || failStreak >= 3 || (busy != 0L && now - busy > STALL_MS)
+        // A model missing from this build never comes back: a whole-screen cover would hide the app's own switch
+        // for good, so that case gets the badge (and the status line says which model is missing).
+        if (modelsBad) return 2
+        val failing = failStreak >= 3 || (busy != 0L && now - busy > STALL_MS)
         // a full-screen cover only where touches pass through it (accessibility overlay): otherwise the phone is stuck
         val canCover = settings.blurFailCover &&
             (overlay.host == BlurOverlay.Host.ACCESSIBILITY || overlay.host == BlurOverlay.Host.SHIZUKU)

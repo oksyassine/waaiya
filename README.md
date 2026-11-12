@@ -7,8 +7,9 @@
 > «وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ», "and that a heedful ear would retain it" (al-Ḥāqqah 69:12)
 
 Waaiya removes musical instruments from everything your device plays and keeps the voice: speech, Quran
-recitation, lectures. It runs on the device, in real time, and fails closed: if the filter cannot run, you hear
-silence, never the unfiltered sound. (The project was called "Islamic Mute" before; some internal names, such as
+recitation, lectures. It runs on the device, in real time, and fails closed: if the filter itself cannot run, you
+hear silence, never the unfiltered sound. (On Android, when the system ends the capture, filtering stops and a
+notification says the sound is no longer filtered.) (The project was called "Islamic Mute" before; some internal names, such as
 the Android package `org.islamicmute.app` and the Linux service, keep the old name so existing installs update.)
 
 | Platform | Status | How it works |
@@ -35,7 +36,7 @@ Research behind the design: `reports/System wide instrument muting app.md`.
 | `models/dfn3/` | Streaming export of DeepFilterNet3 (speech mode) + parity tests against the official implementation. |
 | `models/voice/` | Training of our own model that keeps speech, Quran recitation and singing (stage 3). |
 | `models/vision/` | Screen blur models: export of the person and nudity models, our woman/man classifier, scorer. |
-| `cli/` | `im-process` (file in/out, delay-compensated) and `im-stream` (raw stdin/stdout filter used by the Linux daemon). |
+| `cli/` | `im-process` (file in/out, delay-compensated), `im-pulse` (the Linux daemon's filter) and `im-stream` (raw stdin/stdout filter, its fallback). |
 | `linux/` | `waaiya` command (also installed as `islamic-mute`), systemd user service, LADSPA plugin (for PipeWire filter-chain), live tests. |
 | `testset/` | Builds the evaluation set: licensed voice clips + synthesised instrumental music (exact references). |
 | `eval/` | Scores models through the real engine: instrument suppression, voice retention, SI-SDR, leakage, optional WER. |
@@ -119,7 +120,7 @@ audio the filter cannot take (e.g. 5.1) means no file, never an unfiltered one. 
 when a site refuses anonymous visitors for a while (Instagram does this at times), cannot be opened.
 
 yt-dlp keeps itself current: once a day the app checks PyPI for a newer release, and after a link fails it
-also takes yt-dlp's nightly build and retries once (`im_update.py`: PyPI SHA-256 checked, pure-Python wheels
+also takes yt-dlp's nightly build (checked at most once an hour) and retries once (`im_update.py`: PyPI SHA-256 checked, pure-Python wheels
 only, used only after it imports correctly, and a newer yt-dlp in an APK update always wins). Because the app
 downloads code, this build is meant for direct download (GitHub releases); stores that forbid downloading code
 (Google Play, F-Droid's main repository) would need a build with the self-update turned off.
@@ -143,7 +144,7 @@ the detector is missing or fails while the option is on, the voice is muted.
 ## Screen blur (optional, Android)
 
 While filtering runs, Waaiya can also cover, over every app, **women** (whole body; people the app cannot
-clearly tell are men are covered too) and **immodest images** (nudity, revealing clothing; the whole screen is
+clearly tell are men are covered too) and **immodest images** (nudity, revealing clothing; the screen is
 covered). Both are off by default and chosen in the app. Everything runs on the phone.
 
 How it works: the screen is captured small (long side 640 px, same screen-capture permission as the audio
