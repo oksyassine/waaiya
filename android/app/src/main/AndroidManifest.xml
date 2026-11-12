@@ -90,6 +90,12 @@
             android:exported="false"
             android:foregroundServiceType="dataSync|mediaProcessing" />
 
+        <!-- One-time setup over Wireless debugging (Android 11+): pairs with the phone's own adbd while the user is in
+             Settings, then grants DUMP and PROJECT_MEDIA. A local network exchange of a few minutes at most. -->
+        <service android:name=".WirelessSetupService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
         <!-- Screen blur's accessibility service (touches pass through the covers) is only in builds made with
              -PimBlurA11y: src/blurA11y/AndroidManifest.xml. Play Protect blocks sideloaded apps that declare one. -->
         <service android:name=".FilterService"
