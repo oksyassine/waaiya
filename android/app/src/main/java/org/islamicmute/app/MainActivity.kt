@@ -65,6 +65,8 @@ class MainActivity : Activity() {
     private var captureCancelled = false
 
     private val serviceChanged: () -> Unit = { refresh() }
+    /** Setup over Wireless debugging: a hint of ours (developer options off, notifications off) under its steps. */
+    private var wsetupHint: Int? = null
     private val shizukuChanged = Shizuku.OnBinderReceivedListener { runOnUiThread { refresh() } }
     private val shizukuDead = Shizuku.OnBinderDeadListener { runOnUiThread { refresh() } }
     private val shizukuPermission = Shizuku.OnRequestPermissionResultListener { code, result ->
@@ -177,6 +179,8 @@ class MainActivity : Activity() {
 
         FilterService.addListener(serviceChanged)
         ScreenBlur.addListener(serviceChanged)
+        WirelessSetup.addListener(serviceChanged)
+        setupWireless()
         Shizuku.addBinderReceivedListenerSticky(shizukuChanged)
         Shizuku.addBinderDeadListener(shizukuDead)
         Shizuku.addRequestPermissionResultListener(shizukuPermission)
@@ -188,6 +192,7 @@ class MainActivity : Activity() {
     override fun onDestroy() {
         FilterService.removeListener(serviceChanged)
         ScreenBlur.removeListener(serviceChanged)
+        WirelessSetup.removeListener(serviceChanged)
         Shizuku.removeBinderReceivedListener(shizukuChanged)
         Shizuku.removeBinderDeadListener(shizukuDead)
         Shizuku.removeRequestPermissionResultListener(shizukuPermission)
@@ -284,6 +289,7 @@ class MainActivity : Activity() {
         setupBanner.visibility = if (dumpOk) View.GONE else View.VISIBLE
         setupCard.visibility = if (dumpOk && projectOk) View.GONE else View.VISIBLE
         refreshSteps(dumpOk)
+        refreshWireless()
 
         // Settings
         val man = settings.gender == "man"
@@ -489,6 +495,85 @@ class MainActivity : Activity() {
         }
     }
 
+    // --- Setup on the phone itself (Wireless debugging, Android 11+): WirelessSetup.kt -----------------------------
+
+    private fun setupWireless() {
+        findViewById<View>(R.id.wsetup_box).visibility = if (WirelessSetup.supported) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.wsetup_android10).visibility = if (WirelessSetup.supported) View.GONE else View.VISIBLE
+        findViewById<Button>(R.id.wsetup_start).setOnClickListener { startWireless(askedNotifications = false) }
+        findViewById<Button>(R.id.wsetup_enter).setOnClickListener { askPairingCode() }
+        findViewById<Button>(R.id.wsetup_cancel).setOnClickListener { WirelessSetup.cancel(this) }
+    }
+
+    private fun refreshWireless() {
+        if (!WirelessSetup.supported) return
+        val st = WirelessSetup.status
+        val running = WirelessSetup.running
+        findViewById<Button>(R.id.wsetup_start).isEnabled = !running
+        findViewById<View>(R.id.wsetup_enter).visibility = if (running) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.wsetup_cancel).visibility = if (running) View.VISIBLE else View.GONE
+        val status = findViewById<TextView>(R.id.wsetup_status)
+        val text = buildList {
+            if (st != null) add(WirelessSetupTexts.title(this@MainActivity, st.phase, st.note) + "\n" +
+                WirelessSetupTexts.body(this@MainActivity, st.phase, st.note, st.detail))
+            wsetupHint?.let { add(getString(it)) }
+        }.joinToString("\n\n")
+        status.text = text
+        status.visibility = if (text.isEmpty()) View.GONE else View.VISIBLE
+        status.setTextColor(getColor(if (st?.phase == org.islamicmute.app.adb.SetupFlow.Phase.FAILED ||
+            st?.note == org.islamicmute.app.adb.SetupFlow.Note.WRONG_CODE) R.color.error else R.color.text_secondary))
+    }
+
+    /**
+     * Start: notifications first (the code is typed in one), then Developer options. With Developer options off,
+     * About phone opens instead and the user comes back once they are on.
+     */
+    private fun startWireless(askedNotifications: Boolean) {
+        wsetupHint = null
+        if (Build.VERSION.SDK_INT >= 33 && !askedNotifications &&
+            checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), REQ_WSETUP_NOTIFICATIONS)
+            return
+        }
+        if (!WirelessSetup.developerOptionsOn(this)) {
+            AlertDialog.Builder(this)
+                .setMessage(R.string.wsetup_dev_off)
+                .setPositiveButton(R.string.wsetup_open_about) { _, _ -> WirelessSetup.openWirelessDebugging(this) }
+                .setNegativeButton(R.string.guide_close, null)
+                .show()
+            return
+        }
+        val notificationsOn = getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled()
+        if (!notificationsOn) wsetupHint = R.string.wsetup_notif_off
+        WirelessSetup.start(this)
+        WirelessSetup.openWirelessDebugging(this)
+        refresh()
+    }
+
+    /** The code typed in the app: for split screen, or when the notification cannot be used. */
+    private fun askPairingCode() {
+        val dp = resources.displayMetrics.density
+        val field = android.widget.EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_PHONE
+            hint = getString(R.string.wsetup_code_hint)
+            textDirection = View.TEXT_DIRECTION_LTR
+        }
+        val box = android.widget.FrameLayout(this).apply {
+            setPadding((24 * dp).toInt(), (8 * dp).toInt(), (24 * dp).toInt(), 0); addView(field)
+        }
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(R.string.wsetup_code_dialog_title)
+            .setMessage(R.string.wsetup_code_dialog_body)
+            .setView(box)
+            .setPositiveButton(R.string.wsetup_code_ok, null)
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            if (WirelessSetup.enterCode(this, field.text.toString())) dialog.dismiss()
+            else field.error = getString(R.string.wsetup_code_unreadable)
+        }
+    }
+
     private fun setGender(g: String) {
         settings.gender = g
         refresh()
@@ -616,6 +701,7 @@ class MainActivity : Activity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ_WSETUP_NOTIFICATIONS) { startWireless(askedNotifications = true); return }
         if (requestCode != REQ_PERMISSIONS || !startAfterPermission) return
         startAfterPermission = false
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) startCapture()
@@ -643,5 +729,6 @@ class MainActivity : Activity() {
         val STRICT_SHORT = intArrayOf(R.string.blur_strict_0_short, R.string.blur_strict_1_short, R.string.blur_strict_2_short)
         const val REQ_PERMISSIONS = 1
         const val REQ_CAPTURE = 7
+        const val REQ_WSETUP_NOTIFICATIONS = 8
     }
 }

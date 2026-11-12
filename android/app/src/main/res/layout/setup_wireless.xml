@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- First setup route on Android 11+: Wireless debugging on the phone itself (WirelessSetup.kt). Shown in the setup
+     card above the Shizuku steps; on Android 10 only the note saying a computer is needed. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout android:id="@+id/wsetup_box" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:layout_marginTop="16dp">
+        <TextView style="@style/Text.Body" android:fontFamily="sans-serif-medium" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="@string/wsetup_route_title" android:accessibilityHeading="true" />
+        <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:text="@string/wsetup_route_body" />
+        <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:text="@string/wsetup_steps" />
+        <TextView android:id="@+id/wsetup_status" style="@style/Text.Secondary" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textIsSelectable="true"
+            android:accessibilityLiveRegion="polite" android:visibility="gone" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <Button android:id="@+id/wsetup_start" style="@style/Button.Tonal" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="@string/wsetup_start" />
+            <Button android:id="@+id/wsetup_enter" style="@style/Button.Text" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_marginStart="8dp" android:visibility="gone"
+                android:text="@string/wsetup_enter_here" />
+        </LinearLayout>
+        <Button android:id="@+id/wsetup_cancel" style="@style/Button.Text" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:visibility="gone" android:text="@string/wsetup_cancel" />
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="20dp"
+            android:background="@color/outline" />
+        <TextView style="@style/Text.Body" android:fontFamily="sans-serif-medium" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/wsetup_shizuku_heading"
+            android:accessibilityHeading="true" />
+        <TextView style="@style/Text.Secondary" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:text="@string/wsetup_shizuku_note" />
+    </LinearLayout>
+    <TextView android:id="@+id/wsetup_android10" style="@style/Text.Secondary" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="@string/wsetup_android10"
+        android:visibility="gone" />
+</LinearLayout>

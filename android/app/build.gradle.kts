@@ -106,6 +106,9 @@ dependencies {
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
     // JVM tests of the parts with no Android classes (LoadMonitor, AudioDump): ./gradlew testDebugUnitTest
     testImplementation("junit:junit:4.13.2")
+    // Host-side check of the Wireless debugging client against a real adbd (AdbInteropTest, skipped unless asked):
+    // Conscrypt gives the JVM the TLS exporter that Android has built in. Tests only, not in the APK.
+    testImplementation("org.conscrypt:conscrypt-openjdk-uber:2.5.2")
 }
 
 // The engine links ONNX Runtime's C API: unpack headers and .so files from the AAR for CMake.
