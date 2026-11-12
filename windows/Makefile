@@ -14,6 +14,17 @@ CXXFLAGS = -O2 -std=c++17 $(WARN) -Iengine/include -Iengine/src -I$(ORT)/include
 LDFLAGS  = -static -L$(ORT)/lib
 ORTLIB   = -lonnxruntime
 
+# The app's version (desktop/pubspec.yaml, "0.2.10+12"), in every program's version information (windows/common/version.rc)
+WAAIYA_VERSION := $(shell sed -n 's/^version: *//p' desktop/pubspec.yaml | tr -d '\r')
+WAAIYA_VERSION_NUM := $(shell echo '$(WAAIYA_VERSION)' | tr '.+' ',,' | awk -F, '{printf "%d,%d,%d,%d", $$1, $$2, $$3, $$4}')
+RC = $(CROSS)windres
+RCFLAGS = -DWAAIYA_VERSION='\"$(WAAIYA_VERSION)\"' -DWAAIYA_VERSION_NUM=$(WAAIYA_VERSION_NUM)
+
+$(OUT)/version-%.o: windows/common/version.rc desktop/pubspec.yaml | $(OUT)
+	$(RC) $(RCFLAGS) -DWAAIYA_FILE='\"waaiya-$*.exe\"' -DWAAIYA_DESCRIPTION='\"$(DESC_$*)\"' $< -O coff -o $@
+DESC_filter = Waaiya sound filter
+DESC_blur = Waaiya screen blur
+
 ENGINE_OBJ = $(OUT)/im_engine.o $(OUT)/im_detector.o
 VISION_OBJ = $(OUT)/im_vision.o $(OUT)/im_cover.o
 
@@ -33,8 +44,8 @@ FILTER_SRC = windows/filter/wfilter.cpp windows/filter/sessions.cpp windows/comm
 WIN_LIBS   = -lole32 -loleaut32 -luuid -lmmdevapi -lavrt -lshell32 -lpropsys
 
 # GUI subsystem (-mwindows): started by the desktop app with pipes, never with a console window of its own
-$(OUT)/waaiya-filter.exe: $(FILTER_SRC) $(wildcard windows/filter/*.h windows/common/*.h) $(ENGINE_OBJ)
-	$(CXX) $(CXXFLAGS) -municode -mwindows $(FILTER_SRC) $(ENGINE_OBJ) -o $@ $(LDFLAGS) $(ORTLIB) $(WIN_LIBS)
+$(OUT)/waaiya-filter.exe: $(FILTER_SRC) $(wildcard windows/filter/*.h windows/common/*.h) $(ENGINE_OBJ) $(OUT)/version-filter.o
+	$(CXX) $(CXXFLAGS) -municode -mwindows $(FILTER_SRC) $(ENGINE_OBJ) $(OUT)/version-filter.o -o $@ $(LDFLAGS) $(ORTLIB) $(WIN_LIBS)
 
 # Screen blur: the main loop and pure parts shared with Linux (linux/blur), the Windows capture, overlay and system
 # layer (windows/blur)
@@ -50,7 +61,7 @@ $(OUT)/blur_%.o: windows/blur/%.c $(BLUR_HDR) | $(OUT)
 $(OUT)/blur_%.o: windows/blur/%.cpp $(BLUR_HDR) | $(OUT)
 	$(CXX) $(CXXFLAGS) -Ilinux/blur -c $< -o $@
 
-$(OUT)/waaiya-blur.exe: $(BLUR_OBJ) $(VISION_OBJ)
+$(OUT)/waaiya-blur.exe: $(BLUR_OBJ) $(VISION_OBJ) $(OUT)/version-blur.o
 	$(CXX) -mwindows $^ -o $@ $(LDFLAGS) $(ORTLIB) -ld3d11 -ldxgi -lshcore -lgdi32 -luser32 -lpthread
 
 $(OUT)/waaiya-wtest.exe: windows/test/wtest.cpp windows/common/wasapi.cpp windows/common/wasapi.h | $(OUT)

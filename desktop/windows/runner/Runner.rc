@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "org.islamicmute" "\0"
+            VALUE "CompanyName", "Waaiya contributors" "\0"
             VALUE "FileDescription", "Waaiya" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "waaiya_desktop" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 org.islamicmute. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Waaiya contributors. Apache License 2.0." "\0"
             VALUE "OriginalFilename", "waaiya_desktop.exe" "\0"
             VALUE "ProductName", "Waaiya" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

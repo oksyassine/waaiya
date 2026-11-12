@@ -28,6 +28,22 @@ Download the Android app from the [releases](https://github.com/oksyassine/waaiy
 is handled, and what is shared between them: [docs/PLATFORMS.md](docs/PLATFORMS.md).
 Research behind the design: `reports/System wide instrument muting app.md`.
 
+### Windows: what the app changes, and how to remove it
+
+The Windows app (preview) is a folder: unzip it anywhere and run `waaiya\waaiya_desktop.exe`; it needs no
+installation and no admin rights. While filtering is on it changes, for your user only:
+
+- **every other app's volume** in the Volume Mixer, turned down to -80 dB (that is how the original sound is
+  silenced; the filtered copy is what you hear). Your own level of each app is kept in
+  `%LOCALAPPDATA%\Waaiya\filter\levels.txt` and given back when you press Stop, also to apps that were closed
+  meanwhile (the next time they play);
+- with "Start at login" on, a value `WaaiyaFilter` under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`.
+
+To remove it: open the app, press Stop and turn "Start at login" off (or run `engine\waaiya-filter.exe stop` and
+delete that Run value), then delete the app folder, `%LOCALAPPDATA%\Waaiya` and `%APPDATA%\Waaiya`. An app that
+was closed while filtering gets its level back the next time it plays only while Waaiya's restorer runs; if one
+stays quiet after an uninstall, raise it in the Volume Mixer.
+
 ## Layout
 
 | Path | What it is |
@@ -193,6 +209,27 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). In short:
   or engine changes.
 - Only train on data whose licence allows redistributing the resulting model (`THIRD_PARTY_LICENSES.md`, section 5).
 - Contributions are accepted under the project licence (Apache-2.0, section 5 of `LICENSE`).
+
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by
+[SignPath Foundation](https://signpath.org/).
+
+What is signed: the Windows desktop app's own programs (`waaiya_desktop.exe`, `engine\waaiya-filter.exe`,
+`engine\waaiya-blur.exe`), built from this repository by GitHub Actions (`.github/workflows/release.yml`) on
+GitHub-hosted runners and submitted to SignPath from there (`.signpath/artifact-configuration.xml`). Third-party
+libraries in the package (ONNX Runtime, Flutter) are shipped as their projects publish them. Every release is
+signed only after an approver approves it in SignPath. (Until SignPath has accepted the project, Windows releases
+are unsigned and Windows names no publisher.)
+
+Team roles:
+- Committers and reviewers: [oksyassine](https://github.com/oksyassine) (the repository's owner)
+- Approvers: [oksyassine](https://github.com/oksyassine)
+
+Privacy policy: this program will not transfer any information to other networked systems unless specifically
+requested by the user or the person installing or operating it. The filter and the screen blur run on the device
+and send nothing; there is no account and no analytics. (On Android only, "Open a link" contacts the site of the
+link you open, and the bundled yt-dlp downloads its own updates from PyPI.)
 
 ## License
 
