@@ -152,7 +152,7 @@
     <!-- One-time setup on the phone itself (WirelessSetup.kt): Android's Wireless debugging, no Shizuku, no computer. -->
     <string name="wsetup_route_title">Set up on this phone (no extra app)</string>
     <string name="wsetup_route_body">With Android\'s own Wireless debugging. You need Wi-Fi (internet is not needed). Pairing is done once.</string>
-    <string name="wsetup_steps">1. Tap “Start”. Waaiya opens Developer options and shows a notification.\n\n2. If Developer options are off, About phone opens instead: tap “Build number” 7 times (on some phones it is under Software information), come back and tap “Start” again.\n\n3. Turn on “Wireless debugging” and confirm “Allow”.\n\n4. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n5. Keep that screen open. Pull down the notifications, tap “Enter code” in Waaiya\'s notification and type the code.\n\n6. Waaiya finishes by itself and says “Setup done”. You can then turn Wireless debugging off.</string>
+    <string name="wsetup_steps">1. Tap “Start”. Waaiya opens Developer options and shows a notification.\n\n2. If Developer options are off, About phone opens instead: tap “Build number” 7 times (on some phones it is under Software information), come back and tap “Start” again.\n\n3. Scroll down to “Wireless debugging” (under Debugging), turn it on and confirm “Allow”.\n\n4. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n5. Keep that screen open. Pull down the notifications, tap “Enter code” in Waaiya\'s notification and type the code.\n\n6. Waaiya finishes by itself and says “Setup done”. You can then turn Wireless debugging off.</string>
     <string name="wsetup_start">Start</string>
     <string name="wsetup_enter_here">Type the code here</string>
     <string name="wsetup_cancel">Cancel</string>
@@ -190,7 +190,7 @@
     <string name="wsetup_open_about">About phone</string>
     <string name="wsetup_notif_off">Notifications are off for Waaiya, so the code cannot be typed in a notification. Use split screen (Settings in one half, Waaiya in the other) and tap “Type the code here”.</string>
     <string name="wsetup_code_dialog_title">Pairing code</string>
-    <string name="wsetup_code_dialog_body">The 6-digit code from “Pair device with pairing code”. If Waaiya has not found the pairing screen, add the port shown under “IP address &amp; Port”, for example 123456 37123.</string>
+    <string name="wsetup_code_dialog_body">Only with split screen (Settings in one half, Waaiya in the other): leaving Settings closes the pairing screen and its code stops working. Type the 6-digit code shown under “Pair device with pairing code”.</string>
     <string name="wsetup_code_ok">Pair</string>
     <string name="blur_strict_title">Who is left uncovered</string>
     <string name="blur_strict_value">Who is left uncovered: %1$s</string>
