@@ -105,7 +105,18 @@ class WaaiyaSettings {
 }
 
 /// FilterService.State. `stoppedBySystem` on desktop: the filter stopped by itself (the service died or failed).
-enum FilterState { stopped, starting, filtering, modelFailed, noCapturePermission, stoppedBySystem, captureFailed }
+/// `silenced`: filtering stopped by itself and `hold_silence` keeps the other apps muted until the user starts again
+/// or stops (then they play unfiltered); not running.
+enum FilterState {
+  stopped,
+  starting,
+  filtering,
+  modelFailed,
+  noCapturePermission,
+  stoppedBySystem,
+  captureFailed,
+  silenced,
+}
 
 /// `filter.problem`: what the user hears is not what filtering promises (shown instead of the "on" detail).
 abstract final class FilterProblem {

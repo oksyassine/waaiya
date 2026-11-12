@@ -77,6 +77,33 @@ class LinuxEngine {
 
   String get _installedScript => '$libDir/islamic-mute';
 
+  /// The script's settings folder ($CFG: `$XDG_CONFIG_HOME/islamic-mute`).
+  String get configDir {
+    final xdg = env['XDG_CONFIG_HOME'];
+    return '${xdg != null && xdg.isNotEmpty ? xdg : '${env['HOME'] ?? '.'}/.config'}/islamic-mute';
+  }
+
+  /// What `waaiya stereo` / `waaiya keep-silent` last set (also by hand on the command line); null: never set.
+  bool? get stereoSet => _onOff('stereo');
+  bool? get keepSilentSet => _onOff('keep_silent');
+
+  bool? _onOff(String name) => switch (_readTrim('$configDir/$name')) {
+        'on' => true,
+        'off' => false,
+        _ => null,
+      };
+
+  /// The notice the daemon shows when it gives the normal sound back (`$CFG/notice`: title line, text line), in
+  /// the app's language.
+  void writeNotice(String title, String text) {
+    try {
+      Directory(configDir).createSync(recursive: true);
+      File('$configDir/notice').writeAsStringSync('${title.replaceAll('\n', ' ')}\n${text.replaceAll('\n', ' ')}\n');
+    } on IOException {
+      // the English default then
+    }
+  }
+
   String get bundledVersion => _readTrim('${dir.path}/VERSION') ?? '';
 
   String? get installedVersion => File(_installedScript).existsSync() ? _readTrim('$libDir/VERSION') ?? '' : null;

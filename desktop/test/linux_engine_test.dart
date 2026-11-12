@@ -27,8 +27,8 @@ case "$1" in
           if [ -f "$FAKE/engine" ]; then echo "engine:   $(cat "$FAKE/engine")"; else echo "engine:   ok"; fi
           if [ -f "$FAKE/enabled" ]; then echo "autostart: on"; else echo "autostart: off"; fi ;;
   women-singing) echo "$2" > "$FAKE/women" ;;
-  stereo) echo "$2" > "$FAKE/stereo" ;;
-  keep-silent) echo "$2" > "$FAKE/keep_silent" ;;
+  stereo) echo "$2" > "$FAKE/stereo"; mkdir -p "$XDG_CONFIG_HOME/islamic-mute"; echo "$2" > "$XDG_CONFIG_HOME/islamic-mute/stereo" ;;
+  keep-silent) echo "$2" > "$FAKE/keep_silent"; mkdir -p "$XDG_CONFIG_HOME/islamic-mute"; echo "$2" > "$XDG_CONFIG_HOME/islamic-mute/keep_silent" ;;
   reload) [ -f "$FAKE/no_reload" ] && { echo "usage: islamic-mute ..." >&2; exit 1; }; true ;;
 esac
 ''';
@@ -293,19 +293,55 @@ void main() {
     expect(b2.state.filter.problem, FilterProblem.detectorFailed);
   });
 
-  test('a filter that stops by itself is "stopped by the system", the user\'s stop is not', () async {
+  test('a filter that stops by itself: apps held silent (hold_silence), else "stopped by the system"', () async {
     final b = await w.backend();
     await b.startFilter();
     expect(b.state.filter.state, FilterState.filtering);
-    w.flag('running', false); // the daemon died
+    w.flag('running', false); // the daemon died, its virtual output kept the apps silent
     w.flag('down');
     await b.refresh();
-    expect(b.state.filter.state, FilterState.stoppedBySystem);
+    expect(b.state.filter.state, FilterState.silenced);
     expect(b.state.filter.running, isFalse);
+    // "Stop: hear apps unfiltered" is the stop
+    await b.stopFilter();
+    expect(w.calls, contains('stop'));
     w.flag('down', false);
+    await b.refresh();
+    expect(b.state.filter.state, FilterState.stopped);
+    // keep-silent off: the daemon gave the sound back and ended
+    await b.startFilter();
+    w.flag('running', false);
+    await b.refresh();
+    expect(b.state.filter.state, FilterState.stoppedBySystem);
     await b.startFilter();
     await b.stopFilter();
     expect(b.state.filter.state, FilterState.stopped);
+  });
+
+  test('stereo / keep-silent set on the command line show in the app and are not overridden at start', () async {
+    final b = await w.backend();
+    await b.startFilter();
+    await b.stopFilter();
+    expect(b.state.settings.audioStereo, isFalse);
+    File(w.p('config/islamic-mute/stereo')).writeAsStringSync('on\n'); // `waaiya stereo on` by hand
+    File(w.p('config/islamic-mute/keep_silent')).writeAsStringSync('off\n');
+    await b.refresh();
+    expect(b.state.settings.audioStereo, isTrue);
+    expect(b.state.settings.holdSilence, isFalse);
+    final before = w.calls.length;
+    await b.startFilter();
+    expect(w.calls.sublist(before), containsAll(['stereo on', 'keep-silent off']));
+  });
+
+  test('the daemon\'s notice is written in the app\'s language', () async {
+    final b = await w.backend();
+    await b.startFilter();
+    final ar = File(w.p('config/islamic-mute/notice')).readAsLinesSync();
+    expect(ar.first, isNot('Waaiya stopped'));
+    expect(ar, hasLength(2));
+    await b.setLanguage('en');
+    expect(File(w.p('config/islamic-mute/notice')).readAsLinesSync(),
+        ['Waaiya stopped', 'The sound is not filtered any more. Tap to start again.']);
   });
 
   test('diagnostics report: version, waaiya status, logs', () async {

@@ -46,8 +46,13 @@ detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.
 policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
 mono_flag() { [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ] || echo "--mono"; }
 keep_silent() { [ "$(cat "$CFG/keep_silent" 2>/dev/null)" != off ]; }
-# a desktop notice (notify-send, when installed); never fails
-notify() { command -v notify-send >/dev/null && notify-send -a Waaiya -i audio-volume-muted "$1" "$2" 2>/dev/null || true; }
+# a desktop notice (notify-send, when installed); never fails. The app writes $CFG/notice (title line, text line)
+# in the user's language (Arabic or English); without it the English below.
+notify() {
+    local title="$1" text="$2"
+    if [ -s "$CFG/notice" ]; then title="$(sed -n 1p "$CFG/notice")"; text="$(sed -n 2p "$CFG/notice")"; fi
+    command -v notify-send >/dev/null && notify-send -a Waaiya -i audio-volume-muted "$title" "$text" 2>/dev/null || true
+}
 # filter.log: kept to its last 128 KiB once it passes 512 KiB
 trim_log() {
     local f="$STATE/filter.log" size

@@ -138,9 +138,9 @@ Linux and desktop (branch `flutter-ui`): the 2026-11-12 audit's items are fixed 
   the build.
 - Not verified on real hardware yet: multi-monitor Wayland (portal) and a resolution change under GNOME are
   covered by code review and unit tests only; CI runs Xvfb and sway headless with one output.
-- Open: a filter that keeps crashing between two status polls still reads as filtering; the app has no "Stop:
-  hear apps unfiltered" button yet while apps are held silent (comes with the 0.2.10 strings; `waaiya stop`
-  works); mono by default (0.2.10) not yet heard on a real sound server; the desktop notice is English only.
+- Open: a filter that keeps crashing between two status polls still reads as filtering; mono by default
+  (0.2.10) not yet heard on a real sound server. Done in 0.2.10: the stereo and keep-silent switches, "Stop:
+  hear apps unfiltered" while apps are held silent, the desktop notice in Arabic or English.
 
 CI: no release asset holds the women's-singing detector, so release APKs built by CI have no women's-singing
 filter (the build warns) and `test-detector` is skipped there with a notice. The owner decides whether to publish

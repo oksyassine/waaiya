@@ -42,7 +42,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `version` | String | App version name (`0.2.9`; desktop: from the bundle's `engine/VERSION`, else `desktop/lib/version.dart`, checked against `desktop/pubspec.yaml` by a test) |
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
 | `settings` | Map | The settings below, with their current values |
-| `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM`, `CAPTURE_FAILED` (`FilterService.State`). Desktop: `STOPPED_BY_SYSTEM` = the filter stopped by itself (the service died or failed; the screen says "Waaiya stopped"), `MODEL_FAILED` = running but its voice model did not load (silent, fail-closed) |
+| `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM`, `CAPTURE_FAILED`, `SILENCED` (`FilterService.State`). `SILENCED`: filtering stopped by itself and `hold_silence` keeps the other apps muted (not running: the power button starts again; a "Stop: hear apps unfiltered" button calls `stopFilter`); Linux: the daemon is gone and its virtual output stayed. Desktop: `STOPPED_BY_SYSTEM` = the filter stopped by itself (the service died or failed; the screen says "Waaiya stopped"), `MODEL_FAILED` = running but its voice model did not load (silent, fail-closed) |
 | `filter.problem` | String? | While `FILTERING`, what the user hears is not what filtering promises (shown instead of the "on" line, in the error colour): `too_slow` (the device cannot filter live in time), `not_muted` (the original sound is not silenced: setup missing), `mute_failing` (silencing the playing app fails), desktop `detector_failed` (women's singing on, its detector did not load: voices muted). Null: none |
 | `filter.mono` | bool | The live sound was made mono so the device keeps up (a note under the "on" line) |
 | `filter.blockedApps` | List<String> | Apps playing now that do not allow filtering (names); said as silenced or unfiltered according to `silence_unfilterable` |
@@ -100,8 +100,8 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `blur_nudity` | bool | false | live |
 | `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` (desktop: always true, clicks pass through the covers) |
 | `blur_strictness` | int 0/1/2 | 0 | live (ScreenBlur watchdog; desktop: sent to the helper). Who is left uncovered: 0 strict, 1 balanced, 2 relaxed = p(man) at least 0.999 / 0.99 / 0.98 (`Settings.blurMaleClear`, `ib_male_clear`). Desktop without a blur (Windows) stores it only and does not show it |
-| `audio_stereo` | bool | false | Live filter in stereo; off = mono (owner's decision, 0.2.10). Desktop: `waaiya stereo on\|off` then `waaiya reload` while running. Android: `Settings.audioStereo` (UiBridge and the switch row follow with the 0.2.10 strings) |
-| `hold_silence` | bool | true | When filtering stops by itself, other apps stay silent until the user starts again or stops (owner's decision, 0.2.10). Linux: `waaiya keep-silent on\|off`; off = the daemon moves the streams back to the real output with a desktop notice (filter keeps failing, model not loaded, daemon died: `ExecStopPost`). Android: `Settings.holdSilence` (as above) |
+| `audio_stereo` | bool | false | Live filter in stereo; off = mono (owner's decision, 0.2.10). Android: `Settings.audioStereo` (read live by the filter). Desktop: `waaiya stereo on\|off`, then `waaiya reload` while running; a value set on the command line is adopted by the app at its next status poll, so Start never overrides it |
+| `hold_silence` | bool | true | When filtering stops by itself, other apps stay silent (`filter.state` `SILENCED`) until the user starts again or stops (owner's decision, 0.2.10). Android: `Settings.holdSilence`. Linux: `waaiya keep-silent on\|off` (adopted from the command line as above); off = the daemon moves the streams back to the real output with a desktop notice (filter keeps failing, model not loaded, daemon died: `ExecStopPost`), in the app's language (`$XDG_CONFIG_HOME/islamic-mute/notice`, written at start and on a language change) |
 
 ## Methods (MethodChannel `waaiya/app`)
 
@@ -123,6 +123,8 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
 | `diagnosticsReport` | none | String | `Diagnostics.report`: what the app sees on this phone (plain text, English) | Linux: version, session, settings, filter and blur state, `waaiya status`, the service journal and the end of `filter.log` |
 
+Screens (0.2.10, as `MainActivity`): the settings card has "Keep apps silent if filtering stops by itself" and
+"Stereo sound"; the wireless-debugging setup (`wsetup_*`) is Android-only and never shown on desktop.
 Screens (0.2.9, as `MainActivity`): Start without the one-time setup (`capabilities.shizukuSetup` and not
 `setup.originalsMuted`) first asks "The music will still be heard" (`start_no_setup_*`: "Do the setup" scrolls to
 the setup card, "Start anyway" starts); a "Problem? Diagnostics report" button at the bottom shows
