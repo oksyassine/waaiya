@@ -91,3 +91,6 @@ models/vision/data/
 models/vision/downloads/
 models/vision/gender/
 models/vision/*.log
+
+# --- local tool state (any folder): never committed
+.claude/
