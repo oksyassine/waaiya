@@ -228,6 +228,9 @@ class SetupInfo {
   const SetupInfo({
     this.originalsMuted = true,
     this.consentSkipped = true,
+    this.notificationTextNeedsSetup = false,
+    this.deviceNote,
+    this.wireless = const WirelessInfo(),
     this.shizuku,
     this.busy = false,
     this.message,
@@ -237,6 +240,9 @@ class SetupInfo {
   factory SetupInfo.fromMap(Map<Object?, Object?> m) => SetupInfo(
         originalsMuted: _bool(m['originalsMuted'], true),
         consentSkipped: _bool(m['consentSkipped'], true),
+        notificationTextNeedsSetup: _bool(m['notificationTextNeedsSetup'], false),
+        deviceNote: _str(m['deviceNote']),
+        wireless: WirelessInfo.fromMap(_map(m['wireless'])),
         shizuku: _enum(ShizukuState.values, m['shizuku']),
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
@@ -248,16 +254,30 @@ class SetupInfo {
 
   /// No screen-capture question at start (Android: app-op PROJECT_MEDIA allowed).
   final bool consentSkipped;
+
+  /// The notification-text Quick Settings tile is on but its permission is missing (Android 15+): the same
+  /// one-time setup grants it, so the setup card shows again.
+  final bool notificationTextNeedsSetup;
+
+  /// `xiaomi` or `coloros`: this phone needs a Developer options switch changed before the setup; null otherwise.
+  final String? deviceNote;
+
+  /// The setup on the phone itself (Android 11+: Wireless debugging, no Shizuku).
+  final WirelessInfo wireless;
   final ShizukuState? shizuku;
   final bool busy;
 
-  /// `failed` (detail = log), `refused`, `done_restart`, `error` (detail = text).
+  /// `failed` (detail = log), `refused`, `done_restart`, `error` (detail = text), `slow` (still waiting for
+  /// Shizuku), `timeout`, `refused_xiaomi` / `refused_coloros` (the phone refused: a Developer options switch).
   final BackendMessage? message;
   final String? adbCommands;
 
   Map<String, Object?> toMap() => {
         'originalsMuted': originalsMuted,
         'consentSkipped': consentSkipped,
+        'notificationTextNeedsSetup': notificationTextNeedsSetup,
+        'deviceNote': deviceNote,
+        'wireless': wireless.toMap(),
         'shizuku': shizuku == null ? null : _enumName(shizuku!),
         'busy': busy,
         'message': message?.toMap(),
@@ -273,6 +293,8 @@ class BlurInfo {
     this.a11yEnabled = false,
     this.touchPassThrough = false,
     this.shizukuLayer = false,
+    this.helperRunning = false,
+    this.helperStartable = false,
     this.layerSupported = false,
     this.busy = false,
     this.message,
@@ -287,6 +309,8 @@ class BlurInfo {
         a11yEnabled: _bool(m['a11yEnabled'], false),
         touchPassThrough: _bool(m['touchPassThrough'], false),
         shizukuLayer: _bool(m['shizukuLayer'], false),
+        helperRunning: _bool(m['helperRunning'], false),
+        helperStartable: _bool(m['helperStartable'], false),
         layerSupported: _bool(m['layerSupported'], false),
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
@@ -303,6 +327,12 @@ class BlurInfo {
 
   /// Shizuku is ready on Android 12+: the covers are a Shizuku shell layer, nothing else to allow.
   final bool shizukuLayer;
+
+  /// Waaiya's own cover helper runs (Android 12+): it draws the covers and touches pass through them.
+  final bool helperRunning;
+
+  /// The helper can be started from here (Android 12+, through the on-phone setup).
+  final bool helperStartable;
 
   /// The Shizuku cover layer is possible on this device (Android 12+), once Shizuku runs and allows Waaiya.
   final bool layerSupported;
@@ -327,6 +357,8 @@ class BlurInfo {
         'a11yEnabled': a11yEnabled,
         'touchPassThrough': touchPassThrough,
         'shizukuLayer': shizukuLayer,
+        'helperRunning': helperRunning,
+        'helperStartable': helperStartable,
         'layerSupported': layerSupported,
         'busy': busy,
         'message': message?.toMap(),
@@ -389,6 +421,75 @@ class Capabilities {
 }
 
 /// One full snapshot: the getState result and every event.
+/// setup.wireless (docs/UI_CONTRACT.md): the on-phone setup's progress. [title] and [body] are Android string
+/// names (wsetup_*, setup_refused_*), turned into words by [wirelessText].
+class WirelessInfo {
+  const WirelessInfo({
+    this.supported = false,
+    this.running = false,
+    this.phase,
+    this.title,
+    this.body,
+    this.detail,
+    this.isError = false,
+    this.hint,
+  });
+
+  factory WirelessInfo.fromMap(Map<Object?, Object?> m) => WirelessInfo(
+        supported: _bool(m['supported'], false),
+        running: _bool(m['running'], false),
+        phase: _str(m['phase']),
+        title: _str(m['title']),
+        body: _str(m['body']),
+        detail: _str(m['detail']),
+        isError: _bool(m['isError'], false),
+        hint: _str(m['hint']),
+      );
+
+  /// Android 11+ (pairing with a code).
+  final bool supported;
+
+  /// Waiting for the code, pairing or connecting.
+  final bool running;
+
+  /// WAITING, PAIRING, CONNECTING, DONE, FAILED; null before the first run.
+  final String? phase;
+  final String? title;
+  final String? body;
+
+  /// Raw output when no sentence explains it.
+  final String? detail;
+  final bool isError;
+
+  /// Extra advice as a string name: `wsetup_notif_off`, `wsetup_dev_off`.
+  final String? hint;
+
+  Map<String, Object?> toMap() => {
+        'supported': supported,
+        'running': running,
+        'phase': phase,
+        'title': title,
+        'body': body,
+        'detail': detail,
+        'isError': isError,
+        'hint': hint,
+      };
+}
+
+/// `navigate`: show [page] once (`setup`, `filter`, `screen`, `links`, `settings`); [id] tells repeats apart.
+class PageRequest {
+  const PageRequest(this.page, this.id);
+  final String page;
+  final int id;
+
+  static PageRequest? fromMap(Object? m) {
+    if (m is! Map) return null;
+    final page = m['page'];
+    final id = m['id'];
+    return page is String && id is int ? PageRequest(page, id) : null;
+  }
+}
+
 class AppState {
   const AppState({
     this.platform = 'android',
@@ -400,6 +501,7 @@ class AppState {
     this.blur = const BlurInfo(),
     this.detectorModel = false,
     this.capabilities = const Capabilities(),
+    this.navigate,
   });
 
   /// Tolerant: a missing or unknown key takes its default (keys are added, never renamed).
@@ -413,6 +515,7 @@ class AppState {
         blur: BlurInfo.fromMap(_map(m['blur'])),
         detectorModel: _bool(_map(m['models'])['detector'], false),
         capabilities: Capabilities.fromMap(_map(m['capabilities'])),
+        navigate: PageRequest.fromMap(m['navigate']),
       );
 
   final String platform;
@@ -428,6 +531,9 @@ class AppState {
   /// The women's-singing detector is bundled.
   final bool detectorModel;
   final Capabilities capabilities;
+
+  /// A page the platform asks to show once (a Quick Settings tile's "Open Waaiya"); null most of the time.
+  final PageRequest? navigate;
 
   AppState copyWith({
     String? language,
@@ -542,6 +648,27 @@ abstract interface class WaaiyaBackend {
   /// A plain-text report of what the app sees on this device (Android: Diagnostics.report; desktop: the daemon,
   /// filter and blur state), for the user to copy and give to whoever helps. Nothing is sent anywhere.
   Future<String> diagnosticsReport();
+
+  /// The on-phone setup (Android 11+): `started`, `dev_off` (Developer options are off: offer About phone), or
+  /// `asking` (Android's notification question is open; the setup goes on by itself after it).
+  Future<String> wirelessStart();
+
+  /// A 6-digit pairing code typed in the app; false when it is not 6 digits.
+  Future<bool> wirelessEnterCode(String code);
+
+  Future<void> wirelessCancel();
+
+  /// About phone (to turn on Developer options), or Developer options when they are on.
+  Future<void> openAboutPhone();
+
+  /// The setup step by step with pictures (Android).
+  Future<void> openSetupGuide();
+
+  /// The page asked for in [AppState.navigate] was shown.
+  Future<void> pageShown();
+
+  /// Android's share sheet with [text] (the diagnostics report).
+  Future<void> shareText(String text);
 }
 
 // --- tolerant readers ---

@@ -46,6 +46,12 @@
     <string name="setup_done_restart">تم. أوقف التصفية ثم شغّلها مرة واحدة لتطبيق ذلك.</string>
     <string name="setup_failed">لم يكتمل الإعداد. التفاصيل:\n%1$s</string>
     <string name="shizuku_refused">رُفض إذن Shizuku. اضغط الزر للمحاولة مرة أخرى.</string>
+    <string name="setup_slow">يستغرق Shizuku وقتًا أطول من المعتاد. انتظر قليلًا: في بعض الهواتف يحتاج مساعده إلى دقيقة ليبدأ أول مرة.</string>
+    <string name="setup_timeout">لم يُجب Shizuku خلال دقيقتين. افتح Shizuku وتأكد أنه يعمل، ثم اضغط الزر مرة أخرى. إذا اكتمل الإعداد لاحقًا فستتحدّث هذه الشاشة وحدها.</string>
+    <string name="setup_refused_xiaomi">رفض الهاتف منح الأذونات. في هواتف شاومي وريدمي وبوكو، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم حاول مرة أخرى.</string>
+    <string name="setup_refused_coloros">رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏، ثم حاول مرة أخرى.</string>
+    <string name="setup_note_xiaomi">شاومي وريدمي وبوكو: قبل الإعداد، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏. يطلب ذلك تسجيل الدخول إلى حساب شاومي (وفي بعض الهواتف وجود شريحة SIM). إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات.</string>
+    <string name="setup_note_coloros">أوبو وون بلس وريلمي: قبل الإعداد، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏.</string>
     <string name="step_done_cd">تم</string>
     <string name="step_todo_cd">الخطوة %1$d</string>
     <string name="computer_toggle">استخدم حاسوبًا بدلًا من ذلك</string>
@@ -131,7 +137,7 @@
     <string name="blur_setup_manual">السماح من إعدادات أندرويد</string>
     <string name="blur_status_needs_setup">يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).</string>
     <string name="blur_status_needs_overlay">يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.</string>
-    <string name="blur_fail_unavailable">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: يرسم Shizuku الأغطية ويمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.</string>
+    <string name="blur_fail_unavailable">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="blur_fail_needs_a11y">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="language_title">اللغة</string>
     <string name="setting_language_title">اللغة: %1$s</string>
@@ -231,4 +237,67 @@
     <string name="notif_stopped_text">الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.</string>
     <string name="notif_silenced_title">توقفت التصفية: التطبيقات الأخرى مكتومة</string>
     <string name="notif_silenced_text">اضغط للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.</string>
+    <!-- مربعات الإعدادات السريعة -->
+    <string name="tile_on">تعمل</string>
+    <string name="tile_off">متوقفة</string>
+    <string name="tile_starting">جارٍ التشغيل…</string>
+    <string name="tile_silenced">متوقفة، التطبيقات مكتومة</string>
+    <string name="tile_on_not_muted">تعمل، الإعداد ناقص</string>
+    <string name="tile_open_app">فتح واعية</string>
+    <string name="tile_text_label">نص الإشعارات</string>
+    <string name="tile_text_shown">ظاهر أثناء التصفية</string>
+    <string name="tile_text_hidden">مخفي أثناء التصفية</string>
+    <string name="tile_text_needs_setup">الإعداد ناقص</string>
+    <string name="tile_text_granting">جارٍ طلب Shizuku…</string>
+    <string name="tile_text_next_start">من التشغيل القادم</string>
+    <string name="tile_text_explain_title">إظهار نص الإشعارات أثناء التصفية؟</string>
+    <string name="tile_text_explain_body">يخفي أندرويد نص الإشعارات حين يلتقط تطبيقٌ الشاشة، والتصفية تُعدّ من ذلك. تستطيع واعية إيقاف هذه الحماية أثناء التصفية فقط، وتعيدها عند توقف التصفية.\n\nأثناء إيقافها، قد تُظهر مشاركةُ شاشةٍ في الوقت نفسه (مكالمة فيديو مثلًا) إشعاراتك ورموزك للآخرين.</string>
+    <string name="tile_text_turn_on">تشغيل</string>
+    <string name="tile_text_setup_title">يلزم إذن إضافي</string>
+    <string name="tile_text_setup_body">افتح واعية وأعد الإعداد الأولي (تصحيح الأخطاء اللاسلكي أو Shizuku أو حاسوب)، فهو يسمح الآن بهذا المربع أيضًا. في هواتف شاومي، فعّل أولًا «تصحيح أخطاء USB (إعدادات الأمان)» في «خيارات المطور».</string>
+    <!-- الدليل المصوّر (SetupGuideActivity) -->
+    <string name="wsetup_guide">الخطوات بالصور</string>
+    <string name="guide_w_title">الإعداد خطوة بخطوة</string>
+    <string name="guide_w_intro">الإعداد لمرة واحدة على هذا الهاتف، مع صور. الصور مأخوذة من هاتف واحد، فقد تختلف القوائم قليلًا في هاتفك، لكن الأسماء نفسها.</string>
+    <string name="guide_w_step">%1$d. %2$s</string>
+    <string name="guide_w_1">فعّل ‏«خيارات المطور»‏: في الإعدادات › حول الهاتف، اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏). تخطَّ هذه الخطوة إن كانت مفعّلة.</string>
+    <string name="guide_w_2">في واعية، اضغط ‏«ابدأ»‏ تحت ‏«الإعداد على هذا الهاتف»‏. تفتح واعية ‏«خيارات المطور»‏ وتُظهر إشعارًا.</string>
+    <string name="guide_w_3">انزل إلى ‏«تصحيح الأخطاء اللاسلكي»‏ (ضمن قسم ‏«تصحيح الأخطاء»‏) واضغط على اسمه، لا على المفتاح.</string>
+    <string name="guide_w_4">فعّل ‏«استخدام تصحيح الأخطاء اللاسلكي»‏ وأكّد بالضغط على ‏«سماح»‏.</string>
+    <string name="guide_w_5">اضغط ‏«إقران الجهاز باستخدام رمز الإقران»‏.</string>
+    <string name="guide_w_6">يظهر رمز من 6 أرقام. اترك هذه الشاشة مفتوحة.</string>
+    <string name="guide_w_7">اسحب الإشعارات إلى الأسفل، واضغط ‏«أدخل الرمز»‏ في إشعار واعية.</string>
+    <string name="guide_w_8">اكتب الأرقام الستة واضغط زر الإرسال.</string>
+    <string name="guide_w_9">تُكمل واعية الباقي وحدها وتقول ‏«اكتمل الإعداد»‏. يمكنك الآن إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.</string>
+    <string name="guide_w_trouble_title">إذا كان شيء مختلفًا</string>
+    <string name="guide_w_trouble">• لا تجد القائمة: استخدم البحث أعلى الإعدادات واكتب ‏«رقم الإصدار»‏ أو ‏«تصحيح الأخطاء اللاسلكي»‏.\n• يحتاج ‏«تصحيح الأخطاء اللاسلكي»‏ إلى شبكة Wi‑Fi (لا يلزم الإنترنت)، ولا يتفعّل بدونها.\n• لا يظهر ‏«أدخل الرمز»‏ في الإشعار (الإشعارات مطفأة لواعية، أو الهاتف يُخفي الحقل): افتح الإعدادات وواعية جنبًا إلى جنب (تقسيم الشاشة)، واضغط ‏«اكتب الرمز هنا»‏ في واعية.\n• لم يُقبل الرمز: يتغيّر الرمز كل مرة تُفتح فيها شاشة الإقران. افتحها من جديد واكتب الرمز الجديد.</string>
+    <string name="guide_w_shizuku_title">باستخدام Shizuku بدلًا من ذلك</string>
+    <string name="guide_w_shizuku">دليل Shizuku نفسه يشرح خطواته بالصور أيضًا. ويسمح Shizuku كذلك بمرور اللمس عبر أغطية الشاشة.</string>
+    <string name="guide_w_shizuku_open">فتح دليل Shizuku</string>
+    <!-- شاشات Flutter: الشريط السفلي والصفحات -->
+    <string name="nav_filter">التصفية</string>
+    <string name="nav_screen">الشاشة</string>
+    <string name="nav_links">الروابط</string>
+    <string name="nav_setup">الإعداد</string>
+    <string name="nav_settings">الإعدادات</string>
+    <string name="setup_done_title">اكتمل الإعداد</string>
+    <string name="setup_done_body">تستطيع واعية كتم الصوت الأصلي للتطبيقات الأخرى. لا تُعِده إلا إذا تغيّر شيء (أُلغي الإعداد، أو قالت واعية إنه ناقص).</string>
+    <string name="setup_redo">إظهار الإعداد من جديد</string>
+    <string name="setup_go">الذهاب إلى الإعداد</string>
+    <!-- مساعد واعية للأغطية (CoverHelper) -->
+    <string name="helper_title">مرور اللمس عبر الأغطية</string>
+    <string name="helper_body_off">دون مساعدة، يمنع الغطاء اللمس تحته. يرسم مساعد واعية الأغطية بحيث يمرّ اللمس من خلالها. فعّل ‏«تصحيح الأخطاء اللاسلكي»‏ (يلزم Wi‑Fi) واضغط الزر؛ في المرة الأولى تُقرن الهاتف مرة واحدة كما في الإعداد. بعد إعادة تشغيل الهاتف اضغطه من جديد.</string>
+    <string name="helper_start">تشغيل مساعد واعية</string>
+    <string name="helper_on">مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.</string>
+    <string name="helper_shizuku_on">Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.</string>
+    <string name="helper_or_shizuku">أو باستخدام Shizuku:</string>
+    <string name="guide_w_helper_note">إذا كان تمويه الشاشة مفعّلًا، يشغّل الإعداد أيضًا مساعد واعية ليمرّ اللمس عبر الأغطية. أبقِ ‏«تصحيح أخطاء USB»‏ مفعّلًا لأجله (يمكن إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏)، واضغط ‏«ابدأ»‏ من جديد بعد إعادة تشغيل الهاتف.</string>
+    <string name="filter_options_title">خيارات التصفية</string>
+    <string name="settings_general_title">عام</string>
+    <!-- اختصارات التطبيق (ضغطة طويلة على الأيقونة) -->
+    <string name="shortcut_start_short">تشغيل</string>
+    <string name="shortcut_start_long">تشغيل التصفية</string>
+    <string name="shortcut_stop_short">إيقاف</string>
+    <string name="shortcut_stop_long">إيقاف التصفية</string>
+    <string name="notif_channel_silenced">إبقاء التطبيقات صامتة</string>
 </resources>

@@ -9,6 +9,7 @@ import 'backend.dart';
 import 'guide.dart';
 import 'theme.dart';
 import 'widgets.dart';
+import 'wireless_setup.dart';
 
 /// One step of the Shizuku checklist, as the UI shows it.
 class SetupStep {
@@ -45,9 +46,64 @@ class SetupStep {
   return (steps, steps.indexWhere((st) => !st.done));
 }
 
-/// The warning banner and the one-time setup card (Shizuku steps, or adb commands from a computer).
-class SetupSection extends StatelessWidget {
+/// "One step left": the original sound cannot be silenced yet (Filter page and Setup page).
+class SetupBanner extends StatelessWidget {
+  const SetupBanner({super.key, this.onGo});
+
+  /// Shows a "Go to the setup" button (Filter page).
+  final VoidCallback? onGo;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final c = WaaiyaColors.of(context);
+    final text = Theme.of(context).textTheme;
+    return Card(
+      color: c.warningContainer,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.warning_amber_rounded, color: c.onWarningContainer),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l.setupBannerTitle, style: text.titleMedium?.copyWith(color: c.onWarningContainer)),
+                  const SizedBox(height: 4),
+                  Text(l.setupBannerBody, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
+                  if (onGo != null) ...[
+                    const SizedBox(height: 8),
+                    TestId('setup_go', child: FilledButton(onPressed: onGo, child: Text(l.setupGo))),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The setup is needed: the original sound, the capture question, or the notification-text permission is missing.
+bool setupNeeded(SetupInfo setup) =>
+    !(setup.originalsMuted && setup.consentSkipped) || setup.notificationTextNeedsSetup;
+
+/// The Setup page: the one-time setup on the phone (Wireless debugging), with Shizuku, or from a computer.
+/// When it is done, a short "done" card, with the steps one tap away.
+class SetupSection extends StatefulWidget {
   const SetupSection({super.key});
+
+  @override
+  State<SetupSection> createState() => _SetupSectionState();
+}
+
+class _SetupSectionState extends State<SetupSection> {
+  bool _showAgain = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,48 +120,72 @@ class SetupSection extends StatelessWidget {
             'failed' => l.setupFailed(message.detail),
             'refused' => l.shizukuRefused,
             'done_restart' => l.setupDoneRestart,
+            'slow' => l.setupSlow,
+            'timeout' => l.setupTimeout,
+            'refused_xiaomi' => l.setupRefusedXiaomi,
+            'refused_coloros' => l.setupRefusedColoros,
             _ => message.detail,
           };
+    // Xiaomi / OPPO family: the Developer options switch to change before the setup (Android SetupHelp).
+    final deviceNote = switch (setup.deviceNote) {
+      'xiaomi' => l.setupNoteXiaomi,
+      'coloros' => l.setupNoteColoros,
+      _ => null,
+    };
+    final needed = setupNeeded(setup);
+    // a run in progress stays on screen even when the permissions arrived meanwhile
+    if (!needed && !_showAgain && !setup.wireless.running) {
+      return SectionCard(
+        title: l.setupDoneTitle,
+        body: l.setupDoneBody,
+        children: [
+          const SizedBox(height: 8),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TestId(
+              'setup_redo',
+              child: TextButton(onPressed: () => setState(() => _showAgain = true), child: Text(l.setupRedo)),
+            ),
+          ),
+        ],
+      );
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (!setup.originalsMuted)
-          Card(
-            color: c.warningContainer,
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(Icons.warning_amber_rounded, color: c.onWarningContainer),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(l.setupBannerTitle, style: text.titleMedium?.copyWith(color: c.onWarningContainer)),
-                        const SizedBox(height: 4),
-                        Text(l.setupBannerBody, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
-                      ],
-                    ),
-                  ),
-                ],
+        if (!setup.originalsMuted) const SetupBanner(),
+        SectionCard(
+          title: l.setupTitle,
+          body: l.setupBody,
+          children: [
+            if (deviceNote != null)
+              Card(
+                color: c.warningContainer,
+                margin: const EdgeInsets.only(top: 12),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(deviceNote, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
+                ),
               ),
-            ),
-          ),
-        if (!(setup.originalsMuted && setup.consentSkipped))
+          ],
+        ),
+        if (caps.shizukuSetup) const WirelessSetupCard(),
+        if (caps.shizukuSetup)
           SectionCard(
-            title: l.setupTitle,
-            body: l.setupBody,
+            title: l.wsetupShizukuHeading,
+            body: l.wsetupShizukuNote,
             children: [
-              if (caps.shizukuSetup) ..._steps(context, l, setup),
-              if (messageText != null) StatusText(messageText, isError: message!.code != 'done_restart'),
-              if (caps.adbSetup && setup.adbCommands != null) ...[
-                const Divider(),
-                _ComputerSetup(commands: setup.adbCommands!),
-              ],
+              ..._steps(context, l, setup),
+              if (messageText != null)
+                StatusText(messageText, isError: message!.code != 'done_restart' && message.code != 'slow'),
             ],
+          ),
+        if (caps.adbSetup && setup.adbCommands != null)
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+              child: _ComputerSetup(commands: setup.adbCommands!),
+            ),
           ),
       ],
     );

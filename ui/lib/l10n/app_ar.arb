@@ -182,6 +182,30 @@
   "@shizukuRefused": {
     "description": "Android string shizuku_refused"
   },
+  "setupSlow": "يستغرق Shizuku وقتًا أطول من المعتاد. انتظر قليلًا: في بعض الهواتف يحتاج مساعده إلى دقيقة ليبدأ أول مرة.",
+  "@setupSlow": {
+    "description": "Android string setup_slow"
+  },
+  "setupTimeout": "لم يُجب Shizuku خلال دقيقتين. افتح Shizuku وتأكد أنه يعمل، ثم اضغط الزر مرة أخرى. إذا اكتمل الإعداد لاحقًا فستتحدّث هذه الشاشة وحدها.",
+  "@setupTimeout": {
+    "description": "Android string setup_timeout"
+  },
+  "setupRefusedXiaomi": "رفض الهاتف منح الأذونات. في هواتف شاومي وريدمي وبوكو، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم حاول مرة أخرى.",
+  "@setupRefusedXiaomi": {
+    "description": "Android string setup_refused_xiaomi"
+  },
+  "setupRefusedColoros": "رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏، ثم حاول مرة أخرى.",
+  "@setupRefusedColoros": {
+    "description": "Android string setup_refused_coloros"
+  },
+  "setupNoteXiaomi": "شاومي وريدمي وبوكو: قبل الإعداد، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏. يطلب ذلك تسجيل الدخول إلى حساب شاومي (وفي بعض الهواتف وجود شريحة SIM). إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات.",
+  "@setupNoteXiaomi": {
+    "description": "Android string setup_note_xiaomi"
+  },
+  "setupNoteColoros": "أوبو وون بلس وريلمي: قبل الإعداد، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏.",
+  "@setupNoteColoros": {
+    "description": "Android string setup_note_coloros"
+  },
   "stepDoneCd": "تم",
   "@stepDoneCd": {
     "description": "Android string step_done_cd"
@@ -491,7 +515,7 @@
   "@blurStatusNeedsOverlay": {
     "description": "Android string blur_status_needs_overlay"
   },
-  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: يرسم Shizuku الأغطية ويمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailUnavailable": {
     "description": "Android string blur_fail_unavailable"
   },
@@ -885,6 +909,78 @@
   "notifStoppedText": "الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.",
   "@notifStoppedText": {
     "description": "Android string notif_stopped_text"
+  },
+  "wsetupGuide": "الخطوات بالصور",
+  "@wsetupGuide": {
+    "description": "Android string wsetup_guide"
+  },
+  "navFilter": "التصفية",
+  "@navFilter": {
+    "description": "Android string nav_filter"
+  },
+  "navScreen": "الشاشة",
+  "@navScreen": {
+    "description": "Android string nav_screen"
+  },
+  "navLinks": "الروابط",
+  "@navLinks": {
+    "description": "Android string nav_links"
+  },
+  "navSetup": "الإعداد",
+  "@navSetup": {
+    "description": "Android string nav_setup"
+  },
+  "navSettings": "الإعدادات",
+  "@navSettings": {
+    "description": "Android string nav_settings"
+  },
+  "setupDoneTitle": "اكتمل الإعداد",
+  "@setupDoneTitle": {
+    "description": "Android string setup_done_title"
+  },
+  "setupDoneBody": "تستطيع واعية كتم الصوت الأصلي للتطبيقات الأخرى. لا تُعِده إلا إذا تغيّر شيء (أُلغي الإعداد، أو قالت واعية إنه ناقص).",
+  "@setupDoneBody": {
+    "description": "Android string setup_done_body"
+  },
+  "setupRedo": "إظهار الإعداد من جديد",
+  "@setupRedo": {
+    "description": "Android string setup_redo"
+  },
+  "setupGo": "الذهاب إلى الإعداد",
+  "@setupGo": {
+    "description": "Android string setup_go"
+  },
+  "helperTitle": "مرور اللمس عبر الأغطية",
+  "@helperTitle": {
+    "description": "Android string helper_title"
+  },
+  "helperBodyOff": "دون مساعدة، يمنع الغطاء اللمس تحته. يرسم مساعد واعية الأغطية بحيث يمرّ اللمس من خلالها. فعّل ‏«تصحيح الأخطاء اللاسلكي»‏ (يلزم Wi‑Fi) واضغط الزر؛ في المرة الأولى تُقرن الهاتف مرة واحدة كما في الإعداد. بعد إعادة تشغيل الهاتف اضغطه من جديد.",
+  "@helperBodyOff": {
+    "description": "Android string helper_body_off"
+  },
+  "helperStart": "تشغيل مساعد واعية",
+  "@helperStart": {
+    "description": "Android string helper_start"
+  },
+  "helperOn": "مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.",
+  "@helperOn": {
+    "description": "Android string helper_on"
+  },
+  "helperShizukuOn": "Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.",
+  "@helperShizukuOn": {
+    "description": "Android string helper_shizuku_on"
+  },
+  "helperOrShizuku": "أو باستخدام Shizuku:",
+  "@helperOrShizuku": {
+    "description": "Android string helper_or_shizuku"
+  },
+  "filterOptionsTitle": "خيارات التصفية",
+  "@filterOptionsTitle": {
+    "description": "Android string filter_options_title"
+  },
+  "settingsGeneralTitle": "عام",
+  "@settingsGeneralTitle": {
+    "description": "Android string settings_general_title"
   },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {

@@ -356,6 +356,42 @@ abstract class AppLocalizations {
   /// **'رُفض إذن Shizuku. اضغط الزر للمحاولة مرة أخرى.'**
   String get shizukuRefused;
 
+  /// Android string setup_slow
+  ///
+  /// In ar, this message translates to:
+  /// **'يستغرق Shizuku وقتًا أطول من المعتاد. انتظر قليلًا: في بعض الهواتف يحتاج مساعده إلى دقيقة ليبدأ أول مرة.'**
+  String get setupSlow;
+
+  /// Android string setup_timeout
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُجب Shizuku خلال دقيقتين. افتح Shizuku وتأكد أنه يعمل، ثم اضغط الزر مرة أخرى. إذا اكتمل الإعداد لاحقًا فستتحدّث هذه الشاشة وحدها.'**
+  String get setupTimeout;
+
+  /// Android string setup_refused_xiaomi
+  ///
+  /// In ar, this message translates to:
+  /// **'رفض الهاتف منح الأذونات. في هواتف شاومي وريدمي وبوكو، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم حاول مرة أخرى.'**
+  String get setupRefusedXiaomi;
+
+  /// Android string setup_refused_coloros
+  ///
+  /// In ar, this message translates to:
+  /// **'رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏، ثم حاول مرة أخرى.'**
+  String get setupRefusedColoros;
+
+  /// Android string setup_note_xiaomi
+  ///
+  /// In ar, this message translates to:
+  /// **'شاومي وريدمي وبوكو: قبل الإعداد، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏. يطلب ذلك تسجيل الدخول إلى حساب شاومي (وفي بعض الهواتف وجود شريحة SIM). إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات.'**
+  String get setupNoteXiaomi;
+
+  /// Android string setup_note_coloros
+  ///
+  /// In ar, this message translates to:
+  /// **'أوبو وون بلس وريلمي: قبل الإعداد، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏.'**
+  String get setupNoteColoros;
+
   /// Android string step_done_cd
   ///
   /// In ar, this message translates to:
@@ -803,7 +839,7 @@ abstract class AppLocalizations {
   /// Android string blur_fail_unavailable
   ///
   /// In ar, this message translates to:
-  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: يرسم Shizuku الأغطية ويمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailUnavailable;
 
   /// Android string blur_fail_needs_a11y
@@ -1339,6 +1375,114 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.'**
   String get notifStoppedText;
+
+  /// Android string wsetup_guide
+  ///
+  /// In ar, this message translates to:
+  /// **'الخطوات بالصور'**
+  String get wsetupGuide;
+
+  /// Android string nav_filter
+  ///
+  /// In ar, this message translates to:
+  /// **'التصفية'**
+  String get navFilter;
+
+  /// Android string nav_screen
+  ///
+  /// In ar, this message translates to:
+  /// **'الشاشة'**
+  String get navScreen;
+
+  /// Android string nav_links
+  ///
+  /// In ar, this message translates to:
+  /// **'الروابط'**
+  String get navLinks;
+
+  /// Android string nav_setup
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعداد'**
+  String get navSetup;
+
+  /// Android string nav_settings
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعدادات'**
+  String get navSettings;
+
+  /// Android string setup_done_title
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتمل الإعداد'**
+  String get setupDoneTitle;
+
+  /// Android string setup_done_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تستطيع واعية كتم الصوت الأصلي للتطبيقات الأخرى. لا تُعِده إلا إذا تغيّر شيء (أُلغي الإعداد، أو قالت واعية إنه ناقص).'**
+  String get setupDoneBody;
+
+  /// Android string setup_redo
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار الإعداد من جديد'**
+  String get setupRedo;
+
+  /// Android string setup_go
+  ///
+  /// In ar, this message translates to:
+  /// **'الذهاب إلى الإعداد'**
+  String get setupGo;
+
+  /// Android string helper_title
+  ///
+  /// In ar, this message translates to:
+  /// **'مرور اللمس عبر الأغطية'**
+  String get helperTitle;
+
+  /// Android string helper_body_off
+  ///
+  /// In ar, this message translates to:
+  /// **'دون مساعدة، يمنع الغطاء اللمس تحته. يرسم مساعد واعية الأغطية بحيث يمرّ اللمس من خلالها. فعّل ‏«تصحيح الأخطاء اللاسلكي»‏ (يلزم Wi‑Fi) واضغط الزر؛ في المرة الأولى تُقرن الهاتف مرة واحدة كما في الإعداد. بعد إعادة تشغيل الهاتف اضغطه من جديد.'**
+  String get helperBodyOff;
+
+  /// Android string helper_start
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل مساعد واعية'**
+  String get helperStart;
+
+  /// Android string helper_on
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.'**
+  String get helperOn;
+
+  /// Android string helper_shizuku_on
+  ///
+  /// In ar, this message translates to:
+  /// **'Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.'**
+  String get helperShizukuOn;
+
+  /// Android string helper_or_shizuku
+  ///
+  /// In ar, this message translates to:
+  /// **'أو باستخدام Shizuku:'**
+  String get helperOrShizuku;
+
+  /// Android string filter_options_title
+  ///
+  /// In ar, this message translates to:
+  /// **'خيارات التصفية'**
+  String get filterOptionsTitle;
+
+  /// Android string settings_general_title
+  ///
+  /// In ar, this message translates to:
+  /// **'عام'**
+  String get settingsGeneralTitle;
 
   /// Flutter only. Arabic not reviewed yet.
   ///

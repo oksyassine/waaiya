@@ -76,8 +76,24 @@ class SessionMuter(private val context: Context, private val settings: Settings)
     var onChange: (() -> Unit)? = null
 
     fun start() {
-        if (!context.hasDumpPermission()) { lastError = "DUMP permission not granted"; status = Status.NO_PERMISSION; return }
         running = true
+        if (context.hasDumpPermission()) { begin(); return }
+        lastError = "DUMP permission not granted"
+        status = Status.NO_PERMISSION
+        // The setup can finish while filtering runs (Shizuku answering late, Wireless debugging, a computer): start
+        // silencing the originals as soon as the permission is there, without a restart of the filter.
+        thread(name = "im-muter-wait", isDaemon = true) {
+            while (running && !context.hasDumpPermission()) {
+                wake.tryAcquire(2, TimeUnit.SECONDS)  // stop() releases it: no 2 s wait at the end
+                wake.drainPermits()
+            }
+            val began = synchronized(this) { if (running) { lastError = null; begin(); true } else false }
+            if (began) { Log.i("IslamicMute", "muter: permission granted while filtering, silencing now"); onChange?.invoke() }
+        }
+    }
+
+    /** With the permission: listen for players and poll the session list until [stop]. */
+    private fun begin() {
         status = Status.OK
         context.getSystemService(AudioManager::class.java).registerAudioPlaybackCallback(playbackCallback, null)
         thread(name = "im-muter", isDaemon = true) {
@@ -96,8 +112,9 @@ class SessionMuter(private val context: Context, private val settings: Settings)
         }
     }
 
+    /** Releases every effect: the other apps sound normal again. Any poll still running attaches nothing more. */
     fun stop() {
-        running = false
+        synchronized(this) { running = false }
         runCatching { context.getSystemService(AudioManager::class.java).unregisterAudioPlaybackCallback(playbackCallback) }
         wake.release()
         synchronized(effects) { effects.values.forEach { runCatching { it.release() } }; effects.clear() }
@@ -133,6 +150,10 @@ class SessionMuter(private val context: Context, private val settings: Settings)
             if (!mute) continue
             seen += s.id
             synchronized(effects) {
+                // stop() may have run while this poll read the session list: it clears [effects] under this lock
+                // after setting running = false, so an effect attached now would never be released and that app
+                // would stay silent until Waaiya's process ends
+                if (!running) return
                 if (s.id !in effects) {
                     runCatching {
                         DynamicsProcessing(Int.MAX_VALUE, s.id, null).apply {

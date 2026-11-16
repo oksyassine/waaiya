@@ -68,6 +68,21 @@ class Settings(context: Context) {
         set(v) = p.edit().putBoolean("hold_silence", v).apply()
 
     /**
+     * Android 15+: show the text of notifications while filtering. Android hides it during any whole-screen capture,
+     * and filtering is one. Set from the Quick Settings tile ([ScreenShareTileService]); [ScreenShareProtection]
+     * turns the protection off only while Waaiya filters. Off by default: it also unprotects other screen shares
+     * that happen at the same time.
+     */
+    var showNotificationText: Boolean
+        get() = p.getBoolean("show_notification_text", false)
+        set(v) = p.edit().putBoolean("show_notification_text", v).apply()
+
+    /** The user saw what the notification-text tile changes (shown once, at the first turn-on). */
+    var notificationTextExplained: Boolean
+        get() = p.getBoolean("notification_text_explained", false)
+        set(v) = p.edit().putBoolean("notification_text_explained", v).apply()
+
+    /**
      * This phone needed mono to filter live sound in time (set by FilterService), so the next start begins in
      * mono instead of cutting again. Forgotten after a week or an app update: the phone may only have been hot
      * or busy that day, and an update may bring a faster model, so stereo gets another try.

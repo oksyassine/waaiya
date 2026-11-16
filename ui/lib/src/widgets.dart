@@ -42,6 +42,19 @@ class AppHeader extends StatelessWidget {
   }
 }
 
+/// The name of a page at its top (the Filter page has the app header instead).
+class PageTitle extends StatelessWidget {
+  const PageTitle(this.title, {super.key});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Semantics(header: true, child: Text(title, style: Theme.of(context).textTheme.headlineSmall)),
+      );
+}
+
 /// A card with a title, optional body text and content.
 class SectionCard extends StatelessWidget {
   const SectionCard({super.key, required this.title, this.body, this.children = const []});
@@ -78,6 +91,7 @@ class SettingSwitch extends StatelessWidget {
     required this.onChanged,
     this.body,
     this.bodyIsError = false,
+    this.id,
   });
 
   final String title;
@@ -86,10 +100,13 @@ class SettingSwitch extends StatelessWidget {
   final bool value;
   final ValueChanged<bool>? onChanged;
 
+  /// Android resource-id for UI tests (android/tools/emu_check.py), the same as the native screen's.
+  final String? id;
+
   @override
   Widget build(BuildContext context) {
     final c = WaaiyaColors.of(context);
-    return SwitchListTile(
+    final tile = SwitchListTile(
       contentPadding: EdgeInsets.zero,
       value: value,
       onChanged: onChanged,
@@ -98,12 +115,28 @@ class SettingSwitch extends StatelessWidget {
           ? null
           : Text(body!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: bodyIsError ? c.error : null)),
     );
+    // one node: the id on the same node as the switch's checked state
+    return id == null ? tile : MergeSemantics(child: Semantics(identifier: id, child: tile));
   }
+}
+
+/// Gives [child] its own accessibility node with an Android resource-id, for UI tests (emu_check.py).
+class TestId extends StatelessWidget {
+  const TestId(this.id, {super.key, required this.child});
+
+  final String id;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Semantics(container: true, identifier: id, child: child);
 }
 
 /// A line of secondary text that turns red for problems.
 class StatusText extends StatelessWidget {
-  const StatusText(this.text, {super.key, this.isError = false, this.color});
+  const StatusText(this.text, {super.key, this.isError = false, this.color, this.id});
+
+  /// Android resource-id for UI tests.
+  final String? id;
 
   final String text;
   final bool isError;
@@ -112,13 +145,13 @@ class StatusText extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 12),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color ?? (isError ? WaaiyaColors.of(context).error : null)),
-        ),
-      );
+  Widget build(BuildContext context) {
+    final t = Text(
+      text,
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color ?? (isError ? WaaiyaColors.of(context).error : null)),
+    );
+    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? t : TestId(id!, child: t));
+  }
 }
 
 /// "Label: value" with a Change button.

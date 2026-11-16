@@ -33,6 +33,7 @@ import javax.net.ssl.SSLSocket
  * like `adb connect` and runs the same two commands as the computer route:
  *   cmd package grant <pkg> android.permission.DUMP
  *   cmd appops set <pkg> PROJECT_MEDIA allow
+ *   cmd package grant <pkg> android.permission.WRITE_SECURE_SETTINGS   (optional: the notification-text tile)
  * Everything stays on the phone: the connections go to 127.0.0.1, mDNS only tells us the ports.
  *
  * The pairing code is shown by Settings while Waaiya is in the background, so it is typed into a notification
@@ -104,6 +105,12 @@ object WirelessSetup {
         return runCatching { ctx.startActivity(dev) }.isSuccess
     }
 
+    /** Start the cover helper during the setup: Android 12+ and a screen-blur option on. */
+    fun helperWanted(ctx: Context): Boolean {
+        val s = Settings(ctx)
+        return Build.VERSION.SDK_INT >= 31 && (s.blurWomen || s.blurNudity)
+    }
+
     fun start(ctx: Context) {
         ctx.startForegroundService(Intent(ctx, WirelessSetupService::class.java).setAction(WirelessSetupService.ACTION_START))
     }
@@ -150,7 +157,8 @@ object WirelessSetup {
     /** The shell line run as the shell user. Each result is echoed so that the log says which step failed. */
     internal fun grantCommand(pkg: String) =
         "cmd package grant $pkg android.permission.DUMP 2>&1; echo \"dump=\$?\"; " +
-            "cmd appops set $pkg PROJECT_MEDIA allow 2>&1; echo \"project_media=\$?\""
+            "cmd appops set $pkg PROJECT_MEDIA allow 2>&1; echo \"project_media=\$?\"; " +
+            "cmd package grant $pkg android.permission.WRITE_SECURE_SETTINGS 2>&1; echo \"secure_settings=\$?\""
 
     internal fun log(msg: String, t: Throwable? = null) { if (t == null) Log.i(TAG, "wireless setup: $msg") else Log.w(TAG, "wireless setup: $msg", t) }
 }
@@ -164,6 +172,7 @@ class WirelessSetupService : Service() {
     override fun attachBaseContext(base: Context) { super.attachBaseContext(Lang.wrap(base)) }
 
     private val main = Handler(Looper.getMainLooper())
+    private val startedAt = android.os.SystemClock.elapsedRealtime()
     private val worker = Executors.newSingleThreadExecutor { Thread(it, "im-adb-setup") }
     private var flow: SetupFlow? = null
     private var nsd: NsdManager? = null
@@ -337,17 +346,24 @@ class WirelessSetupService : Service() {
     }
 
     private fun connect(port: Int) {
-        val result = runCatching { AdbShell(ensureKey()).run(LOCALHOST, port, WirelessSetup.grantCommand(packageName)) }
+        // with the screen blur on (Android 12+), the same connection also starts Waaiya's cover helper: touches then
+        // pass through the covers without Shizuku (CoverHelper)
+        val command = WirelessSetup.grantCommand(packageName) +
+            if (WirelessSetup.helperWanted(this)) "; " + CoverHelper.startCommand(this) else ""
+        val result = runCatching { AdbShell(ensureKey()).run(LOCALHOST, port, command) }
         main.post {
             val f = flow ?: return@post
             result.onSuccess { out ->
                 WirelessSetup.log("grants:\n$out")
+                SetupLog.record(this, "Wireless debugging", android.os.SystemClock.elapsedRealtime() - startedAt, out)
                 val ok = hasDumpPermission() && hasProjectMediaAppOp()
                 detail = if (ok) null else out.trim()
                 f.grantsDone(ok)
                 finish(if (ok) null else out.trim())
             }.onFailure {
                 WirelessSetup.log("connect failed", it)
+                SetupLog.record(this, "Wireless debugging", android.os.SystemClock.elapsedRealtime() - startedAt,
+                    "connect failed: $it")
                 if (it is AdbShell.NotPairedException) { WirelessSetup.setPaired(this, false); detail = null; f.connectRefused() }
                 else { detail = describe(it); f.connectFailed() }
                 update()
@@ -389,7 +405,7 @@ class WirelessSetupService : Service() {
         nm.createNotificationChannel(NotificationChannel(CHANNEL, getString(R.string.wsetup_channel), NotificationManager.IMPORTANCE_HIGH)
             .apply { setSound(null, null); enableVibration(false) })
         val (title, body) = texts()
-        val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java)
+        val open = PendingIntent.getActivity(this, 0, UiActivity.main(this)
             .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), PendingIntent.FLAG_IMMUTABLE)
         val b = Notification.Builder(this, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification).setColor(getColor(R.color.primary))
@@ -419,7 +435,7 @@ class WirelessSetupService : Service() {
             detail = failureDetail ?: detail
             publish()
             val (title, body) = texts()
-            val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+            val open = PendingIntent.getActivity(this, 0, UiActivity.main(this), PendingIntent.FLAG_IMMUTABLE)
             stopForeground(STOP_FOREGROUND_REMOVE)
             runCatching {
                 getSystemService(NotificationManager::class.java).notify(RESULT_NOTIFICATION_ID, Notification.Builder(this, CHANNEL)
@@ -470,35 +486,51 @@ class WirelessSetupService : Service() {
 
 /** Words for each state, shared by the notification and the app's setup card. */
 object WirelessSetupTexts {
-    fun title(ctx: Context, phase: SetupFlow.Phase, note: SetupFlow.Note): String = ctx.getString(when (phase) {
+    @androidx.annotation.StringRes
+    fun titleRes(phase: SetupFlow.Phase, note: SetupFlow.Note): Int = when (phase) {
         SetupFlow.Phase.DONE -> R.string.wsetup_done_title
         SetupFlow.Phase.FAILED -> R.string.wsetup_failed_title
         SetupFlow.Phase.PAIRING, SetupFlow.Phase.CONNECTING -> R.string.wsetup_busy_title
         SetupFlow.Phase.WAITING -> if (note == SetupFlow.Note.ENTER_CODE) R.string.wsetup_found_title else R.string.wsetup_notif_title
-    })
+    }
+
+    /** The main sentence (without the detail line). The Flutter screens get its resource name (UiBridge). */
+    @androidx.annotation.StringRes
+    fun bodyRes(ctx: Context, phase: SetupFlow.Phase, note: SetupFlow.Note, detail: String?): Int = when (phase) {
+        SetupFlow.Phase.DONE -> R.string.wsetup_done_body  // a running filter picks the permission up by itself
+        SetupFlow.Phase.PAIRING -> R.string.wsetup_pairing
+        SetupFlow.Phase.CONNECTING -> R.string.wsetup_connecting
+        else -> when (note) {
+            SetupFlow.Note.NONE, SetupFlow.Note.OPEN_PAIRING_DIALOG -> when {
+                !WirelessSetup.onWifi() -> R.string.wsetup_need_wifi
+                WirelessSetup.wirelessDebuggingOn(ctx) == false -> R.string.wsetup_need_wireless_debugging
+                else -> R.string.wsetup_open_dialog
+            }
+            SetupFlow.Note.ENTER_CODE -> R.string.wsetup_enter_code_body
+            SetupFlow.Note.CODE_WAITING_FOR_DIALOG -> R.string.wsetup_code_waiting
+            SetupFlow.Note.WRONG_CODE -> R.string.wsetup_wrong_code
+            SetupFlow.Note.PAIRING_FAILED -> R.string.wsetup_pairing_failed
+            SetupFlow.Note.WAITING_FOR_CONNECT_PORT -> R.string.wsetup_waiting_connect
+            SetupFlow.Note.NOT_PAIRED -> R.string.wsetup_not_paired
+            SetupFlow.Note.CONNECT_FAILED -> R.string.wsetup_connect_failed
+            // the phone itself refused (Xiaomi, OPPO family: a Developer options switch), else the generic text
+            SetupFlow.Note.GRANT_FAILED -> when {
+                !SetupHelp.refused(detail.orEmpty()) -> R.string.wsetup_grant_failed
+                SetupHelp.brand == SetupHelp.Brand.XIAOMI -> R.string.setup_refused_xiaomi
+                SetupHelp.brand == SetupHelp.Brand.COLOROS -> R.string.setup_refused_coloros
+                else -> R.string.wsetup_grant_failed
+            }
+            SetupFlow.Note.TIMEOUT -> R.string.wsetup_timeout
+        }
+    }
+
+    fun title(ctx: Context, phase: SetupFlow.Phase, note: SetupFlow.Note): String = ctx.getString(titleRes(phase, note))
 
     fun body(ctx: Context, phase: SetupFlow.Phase, note: SetupFlow.Note, detail: String?): String {
-        val main = when (phase) {
-            SetupFlow.Phase.DONE -> ctx.getString(if (FilterService.running) R.string.setup_done_restart else R.string.wsetup_done_body)
-            SetupFlow.Phase.PAIRING -> ctx.getString(R.string.wsetup_pairing)
-            SetupFlow.Phase.CONNECTING -> ctx.getString(R.string.wsetup_connecting)
-            else -> ctx.getString(when (note) {
-                SetupFlow.Note.NONE, SetupFlow.Note.OPEN_PAIRING_DIALOG -> when {
-                    !WirelessSetup.onWifi() -> R.string.wsetup_need_wifi
-                    WirelessSetup.wirelessDebuggingOn(ctx) == false -> R.string.wsetup_need_wireless_debugging
-                    else -> R.string.wsetup_open_dialog
-                }
-                SetupFlow.Note.ENTER_CODE -> R.string.wsetup_enter_code_body
-                SetupFlow.Note.CODE_WAITING_FOR_DIALOG -> R.string.wsetup_code_waiting
-                SetupFlow.Note.WRONG_CODE -> R.string.wsetup_wrong_code
-                SetupFlow.Note.PAIRING_FAILED -> R.string.wsetup_pairing_failed
-                SetupFlow.Note.WAITING_FOR_CONNECT_PORT -> R.string.wsetup_waiting_connect
-                SetupFlow.Note.NOT_PAIRED -> R.string.wsetup_not_paired
-                SetupFlow.Note.CONNECT_FAILED -> R.string.wsetup_connect_failed
-                SetupFlow.Note.GRANT_FAILED -> R.string.wsetup_grant_failed
-                SetupFlow.Note.TIMEOUT -> R.string.wsetup_timeout
-            })
-        }
-        return if (detail.isNullOrBlank()) main else main + "\n" + ctx.getString(R.string.wsetup_detail, detail)
+        val main = ctx.getString(bodyRes(ctx, phase, note, detail))
+        // a refusal explained in words needs no raw log under it
+        val showDetail = !detail.isNullOrBlank() && !(note == SetupFlow.Note.GRANT_FAILED && SetupHelp.refused(detail) &&
+            SetupHelp.brand != SetupHelp.Brand.OTHER)
+        return if (!showDetail) main else main + "\n" + ctx.getString(R.string.wsetup_detail, detail)
     }
 }

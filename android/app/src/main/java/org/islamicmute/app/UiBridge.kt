@@ -66,8 +66,88 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         Shizuku.addRequestPermissionResultListener(shizukuPermission)
     }
 
+    private val main = android.os.Handler(android.os.Looper.getMainLooper())
+    /** While the setup is not finished, look again every 2 s (as MainActivity.setupTick). */
+    private val setupTick = object : Runnable {
+        override fun run() {
+            main.removeCallbacks(this)
+            if (disposed || (activity.hasDumpPermission() && activity.hasProjectMediaAppOp())) return
+            refresh()
+            main.postDelayed(this, 2000)
+        }
+    }
+    /** A Shizuku grant ended, perhaps after the screen stopped waiting: show the real state. */
+    private val shizukuGrantEnded: () -> Unit = {
+        if (activity.hasDumpPermission() && !shizukuBusy) shizukuMessage = null
+        if (!blurBusy && (activity.blurAccessibilityEnabled() || android.provider.Settings.canDrawOverlays(activity)))
+            blurMessage = null
+        refresh()
+    }
+
+    init {  // after the properties above are initialised
+        ShizukuSetup.addListener(shizukuGrantEnded)
+        WirelessSetup.addListener(changed)
+        CoverHelper.addListener(changed)
+    }
+
+    /** A page asked for by an intent (UiActivity), until Flutter says it showed it. */
+    private var pageRequest: Pair<String, Int>? = null
+    private var pageRequests = 0
+    fun requestPage(page: String) { pageRequest = page to ++pageRequests; refresh() }
+
+    /** Notifications were refused or never asked: the code must then be typed in the app (split screen). */
+    private var wirelessHint: String? = null
+
+    /**
+     * Start of the on-phone setup: notifications first (the code is typed in one), then Developer options. Returns
+     * `started`, `dev_off` (Flutter offers About phone), or `asking` (Android's notification question is open; the
+     * setup continues by itself after it).
+     */
+    private fun wirelessStart(askedNotifications: Boolean): String {
+        wirelessHint = null
+        if (Build.VERSION.SDK_INT >= 33 && !askedNotifications &&
+            activity.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            activity.requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), REQ_WSETUP_NOTIFICATIONS)
+            return "asking"
+        }
+        if (!WirelessSetup.developerOptionsOn(activity)) return "dev_off"
+        if (!activity.getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled())
+            wirelessHint = "wsetup_notif_off"
+        WirelessSetup.start(activity)
+        WirelessSetup.openWirelessDebugging(activity)
+        refresh()
+        return "started"
+    }
+
+    /** setup.wireless (docs/UI_CONTRACT.md): codes and resource names, the words are chosen in Flutter. */
+    private fun wirelessInfo(): Map<String, Any?> {
+        val st = WirelessSetup.status
+        val res = activity.resources
+        return mapOf(
+            "supported" to WirelessSetup.supported,
+            "running" to WirelessSetup.running,
+            "phase" to st?.phase?.name,
+            "title" to st?.let { res.getResourceEntryName(WirelessSetupTexts.titleRes(it.phase, it.note)) },
+            "body" to st?.let { res.getResourceEntryName(WirelessSetupTexts.bodyRes(activity, it.phase, it.note, it.detail)) },
+            // the raw output only when no sentence explains it (a refusal on Xiaomi/OPPO is explained)
+            "detail" to st?.detail?.takeUnless { d ->
+                st.note == org.islamicmute.app.adb.SetupFlow.Note.GRANT_FAILED && SetupHelp.refused(d) &&
+                    SetupHelp.brand != SetupHelp.Brand.OTHER },
+            "isError" to (st?.phase == org.islamicmute.app.adb.SetupFlow.Phase.FAILED ||
+                st?.note == org.islamicmute.app.adb.SetupFlow.Note.WRONG_CODE),
+            "hint" to wirelessHint,
+        )
+    }
+
+    fun onResume() { refresh(); setupTick.run() }
+    fun onPause() { main.removeCallbacks(setupTick) }
+
     fun dispose() {
         disposed = true
+        main.removeCallbacks(setupTick)
+        ShizukuSetup.removeListener(shizukuGrantEnded)
+        WirelessSetup.removeListener(changed)
+        CoverHelper.removeListener(changed)
         FilterService.removeListener(changed)
         ScreenBlur.removeListener(changed)
         Shizuku.removeBinderReceivedListener(shizukuChanged)
@@ -101,6 +181,18 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "runSetupStep" -> { runSetupStep(call.argument<Int>("step") ?: throw BadArgs("step")); result.success(null) }
                 "blurSetup" -> { blurSetup(); result.success(null) }
                 "openShizuku" -> { openShizuku(); result.success(null) }
+                // --- setup on the phone itself (Wireless debugging), as MainActivity.startWireless / askPairingCode
+                "wirelessStart" -> result.success(wirelessStart(askedNotifications = false))
+                "wirelessEnterCode" -> result.success(WirelessSetup.enterCode(activity, call.argument<String>("code") ?: ""))
+                "wirelessCancel" -> { WirelessSetup.cancel(activity); result.success(null) }
+                "openAboutPhone" -> { WirelessSetup.openWirelessDebugging(activity); result.success(null) }
+                "openSetupGuide" -> { activity.startActivity(Intent(activity, SetupGuideActivity::class.java)); result.success(null) }
+                "pageShown" -> { pageRequest = null; result.success(null) }
+                "shareText" -> {
+                    activity.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT, call.argument<String>("text") ?: throw BadArgs("text")), null))
+                    result.success(null)
+                }
                 "openDeveloperOptions" -> {
                     // Developer options, or About phone when they are not turned on yet (step 2 of the guide).
                     // Checked first: with them off, the Developer options page opens and closes at once (no exception).
@@ -146,6 +238,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     /** The contract's snapshot (docs/UI_CONTRACT.md). */
     private fun snapshot(): Map<String, Any?> = mapOf(
         "platform" to "android",
+        // a page to show once (the tiles' "Open Waaiya", a notification): {page, id}; Flutter calls pageShown
+        "navigate" to pageRequest?.let { (page, id) -> mapOf("page" to page, "id" to id) },
         "version" to BuildConfig.VERSION_NAME,
         "language" to Lang.current(activity),
         "settings" to mapOf(
@@ -171,18 +265,27 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 FilterService.muterStatus == SessionMuter.Status.FAILING -> "mute_failing"
                 else -> null
             },
-            "mono" to (FilterService.health?.mono == true),
+            // mono because the phone could not keep up with the stereo chosen, not mono by choice (MainActivity)
+            "mono" to (FilterService.health?.monoForSpeed == true),
             "blockedApps" to FilterService.blockedApps,
             "captureCancelled" to captureCancelled,
         ),
         "setup" to mapOf(
             "originalsMuted" to activity.hasDumpPermission(),
             "consentSkipped" to activity.hasProjectMediaAppOp(),
+            // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
+            "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
+            // Xiaomi / OPPO family: the Developer options switch to change before the setup (SetupHelp)
+            "deviceNote" to when (SetupHelp.brand) {
+                SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
+            },
             "shizuku" to ShizukuSetup.state(activity).name,
+            "wireless" to wirelessInfo(),
             "busy" to shizukuBusy,
             "message" to shizukuMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
             "adbCommands" to "adb shell pm grant ${activity.packageName} android.permission.DUMP\n" +
-                "adb shell appops set ${activity.packageName} PROJECT_MEDIA allow",
+                "adb shell appops set ${activity.packageName} PROJECT_MEDIA allow\n" +
+                "adb shell pm grant ${activity.packageName} android.permission.WRITE_SECURE_SETTINGS",
         ),
         "blur" to mapOf(
             "state" to ScreenBlur.state?.name,
@@ -191,7 +294,11 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "a11yEnabled" to activity.blurAccessibilityEnabled(),
             "touchPassThrough" to activity.blurTouchPassThrough(),
             // Shizuku running (Android 12+): the covers are a shell layer (ShizukuCovers), nothing else to allow
-            "shizukuLayer" to (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(activity) == ShizukuSetup.State.READY),
+            // a shell process draws the covers (touches pass through): Waaiya's helper or Shizuku (name kept)
+            "shizukuLayer" to activity.blurShellLayerAvailable(),
+            // Waaiya's own cover helper (CoverHelper): running, or startable through the on-phone setup (12+)
+            "helperRunning" to CoverHelper.available,
+            "helperStartable" to (Build.VERSION.SDK_INT >= 31 && WirelessSetup.supported),
             "layerSupported" to (Build.VERSION.SDK_INT >= 31),  // Shizuku covers need Android 12+
             "busy" to blurBusy,
             "message" to blurMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
@@ -257,6 +364,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     }
 
     fun onRequestPermissionsResult(requestCode: Int) {
+        if (requestCode == REQ_WSETUP_NOTIFICATIONS) {  // answered (either way): go on with the on-phone setup
+            if (wirelessStart(askedNotifications = true) == "dev_off") { wirelessHint = "wsetup_dev_off"; refresh() }
+            return
+        }
         if (requestCode != REQ_PERMISSIONS || pendingStart == null) return
         if (activity.checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) askOrConsent()
         else { micDenied = true; finishStart("mic_denied") }
@@ -300,16 +411,27 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         if (shizukuBusy) return
         shizukuBusy = true
         refresh()
-        ShizukuSetup.grant(activity) { log ->
+        ShizukuSetup.grant(activity, slow = {
+            if (!disposed && shizukuBusy) { shizukuMessage = "slow" to ""; refresh() }
+        }) { log ->
             if (disposed) return@grant
             shizukuBusy = false
-            shizukuMessage = when {
-                !activity.hasDumpPermission() -> "failed" to log
-                FilterService.running -> "done_restart" to ""
-                else -> null
-            }
+            // A running filter starts silencing the originals by itself (SessionMuter waits for the permission).
+            shizukuMessage = failure(log, activity.hasDumpPermission(), "failed")
             refresh()
         }
+    }
+
+    /**
+     * The message after a Shizuku grant: none when it worked, `timeout`, `refused_xiaomi` / `refused_coloros` (the
+     * phone itself refused: a Developer options switch, SetupHelp), else [generic] with the log as detail.
+     */
+    private fun failure(log: String, ok: Boolean, generic: String): Pair<String, String>? = when {
+        ok -> null
+        log == ShizukuSetup.TIMEOUT -> "timeout" to ""
+        SetupHelp.refused(log) && SetupHelp.brand == SetupHelp.Brand.XIAOMI -> "refused_xiaomi" to log
+        SetupHelp.refused(log) && SetupHelp.brand == SetupHelp.Brand.COLOROS -> "refused_coloros" to log
+        else -> generic to log
     }
 
     // --- Screen blur permission (as MainActivity.onBlurSetup / grantBlur) ---
@@ -333,11 +455,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         if (blurBusy) return
         blurBusy = true
         refresh()
-        ShizukuSetup.grantBlur(activity) { log ->
+        ShizukuSetup.grantBlur(activity, slow = {
+            if (!disposed && blurBusy) { blurMessage = "slow" to ""; refresh() }
+        }) { log ->
             if (disposed) return@grantBlur
             blurBusy = false
-            blurMessage = if (activity.blurAccessibilityEnabled() || android.provider.Settings.canDrawOverlays(activity)) null
-                          else "setup_failed" to log
+            blurMessage = failure(log, activity.blurAccessibilityEnabled() ||
+                android.provider.Settings.canDrawOverlays(activity), "setup_failed")
             refresh()
         }
     }
@@ -362,5 +486,6 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private companion object {
         const val REQ_PERMISSIONS = 1
         const val REQ_CAPTURE = 7
+        const val REQ_WSETUP_NOTIFICATIONS = 8
     }
 }

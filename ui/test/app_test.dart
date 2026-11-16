@@ -93,6 +93,8 @@ void main() {
     );
     await tester.pumpWidget(WaaiyaApp(backend: backend));
     await tester.pumpAndSettle();
+    expect(find.text('بقيت خطوة واحدة'), findsOneWidget); // on the Filter page too
+    await goTo(tester, 'setup');
     expect(find.text('بقيت خطوة واحدة'), findsOneWidget);
     expect(find.text('إعداد لمرة واحدة'), findsOneWidget);
     expect(find.text('كيف أشغّل Shizuku؟'), findsOneWidget); // step 2 is current: the guide
@@ -178,6 +180,7 @@ void main() {
     );
     await tester.pumpWidget(WaaiyaApp(backend: backend));
     await tester.pumpAndSettle();
+    await goTo(tester, 'screen');
     final fix = find.byKey(const Key('blur_fail_fix'));
     await tester.ensureVisible(fix);
     await tester.pumpAndSettle();
@@ -197,6 +200,7 @@ void main() {
     );
     await tester.pumpWidget(WaaiyaApp(backend: backend));
     await tester.pumpAndSettle();
+    await goTo(tester, 'screen');
     final row = find.byKey(const Key('blur_strict'));
     await tester.ensureVisible(row);
     await tester.pumpAndSettle();
@@ -225,6 +229,7 @@ void main() {
     backend.emit(backend.state.copyWith(filter: const FilterInfo(state: FilterState.filtering)));
     await tester.pumpAndSettle();
     expect(find.text('تُزال الآلات من كل التطبيقات.'), findsOneWidget); // delay unknown: no "0 ms"
+    await goTo(tester, 'settings');
     final sw = find.byKey(const Key('autostart'));
     await tester.ensureVisible(sw);
     await tester.pumpAndSettle();
@@ -323,4 +328,11 @@ void main() {
     expect(calls.last.arguments, {'step': 2});
     expect(() => b.setSetting('gender', 'man'), throwsA(isA<BackendException>()));
   });
+}
+
+
+/// Shows a page of the main screen through the bottom bar.
+Future<void> goTo(WidgetTester tester, String page) async {
+  await tester.tap(find.byKey(Key('nav_$page')));
+  await tester.pumpAndSettle();
 }
