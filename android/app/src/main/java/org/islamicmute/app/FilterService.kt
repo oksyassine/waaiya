@@ -64,7 +64,10 @@ class FilterService : Service() {
         const val ACTION_DEBUG_END_CAPTURE = "org.islamicmute.app.DEBUG_END_CAPTURE"
         const val ACTION_DEBUG_COVERS = "org.islamicmute.app.DEBUG_COVERS"
         const val ACTION_DEBUG_FAIL_BLUR = "org.islamicmute.app.DEBUG_FAIL_BLUR"
+        /** Debug builds: the notification's Stop, for tests while another app stays in front. */
+        const val ACTION_DEBUG_STOP = "org.islamicmute.app.DEBUG_STOP"
         private const val CHANNEL = "filter"
+        private const val CHANNEL_SILENCED = "silenced"
         private const val TAG = "IslamicMute"
         @Volatile var state = State.STOPPED
             private set
@@ -98,6 +101,8 @@ class FilterService : Service() {
     @Volatile private var failState: State? = null
     /** Main thread: filtering ended by itself and the originals are kept muted (State.SILENCED). */
     private var holding = false
+    /** The kept-silent notification already popped up once for this hold. */
+    private var silencedShown = false
     private var debugReceiver: android.content.BroadcastReceiver? = null
 
     override fun onCreate() {
@@ -112,12 +117,13 @@ class FilterService : Service() {
                             ?.flatMap { c -> c.split(',').map { it.trim().toFloat() } }?.toFloatArray()
                         // --ez fail true: the next blur start cannot create its capture
                         ACTION_DEBUG_FAIL_BLUR -> ScreenBlur.debugFailCapture = i.getBooleanExtra("fail", true)
+                        ACTION_DEBUG_STOP -> startService(Intent(this@FilterService, FilterService::class.java).setAction(ACTION_STOP))
                     }
                 }
             }
             debugReceiver = r
             val f = android.content.IntentFilter(ACTION_DEBUG_END_CAPTURE).apply {
-                addAction(ACTION_DEBUG_COVERS); addAction(ACTION_DEBUG_FAIL_BLUR)
+                addAction(ACTION_DEBUG_COVERS); addAction(ACTION_DEBUG_FAIL_BLUR); addAction(ACTION_DEBUG_STOP)
             }
             if (Build.VERSION.SDK_INT >= 33) registerReceiver(r, f, Context.RECEIVER_EXPORTED)
             else @Suppress("UnspecifiedRegisterReceiverFlag") registerReceiver(r, f)
@@ -140,6 +146,8 @@ class FilterService : Service() {
         failState = null
         runCatching { getSystemService(NotificationManager::class.java).cancel(3) }  // an old "stopped" notice
         if (data == null) { noCapture(wasHolding); return START_NOT_STICKY }
+        // Before the capture starts: Android 15+ decides at the start whether notifications are hidden during it.
+        ScreenShareProtection.apply(this)
         val mpm = getSystemService(MediaProjectionManager::class.java)
         val mp = runCatching { mpm.getMediaProjection(code, data) }
             .onFailure { Log.e(TAG, "no screen-capture token", it) }.getOrNull()
@@ -172,6 +180,7 @@ class FilterService : Service() {
 
     /** No capture at start: back to the silence that was kept, or (first start) stop with the reason. */
     private fun noCapture(wasHolding: Boolean) {
+        ScreenShareProtection.captureEnded(this)  // it may have been turned off for this start: no capture came
         if (wasHolding) { holding = true; publish(State.SILENCED); updateNotification() }
         else { failState = State.CAPTURE_FAILED; stopSelf() }
     }
@@ -224,6 +233,8 @@ class FilterService : Service() {
         projection?.stop(); projection = null
         health = null
         holding = true
+        silencedShown = false  // a new hold: pop up again
+        ScreenShareProtection.captureEnded(this)  // no capture any more
         publish(State.SILENCED)
         updateNotification()
     }
@@ -413,6 +424,7 @@ class FilterService : Service() {
         blur?.stop(); blur = null
         muter?.stop()           // un-mutes the original sessions: an explicit stop restores normal audio
         projection?.stop()
+        ScreenShareProtection.captureEnded(this)
         health = null
         muterStatus = SessionMuter.Status.NO_PERMISSION
         blockedApps = emptyList()
@@ -421,7 +433,7 @@ class FilterService : Service() {
         // Not stopped by the user: the sound is unfiltered again from now on, and the "on" notification is gone.
         // Say so where it will be seen.
         if (failState != null || stoppedBySystem) runCatching {
-            val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
+            val open = PendingIntent.getActivity(this, 0, UiActivity.main(this), PendingIntent.FLAG_IMMUTABLE)
             getSystemService(NotificationManager::class.java).notify(3, Notification.Builder(this, CHANNEL)
                 .setContentTitle(getString(R.string.notif_stopped_title))
                 .setContentText(getString(R.string.notif_stopped_text))
@@ -437,8 +449,13 @@ class FilterService : Service() {
         nm.createNotificationChannel(NotificationChannel(CHANNEL, getString(R.string.notif_channel), NotificationManager.IMPORTANCE_LOW))
         val stopIntent = PendingIntent.getService(this, 1, Intent(this, FilterService::class.java).setAction(ACTION_STOP),
             PendingIntent.FLAG_IMMUTABLE)
-        val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), PendingIntent.FLAG_IMMUTABLE)
-        if (holding) return Notification.Builder(this, CHANNEL)
+        val open = PendingIntent.getActivity(this, 0, UiActivity.main(this), PendingIntent.FLAG_IMMUTABLE)
+        // Pops up once on screen (its own high-importance channel): sharing was stopped from Android's own control
+        // (the status-bar chip) and the other apps stay silent on purpose; without this, people took it for lost sound
+        if (holding) nm.createNotificationChannel(NotificationChannel(CHANNEL_SILENCED,
+            getString(R.string.notif_channel_silenced), NotificationManager.IMPORTANCE_HIGH).apply { setSound(null, null) })
+        if (holding) return Notification.Builder(this, CHANNEL_SILENCED)
+            .setOnlyAlertOnce(silencedShown).also { silencedShown = true }  // later updates stay quiet
             .setContentTitle(getString(R.string.notif_silenced_title))
             .setContentText(getString(R.string.notif_silenced_text))
             .setStyle(Notification.BigTextStyle().bigText(getString(R.string.notif_silenced_text)))

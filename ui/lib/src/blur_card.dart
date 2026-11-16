@@ -15,7 +15,16 @@ import 'widgets.dart';
   final needsSetup = blurNeedsSetup(s);
   final setupText = b.a11yBuild ? l.blurStatusNeedsSetup : l.blurStatusNeedsOverlay;
   final msg = b.message;
-  if (msg != null) return (msg.code == 'setup_failed' ? l.blurSetupFailed(msg.detail) : msg.detail, true);
+  if (msg != null) {
+    return switch (msg.code) {
+      'setup_failed' => (l.blurSetupFailed(msg.detail), true),
+      'slow' => (l.setupSlow, false),
+      'timeout' => (l.setupTimeout, true),
+      'refused_xiaomi' => (l.setupRefusedXiaomi, true),
+      'refused_coloros' => (l.setupRefusedColoros, true),
+      _ => (msg.detail, true),
+    };
+  }
   if (!s.settings.blurOn) return null;
   if (needsSetup && !b.overlayAllowed) return (setupText, true);
   if (!on) return needsSetup ? (setupText, false) : null;
@@ -103,12 +112,14 @@ class BlurCard extends StatelessWidget {
       children: [
         const SizedBox(height: 8),
         SettingSwitch(
+          id: 'switch_blur_women',
           title: l.blurWomenTitle,
           body: l.blurWomenBody,
           value: st.blurWomen,
           onChanged: (v) => onChanged(SettingKeys.blurWomen, v),
         ),
         SettingSwitch(
+          id: 'switch_blur_nudity',
           title: l.blurNudityTitle,
           body: l.blurNudityBody,
           value: st.blurNudity,
@@ -136,7 +147,7 @@ class BlurCard extends StatelessWidget {
               child: Text(fix),
             ),
           ),
-        if (status != null) StatusText(status.$1, key: const Key('blur_status'), isError: status.$2),
+        if (status != null) StatusText(status.$1, key: const Key('blur_status'), id: 'blur_status', isError: status.$2),
         if (needsSetup) ...[
           const SizedBox(height: 12),
           FilledButton(

@@ -103,7 +103,6 @@ scripts/fetch_deps.sh                   # default model (the APK bundles it)
 (cd ui_module && flutter pub get)
 # Needs Python 3.11 on the build machine (Chaquopy runs the link feature's yt-dlp in the app):
 cd android && ./gradlew assembleDebug -PimBuildPython=/path/to/python3.11
-#   -PimNativeUi                 the old native main screen instead of the Flutter one
 #   -PimModel=/path/model.onnx   bundle another voice model
 #   -PimX86                      also build x86_64 (emulators); phones are arm64-v8a + armeabi-v7a
 adb install -r app/build/outputs/apk/debug/app-debug.apk
@@ -127,6 +126,7 @@ Both are granted once, in one of two ways:
   ```bash
   adb shell pm grant org.islamicmute.app android.permission.DUMP
   adb shell appops set org.islamicmute.app PROJECT_MEDIA allow   # optional
+  adb shell pm grant org.islamicmute.app android.permission.WRITE_SECURE_SETTINGS   # optional: notification-text tile
   ```
 
 ## Links: watch or save a video without music

@@ -85,6 +85,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(b.state.filter.running, isFalse);
     expect(find.text(ar.startNoSetupTitle), findsNothing);
+    expect(find.text(ar.setupTitle), findsOneWidget); // "Do the setup" opened the Setup page
+    await goTo(tester, 'filter');
     await tester.ensureVisible(find.byKey(const Key('power')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('power')));
@@ -123,6 +125,7 @@ void main() {
     await tester.pumpWidget(WaaiyaApp(backend: b));
     await tester.pumpAndSettle();
     final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    await goTo(tester, 'settings');
     final button = find.byKey(const Key('diagnostics'));
     await tester.ensureVisible(button);
     await tester.pumpAndSettle();
@@ -233,4 +236,11 @@ void main() {
       expect(texts.intersection({l.wsetupRouteTitle, l.wsetupRouteBody, l.wsetupSteps}), isEmpty);
     }
   });
+}
+
+
+/// Shows a page of the main screen through the bottom bar.
+Future<void> goTo(WidgetTester tester, String page) async {
+  await tester.tap(find.byKey(Key('nav_$page')));
+  await tester.pumpAndSettle();
 }

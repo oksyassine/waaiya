@@ -9,77 +9,246 @@ import 'licences.dart';
 import 'setup_card.dart';
 import 'theme.dart';
 import 'widgets.dart';
+import 'wireless_setup.dart';
 
-/// Main screen: one large on/off control with its state in words, the one-time setup, links, screen blur,
-/// settings. Shows the same things, under the same conditions, as the native MainActivity. Settings apply live
-/// (the running filter and blur re-read them every half second), so there is no "restart" note.
-class HomeScreen extends StatelessWidget {
+/// The pages of the main screen, in bottom-bar order. Pages without the capability are left out (desktop: Filter,
+/// Screen when it has a blur, Settings).
+const homePages = ['filter', 'screen', 'links', 'setup', 'settings'];
+
+/// Switches the main screen's page from anywhere below it ("Do the setup" in the start dialog).
+class HomeNav extends InheritedWidget {
+  const HomeNav({super.key, required this.go, required super.child});
+
+  final void Function(String page) go;
+
+  static HomeNav? maybeOf(BuildContext context) => context.dependOnInheritedWidgetOfExactType<HomeNav>();
+
+  @override
+  bool updateShouldNotify(HomeNav old) => false;
+}
+
+/// Main screen: a bottom bar with one page per purpose, so that no page is long. Filter: the on/off control with
+/// its state in words and the filter options. Screen: the screen blur. Links: playing a link filtered. Setup: the
+/// one-time setup. Settings: who uses the phone, language, the report and licences. Shows the same things, under
+/// the same conditions, as the native MainActivity. Settings apply live (the running filter and blur re-read them
+/// every half second), so there is no "restart" note.
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  static Future<void> _set(BuildContext context, String key, Object value) =>
+  static Future<void> set(BuildContext context, String key, Object value) =>
       runAction(context, (b) => b.setSetting(key, value));
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String _page = 'filter';
+  int? _handledRequest;
+
+  List<String> _pages(AppState s) {
+    final caps = s.capabilities;
+    return [
+      for (final p in homePages)
+        if (switch (p) {
+          'screen' => caps.screenBlur,
+          'links' => caps.links,
+          'setup' => caps.shizukuSetup || caps.adbSetup,
+          _ => true,
+        })
+          p,
+    ];
+  }
+
+  void _go(String page) => setState(() => _page = page);
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final s = WaaiyaScope.of(context).state;
-    final caps = s.capabilities;
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: PageColumn(
-          children: [
-            const AppHeader(),
-            const SizedBox(height: 24),
-            const PowerSection(),
-            if (caps.shizukuSetup || caps.adbSetup) SetupSection(key: setupSectionKey),
-            if (caps.links)
-              SectionCard(
-                title: l.linkEntryTitle,
-                body: l.linkEntryBody,
-                children: [
-                  const SizedBox(height: 12),
-                  FilledButton.tonal(
-                    onPressed: () => runAction(context, (b) => b.openLinkScreen()),
-                    child: Text(l.linkOpen),
-                  ),
-                ],
+    final scope = WaaiyaScope.of(context);
+    final s = scope.state;
+    final pages = _pages(s);
+    // a page asked for by the platform (a Quick Settings tile's "Open Waaiya"): shown once
+    final request = s.navigate;
+    if (request != null && request.id != _handledRequest) {
+      _handledRequest = request.id;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        if (pages.contains(request.page)) setState(() => _page = request.page);
+        scope.backend.pageShown();
+      });
+    }
+    final index = pages.indexOf(_page).clamp(0, pages.length - 1);
+    final setupMissing = !s.setup.originalsMuted;
+    return HomeNav(
+      go: (p) => pages.contains(p) ? _go(p) : null,
+      child: Scaffold(
+        body: SafeArea(
+          bottom: false,
+          child: IndexedStack(
+            index: index,
+            children: [for (final p in pages) _body(context, p, s)],
+          ),
+        ),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: index,
+          onDestinationSelected: (i) => _go(pages[i]),
+          destinations: [
+            for (final p in pages)
+              TestId(
+                'nav_$p',
+                key: Key('nav_$p'),
+                child: switch (p) {
+                  'filter' => NavigationDestination(
+                      icon: const Icon(Icons.graphic_eq_rounded), label: l.navFilter),
+                  'screen' => NavigationDestination(
+                      icon: const Icon(Icons.blur_on_rounded), label: l.navScreen),
+                  'links' => NavigationDestination(icon: const Icon(Icons.link_rounded), label: l.navLinks),
+                  'setup' => NavigationDestination(
+                      icon: Badge(isLabelVisible: setupMissing, child: const Icon(Icons.build_circle_outlined)),
+                      selectedIcon: Badge(isLabelVisible: setupMissing, child: const Icon(Icons.build_circle)),
+                      label: l.navSetup),
+                  _ => NavigationDestination(
+                      icon: const Icon(Icons.settings_outlined),
+                      selectedIcon: const Icon(Icons.settings),
+                      label: l.navSettings),
+                },
               ),
-            if (caps.screenBlur)
-              BlurCard(onChanged: (key, v) => _set(context, key, v)),
-            _settings(context, s),
-            if (caps.links) SectionCard(title: l.playerTitle, body: l.playerBody),
-            const SizedBox(height: 16),
-            TextButton(
-              key: const Key('diagnostics'),
-              onPressed: () => showDiagnostics(context),
-              child: Text(l.diagButton),
-            ),
-            TextButton(
-              onPressed: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const LicencesScreen())),
-              child: Text(l.licences),
-            ),
-            SizedBox(height: MediaQuery.paddingOf(context).bottom),
           ],
         ),
       ),
     );
   }
 
-  Widget _settings(BuildContext context, AppState s) {
+  Widget _body(BuildContext context, String page, AppState s) {
     final l = AppLocalizations.of(context);
+    final caps = s.capabilities;
+    void set(String key, Object v) => HomeScreen.set(context, key, v);
+    return switch (page) {
+      'filter' => PageColumn(
+          children: [
+            const AppHeader(),
+            const SizedBox(height: 24),
+            const PowerSection(),
+            const SizedBox(height: 16),
+            if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
+            const FilterOptionsCard(),
+          ],
+        ),
+      'screen' => PageColumn(
+          children: [
+            PageTitle(l.navScreen),
+            BlurCard(onChanged: set),
+            const CoverHelperCard(),
+          ],
+        ),
+      'links' => PageColumn(
+          children: [
+            PageTitle(l.navLinks),
+            SectionCard(
+              title: l.linkEntryTitle,
+              body: l.linkEntryBody,
+              children: [
+                const SizedBox(height: 12),
+                FilledButton.tonal(
+                  onPressed: () => runAction(context, (b) => b.openLinkScreen()),
+                  child: Text(l.linkOpen),
+                ),
+              ],
+            ),
+            SectionCard(title: l.playerTitle, body: l.playerBody),
+          ],
+        ),
+      'setup' => PageColumn(children: [PageTitle(l.navSetup), const SetupSection()]),
+      _ => PageColumn(
+          children: [
+            PageTitle(l.navSettings),
+            const GeneralSettingsCard(),
+            const SizedBox(height: 16),
+            TestId(
+              'diagnostics',
+              child: TextButton(
+                key: const Key('diagnostics'),
+                onPressed: () => showDiagnostics(context),
+                child: Text(l.diagButton),
+              ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const LicencesScreen())),
+              child: Text(l.licences),
+            ),
+            Center(child: Text('Waaiya ${s.version}', style: Theme.of(context).textTheme.bodySmall)),
+          ],
+        ),
+    };
+  }
+}
+
+/// How the filter works: what to do with apps that block it, holding silence, stereo, women's singing.
+class FilterOptionsCard extends StatelessWidget {
+  const FilterOptionsCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final s = WaaiyaScope.of(context).state;
     final st = s.settings;
     final singingNoModel = st.muteWomenSinging && !s.detectorModel;
+    void set(String key, Object v) => HomeScreen.set(context, key, v);
     return SectionCard(
-      title: l.settingsTitle,
+      title: l.filterOptionsTitle,
       children: [
         const SizedBox(height: 8),
         SettingSwitch(
+          id: 'switch_silence',
           title: l.settingSilenceTitle,
           body: l.settingSilenceBody,
           value: st.silenceUnfilterable,
-          onChanged: (v) => _set(context, SettingKeys.silenceUnfilterable, v),
+          onChanged: (v) => set(SettingKeys.silenceUnfilterable, v),
         ),
+        SettingSwitch(
+          key: const Key('hold_silence'),
+          id: 'switch_hold_silence',
+          title: l.settingHoldSilenceTitle,
+          body: l.settingHoldSilenceBody,
+          value: st.holdSilence,
+          onChanged: (v) => set(SettingKeys.holdSilence, v),
+        ),
+        SettingSwitch(
+          key: const Key('audio_stereo'),
+          id: 'switch_stereo',
+          title: l.settingStereoTitle,
+          body: l.settingStereoBody,
+          value: st.audioStereo,
+          onChanged: (v) => set(SettingKeys.audioStereo, v),
+        ),
+        if (st.isMan && s.capabilities.womenSinging)
+          SettingSwitch(
+            id: 'switch_singing',
+            title: l.settingSingingTitle,
+            body: singingNoModel ? l.settingSingingNoModel : l.settingSingingBody,
+            bodyIsError: singingNoModel,
+            value: st.muteWomenSinging,
+            onChanged: (v) => set(SettingKeys.muteWomenSinging, v),
+          ),
+      ],
+    );
+  }
+}
+
+/// Who uses the phone, the language, starting at login (desktop).
+class GeneralSettingsCard extends StatelessWidget {
+  const GeneralSettingsCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final s = WaaiyaScope.of(context).state;
+    final st = s.settings;
+    return SectionCard(
+      title: l.settingsGeneralTitle,
+      children: [
+        const SizedBox(height: 8),
         if (s.capabilities.autostart)
           SettingSwitch(
             key: const Key('autostart'),
@@ -88,36 +257,13 @@ class HomeScreen extends StatelessWidget {
             value: s.filter.autostart,
             onChanged: (v) => runAction(context, (b) => b.setAutostart(v)),
           ),
-        SettingSwitch(
-          key: const Key('hold_silence'),
-          title: l.settingHoldSilenceTitle,
-          body: l.settingHoldSilenceBody,
-          value: st.holdSilence,
-          onChanged: (v) => _set(context, SettingKeys.holdSilence, v),
-        ),
-        SettingSwitch(
-          key: const Key('audio_stereo'),
-          title: l.settingStereoTitle,
-          body: l.settingStereoBody,
-          value: st.audioStereo,
-          onChanged: (v) => _set(context, SettingKeys.audioStereo, v),
-        ),
-        if (st.isMan && s.capabilities.womenSinging)
-          SettingSwitch(
-            title: l.settingSingingTitle,
-            body: singingNoModel ? l.settingSingingNoModel : l.settingSingingBody,
-            bodyIsError: singingNoModel,
-            value: st.muteWomenSinging,
-            onChanged: (v) => _set(context, SettingKeys.muteWomenSinging, v),
-          ),
-        const Divider(),
         ValueRow(
           label: '${l.settingGenderTitle}: ${st.isMan ? l.genderMan : l.genderWoman}',
           action: l.change,
           onPressed: () async {
             final i = await chooseOne(context,
                 title: l.settingGenderTitle, options: [l.genderMan, l.genderWoman], selected: st.isMan ? 0 : 1);
-            if (i != null && context.mounted) await _set(context, SettingKeys.gender, i == 0 ? 'man' : 'woman');
+            if (i != null && context.mounted) await HomeScreen.set(context, SettingKeys.gender, i == 0 ? 'man' : 'woman');
           },
         ),
         ValueRow(
@@ -136,9 +282,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-/// The one-time setup card, for "Do the setup" in the start dialog.
-final setupSectionKey = GlobalKey();
 
 /// The diagnostics report (MainActivity.showDiagnostics): what the app sees, to copy and give to whoever helps.
 Future<void> showDiagnostics(BuildContext context) async {
@@ -168,6 +311,16 @@ Future<void> showDiagnostics(BuildContext context) async {
       ),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.guideClose)),
+        // Android: send it straight to whoever helps (MainActivity's Share button)
+        if (s.platform == 'android')
+          TextButton(
+            key: const Key('diag_share'),
+            onPressed: () {
+              Navigator.pop(ctx);
+              runAction(context, (b) => b.shareText(report));
+            },
+            child: Text(l.linkShare),
+          ),
         FilledButton(
           onPressed: () async {
             await Clipboard.setData(ClipboardData(text: report));
@@ -200,8 +353,7 @@ Future<void> _start(BuildContext context) async {
     );
     if (!context.mounted || go == null) return;
     if (!go) {
-      final setup = setupSectionKey.currentContext;
-      if (setup != null) await Scrollable.ensureVisible(setup, duration: const Duration(milliseconds: 300));
+      HomeNav.maybeOf(context)?.go('setup');
       return;
     }
   }
@@ -286,7 +438,9 @@ class PowerSection extends StatelessWidget {
     return Column(
       children: [
         Semantics(
+          container: true, // its own node, so that the id stays on the button
           button: true,
+          identifier: 'power',
           label: on ? l.powerStopCd : l.powerStartCd,
           excludeSemantics: true,
           child: SizedBox.square(
@@ -307,16 +461,22 @@ class PowerSection extends StatelessWidget {
         Semantics(liveRegion: true, child: Text(title, style: text.titleLarge, textAlign: TextAlign.center)),
         if (detail.isNotEmpty) ...[
           const SizedBox(height: 6),
-          Text(detail,
-              textAlign: TextAlign.center, style: text.bodyMedium?.copyWith(color: detailIsError ? c.error : null)),
+          TestId(
+            'state_detail',
+            child: Text(detail,
+                textAlign: TextAlign.center, style: text.bodyMedium?.copyWith(color: detailIsError ? c.error : null)),
+          ),
         ],
         // apps are held silent: the power button starts again, this gives them back unfiltered (MainActivity)
         if (f.state == FilterState.silenced) ...[
           const SizedBox(height: 12),
-          OutlinedButton(
-            key: const Key('release_silence'),
-            onPressed: () => runAction(context, (b) => b.stopFilter()),
-            child: Text(l.releaseSilence),
+          TestId(
+            'release_silence',
+            child: OutlinedButton(
+              key: const Key('release_silence'),
+              onPressed: () => runAction(context, (b) => b.stopFilter()),
+              child: Text(l.releaseSilence),
+            ),
           ),
         ],
         if (s.capabilities.captureConsent && !on && !s.setup.consentSkipped) ...[

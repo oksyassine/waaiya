@@ -58,8 +58,14 @@ class BlurOverlay(private val context: Context) {
         }
 
     private var layer: ShizukuCovers? = null
+    /** A shell layer being connected while app-overlay windows still draw (Waaiya's helper or Shizuku became
+     *  available after the blur started, e.g. the helper hands its binder a few seconds after the app starts). */
+    private var upgrading: ShizukuCovers? = null
     /** After the Shizuku layer failed, windows are used for a while instead of retrying every watchdog tick. */
     private var layerFailedAt = -1_000_000L
+
+    /** For the diagnostics report: the host, with who runs the shell layer. */
+    val hostName: String? get() = host?.let { if (it == Host.SHIZUKU) "shell layer (${layer?.via})" else it.name }
 
     /** The Shizuku layer is being bound and probed: nothing draws yet, and attach() must not start another. */
     val connecting: Boolean get() = layer != null && host == null
@@ -68,7 +74,7 @@ class BlurOverlay(private val context: Context) {
      *  windows. Returns false when nothing can draw (no Shizuku, no accessibility service, no overlay permission). */
     fun attach(): Boolean {
         if (wins.isNotEmpty() || layer != null) return true
-        if (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(context) == ShizukuSetup.State.READY &&
+        if (context.blurShellLayerAvailable() &&
             android.os.SystemClock.uptimeMillis() - layerFailedAt > 30_000) {
             val l = ShizukuCovers(context)
             layer = l
@@ -138,6 +144,7 @@ class BlurOverlay(private val context: Context) {
     }
 
     fun detach() {
+        upgrading?.stop(); upgrading = null
         layer?.stop(); layer = null
         wins.forEach { runCatching { wm?.removeViewImmediate(it.v) } }
         wins.clear()
@@ -170,10 +177,11 @@ class BlurOverlay(private val context: Context) {
             if (attach()) show(lastRects, lastCount, lastThumb, lastFail, lastTest)
             return
         }
+        if (host == Host.APP_OVERLAY) upgrade()
         val l = layer ?: return
         if (host != Host.SHIZUKU) return               // still connecting
         if (!l.alive || l.failed) {
-            Log.w(TAG, "blur: Shizuku layer ${if (l.failed) "cannot draw" else "died (Shizuku stopped?)"}, using a window")
+            Log.w(TAG, "blur: shell layer (${l.via}) ${if (l.failed) "cannot draw" else "died"}, using a window")
             layerFailedAt = android.os.SystemClock.uptimeMillis()
             l.stop(); layer = null; host = null
             if (attachWindow()) show(lastRects, lastCount, lastThumb, lastFail, lastTest)
@@ -181,6 +189,33 @@ class BlurOverlay(private val context: Context) {
         }
         show(lastRects, lastCount, lastThumb, lastFail, lastTest)
         l.checkHealth()
+    }
+
+    /**
+     * App-overlay windows take the touches under them (Android 12+). When a shell layer becomes available, the covers
+     * move to it: it is connected while the windows keep drawing, and the windows are removed only once the layer has
+     * drawn, so nothing is left uncovered in between.
+     */
+    private fun upgrade() {
+        if (layer != null || upgrading != null || !context.blurShellLayerAvailable() ||
+            android.os.SystemClock.uptimeMillis() - layerFailedAt <= 30_000) return
+        Log.i(TAG, "blur: a shell layer is available now, moving the covers to it")
+        val l = ShizukuCovers(context)
+        upgrading = l
+        l.connect { ok ->
+            if (upgrading !== l) return@connect           // detached meanwhile
+            upgrading = null
+            if (!ok || host != Host.APP_OVERLAY) {
+                if (!ok) layerFailedAt = android.os.SystemClock.uptimeMillis()
+                l.stop()
+                return@connect
+            }
+            layer = l
+            host = Host.SHIZUKU
+            show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+            wins.forEach { runCatching { wm?.removeViewImmediate(it.v) } }
+            wins.clear()
+        }
     }
 
     /** Changes only the failure display, keeping the current covers. */
@@ -476,9 +511,14 @@ class BlurAccessibilityService : AccessibilityService() {
  * Touches reach the app under the covers only through the accessibility overlay. Without it, a full-screen cover would
  * block every touch, so the "cover the screen" fail setting is off and greyed out.
  */
-fun Context.blurTouchPassThrough(): Boolean =
-    (Build.VERSION.SDK_INT >= 31 && ShizukuSetup.state(this) == ShizukuSetup.State.READY) ||
-        (BuildConfig.BLUR_A11Y && blurAccessibilityEnabled())
+fun Context.blurTouchPassThrough(): Boolean = blurShellLayerAvailable() || (BuildConfig.BLUR_A11Y && blurAccessibilityEnabled())
+
+/**
+ * Android 12+ and a shell process to draw the covers as a pass-through layer: Waaiya's own helper ([CoverHelper]) or
+ * Shizuku.
+ */
+fun Context.blurShellLayerAvailable(): Boolean = Build.VERSION.SDK_INT >= 31 &&
+    (CoverHelper.available || ShizukuSetup.state(this) == ShizukuSetup.State.READY)
 
 /** True when the user (or Shizuku) turned on [BlurAccessibilityService]. */
 fun Context.blurAccessibilityEnabled(): Boolean {

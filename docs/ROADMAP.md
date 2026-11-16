@@ -84,8 +84,10 @@ The diagnostics report is how those answers will come back.
 
 1. **Setup without a second app.** Today the setup needs Shizuku or a computer; it is longer than any
    competitor's, and a crash or confusion during first-run setup is a known reason people give up (finding 3.16).
-   - a. Pair with Android's wireless debugging from inside Waaiya (Android 11+) and run the two grants directly.
-     Shizuku stays optional, for the touch-through blur layer. Large: needs the ADB pairing protocol in the app.
+   - a. Done (0.2.10): pair with Android's wireless debugging from inside Waaiya (Android 11+) and run the grants
+     directly. 0.2.11: the same connection starts Waaiya's own cover helper, so Shizuku is no longer needed for the
+     touch-through blur layer either; it stays an alternative (rooted Android 10). The helper must be started
+     again after each restart (one tap); a start at boot is not done.
    - b. A "use a computer" page that does the grant from Chrome over USB (WebUSB), no ADB install. Medium.
 2. **A lighter live model, and measured battery and heat** (need 3: the most common complaint about every similar
    tool). Benchmark model variants on ARM through the diagnostics numbers; try the two channels on two threads

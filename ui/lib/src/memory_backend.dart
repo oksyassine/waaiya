@@ -97,5 +97,26 @@ class MemoryBackend implements WaaiyaBackend {
   Future<String> diagnosticsReport() async => 'Waaiya ${_state.version} (${_state.platform})\n'
       'Filter: ${_state.filter.state.name}\nBlur: ${_state.blur.state?.name ?? 'off'}';
 
+  @override
+  Future<String> wirelessStart() async => throw const BackendException('unsupported', 'wirelessStart');
+
+  @override
+  Future<bool> wirelessEnterCode(String code) async => throw const BackendException('unsupported', 'wirelessEnterCode');
+
+  @override
+  Future<void> wirelessCancel() async {}
+
+  @override
+  Future<void> openAboutPhone() async => throw const BackendException('unsupported', 'openAboutPhone');
+
+  @override
+  Future<void> openSetupGuide() async => throw const BackendException('unsupported', 'openSetupGuide');
+
+  @override
+  Future<void> pageShown() async {}
+
+  @override
+  Future<void> shareText(String text) async => throw const BackendException('unsupported', 'shareText');
+
   Future<void> close() => _controller.close();
 }

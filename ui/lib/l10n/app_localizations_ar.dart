@@ -156,6 +156,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get shizukuRefused => 'رُفض إذن Shizuku. اضغط الزر للمحاولة مرة أخرى.';
 
   @override
+  String get setupSlow =>
+      'يستغرق Shizuku وقتًا أطول من المعتاد. انتظر قليلًا: في بعض الهواتف يحتاج مساعده إلى دقيقة ليبدأ أول مرة.';
+
+  @override
+  String get setupTimeout =>
+      'لم يُجب Shizuku خلال دقيقتين. افتح Shizuku وتأكد أنه يعمل، ثم اضغط الزر مرة أخرى. إذا اكتمل الإعداد لاحقًا فستتحدّث هذه الشاشة وحدها.';
+
+  @override
+  String get setupRefusedXiaomi =>
+      'رفض الهاتف منح الأذونات. في هواتف شاومي وريدمي وبوكو، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم حاول مرة أخرى.';
+
+  @override
+  String get setupRefusedColoros =>
+      'رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏، ثم حاول مرة أخرى.';
+
+  @override
+  String get setupNoteXiaomi =>
+      'شاومي وريدمي وبوكو: قبل الإعداد، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏. يطلب ذلك تسجيل الدخول إلى حساب شاومي (وفي بعض الهواتف وجود شريحة SIM). إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات.';
+
+  @override
+  String get setupNoteColoros =>
+      'أوبو وون بلس وريلمي: قبل الإعداد، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏.';
+
+  @override
   String get stepDoneCd => 'تم';
 
   @override
@@ -404,7 +428,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurFailUnavailable =>
-      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: يرسم Shizuku الأغطية ويمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
+      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
   String get blurFailNeedsA11y =>
@@ -722,6 +746,63 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifStoppedText => 'الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.';
+
+  @override
+  String get wsetupGuide => 'الخطوات بالصور';
+
+  @override
+  String get navFilter => 'التصفية';
+
+  @override
+  String get navScreen => 'الشاشة';
+
+  @override
+  String get navLinks => 'الروابط';
+
+  @override
+  String get navSetup => 'الإعداد';
+
+  @override
+  String get navSettings => 'الإعدادات';
+
+  @override
+  String get setupDoneTitle => 'اكتمل الإعداد';
+
+  @override
+  String get setupDoneBody =>
+      'تستطيع واعية كتم الصوت الأصلي للتطبيقات الأخرى. لا تُعِده إلا إذا تغيّر شيء (أُلغي الإعداد، أو قالت واعية إنه ناقص).';
+
+  @override
+  String get setupRedo => 'إظهار الإعداد من جديد';
+
+  @override
+  String get setupGo => 'الذهاب إلى الإعداد';
+
+  @override
+  String get helperTitle => 'مرور اللمس عبر الأغطية';
+
+  @override
+  String get helperBodyOff =>
+      'دون مساعدة، يمنع الغطاء اللمس تحته. يرسم مساعد واعية الأغطية بحيث يمرّ اللمس من خلالها. فعّل ‏«تصحيح الأخطاء اللاسلكي»‏ (يلزم Wi‑Fi) واضغط الزر؛ في المرة الأولى تُقرن الهاتف مرة واحدة كما في الإعداد. بعد إعادة تشغيل الهاتف اضغطه من جديد.';
+
+  @override
+  String get helperStart => 'تشغيل مساعد واعية';
+
+  @override
+  String get helperOn =>
+      'مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.';
+
+  @override
+  String get helperShizukuOn => 'Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.';
+
+  @override
+  String get helperOrShizuku => 'أو باستخدام Shizuku:';
+
+  @override
+  String get filterOptionsTitle => 'خيارات التصفية';
+
+  @override
+  String get settingsGeneralTitle => 'عام';
 
   @override
   String get desktopPreview =>

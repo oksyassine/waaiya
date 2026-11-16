@@ -50,10 +50,25 @@ class ShizukuCovers(private val ctx: Context) {
         private set
     @Volatile private var checking = false
 
+    /** Who hosts the layer: Waaiya's own helper ([CoverHelper]) when it runs, else Shizuku. */
+    var via = ""
+        private set
+
     /** Binds the service and creates the layer. [done] runs on the main thread: true = covers can be drawn. */
     fun connect(done: (Boolean) -> Unit) {
         var finished = false
         fun finish(ok: Boolean) = main.post { if (!finished) { finished = true; done(ok) } }
+        CoverHelper.service?.let { s ->
+            via = "Waaiya helper"
+            thread(name = "im-covers-start") {
+                val ok = runCatching { s.start(token) }.onFailure { Log.w(TAG, "covers: helper start failed", it) }
+                    .getOrDefault(false)
+                if (ok) svc = s
+                finish(ok)
+            }
+            return
+        }
+        via = "Shizuku"
         val c = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
                 if (binder == null || !binder.pingBinder()) { finish(false); return }
@@ -97,7 +112,8 @@ class ShizukuCovers(private val ctx: Context) {
         svc = null
         thread(name = "im-covers-stop") {
             runCatching { s?.stop() }
-            runCatching { conn?.let { Shizuku.unbindUserService(args, it, true) } }
+            // the helper stays for the next blur; a Shizuku UserService is removed with the binding
+            if (via == "Shizuku") runCatching { conn?.let { Shizuku.unbindUserService(args, it, true) } }
         }
     }
 
@@ -115,7 +131,11 @@ class ShizukuCovers(private val ctx: Context) {
  * Shizuku UserService (shell uid, own process, not started by Android: not in the manifest). Hidden SurfaceControl
  * methods are called by reflection; hidden-API checks do not apply to app_process processes.
  */
-class CoverService : ICoverService.Stub() {
+/**
+ * [allowedUid] >= 0 when hosted by Waaiya's own helper ([CoverHelper]): only that uid may call it, and destroy() does
+ * not end the helper. Under Shizuku (-1) Shizuku hands the binder to this app only.
+ */
+class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
     private companion object {
         /** Colour layers at most: the app's rects (Vision.MAX_RECTS, outlines as strips) plus badge and test square. */
         const val MAX_LAYERS = Vision.MAX_RECTS + 2
@@ -140,9 +160,14 @@ class CoverService : ICoverService.Stub() {
         }
     }
 
-    override fun destroy() { clear(); exitProcess(0) }
+    private fun checkCaller() {
+        if (allowedUid >= 0 && Binder.getCallingUid() != allowedUid) throw SecurityException("not Waaiya")
+    }
+
+    override fun destroy() { checkCaller(); clear(); if (allowedUid < 0) exitProcess(0) }
 
     override fun start(app: IBinder): Boolean = synchronized(lock) {
+        checkCaller()
         clear()
         try {
             val b = SurfaceControl.Builder().setName("waaiya-covers")
@@ -177,6 +202,7 @@ class CoverService : ICoverService.Stub() {
     }
 
     override fun update(rects: FloatArray, count: Int): Unit = synchronized(lock) {
+        if (allowedUid >= 0 && Binder.getCallingUid() != allowedUid) return@synchronized  // one-way: drop, no throw
         val r = root ?: return@synchronized
         last = SystemClock.uptimeMillis()
         val n = count.coerceIn(0, rects.size / ShizukuCovers.RECORD).coerceAtMost(MAX_LAYERS)
@@ -208,6 +234,7 @@ class CoverService : ICoverService.Stub() {
     }
 
     override fun health(): Int = synchronized(lock) {
+        checkCaller()
         val r = when { root == null -> 1; updateFailed -> 2; else -> 0 }
         updateFailed = false
         r
@@ -233,7 +260,7 @@ class CoverService : ICoverService.Stub() {
         t.setLayer(c, if (kind == ShizukuCovers.KIND_BADGE || kind == ShizukuCovers.KIND_TEST) 10 else 1)
     }
 
-    override fun stop(): Unit = clear()
+    override fun stop() { checkCaller(); clear() }
 
     private fun hideAll(): Unit = synchronized(lock) {
         val t = SurfaceControl.Transaction()

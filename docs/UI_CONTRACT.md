@@ -41,10 +41,11 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `platform` | String | `android`, `linux`, `windows`, `macos` |
 | `version` | String | App version name (`0.2.9`; desktop: from the bundle's `engine/VERSION`, else `desktop/lib/version.dart`, checked against `desktop/pubspec.yaml` by a test) |
 | `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
+| `navigate` | Map? | `{page, id}`: a page the platform asks to show once (`filter`, `screen`, `links`, `setup`, `settings`), e.g. a Quick Settings tile's "Open Waaiya" (`UiActivity.EXTRA_PAGE`). Flutter shows it when `id` is new and calls `pageShown`. Null most of the time |
 | `settings` | Map | The settings below, with their current values |
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM`, `CAPTURE_FAILED`, `SILENCED` (`FilterService.State`). `SILENCED`: filtering stopped by itself and `hold_silence` keeps the other apps muted (not running: the power button starts again; a "Stop: hear apps unfiltered" button calls `stopFilter`); Linux: the daemon is gone and its virtual output stayed. Desktop: `STOPPED_BY_SYSTEM` = the filter stopped by itself (the service died or failed; the screen says "Waaiya stopped"), `MODEL_FAILED` = running but its voice model did not load (silent, fail-closed) |
 | `filter.problem` | String? | While `FILTERING`, what the user hears is not what filtering promises (shown instead of the "on" line, in the error colour): `too_slow` (the device cannot filter live in time), `not_muted` (the original sound is not silenced: setup missing), `mute_failing` (silencing the playing app fails), desktop `detector_failed` (women's singing on, its detector did not load: voices muted). Null: none |
-| `filter.mono` | bool | The live sound was made mono so the device keeps up (a note under the "on" line) |
+| `filter.mono` | bool | Stereo was chosen but the live sound was made mono so the device keeps up (a note under the "on" line). Android: `health.monoForSpeed`, not mono by choice (the default) |
 | `filter.blockedApps` | List<String> | Apps playing now that do not allow filtering (names); said as silenced or unfiltered according to `silence_unfilterable` |
 | `filter.captureCancelled` | bool | Android's screen-sharing question was cancelled at the last start (until the next start) |
 | `filter.delayMs` | int | Engine delay of the running filter; 0 = not measured (the screen then leaves the figure out) |
@@ -54,17 +55,22 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `filter.autostart` | bool | The filter starts at login (capability `autostart`) |
 | `setup.originalsMuted` | bool | The originals can be silenced (Android: `DUMP` granted) |
 | `setup.consentSkipped` | bool | No screen-capture question at start (Android: app-op `PROJECT_MEDIA` = allow) |
+| `setup.notificationTextNeedsSetup` | bool | Android 15+: the "Notification text" Quick Settings tile is on but `WRITE_SECURE_SETTINGS` is missing; the setup card shows again (the same setup grants it). Default false |
+| `setup.deviceNote` | String? | `xiaomi` or `coloros`: the phone needs a Developer options switch changed before the setup ("USB debugging (Security settings)" on, "Permission monitoring" off); null otherwise |
+| `setup.wireless` | Map | The setup on the phone itself (Wireless debugging, `WirelessSetup`): `supported` (Android 11+), `running`, `phase` (`WAITING`, `PAIRING`, `CONNECTING`, `DONE`, `FAILED`; null before the first run), `title` and `body` (Android string names, `wsetup_*` / `setup_refused_*`, turned into words by Flutter's `wirelessText`), `detail` (raw output, only when no sentence explains it), `isError`, `hint` (`wsetup_notif_off`, `wsetup_dev_off`). Empty off Android |
 | `setup.shizuku` | String? | `NOT_INSTALLED`, `NOT_RUNNING`, `TOO_OLD`, `NEEDS_PERMISSION`, `DENIED_PERMANENTLY`, `READY` (`ShizukuSetup.State`); null off Android |
 | `setup.busy` | bool | A Shizuku grant is running |
-| `setup.message` | Map? | `{code, detail}`: `failed` (detail = command log), `refused`, `done_restart`, `error` (detail = text) |
-| `setup.adbCommands` | String? | The two `adb shell ...` lines for this package |
+| `setup.message` | Map? | `{code, detail}`: `failed` (detail = command log), `refused`, `done_restart`, `error` (detail = text), `slow` (Shizuku still starting after 20 s; not an error), `timeout` (no answer after 2 min; a later answer still updates the state), `refused_xiaomi` / `refused_coloros` (detail = log) |
+| `setup.adbCommands` | String? | The `adb shell ...` lines for this package (DUMP, PROJECT_MEDIA, WRITE_SECURE_SETTINGS) |
 | `blur.state` | String? | `STARTING`, `ON`, `ON_COVERS_VISIBLE`, `NO_OVERLAY`, `MODELS_MISSING`, `FAILING` (`ScreenBlur.State`), and on desktop `NO_CAPTURE`; null when not running (or not yet applied: shown as starting) |
 | `blur.overlayAllowed` | bool | May draw over other apps |
 | `blur.a11yBuild` | bool | This build declares the blur accessibility service (`BuildConfig.BLUR_A11Y`) |
 | `blur.a11yEnabled` | bool | That service is on |
 | `blur.touchPassThrough` | bool | Touches reach the app under a cover (so a full-screen fail cover is safe) |
 | `blur.layerSupported` | bool | The Shizuku cover layer is possible on this device (Android 12+) |
-| `blur.shizukuLayer` | bool | Shizuku is ready on Android 12+: the covers are a Shizuku shell layer (`ShizukuCovers`), nothing else to allow |
+| `blur.shizukuLayer` | bool | Android 12+ and a shell process draws the covers as a pass-through layer: Waaiya's own helper (`CoverHelper`) or Shizuku (name kept from 0.2.x). Nothing else to allow |
+| `blur.helperRunning` | bool | Waaiya's own cover helper runs for this app version (`CoverHelper.available`) |
+| `blur.helperStartable` | bool | The helper can be started from the Screen page: Android 12+ with the on-phone setup (it is started by the same Wireless debugging run, `wirelessStart`, when a blur option is on) |
 | `blur.busy` | bool | A Shizuku blur grant is running |
 | `blur.message` | Map? | `{code: "setup_failed", detail}` |
 | `blur.uncovered` | int | Desktop: monitors the blur does not cover (Wayland: not shared in the screen-sharing dialog, or plugged in later); the card says so in the error colour. 0 otherwise |
@@ -122,7 +128,21 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `getLicences` | none | `{notice, docs: [{label, file}]}` | Assets copied at build time (`copyLicences`) | Files next to the app, else a link to the repository |
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
 | `diagnosticsReport` | none | String | `Diagnostics.report`: what the app sees on this phone (plain text, English) | Linux: version, session, settings, filter and blur state, `waaiya status`, the service journal and the end of `filter.log` |
+| `wirelessStart` | none | `started`, `dev_off`, `asking` | The on-phone setup: asks POST_NOTIFICATIONS first (the code is typed in a notification; `asking` = Android's question is open, the run goes on after it), `dev_off` = Developer options are off (Flutter offers `openAboutPhone`), else starts `WirelessSetupService` and opens Wireless debugging. With a blur option on (12+), the run also starts the cover helper. Progress in `setup.wireless` | `unsupported` |
+| `wirelessEnterCode` | `{code}` | bool | A pairing code typed in Waaiya (split screen); false when it is not 6 digits | `unsupported` |
+| `wirelessCancel` | none | null | Stops a running on-phone setup | no-op |
+| `openAboutPhone` | none | null | Wireless debugging in Developer options, or About phone when they are off | `unsupported` |
+| `openSetupGuide` | none | null | The native step-by-step guide with pictures (`SetupGuideActivity`) | `unsupported` |
+| `pageShown` | none | null | The `navigate` page was shown: the request is cleared | no-op |
+| `shareText` | `{text}` | null | Android's share sheet (the diagnostics report's Share button) | `unsupported` |
 
+Screens (0.2.11): a bottom bar with one page per purpose, so that no page is long: Filter (the on/off control,
+"one step left" with "Go to the setup", filter options), Screen (blur, who draws the covers and the helper button),
+Links, Setup (on this phone, with Shizuku, from a computer; once done, a short "Setup done" card), Settings (who
+uses the phone, language, start at login, diagnostics, licences). Pages without their capability are left out
+(desktop: Filter, Screen with a blur, Settings). "Do the setup" in the start dialog opens the Setup page. Nodes
+that UI tests use carry `Semantics(identifier:)` = the native view ids (`power`, `state_detail`, `switch_*`,
+`nav_*`...), so `android/tools/emu_check.py` runs on both screens.
 Screens (0.2.10, as `MainActivity`): the settings card has "Keep apps silent if filtering stops by itself" and
 "Stereo sound"; the wireless-debugging setup (`wsetup_*`) is Android-only and never shown on desktop.
 Screens (0.2.9, as `MainActivity`): Start without the one-time setup (`capabilities.shizukuSetup` and not
@@ -188,7 +208,7 @@ Flutter's own `Clipboard`; it needs no backend method.
 
 ```bash
 cd ui_module && flutter pub get          # once: creates ui_module/.android, which android/settings.gradle.kts includes
-cd android && ./gradlew assembleDebug    # -PimNativeUi: the old native main screen instead of Flutter
+cd android && ./gradlew assembleDebug    # the Flutter screens (the native MainActivity screen was retired in 0.2.11)
 cd ui && flutter analyze && flutter test
 cd desktop && flutter build linux        # Windows: `flutter build windows` on Windows (CI: .github/workflows/flutter.yml)
 python3 ui/tool/arb_from_android.py && (cd ui && flutter gen-l10n)   # after changing res/values*/strings.xml

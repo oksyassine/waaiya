@@ -22,7 +22,8 @@ object Diagnostics {
         fun granted(p: String) = ctx.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED
 
         appendLine("Waaiya ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE}) ${BuildConfig.BUILD_TYPE}")
-        appendLine("Phone: ${Build.MANUFACTURER} ${Build.MODEL}, Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
+        appendLine("Phone: ${Build.MANUFACTURER} ${Build.MODEL}, Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})" +
+            SetupHelp.systemName.let { if (it.isEmpty()) "" else ", $it" })
         val mem = ActivityManager.MemoryInfo().also { ctx.getSystemService(ActivityManager::class.java).getMemoryInfo(it) }
         appendLine("Chip: ${chip()}, ${Runtime.getRuntime().availableProcessors()} cores, " +
             "ABI ${Build.SUPPORTED_ABIS.joinToString("/")}, RAM ${mem.totalMem / (1 shl 20)} MB (free ${mem.availMem / (1 shl 20)} MB)")
@@ -33,6 +34,9 @@ object Diagnostics {
         appendLine("Silence originals (DUMP): ${yes(ctx.hasDumpPermission())}")
         appendLine("Skip screen-share question (PROJECT_MEDIA): ${yes(ctx.hasProjectMediaAppOp())}")
         appendLine("Shizuku: ${ShizukuSetup.state(ctx)}")
+        appendLine("Notification text tile (Android 15+): permission ${yes(ScreenShareProtection.canWrite(ctx))}, " +
+            "on ${yes(Settings(ctx).showNotificationText)}")
+        appendLine("Last setup: " + SetupLog.report(ctx))
         appendLine("Microphone permission: ${yes(granted(android.Manifest.permission.RECORD_AUDIO))}")
         appendLine("Notifications: ${yes(ctx.getSystemService(NotificationManager::class.java).areNotificationsEnabled())}")
         val pm = ctx.getSystemService(PowerManager::class.java)

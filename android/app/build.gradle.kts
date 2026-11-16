@@ -26,9 +26,6 @@ val signingProps = Properties().apply {
 
 // Screen blur: declare the accessibility service only on request (Play Protect blocks sideloaded apps that have one).
 val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
-// Main screen: the shared Flutter screens (../ui, UiActivity) by default; -PimNativeUi builds the old native
-// MainActivity screen instead (kept as a fallback until the Flutter one has replaced it everywhere).
-val nativeUi = providers.gradleProperty("imNativeUi").isPresent
 
 android {
     namespace = "org.islamicmute.app"
@@ -39,8 +36,8 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 12
-        versionName = "0.2.10"
+        versionCode = 13
+        versionName = "0.2.11"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         if (blurA11y) versionNameSuffix = "-a11y"
@@ -177,11 +174,9 @@ gradle.taskGraph.whenReady {
 android.sourceSets["main"].assets.srcDir(modelAssets)
 
 // -PimBlurA11y: also declare the screen blur's accessibility service (touches pass through the covers).
-// -PimNativeUi: launch the native MainActivity instead of the Flutter screens.
 androidComponents {
     onVariants { v ->
         if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml")
-        if (nativeUi) v.sources.manifests.addStaticManifestFile("src/nativeUi/AndroidManifest.xml")
     }
 }
 

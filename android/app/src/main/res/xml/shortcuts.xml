@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Long-press the Waaiya icon (or drag one to the home screen): start or stop filtering without opening the app.
+     Both go through TileStartActivity, as the Quick Settings tile does: after the one-time setup, Android answers
+     its screen-capture question without showing it. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="start"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_start"
+        android:shortcutShortLabel="@string/shortcut_start_short"
+        android:shortcutLongLabel="@string/shortcut_start_long">
+        <intent
+            android:action="org.islamicmute.app.START_FILTER"
+            android:targetPackage="org.islamicmute.app"
+            android:targetClass="org.islamicmute.app.TileStartActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="stop"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_stop"
+        android:shortcutShortLabel="@string/shortcut_stop_short"
+        android:shortcutLongLabel="@string/shortcut_stop_long">
+        <intent
+            android:action="org.islamicmute.app.STOP_FILTER"
+            android:targetPackage="org.islamicmute.app"
+            android:targetClass="org.islamicmute.app.TileStartActivity" />
+    </shortcut>
+</shortcuts>

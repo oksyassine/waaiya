@@ -254,13 +254,15 @@ void main() {
     await tester.runAsync(() => until(() => b.state.blur.state, (s) => s == BlurState.noOverlay));
     await tester.pumpWidget(WaaiyaApp(backend: b));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('nav_screen'))); // the Screen page
+    await tester.pumpAndSettle();
     expect(find.text('تمويه الشاشة'), findsOneWidget); // the blur card
     final card = find.ancestor(of: find.text('تمويه الشاشة'), matching: find.byType(Card));
     final row = find.byKey(const Key('blur_strict'));
     expect(row, findsOneWidget);
     expect(find.descendant(of: card, matching: row), findsOneWidget);
-    final settings = find.ancestor(of: find.text('الإعدادات'), matching: find.byType(Card));
-    expect(find.descendant(of: settings, matching: row), findsNothing);
+    // only there: not on another page (the Settings page)
+    expect(find.byKey(const Key('blur_strict'), skipOffstage: false), findsOneWidget);
     // filtering is off, yet the blur reports: it runs on its own on desktop
     expect(b.state.filter.running, isFalse);
     final status = find.byKey(const Key('blur_status'));
@@ -292,6 +294,8 @@ void main() {
     await tester.runAsync(() => until(() => b.state.blur.state, (s) => s == BlurState.on));
     await tester.pumpWidget(WaaiyaApp(backend: b));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('nav_screen')));
+    await tester.pumpAndSettle();
     expect(find.text('تمويه الشاشة'), findsOneWidget);
     await tester.runAsync(() => b.close());
   });
@@ -305,8 +309,10 @@ void main() {
     expect(find.text('تمويه الشاشة'), findsNothing);
     await tester.scrollUntilVisible(find.text('الإعدادات'), 200);
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('blur_strict')), findsNothing);
-    expect(find.textContaining('مَن يبقى دون تغطية'), findsNothing);
+    // on no page at all, shown or not
+    expect(find.byKey(const Key('blur_strict'), skipOffstage: false), findsNothing);
+    expect(find.textContaining('مَن يبقى دون تغطية', skipOffstage: false), findsNothing);
+    expect(find.byKey(const Key('nav_screen')), findsNothing);
     expect(File('$log.args').existsSync(), isFalse); // never started
     await tester.runAsync(() => b.close());
   });

@@ -158,6 +158,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'Shizuku permission was refused. Tap the button to try again.';
 
   @override
+  String get setupSlow =>
+      'Shizuku is taking longer than usual. Keep waiting: on some phones its helper takes up to a minute to start the first time.';
+
+  @override
+  String get setupTimeout =>
+      'Shizuku did not answer within 2 minutes. Open Shizuku, check that it says it is running, then tap the button again. If the setup finishes later, this screen updates by itself.';
+
+  @override
+  String get setupRefusedXiaomi =>
+      'This phone refused the permissions. On Xiaomi, Redmi and POCO, turn on “USB debugging (Security settings)” in Developer options (it asks you to sign in to a Xiaomi account), then try again.';
+
+  @override
+  String get setupRefusedColoros =>
+      'This phone refused the permissions. On OPPO, OnePlus and realme, turn off “Permission monitoring” in Developer options, then try again.';
+
+  @override
+  String get setupNoteXiaomi =>
+      'Xiaomi, Redmi and POCO: before the setup, turn on “USB debugging (Security settings)” in Developer options. It asks you to sign in to a Xiaomi account (and on some phones for a SIM card). If the notification has no field to type the code in, set the notification style to “Android” in the notification settings.';
+
+  @override
+  String get setupNoteColoros =>
+      'OPPO, OnePlus and realme: before the setup, turn off “Permission monitoring” in Developer options.';
+
+  @override
   String get stepDoneCd => 'Done';
 
   @override
@@ -410,7 +434,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurFailUnavailable =>
-      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) and it turns on: the covers are then drawn by Shizuku and taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.';
+      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper or Shizuku (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.';
 
   @override
   String get blurFailNeedsA11y =>
@@ -730,6 +754,64 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notifStoppedText =>
       'The sound is not filtered any more. Tap to start again.';
+
+  @override
+  String get wsetupGuide => 'Steps with pictures';
+
+  @override
+  String get navFilter => 'Filter';
+
+  @override
+  String get navScreen => 'Screen';
+
+  @override
+  String get navLinks => 'Links';
+
+  @override
+  String get navSetup => 'Setup';
+
+  @override
+  String get navSettings => 'Settings';
+
+  @override
+  String get setupDoneTitle => 'Setup done';
+
+  @override
+  String get setupDoneBody =>
+      'Waaiya can silence the original sound of other apps. Do it again only if something changed (the setup was undone, or Waaiya says it is missing).';
+
+  @override
+  String get setupRedo => 'Show the setup again';
+
+  @override
+  String get setupGo => 'Go to the setup';
+
+  @override
+  String get helperTitle => 'Touches through the covers';
+
+  @override
+  String get helperBodyOff =>
+      'Without help, a cover blocks the touches under it. Waaiya\'s helper draws the covers so that touches pass through. Turn on Wireless debugging (Wi-Fi is needed) and tap the button; the first time, pair once as in the setup. After the phone restarts, tap it again.';
+
+  @override
+  String get helperStart => 'Start Waaiya\'s helper';
+
+  @override
+  String get helperOn =>
+      'Waaiya\'s helper draws the covers: touches pass through them. It stops when the phone restarts or when USB debugging is turned off; tap the button again then.';
+
+  @override
+  String get helperShizukuOn =>
+      'Shizuku draws the covers: touches pass through them.';
+
+  @override
+  String get helperOrShizuku => 'Or with Shizuku:';
+
+  @override
+  String get filterOptionsTitle => 'Filter options';
+
+  @override
+  String get settingsGeneralTitle => 'General';
 
   @override
   String get desktopPreview =>

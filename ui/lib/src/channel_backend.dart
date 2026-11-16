@@ -77,4 +77,25 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<String> diagnosticsReport() async => await _call<String>('diagnosticsReport') ?? '';
+
+  @override
+  Future<String> wirelessStart() async => await _call<String>('wirelessStart') ?? 'started';
+
+  @override
+  Future<bool> wirelessEnterCode(String code) async => await _call<bool>('wirelessEnterCode', {'code': code}) ?? false;
+
+  @override
+  Future<void> wirelessCancel() => _call<void>('wirelessCancel');
+
+  @override
+  Future<void> openAboutPhone() => _call<void>('openAboutPhone');
+
+  @override
+  Future<void> openSetupGuide() => _call<void>('openSetupGuide');
+
+  @override
+  Future<void> pageShown() => _call<void>('pageShown');
+
+  @override
+  Future<void> shareText(String text) => _call<void>('shareText', {'text': text});
 }
