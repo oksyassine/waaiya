@@ -222,7 +222,8 @@ def main():
     if a.cover_helper:
         # the same shell line as CoverHelper.startCommand (WirelessSetupService runs it over Wireless debugging)
         dump = e.sh(f"dumpsys package {PKG}")
-        uid, vc = re.search(r"appId=(\d+)", dump).group(1), re.search(r"versionCode=(\d+)", dump).group(1)
+        # "appId=" from Android 12, "userId=" before
+        uid, vc = re.search(r"(?:appId|userId)=(\d+)", dump).group(1), re.search(r"versionCode=(\d+)", dump).group(1)
         e.sh("for p in $(pidof waaiya_covers); do kill $p; done; "
              f"P=$(pm path {PKG} | head -n 1 | cut -d: -f2); CLASSPATH=$P setsid app_process /system/bin "
              f"--nice-name=waaiya_covers org.islamicmute.app.CoverHelper {uid} {vc} </dev/null >/dev/null 2>&1 & "
