@@ -96,13 +96,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Without the one-time setup below, you will hear the music and the filtered sound together.';
 
   @override
-  String get setupTitle => 'One-time setup';
-
-  @override
-  String get setupBody =>
-      'Lets Waaiya silence the original sound. You do it once; it stays until you uninstall the app.';
-
-  @override
   String get step1Title => 'Install Shizuku';
 
   @override
@@ -171,15 +164,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupRefusedColoros =>
-      'This phone refused the permissions. On OPPO, OnePlus and realme, turn off “Permission monitoring” in Developer options, then try again.';
+      'This phone refused the permissions. On OPPO, OnePlus and realme, in Developer options, turn on “Disable permission monitoring” (on the newest versions it is called “Disable system optimization”, and may show only with the phone set to English). To find it, search “permission” in Settings. Then try again.';
 
   @override
   String get setupNoteXiaomi =>
-      'Xiaomi, Redmi and POCO: before the setup, turn on “USB debugging (Security settings)” in Developer options. It asks you to sign in to a Xiaomi account (and on some phones for a SIM card). If the notification has no field to type the code in, set the notification style to “Android” in the notification settings.';
-
-  @override
-  String get setupNoteColoros =>
-      'OPPO, OnePlus and realme: before the setup, turn off “Permission monitoring” in Developer options.';
+      'Xiaomi, Redmi and POCO: if the notification has no field to type the code in, set the notification style to “Android” in the notification settings, or type the code in Waaiya using split screen.';
 
   @override
   String get stepDoneCd => 'Done';
@@ -513,18 +502,106 @@ class AppLocalizationsEn extends AppLocalizations {
       'You need Wi-Fi and Android 11 or newer. Pairing is done once; after the phone restarts you only repeat step 7.\n\n1. Connect the phone to Wi-Fi.\n\n2. Turn on Developer options: Settings › About phone › Software information › tap “Build number” 7 times. (On other phones: Settings › About phone › Build number.)\n\n3. Open Shizuku. If it asks to show notifications, allow it: the pairing code is typed in a Shizuku notification.\n\n4. In Shizuku, under “Start via Wireless debugging”, tap “Pairing”. On the page that opens, tap “Developer options”, turn on “Wireless debugging” and confirm “Allow”.\n\n5. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n6. Keep that screen open and pull down the notifications. When Shizuku\'s notification says “Pairing service found”, tap “Enter pairing code” and type the code. Shizuku says pairing succeeded.\n\n7. Go back to Shizuku and tap “Start” under “Start via Wireless debugging”. Wait until it says “Shizuku is running”.\n\n8. Come back to Waaiya and tap “Give permission”, then “Allow”.\n\nAfter a phone restart Shizuku stops: connect to Wi-Fi, turn “Wireless debugging” back on if it is off, open Shizuku and tap “Start”. No new pairing.';
 
   @override
-  String get wsetupRouteTitle => 'Set up on this phone (no extra app)';
+  String get wsetupRouteTitle => 'Set up on this phone';
 
   @override
   String get wsetupRouteBody =>
-      'With Android\'s own Wireless debugging. You need Wi-Fi (internet is not needed). Pairing is done once.';
+      'Four short steps, done once. No extra app and no computer. Waaiya ticks each step when it is done.';
 
   @override
-  String get wsetupSteps =>
-      '1. Tap “Start”. Waaiya opens Developer options and shows a notification.\n\n2. If Developer options are off, About phone opens instead: tap “Build number” 7 times (on some phones it is under Software information), come back and tap “Start” again.\n\n3. Scroll down to “Wireless debugging” (under Debugging), turn it on and confirm “Allow”.\n\n4. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n5. Keep that screen open. Pull down the notifications, tap “Enter code” in Waaiya\'s notification and type the code.\n\n6. Waaiya finishes by itself and says “Setup done”. You can then turn Wireless debugging off.';
+  String get wizDevTitle => 'Turn on Developer options';
 
   @override
-  String get wsetupStart => 'Start';
+  String get wizDevBody =>
+      'In About phone, tap “Build number” 7 times, then come back here. If you cannot find it, search “Build number” in Settings.';
+
+  @override
+  String get wizDevBodySamsung =>
+      'In About phone › Software information, tap “Build number” 7 times, then come back here.';
+
+  @override
+  String get wizDevBodyXiaomi =>
+      'In About phone, tap “OS version” 7 times (on older phones “MIUI version”; on some it is under “Detailed info and specs”), then come back here.';
+
+  @override
+  String get wizDevBodyColoros =>
+      'In About device (or About phone) › Version, tap “Build number” 7 times, then come back here.';
+
+  @override
+  String get wizDevBodyVivo =>
+      'In About phone, tap “Software version” 7 times (on some phones: Software information › “Build number”), then come back here.';
+
+  @override
+  String get wizDevBodyHuawei =>
+      'In About phone, tap “Build number” 7 times, then come back here.';
+
+  @override
+  String get wizDevBodyTranssion =>
+      'In My phone (or About phone), tap “Build number” 7 times, then come back here.';
+
+  @override
+  String get setupNoteHuawei =>
+      'Huawei: many Huawei phones have no “Wireless debugging”. If you cannot find it in Developer options, use a computer (“Other ways” below).';
+
+  @override
+  String get wsetupFilterOn =>
+      'Filtering is on: on this Android version the code cannot be typed in a notification while it runs. Stop filtering first, or use split screen and “Type the code here”.';
+
+  @override
+  String get wizDevSearch =>
+      'The names can differ with the phone’s language: if you cannot find it, use the search at the top of Settings.';
+
+  @override
+  String get wizDevAction => 'Open About phone';
+
+  @override
+  String get wizWifiTitle => 'Connect to Wi-Fi';
+
+  @override
+  String get wizWifiBody =>
+      'Any Wi-Fi network will do; internet is not needed.';
+
+  @override
+  String get wizWifiAction => 'Open Wi-Fi settings';
+
+  @override
+  String get wizWdTitle => 'Turn on Wireless debugging';
+
+  @override
+  String get wizWdBody =>
+      'Waaiya opens Developer options at “Wireless debugging”. Turn it on and tap “Allow”.';
+
+  @override
+  String get wizWdAction => 'Open Developer options';
+
+  @override
+  String get wizPairTitle => 'Type the pairing code';
+
+  @override
+  String get wizPairBody =>
+      'Tap the words “Wireless debugging”, then “Pair device with pairing code”. Type the 6 digits in Waaiya’s notification. Waaiya does the rest.';
+
+  @override
+  String get wizPairBodyPaired =>
+      'Waaiya is already paired with this phone: no code is needed. Tap the button and Waaiya finishes by itself.';
+
+  @override
+  String get wizPairAction => 'Continue';
+
+  @override
+  String get wizAgain => 'Run the setup again';
+
+  @override
+  String get setupShizukuReadyTitle => 'With Shizuku, which is already running';
+
+  @override
+  String get setupOtherWaysPlain => 'Other ways to do the setup';
+
+  @override
+  String get wizSkip => 'Skip to Wireless debugging';
+
+  @override
+  String get setupOtherWays => 'Other ways: Shizuku or a computer';
 
   @override
   String get wsetupEnterHere => 'Type the code here';
@@ -561,6 +638,50 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get wsetupDoneBody =>
       'Waaiya can now silence the original sound. You can turn Wireless debugging off.';
+
+  @override
+  String get wsetupDoneHelperBody =>
+      'Done. This phone does not let apps keep these permissions, so Waaiya’s helper silences the original sound instead. The helper stops when the phone restarts and when Waaiya is updated. When you open Waaiya after that, it starts the helper again by itself if Wireless debugging is on; if not, it shows a button for it.';
+
+  @override
+  String get helperMissingTitle => 'Waaiya’s helper is stopped';
+
+  @override
+  String get helperMissingBody =>
+      'This phone does not keep Waaiya’s permissions, so Waaiya uses its helper. The helper stops when the phone restarts and when Waaiya is updated. Connect to Wi-Fi, turn on “Wireless debugging” in Developer options, then tap “Start Waaiya’s helper”.';
+
+  @override
+  String get helperChannel => 'Waaiya’s helper';
+
+  @override
+  String get helperStarting => 'Starting the helper…';
+
+  @override
+  String get helperModeNote =>
+      'This phone does not let apps keep these permissions: Waaiya’s helper does the work. It stops when the phone restarts and when Waaiya is updated. When you open Waaiya after that, it starts the helper again by itself if Wireless debugging is on; if not, it shows a button for it.';
+
+  @override
+  String get helperTipXiaomi =>
+      'Optional, to keep the permissions for good (no helper after restarts): in Developer options, turn on “USB debugging (Security settings)” (it asks you to sign in to a Xiaomi account), then do the setup again.';
+
+  @override
+  String get helperTipColoros =>
+      'Optional, to keep the permissions for good (no helper after restarts): in Developer options, turn on “Disable permission monitoring” (on the newest versions “Disable system optimization”; it may show only with the phone set to English), then do the setup again.';
+
+  @override
+  String get stateOnHelperMissing =>
+      'The original sound is not silenced, so you hear the music together with the filtered sound: Waaiya’s helper is stopped. Connect to Wi-Fi, turn on Wireless debugging, then tap “Start Waaiya’s helper”.';
+
+  @override
+  String get setupRefusedTryWireless =>
+      'Or use “Set up on this phone” on this page: Waaiya’s helper then works without that switch.';
+
+  @override
+  String get helperStartAnywayTitle => 'Waaiya’s helper is stopped';
+
+  @override
+  String get helperStartAnywayBody =>
+      'Without it you will hear the music together with the filtered sound. Start the helper first (Wireless debugging must be on), or start filtering anyway.';
 
   @override
   String get wsetupFailedTitle => 'Setup did not finish';
@@ -617,7 +738,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wsetupTimeout =>
-      'Stopped after 10 minutes without finishing. Tap “Start” to try again.';
+      'Stopped after 10 minutes without finishing. You can try again.';
 
   @override
   String get wsetupCodeUnreadable => 'Type the 6 digits of the pairing code.';
@@ -641,7 +762,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wsetupDevOff =>
-      'Developer options are off. In About phone, tap “Build number” 7 times (on some phones it is under Software information), then come back and tap “Start” again.';
+      'Developer options are off. In About phone, tap “Build number” 7 times, then come back.';
 
   @override
   String get wsetupOpenAbout => 'About phone';

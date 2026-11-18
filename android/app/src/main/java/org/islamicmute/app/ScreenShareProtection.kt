@@ -24,15 +24,26 @@ object ScreenShareProtection {
 
     val supported: Boolean get() = Build.VERSION.SDK_INT >= 35
 
+    /** The permission, or Waaiya's helper on a phone that refused it ([HelperDumps]). */
     fun canWrite(ctx: Context) =
-        ctx.checkSelfPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED
+        ctx.checkSelfPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ||
+            HelperDumps.helperReady
+
+    /** The tile can work on this phone: the permission, or the helper mode (the helper may need starting again). */
+    fun setUp(ctx: Context) =
+        ctx.checkSelfPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED ||
+            HelperDumps.helperMode(ctx)
+
+    /** The helper tried to write the switch and this phone refused: the tile says so instead of pretending. */
+    @Volatile var refusedByPhone = false
+        private set
 
     /** True when Android's protection is off now (by Waaiya or by hand): notification text shows during captures. */
     fun protectionOff(ctx: Context) =
         android.provider.Settings.Global.getInt(ctx.contentResolver, KEY, 0) != 0
 
     /** The user turned the tile on but the permission is missing: the main screen shows the setup card again. */
-    fun needsSetup(ctx: Context) = supported && Settings(ctx).showNotificationText && !canWrite(ctx)
+    fun needsSetup(ctx: Context) = supported && Settings(ctx).showNotificationText && !setUp(ctx)
 
     private fun prefs(ctx: Context) = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
@@ -61,10 +72,26 @@ object ScreenShareProtection {
     @android.annotation.SuppressLint("ApplySharedPref")
     fun restore(ctx: Context) {
         if (!prefs(ctx).getBoolean(CHANGED, false)) return
-        if (!canWrite(ctx) || put(ctx, 0)) prefs(ctx).edit().putBoolean(CHANGED, false).commit()
+        // Forget the mark only when Android's switch really is back (written now, or already 0). When it cannot be
+        // written now (helper stopped), the mark stays: CoverHelperProvider calls this again when a helper answers.
+        if (put(ctx, 0) || !protectionOff(ctx)) prefs(ctx).edit().putBoolean(CHANGED, false).commit()
     }
 
+    /**
+     * Through the helper (no permission): the helper runs `settings put`, which takes a moment and which some phones
+     * refuse to the shell too (OPPO family). So: off the calling thread with a deadline (this is called on the main
+     * thread just before a capture starts), and believed only when the value reads back.
+     */
     private fun put(ctx: Context, v: Int): Boolean = runCatching {
-        android.provider.Settings.Global.putInt(ctx.contentResolver, KEY, v)
+        if (ctx.checkSelfPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED)
+            return@runCatching android.provider.Settings.Global.putInt(ctx.contentResolver, KEY, v)
+        val helper = CoverHelper.service ?: return@runCatching false
+        val task = java.util.concurrent.FutureTask { helper.putScreenShareProtection(v) }
+        kotlin.concurrent.thread(name = "im-ssp-put", isDaemon = true) { task.run() }
+        val said = runCatching { task.get(2500, java.util.concurrent.TimeUnit.MILLISECONDS) }.getOrDefault(false)
+        val took = protectionOff(ctx) == (v != 0)
+        refusedByPhone = !took
+        if (!took) Log.w(TAG, "screen share protection: the helper's write did not take (helper said $said)")
+        took
     }.onFailure { Log.w(TAG, "screen share protection: cannot write $KEY", it) }.getOrDefault(false)
 }

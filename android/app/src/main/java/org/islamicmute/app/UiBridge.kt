@@ -72,6 +72,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         override fun run() {
             main.removeCallbacks(this)
             if (disposed || (activity.hasDumpPermission() && activity.hasProjectMediaAppOp())) return
+            // helper mode: nothing more to wait for while the helper runs (Android asks before each capture there)
+            if (HelperDumps.helperMode(activity) && HelperDumps.helperReady) return
             refresh()
             main.postDelayed(this, 2000)
         }
@@ -113,6 +115,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         if (!WirelessSetup.developerOptionsOn(activity)) return "dev_off"
         if (!activity.getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled())
             wirelessHint = "wsetup_notif_off"
+        // Android 15+ makes notifications unusable while a screen share runs, and filtering is one: the code could
+        // not be typed in Waaiya's notification
+        else if (Build.VERSION.SDK_INT >= 35 && FilterService.running && !ScreenShareProtection.protectionOff(activity))
+            wirelessHint = "wsetup_filter_on"
         WirelessSetup.start(activity)
         WirelessSetup.openWirelessDebugging(activity)
         refresh()
@@ -136,15 +142,36 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "isError" to (st?.phase == org.islamicmute.app.adb.SetupFlow.Phase.FAILED ||
                 st?.note == org.islamicmute.app.adb.SetupFlow.Note.WRONG_CODE),
             "hint" to wirelessHint,
+            // the guided steps (setup page): what Waaiya can see of each step. Hints only: the Wi-Fi guess can be
+            // wrong and some phones do not let apps read the Wireless debugging switch (null).
+            "devOptions" to WirelessSetup.developerOptionsOn(activity),
+            "wifi" to WirelessSetup.onWifi(),
+            "wirelessDebugging" to WirelessSetup.wirelessDebuggingOn(activity),
+            "paired" to (WirelessSetup.pairedBefore(activity) &&
+                WirelessSetup.keyDir(activity).list()?.isNotEmpty() == true),
+            // where "Build number" is on this make of phone (SetupHelp), null: the general sentence
+            "aboutHint" to SetupHelp.aboutHint,
         )
     }
 
-    fun onResume() { refresh(); setupTick.run() }
-    fun onPause() { main.removeCallbacks(setupTick) }
+    /** Helper mode: once a new process had time to hear from a running helper, start one if none answered. */
+    private val helperCheck = Runnable {
+        if (!disposed) { WirelessSetup.restartHelperIfNeeded(activity); refresh() }
+    }
+
+    fun onResume() {
+        main.removeCallbacks(helperCheck)
+        if (HelperDumps.helperMode(activity) && !HelperDumps.helperReady) {
+            if (HelperDumps.settling) main.postDelayed(helperCheck, HelperDumps.SETTLE_MS) else helperCheck.run()
+        }
+        refresh(); setupTick.run()
+    }
+    fun onPause() { main.removeCallbacks(setupTick); main.removeCallbacks(helperCheck) }
 
     fun dispose() {
         disposed = true
         main.removeCallbacks(setupTick)
+        main.removeCallbacks(helperCheck)
         ShizukuSetup.removeListener(shizukuGrantEnded)
         WirelessSetup.removeListener(changed)
         CoverHelper.removeListener(changed)
@@ -186,6 +213,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wirelessEnterCode" -> result.success(WirelessSetup.enterCode(activity, call.argument<String>("code") ?: ""))
                 "wirelessCancel" -> { WirelessSetup.cancel(activity); result.success(null) }
                 "openAboutPhone" -> { WirelessSetup.openWirelessDebugging(activity); result.success(null) }
+                "openWifiSettings" -> {
+                    runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_WIFI_SETTINGS)) }
+                    result.success(null)
+                }
                 "openSetupGuide" -> { activity.startActivity(Intent(activity, SetupGuideActivity::class.java)); result.success(null) }
                 "pageShown" -> { pageRequest = null; result.success(null) }
                 "shareText" -> {
@@ -261,7 +292,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             // what the user actually hears while filtering (MainActivity.refresh): a problem first
             "problem" to if (FilterService.state != FilterService.State.FILTERING) null else when {
                 FilterService.health?.tooSlow == true -> "too_slow"
-                FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION -> "not_muted"
+                FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION ->
+                    if (activity.helperMissing()) "helper_missing" else "not_muted"
                 FilterService.muterStatus == SessionMuter.Status.FAILING -> "mute_failing"
                 else -> null
             },
@@ -271,13 +303,25 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "captureCancelled" to captureCancelled,
         ),
         "setup" to mapOf(
-            "originalsMuted" to activity.hasDumpPermission(),
+            // DUMP granted, or this phone refused it and Waaiya's helper reads the sessions (HelperDumps)
+            "originalsMuted" to activity.setupDone(),
+            "helperMode" to HelperDumps.helperMode(activity),
+            // helper mode but the helper is not running (after a restart): the Setup and Filter pages say how
+            "helperMissing" to activity.helperMissing(),
+            // an automatic restart of the helper is trying (short and silent); a run the user started shows its steps
+            "helperRestarting" to (WirelessSetup.running && WirelessSetup.quietRun),
+            "helperTip" to when (SetupHelp.brand) {
+                SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
+            },
             "consentSkipped" to activity.hasProjectMediaAppOp(),
             // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
             "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
-            // Xiaomi / OPPO family: the Developer options switch to change before the setup (SetupHelp)
-            "deviceNote" to when (SetupHelp.brand) {
-                SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
+            // Xiaomi: its notification style can hide the field for the pairing code (SetupHelp)
+            // or Huawei: Wireless debugging may be missing there, the computer is then the way
+            "deviceNote" to when {
+                SetupHelp.brand == SetupHelp.Brand.XIAOMI -> "xiaomi"
+                SetupHelp.aboutHint == "huawei" && Build.MANUFACTURER.contains("huawei", ignoreCase = true) -> "huawei"
+                else -> null
             },
             "shizuku" to ShizukuSetup.state(activity).name,
             "wireless" to wirelessInfo(),
@@ -338,6 +382,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private fun startFilter(result: MethodChannel.Result) {
         if (FilterService.running) { result.success("already_running"); return }
         if (pendingStart != null) { result.error("busy", "a start is waiting for a dialog", null); return }
+        WirelessSetup.restartHelperIfNeeded(activity)  // helper mode after a restart (the muter waits for it)
         pendingStart = result
         micDenied = false
         captureCancelled = false

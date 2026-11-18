@@ -94,9 +94,32 @@ class TileStartActivity : Activity() {
         }
         if (FilterService.running) { finish(); return }
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
-            !hasDumpPermission()) {
+            !setupDone()) {
             // the setup is missing: the Setup page explains; the microphone question belongs to the Filter page
-            UiActivity.open(this, if (hasDumpPermission()) "filter" else "setup")?.let { runCatching { startActivity(it) } }
+            UiActivity.open(this, if (setupDone()) "filter" else "setup")?.let { runCatching { startActivity(it) } }
+            finish()
+            return
+        }
+        // Helper mode in a process that just started (the tile, a shortcut): a running helper answers within a few
+        // seconds; wait for it rather than guess (HelperDumps.settling).
+        if (HelperDumps.helperMode(this) && !HelperDumps.helperReady && HelperDumps.settling) {
+            val go = object : Runnable {
+                var done = false
+                override fun run() { if (!done && !isFinishing && !isDestroyed) { done = true; CoverHelper.removeListener(arrived); askOrExplain() } }
+                val arrived: () -> Unit = { if (HelperDumps.helperReady) run() }
+            }
+            CoverHelper.addListener(go.arrived)
+            window.decorView.postDelayed(go, HelperDumps.SETTLE_MS)
+            return
+        }
+        askOrExplain()
+    }
+
+    private fun askOrExplain() {
+        // helper mode after a restart: the helper comes back while the capture starts (the muter waits for it). When
+        // it cannot (Wireless debugging off), filtering would play the music too: the Filter page says how instead
+        if (helperMissing() && !WirelessSetup.restartHelperIfNeeded(this) && !WirelessSetup.running) {
+            UiActivity.open(this, "filter")?.let { runCatching { startActivity(it) } }
             finish()
             return
         }

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../l10n/app_localizations.dart';
 import 'app.dart';
+import 'backend.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -15,6 +16,7 @@ String? wirelessText(AppLocalizations l, String? name) => switch (name) {
       'wsetup_done_title' => l.wsetupDoneTitle,
       'wsetup_failed_title' => l.wsetupFailedTitle,
       'wsetup_done_body' => l.wsetupDoneBody,
+      'wsetup_done_helper_body' => l.wsetupDoneHelperBody,
       'wsetup_pairing' => l.wsetupPairing,
       'wsetup_connecting' => l.wsetupConnecting,
       'wsetup_need_wifi' => l.wsetupNeedWifi,
@@ -32,6 +34,7 @@ String? wirelessText(AppLocalizations l, String? name) => switch (name) {
       'setup_refused_xiaomi' => l.setupRefusedXiaomi,
       'setup_refused_coloros' => l.setupRefusedColoros,
       'wsetup_notif_off' => l.wsetupNotifOff,
+      'wsetup_filter_on' => l.wsetupFilterOn,
       'wsetup_dev_off' => l.wsetupDevOff,
       _ => null,
     };
@@ -194,22 +197,124 @@ class WirelessButtons extends StatelessWidget {
   }
 }
 
-/// "Set up on this phone": Android's own Wireless debugging, no extra app (Android 11+).
+/// The guided steps and which one is current (4: nothing left to do here). The ticks come from what Waaiya can see
+/// of the phone; they are hints, so the last two steps stay reachable whatever the first two say.
+(List<bool>, int) wirelessSteps(SetupInfo setup) {
+  final w = setup.wireless;
+  // this run finished (a stale "done" does not count once the helper it started is gone)
+  final finished = w.phase == 'DONE' && !setup.helperMissing;
+  // seen on, or the run got far enough to prove it (a pairing screen was found, pairing, connecting)
+  final debuggingOn = w.wirelessDebugging == true ||
+      (w.running && (w.phase == 'PAIRING' || w.phase == 'CONNECTING' || w.title == 'wsetup_found_title'));
+  final done = [
+    w.devOptions || debuggingOn || finished,
+    w.wifi || debuggingOn || finished,
+    debuggingOn || finished,
+    finished,
+  ];
+  return (done, done.indexWhere((d) => !d).let((i) => i < 0 ? 4 : i));
+}
+
+extension _Let<T> on T {
+  R let<R>(R Function(T) f) => f(this);
+}
+
+/// "Set up on this phone": Android's own Wireless debugging, no extra app (Android 11+), as four steps that tick
+/// themselves, with one button for the current step.
 class WirelessSetupCard extends StatelessWidget {
   const WirelessSetupCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final text = Theme.of(context).textTheme;
-    final w = WaaiyaScope.of(context).state.setup.wireless;
+    final setup = WaaiyaScope.of(context).state.setup;
+    final w = setup.wireless;
     if (!w.supported) return SectionCard(title: l.wsetupRouteTitle, body: l.wsetupAndroid10);
+    final (done, current) = wirelessSteps(setup);
+    // The make's own path, and always the way out: these names change with the phone's language and version.
+    final makeBody = switch (w.aboutHint) {
+      'samsung' => l.wizDevBodySamsung,
+      'xiaomi' => l.wizDevBodyXiaomi,
+      'coloros' => l.wizDevBodyColoros,
+      'vivo' => l.wizDevBodyVivo,
+      'huawei' => l.wizDevBodyHuawei,
+      'transsion' => l.wizDevBodyTranssion,
+      _ => null,
+    };
+    final devBody = makeBody == null ? l.wizDevBody : '$makeBody ${l.wizDevSearch}';
+    // Steps 3 and 4 share one run of the setup service: its button, its live status, the code field, cancel.
+    // The same block stays reachable outside them: under the first steps once a run exists (its status must show),
+    // and when every step is ticked (to run the setup again).
+    final run = [
+      const WirelessStatus(),
+      WirelessButtons(startLabel: switch (current) { 3 => l.wizPairAction, 4 => l.wizAgain, _ => l.wizWdAction }),
+    ];
+    final ranBefore = w.running || w.phase != null;
     return SectionCard(
       title: l.wsetupRouteTitle,
       body: l.wsetupRouteBody,
       children: [
-        const SizedBox(height: 12),
-        Text(l.wsetupSteps, style: text.bodyMedium),
+        StepRow(
+          index: 0,
+          done: done[0],
+          title: l.wizDevTitle,
+          body: devBody,
+          current: current == 0,
+          children: [
+            TestId(
+              'wiz_about',
+              child: FilledButton(
+                onPressed: () => runAction(context, (b) => b.openAboutPhone()),
+                child: Text(l.wizDevAction),
+              ),
+            ),
+          ],
+        ),
+        StepRow(
+          index: 1,
+          done: done[1],
+          title: l.wizWifiTitle,
+          body: l.wizWifiBody,
+          current: current == 1,
+          children: [
+            TestId(
+              'wiz_wifi',
+              child: FilledButton(
+                onPressed: () => runAction(context, (b) => b.openWifiSettings()),
+                child: Text(l.wizWifiAction),
+              ),
+            ),
+          ],
+        ),
+        StepRow(
+          index: 2,
+          done: done[2],
+          title: l.wizWdTitle,
+          body: l.wizWdBody,
+          current: current == 2,
+          children: run,
+        ),
+        StepRow(
+          index: 3,
+          done: done[3],
+          title: l.wizPairTitle,
+          body: w.paired ? l.wizPairBodyPaired : l.wizPairBody,
+          current: current == 3,
+          children: run,
+        ),
+        // the first two ticks are guesses (Wi-Fi by the interface name): never a dead end
+        if (current < 2 && !ranBefore)
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: TestId(
+                'wsetup_start',
+                child: TextButton(onPressed: () => startWirelessSetup(context), child: Text(l.wizSkip)),
+              ),
+            ),
+          ),
+        if ((current < 2 && ranBefore) || current == 4) ...run,
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: TestId(
@@ -221,8 +326,6 @@ class WirelessSetupCard extends StatelessWidget {
             ),
           ),
         ),
-        const WirelessStatus(),
-        WirelessButtons(startLabel: l.wsetupStart),
       ],
     );
   }

@@ -197,3 +197,72 @@ Future<int?> chooseOne(BuildContext context, {required String title, required Li
     ),
   );
 }
+
+/// One numbered step of a setup: a circle with the number (a tick when done), the title, one sentence, and, for the
+/// current step only, its buttons.
+class StepRow extends StatelessWidget {
+  const StepRow({
+    super.key,
+    required this.index,
+    required this.done,
+    required this.title,
+    required this.body,
+    required this.current,
+    this.children = const [],
+  });
+
+  final int index;
+  final bool done;
+  final String title;
+  final String body;
+  final bool current;
+
+  /// Shown under the sentence while this is the current step (buttons, live status).
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final c = WaaiyaColors.of(context);
+    final text = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExcludeSemantics(
+            child: Container(
+              width: 32,
+              height: 32,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: done ? c.primary : null,
+                border: done ? null : Border.all(color: current ? c.primary : c.offRing, width: 2),
+              ),
+              child: done
+                  ? Icon(Icons.check_rounded, size: 20, color: c.onPrimary)
+                  : Text('${index + 1}', style: text.bodyLarge),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Semantics(
+                  label: '${done ? l.stepDoneCd : l.stepTodoCd(index + 1)}. $title',
+                  excludeSemantics: true,
+                  child: Text(title, style: text.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
+                ),
+                // a finished step keeps only its title: less to read
+                if (!done) ...[const SizedBox(height: 2), Text(body, style: text.bodyMedium)],
+                if (current) ...[const SizedBox(height: 8), ...children],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

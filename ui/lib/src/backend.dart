@@ -129,6 +129,9 @@ abstract final class FilterProblem {
   /// Silencing the playing app's original sound fails (SessionMuter FAILING).
   static const muteFailing = 'mute_failing';
 
+  /// Helper mode (the phone refused the grants) and Waaiya's helper is not running: the original plays too.
+  static const helperMissing = 'helper_missing';
+
   /// Desktop: the women's-singing detector did not load; voices are muted while that option is on (fail-closed).
   static const detectorFailed = 'detector_failed';
 }
@@ -230,6 +233,10 @@ class SetupInfo {
     this.consentSkipped = true,
     this.notificationTextNeedsSetup = false,
     this.deviceNote,
+    this.helperMode = false,
+    this.helperMissing = false,
+    this.helperRestarting = false,
+    this.helperTip,
     this.wireless = const WirelessInfo(),
     this.shizuku,
     this.busy = false,
@@ -242,6 +249,10 @@ class SetupInfo {
         consentSkipped: _bool(m['consentSkipped'], true),
         notificationTextNeedsSetup: _bool(m['notificationTextNeedsSetup'], false),
         deviceNote: _str(m['deviceNote']),
+        helperMode: _bool(m['helperMode'], false),
+        helperMissing: _bool(m['helperMissing'], false),
+        helperRestarting: _bool(m['helperRestarting'], false),
+        helperTip: _str(m['helperTip']),
         wireless: WirelessInfo.fromMap(_map(m['wireless'])),
         shizuku: _enum(ShizukuState.values, m['shizuku']),
         busy: _bool(m['busy'], false),
@@ -249,8 +260,21 @@ class SetupInfo {
         adbCommands: _str(m['adbCommands']),
       );
 
-  /// The original sound can be silenced (Android: DUMP granted).
+  /// The original sound can be silenced (Android: DUMP granted, or helper mode).
   final bool originalsMuted;
+
+  /// Android: this phone refused the grants (Xiaomi, OPPO family), so Waaiya's helper reads the sound sessions.
+  /// The helper stops when the phone restarts; Android asks before each capture (no PROJECT_MEDIA).
+  final bool helperMode;
+
+  /// Helper mode and the helper is not running now: the original sound plays next to the filtered one.
+  final bool helperMissing;
+
+  /// Helper mode and the setup service is starting the helper again (automatically or from the button).
+  final bool helperRestarting;
+
+  /// `xiaomi` or `coloros`: the optional Developer options switch that would make the permissions permanent.
+  final String? helperTip;
 
   /// No screen-capture question at start (Android: app-op PROJECT_MEDIA allowed).
   final bool consentSkipped;
@@ -277,6 +301,10 @@ class SetupInfo {
         'consentSkipped': consentSkipped,
         'notificationTextNeedsSetup': notificationTextNeedsSetup,
         'deviceNote': deviceNote,
+        'helperMode': helperMode,
+        'helperMissing': helperMissing,
+        'helperRestarting': helperRestarting,
+        'helperTip': helperTip,
         'wireless': wireless.toMap(),
         'shizuku': shizuku == null ? null : _enumName(shizuku!),
         'busy': busy,
@@ -433,6 +461,11 @@ class WirelessInfo {
     this.detail,
     this.isError = false,
     this.hint,
+    this.devOptions = true,
+    this.wifi = true,
+    this.wirelessDebugging,
+    this.paired = false,
+    this.aboutHint,
   });
 
   factory WirelessInfo.fromMap(Map<Object?, Object?> m) => WirelessInfo(
@@ -444,6 +477,11 @@ class WirelessInfo {
         detail: _str(m['detail']),
         isError: _bool(m['isError'], false),
         hint: _str(m['hint']),
+        devOptions: _bool(m['devOptions'], true),
+        wifi: _bool(m['wifi'], true),
+        wirelessDebugging: m['wirelessDebugging'] is bool ? m['wirelessDebugging'] as bool : null,
+        paired: _bool(m['paired'], false),
+        aboutHint: _str(m['aboutHint']),
       );
 
   /// Android 11+ (pairing with a code).
@@ -464,6 +502,18 @@ class WirelessInfo {
   /// Extra advice as a string name: `wsetup_notif_off`, `wsetup_dev_off`.
   final String? hint;
 
+  /// The guided steps. What Waaiya can see of each one: hints for the ticks, never a gate (the Wi-Fi guess can be
+  /// wrong, and [wirelessDebugging] is null on phones that do not let apps read that switch).
+  final bool devOptions;
+  final bool wifi;
+  final bool? wirelessDebugging;
+
+  /// Waaiya paired with this phone before: no code is needed, turning Wireless debugging on is enough.
+  final bool paired;
+
+  /// Where "Build number" is on this make of phone: `samsung`, `xiaomi`, `coloros`, `vivo`, `huawei`, or null.
+  final String? aboutHint;
+
   Map<String, Object?> toMap() => {
         'supported': supported,
         'running': running,
@@ -473,6 +523,11 @@ class WirelessInfo {
         'detail': detail,
         'isError': isError,
         'hint': hint,
+        'devOptions': devOptions,
+        'wifi': wifi,
+        'wirelessDebugging': wirelessDebugging,
+        'paired': paired,
+        'aboutHint': aboutHint,
       };
 }
 
@@ -660,6 +715,9 @@ abstract interface class WaaiyaBackend {
 
   /// About phone (to turn on Developer options), or Developer options when they are on.
   Future<void> openAboutPhone();
+
+  /// Android's Wi-Fi settings (Wireless debugging needs Wi-Fi).
+  Future<void> openWifiSettings();
 
   /// The setup step by step with pictures (Android).
   Future<void> openSetupGuide();

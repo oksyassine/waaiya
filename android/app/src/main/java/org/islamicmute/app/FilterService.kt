@@ -469,7 +469,8 @@ class FilterService : Service() {
             .setContentTitle(getString(R.string.notif_title))
             .setContentText(getString(when {
                 health?.tooSlow == true -> R.string.notif_too_slow
-                muter != null && muterStatus == SessionMuter.Status.NO_PERMISSION -> R.string.notif_not_muted
+                muter != null && muterStatus == SessionMuter.Status.NO_PERMISSION ->
+                    if (helperMissing()) R.string.notif_helper_missing else R.string.notif_not_muted
                 muterStatus == SessionMuter.Status.FAILING -> R.string.notif_mute_failing
                 else -> R.string.notif_text
             }))

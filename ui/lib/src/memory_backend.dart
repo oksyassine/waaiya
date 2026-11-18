@@ -110,6 +110,9 @@ class MemoryBackend implements WaaiyaBackend {
   Future<void> openAboutPhone() async => throw const BackendException('unsupported', 'openAboutPhone');
 
   @override
+  Future<void> openWifiSettings() async => throw const BackendException('unsupported', 'openWifiSettings');
+
+  @override
   Future<void> openSetupGuide() async => throw const BackendException('unsupported', 'openSetupGuide');
 
   @override

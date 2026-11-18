@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
     final index = pages.indexOf(_page).clamp(0, pages.length - 1);
-    final setupMissing = !s.setup.originalsMuted;
+    final setupMissing = !s.setup.originalsMuted || s.setup.helperMissing;
     return HomeNav(
       go: (p) => pages.contains(p) ? _go(p) : null,
       child: Scaffold(
@@ -132,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const PowerSection(),
             const SizedBox(height: 16),
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
+            if (s.setup.originalsMuted && s.setup.helperMissing) const HelperMissingBanner(),
             const FilterOptionsCard(),
           ],
         ),
@@ -357,6 +358,25 @@ Future<void> _start(BuildContext context) async {
       return;
     }
   }
+  // helper mode, the helper stopped and not coming back by itself (Wireless debugging off): say so before starting
+  if (s.setup.helperMissing && !s.setup.helperRestarting) {
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.helperStartAnywayTitle),
+        content: Text(l.helperStartAnywayBody),
+        actions: [
+          TextButton(key: const Key('start_anyway'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.startNoSetupAnyway)),
+          FilledButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.helperStart)),
+        ],
+      ),
+    );
+    if (!context.mounted || go == null) return;
+    if (!go) {
+      await startWirelessSetup(context);
+      return;
+    }
+  }
   await runAction(context, (b) => b.startFilter());
 }
 
@@ -367,6 +387,7 @@ Future<void> _start(BuildContext context) async {
   final problem = switch (f.problem) {
     FilterProblem.tooSlow => l.stateTooSlow,
     FilterProblem.notMuted => l.stateOnNotMuted,
+    FilterProblem.helperMissing => l.stateOnHelperMissing,
     FilterProblem.muteFailing => l.stateOnMuteFailing,
     FilterProblem.detectorFailed => l.engineDetectorFailed,
     _ => null,

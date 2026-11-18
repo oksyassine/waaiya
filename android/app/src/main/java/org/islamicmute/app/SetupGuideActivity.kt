@@ -88,7 +88,6 @@ class SetupGuideActivity : Activity() {
         text(R.string.guide_w_trouble_title, R.style.Text_Section, top = 32).isAccessibilityHeading = true
         text(R.string.guide_w_trouble, R.style.Text_Secondary, top = 8)
         text(R.string.setup_note_xiaomi, R.style.Text_Secondary, top = 12)
-        text(R.string.setup_note_coloros, R.style.Text_Secondary, top = 12)
 
         text(R.string.guide_w_shizuku_title, R.style.Text_Section, top = 32).isAccessibilityHeading = true
         text(R.string.guide_w_shizuku, R.style.Text_Secondary, top = 8)

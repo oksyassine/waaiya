@@ -248,18 +248,6 @@ abstract class AppLocalizations {
   /// **'بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.'**
   String get setupBannerBody;
 
-  /// Android string setup_title
-  ///
-  /// In ar, this message translates to:
-  /// **'إعداد لمرة واحدة'**
-  String get setupTitle;
-
-  /// Android string setup_body
-  ///
-  /// In ar, this message translates to:
-  /// **'يسمح لواعية بكتم الصوت الأصلي. تفعله مرة واحدة، ويبقى حتى تلغي تثبيت التطبيق.'**
-  String get setupBody;
-
   /// Android string step1_title
   ///
   /// In ar, this message translates to:
@@ -377,20 +365,14 @@ abstract class AppLocalizations {
   /// Android string setup_refused_coloros
   ///
   /// In ar, this message translates to:
-  /// **'رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏، ثم حاول مرة أخرى.'**
+  /// **'رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، فعّل في ‏«خيارات المطور»‏ ‏«تعطيل مراقبة الأذونات»‏ (اسمه في أحدث الإصدارات ‏«تعطيل تحسين النظام»‏، وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية: Disable permission monitoring أو Disable system optimization). ثم حاول مرة أخرى.'**
   String get setupRefusedColoros;
 
   /// Android string setup_note_xiaomi
   ///
   /// In ar, this message translates to:
-  /// **'شاومي وريدمي وبوكو: قبل الإعداد، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏. يطلب ذلك تسجيل الدخول إلى حساب شاومي (وفي بعض الهواتف وجود شريحة SIM). إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات.'**
+  /// **'شاومي وريدمي وبوكو: إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات، أو اكتب الرمز في واعية مع تقسيم الشاشة.'**
   String get setupNoteXiaomi;
-
-  /// Android string setup_note_coloros
-  ///
-  /// In ar, this message translates to:
-  /// **'أوبو وون بلس وريلمي: قبل الإعداد، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏.'**
-  String get setupNoteColoros;
 
   /// Android string step_done_cd
   ///
@@ -971,26 +953,176 @@ abstract class AppLocalizations {
   /// Android string wsetup_route_title
   ///
   /// In ar, this message translates to:
-  /// **'الإعداد على هذا الهاتف (دون تطبيق إضافي)'**
+  /// **'الإعداد على هذا الهاتف'**
   String get wsetupRouteTitle;
 
   /// Android string wsetup_route_body
   ///
   /// In ar, this message translates to:
-  /// **'باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ الموجود في أندرويد نفسه. تحتاج إلى شبكة Wi‑Fi (لا يلزم الإنترنت). الإقران يكون مرة واحدة فقط.'**
+  /// **'أربع خطوات قصيرة، مرة واحدة فقط. دون تطبيق إضافي ودون حاسوب. تضع واعية علامة على كل خطوة عند إتمامها.'**
   String get wsetupRouteBody;
 
-  /// Android string wsetup_steps
+  /// Android string wiz_dev_title
   ///
   /// In ar, this message translates to:
-  /// **'1. اضغط ‏«ابدأ»‏. تفتح واعية ‏«خيارات المطور»‏ وتُظهر إشعارًا.\n\n2. إذا كانت ‏«خيارات المطور»‏ غير مفعّلة، تُفتح صفحة ‏«حول الهاتف»‏ بدلًا منها: اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.\n\n3. انزل في الصفحة إلى ‏«تصحيح الأخطاء اللاسلكي»‏ (ضمن قسم ‏«تصحيح الأخطاء»‏)، وفعّله وأكّد بالضغط على ‏«سماح»‏.\n\n4. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. يظهر رمز من 6 أرقام.\n\n5. اترك تلك الشاشة مفتوحة. اسحب الإشعارات إلى الأسفل، واضغط ‏«أدخل الرمز»‏ في إشعار واعية واكتب الرمز.\n\n6. تُكمل واعية الباقي وحدها وتقول ‏«اكتمل الإعداد»‏. بعدها يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.'**
-  String get wsetupSteps;
+  /// **'فعّل ‏«خيارات المطور»‏'**
+  String get wizDevTitle;
 
-  /// Android string wsetup_start
+  /// Android string wiz_dev_body
   ///
   /// In ar, this message translates to:
-  /// **'ابدأ'**
-  String get wsetupStart;
+  /// **'في صفحة ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا. إن لم تجده، فابحث عن ‏«رقم الإصدار»‏ في الإعدادات.'**
+  String get wizDevBody;
+
+  /// Android string wiz_dev_body_samsung
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏ › ‏«معلومات البرنامج»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodySamsung;
+
+  /// Android string wiz_dev_body_xiaomi
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏، اضغط على ‏«إصدار النظام»‏ 7 مرات (في الهواتف الأقدم ‏«إصدار MIUI»‏، وفي بعضها داخل ‏«المعلومات والمواصفات التفصيلية»‏)، ثم ارجع إلى هنا.'**
+  String get wizDevBodyXiaomi;
+
+  /// Android string wiz_dev_body_coloros
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الجهاز»‏ (أو ‏«حول الهاتف»‏) › ‏«الإصدار»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodyColoros;
+
+  /// Android string wiz_dev_body_vivo
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏، اضغط على ‏«إصدار البرنامج»‏ 7 مرات (في بعض الهواتف: ‏«معلومات البرنامج»‏ › ‏«رقم الإصدار»‏)، ثم ارجع إلى هنا.'**
+  String get wizDevBodyVivo;
+
+  /// Android string wiz_dev_body_huawei
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodyHuawei;
+
+  /// Android string wiz_dev_body_transsion
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«هاتفي»‏ (أو ‏«حول الهاتف»‏)، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodyTranssion;
+
+  /// Android string setup_note_huawei
+  ///
+  /// In ar, this message translates to:
+  /// **'هواوي: كثير من هواتف هواوي ليس فيها ‏«تصحيح الأخطاء اللاسلكي»‏. إن لم تجده في ‏«خيارات المطور»‏، فاستعمل حاسوبًا (‏«طرق أخرى»‏ في الأسفل).'**
+  String get setupNoteHuawei;
+
+  /// Android string wsetup_filter_on
+  ///
+  /// In ar, this message translates to:
+  /// **'التصفية تعمل: في هذا الإصدار من أندرويد لا يمكن كتابة الرمز في الإشعار أثناء عملها. أوقف التصفية أولًا، أو استعمل تقسيم الشاشة و‏«اكتب الرمز هنا»‏.'**
+  String get wsetupFilterOn;
+
+  /// Android string wiz_dev_search
+  ///
+  /// In ar, this message translates to:
+  /// **'قد تختلف الأسماء بحسب لغة الهاتف: إن لم تجده، فاستعمل البحث في أعلى الإعدادات.'**
+  String get wizDevSearch;
+
+  /// Android string wiz_dev_action
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح ‏«حول الهاتف»‏'**
+  String get wizDevAction;
+
+  /// Android string wiz_wifi_title
+  ///
+  /// In ar, this message translates to:
+  /// **'اتصل بشبكة Wi-Fi'**
+  String get wizWifiTitle;
+
+  /// Android string wiz_wifi_body
+  ///
+  /// In ar, this message translates to:
+  /// **'أي شبكة Wi-Fi تكفي؛ لا يلزم الإنترنت.'**
+  String get wizWifiBody;
+
+  /// Android string wiz_wifi_action
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح إعدادات Wi-Fi'**
+  String get wizWifiAction;
+
+  /// Android string wiz_wd_title
+  ///
+  /// In ar, this message translates to:
+  /// **'فعّل ‏«تصحيح الأخطاء اللاسلكي»‏'**
+  String get wizWdTitle;
+
+  /// Android string wiz_wd_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تفتح واعية ‏«خيارات المطور»‏ عند ‏«تصحيح الأخطاء اللاسلكي»‏. فعّله واضغط ‏«سماح»‏.'**
+  String get wizWdBody;
+
+  /// Android string wiz_wd_action
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح خيارات المطور'**
+  String get wizWdAction;
+
+  /// Android string wiz_pair_title
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب رمز الإقران'**
+  String get wizPairTitle;
+
+  /// Android string wiz_pair_body
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. اكتب الأرقام الستة في إشعار واعية، وتكمل واعية الباقي.'**
+  String get wizPairBody;
+
+  /// Android string wiz_pair_body_paired
+  ///
+  /// In ar, this message translates to:
+  /// **'سبق إقران واعية بهذا الهاتف: لا حاجة لأي رمز. اضغط الزر وتكمل واعية وحدها.'**
+  String get wizPairBodyPaired;
+
+  /// Android string wiz_pair_action
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get wizPairAction;
+
+  /// Android string wiz_again
+  ///
+  /// In ar, this message translates to:
+  /// **'أعد تنفيذ الإعداد'**
+  String get wizAgain;
+
+  /// Android string setup_shizuku_ready_title
+  ///
+  /// In ar, this message translates to:
+  /// **'عبر Shizuku، وهو يعمل الآن'**
+  String get setupShizukuReadyTitle;
+
+  /// Android string setup_other_ways_plain
+  ///
+  /// In ar, this message translates to:
+  /// **'طرق أخرى لإتمام الإعداد'**
+  String get setupOtherWaysPlain;
+
+  /// Android string wiz_skip
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقل مباشرة إلى ‏«تصحيح الأخطاء اللاسلكي»‏'**
+  String get wizSkip;
+
+  /// Android string setup_other_ways
+  ///
+  /// In ar, this message translates to:
+  /// **'طرق أخرى: Shizuku أو حاسوب'**
+  String get setupOtherWays;
 
   /// Android string wsetup_enter_here
   ///
@@ -1057,6 +1189,78 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تستطيع واعية الآن كتم الصوت الأصلي. يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.'**
   String get wsetupDoneBody;
+
+  /// Android string wsetup_done_helper_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تم. هذا الهاتف لا يسمح للتطبيقات بالاحتفاظ بهذه الأذونات، لذلك يتولى مساعد واعية كتم الصوت الأصلي. يتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية. عند فتح واعية بعد ذلك، تشغّله من جديد تلقائيًا إن كان ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا؛ وإلا فتعرض زرًّا لذلك.'**
+  String get wsetupDoneHelperBody;
+
+  /// Android string helper_missing_title
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية متوقف'**
+  String get helperMissingTitle;
+
+  /// Android string helper_missing_body
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الهاتف لا يحتفظ بأذونات واعية، لذلك تستعمل واعية مساعدها. يتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية. اتصل بشبكة Wi-Fi، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏ في ‏«خيارات المطور»‏، ثم اضغط ‏«تشغيل مساعد واعية»‏.'**
+  String get helperMissingBody;
+
+  /// Android string helper_channel
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية'**
+  String get helperChannel;
+
+  /// Android string helper_starting
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ تشغيل المساعد…'**
+  String get helperStarting;
+
+  /// Android string helper_mode_note
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الهاتف لا يسمح للتطبيقات بالاحتفاظ بهذه الأذونات: مساعد واعية يقوم بالعمل. يتوقف عند إعادة تشغيل الهاتف وعند تحديث واعية. عند فتح واعية بعد ذلك، تشغّله من جديد تلقائيًا إن كان ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا؛ وإلا فتعرض زرًّا لذلك.'**
+  String get helperModeNote;
+
+  /// Android string helper_tip_xiaomi
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري، للاحتفاظ بالأذونات نهائيًا (دون مساعد بعد إعادة التشغيل): فعّل في ‏«خيارات المطور»‏ ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم أعد الإعداد.'**
+  String get helperTipXiaomi;
+
+  /// Android string helper_tip_coloros
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري، للاحتفاظ بالأذونات نهائيًا (دون مساعد بعد إعادة التشغيل): فعّل في ‏«خيارات المطور»‏ ‏«تعطيل مراقبة الأذونات»‏ (في أحدث الإصدارات ‏«تعطيل تحسين النظام»‏؛ وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية: Disable permission monitoring أو Disable system optimization)، ثم أعد الإعداد.'**
+  String get helperTipColoros;
+
+  /// Android string state_on_helper_missing
+  ///
+  /// In ar, this message translates to:
+  /// **'الصوت الأصلي لم يُكتم، ولذلك تسمع الموسيقى مع الصوت المُصفّى: مساعد واعية متوقف. اتصل بشبكة Wi-Fi، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط ‏«تشغيل مساعد واعية»‏.'**
+  String get stateOnHelperMissing;
+
+  /// Android string setup_refused_try_wireless
+  ///
+  /// In ar, this message translates to:
+  /// **'أو استعمل ‏«الإعداد على هذا الهاتف»‏ في هذه الصفحة: يعمل مساعد واعية حينها دون ذلك الخيار.'**
+  String get setupRefusedTryWireless;
+
+  /// Android string helper_start_anyway_title
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية متوقف'**
+  String get helperStartAnywayTitle;
+
+  /// Android string helper_start_anyway_body
+  ///
+  /// In ar, this message translates to:
+  /// **'من دونه ستسمع الموسيقى مع الصوت المُصفّى. شغّل المساعد أولًا (يجب أن يكون ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا)، أو ابدأ التصفية على أي حال.'**
+  String get helperStartAnywayBody;
 
   /// Android string wsetup_failed_title
   ///
@@ -1145,7 +1349,7 @@ abstract class AppLocalizations {
   /// Android string wsetup_timeout
   ///
   /// In ar, this message translates to:
-  /// **'توقّف الإعداد بعد 10 دقائق دون أن يكتمل. اضغط ‏«ابدأ»‏ للمحاولة مرة أخرى.'**
+  /// **'توقّف الإعداد بعد 10 دقائق دون أن يكتمل. يمكنك المحاولة مرة أخرى.'**
   String get wsetupTimeout;
 
   /// Android string wsetup_code_unreadable
@@ -1187,7 +1391,7 @@ abstract class AppLocalizations {
   /// Android string wsetup_dev_off
   ///
   /// In ar, this message translates to:
-  /// **'‏«خيارات المطور»‏ غير مفعّلة. في ‏«حول الهاتف»‏ اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.'**
+  /// **'‏«خيارات المطور»‏ غير مفعّلة. في صفحة ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
   String get wsetupDevOff;
 
   /// Android string wsetup_open_about

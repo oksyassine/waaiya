@@ -91,6 +91,9 @@ class ChannelBackend implements WaaiyaBackend {
   Future<void> openAboutPhone() => _call<void>('openAboutPhone');
 
   @override
+  Future<void> openWifiSettings() => _call<void>('openWifiSettings');
+
+  @override
   Future<void> openSetupGuide() => _call<void>('openSetupGuide');
 
   @override

@@ -96,7 +96,7 @@ void main() {
     expect(find.text('بقيت خطوة واحدة'), findsOneWidget); // on the Filter page too
     await goTo(tester, 'setup');
     expect(find.text('بقيت خطوة واحدة'), findsOneWidget);
-    expect(find.text('إعداد لمرة واحدة'), findsOneWidget);
+    expect(find.text('طرق أخرى: Shizuku أو حاسوب'), findsOneWidget); // open here: this phone has no on-phone route
     expect(find.text('كيف أشغّل Shizuku؟'), findsOneWidget); // step 2 is current: the guide
     expect(find.text('تحميل Shizuku'), findsNothing); // step 1 done
     await tester.ensureVisible(find.text('كيف أشغّل Shizuku؟'));

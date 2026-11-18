@@ -32,6 +32,8 @@ object Diagnostics {
 
         appendLine("[Setup]")
         appendLine("Silence originals (DUMP): ${yes(ctx.hasDumpPermission())}")
+        if (HelperDumps.helperMode(ctx)) appendLine("Grants refused by this phone: Waaiya's helper reads the sessions " +
+            "(helper running: ${yes(HelperDumps.helperReady)})")
         appendLine("Skip screen-share question (PROJECT_MEDIA): ${yes(ctx.hasProjectMediaAppOp())}")
         appendLine("Shizuku: ${ShizukuSetup.state(ctx)}")
         appendLine("Notification text tile (Android 15+): permission ${yes(ScreenShareProtection.canWrite(ctx))}, " +
@@ -75,8 +77,11 @@ object Diagnostics {
         else {
             appendLine("Muter: ${m.status}, list from ${m.source}, polls ${m.polls}, failed polls ${m.pollFailures}, " +
                 "sessions that could not be muted ${m.attachFailures}")
-            m.lastError?.takeIf { m.status != SessionMuter.Status.NO_PERMISSION }?.let { appendLine("Last error: $it") }
-            if (m.status == SessionMuter.Status.NO_PERMISSION) appendLine("Other apps' sound sessions cannot be listed without the setup.")
+            m.lastError?.takeIf { m.status != SessionMuter.Status.NO_PERMISSION || HelperDumps.helperMode(ctx) }
+                ?.let { appendLine("Last error: $it") }
+            if (m.status == SessionMuter.Status.NO_PERMISSION) appendLine(
+                if (HelperDumps.helperMode(ctx)) "Other apps' sound sessions cannot be listed while Waaiya's helper is stopped."
+                else "Other apps' sound sessions cannot be listed without the setup.")
             else if (m.sessions.isEmpty()) appendLine("No other app has a sound session.")
             for (x in m.sessions) {
                 val name = ctx.packageManager.getPackagesForUid(x.uid)?.firstOrNull() ?: "uid ${x.uid}"

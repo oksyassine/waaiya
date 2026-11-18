@@ -1,4 +1,4 @@
-# Status (2026-11-16, 0.2.11)
+# Status (2026-11-18, 0.2.12 pre-release)
 
 What comes next, and why: `docs/ROADMAP.md`.
 
@@ -8,7 +8,7 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Engine (C, ONNX Runtime) | done | parity >100 dB vs PyTorch, 30 ms delay on the hop-aligned path; stereo about 7 ms and mono about 3 ms per 10 ms hop on a loaded desktop core (`build/test-mono`); mono can be switched on a running engine |
 | Linux always-on | done, live-tested on PulseAudio | `linux/test_run.sh`: 24 dB suppression, crash restarts fail-closed; delay in `eval/results/latency.md` |
 | Android live filter | released (0.2.11); 0.2.9 and 0.2.10 used on a Galaxy S24 and a Xiaomi | Mono by default with a stereo setting (0.2.10); adapts to the phone (mono fallback, dropout counting), says when the original is not silenced or the phone is too slow, diagnostics report. When Android ends filtering, other apps stay silent by default (0.2.10). Checked on emulators with `android/tools/emu_check.py`; 27 JVM tests |
-| Android: silence the originals | done | Session list from the audio policy dump (Android 10+); one-time grant on the phone (Wireless debugging, Android 11+), with Shizuku or ADB; Xiaomi/OPPO notes, slow-Shizuku handling (0.2.11) |
+| Android: silence the originals | done; helper mode not proven on a real Xiaomi/OPPO | Session list from the audio policy dump (Android 10+); one-time grant on the phone (Wireless debugging, Android 11+), with Shizuku or ADB; slow-Shizuku handling (0.2.11). 0.2.12: guided four-step setup page; phones that refuse the grant (Xiaomi, OPPO family) use Waaiya's shell helper for the session list instead of a hidden Developer options switch (`docs/SETUP.md`), checked on emulators with a simulated refusal |
 | Android: Quick Settings tiles, icon shortcuts | done (0.2.11) | "Waaiya" tile and Start/Stop shortcuts on the icon; "Notification text" tile (Android 15+) shows notification text while filtering |
 | Open a link (YouTube, TikTok, Instagram) | done | Video links stay video; saved files keep the original picture with filtered sound |
 | Screen blur (Android) | released | Person detector with tiles, woman/man classifier v2, outlines, steady covers: `eval/results/blur_*.md`. 0.2.10: one window per cover group without Shizuku, checked Shizuku layer, self-test on every host change. Speed on phones not measured |

@@ -38,7 +38,7 @@ class ScreenShareTileService : TileService() {
     /** One dialog at most per tap: a second dialog opened from the first one's button would not show. */
     private fun click() {
         val settings = Settings(this)
-        val can = ScreenShareProtection.canWrite(this)
+        val can = ScreenShareProtection.setUp(this)
         when {
             granting -> return
             settings.showNotificationText && can -> set(false)
@@ -63,7 +63,7 @@ class ScreenShareTileService : TileService() {
      */
     private fun turnOn(withDialog: Boolean) {
         set(true)
-        if (ScreenShareProtection.canWrite(this)) return
+        if (ScreenShareProtection.setUp(this)) return
         when {
             ShizukuSetup.state(this) == ShizukuSetup.State.READY -> grantWithShizuku()
             withDialog -> showDialog(dialog()
@@ -112,7 +112,7 @@ class ScreenShareTileService : TileService() {
 
     private fun update() {
         val tile = qsTile ?: return
-        val can = ScreenShareProtection.canWrite(this)
+        val can = ScreenShareProtection.setUp(this)
         val on = can && Settings(this).showNotificationText
         tile.label = getString(R.string.tile_text_label)
         tile.state = if (on) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
@@ -120,6 +120,7 @@ class ScreenShareTileService : TileService() {
         tile.subtitle = getString(when {
             granting -> R.string.tile_text_granting
             !can -> R.string.tile_text_needs_setup
+            ScreenShareProtection.refusedByPhone && on -> R.string.tile_text_refused
             running != null && running != on -> R.string.tile_text_next_start
             on -> R.string.tile_text_shown
             else -> R.string.tile_text_hidden

@@ -90,8 +90,66 @@ class SetupBanner extends StatelessWidget {
 }
 
 /// The setup is needed: the original sound, the capture question, or the notification-text permission is missing.
-bool setupNeeded(SetupInfo setup) =>
-    !(setup.originalsMuted && setup.consentSkipped) || setup.notificationTextNeedsSetup;
+/// In helper mode the phone refused the capture question's permission: Android asks at each start, nothing to fix.
+/// Android's question before each capture ([SetupInfo.consentSkipped] false) is not a missing setup: some phones
+/// never let it be skipped (vivo ignores the command, Xiaomi and the OPPO family refuse it), and the Filter page
+/// says that Android will ask.
+bool setupNeeded(SetupInfo setup) => !setup.originalsMuted || setup.notificationTextNeedsSetup;
+
+/// Helper mode after a restart of the phone: Waaiya's helper must run again (Filter page and Setup page).
+/// Waaiya starts it by itself when Wireless debugging is on; the button starts it (or explains) at once.
+class HelperMissingBanner extends StatelessWidget {
+  const HelperMissingBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final c = WaaiyaColors.of(context);
+    final text = Theme.of(context).textTheme;
+    final setup = WaaiyaScope.of(context).state.setup;
+    return Card(
+      color: c.warningContainer,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.warning_amber_rounded, color: c.onWarningContainer),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l.helperMissingTitle, style: text.titleMedium?.copyWith(color: c.onWarningContainer)),
+                  const SizedBox(height: 4),
+                  Text(l.helperMissingBody, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
+                  const SizedBox(height: 8),
+                  // stays usable while an automatic restart tries: a tap turns it into a normal run
+                  TestId(
+                    'helper_restart',
+                    child: FilledButton(
+                      onPressed: setup.wireless.running && !setup.helperRestarting
+                          ? null
+                          : () => startWirelessSetup(context),
+                      child: Text(l.helperStart),
+                    ),
+                  ),
+                  if (setup.helperRestarting) ...[
+                    const SizedBox(height: 4),
+                    Text(l.helperStarting, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
+                  ],
+                  // a run the user started that failed: why (the steps are one tap away on the Setup page)
+                  if (!setup.wireless.running && setup.wireless.phase == 'FAILED') const WirelessStatus(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 /// The Setup page: the one-time setup on the phone (Wireless debugging), with Shizuku, or from a computer.
 /// When it is done, a short "done" card, with the steps one tap away.
@@ -122,23 +180,35 @@ class _SetupSectionState extends State<SetupSection> {
             'done_restart' => l.setupDoneRestart,
             'slow' => l.setupSlow,
             'timeout' => l.setupTimeout,
-            'refused_xiaomi' => l.setupRefusedXiaomi,
-            'refused_coloros' => l.setupRefusedColoros,
+            // Shizuku was refused by the phone: the on-phone setup works without the switch (Waaiya's helper)
+            'refused_xiaomi' => '${l.setupRefusedXiaomi}\n${l.setupRefusedTryWireless}',
+            'refused_coloros' => '${l.setupRefusedColoros}\n${l.setupRefusedTryWireless}',
             _ => message.detail,
           };
     // Xiaomi / OPPO family: the Developer options switch to change before the setup (Android SetupHelp).
     final deviceNote = switch (setup.deviceNote) {
       'xiaomi' => l.setupNoteXiaomi,
-      'coloros' => l.setupNoteColoros,
+      'huawei' => l.setupNoteHuawei,
       _ => null,
     };
     final needed = setupNeeded(setup);
-    // a run in progress stays on screen even when the permissions arrived meanwhile
-    if (!needed && !_showAgain && !setup.wireless.running) {
+    final helperTip = switch (setup.helperTip) {
+      'xiaomi' => l.helperTipXiaomi,
+      'coloros' => l.helperTipColoros,
+      _ => null,
+    };
+    // a run in progress stays on screen even when the permissions arrived meanwhile; the helper's own automatic
+    // restart is not such a run (the banner says "starting")
+    if (!needed && !_showAgain && (!setup.wireless.running || setup.helperRestarting)) {
       return SectionCard(
         title: l.setupDoneTitle,
-        body: l.setupDoneBody,
+        body: setup.helperMode ? l.helperModeNote : l.setupDoneBody,
         children: [
+          if (setup.helperMissing) ...[const SizedBox(height: 12), const HelperMissingBanner()],
+          if (setup.helperMode && helperTip != null) ...[
+            const SizedBox(height: 12),
+            Text(helperTip, style: text.bodyMedium),
+          ],
           const SizedBox(height: 8),
           Align(
             alignment: AlignmentDirectional.centerStart,
@@ -150,42 +220,53 @@ class _SetupSectionState extends State<SetupSection> {
         ],
       );
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (!setup.originalsMuted) const SetupBanner(),
-        SectionCard(
-          title: l.setupTitle,
-          body: l.setupBody,
-          children: [
-            if (deviceNote != null)
-              Card(
-                color: c.warningContainer,
-                margin: const EdgeInsets.only(top: 12),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(deviceNote, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
-                ),
-              ),
-          ],
-        ),
-        if (caps.shizukuSetup) const WirelessSetupCard(),
-        if (caps.shizukuSetup)
-          SectionCard(
-            title: l.wsetupShizukuHeading,
+    // One way on top, chosen by what this phone has: Shizuku already running is one tap; else the steps on the
+    // phone itself (Android 11+). The others are folded under "Other ways".
+    final shizukuUp = setup.shizuku == ShizukuState.ready || setup.shizuku == ShizukuState.needsPermission;
+    final shizukuCard = !caps.shizukuSetup
+        ? null
+        : SectionCard(
+            title: shizukuUp ? l.setupShizukuReadyTitle : l.wsetupShizukuHeading,
             body: l.wsetupShizukuNote,
             children: [
               ..._steps(context, l, setup),
               if (messageText != null)
                 StatusText(messageText, isError: message!.code != 'done_restart' && message.code != 'slow'),
             ],
-          ),
-        if (caps.adbSetup && setup.adbCommands != null)
-          Card(
+          );
+    final computerCard = !(caps.adbSetup && setup.adbCommands != null)
+        ? null
+        : Card(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
               child: _ComputerSetup(commands: setup.adbCommands!),
             ),
+          );
+    final wizard = caps.shizukuSetup ? const WirelessSetupCard() : null;
+    // a run of the on-phone setup in progress is never folded away
+    final wizardOnTop = !shizukuUp || setup.wireless.running;
+    final others = [if (!shizukuUp) ?shizukuCard, if (!wizardOnTop) ?wizard, ?computerCard];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (!setup.originalsMuted) const SetupBanner(),
+        if (setup.originalsMuted && setup.helperMissing) const HelperMissingBanner(),
+        if (shizukuUp) ?shizukuCard,
+        if (wizardOnTop) ?wizard,
+        if (deviceNote != null)
+          Card(
+            color: c.warningContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(deviceNote, style: text.bodyMedium?.copyWith(color: c.onWarningContainer)),
+            ),
+          ),
+        if (others.isNotEmpty)
+          // open from the start when they are the only way (Android 10) or hold a message to read
+          _OtherWays(
+            label: shizukuUp ? l.setupOtherWaysPlain : l.setupOtherWays,
+            initiallyOpen: !setup.wireless.supported || (messageText != null && !shizukuUp),
+            children: others,
           ),
       ],
     );
@@ -195,81 +276,67 @@ class _SetupSectionState extends State<SetupSection> {
     final (steps, current) = setupSteps(l, setup);
     return [
       for (var i = 0; i < steps.length; i++)
-        _StepRow(
+        StepRow(
           index: i,
-          step: steps[i],
+          done: steps[i].done,
+          title: steps[i].title,
+          body: steps[i].body,
           current: i == current,
-          enabled: !(i == 2 && setup.busy),
-          // Step 2 (installed, not running): the wireless-debugging guide, as MainActivity.onStepAction.
-          onPressed: () => i == 1 && setup.shizuku != ShizukuState.tooOld
-              ? showShizukuGuide(context)
-              : runAction(context, (b) => b.runSetupStep(i)),
+          children: [
+            FilledButton(
+              // Step 2 (installed, not running): the wireless-debugging guide, as MainActivity.onStepAction.
+              onPressed: i == 2 && setup.busy
+                  ? null
+                  : () => i == 1 && setup.shizuku != ShizukuState.tooOld
+                      ? showShizukuGuide(context)
+                      : runAction(context, (b) => b.runSetupStep(i)),
+              child: Text(steps[i].action),
+            ),
+          ],
         ),
     ];
   }
 }
 
-class _StepRow extends StatelessWidget {
-  const _StepRow({
-    required this.index,
-    required this.step,
-    required this.current,
-    required this.enabled,
-    required this.onPressed,
-  });
+/// "Other ways: Shizuku or a computer", folded so that the page shows one way to follow.
+class _OtherWays extends StatefulWidget {
+  const _OtherWays({required this.label, required this.children, required this.initiallyOpen});
 
-  final int index;
-  final SetupStep step;
-  final bool current;
-  final bool enabled;
-  final VoidCallback onPressed;
+  final String label;
+  final List<Widget> children;
+  final bool initiallyOpen;
+
+  @override
+  State<_OtherWays> createState() => _OtherWaysState();
+}
+
+class _OtherWaysState extends State<_OtherWays> {
+  late bool _open = widget.initiallyOpen;
+
+  @override
+  void didUpdateWidget(_OtherWays old) {
+    super.didUpdateWidget(old);
+    if (widget.initiallyOpen && !old.initiallyOpen) _open = true; // a message arrived inside: show it
+  }
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    final c = WaaiyaColors.of(context);
-    final text = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ExcludeSemantics(
-            child: Container(
-              width: 32,
-              height: 32,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: step.done ? c.primary : null,
-                border: step.done ? null : Border.all(color: c.offRing, width: 2),
-              ),
-              child: step.done
-                  ? Icon(Icons.check_rounded, size: 20, color: c.onPrimary)
-                  : Text('${index + 1}', style: text.bodyLarge),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TestId(
+            'setup_other',
+            child: TextButton.icon(
+              onPressed: () => setState(() => _open = !_open),
+              icon: Icon(_open ? Icons.expand_less_rounded : Icons.expand_more_rounded),
+              label: Text(widget.label),
             ),
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Semantics(
-                  label: '${step.done ? l.stepDoneCd : l.stepTodoCd(index + 1)}. ${step.title}',
-                  excludeSemantics: true,
-                  child: Text(step.title, style: text.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
-                ),
-                const SizedBox(height: 2),
-                Text(step.body, style: text.bodyMedium),
-                if (current) ...[
-                  const SizedBox(height: 8),
-                  FilledButton(onPressed: enabled ? onPressed : null, child: Text(step.action)),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+        if (_open) ...widget.children,
+      ],
     );
   }
 }
