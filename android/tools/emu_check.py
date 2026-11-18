@@ -99,12 +99,14 @@ class Emu:
 
     def page(self, name):
         """Flutter screens: shows a page through the bottom bar (the native screen has one long page)."""
-        for _ in range(3):  # a tap right after a fling can be taken by the scrolling: check and tap again
+        # a tap right after a fling can be taken by the scrolling, and on a loaded host the page takes a while to
+        # change (the filter keeps a core busy): check and tap again
+        for attempt in range(6):
             hit = self.find(rid="nav_" + name)
             if not hit:
                 return
             self.sh(f"input tap {hit[2][0]} {hit[2][1]}")
-            time.sleep(1)
+            time.sleep(1 if attempt < 2 else 3)
             self.sh("uiautomator dump /sdcard/emu_check.xml")
             xml = self.sh("cat /sdcard/emu_check.xml")
             if re.search(r'resource-id="nav_%s"[^>]*selected="true"' % name, xml):
