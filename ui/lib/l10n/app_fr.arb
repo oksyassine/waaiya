@@ -251,7 +251,7 @@
   "navFilter": "Filtre",
   "navScreen": "Écran",
   "navLinks": "Liens",
-  "navSetup": "Configuration",
+  "navSetup": "Configurer",
   "navSettings": "Paramètres",
   "setupDoneTitle": "Configuration terminée",
   "setupDoneBody": "Waaiya peut couper le son d'origine des autres applications. Ne refaites la configuration que si quelque chose a changé (elle a été annulée, ou Waaiya indique qu'elle manque).",

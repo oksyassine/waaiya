@@ -900,7 +900,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navLinks => 'Liens';
 
   @override
-  String get navSetup => 'Configuration';
+  String get navSetup => 'Configurer';
 
   @override
   String get navSettings => 'Paramètres';

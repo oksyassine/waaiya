@@ -41,9 +41,10 @@ notice() { if [ -n "${GITHUB_ACTIONS:-}" ]; then echo "::notice::$*"; else echo 
 ort_nupkg() {
     local f="$WORK/onnxruntime-$ORT_VERSION.nupkg"
     if [ ! -f "$f" ]; then
-        fetch "https://api.nuget.org/v3-flatcontainer/microsoft.ml.onnxruntime/$ORT_VERSION/microsoft.ml.onnxruntime.$ORT_VERSION.nupkg" "$f.part"
-        echo "$ORT_NUPKG_SHA256  $f.part" | sha256sum -c --quiet
-        mv "$f.part" "$f"
+        # explicit returns: this runs inside $(...), where a failed command would not stop the script by itself
+        fetch "https://api.nuget.org/v3-flatcontainer/microsoft.ml.onnxruntime/$ORT_VERSION/microsoft.ml.onnxruntime.$ORT_VERSION.nupkg" "$f.part" || return 1
+        echo "$ORT_NUPKG_SHA256  $f.part" | sha256sum -c --quiet || { echo "ONNX Runtime package: checksum mismatch" >&2; return 1; }
+        mv "$f.part" "$f" || return 1
     fi
     echo "$f"
 }
@@ -51,7 +52,9 @@ ort_nupkg() {
 # ort_unpack PLATFORM DEST: the package's files for linux-x64 or win-x64 in the layout of Microsoft's release
 # archives (include/, lib/, LICENSE, ThirdPartyNotices.txt, VERSION_NUMBER), which the Makefiles and scripts use.
 ort_unpack() {
-    local pkg tmp; pkg="$(ort_nupkg)"; tmp="$(mktemp -d -p "$WORK")"
+    local pkg tmp
+    pkg="$(ort_nupkg)" || exit 1
+    tmp="$(mktemp -d -p "$WORK")"
     python3 -I - "$pkg" "$1" "$tmp/ort" "$ORT_VERSION" <<'PY'
 import os, sys, zipfile
 pkg, plat, dest, ver = sys.argv[1:]

@@ -315,7 +315,7 @@
     <string name="nav_filter">Filtre</string>
     <string name="nav_screen">Écran</string>
     <string name="nav_links">Liens</string>
-    <string name="nav_setup">Configuration</string>
+    <string name="nav_setup">Configurer</string>
     <string name="nav_settings">Paramètres</string>
     <string name="setup_done_title">Configuration terminée</string>
     <string name="setup_done_body">Waaiya peut couper le son d\'origine des autres applications. Ne refaites la configuration que si quelque chose a changé (elle a été annulée, ou Waaiya indique qu\'elle manque).</string>

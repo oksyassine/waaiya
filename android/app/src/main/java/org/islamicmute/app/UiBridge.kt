@@ -214,10 +214,11 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wirelessCancel" -> { WirelessSetup.cancel(activity); result.success(null) }
                 "openAboutPhone" -> { WirelessSetup.openWirelessDebugging(activity); result.success(null) }
                 "guidePicture" -> {
-                    // the illustrated guide's picture in the app's language (res/drawable-<language>-nodpi)
+                    // the illustrated guide's picture in the app's language (res/drawable-<language>-nodpi); through
+                    // Lang.wrap because below Android 13 this activity keeps the language it started with
                     val id = SetupGuideActivity.PICTURES[call.argument<String>("name")]
                         ?: throw BadArgs("guide picture ${call.argument<Any>("name")}")
-                    result.success(activity.resources.openRawResource(id).use { it.readBytes() })
+                    result.success(Lang.wrap(activity).resources.openRawResource(id).use { it.readBytes() })
                 }
                 "openWifiSettings" -> {
                     runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_WIFI_SETTINGS)) }
