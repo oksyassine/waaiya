@@ -73,6 +73,7 @@ object Diagnostics {
 
         appendLine("[Original sound]")
         val m = h?.muter
+        append(SimpleMode.report(ctx))
         if (m == null) appendLine("Muter: ${FilterService.muterStatus} (details appear while filtering runs)")
         else {
             appendLine("Muter: ${m.status}, list from ${m.source}, polls ${m.polls}, failed polls ${m.pollFailures}, " +

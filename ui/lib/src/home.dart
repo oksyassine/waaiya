@@ -391,6 +391,7 @@ Future<void> _start(BuildContext context) async {
       // no measured delay (desktop host): the sentence without it
       f.delayMs > 0 ? l.stateOnDetail(f.delayMs) : l.stateOnDetailNoDelay,
       if (f.mono) l.stateMonoNote,
+      if (s.settings.simpleMode && s.platform == 'android') l.simpleOnDetail,
       if (f.blockedApps.isNotEmpty)
         s.settings.silenceUnfilterable
             ? l.stateBlockedSilenced(f.blockedApps.join('، '))

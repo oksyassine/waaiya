@@ -24,6 +24,12 @@ abstract final class SettingKeys {
   /// desktop notice.
   static const holdSilence = 'hold_silence';
 
+  /// Android, TEST (0.2.13): filter without the one-time setup by muting media while filtering (SimpleMode.kt).
+  static const simpleMode = 'simple_mode';
+
+  /// Simple mode's output channel: "alarm" or "notification".
+  static const simpleChannel = 'simple_channel';
+
   /// Key -> default value. The value's type is the key's type.
   static const Map<String, Object> defaults = {
     gender: '',
@@ -35,6 +41,8 @@ abstract final class SettingKeys {
     blurStrictness: 0,
     audioStereo: false,
     holdSilence: true,
+    simpleMode: false,
+    simpleChannel: 'alarm',
   };
 
   /// Returns an error text when [key]/[value] is not a valid setting, else null.
@@ -46,6 +54,9 @@ abstract final class SettingKeys {
     if (def is String) {
       if (value is! String) return '"$key" takes a string';
       if (key == gender && !const {'', 'man', 'woman'}.contains(value)) return 'gender is "", "man" or "woman"';
+      if (key == simpleChannel && !const {'alarm', 'notification'}.contains(value)) {
+        return 'simple_channel is "alarm" or "notification"';
+      }
     }
     return null;
   }
@@ -63,6 +74,8 @@ class WaaiyaSettings {
     this.blurStrictness = 0,
     this.audioStereo = false,
     this.holdSilence = true,
+    this.simpleMode = false,
+    this.simpleChannel = 'alarm',
   });
 
   factory WaaiyaSettings.fromMap(Map<Object?, Object?> m) => WaaiyaSettings(
@@ -75,6 +88,8 @@ class WaaiyaSettings {
         blurStrictness: _int(m[SettingKeys.blurStrictness]).clamp(0, 2),
         audioStereo: _bool(m[SettingKeys.audioStereo], false),
         holdSilence: _bool(m[SettingKeys.holdSilence], true),
+        simpleMode: _bool(m[SettingKeys.simpleMode], false),
+        simpleChannel: _str(m[SettingKeys.simpleChannel]) == 'notification' ? 'notification' : 'alarm',
       );
 
   /// "man", "woman" or "" (not answered yet: the onboarding is shown).
@@ -89,6 +104,8 @@ class WaaiyaSettings {
   final int blurStrictness;
   final bool audioStereo;
   final bool holdSilence;
+  final bool simpleMode;
+  final String simpleChannel;
 
   bool get isMan => gender == 'man';
   bool get blurOn => blurWomen || blurNudity;
@@ -103,6 +120,8 @@ class WaaiyaSettings {
         SettingKeys.blurStrictness: blurStrictness,
         SettingKeys.audioStereo: audioStereo,
         SettingKeys.holdSilence: holdSilence,
+        SettingKeys.simpleMode: simpleMode,
+        SettingKeys.simpleChannel: simpleChannel,
       };
 }
 

@@ -290,6 +290,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_strictness" to settings.blurStrictness,
             "audio_stereo" to settings.audioStereo,
             "hold_silence" to settings.holdSilence,
+            "simple_mode" to settings.simpleMode,
+            "simple_channel" to settings.simpleChannel,
         ),
         "filter" to mapOf(
             "state" to FilterService.state.name,
@@ -311,7 +313,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         ),
         "setup" to mapOf(
             // DUMP granted, or this phone refused it and Waaiya's helper reads the sessions (HelperDumps)
-            "originalsMuted" to activity.setupDone(),
+            // simple mode (test) silences the originals with the media mute instead of the setup
+            "originalsMuted" to (activity.setupDone() || settings.simpleMode),
             "helperMode" to HelperDumps.helperMode(activity),
             // helper mode but the helper is not running (after a restart): the Setup and Filter pages say how
             "helperMissing" to activity.helperMissing(),
@@ -377,6 +380,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             // read by the running filter (stereo) and when Android ends filtering (hold): apply at once
             "audio_stereo" -> settings.audioStereo = bool()
             "hold_silence" -> settings.holdSilence = bool()
+            // read when filtering starts (a running filter keeps its way until the next start)
+            "simple_mode" -> settings.simpleMode = bool()
+            "simple_channel" -> settings.simpleChannel = (value as? String)?.takeIf { it == "alarm" || it == "notification" }
+                ?: throw BadArgs("simple_channel is \"alarm\" or \"notification\"")
             else -> throw BadArgs("unknown setting $key")
         }
         // No restart: the running filter and blur re-read Settings every 0.5 s.

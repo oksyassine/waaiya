@@ -164,7 +164,12 @@ class FilterService : Service() {
         stoppedBySystem = false
         publish(State.STARTING)
         val settings = Settings(this)
-        muter = (muter ?: SessionMuter(this, settings).also { m ->
+        if (settings.simpleMode && muter == null) {
+            // Simple mode (test): the media mute silences the originals; no muter, the setup is not needed
+            SimpleMode.begin(this)
+            muterStatus = SessionMuter.Status.OK
+            notifyListeners()
+        } else muter = (muter ?: SessionMuter(this, settings).also { m ->
             m.onChange = { muterChanged(m) }
             m.start()
         }).also { muterChanged(it) }
@@ -221,7 +226,8 @@ class FilterService : Service() {
     private fun endedBySystem(fail: State?) = main.post {
         if (stop || holding) return@post
         val m = muter
-        if (!Settings(this).holdSilence || m == null || m.status == SessionMuter.Status.NO_PERMISSION) {
+        val canHold = SimpleMode.active || (m != null && m.status != SessionMuter.Status.NO_PERMISSION)
+        if (!Settings(this).holdSilence || !canHold) {
             if (fail != null) failState = fail else stoppedBySystem = true
             stopSelf()
             return@post
@@ -263,7 +269,9 @@ class FilterService : Service() {
         val minOut = AudioTrack.getMinBufferSize(Engine.SAMPLE_RATE, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_FLOAT)
         val minOutFrames = minOut / frameBytes
         val track = AudioTrack.Builder()
-            .setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+            // simple mode (test): another channel, media is muted while it filters
+            .setAudioAttributes(AudioAttributes.Builder()
+                .setUsage(if (SimpleMode.active) SimpleMode.usage(this) else AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE).build())
             .setAudioFormat(outFmt)
             .setPerformanceMode(AudioTrack.PERFORMANCE_MODE_LOW_LATENCY)  // the only "free" latency saving
@@ -301,6 +309,7 @@ class FilterService : Service() {
         val inBuf = FloatArray(hop * ch)
         val outBuf = FloatArray(hop * ch)
         fun report() {
+            if (SimpleMode.active) SimpleMode.routed = track.routedDevice
             val buffered = (written - (track.playbackHeadPosition.toLong() and 0xFFFFFFFFL)).coerceAtLeast(0)
             health = Health(
                 model = engine.modelName, mono = monitor.mono, tooSlow = monitor.tooSlow,
@@ -317,10 +326,15 @@ class FilterService : Service() {
                 muter = muter?.info())
         }
         report()
+        var simpleGain = -1f
         try {
             record.startRecording()
             track.play()
             while (!stop) {
+                if (SimpleMode.active) {  // simple mode: the volume keys set this track's gain
+                    val g = SimpleMode.gain
+                    if (g != simpleGain) { track.setVolume(g); simpleGain = g }
+                }
                 // collect exactly one hop so the engine can return it at once (hop-aligned: one hop less delay)
                 var got = 0
                 while (got < inBuf.size && !stop) {
@@ -423,6 +437,7 @@ class FilterService : Service() {
         worker?.join(500)
         blur?.stop(); blur = null
         muter?.stop()           // un-mutes the original sessions: an explicit stop restores normal audio
+        SimpleMode.end(this)    // simple mode: the media sound back
         projection?.stop()
         ScreenShareProtection.captureEnded(this)
         health = null

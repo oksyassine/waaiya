@@ -203,3 +203,20 @@ pass through. Shizuku was the only such process; `CoverHelper.kt` is Waaiya's ow
   `emu_check.py --blur --cover-helper` (shell layer, no cover windows, a tap on a cover reaches the app). Not
   verified on a real phone or on Android 12 to 14 yet. Google has discussed restricting on-device (loopback) adb,
   which would affect this route and Shizuku alike.
+
+## Simple mode (test, 0.2.13): no Developer options
+
+For people who will not do the setup. Without it Waaiya cannot silence another app's own sound, so simple mode
+mutes the phone's media sound while Waaiya filters and plays the filtered sound on another channel (alarm or
+notification, a setting; `SimpleMode.kt`). Checked on the API 30 and 35 emulators (`emu_check.py --simple`):
+the playback capture keeps the full level with media muted or at 0; media is muted while filtering, Waaiya's track
+has the chosen usage, a volume-key press becomes Waaiya's own gain and media is muted again, Stop gives media
+back, and after a killed process the next app start gives it back (the mute is recorded before it is made).
+Only the media mute is written; alarm and notification volumes are never changed.
+
+Not known yet, only real phones tell (the diagnostics report's "Simple mode" lines have what is needed): whether
+the channel is heard with media muted; alarm also rings on the speaker with earphones in; notification is silent
+on vibrate and in Do Not Disturb; Bluetooth earbuds with absolute volume may go silent with media muted; some apps
+may pause when they see media muted. An accessibility service would give a clean channel of its own
+(FLAG_ENABLE_ACCESSIBILITY_VOLUME) but is kept out of the main APK (Play Protect's fraud protection blocks such
+sideloaded apps in several countries).
