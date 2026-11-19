@@ -146,7 +146,8 @@ class Emu:
 
 def strings(lang):
     """name -> text of the app's strings in one language."""
-    path = os.path.join(RES, "values-ar" if lang == "ar" else "values", "strings.xml")
+    folder = "values" if lang == "en" else "values-" + ("in" if lang == "id" else lang)
+    path = os.path.join(RES, folder, "strings.xml")
     out = {}
     for s in ET.parse(path).getroot().iter("string"):
         out[s.get("name")] = (s.text or "").replace("\\n", "\n").replace("\\'", "'").replace('\\"', '"')
@@ -197,7 +198,13 @@ def main():
     ap.add_argument("--blur-fail", action="store_true",
                     help="debug APK: make the blur's capture fail and check the screen says so")
     a = ap.parse_args()
-    e, c, ar = Emu(a.serial), Checks(), strings("ar")
+    e, c = Emu(a.serial), Checks()
+    # First launch (0.2.13): the phone's language when Waaiya has it, else Arabic. The checks find the screens'
+    # words in that language (the name `ar` stays: it was Arabic only).
+    phone = (e.sh("getprop persist.sys.locale").strip() or e.sh("getprop ro.product.locale").strip()).split("-")[0]
+    lang = {"in": "id"}.get(phone, phone)
+    lang = lang if lang in ("ar", "en", "fr", "ur", "id", "tr", "bn", "fa", "ms") else "ar"
+    ar = strings(lang)
     shot = (lambda name: e.screenshot(os.path.join(a.shots, name + ".png"))) if a.shots else (lambda name: None)
     if a.shots:
         os.makedirs(a.shots, exist_ok=True)
@@ -234,7 +241,7 @@ def main():
 
     # --- first launch: Arabic, the man/woman question
     if e.wait(rid="choose_man", seconds=45):  # a debug Flutter build takes ~20 s to start on an emulator
-        c.check(e.find(text=re.escape(ar["onboard_title"])) is not None, "first launch is in Arabic")
+        c.check(e.find(text=re.escape(ar["onboard_title"])) is not None, f"first launch is in the phone's language ({lang})")
         e.tap(rid="choose_man")
         # Flutter: the first frame can be on screen before it takes taps; tap again if nothing moved
         if not e.wait(rid="power", seconds=5) and e.find(rid="choose_man"):
@@ -267,13 +274,13 @@ def main():
                 "start without setup: a dialog says the music will still be heard")
         shot("2_start_dialog")
         e.tap(text=re.escape(ar["start_no_setup_anyway"]))
-        # Android's own question (in the phone's language)
-        e.tap(text=r"^(Start|Start now|ابدأ|بدء|البدء الآن)$", seconds=15)
+        # Android's own question, in the phone's language: its positive button
+        e.tap(rid="android:id/button1", seconds=15)
     else:
         c.check(e.wait(text=re.escape(ar["start_no_setup_title"]), seconds=3) is None, "setup done: no warning dialog")
         if a.setup != "done":
             # helper mode: the phone refused PROJECT_MEDIA too, so Android asks before each capture
-            e.tap(text=r"^(Start|Start now|ابدأ|بدء|البدء الآن)$", seconds=15)
+            e.tap(rid="android:id/button1", seconds=15)
         elif e.find(text=r"^(Start|Start now)$"):
             c.check(False, "setup done: Android should not ask to share the screen")
             e.tap(text=r"^(Start|Start now)$")

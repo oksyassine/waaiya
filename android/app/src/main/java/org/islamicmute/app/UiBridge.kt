@@ -213,6 +213,12 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wirelessEnterCode" -> result.success(WirelessSetup.enterCode(activity, call.argument<String>("code") ?: ""))
                 "wirelessCancel" -> { WirelessSetup.cancel(activity); result.success(null) }
                 "openAboutPhone" -> { WirelessSetup.openWirelessDebugging(activity); result.success(null) }
+                "guidePicture" -> {
+                    // the illustrated guide's picture in the app's language (res/drawable-<language>-nodpi)
+                    val id = SetupGuideActivity.PICTURES[call.argument<String>("name")]
+                        ?: throw BadArgs("guide picture ${call.argument<Any>("name")}")
+                    result.success(activity.resources.openRawResource(id).use { it.readBytes() })
+                }
                 "openWifiSettings" -> {
                     runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_WIFI_SETTINGS)) }
                     result.success(null)
@@ -241,7 +247,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     result.success(null)
                 }
                 "setLanguage" -> {
-                    val tag = call.argument<String>("tag")?.takeIf { it == Lang.AR || it == Lang.EN }
+                    val tag = call.argument<String>("tag")?.takeIf { it in Lang.ALL }
                         ?: throw BadArgs("language ${call.argument<Any>("tag")}")
                     Lang.store(activity, tag)
                     result.success(null)

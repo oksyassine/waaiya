@@ -1,4 +1,4 @@
-# Status (2026-11-18, 0.2.12 pre-release)
+# Status (2026-11-19, 0.2.13 in preparation)
 
 What comes next, and why: `docs/ROADMAP.md`.
 
@@ -16,6 +16,7 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Model shrink | done: int8 weights 2.4 MB, within 0.2 dB | `eval/results/shrink.md` |
 | Own voice model (keeps singing) | trained on Kaggle, not the default | roadmap item 6 |
 | Flutter UI (Android main screen since 0.2.11, pages with a bottom bar), Linux desktop app | Android: released; desktop: preview | Sound filter and X11 blur work; Wayland blur untested on real sessions |
+| Languages | Arabic and English written for the project; French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay machine-translated (0.2.13), not reviewed by native speakers | `ui/tool/check_translation.py` (every text, format arguments, escaping), `ui/test/languages_test.dart` (each page in each language on a small phone, no overflow), setup pictures retaken per language (`android/tools/guide_shots.py`) |
 | Windows desktop app (filter + blur) | preview (branch `windows-filter`) | CI on Windows Server 2022 and 2025 with a virtual output: `windows/test/audio_test.py` (route C2 measured: level back within 0.03 dB, HNR > 120 dB; tone suppressed about 47 dB, about 50 ms delay; new apps lowered before their first sound; crash, stop, restore), `windows/test/blur_test.py` (covers out of the capture on 2025, in it on 2022; click-through; fail-closed; models). Not yet on a real PC |
 | macOS, iOS | not started | `docs/PLATFORMS.md`; macOS needs an Apple Developer ID (the capture permission is tied to the signature) |
 

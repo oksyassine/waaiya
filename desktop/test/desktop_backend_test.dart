@@ -14,7 +14,12 @@ void main() {
 
   test('settings and language are kept in a JSON file with the Android keys', () async {
     final file = File('${dir.path}/settings.json');
-    var b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false, findBlur: false);
+    // first run: the computer's language when Waaiya has it, else Arabic
+    final fresh = File('${dir.path}/fresh.json');
+    var b = await DesktopBackend.open(
+        file: fresh, licencesDir: dir, findEngine: false, findBlur: false, systemLocale: 'fr_FR.UTF-8');
+    expect(b.state.language, 'fr');
+    b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false, findBlur: false, systemLocale: 'de_DE');
     expect(b.state.language, 'ar');
     expect(b.state.filter.simulated, isTrue);
     expect(b.state.capabilities.shizukuSetup, isFalse);

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'backend.dart';
 
@@ -68,7 +69,7 @@ class MemoryBackend implements WaaiyaBackend {
 
   @override
   Future<void> setLanguage(String tag) async {
-    if (tag != 'ar' && tag != 'en') throw BackendException('bad_args', 'language "$tag"');
+    if (!appLanguages.containsKey(tag)) throw BackendException('bad_args', 'language "$tag"');
     emit(_state.copyWith(language: tag));
     await saved();
   }
@@ -111,6 +112,10 @@ class MemoryBackend implements WaaiyaBackend {
 
   @override
   Future<void> openWifiSettings() async => throw const BackendException('unsupported', 'openWifiSettings');
+
+  /// No pictures off Android (tests and desktop): the steps show their words only.
+  @override
+  Future<Uint8List?> guidePicture(String name) async => null;
 
   @override
   Future<void> openSetupGuide() async => throw const BackendException('unsupported', 'openSetupGuide');

@@ -335,6 +335,7 @@ void main() {
 
   test('the daemon\'s notice is written in the app\'s language', () async {
     final b = await w.backend();
+    await b.setLanguage('ar');
     await b.startFilter();
     final ar = File(w.p('config/islamic-mute/notice')).readAsLinesSync();
     expect(ar.first, isNot('Waaiya stopped'));

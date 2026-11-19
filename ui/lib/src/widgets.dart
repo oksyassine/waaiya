@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import 'app.dart';
+import 'backend.dart';
 import 'theme.dart';
 
 /// Scrolling page column, at most 640 wide (phones use the full width; desktop windows stay readable).
@@ -196,6 +198,16 @@ Future<int?> chooseOne(BuildContext context, {required String title, required Li
       ],
     ),
   );
+}
+
+/// The language list ([appLanguages], each in its own name); the choice goes through the backend.
+Future<void> chooseLanguage(BuildContext context) async {
+  final l = AppLocalizations.of(context);
+  final current = WaaiyaScope.of(context).state.language;
+  final tags = appLanguages.keys.toList();
+  final i = await chooseOne(context,
+      title: l.languageTitle, options: appLanguages.values.toList(), selected: tags.indexOf(current));
+  if (i != null && tags[i] != current && context.mounted) await runAction(context, (b) => b.setLanguage(tags[i]));
 }
 
 /// One numbered step of a setup: a circle with the number (a tick when done), the title, one sentence, and, for the

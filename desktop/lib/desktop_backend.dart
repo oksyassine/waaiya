@@ -81,8 +81,10 @@ class DesktopBackend extends MemoryBackend {
     String? platform,
     Duration? poll = const Duration(seconds: 3),
     Duration startTimeout = defaultStartTimeout,
+    String? systemLocale,
   }) async {
     file ??= defaultSettingsFile();
+    systemLocale ??= Platform.localeName;
     platform ??= Platform.operatingSystem;
     licencesDir ??= Directory('${File(Platform.resolvedExecutable).parent.path}${Platform.pathSeparator}licences');
     final linux = platform == 'linux', windows = platform == 'windows';
@@ -111,7 +113,10 @@ class DesktopBackend extends MemoryBackend {
       version: (engine?.bundledVersion ?? '').split('-').first.isNotEmpty
           ? engine!.bundledVersion.split('-').first
           : appVersion,
-      language: saved[_langKey] == 'en' ? 'en' : 'ar', // Arabic first, whatever the system language
+      // The saved choice; on a first run the computer's language when Waaiya has it, else Arabic. Someone who used
+      // Waaiya before this rule has a settings file without a language and keeps Arabic.
+      language: appLanguageOf(saved[_langKey] as String?) ??
+          (saved.isEmpty ? appLanguageOf(systemLocale) ?? 'ar' : 'ar'),
       settings: WaaiyaSettings.fromMap(settings),
       filter: FilterInfo(simulated: engine == null),
       detectorModel: detector,

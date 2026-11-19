@@ -156,10 +156,17 @@ Known limits:
 ## Illustrated guide
 
 "Steps with pictures" in the setup card opens `SetupGuideActivity`: the Wireless-debugging route in 9 steps, each
-with a screenshot, like Shizuku's guide (which it links for the Shizuku route). The pictures were taken on the
-API 35 emulator (`res/drawable-nodpi` English, `res/drawable-ar-nodpi` Arabic, 540 px WebP, about 190 KB in all).
-To retake them: set the per-app locale of Settings and SystemUI (`cmd locale set-app-locales com.android.settings
---locales ar`), go through the setup, crop and outline with Pillow. Both screens open it (Flutter: `openSetupGuide`).
+with a screenshot, like Shizuku's guide (which it links for the Shizuku route). Since 0.2.13 the setup steps also
+show their own pictures under the current step's button (Flutter `GuidePictures`, through `guidePicture`): About
+phone with "Build number" marked; Developer options at "Wireless debugging" and Android's "Allow" question; the
+pairing row, Waaiya's notification and the code field.
+
+The pictures are real screens of the API 35 emulator in each of the app's languages (`res/drawable-nodpi` English,
+`res/drawable-<language>-nodpi`, `drawable-in-nodpi` Indonesian; 540 px WebP), the place to tap framed in green.
+`android/tools/guide_shots.py --lang <tag>` retakes one language: it switches the emulator's system language,
+forgets paired computers and trusted networks, runs the real setup and saves the nine pictures. Look at every
+picture before committing them. The Settings labels the steps quote come from the same emulator (the
+"Build number", "Wireless debugging" ... wording of each language), so the words match the pictures.
 
 ## Waaiya's own cover helper (touches through the blur covers, no Shizuku)
 

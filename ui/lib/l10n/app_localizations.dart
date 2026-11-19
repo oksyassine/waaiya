@@ -6,7 +6,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
+import 'app_localizations_bn.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fa.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_ms.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_ur.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,7 +102,14 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
+    Locale('bn'),
     Locale('en'),
+    Locale('fa'),
+    Locale('fr'),
+    Locale('id'),
+    Locale('ms'),
+    Locale('tr'),
+    Locale('ur'),
   ];
 
   /// Android string app_name
@@ -896,7 +910,7 @@ abstract class AppLocalizations {
   /// **'لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.'**
   String get blurStatusNoOverlay;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
@@ -1688,133 +1702,133 @@ abstract class AppLocalizations {
   /// **'عام'**
   String get settingsGeneralTitle;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.'**
   String get desktopPreview;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تعذّر ذلك: {details}'**
   String actionFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تُزال الآلات من كل التطبيقات.'**
   String get stateOnDetailNoDelay;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.'**
   String get engineErrorNoPactl;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'خادم الصوت لا يعمل (PulseAudio أو PipeWire).'**
   String get engineErrorNoSoundServer;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.'**
   String get engineErrorNoSystemd;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم يُعثر على مكبّرات صوت أو سماعات.'**
   String get engineErrorNoOutput;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تعذّر تثبيت التصفية. التفاصيل:\n{details}'**
   String engineErrorInstallFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم تبدأ التصفية. التفاصيل:\n{details}'**
   String engineErrorStartFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'توقّفت التصفية بسبب خطأ. التفاصيل:\n{details}'**
   String engineErrorServiceFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'التشغيل عند تسجيل الدخول'**
   String get autostartTitle;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تصفية الصوت فور تسجيل الدخول.'**
   String get autostartBody;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.'**
   String get blurBodyDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.'**
   String get blurFailBodyDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.'**
   String get blurStatusOnVisibleDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n{details}'**
   String blurStatusNoOverlayDesktop(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.'**
   String get blurStatusShareDialog;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}'**
   String blurStatusExited(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.'**
   String get engineDetectorFailed;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.'**
   String get blurStatusUncovered;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.'**
   String get blurStatusModelsMissingDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
@@ -1831,8 +1845,17 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['ar', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'bn',
+    'en',
+    'fa',
+    'fr',
+    'id',
+    'ms',
+    'tr',
+    'ur',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1843,8 +1866,22 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return AppLocalizationsAr();
+    case 'bn':
+      return AppLocalizationsBn();
     case 'en':
       return AppLocalizationsEn();
+    case 'fa':
+      return AppLocalizationsFa();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'id':
+      return AppLocalizationsId();
+    case 'ms':
+      return AppLocalizationsMs();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'ur':
+      return AppLocalizationsUr();
   }
 
   throw FlutterError(

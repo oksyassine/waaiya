@@ -221,6 +221,51 @@ extension _Let<T> on T {
 
 /// "Set up on this phone": Android's own Wireless debugging, no extra app (Android 11+), as four steps that tick
 /// themselves, with one button for the current step.
+/// What the phone shows at a step, with the place to tap marked: the illustrated guide's pictures, in the app's
+/// language. Nothing where the backend has no pictures (desktop, tests).
+class GuidePictures extends StatelessWidget {
+  const GuidePictures(this.names, {super.key});
+
+  final List<String> names;
+
+  static final _cache = <String, Future<Uint8List?>>{};
+
+  @override
+  Widget build(BuildContext context) {
+    final scope = WaaiyaScope.of(context);
+    return Column(
+      children: [
+        for (final name in names)
+          FutureBuilder<Uint8List?>(
+            future: _cache.putIfAbsent('${scope.state.language}/$name',
+                () => scope.backend.guidePicture(name).catchError((Object _) => null)),
+            builder: (context, snap) {
+              final bytes = snap.data;
+              if (bytes == null) return const SizedBox.shrink();
+              return Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 320),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: DecoratedBox(
+                      position: DecorationPosition.foreground,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Image.memory(bytes, key: Key('guide_pic_$name'), gaplessPlayback: true),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+      ],
+    );
+  }
+}
+
 class WirelessSetupCard extends StatelessWidget {
   const WirelessSetupCard({super.key});
 
@@ -268,6 +313,7 @@ class WirelessSetupCard extends StatelessWidget {
                 child: Text(l.wizDevAction),
               ),
             ),
+            const GuidePictures(['guide_1_about']),
           ],
         ),
         StepRow(
@@ -292,7 +338,7 @@ class WirelessSetupCard extends StatelessWidget {
           title: l.wizWdTitle,
           body: l.wizWdBody,
           current: current == 2,
-          children: run,
+          children: [...run, const GuidePictures(['guide_2_dev', 'guide_3_allow'])],
         ),
         StepRow(
           index: 3,
@@ -300,7 +346,10 @@ class WirelessSetupCard extends StatelessWidget {
           title: l.wizPairTitle,
           body: w.paired ? l.wizPairBodyPaired : l.wizPairBody,
           current: current == 3,
-          children: run,
+          children: [
+            ...run,
+            if (!w.paired) const GuidePictures(['guide_4_pair', 'guide_7_notif', 'guide_8_reply']),
+          ],
         ),
         // the first two ticks are guesses (Wi-Fi by the interface name): never a dead end
         if (current < 2 && !ranBefore)

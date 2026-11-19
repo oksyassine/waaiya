@@ -268,16 +268,9 @@ class GeneralSettingsCard extends StatelessWidget {
           },
         ),
         ValueRow(
-          label: l.settingLanguageTitle(s.language == 'ar' ? l.languageAr : l.languageEn),
+          label: l.settingLanguageTitle(appLanguages[s.language] ?? s.language),
           action: l.change,
-          onPressed: () async {
-            const tags = ['ar', 'en'];
-            final i = await chooseOne(context,
-                title: l.languageTitle, options: [l.languageAr, l.languageEn], selected: tags.indexOf(s.language));
-            if (i != null && tags[i] != s.language && context.mounted) {
-              await runAction(context, (b) => b.setLanguage(tags[i]));
-            }
-          },
+          onPressed: () => chooseLanguage(context),
         ),
       ],
     );

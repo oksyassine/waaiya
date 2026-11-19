@@ -20,8 +20,10 @@ VISION_TAG=models-vision-v1
 VISION_FILES=(person_yolox_nano.onnx gender_v2.onnx nsfw_marqo_int8.onnx seg.onnx)
 DETECTOR=detector_v1.onnx
 ORT_VERSION=1.19.2
-ORT_SHA256=eb00c64e0041f719913c4080e0fed7d9963dc3aa9b54664df6036d8308dbcd33
-ORT_WIN_SHA256=dc4f841e511977c0a4f02e5066c3d9a58427644010ab4f89b918614a1cd4c2b0
+# ONNX Runtime comes from Microsoft's NuGet package (the GitHub release archives answer 404 since 2026-11-18). The
+# package holds the Linux x64 and Windows x64 libraries, the headers and the licence texts; its libonnxruntime.so is
+# byte for byte the one of the GitHub archive this project used before (sha256 9c8139e1...).
+ORT_NUPKG_SHA256=fa133c8fe6238445a0dd3e8447baa5c7d16f418caa8e576c7e253ba77b27b61b
 MINGW_VERSION=20261104
 MINGW_SHA256=919380403de87dca3c581c2053230cd298af5e891286628ba0613b7fed370926
 
@@ -35,16 +37,51 @@ fetch() { curl -fsSL --retry 3 -o "$2" "$1"; }
 # GitHub Actions shows ::notice:: lines in the run summary.
 notice() { if [ -n "${GITHUB_ACTIONS:-}" ]; then echo "::notice::$*"; else echo "notice: $*"; fi; }
 
+# ort_nupkg: downloads and checks the NuGet package once per run; prints its path.
+ort_nupkg() {
+    local f="$WORK/onnxruntime-$ORT_VERSION.nupkg"
+    if [ ! -f "$f" ]; then
+        fetch "https://api.nuget.org/v3-flatcontainer/microsoft.ml.onnxruntime/$ORT_VERSION/microsoft.ml.onnxruntime.$ORT_VERSION.nupkg" "$f.part"
+        echo "$ORT_NUPKG_SHA256  $f.part" | sha256sum -c --quiet
+        mv "$f.part" "$f"
+    fi
+    echo "$f"
+}
+
+# ort_unpack PLATFORM DEST: the package's files for linux-x64 or win-x64 in the layout of Microsoft's release
+# archives (include/, lib/, LICENSE, ThirdPartyNotices.txt, VERSION_NUMBER), which the Makefiles and scripts use.
+ort_unpack() {
+    local pkg tmp; pkg="$(ort_nupkg)"; tmp="$(mktemp -d -p "$WORK")"
+    python3 -I - "$pkg" "$1" "$tmp/ort" "$ORT_VERSION" <<'PY'
+import os, sys, zipfile
+pkg, plat, dest, ver = sys.argv[1:]
+z = zipfile.ZipFile(pkg)
+os.makedirs(dest + "/include"); os.makedirs(dest + "/lib")
+def put(name, path):
+    with open(path, "wb") as f:
+        f.write(z.read(name).replace(b"\r\n", b"\n") if path.endswith((".h", ".txt", "LICENSE")) else z.read(name))
+for n in z.namelist():
+    if n.startswith("build/native/include/") and n.endswith(".h"):
+        put(n, dest + "/include/" + n.rsplit("/", 1)[1])
+    elif n.startswith(f"runtimes/{plat}/native/") and not n.endswith("/"):
+        put(n, dest + "/lib/" + n.rsplit("/", 1)[1])
+put("LICENSE", dest + "/LICENSE"); put("ThirdPartyNotices.txt", dest + "/ThirdPartyNotices.txt")
+open(dest + "/VERSION_NUMBER", "w").write(ver + "\n")
+if plat == "linux-x64":  # the archive's names: libonnxruntime.so -> .so.1 -> .so.<version> (SONAME libonnxruntime.so.1)
+    lib = dest + "/lib/"
+    os.rename(lib + "libonnxruntime.so", lib + f"libonnxruntime.so.{ver}")
+    os.chmod(lib + f"libonnxruntime.so.{ver}", 0o755); os.chmod(lib + "libonnxruntime_providers_shared.so", 0o755)
+    os.symlink(f"libonnxruntime.so.{ver}", lib + "libonnxruntime.so.1")
+    os.symlink("libonnxruntime.so.1", lib + "libonnxruntime.so")
+PY
+    rm -rf "$2" && mkdir -p "$(dirname "$2")" && mv "$tmp/ort" "$2"
+}
+
 ort() {
     if [ "$(cat third_party/onnxruntime/VERSION_NUMBER 2>/dev/null)" = "$ORT_VERSION" ]; then
         echo "onnxruntime $ORT_VERSION already in third_party/onnxruntime"; return
     fi
-    local tmp; tmp="$(mktemp -d -p "$WORK")"
-    local name="onnxruntime-linux-x64-$ORT_VERSION"
-    fetch "https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$name.tgz" "$tmp/ort.tgz"
-    echo "$ORT_SHA256  $tmp/ort.tgz" | sha256sum -c --quiet
-    tar xzf "$tmp/ort.tgz" -C "$tmp"
-    rm -rf third_party/onnxruntime && mkdir -p third_party && mv "$tmp/$name" third_party/onnxruntime
+    ort_unpack linux-x64 third_party/onnxruntime
     echo "onnxruntime $ORT_VERSION -> third_party/onnxruntime"
 }
 
@@ -87,12 +124,7 @@ ort_win() {
     if [ "$(cat third_party/onnxruntime-win/VERSION_NUMBER 2>/dev/null)" = "$ORT_VERSION" ]; then
         echo "onnxruntime $ORT_VERSION (Windows) already in third_party/onnxruntime-win"; return
     fi
-    local tmp name="onnxruntime-win-x64-$ORT_VERSION"
-    tmp="$(mktemp -d -p "$WORK")"
-    fetch "https://github.com/microsoft/onnxruntime/releases/download/v$ORT_VERSION/$name.zip" "$tmp/ort.zip"
-    echo "$ORT_WIN_SHA256  $tmp/ort.zip" | sha256sum -c --quiet
-    python3 -c 'import sys, zipfile; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])' "$tmp/ort.zip" "$tmp"
-    rm -rf third_party/onnxruntime-win && mkdir -p third_party && mv "$tmp/$name" third_party/onnxruntime-win
+    ort_unpack win-x64 third_party/onnxruntime-win
     echo "onnxruntime $ORT_VERSION (Windows) -> third_party/onnxruntime-win"
 }
 

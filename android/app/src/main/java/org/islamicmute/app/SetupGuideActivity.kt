@@ -17,7 +17,7 @@ import android.widget.TextView
 /**
  * The on-phone setup (Wireless debugging, [WirelessSetup]) step by step, each step with a screenshot, like
  * Shizuku's own guide (https://shizuku.rikka.app/guide/setup/). The pictures were taken on an Android 15 emulator,
- * in English (drawable-nodpi) and Arabic (drawable-ar-nodpi); menus look a little different on each phone, so the
+ * in each language of the app (drawable-nodpi = English, drawable-<language>-nodpi; android/tools/guide_shots.py); menus look a little different on each phone, so the
  * last section says what to look for, with the notes for Xiaomi and OPPO-family phones ([SetupHelp]).
  */
 class SetupGuideActivity : Activity() {
@@ -34,6 +34,19 @@ class SetupGuideActivity : Activity() {
         R.string.guide_w_8 to R.drawable.guide_8_reply,
         R.string.guide_w_9 to R.drawable.guide_9_done,
     )
+
+    companion object {
+        const val SHIZUKU_GUIDE = "https://shizuku.rikka.app/guide/setup/"
+
+        /** The pictures by name, for the Flutter setup steps (UiBridge "guidePicture"). */
+        val PICTURES = mapOf(
+            "guide_1_about" to R.drawable.guide_1_about, "guide_2_dev" to R.drawable.guide_2_dev,
+            "guide_3_allow" to R.drawable.guide_3_allow, "guide_4_pair" to R.drawable.guide_4_pair,
+            "guide_5_start" to R.drawable.guide_5_start, "guide_6_code" to R.drawable.guide_6_code,
+            "guide_7_notif" to R.drawable.guide_7_notif, "guide_8_reply" to R.drawable.guide_8_reply,
+            "guide_9_done" to R.drawable.guide_9_done,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,5 +125,4 @@ class SetupGuideActivity : Activity() {
         setContentView(root)
     }
 
-    companion object { const val SHIZUKU_GUIDE = "https://shizuku.rikka.app/guide/setup/" }
 }

@@ -5,12 +5,14 @@ import android.app.Application
 import android.app.LocaleManager
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
 import java.util.Locale
 
 /**
- * App language: Arabic first (whatever the phone's language), English on request.
+ * App language: the phone's language when Waaiya has it (owner, 2026-11-19), Arabic otherwise; any of [ALL] on
+ * request. Besides Arabic and English the languages are machine translations (docs/STATUS.md).
  *
  * Android 13+: the choice is the system's per-app language (LocaleManager; also shown in Android's app settings
  * through res/xml/locales_config.xml), so the system applies it to every activity and service.
@@ -19,21 +21,38 @@ import java.util.Locale
 object Lang {
     const val AR = "ar"
     const val EN = "en"
+    /** The app's languages, as BCP 47 tags ("id", which Android's java.util.Locale may call "in"). */
+    val ALL = listOf(AR, EN, "fr", "ur", "id", "tr", "bn", "fa", "ms")
     private const val PREF = "lang"
+
+    /** [ALL]'s tag for a locale's language, or null when Waaiya does not have it. */
+    fun tagOf(language: String?): String? = (if (language == "in") "id" else language)?.takeIf { it in ALL }
+
+    /** The phone's own language when Waaiya has it, else Arabic (the first launch). */
+    private fun phoneDefault(): String = tagOf(Resources.getSystem().configuration.locales[0].language) ?: AR
 
     private fun prefs(ctx: Context) = ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
-    /** The language in use: "ar" or "en". */
+    /** The language in use, one of [ALL]. */
     fun current(ctx: Context): String {
         if (Build.VERSION.SDK_INT >= 33) {
             val l = ctx.getSystemService(LocaleManager::class.java).applicationLocales
-            if (!l.isEmpty) return if (l[0].language == EN) EN else AR
+            if (!l.isEmpty) return tagOf(l[0].language) ?: AR
         }
-        return prefs(ctx).getString(PREF, AR) ?: AR
+        return tagOf(prefs(ctx).getString(PREF, null)) ?: phoneDefault()
     }
 
-    /** At app start: on Android 13+, apply Arabic as the per-app language when none was ever chosen. */
+    /**
+     * At app start: on Android 13+, set the per-app language when none was ever chosen (the phone's language when
+     * Waaiya has it, else Arabic), so that it stays when the phone's language changes later.
+     */
     fun init(app: Application) {
+        val p = prefs(app)
+        if (p.getString(PREF, null) == null && (Build.VERSION.SDK_INT < 33 ||
+                app.getSystemService(LocaleManager::class.java).applicationLocales.isEmpty)) {
+            // Someone who used Waaiya before this rule (the first screen's question answered) keeps Arabic.
+            p.edit().putString(PREF, if (p.getString("gender", "").isNullOrEmpty()) phoneDefault() else AR).apply()
+        }
         if (Build.VERSION.SDK_INT >= 33) {
             val lm = app.getSystemService(LocaleManager::class.java)
             if (lm.applicationLocales.isEmpty) lm.applicationLocales = LocaleList.forLanguageTags(current(app))

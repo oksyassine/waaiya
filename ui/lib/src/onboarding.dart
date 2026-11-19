@@ -5,8 +5,8 @@ import 'app.dart';
 import 'backend.dart';
 import 'widgets.dart';
 
-/// First launch: who is using the phone (it only decides which optional settings are shown), and a button to
-/// switch the language before anything else.
+/// First launch: who is using the phone (it only decides which optional settings are shown), and a button with the
+/// language in use, to choose another before anything else.
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
@@ -14,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final text = Theme.of(context).textTheme;
-    final other = WaaiyaScope.of(context).state.language == 'ar' ? 'en' : 'ar';
+    final language = WaaiyaScope.of(context).state.language;
     void choose(String gender) => runAction(context, (b) => b.setSetting(SettingKeys.gender, gender));
     return Scaffold(
       body: SafeArea(
@@ -22,10 +22,11 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: TextButton(
+              child: OutlinedButton.icon(
                 key: const Key('onboard_language'),
-                onPressed: () => runAction(context, (b) => b.setLanguage(other)),
-                child: Text(other == 'ar' ? l.languageAr : l.languageEn),
+                onPressed: () => chooseLanguage(context),
+                icon: const Icon(Icons.language),
+                label: Text(appLanguages[language] ?? language),
               ),
             ),
             const AppHeader(),

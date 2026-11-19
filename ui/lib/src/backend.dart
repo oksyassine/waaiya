@@ -1,6 +1,8 @@
 /// The contract between the shared screens and a native backend (docs/UI_CONTRACT.md).
 library;
 
+import 'dart:typed_data';
+
 /// Settings keys, exactly as in Android's Settings.kt (SharedPreferences file "settings").
 abstract final class SettingKeys {
   static const gender = 'gender';
@@ -545,6 +547,35 @@ class PageRequest {
   }
 }
 
+/// The pictures of the illustrated setup guide (Android res/drawable-*-nodpi/guide_*.webp, one set per language).
+const guidePictureNames = {
+  'guide_1_about', 'guide_2_dev', 'guide_3_allow', 'guide_4_pair', 'guide_5_start', 'guide_6_code',
+  'guide_7_notif', 'guide_8_reply', 'guide_9_done',
+};
+
+/// The app's languages: tag -> the language's own name (shown as is in every language). Arabic and English are
+/// written by the project; the others are machine translations not reviewed yet (docs/STATUS.md). Keep in step with
+/// Android's Lang.ALL and res/xml/locales_config.xml.
+const appLanguages = <String, String>{
+  'ar': 'العربية',
+  'en': 'English',
+  'fr': 'Français',
+  'ur': 'اردو',
+  'id': 'Bahasa Indonesia',
+  'tr': 'Türkçe',
+  'bn': 'বাংলা',
+  'fa': 'فارسی',
+  'ms': 'Bahasa Melayu',
+};
+
+/// [appLanguages]' tag for a system locale name such as "fr_FR.UTF-8", "id-ID" or "in", or null.
+String? appLanguageOf(String? localeName) {
+  if (localeName == null) return null;
+  var tag = localeName.split(RegExp(r'[_.@-]')).first.toLowerCase();
+  if (tag == 'in') tag = 'id';
+  return appLanguages.containsKey(tag) ? tag : null;
+}
+
 class AppState {
   const AppState({
     this.platform = 'android',
@@ -563,7 +594,7 @@ class AppState {
   factory AppState.fromMap(Map<Object?, Object?> m) => AppState(
         platform: _str(m['platform']) ?? 'android',
         version: _str(m['version']) ?? '',
-        language: _str(m['language']) == 'en' ? 'en' : 'ar',
+        language: appLanguages.containsKey(_str(m['language'])) ? _str(m['language'])! : 'ar',
         settings: WaaiyaSettings.fromMap(_map(m['settings'])),
         filter: FilterInfo.fromMap(_map(m['filter'])),
         setup: SetupInfo.fromMap(_map(m['setup'])),
@@ -576,7 +607,7 @@ class AppState {
   final String platform;
   final String version;
 
-  /// "ar" (default) or "en".
+  /// One of [appLanguages]' tags ("ar" by default).
   final String language;
   final WaaiyaSettings settings;
   final FilterInfo filter;
@@ -721,6 +752,10 @@ abstract interface class WaaiyaBackend {
 
   /// The setup step by step with pictures (Android).
   Future<void> openSetupGuide();
+
+  /// One picture of the illustrated setup guide ([guidePictureNames]), in the app's language: the encoded image
+  /// (WebP), or null where there are no pictures (desktop).
+  Future<Uint8List?> guidePicture(String name);
 
   /// The page asked for in [AppState.navigate] was shown.
   Future<void> pageShown();
