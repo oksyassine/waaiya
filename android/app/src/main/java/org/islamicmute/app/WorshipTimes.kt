@@ -74,16 +74,20 @@ object WorshipTimes {
      * | 6 | gulf | 19.5° | 90 min | Gulf region |
      * | 7 | kuwait | 18° | 17.5° | Kuwait |
      * | 8 | qatar | 18° | 90 min | Qatar |
-     * | 9 | singapore | 20° | 18° | Majlis Ugama Islam Singapura (MUIS); dhuhr +1 (rounded up as published) |
+     * | 9 | singapore | 20° | 18° | Majlis Ugama Islam Singapura (MUIS); dhuhr +1 (MUIS's table is about 1 min later still) |
      * | 10 | turkey | 18° | 17° | Diyanet İşleri Başkanlığı; temkin: sunrise −7, dhuhr +5, asr +4, maghrib +7, isha +0 |
      * | 11 | france | 12° | 12° | Union des organisations islamiques de France (UOIF) |
      * | 12 | morocco | 19° | 17° | Ministry of Habous; sunrise −3, dhuhr +5, maghrib +5 |
      * | 13 | indonesia | 20° | 18° | Kementerian Agama (Kemenag); ihtiyat +2 on every time, sunrise −2 |
-     * | 14 | malaysia | 20° | 18° | JAKIM; dhuhr +1, maghrib +1 (ihtiyat as published) |
+     * | 14 | malaysia | 18° | 18° | JAKIM: Subuh at 18° since the MKI decision of 2019 (before: 20°); ihtiyat +2 on the five prayers |
      * | 15 | dubai | 18.2° | 18.2° | Dubai (IACAD); sunrise −3, dhuhr +3, asr +3, maghrib +3 |
      *
-     * The offsets come from each publisher's own description and were checked against its timetables in
-     * src/test/resources/worship_reference.tsv (the differences left are listed there).
+     * Checked against published timetables in src/test/resources/worship_reference.tsv (Umm al-Qura, Egypt,
+     * Diyanet, JAKIM, MUIS, Kemenag; ISNA and UOIF through calculators that state the method): within 2 minutes.
+     * MWL has no independent timetable yet: a London calculator's sunrise and sunset are 2-3 minutes apart from
+     * these (another horizon or elevation), so its rows are kept there but not asserted.
+     * The Kemenag, Morocco and Dubai offsets are the usual published precaution minutes; Morocco, Dubai, Karachi,
+     * Tehran, Gulf, Kuwait and Qatar have no fetched timetable yet.
      */
     val METHODS: List<Method> = listOf(
         Method("mwl", 18.0, 17.0),
@@ -100,7 +104,7 @@ object WorshipTimes {
         Method("france", 12.0, 12.0),
         Method("morocco", 19.0, 17.0, offsets = intArrayOf(0, -3, 5, 0, 5, 0)),
         Method("indonesia", 20.0, 18.0, offsets = intArrayOf(2, -2, 2, 2, 2, 2)),
-        Method("malaysia", 20.0, 18.0, offsets = intArrayOf(0, 0, 1, 0, 1, 0)),
+        Method("malaysia", 18.0, 18.0, offsets = intArrayOf(2, 0, 2, 2, 2, 2)),
         Method("dubai", 18.2, 18.2, offsets = intArrayOf(0, -3, 3, 3, 3, 0)),
     )
 
