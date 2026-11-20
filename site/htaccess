@@ -5,11 +5,18 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 Options -Indexes
 AddType video/mp4 .mp4
 AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType audio/webm .webm
+AddType audio/mp4 .m4a
+AddType text/plain .txt
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/webp "access plus 30 days"
   ExpiresByType image/jpeg "access plus 30 days"
   ExpiresByType image/png "access plus 30 days"
   ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType audio/webm "access plus 30 days"
+  ExpiresByType audio/mp4 "access plus 30 days"
   ExpiresByType text/html "access plus 10 minutes"
 </IfModule>
