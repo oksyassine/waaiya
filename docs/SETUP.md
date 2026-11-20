@@ -156,7 +156,7 @@ Known limits:
 ## Illustrated guide
 
 "Steps with pictures" in the setup card opens `SetupGuideActivity`: the Wireless-debugging route in 9 steps, each
-with a screenshot, like Shizuku's guide (which it links for the Shizuku route). Since 0.2.13 the setup steps also
+with a screenshot, like Shizuku's guide (which it links for the Shizuku route). Since 0.2.12 the setup steps also
 show their own pictures under the current step's button (Flutter `GuidePictures`, through `guidePicture`): About
 phone with "Build number" marked; Developer options at "Wireless debugging" and Android's "Allow" question; the
 pairing row, Waaiya's notification and the code field.

@@ -69,7 +69,7 @@ pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "$(backend)" !
 
 # Sink inputs that should be filtered but play elsewhere (the sound server restored an app's last device, an app
 # picked one itself): moved to the virtual output. Never our own output: pacat (client "islamic-mute") or
-# im-pulse (client "Islamic Mute", which also asks not to be moved); moving it in would loop the filter into itself.
+# im-pulse (client "Waaiya filter", "Islamic Mute" before 0.2.12, which also asks not to be moved); moving it in would loop the filter into itself.
 move_strays() {
     local sid; sid="$(pactl list short sinks 2>/dev/null | awk -v s="$SINK" '$2 == s {print $1}')"
     [ -n "$sid" ] || return 0
@@ -77,7 +77,7 @@ move_strays() {
         function out() { if (id != "" && !own && sink != "" && sink != sid) print id }
         /^Sink Input #/ { out(); id = substr($3, 2); sink = ""; own = 0 }
         /^[ \t]*Sink: / { sink = $2 }
-        /application.name = "(islamic-mute|Islamic Mute)"/ { own = 1 }
+        /application.name = "(islamic-mute|Islamic Mute|Waaiya filter)"/ { own = 1 }
         END { out() }' | while read -r i; do
         pactl move-sink-input "$i" "$SINK" 2>/dev/null || true
     done

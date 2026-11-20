@@ -109,7 +109,7 @@ The diagnostics report is how those answers will come back.
    notification ([W3]). Off by default. Well served by other apps, so small scope only.
 9. **Plain tones helper** (need 15): one screen that sets a plain ringtone and notification tone. Ring and
    notification sound cannot be filtered, only replaced.
-10. **More languages** (need 11): French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay are in since 0.2.13
+10. **More languages** (need 11): French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay are in since 0.2.12
     as machine translations, with Android's own Settings wording and pictures of the setup in each. Each still
     needs a native reviewer; "Arabic that needs fixing" is itself a complaint (finding 3.15).
 11. **Distribution**: decide on Google's developer verification (live in Indonesia, Brazil, Singapore, Thailand

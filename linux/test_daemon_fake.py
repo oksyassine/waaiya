@@ -194,10 +194,12 @@ def main():
         # the sound server restores a stream to the real output: moved again; our own output stream never
         add_input("11", "Chromium")
         add_input("12", "Islamic Mute")
+        add_input("13", "Waaiya filter")  # the filter's client name since 0.2.12
         wait(lambda: sink_of("11") == "islamic_mute", 5, "a restored stream to be moved back onto the virtual output")
         time.sleep(1.5)
         check(sink_of("11") == "islamic_mute", "a stream restored to the real output is moved onto the virtual one")
-        check(sink_of("12") == "speakers", "the filter's own output stream is never moved")
+        check(sink_of("12") == "speakers" and sink_of("13") == "speakers",
+              "the filter's own output stream is never moved (old and new client name)")
 
         st = waaiya("status").stdout
         check("filter:   running" in st and "engine:   ok" in st and "sound:    mono" in st, "status: running, engine ok, mono")
