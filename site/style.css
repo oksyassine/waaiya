@@ -107,9 +107,9 @@ html:not(.js) .s-before { opacity: 0; }
 .music i {
   position: absolute; inset: 18% 0; display: block; background: var(--band);
   -webkit-mask: url(assets-bands) repeat-x center / auto 100%; mask: url(assets-bands) repeat-x center / auto 100%;
-  clip-path: inset(0 0 0 0); visibility: hidden;
+  clip-path: inset(0 0 0 0);
 }
-.js[data-filter="off"] .music i { visibility: visible; }
+html:not(.js) .music i { display: none; }
 .js.sweep-rtl[data-filter="on"] .music i { clip-path: inset(0 100% 0 0); }
 .js.sweep-ltr[data-filter="on"] .music i { clip-path: inset(0 0 0 100%); }
 
