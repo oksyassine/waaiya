@@ -33,7 +33,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'این فقط تعیین می‌کند کدام تنظیمات اختیاری را ببینید. بعداً می‌توانید آن را تغییر دهید.';
+      'این فقط تعیین می‌کند کدام تنظیمات اختیاری را ببینید. مثلاً «بی‌صدا کردن آواز زنان» فقط به مردها نشان داده می‌شود. بعداً می‌توانید آن را تغییر دهید.';
 
   @override
   String get stateOnTitle => 'پالایش روشن است';
@@ -46,7 +46,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'سازها از همهٔ برنامه‌ها حذف می‌شوند. تأخیر حدود $delayMs میلی‌ثانیه.';
+    return 'سازها از همهٔ برنامه‌ها حذف می‌شوند. صدا حدود $delayMs میلی‌ثانیه دیرتر می‌رسد (۱۰۰۰ میلی‌ثانیه یک ثانیه است).';
   }
 
   @override
@@ -225,7 +225,8 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingSingingTitle => 'بی‌صدا کردن آواز زنان';
 
   @override
-  String get settingSingingBody => 'گفتار و تلاوت زنان حفظ می‌شود.';
+  String get settingSingingBody =>
+      'مثلاً آوازی که زنی می‌خواند بی‌صدا می‌شود، اما صدای زنی که سخنرانی می‌کند همچنان شنیده می‌شود.';
 
   @override
   String get settingSingingNoModel =>
@@ -396,14 +397,14 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'کل بدن. افرادی که برنامه نمی‌تواند به‌روشنی تشخیص دهد مرد هستند هم تار می‌شوند.';
+      'کل بدن را می‌پوشاند. اگر برنامه مطمئن نباشد که کسی مرد است، او را هم می‌پوشاند.';
 
   @override
   String get blurNudityTitle => 'تار کردن تصاویر ناشایست';
 
   @override
   String get blurNudityBody =>
-      'برهنگی و لباس بدن‌نما، از هر کسی: کل صفحه پوشانده می‌شود.';
+      'برهنگی یا لباس بدن‌نما، از هر کسی: کل صفحه پوشانده می‌شود.';
 
   @override
   String get blurFailTitle => 'پوشاندن صفحه اگر تاری عقب بماند';
@@ -420,11 +421,11 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'تاری باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: با Shizuku اجازه دهید (سرویس دسترس‌پذیری «تاری واعية» را روشن می‌کند، تا لمس‌ها همچنان به برنامهٔ زیرین برسند). یا در تنظیمات اندروید «نمایش روی برنامه‌های دیگر» را مجاز کنید (آنگاه لمس‌ها روی ناحیهٔ تار از دست می‌روند).';
+      'برای تار کردن، واعية باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: «اجازه با Shizuku»، تا لمس‌های شما همچنان به برنامهٔ زیر تاری برسد. یا «اجازه در تنظیمات اندروید»، اما آن‌وقت لمس روی بخش تار کاری نمی‌کند.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'تاری باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: Shizuku را اجرا کنید (و در آن به واعية اجازه دهید): آنگاه تاری لایهٔ خودش را می‌کشد که ضربه‌ها از آن عبور می‌کنند. در غیر این صورت، در تنظیمات اندروید «نمایش روی برنامه‌های دیگر» را مجاز کنید؛ آنگاه ضربه روی ناحیهٔ تار به برنامهٔ زیرین نمی‌رسد.';
+      'برای تار کردن، واعية باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: Shizuku را اجرا کنید و در آن به واعية اجازه دهید، تا لمس‌های شما همچنان به برنامهٔ زیر تاری برسد. یا در تنظیمات اندروید «نمایش روی برنامه‌های دیگر» را مجاز کنید، اما آن‌وقت لمس روی بخش تار کاری نمی‌کند.';
 
   @override
   String get blurFailUnavailable =>
@@ -1056,6 +1057,42 @@ class AppLocalizationsFa extends AppLocalizations {
       'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. خود برنامه چیزی نمی‌فرستد.';
 
   @override
+  String get settingHoldSilenceBodyDesktop =>
+      'توصیه می‌شود. اگر فیلتر کردن خودبه‌خود متوقف شود (به‌دلیل خطا، نه به دست شما)، برنامه‌های دیگر ساکت می‌مانند تا دوباره شروع کنید یا «توقف» را بزنید، به‌جای آنکه موسیقی بدون فیلتر پخش شود.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'خاموش: مونو، که بار کمتری روی رایانه می‌گذارد. روشن: صدای چپ و راست را جدا نگه می‌دارد. اگر رایانه برای استریو بیش از حد کند باشد، خودش به مونو برمی‌گردد.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'پیوند یوتیوب، تیک‌تاک یا اینستاگرام را بچسبانید تا با پالایش روشن تماشا کنید، یا بدون موسیقی ذخیره کنید.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'پیوند یوتیوب، تیک‌تاک یا اینستاگرام را بچسبانید تا در مرورگرتان با پالایش روشن تماشا کنید.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'در مرورگر شما باز می‌شود. Waaiya ابتدا پالایش را روشن می‌کند، پس موسیقی آنجا هم حذف می‌شود.';
+
+  @override
+  String get linkFilterFailed =>
+      'پالایشگر شروع به کار نکرد، پس پیوند باز نشد. آن را از صفحهٔ پالایش روشن کنید و دوباره امتحان کنید.';
+
+  @override
+  String get linkSavedVideoDesktop => 'در پوشهٔ ویدیوهای شما: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'در پوشهٔ موسیقی شما: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'نمایش در پوشه';
+
+  @override
+  String get linkSingingNote => 'طبق تنظیمات شما، آواز زنان هم بی‌صدا می‌شود.';
+
+  @override
   String get singingKeepTitle => 'نگه داشتن صدای آواز (آزمایشی)';
 
   @override
@@ -1071,7 +1108,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'این برنامه‌ها صدای اصلی خود را پخش می‌کنند: واعیه نه آن‌ها را فیلتر می‌کند و نه بی‌صدا.';
+      'برنامه‌هایی که اینجا انتخاب می‌کنید همان‌طور که هستند پخش می‌شوند: بدون فیلتر و بدون بی‌صدا شدن. مثلاً یک برنامهٔ تماس تصویری، تا تماس‌ها تأخیر نداشته باشند.';
 
   @override
   String get fixAddApp => 'افزودن برنامه';
@@ -1102,22 +1139,22 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'تا وقتی یکی از این برنامه‌ها به‌تنهایی روی صفحه است، پوششی نیست. به‌محض ترک آن، یا هر وقت واعیه مطمئن نباشد کدام برنامه نمایش داده می‌شود، پوشش‌ها برمی‌گردند.';
+      'تا وقتی یکی از این برنامه‌ها کل صفحه را پر کرده است، مثلاً برنامهٔ نقشه یا برنامهٔ بانک شما، پوششی نیست. به‌محض اینکه از آن بیرون بیایید، یا هر وقت واعية مطمئن نباشد کدام برنامه نمایش داده می‌شود، پوشش‌ها برمی‌گردند.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
-      'به راه‌اندازی یک‌باره نیاز دارد: بدون آن واعیه نمی‌داند کدام برنامه روی صفحه است، پس محوسازی همه‌جا می‌ماند.';
+      'به راه‌اندازی یک‌باره نیاز دارد: بدون آن واعية نمی‌داند کدام برنامه روی صفحه است، پس محوسازی همه‌جا می‌ماند.';
 
   @override
   String get fixBlurAppsHelperMode =>
-      'دستیار واعیه اجرا نمی‌شود، پس برنامهٔ روی صفحه خوانده نمی‌شود. تا وقتی دستیار از صفحهٔ راه‌اندازی دوباره اجرا نشود، تار کردن همه‌جا روشن می‌ماند.';
+      'دستیار واعية اجرا نمی‌شود، پس برنامهٔ روی صفحه خوانده نمی‌شود. تا وقتی دستیار از صفحهٔ راه‌اندازی دوباره اجرا نشود، تار کردن همه‌جا روشن می‌ماند.';
 
   @override
   String get fixHandTitle => 'پوشاندن یک بخش با دست';
 
   @override
   String get fixHandBody =>
-      'هنگام کار محوسازی، انگشت خود را روی هر بخشی از صفحه بکشید تا پوشانده شود. تا وقتی آن را بردارید یا محوسازی متوقف شود پوشیده می‌ماند.';
+      'هنگام کار محوسازی، می‌توانید خودتان بخشی از صفحه را بپوشانید، مثلاً تصویری که محوسازی آن را نپوشانده است: «پوشاندن یک بخش» را بزنید و انگشتتان را روی آن بکشید. تا وقتی آن را بردارید یا محوسازی متوقف شود پوشیده می‌ماند.';
 
   @override
   String get fixHandNotRunning =>
@@ -1136,7 +1173,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'همان لحظه علامت بزنید. یادداشت زمان، برنامه و تنظیمات را نگه می‌دارد. روی همین دستگاه می‌ماند و هرگز فرستاده نمی‌شود.';
+      'وقتی واعية اشتباه می‌کند، روی آنچه پیش آمد بزنید، مثلاً «موسیقی رد شد». یادداشت زمان، برنامه و تنظیمات را نگه می‌دارد تا به پیدا کردن علت کمک کند. روی همین دستگاه می‌ماند و هرگز فرستاده نمی‌شود.';
 
   @override
   String get fixMissedSound => 'موسیقی رد شد';
@@ -1171,7 +1208,7 @@ class AppLocalizationsFa extends AppLocalizations {
       'همهٔ یادداشت‌ها حذف شوند؟ این کار برگشت‌پذیر نیست.';
 
   @override
-  String get fixNotesTitle => 'یادداشت‌های تشخیص اشتباه';
+  String get fixNotesTitle => 'یادداشت‌های اشتباه';
 
   @override
   String get worshipTitle => 'اوقات نماز';
@@ -1303,7 +1340,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'از وقت هر نماز، «مزاحم نشوید» به مدت زیر روشن می‌شود و بعد به حالت قبل برمی‌گردد.';
+      'در وقت هر نماز، گوشی به مدت دقیقه‌های زیر بی‌صدا می‌شود («مزاحم نشوید»)، سپس به حالت قبل برمی‌گردد. مثلاً از ظهر ساعت ۱۲:۰۰ تا ۱۲:۲۰.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1492,19 +1529,19 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'همین حالا که آرامید تصمیم بگیرید: هر تغییری که محافظت را کم کند پیش از اعمال شدن صبر می‌کند. والدین می‌توانند رمز هم بگذارند.';
+      'برای لحظهٔ ضعفی که ممکن است بخواهید فیلتر را خاموش کنید. همین حالا که آرام هستید یک مدت انتظار انتخاب کنید: آن‌وقت دکمهٔ توقف فیلتر را فوراً متوقف نمی‌کند و پس از پایان این مدت دوباره تصمیم می‌گیرید. والدین هم می‌توانند PIN بگذارند.';
 
   @override
   String protectDelay(Object value) {
-    return 'مدت انتظار: $value';
+    return 'انتظار پیش از خاموش کردن: $value';
   }
 
   @override
-  String get protectDelayTitle => 'مدت انتظار';
+  String get protectDelayTitle => 'انتظار پیش از خاموش کردن';
 
   @override
   String get protectDelayBody =>
-      'توقف فیلتر، خاموش کردن پوشش یا هر چیزی که محافظت را کم کند این مدت صبر می‌کند. سپس آن را ظرف ۱۵ دقیقه تأیید می‌کنید، وگرنه چیزی تغییر نمی‌کند. روشن کردن همیشه فوراً اعمال می‌شود.';
+      'مثلاً با ۳۰ دقیقه: دکمهٔ توقف را می‌زنید، اما فیلتر به کارش ادامه می‌دهد. پس از ۳۰ دقیقه این صفحه می‌پرسد که آیا هنوز می‌خواهید متوقف کنید. اگر ظرف ۱۵ دقیقه «تأیید» را بزنید متوقف می‌شود؛ وگرنه چیزی تغییر نمی‌کند. خاموش کردن پوشش یا هر محافظت دیگری هم همین‌طور است. روشن کردن همیشه فوراً انجام می‌شود.';
 
   @override
   String get protectDelayOff => 'بدون انتظار';
@@ -1549,11 +1586,11 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'با رمز، هر تغییری که محافظت را کم کند اول رمز را می‌خواهد. تغییر مدت انتظار یا خود رمز هم آن را می‌خواهد.';
+      'با رمز، برای متوقف کردن فیلتر یا خاموش کردن هر محافظتی، اول رمز خواسته می‌شود. مثلاً پدر یا مادر رمزی می‌گذارد تا کودک نتواند فیلتر را خاموش کند. تغییر مدت انتظار یا خود رمز هم آن را می‌خواهد.';
 
   @override
   String get protectPinForgot =>
-      'اگر رمز فراموش شود، راه بازنشانی نیست: فقط پاک کردن داده‌های واعية یا نصب دوباره، که همهٔ تنظیماتش را هم پاک می‌کند.';
+      'رمز را جای امنی بنویسید: اگر فراموش شود، راهی برای بازنشانی آن نیست. تنها راه، پاک کردن داده‌های واعية یا نصب دوبارهٔ آن است که همهٔ تنظیماتش را هم پاک می‌کند.';
 
   @override
   String get protectPinTitle => 'رمز را وارد کنید';
@@ -1603,12 +1640,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: ساعت $time اعمال می‌شود.';
+    return '$what: در انتظار تا $time. سپس در «تنظیمات» تأیید کنید.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: انتظار تمام شد. هنوز می‌خواهید؟ پیش از $time تأیید کنید، وگرنه چیزی تغییر نمی‌کند.';
+    return '$what: انتظار تمام شد. هنوز آن را می‌خواهید؟ پیش از $time «تأیید» را بزنید؛ وگرنه چیزی تغییر نمی‌کند.';
   }
 
   @override
@@ -1616,7 +1653,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what ساعت $time اعمال می‌شود، اگر آن موقع هنوز بخواهید. سپس ظرف ۱۵ دقیقه همین‌جا تأییدش می‌کنید.';
+    return '$what اکنون انجام نمی‌شود. در ساعت $time، اگر هنوز بخواهید، ظرف ۱۵ دقیقه در «تنظیمات» تأییدش کنید. اگر کاری نکنید، چیزی تغییر نمی‌کند.';
   }
 
   @override
@@ -1624,12 +1661,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'از قبل در انتظار است: ساعت $time اعمال می‌شود.';
+    return 'از قبل در انتظار تا $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'ساعت $time اعمال می‌شود. آن موقع تأییدش کنید.';
+    return 'در انتظار تا $time. سپس در «تنظیمات» تأیید کنید.';
   }
 
   @override
@@ -1638,15 +1675,20 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String get protectHeldBack => 'تنظیمات محافظت این تغییر را نگه داشته است.';
+  String get protectHeldBack =>
+      'الان نه: تنظیمات محافظت شما این تغییر را به انتظار می‌اندازد، یا رمز را می‌خواهد.';
 
   @override
   String get protectLimits =>
-      'آنچه این نمی‌تواند جلویش را بگیرد: توقف اجباری، حذف برنامه، پاک کردن داده‌های واعية و تنظیمات خود اندروید. جلوگیری از این‌ها اختیارات مدیر دستگاه یا دسترس‌پذیری می‌خواهد که واعية از آن‌ها استفاده نمی‌کند. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
+      'آنچه این نمی‌تواند جلویش را بگیرد: توقف اجباری، حذف برنامه، پاک کردن داده‌های واعية و تنظیمات خود اندروید. جلوگیری از این‌ها به اجازه‌های ویژهٔ اندروید نیاز دارد که واعية از آن‌ها استفاده نمی‌کند. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
 
   @override
   String get protectLimitsDesktop =>
       'آنچه این نمی‌تواند جلویش را بگیرد: فرمان waaiya در ترمینال، حذف واعية یا پاک کردن پوشهٔ تنظیماتش. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
+
+  @override
+  String get protectLimitsWindows =>
+      'آنچه این نمی‌تواند جلویش را بگیرد: فرمان waaiya-filter.exe در ترمینال، حذف واعية یا پاک کردن پوشهٔ تنظیماتش. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
 
   @override
   String get protectWhatStop => 'توقف فیلتر';
@@ -1670,11 +1712,11 @@ class AppLocalizationsFa extends AppLocalizations {
   String get protectWhatStrictness => 'کم‌سخت‌گیرتر کردن تار کردن';
 
   @override
-  String get protectWhatGender => 'تغییر کسی که از گوشی استفاده می‌کند';
+  String get protectWhatGender => 'تغییر کسی که از واعية استفاده می‌کند';
 
   @override
   String protectWhatDelay(Object value) {
-    return 'تغییر مدت انتظار به: $value';
+    return 'تغییر انتظار پیش از خاموش کردن به: $value';
   }
 
   @override
@@ -1685,4 +1727,8 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'تغییر یک تنظیم';
+
+  @override
+  String get onboardBodyDesktop =>
+      'واعية سازهای موسیقی را از صدای همهٔ برنامه‌های این رایانه حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. فعلاً صدای آواز هم حذف می‌شود.';
 }

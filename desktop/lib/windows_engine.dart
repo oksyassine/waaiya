@@ -1,26 +1,59 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:waaiya_ui/waaiya_ui.dart';
+// ignore: implementation_imports
+import 'package:waaiya_ui/src/protection_core.dart' show ProtectionClock, ProcessClock;
 
 import 'filter_host.dart';
 
 /// The Windows sound filter shipped in the desktop bundle (`<bundle>\engine\waaiya-filter.exe`, windows/filter).
 ///
 /// It runs from the bundle, detached from the app, so it keeps filtering when the app is closed; "Start at login"
-/// is a value under the user's Run key. It reads the app's own settings file (%APPDATA%\Waaiya\settings.json) and
+/// is a value under the user's Run key, or, in the Microsoft Store package (desktop/msix, [packaged]), the file
+/// `autostart` that the package's startup task (`waaiya-filter autostart`, at every login) looks for: a packaged
+/// app's registry writes stay inside the package, where Windows does not read Run values. It reads the app's own settings file (%APPDATA%\Waaiya\settings.json) and
 /// applies changes while it runs, so the setting calls here have nothing to do: the app has saved the file first.
 /// Its state is %LOCALAPPDATA%\Waaiya\filter\state.json, read directly ([status]).
 ///
 /// How it filters: every other app is turned down to -80 dB, their mix is read by process loopback, brought back up,
 /// filtered and played. When it dies, Windows keeps the apps turned down (silent) until Start or Stop.
 class WindowsEngine implements FilterHost {
-  WindowsEngine(this.dir, {Map<String, String>? environment}) : env = environment ?? Platform.environment;
+  WindowsEngine(this.dir, {Map<String, String>? environment, bool? packaged})
+      : env = environment ?? Platform.environment,
+        packaged = packaged ?? (isPackagedPath(dir.path) || isPackagedProcess());
 
   /// `<bundle>\engine`.
   final Directory dir;
   final Map<String, String> env;
+
+  /// Installed from the Microsoft Store (an MSIX package): the app runs from `C:\Program Files\WindowsApps`.
+  final bool packaged;
+
+  static bool isPackagedPath(String path) => path.toLowerCase().contains(r'\windowsapps\');
+
+  /// This app runs with a package identity (the Store's install, or the same package installed unpacked in
+  /// Developer Mode, outside WindowsApps): Windows' own answer, as waaiya-filter.exe asks it.
+  static bool isPackagedProcess() {
+    if (!Platform.isWindows) return false;
+    try {
+      final ole = DynamicLibrary.open('ole32.dll');
+      final alloc = ole.lookupFunction<Pointer<Void> Function(IntPtr), Pointer<Void> Function(int)>('CoTaskMemAlloc');
+      final free = ole.lookupFunction<Void Function(Pointer<Void>), void Function(Pointer<Void>)>('CoTaskMemFree');
+      final name = DynamicLibrary.open('kernel32.dll').lookupFunction<Int32 Function(Pointer<Uint32>, Pointer<Uint16>),
+          int Function(Pointer<Uint32>, Pointer<Uint16>)>('GetCurrentPackageFullName');
+      final len = alloc(4).cast<Uint32>();
+      if (len == nullptr) return false;
+      len.value = 0;
+      final r = name(len, nullptr);
+      free(len.cast());
+      return r != 15700; // APPMODEL_ERROR_NO_PACKAGE
+    } on Object {
+      return false;
+    }
+  }
 
   static const runValue = 'WaaiyaFilter';
   static const _runKey = r'HKCU\Software\Microsoft\Windows\CurrentVersion\Run';
@@ -46,6 +79,38 @@ class WindowsEngine implements FilterHost {
 
   @override
   bool get hasDetector => File('${dir.path}\\models\\detector\\detector_v1.onnx').existsSync();
+
+  /// The "keep singing" model (voice_v1) is in the bundle; the filter switches to it while running when the setting
+  /// `keep_singing` changes (it reads the settings file).
+  bool get hasSingingModel =>
+      File('${dir.path}\\models\\voice\\v3\\voice_v1_fp16.onnx').existsSync() &&
+      File('${dir.path}\\models\\voice\\v3\\voice_v1_fp16.state_init.bin').existsSync();
+
+  /// The apps with a sound session now, as the filter last wrote them (state.json "apps"): file name ("chrome.exe",
+  /// what the setting `filter_off_apps` holds) and the name Windows shows ("Google Chrome").
+  List<({String exe, String name})> playingApps() => appsFrom(_readState());
+
+  static List<({String exe, String name})> appsFrom(String json) {
+    try {
+      final apps = (jsonDecode(json) as Map)['apps'];
+      if (apps is! List) return const [];
+      return [
+        for (final a in apps)
+          if (a is Map && a['exe'] is String && (a['exe'] as String).isNotEmpty)
+            (exe: a['exe'] as String, name: a['name'] is String ? a['name'] as String : a['exe'] as String),
+      ];
+    } on Object {
+      return const [];
+    }
+  }
+
+  String _readState() {
+    try {
+      return File('$stateDir\\state.json').readAsStringSync();
+    } on IOException {
+      return '';
+    }
+  }
 
   @override
   bool? get stereoSet => null;
@@ -86,6 +151,7 @@ class WindowsEngine implements FilterHost {
   /// Starts the filter, detached, and waits until it plays (or says why not).
   @override
   Future<BackendMessage?> start({Duration timeout = const Duration(seconds: 8)}) async {
+    final since = DateTime.now().subtract(const Duration(seconds: 1));
     try {
       await Process.start(exe.path, ['run'], mode: ProcessStartMode.detached, environment: env, includeParentEnvironment: false);
     } on ProcessException catch (e) {
@@ -99,7 +165,19 @@ class WindowsEngine implements FilterHost {
       if (st.sinkUp) return null;
     } while (DateTime.now().isBefore(end));
     if (st.active == 'activating') return null; // running, retrying its audio: the state says so
-    return BackendMessage('start_failed', filterLogTail(maxBytes: 600));
+    return BackendMessage('start_failed', startFailure(filterLogTail(maxBytes: 4000), since));
+  }
+
+  /// Why a start failed, for the details under the message: the filter's log lines written since [since] (older
+  /// ones belong to another run and only mislead), or, when it wrote none, what that means.
+  static String startFailure(String log, DateTime since) {
+    final recent = log.split('\n').where((line) {
+      final t = line.length >= 23 ? DateTime.tryParse(line.substring(0, 23)) : null;
+      return t != null && !t.isBefore(since);
+    }).toList();
+    if (recent.isNotEmpty) return (recent.length > 8 ? recent.sublist(recent.length - 8) : recent).join('\n');
+    return 'waaiya-filter.exe did not answer. Another Waaiya filter may be running and not responding (for example '
+        'one from an older version). Restarting the computer ends it.';
   }
 
   /// The filter gives every app its level back (apps not running get theirs when they next play).
@@ -111,6 +189,20 @@ class WindowsEngine implements FilterHost {
 
   @override
   Future<BackendMessage?> setAutostart(bool on) async {
+    if (packaged) {
+      final f = File('$stateDir\\autostart');
+      try {
+        if (on) {
+          await f.parent.create(recursive: true);
+          await f.writeAsString('1\n');
+        } else if (await f.exists()) {
+          await f.delete();
+        }
+        return null;
+      } on IOException catch (e) {
+        return BackendMessage('start_failed', '$e');
+      }
+    }
     final r = await _run('reg', [
       if (on) 'add' else 'delete',
       _runKey,
@@ -124,7 +216,9 @@ class WindowsEngine implements FilterHost {
     return BackendMessage('start_failed', _detail(r));
   }
 
-  Future<bool> _autostart() async => (await _run('reg', ['query', _runKey, '/v', runValue])).exitCode == 0;
+  Future<bool> _autostart() async => packaged
+      ? File('$stateDir\\autostart').exists()
+      : (await _run('reg', ['query', _runKey, '/v', runValue])).exitCode == 0;
 
   /// Read from state.json directly (the filter rewrites it at least every 2 s; older than 5 s, it is not running or
   /// stuck), not from `waaiya-filter status`: no process per poll, and no reliance on a GUI program's console output.
@@ -220,4 +314,34 @@ class WindowsEngine implements FilterHost {
       return null;
     }
   }
+}
+
+/// The clock of the waiting period on Windows (protection_core.dart): the time since Windows started
+/// (GetTickCount64: sleep and hibernation included, not changed by the clock settings), so the wait keeps counting
+/// while Waaiya is closed and a clock change does not shorten it. The boot id is always the same: after a restart
+/// the count is lower than the one saved, which ProtectionCore reads as a new boot (only the time since that start
+/// counts); in the rare case the new count is already above the saved one, it counts less than the real time,
+/// never more. A restart or a clock change can make the wait longer, never shorter.
+class WindowsTickClock implements ProtectionClock {
+  WindowsTickClock() : _ticks = _lookup();
+
+  final int Function()? _ticks;
+  final _fallback = ProcessClock();
+
+  static int Function()? _lookup() {
+    try {
+      return DynamicLibrary.open('kernel32.dll').lookupFunction<Uint64 Function(), int Function()>('GetTickCount64');
+    } on Object {
+      return null;
+    }
+  }
+
+  @override
+  int wallMs() => DateTime.now().millisecondsSinceEpoch;
+
+  @override
+  int elapsedMs() => _ticks?.call() ?? _fallback.elapsedMs();
+
+  @override
+  String bootId() => _ticks != null ? 'windows' : _fallback.bootId();
 }

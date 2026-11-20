@@ -33,7 +33,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Bu yalnızca hangi isteğe bağlı ayarları göreceğinizi belirler. Daha sonra değiştirebilirsiniz.';
+      'Bu yalnızca hangi isteğe bağlı ayarları göreceğinizi belirler. Örneğin “Kadınların şarkı sesini sustur” yalnızca erkeklere sunulur. Daha sonra değiştirebilirsiniz.';
 
   @override
   String get stateOnTitle => 'Filtreleme açık';
@@ -46,7 +46,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Tüm uygulamalardan müzik aletleri kaldırılıyor. Gecikme yaklaşık $delayMs ms.';
+    return 'Tüm uygulamalardan müzik aletleri kaldırılıyor. Ses yaklaşık $delayMs ms geç gelir (1000 ms bir saniyedir).';
   }
 
   @override
@@ -225,7 +225,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingSingingTitle => 'Kadınların şarkı sesini sustur';
 
   @override
-  String get settingSingingBody => 'Kadınların konuşması ve tilaveti korunur.';
+  String get settingSingingBody =>
+      'Örneğin bir kadının söylediği şarkı susturulur, ama konuşma yapan bir kadın yine duyulur.';
 
   @override
   String get settingSingingNoModel =>
@@ -396,14 +397,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Tüm vücut. Uygulamanın erkek olduğundan net emin olamadığı kişiler de bulanıklaştırılır.';
+      'Tüm vücudu örter. Uygulama bir kişinin erkek olduğundan emin değilse, onu da örter.';
 
   @override
   String get blurNudityTitle => 'Uygunsuz görüntüleri bulanıklaştır';
 
   @override
   String get blurNudityBody =>
-      'Kim olursa olsun çıplaklık ve açık giyim: tüm ekran örtülür.';
+      'Kim olursa olsun çıplaklık veya açık giyim: tüm ekran örtülür.';
 
   @override
   String get blurFailTitle => 'Bulanıklaştırma yetişemezse ekranı ört';
@@ -420,11 +421,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'Bulanıklaştırmanın diğer uygulamaların üzerine çizmesi gerekiyor. En iyisi: Shizuku ile izin verin (Waaiya Bulanıklaştırma erişilebilirlik hizmetini açar, böylece dokunuşlar alttaki uygulamaya yine ulaşır). Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin (bu durumda bulanık bir alana yapılan dokunuşlar kaybolur).';
+      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: “Shizuku ile izin ver”; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da “Android ayarlarında izin ver”; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Bulanıklaştırmanın diğer uygulamaların üzerine çizmesi gerekiyor. En iyisi: Shizuku\'yu başlatın (ve içinde Waaiya\'ya izin verin): bulanıklaştırma o zaman dokunuşların içinden geçtiği kendi katmanını çizer. Aksi halde Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; bu durumda bulanık bir alana yapılan dokunuş alttaki uygulamaya ulaşmaz.';
+      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: Shizuku\'yu başlatın ve içinde Waaiya\'ya izin verin; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
 
   @override
   String get blurFailUnavailable =>
@@ -1058,6 +1059,43 @@ class AppLocalizationsTr extends AppLocalizations {
       'Waaiya\'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.';
 
   @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Önerilir. Filtreleme kendiliğinden durursa (sizin yüzünüzden değil, bir hata nedeniyle), diğer uygulamalar müziği filtresiz çalmak yerine siz yeniden başlatana veya Durdur\'a basana kadar sessiz kalır.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Kapalı: mono, bilgisayarı daha az yorar. Açık: sol ve sağ tarafları ayrı tutar. Bilgisayar stereo için fazla yavaşsa kendiliğinden monoya geçer.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Filtre açıkken izlemek ya da müziksiz kaydetmek için bir YouTube, TikTok veya Instagram bağlantısı yapıştırın.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Tarayıcınızda filtre açıkken izlemek için bir YouTube, TikTok veya Instagram bağlantısı yapıştırın.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Tarayıcınızda açılır. Waaiya önce filtreyi başlatır, böylece müzik orada da kaldırılır.';
+
+  @override
+  String get linkFilterFailed =>
+      'Filtre başlamadı, bu yüzden bağlantı açılmadı. Filtre sayfasından başlatıp tekrar deneyin.';
+
+  @override
+  String get linkSavedVideoDesktop => 'Videolar klasörünüzde: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'Müzik klasörünüzde: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Klasörde göster';
+
+  @override
+  String get linkSingingNote =>
+      'Ayarlarınızdaki gibi kadınların şarkı sesi de susturulur.';
+
+  @override
   String get singingKeepTitle => 'Şarkı seslerini koru (deneme)';
 
   @override
@@ -1073,7 +1111,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Bu uygulamalar özgün seslerini çalar: Waaiya onları ne filtreler ne de susturur.';
+      'Burada seçtiğiniz uygulamalar olduğu gibi çalar: filtre yok, susturma yok. Örneğin görüntülü arama uygulaması; böylece aramalarda gecikme olmaz.';
 
   @override
   String get fixAddApp => 'Uygulama ekle';
@@ -1104,7 +1142,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'Bu uygulamalardan biri ekranda tek başınayken örtü yok. Ondan çıktığınız anda ya da Waaiya hangi uygulamanın gösterildiğinden emin olmadığında örtüler geri gelir.';
+      'Bu uygulamalardan biri ekranı kapladığı sürece örtü yok; örneğin bir harita uygulaması ya da bankanızın uygulaması. Ondan çıktığınız anda ya da Waaiya hangi uygulamanın gösterildiğinden emin olmadığında örtüler geri gelir.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1119,7 +1157,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Bulanıklık çalışırken, örtmek için ekranın herhangi bir yerinde parmağınızı sürükleyin. Siz kaldırana ya da bulanıklık durana kadar örtülü kalır.';
+      'Bulanıklık çalışırken ekranın bir kısmını kendiniz örtebilirsiniz; örneğin bulanıklığın kaçırdığı bir resmi: “Bir alanı ört” düğmesine dokunun ve parmağınızı onun üzerinde sürükleyin. Siz kaldırana ya da bulanıklık durana kadar örtülü kalır.';
 
   @override
   String get fixHandNotRunning =>
@@ -1138,7 +1176,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Olduğu anda işaretleyin. Not; saati, uygulamayı ve ayarları saklar. Bu cihazda kalır ve asla gönderilmez.';
+      'Waaiya bir şeyi yanlış yaptığında, ne olduğuna dokunun; örneğin “Müzik geçti”. Not, nedeni bulmaya yardım etmek için saati, uygulamayı ve ayarları saklar. Bu cihazda kalır ve asla gönderilmez.';
 
   @override
   String get fixMissedSound => 'Müzik geçti';
@@ -1172,7 +1210,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fixNotesDeleteAsk => 'Tüm notlar silinsin mi? Bu geri alınamaz.';
 
   @override
-  String get fixNotesTitle => 'Yanlış algılama notları';
+  String get fixNotesTitle => 'Hatalarla ilgili notlar';
 
   @override
   String get worshipTitle => 'Namaz vakitleri';
@@ -1303,7 +1341,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Her namaz vaktinden itibaren aşağıdaki süre boyunca Rahatsız Etmeyin açılır, sonra eski haline döner.';
+      'Her namaz vaktinde telefon aşağıdaki dakikalar boyunca sessize geçer (Rahatsız Etmeyin), sonra eski haline döner. Örneğin Öğle vaktinde 12:00\'den 12:20\'ye kadar.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1492,19 +1530,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Şimdi, sakinken karar verin: korumayı azaltan bir değişiklik geçerli olmadan önce bekler. Bir ebeveyn ayrıca PIN koyabilir.';
+      'Filtreyi kapatmak isteyebileceğiniz zayıf bir an için. Şimdi, sakinken bir bekleme süresi seçin: o zaman durdurma düğmesi filtreyi hemen durdurmaz ve süre bitince yeniden karar verirsiniz. Bir ebeveyn PIN de belirleyebilir.';
 
   @override
   String protectDelay(Object value) {
-    return 'Bekleme süresi: $value';
+    return 'Kapatmadan önce bekleme: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Bekleme süresi';
+  String get protectDelayTitle => 'Kapatmadan önce bekleme';
 
   @override
   String get protectDelayBody =>
-      'Filtreyi durdurmak, bir örtüyü kapatmak veya korumayı azaltan herhangi bir şey bu kadar bekler. Sonra 15 dakika içinde onaylarsınız, yoksa hiçbir şey değişmez. Bir şeyi açmak her zaman hemen geçerli olur.';
+      'Örneğin 30 dakika ile: durdurmak için düğmeye basarsınız ama filtre çalışmaya devam eder. 30 dakika sonra bu sayfa hâlâ durdurmak isteyip istemediğinizi sorar. 15 dakika içinde “Onayla” düğmesine basarsanız durur; basmazsanız hiçbir şey değişmez. Bir örtüyü ya da başka bir korumayı kapatmak da böyledir. Bir şeyi açmak her zaman hemen olur.';
 
   @override
   String get protectDelayOff => 'Yok';
@@ -1549,11 +1587,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'PIN varken, korumayı azaltan her değişiklik önce onu ister. Bekleme süresini veya PIN\'i değiştirmek de onu ister.';
+      'PIN varken filtreyi durdurmak veya herhangi bir korumayı kapatmak önce PIN\'i ister. Örneğin bir ebeveyn, çocuk filtreyi kapatamasın diye PIN koyar. Bekleme süresini veya PIN\'i değiştirmek de PIN\'i ister.';
 
   @override
   String get protectPinForgot =>
-      'PIN unutulursa sıfırlama yoktur: yalnızca Waaiya\'nın verilerini silmek veya yeniden yüklemek kalır, bu da tüm ayarlarını siler.';
+      'PIN\'i bir yere yazıp güvenli bir yerde saklayın: unutulursa sıfırlama yoktur. Tek çıkış yolu Waaiya\'nın verilerini silmek veya onu yeniden yüklemektir; bu da tüm ayarlarını siler.';
 
   @override
   String get protectPinTitle => 'PIN\'i girin';
@@ -1603,12 +1641,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: $time saatinde geçerli olur.';
+    return '$what: $time saatine kadar bekliyor. Sonra “Ayarlar” sayfasında onaylayın.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: bekleme bitti. Hâlâ istiyor musunuz? $time saatinden önce onaylayın, yoksa hiçbir şey değişmez.';
+    return '$what: bekleme bitti. Hâlâ istiyor musunuz? $time saatinden önce “Onayla” düğmesine basın; yoksa hiçbir şey değişmez.';
   }
 
   @override
@@ -1616,7 +1654,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what, o zaman hâlâ isterseniz $time saatinde geçerli olur. Ardından 15 dakika içinde burada onaylarsınız.';
+    return '$what şimdi olmaz. $time saatinde hâlâ istiyorsanız, 15 dakika içinde “Ayarlar” sayfasında onaylayın. Hiçbir şey yapmazsanız hiçbir şey değişmez.';
   }
 
   @override
@@ -1624,12 +1662,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Zaten bekliyor: $time saatinde geçerli olur.';
+    return 'Zaten $time saatine kadar bekliyor.';
   }
 
   @override
   String protectStarted(Object time) {
-    return '$time saatinde geçerli olur. O zaman onaylayın.';
+    return '$time saatine kadar bekliyor. Sonra “Ayarlar” sayfasında onaylayın.';
   }
 
   @override
@@ -1639,15 +1677,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'Bu değişiklik koruma ayarları tarafından bekletiliyor.';
+      'Şimdi değil: koruma ayarlarınız bu değişikliği bekletiyor ya da PIN istiyor.';
 
   @override
   String get protectLimits =>
-      'Bunun engelleyemedikleri: zorla durdurma, kaldırma, Waaiya\'nın verilerini silme ve Android\'in kendi ayarları. Bunları engellemek, Waaiya\'nın kullanmadığı cihaz yöneticisi veya erişilebilirlik yetkileri gerektirir. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
+      'Bunun engelleyemedikleri: zorla durdurma, kaldırma, Waaiya\'nın verilerini silme ve Android\'in kendi ayarları. Bunları engellemek, Waaiya\'nın kullanmadığı özel Android izinleri gerektirir. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
 
   @override
   String get protectLimitsDesktop =>
       'Bunun engelleyemedikleri: terminaldeki waaiya komutu, Waaiya\'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
+
+  @override
+  String get protectLimitsWindows =>
+      'Bunun engelleyemedikleri: terminaldeki waaiya-filter.exe komutu, Waaiya\'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
 
   @override
   String get protectWhatStop => 'Filtreyi durdur';
@@ -1671,11 +1713,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get protectWhatStrictness => 'Bulanıklığı daha az sıkı yap';
 
   @override
-  String get protectWhatGender => 'Telefonu kimin kullandığını değiştir';
+  String get protectWhatGender => 'Waaiya\'yı kimin kullandığını değiştir';
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Bekleme süresini değiştir: $value';
+    return 'Kapatmadan önceki beklemeyi şuna değiştir: $value';
   }
 
   @override
@@ -1686,4 +1728,8 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Bir ayarı değiştir';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya, bu bilgisayardaki her uygulamanın sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şimdilik şarkı söyleyen sesler de kaldırılır.';
 }

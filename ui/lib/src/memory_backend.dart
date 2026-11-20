@@ -99,6 +99,81 @@ class MemoryBackend implements WaaiyaBackend {
   @override
   Future<void> openLinkScreen() async => throw const BackendException('unsupported', 'openLinkScreen');
 
+  /// Links in the simulation: the last link opened in the "browser" ([watchLink]).
+  String? openedLink;
+
+  /// Links in the simulation: how [saveLink] ends (null: saved; a code: failed with it). Tests set it.
+  String? linkSaveOutcome;
+
+  /// The simulated save waits for [finishLinkSave] (tests: to see the progress, cancel it) instead of ending at once.
+  bool holdLinkSave = false;
+
+  /// The web link in [text] (http or https with a host), or null.
+  static Uri? webLink(String text) {
+    final m = RegExp(r'https?://\S+', caseSensitive: false).firstMatch(text.trim());
+    final u = m == null ? null : Uri.tryParse(m.group(0)!);
+    return u != null && u.host.isNotEmpty ? u : null;
+  }
+
+  @override
+  Future<LinkMeta> resolveLink(String url) async {
+    if (!_state.capabilities.linkPage) throw const BackendException('unsupported', 'resolveLink');
+    final u = webLink(url);
+    if (u == null) throw const BackendException('invalid_url');
+    if (u.path.contains('playlist')) throw const BackendException('playlist');
+    return LinkMeta(url: u.toString(), title: 'Video', site: u.host, durationSec: 95);
+  }
+
+  @override
+  Future<void> watchLink(String url) async {
+    if (!_state.capabilities.linkPage) throw const BackendException('unsupported', 'watchLink');
+    final u = webLink(url);
+    if (u == null) throw const BackendException('invalid_url');
+    if (!_state.filter.running && await startFilter() != StartResult.started) {
+      throw const BackendException('filter_failed');
+    }
+    openedLink = u.toString();
+  }
+
+  @override
+  Future<void> saveLink(String url) async {
+    if (!_state.capabilities.linkSave) throw const BackendException('unsupported', 'saveLink');
+    if (_state.linkSave.busy) throw const BackendException('busy');
+    final meta = await resolveLink(url);
+    emit(_state.copyWith(
+        linkSave: LinkSaveInfo(phase: LinkSavePhase.downloading, title: meta.title, progress: 0)));
+    if (!holdLinkSave) finishLinkSave();
+  }
+
+  /// Ends a simulated save the way [linkSaveOutcome] says.
+  void finishLinkSave() {
+    final s = _state.linkSave;
+    if (!s.busy) return;
+    final outcome = linkSaveOutcome;
+    emit(_state.copyWith(
+      linkSave: outcome == null
+          ? LinkSaveInfo(phase: LinkSavePhase.done, title: s.title, progress: 1, path: 'Videos/Waaiya/${s.title}.mp4')
+          : LinkSaveInfo(phase: LinkSavePhase.failed, title: s.title, error: BackendMessage(outcome)),
+    ));
+  }
+
+  @override
+  Future<void> cancelLinkSave() async {
+    final s = _state.linkSave;
+    if (!s.busy) return;
+    emit(_state.copyWith(
+        linkSave: LinkSaveInfo(phase: LinkSavePhase.failed, title: s.title, error: const BackendMessage('cancelled'))));
+  }
+
+  /// The simulation's "player" and "folder": the path last opened.
+  String? openedFile;
+
+  @override
+  Future<void> openSavedLink() async => openedFile = _state.linkSave.path;
+
+  @override
+  Future<void> showSavedLink() async => openedFile = _state.linkSave.path;
+
   @override
   Future<Licences> getLicences() async => const Licences(notice: '', docs: []);
 

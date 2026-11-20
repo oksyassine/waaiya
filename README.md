@@ -39,9 +39,10 @@ installation and no admin rights. While filtering is on it changes, for your use
 - with "Start at login" on, a value `WaaiyaFilter` under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`.
 
 To remove it: open the app, press Stop and turn "Start at login" off (or run `engine\waaiya-filter.exe stop` and
-delete that Run value), then delete the app folder, `%LOCALAPPDATA%\Waaiya` and `%APPDATA%\Waaiya`. An app that
-was closed while filtering gets its level back the next time it plays only while Waaiya's restorer runs; if one
-stays quiet after an uninstall, raise it in the Volume Mixer.
+delete that Run value), then delete the app folder, `%LOCALAPPDATA%\Waaiya` and `%APPDATA%\Waaiya`. The Microsoft
+Store version gives every running app its level back by itself when it is updated or uninstalled while filtering.
+An app that was closed while filtering gets its level back the next time it plays only while Waaiya's restorer runs;
+if one stays quiet after an uninstall, raise it in the Volume Mixer.
 
 ## Layout
 
@@ -227,8 +228,9 @@ Team roles:
 
 Privacy policy: this program will not transfer any information to other networked systems unless specifically
 requested by the user or the person installing or operating it. The filter and the screen blur run on the device
-and send nothing; there is no account and no analytics. (On Android only, "Open a link" contacts the site of the
-link you open, and the bundled yt-dlp downloads its own updates from PyPI.)
+and send nothing; there is no account and no analytics. "Open a link" contacts the site of the link you open: on
+Android, and in the Windows app from GitHub (the zip), where saving downloads that video. The Android app's yt-dlp
+downloads its own updates from PyPI. The Windows app from the Microsoft Store only opens the link in your browser.
 
 ## License
 

@@ -9,12 +9,12 @@
     <string name="onboard_question">Cinsiyetiniz</string>
     <string name="gender_man">Erkek</string>
     <string name="gender_woman">Kadın</string>
-    <string name="onboard_why">Bu yalnızca hangi isteğe bağlı ayarları göreceğinizi belirler. Daha sonra değiştirebilirsiniz.</string>
+    <string name="onboard_why">Bu yalnızca hangi isteğe bağlı ayarları göreceğinizi belirler. Örneğin “Kadınların şarkı sesini sustur” yalnızca erkeklere sunulur. Daha sonra değiştirebilirsiniz.</string>
 
     <string name="state_on_title">Filtreleme açık</string>
     <string name="state_off_title">Filtreleme kapalı</string>
     <string name="state_starting">Başlatılıyor…</string>
-    <string name="state_on_detail">Tüm uygulamalardan müzik aletleri kaldırılıyor. Gecikme yaklaşık %1$d ms.</string>
+    <string name="state_on_detail">Tüm uygulamalardan müzik aletleri kaldırılıyor. Ses yaklaşık %1$d ms geç gelir (1000 ms bir saniyedir).</string>
     <string name="state_off_detail">Başlatmak için düğmeye dokunun.</string>
     <string name="state_model_failed">Ses modeli yüklenemedi, bu yüzden güvenlik için ses kapatıldı.</string>
     <string name="state_capture_denied">Diğer uygulamaların sesini almak için mikrofon izni gerekiyor.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Stereo ses</string>
     <string name="setting_stereo_body">Kapalı: mono; pilin yaklaşık yarısını kullanır ve daha çok telefonda yetişir. Açık: sol ve sağ tarafları ayrı tutar. Telefon stereo için fazla yavaşsa yine kendiliğinden monoya geçer.</string>
     <string name="setting_singing_title">Kadınların şarkı sesini sustur</string>
-    <string name="setting_singing_body">Kadınların konuşması ve tilaveti korunur.</string>
+    <string name="setting_singing_body">Örneğin bir kadının söylediği şarkı susturulur, ama konuşma yapan bir kadın yine duyulur.</string>
     <string name="setting_singing_no_model">Bu sürümde şarkı algılayıcı yok, bu yüzden bu seçenek açıkken tüm sesler susturulur.</string>
     <string name="setting_restart">Değişiklikleri uygulamak için filtrelemeyi durdurup başlatın.</string>
     <string name="setting_gender_title">Cinsiyetiniz</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Ekran bulanıklaştırma</string>
     <string name="blur_body">Filtreleme açıkken her uygulamada ekrandaki insanları ve görüntüleri örter. Telefonda çalışır; hiçbir yere bir şey gönderilmez.</string>
     <string name="blur_women_title">Kadınları bulanıklaştır</string>
-    <string name="blur_women_body">Tüm vücut. Uygulamanın erkek olduğundan net emin olamadığı kişiler de bulanıklaştırılır.</string>
+    <string name="blur_women_body">Tüm vücudu örter. Uygulama bir kişinin erkek olduğundan emin değilse, onu da örter.</string>
     <string name="blur_nudity_title">Uygunsuz görüntüleri bulanıklaştır</string>
-    <string name="blur_nudity_body">Kim olursa olsun çıplaklık ve açık giyim: tüm ekran örtülür.</string>
+    <string name="blur_nudity_body">Kim olursa olsun çıplaklık veya açık giyim: tüm ekran örtülür.</string>
     <string name="blur_fail_title">Bulanıklaştırma yetişemezse ekranı ört</string>
     <string name="blur_fail_body">Açık: telefon çok yavaş kaldığında veya bulanıklaştırma başarısız olduğunda tüm ekran örtülür. Kapalı: ekran bir uyarıyla görünür kalır.</string>
     <string name="blur_setup_shizuku">Shizuku ile izin ver</string>
     <string name="blur_setup_manual">Android ayarlarında izin ver</string>
-    <string name="blur_status_needs_setup">Bulanıklaştırmanın diğer uygulamaların üzerine çizmesi gerekiyor. En iyisi: Shizuku ile izin verin (Waaiya Bulanıklaştırma erişilebilirlik hizmetini açar, böylece dokunuşlar alttaki uygulamaya yine ulaşır). Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin (bu durumda bulanık bir alana yapılan dokunuşlar kaybolur).</string>
-    <string name="blur_status_needs_overlay">Bulanıklaştırmanın diğer uygulamaların üzerine çizmesi gerekiyor. En iyisi: Shizuku\'yu başlatın (ve içinde Waaiya\'ya izin verin): bulanıklaştırma o zaman dokunuşların içinden geçtiği kendi katmanını çizer. Aksi halde Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; bu durumda bulanık bir alana yapılan dokunuş alttaki uygulamaya ulaşmaz.</string>
+    <string name="blur_status_needs_setup">Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: “Shizuku ile izin ver”; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da “Android ayarlarında izin ver”; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.</string>
+    <string name="blur_status_needs_overlay">Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: Shizuku\'yu başlatın ve içinde Waaiya\'ya izin verin; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.</string>
     <string name="blur_fail_unavailable">Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını veya Shizuku\'yu (Android 12 veya daha yeni) başlatın, seçenek kullanılabilir olur: örtüler o zaman dokunuşlar içinden geçecek şekilde çizilir. O zamana kadar, bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.</string>
     <string name="blur_fail_needs_a11y">Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Shizuku\'yu başlatın (Android 12 veya daha yeni) ya da Waaiya Bulanıklaştırma erişilebilirlik hizmetini açın (yukarıdaki “Shizuku ile izin ver”), seçenek kullanılabilir olur. O zamana kadar ekran bir uyarıyla görünür kalır.</string>
     <string name="language_title">Dil</string>
@@ -370,11 +370,11 @@
     <string name="worship_sms_default">Namaz vakti, şu an cevap veremiyorum. Sizi geri arayacağım.</string>
     <string name="notif_worship_sms_title">SMS ile yanıtlandı</string>
     <string name="notif_worship_sms_text">Namaz vakti yanıtınız {number} numarasına gönderildi.</string>
-    <string name="notif_protect_channel">Bekleme süresi</string>
+    <string name="notif_protect_channel">Kapatmadan önce bekleme</string>
     <string name="notif_protect_what_stop">Filtreyi durdurma</string>
     <string name="notif_protect_what_pin">PIN\'i değiştirme veya kaldırma</string>
     <string name="notif_protect_what_setting">Korumayı azaltan bir değişiklik</string>
-    <string name="notif_protect_waiting_text">%1$s saatinde geçerli olur, o zaman hâlâ isterseniz. İptal her şeyi olduğu gibi bırakır.</string>
+    <string name="notif_protect_waiting_text">%1$s saatine kadar bekliyor. Hâlâ istiyorsanız sonra uygulamada onaylayın. İptal her şeyi olduğu gibi bırakır.</string>
     <string name="notif_protect_ready_text">Hâlâ istiyor musunuz? %1$s saatinden önce Waaiya\'da onaylayın, yoksa hiçbir şey değişmez.</string>
     <string name="notif_protect_cancel">İptal</string>
 </resources>

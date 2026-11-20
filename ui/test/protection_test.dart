@@ -71,15 +71,17 @@ class _Backend extends MemoryBackend {
   }
 }
 
-AppState _state({int delay = 0, bool hold = true}) => AppState(
+AppState _state({int delay = 0, bool hold = true, String platform = 'android'}) => AppState(
       language: 'en',
+      platform: platform,
       settings: WaaiyaSettings(gender: 'man', holdSilence: hold, protectDelayMinutes: delay),
       capabilities: Capabilities.android,
       filter: const FilterInfo(state: FilterState.filtering, delayMs: 40),
     );
 
-Future<_Backend> _open(WidgetTester tester, {int delay = 0, String? pin, bool hold = true}) async {
-  final b = _Backend(_state(delay: delay, hold: hold), _Clock());
+Future<_Backend> _open(WidgetTester tester,
+    {int delay = 0, String? pin, bool hold = true, String platform = 'android'}) async {
+  final b = _Backend(_state(delay: delay, hold: hold, platform: platform), _Clock());
   if (pin != null) await b.invoke('protect.setPin', {'pin': pin});
   await tester.pumpWidget(WaaiyaApp(key: UniqueKey(), backend: b));
   await tester.pumpAndSettle();
@@ -179,12 +181,12 @@ void main() {
     expect(find.text('This change waits'), findsOneWidget);
     await _tap(tester, find.byKey(const Key('protect_wait_start')));
     expect(b.state.settings.holdSilence, isTrue, reason: 'not applied yet');
-    expect(find.textContaining('It takes effect at'), findsOneWidget);
+    expect(find.textContaining('Waiting until'), findsOneWidget);
     await tester.pump(const Duration(seconds: 5)); // the message goes
     await tester.pumpAndSettle();
     await _go(tester, 'settings');
     expect(find.textContaining('Keep apps silent'), findsWidgets);
-    expect(find.textContaining(': takes effect at'), findsOneWidget);
+    expect(find.textContaining(': waiting until'), findsOneWidget);
     expect(find.byKey(const Key('protect_confirm')), findsNothing);
     // the same change again does not restart the wait
     await _go(tester, 'filter');
@@ -194,7 +196,7 @@ void main() {
     await tester.pumpAndSettle();
     await _go(tester, 'settings');
     await _tap(tester, find.byKey(const Key('protect_cancel')));
-    expect(find.textContaining('takes effect at'), findsNothing);
+    expect(find.textContaining('waiting until'), findsNothing);
     expect(b.state.settings.holdSilence, isTrue);
   });
 
@@ -206,7 +208,7 @@ void main() {
     b.clock.pass(const Duration(minutes: 1));
     b.show();
     await tester.pumpAndSettle();
-    expect(find.textContaining('Still want it?'), findsOneWidget);
+    expect(find.textContaining('Do you still want it?'), findsOneWidget);
     expect(b.state.settings.holdSilence, isTrue, reason: 'never applied silently');
     await _tap(tester, find.byKey(const Key('protect_confirm')));
     expect(b.state.settings.holdSilence, isFalse);
@@ -252,7 +254,7 @@ void main() {
     await _tap(tester, find.byKey(const Key('protect_pin_remove')));
     await _typePin(tester, '1357');
     expect(b.gate.core.pinSet, isTrue, reason: 'removing the PIN waits');
-    expect(find.textContaining('Remove the PIN: takes effect at'), findsOneWidget);
+    expect(find.textContaining('Remove the PIN: waiting until'), findsOneWidget);
   });
 
   testWidgets('raising the waiting period with a PIN asks the PIN only', (tester) async {
@@ -296,8 +298,17 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('power')));
     await tester.pumpAndSettle();
-    expect(find.text('This change is held back by the protection settings.'), findsOneWidget);
+    expect(find.text('Not now: your protection settings make this change wait, or ask for the PIN.'), findsOneWidget);
     expect(b.state.filter.running, isTrue);
+  });
+
+  testWidgets('what protection cannot stop names the right command on each platform', (tester) async {
+    for (final (platform, command) in [('android', 'force stop'), ('linux', 'the waaiya command'),
+        ('windows', 'the waaiya-filter.exe command')]) {
+      await _open(tester, platform: platform);
+      await _go(tester, 'settings');
+      expect(find.textContaining(command), findsOneWidget, reason: platform);
+    }
   });
 }
 

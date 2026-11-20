@@ -14,7 +14,8 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final text = Theme.of(context).textTheme;
-    final language = WaaiyaScope.of(context).state.language;
+    final state = WaaiyaScope.of(context).state;
+    final language = state.language;
     void choose(String gender) => runAction(context, (b) => b.setSetting(SettingKeys.gender, gender));
     return Scaffold(
       body: SafeArea(
@@ -33,7 +34,7 @@ class OnboardingScreen extends StatelessWidget {
             const SizedBox(height: 32),
             Text(l.onboardTitle, style: text.titleLarge),
             const SizedBox(height: 8),
-            Text(l.onboardBody, style: text.bodyLarge),
+            Text(state.platform == 'android' ? l.onboardBody : l.onboardBodyDesktop, style: text.bodyLarge),
             const SizedBox(height: 24),
             Text(l.onboardQuestion, style: text.titleMedium),
             const SizedBox(height: 12),

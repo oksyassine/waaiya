@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,6 +9,8 @@ import 'backend.dart';
 import 'blur_card.dart';
 import 'fix_mistakes.dart';
 import 'licences.dart';
+import 'links_page.dart';
+import 'motion.dart';
 import 'protection.dart';
 import 'setup_card.dart';
 import 'singing_option.dart';
@@ -91,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bottom: false,
           child: IndexedStack(
             index: index,
-            children: [for (final p in pages) _body(context, p, s)],
+            children: [for (final p in pages) _PageIn(active: p == pages[index], child: _body(context, p, s))],
           ),
         ),
         bottomNavigationBar: NavigationBar(
@@ -149,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const CoverHelperCard(),
           ],
         ),
+      'links' when caps.linkPage => PageColumn(children: [PageTitle(l.navLinks), const LinksPanel()]),
       'links' => PageColumn(
           children: [
             PageTitle(l.navLinks),
@@ -203,23 +208,26 @@ class FilterOptionsCard extends StatelessWidget {
     final s = WaaiyaScope.of(context).state;
     final st = s.settings;
     final singingNoModel = st.muteWomenSinging && !s.detectorModel;
+    // the texts say "Android" and "phone"; a computer has its own (and no app there can refuse to be filtered)
+    final android = s.platform == 'android';
     void set(String key, Object v) => HomeScreen.set(context, key, v);
     return SectionCard(
       title: l.filterOptionsTitle,
       children: [
         const SizedBox(height: 8),
-        SettingSwitch(
-          id: 'switch_silence',
-          title: l.settingSilenceTitle,
-          body: l.settingSilenceBody,
-          value: st.silenceUnfilterable,
-          onChanged: (v) => set(SettingKeys.silenceUnfilterable, v),
-        ),
+        if (android)
+          SettingSwitch(
+            id: 'switch_silence',
+            title: l.settingSilenceTitle,
+            body: l.settingSilenceBody,
+            value: st.silenceUnfilterable,
+            onChanged: (v) => set(SettingKeys.silenceUnfilterable, v),
+          ),
         SettingSwitch(
           key: const Key('hold_silence'),
           id: 'switch_hold_silence',
           title: l.settingHoldSilenceTitle,
-          body: l.settingHoldSilenceBody,
+          body: android ? l.settingHoldSilenceBody : l.settingHoldSilenceBodyDesktop,
           value: st.holdSilence,
           onChanged: (v) => set(SettingKeys.holdSilence, v),
         ),
@@ -227,7 +235,7 @@ class FilterOptionsCard extends StatelessWidget {
           key: const Key('audio_stereo'),
           id: 'switch_stereo',
           title: l.settingStereoTitle,
-          body: l.settingStereoBody,
+          body: android ? l.settingStereoBody : l.settingStereoBodyDesktop,
           value: st.audioStereo,
           onChanged: (v) => set(SettingKeys.audioStereo, v),
         ),
@@ -346,6 +354,7 @@ Future<void> _start(BuildContext context) async {
     final go = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.startNoSetupTitle),
         content: Text(l.startNoSetupBody),
         actions: [
@@ -365,6 +374,7 @@ Future<void> _start(BuildContext context) async {
     final go = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.helperStartAnywayTitle),
         content: Text(l.helperStartAnywayBody),
         actions: [
@@ -453,8 +463,13 @@ class PowerSection extends StatelessWidget {
       detailIsError = true;
     }
     final error = f.error;
+    String? technical;
     if (error != null) {
-      detail = engineErrorText(l, error);
+      // the sentence in the app's language; the program's own lines apart, left to right (they are English, paths
+      // and times: inside an Arabic sentence they came out jumbled)
+      final withLines = const {'install_failed', 'start_failed', 'service_failed'}.contains(error.code);
+      technical = withLines && error.detail.trim().isNotEmpty ? error.detail.trim() : null;
+      detail = engineErrorText(l, withLines ? BackendMessage(error.code) : error).trim();
       detailIsError = true;
     }
 
@@ -466,28 +481,46 @@ class PowerSection extends StatelessWidget {
           identifier: 'power',
           label: on ? l.powerStopCd : l.powerStartCd,
           excludeSemantics: true,
-          child: SizedBox.square(
-            dimension: 168,
-            child: Material(
-              key: const Key('power'),
-              color: on ? c.primary : c.surface,
-              shape: CircleBorder(side: on ? BorderSide.none : BorderSide(color: c.offRing, width: 3)),
-              child: InkWell(
-                customBorder: const CircleBorder(),
-                onTap: () => on ? runAction(context, (b) => b.stopFilter()) : _start(context),
-                child: Icon(Icons.power_settings_new_rounded, size: 72, color: on ? c.onPrimary : c.textPrimary),
-              ),
-            ),
+          child: _PowerButton(
+            on: on,
+            starting: f.state == FilterState.starting,
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              on ? runAction(context, (b) => b.stopFilter()) : _start(context);
+            },
           ),
         ),
         const SizedBox(height: 20),
-        Semantics(liveRegion: true, child: Text(title, style: text.titleLarge, textAlign: TextAlign.center)),
+        Semantics(
+          liveRegion: true,
+          child: SwitchFade(child: Text(title, key: ValueKey(title), style: text.titleLarge, textAlign: TextAlign.center)),
+        ),
         if (detail.isNotEmpty) ...[
           const SizedBox(height: 6),
           TestId(
             'state_detail',
-            child: Text(detail,
-                textAlign: TextAlign.center, style: text.bodyMedium?.copyWith(color: detailIsError ? c.error : null)),
+            child: SwitchFade(
+              child: Text(detail,
+                  key: ValueKey('$detail$detailIsError'),
+                  textAlign: TextAlign.center,
+                  style: text.bodyMedium?.copyWith(color: detailIsError ? c.error : null)),
+            ),
+          ),
+        ],
+        if (technical != null) ...[
+          const SizedBox(height: 8),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Container(
+              key: const Key('state_technical'),
+              width: double.infinity,
+              constraints: const BoxConstraints(maxHeight: 160),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(color: c.codeBg, borderRadius: const BorderRadius.all(Radius.circular(12))),
+              child: SingleChildScrollView(
+                child: SelectableText(technical, style: text.bodySmall?.copyWith(fontFamily: 'monospace', color: c.error)),
+              ),
+            ),
           ),
         ],
         // apps are held silent: the power button starts again, this gives them back unfiltered (MainActivity)
@@ -511,6 +544,132 @@ class PowerSection extends StatelessWidget {
           Text(l.desktopPreview, textAlign: TextAlign.center, style: text.bodyMedium),
         ],
       ],
+    );
+  }
+}
+
+/// A page of the bottom bar fades in (and rises a little) when it is chosen.
+class _PageIn extends StatelessWidget {
+  const _PageIn({required this.active, required this.child});
+
+  final bool active;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = Motion.of(context, Motion.medium);
+    return AnimatedOpacity(
+      opacity: active ? 1 : 0,
+      duration: d,
+      curve: Motion.curve,
+      child: AnimatedSlide(
+        offset: active ? Offset.zero : const Offset(0, 0.012),
+        duration: d,
+        curve: Motion.curve,
+        child: child,
+      ),
+    );
+  }
+}
+
+/// The on/off control: its fill, ring and icon blend between off, starting (half) and on; it shrinks a little under
+/// the finger; a soft halo breathes twice when filtering begins, then stays (never an endless animation).
+class _PowerButton extends StatefulWidget {
+  const _PowerButton({required this.on, required this.starting, required this.onTap});
+
+  final bool on;
+  final bool starting;
+  final VoidCallback onTap;
+
+  @override
+  State<_PowerButton> createState() => _PowerButtonState();
+}
+
+class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderStateMixin {
+  late final AnimationController _glow = AnimationController(vsync: this, duration: const Duration(milliseconds: 1300));
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.on) _glow.value = 1;
+  }
+
+  @override
+  void didUpdateWidget(_PowerButton old) {
+    super.didUpdateWidget(old);
+    final filtering = widget.on && !widget.starting, was = old.on && !old.starting;
+    if (filtering && !was) _breathe();
+  }
+
+  Future<void> _breathe() async {
+    if (Motion.of(context, Motion.slow) == Duration.zero) {
+      _glow.value = 1;
+      return;
+    }
+    try {
+      for (var i = 0; i < 2; i++) {
+        await _glow.forward(from: 0).orCancel;
+      }
+    } on TickerCanceled {
+      // left the screen
+    }
+  }
+
+  @override
+  void dispose() {
+    _glow.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = WaaiyaColors.of(context);
+    final target = widget.starting ? 0.45 : (widget.on ? 1.0 : 0.0);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(end: target),
+      duration: Motion.of(context, Motion.slow),
+      curve: Motion.curve,
+      builder: (context, t, _) => AnimatedBuilder(
+        animation: _glow,
+        builder: (context, _) {
+          // a breath: the halo swells and settles; while on, a soft steady halo
+          final breath = _glow.isAnimating ? math.sin(_glow.value * math.pi) : 0.0;
+          final halo = (t >= 1 ? 0.22 : 0.0) + 0.28 * breath;
+          return DecoratedBox(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                if (halo > 0)
+                  BoxShadow(
+                    color: c.primary.withValues(alpha: halo),
+                    blurRadius: 28 + 28 * breath,
+                    spreadRadius: 2 + 10 * breath,
+                  ),
+              ],
+            ),
+            child: Pressable(
+              scale: 0.94,
+              child: SizedBox.square(
+                dimension: 168,
+                child: Material(
+                  key: const Key('power'),
+                  color: Color.lerp(c.surface, c.primary, t),
+                  shape: CircleBorder(
+                    side: t >= 1 ? BorderSide.none : BorderSide(color: Color.lerp(c.offRing, c.primary, t)!, width: 3),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: widget.onTap,
+                    child: Icon(Icons.power_settings_new_rounded,
+                        size: 72, color: Color.lerp(c.textPrimary, c.onPrimary, t)),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

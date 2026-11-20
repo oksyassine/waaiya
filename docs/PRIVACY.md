@@ -12,7 +12,8 @@ hear and see stays in memory on your device and is not saved.
 
 | When | What is contacted | What it learns |
 |---|---|---|
-| You open or save a link ("Open a link", Android; Windows from 0.2.12) | The site of that link (for example YouTube), the same way a browser would | What any site learns from a visitor: your IP address and the video you asked for |
+| You open or save a link ("Open a link" on Android; "Save without music" in the Windows app from GitHub) | The site of that link (for example YouTube), the same way a browser would | What any site learns from a visitor: your IP address and the video you asked for |
+| Windows: "Watch" on the Links page | Nothing from Waaiya: it starts the filter and hands the link to your own web browser, which opens it as usual. The Windows app from the Microsoft Store only does this: it has no download tools and never contacts a site itself | What your browser's site learns, as without Waaiya |
 | Android: the bundled link reader (yt-dlp) checks for a newer version, at most once a day, only around a link you open | PyPI (pypi.org and files.pythonhosted.org), with Python's default client name, never Waaiya's | Your IP address and that some Python program asked for yt-dlp |
 | Windows: the Microsoft Store updates Waaiya | Microsoft, as for every Store app | As in Microsoft's own privacy statement |
 
@@ -28,7 +29,10 @@ them tries one (`linux/test_no_network.sh`, the Linux blur's end-to-end test, an
   the device only if you share them yourself, to whoever you choose.
 - Android: cloud backup and device-to-device transfer are switched off for Waaiya's data.
 
-Uninstalling Waaiya deletes all of it.
+Uninstalling Waaiya deletes all of it on Android and Linux (the app's own data). On Windows, the settings, the
+notes and the sound filter's small working files (the apps' volume levels to give back and a log of the filter's own
+messages, never any sound) are in `%APPDATA%\Waaiya` and `%LOCALAPPDATA%\Waaiya`; Windows does not delete these
+two folders when you uninstall the app, and you can delete them yourself.
 
 ## Permissions and why (Android)
 
@@ -67,8 +71,10 @@ Changes to this policy are made in this file in the public repository, where the
 
 ### ما يتصل بالإنترنت، وبطلب منك فقط
 
-- عند فتح رابط أو حفظه («افتح رابطًا»): يُتَّصَل بموقع ذلك الرابط كما يفعل المتصفح، فيعرف ما يعرفه أي موقع عن زائره:
-  عنوان IP والمقطع الذي طلبته.
+- عند فتح رابط أو حفظه («افتح رابطًا» في أندرويد، و«احفظ دون موسيقى» في نسخة ويندوز من GitHub): يُتَّصَل بموقع ذلك
+  الرابط كما يفعل المتصفح، فيعرف ما يعرفه أي موقع عن زائره: عنوان IP والمقطع الذي طلبته.
+- في ويندوز، «شاهد» في صفحة الروابط: لا تتصل واعية بشيء، بل تشغّل الترشيح وتعطي الرابط لمتصفحك فيفتحه كعادته. ونسخة
+  متجر مايكروسوفت لا تفعل إلا هذا: لا أدوات تنزيل فيها، ولا تتصل بأي موقع بنفسها.
 - في أندرويد: قارئ الروابط المرفق (yt-dlp) يبحث عن إصدار أحدث، مرة في اليوم على الأكثر وعند فتح رابط فقط، من موقع
   PyPI، باسم بايثون العام لا باسم واعية.
 - في ويندوز: متجر مايكروسوفت يحدّث واعية كما يحدّث كل تطبيقاته.
@@ -82,7 +88,9 @@ Changes to this policy are made in this file in the public repository, where the
 - تقرير التشخيص وملاحظات «اكتشاف خاطئ»: نص في مساحة التطبيق الخاصة، لا يخرج من الجهاز إلا إذا شاركته بنفسك.
 - في أندرويد: النسخ الاحتياطي السحابي والنقل بين الأجهزة معطَّلان لبيانات واعية.
 
-حذف واعية يحذف ذلك كله.
+حذف واعية يحذف ذلك كله في أندرويد ولينكس. أما في ويندوز فالإعدادات والملاحظات وملفات المرشّح الصغيرة (مستويات صوت
+التطبيقات لإرجاعها، وسجلّ لرسائل المرشّح نفسه، بلا أي صوت) في المجلدين `%APPDATA%\Waaiya` و`%LOCALAPPDATA%\Waaiya`،
+ولا يحذفهما ويندوز عند إزالة التطبيق، ويمكنك حذفهما بنفسك.
 
 ### الأذونات (أندرويد)
 

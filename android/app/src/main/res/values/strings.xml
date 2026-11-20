@@ -8,12 +8,12 @@
     <string name="onboard_question">I am</string>
     <string name="gender_man">A man</string>
     <string name="gender_woman">A woman</string>
-    <string name="onboard_why">This only decides which optional settings you see. You can change it later.</string>
+    <string name="onboard_why">This only decides which optional settings you see. For example, “Mute women\'s singing” is offered only to men. You can change it later.</string>
 
     <string name="state_on_title">Filtering is on</string>
     <string name="state_off_title">Filtering is off</string>
     <string name="state_starting">Starting…</string>
-    <string name="state_on_detail">Instruments are removed from all apps. Delay about %1$d ms.</string>
+    <string name="state_on_detail">Instruments are removed from all apps. The sound comes about %1$d ms late (1000 ms is one second).</string>
     <string name="state_off_detail">Tap the button to start.</string>
     <string name="state_model_failed">The sound model could not load, so the sound is muted for safety.</string>
     <string name="state_capture_denied">The microphone permission is needed to receive other apps\' sound.</string>
@@ -65,7 +65,7 @@
     <string name="setting_stereo_title">Stereo sound</string>
     <string name="setting_stereo_body">Off: mono, which uses about half the battery and keeps up on more phones. On: keeps the left and right sides apart. If the phone is too slow for stereo, it still switches to mono by itself.</string>
     <string name="setting_singing_title">Mute women\'s singing</string>
-    <string name="setting_singing_body">Women\'s speech and recitation are kept.</string>
+    <string name="setting_singing_body">For example, a song sung by a woman is muted, but a woman giving a talk is still heard.</string>
     <string name="setting_singing_no_model">This version has no singing detector, so all voices are muted while this is on.</string>
     <string name="setting_restart">Stop and start filtering to apply changes.</string>
     <string name="setting_gender_title">I am</string>
@@ -125,15 +125,15 @@
     <string name="blur_title">Screen blur</string>
     <string name="blur_body">Covers people and images on screen, in every app, while filtering is on. It runs on the phone; nothing is sent anywhere.</string>
     <string name="blur_women_title">Blur women</string>
-    <string name="blur_women_body">Whole body. People the app cannot clearly tell are men are blurred too.</string>
+    <string name="blur_women_body">Covers the whole body. If the app is not sure that a person is a man, it covers them too.</string>
     <string name="blur_nudity_title">Blur immodest images</string>
-    <string name="blur_nudity_body">Nudity and revealing clothing, of anyone: the whole screen is covered.</string>
+    <string name="blur_nudity_body">Nudity or revealing clothes, on anyone: the whole screen is covered.</string>
     <string name="blur_fail_title">Cover the screen if the blur cannot keep up</string>
     <string name="blur_fail_body">On: the whole screen is covered when the phone is too slow or the blur fails. Off: the screen stays visible with a warning.</string>
     <string name="blur_setup_shizuku">Allow with Shizuku</string>
     <string name="blur_setup_manual">Allow in Android settings</string>
-    <string name="blur_status_needs_setup">The blur needs to draw over other apps. Best: allow it with Shizuku (turns on the Waaiya Blur accessibility service, so touches still reach the app underneath). Or allow "Display over other apps" in Android settings (touches on a blurred area are then lost).</string>
-    <string name="blur_status_needs_overlay">The blur needs to draw over other apps. Best: start Shizuku (and allow Waaiya in it): the blur then draws its own layer, which taps pass through. Otherwise allow "Display over other apps" in Android settings; a tap on a blurred area then does not reach the app underneath.</string>
+    <string name="blur_status_needs_setup">To blur, Waaiya has to draw over other apps. Best: “Allow with Shizuku”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.</string>
+    <string name="blur_status_needs_overlay">To blur, Waaiya has to draw over other apps. Best: start Shizuku and allow Waaiya in it, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.</string>
     <string name="blur_fail_unavailable">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper or Shizuku (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.</string>
     <string name="blur_fail_needs_a11y">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) or turn on the Waaiya Blur accessibility service (Allow with Shizuku above) and it turns on. Until then, the screen stays visible with a warning.</string>
     <string name="language_title">Language</string>
@@ -371,11 +371,11 @@
     <string name="worship_sms_default">It\'s prayer time, I can\'t answer now. I\'ll call you back.</string>
     <string name="notif_worship_sms_title">Replied by SMS</string>
     <string name="notif_worship_sms_text">Your prayer-time reply was sent to {number}.</string>
-    <string name="notif_protect_channel">Waiting period</string>
+    <string name="notif_protect_channel">Wait before turning off</string>
     <string name="notif_protect_what_stop">Stopping the filter</string>
     <string name="notif_protect_what_pin">Changing or removing the PIN</string>
     <string name="notif_protect_what_setting">A change that lowers protection</string>
-    <string name="notif_protect_waiting_text">Takes effect at %1$s, if you still want it then. Cancel keeps things as they are.</string>
+    <string name="notif_protect_waiting_text">Waiting until %1$s. Then confirm it in the app if you still want it. Cancel keeps things as they are.</string>
     <string name="notif_protect_ready_text">Still want it? Confirm in Waaiya before %1$s, or nothing changes.</string>
     <string name="notif_protect_cancel">Cancel</string>
 </resources>

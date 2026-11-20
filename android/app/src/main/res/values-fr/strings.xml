@@ -9,12 +9,12 @@
     <string name="onboard_question">Je suis</string>
     <string name="gender_man">Un homme</string>
     <string name="gender_woman">Une femme</string>
-    <string name="onboard_why">Cela décide seulement des réglages facultatifs que vous voyez. Vous pourrez le changer plus tard.</string>
+    <string name="onboard_why">Cela décide seulement des réglages facultatifs que vous voyez. Par exemple, « Couper le chant des femmes » n\'est proposé qu\'aux hommes. Vous pourrez le changer plus tard.</string>
 
     <string name="state_on_title">Le filtrage est activé</string>
     <string name="state_off_title">Le filtrage est désactivé</string>
     <string name="state_starting">Démarrage…</string>
-    <string name="state_on_detail">Les instruments sont supprimés de toutes les applications. Délai d\'environ %1$d ms.</string>
+    <string name="state_on_detail">Les instruments sont supprimés de toutes les applications. Le son arrive avec environ %1$d ms de retard (1000 ms font une seconde).</string>
     <string name="state_off_detail">Appuyez sur le bouton pour démarrer.</string>
     <string name="state_model_failed">Le modèle audio n\'a pas pu se charger : le son est donc coupé par sécurité.</string>
     <string name="state_capture_denied">L\'autorisation du micro est nécessaire pour recevoir le son des autres applications.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Son stéréo</string>
     <string name="setting_stereo_body">Désactivé : mono, qui consomme environ deux fois moins de batterie et suit le rythme sur plus de téléphones. Activé : garde la gauche et la droite séparées. Si le téléphone est trop lent pour la stéréo, il repasse quand même en mono tout seul.</string>
     <string name="setting_singing_title">Couper le chant des femmes</string>
-    <string name="setting_singing_body">La parole et la récitation des femmes sont conservées.</string>
+    <string name="setting_singing_body">Par exemple, une chanson chantée par une femme est coupée, mais on entend toujours une femme qui donne une conférence.</string>
     <string name="setting_singing_no_model">Cette version n\'a pas de détecteur de chant : toutes les voix sont donc coupées tant que cette option est activée.</string>
     <string name="setting_restart">Arrêtez puis relancez le filtrage pour appliquer les changements.</string>
     <string name="setting_gender_title">Je suis</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Floutage de l\'écran</string>
     <string name="blur_body">Couvre les personnes et les images à l\'écran, dans toutes les applications, tant que le filtrage est activé. Tout se fait sur le téléphone ; rien n\'est envoyé nulle part.</string>
     <string name="blur_women_title">Flouter les femmes</string>
-    <string name="blur_women_body">Le corps entier. Les personnes dont l\'appli ne voit pas clairement que ce sont des hommes sont floutées aussi.</string>
+    <string name="blur_women_body">Couvre tout le corps. Si l\'appli n\'est pas sûre qu\'une personne est un homme, elle la couvre aussi.</string>
     <string name="blur_nudity_title">Flouter les images indécentes</string>
-    <string name="blur_nudity_body">Nudité et tenues révélatrices, de qui que ce soit : tout l\'écran est couvert.</string>
+    <string name="blur_nudity_body">Nudité ou tenues révélatrices, chez n\'importe qui : tout l\'écran est couvert.</string>
     <string name="blur_fail_title">Couvrir l\'écran si le flou ne suit pas</string>
     <string name="blur_fail_body">Activé : tout l\'écran est couvert quand le téléphone est trop lent ou que le flou échoue. Désactivé : l\'écran reste visible avec un avertissement.</string>
     <string name="blur_setup_shizuku">Autoriser avec Shizuku</string>
     <string name="blur_setup_manual">Autoriser dans les paramètres Android</string>
-    <string name="blur_status_needs_setup">Le flou doit s\'afficher par-dessus les autres applications. Le mieux : l\'autoriser avec Shizuku (cela active le service d\'accessibilité Flou Waaiya, pour que les appuis atteignent toujours l\'appli en dessous). Sinon, autorisez « Superposition sur d\'autres applis » dans les paramètres Android (les appuis sur une zone floutée sont alors perdus).</string>
-    <string name="blur_status_needs_overlay">Le flou doit s\'afficher par-dessus les autres applications. Le mieux : démarrez Shizuku (et autorisez-y Waaiya) : le flou dessine alors son propre calque, que les appuis traversent. Sinon, autorisez « Superposition sur d\'autres applis » dans les paramètres Android ; un appui sur une zone floutée n\'atteint alors pas l\'appli en dessous.</string>
+    <string name="blur_status_needs_setup">Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : « Autoriser avec Shizuku », pour que vos appuis atteignent toujours l\'appli sous le flou. Ou « Autoriser dans les paramètres Android », mais alors un appui sur une zone floutée ne fait rien.</string>
+    <string name="blur_status_needs_overlay">Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : démarrez Shizuku et autorisez-y Waaiya, pour que vos appuis atteignent toujours l\'appli sous le flou. Ou autorisez « Superposition sur d\'autres applis » dans les paramètres Android, mais alors un appui sur une zone floutée ne fait rien.</string>
     <string name="blur_fail_unavailable">Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya ou Shizuku (Android 12 ou plus récent) et l\'option s\'active : les caches sont alors dessinés pour que les appuis les traversent. D\'ici là, quand le flou ne suit pas, l\'écran reste visible avec un avertissement.</string>
     <string name="blur_fail_needs_a11y">Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez Shizuku (Android 12 ou plus récent) ou activez le service d\'accessibilité Flou Waaiya (Autoriser avec Shizuku, ci-dessus) et l\'option s\'active. D\'ici là, l\'écran reste visible avec un avertissement.</string>
     <string name="language_title">Langue</string>
@@ -370,11 +370,11 @@
     <string name="worship_sms_default">C\'est l\'heure de la prière, je ne peux pas répondre maintenant. Je vous rappelle.</string>
     <string name="notif_worship_sms_title">Réponse envoyée par SMS</string>
     <string name="notif_worship_sms_text">Votre réponse de l\'heure de prière a été envoyée au {number}.</string>
-    <string name="notif_protect_channel">Délai d\'attente</string>
+    <string name="notif_protect_channel">Délai avant l\'arrêt</string>
     <string name="notif_protect_what_stop">Arrêt du filtre</string>
     <string name="notif_protect_what_pin">Changement ou suppression du code</string>
     <string name="notif_protect_what_setting">Un changement qui baisse la protection</string>
-    <string name="notif_protect_waiting_text">Prend effet à %1$s, si vous le voulez toujours à ce moment. Annuler laisse tout comme avant.</string>
+    <string name="notif_protect_waiting_text">En attente jusqu\'à %1$s. Confirmez ensuite dans l\'application si vous le voulez toujours. Annuler laisse tout tel quel.</string>
     <string name="notif_protect_ready_text">Vous le voulez toujours ? Confirmez dans Waaiya avant %1$s, sinon rien ne change.</string>
     <string name="notif_protect_cancel">Annuler</string>
 </resources>

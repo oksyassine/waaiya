@@ -7,13 +7,22 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
 import 'app_localizations_bn.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
 import 'app_localizations_fa.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_ha.dart';
 import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
 import 'app_localizations_ms.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_so.dart';
+import 'app_localizations_sw.dart';
 import 'app_localizations_tr.dart';
 import 'app_localizations_ur.dart';
+import 'app_localizations_uz.dart';
 
 // ignore_for_file: type=lint
 
@@ -103,13 +112,22 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
     Locale('bn'),
+    Locale('de'),
     Locale('en'),
+    Locale('es'),
     Locale('fa'),
     Locale('fr'),
+    Locale('ha'),
     Locale('id'),
+    Locale('it'),
     Locale('ms'),
+    Locale('nl'),
+    Locale('ru'),
+    Locale('so'),
+    Locale('sw'),
     Locale('tr'),
     Locale('ur'),
+    Locale('uz'),
   ];
 
   /// Android string app_name
@@ -157,7 +175,7 @@ abstract class AppLocalizations {
   /// Android string onboard_why
   ///
   /// In ar, this message translates to:
-  /// **'هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.'**
+  /// **'هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.'**
   String get onboardWhy;
 
   /// Android string state_on_title
@@ -181,7 +199,7 @@ abstract class AppLocalizations {
   /// Android string state_on_detail
   ///
   /// In ar, this message translates to:
-  /// **'تُزال الآلات من كل التطبيقات. التأخير نحو {delayMs} ميلي ثانية.'**
+  /// **'تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو {delayMs} ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).'**
   String stateOnDetail(int delayMs);
 
   /// Android string state_off_detail
@@ -481,7 +499,7 @@ abstract class AppLocalizations {
   /// Android string setting_singing_body
   ///
   /// In ar, this message translates to:
-  /// **'يُبقي كلام النساء وتلاوتهن.'**
+  /// **'مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.'**
   String get settingSingingBody;
 
   /// Android string setting_singing_no_model
@@ -781,7 +799,7 @@ abstract class AppLocalizations {
   /// Android string blur_women_body
   ///
   /// In ar, this message translates to:
-  /// **'الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.'**
+  /// **'يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.'**
   String get blurWomenBody;
 
   /// Android string blur_nudity_title
@@ -793,7 +811,7 @@ abstract class AppLocalizations {
   /// Android string blur_nudity_body
   ///
   /// In ar, this message translates to:
-  /// **'العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.'**
+  /// **'العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.'**
   String get blurNudityBody;
 
   /// Android string blur_fail_title
@@ -823,13 +841,13 @@ abstract class AppLocalizations {
   /// Android string blur_status_needs_setup
   ///
   /// In ar, this message translates to:
-  /// **'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsSetup;
 
   /// Android string blur_status_needs_overlay
   ///
   /// In ar, this message translates to:
-  /// **'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsOverlay;
 
   /// Android string blur_fail_unavailable
@@ -1891,6 +1909,66 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
+  /// **'مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.'**
+  String get settingHoldSilenceBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.'**
+  String get settingStereoBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.'**
+  String get linkEntryBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.'**
+  String get linkEntryBodyWatch;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.'**
+  String get linkWatchNoteDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.'**
+  String get linkFilterFailed;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'في مجلد الفيديو: Waaiya'**
+  String get linkSavedVideoDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'في مجلد الموسيقى: Waaiya'**
+  String get linkSavedAudioDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار في المجلد'**
+  String get linkShowInFolder;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُكتم غناء النساء أيضاً، كما في إعداداتك.'**
+  String get linkSingingNote;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
   /// **'إبقاء أصوات الغناء (تجريبي)'**
   String get singingKeepTitle;
 
@@ -1915,7 +1993,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'تُشغَّل هذه التطبيقات بصوتها الأصلي: لا تصفّيها واعية ولا تُسكتها.'**
+  /// **'التطبيقات التي تختارها هنا تُسمع كما هي: بلا تصفية وبلا إسكات. مثلًا: تطبيق مكالمات الفيديو، حتى لا يتأخّر الصوت في المكالمات.'**
   String get fixFilterAppsBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -1969,7 +2047,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'لا تغطية ما دام أحد هذه التطبيقات وحده على الشاشة. تعود التغطية فور مغادرته، أو متى لم تتيقّن واعية من التطبيق الظاهر.'**
+  /// **'لا تغطية ما دام أحد هذه التطبيقات يملأ الشاشة، مثل تطبيق الخرائط أو تطبيق البنك. وتعود التغطية فور مغادرته، أو كلما لم تتيقّن واعية من التطبيق الظاهر.'**
   String get fixBlurAppsBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -1993,7 +2071,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'أثناء عمل التمويه، اسحب إصبعك على أي جزء من الشاشة لتغطيته. يبقى مغطًّى حتى تزيله أو يتوقف التمويه.'**
+  /// **'أثناء عمل التمويه يمكنك تغطية جزء من الشاشة بنفسك، مثل صورة فاتت التمويه: اضغط «تغطية جزء» واسحب إصبعك فوقها. تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.'**
   String get fixHandBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2023,7 +2101,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'سجّله لحظة حدوثه. تحفظ الملاحظة الوقت والتطبيق والإعدادات، وتبقى على هذا الجهاز ولا تُرسَل أبدًا.'**
+  /// **'حين تخطئ واعية، اضغط على ما حدث، مثل «مرّت موسيقى». تحفظ الملاحظة الوقت والتطبيق والإعدادات، لتساعد على معرفة السبب. وتبقى على هذا الجهاز ولا تُرسَل أبدًا.'**
   String get fixNoteBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2083,7 +2161,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'ملاحظات أخطاء الكشف'**
+  /// **'ملاحظات الأخطاء'**
   String get fixNotesTitle;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2323,7 +2401,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.'**
+  /// **'عند كل وقت صلاة يصبح الهاتف صامتًا («عدم الإزعاج») للدقائق المحدّدة أدناه، ثم يعود كما كان. مثلًا: من الظهر الساعة 12:00 حتى 12:20.'**
   String get worshipSilentBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2617,25 +2695,25 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.'**
+  /// **'للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.'**
   String get protectBody;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'مدة الانتظار: {value}'**
+  /// **'الانتظار قبل الإيقاف: {value}'**
   String protectDelay(Object value);
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'مدة الانتظار'**
+  /// **'الانتظار قبل الإيقاف'**
   String get protectDelayTitle;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.'**
+  /// **'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.'**
   String get protectDelayBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2719,13 +2797,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'مع الرمز، يُطلب أولًا قبل كل تغيير يُضعف الحماية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.'**
+  /// **'مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.'**
   String get protectPinBody;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'إن نُسي الرمز فلا سبيل لاسترجاعه: لا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.'**
+  /// **'اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.'**
   String get protectPinForgot;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2815,13 +2893,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'{what}: يسري عند {time}.'**
+  /// **'{what}: ينتظر حتى {time}، ثم أكِّده في «الإعدادات».'**
   String protectPending(Object time, Object what);
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'{what}: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل {time}، وإلا فلن يتغيّر شيء.'**
+  /// **'{what}: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل {time}، وإلا فلن يتغيّر شيء.'**
   String protectReady(Object time, Object what);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2833,7 +2911,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'{what} يسري عند {time} إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.'**
+  /// **'{what} لن يحدث الآن. عند {time}، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.'**
   String protectWaitBody(Object time, Object what);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2845,13 +2923,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'ينتظر بالفعل: يسري عند {time}.'**
+  /// **'ينتظر بالفعل حتى {time}.'**
   String protectAlreadyWaiting(Object time);
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'يسري عند {time}. أكِّده حينها.'**
+  /// **'ينتظر حتى {time}، ثم أكِّده في «الإعدادات».'**
   String protectStarted(Object time);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2863,13 +2941,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'إعدادات الحماية تؤخّر هذا التغيير.'**
+  /// **'ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.'**
   String get protectHeldBack;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات مدير الجهاز أو خدمة الوصول، وواعية لا تستعملها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  /// **'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
   String get protectLimits;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2877,6 +2955,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
   String get protectLimitsDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimitsWindows;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
@@ -2911,13 +2995,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'تغيير من يستعمل الهاتف'**
+  /// **'تغيير من يستعمل واعية'**
   String get protectWhatGender;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'تغيير مدة الانتظار إلى: {value}'**
+  /// **'تغيير الانتظار قبل الإيقاف إلى: {value}'**
   String protectWhatDelay(Object value);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2937,6 +3021,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تغيير إعداد'**
   String get protectWhatSetting;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.'**
+  String get onboardBodyDesktop;
 }
 
 class _AppLocalizationsDelegate
@@ -2952,13 +3042,22 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) => <String>[
     'ar',
     'bn',
+    'de',
     'en',
+    'es',
     'fa',
     'fr',
+    'ha',
     'id',
+    'it',
     'ms',
+    'nl',
+    'ru',
+    'so',
+    'sw',
     'tr',
     'ur',
+    'uz',
   ].contains(locale.languageCode);
 
   @override
@@ -2972,20 +3071,38 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsAr();
     case 'bn':
       return AppLocalizationsBn();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
     case 'fa':
       return AppLocalizationsFa();
     case 'fr':
       return AppLocalizationsFr();
+    case 'ha':
+      return AppLocalizationsHa();
     case 'id':
       return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
     case 'ms':
       return AppLocalizationsMs();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'so':
+      return AppLocalizationsSo();
+    case 'sw':
+      return AppLocalizationsSw();
     case 'tr':
       return AppLocalizationsTr();
     case 'ur':
       return AppLocalizationsUr();
+    case 'uz':
+      return AppLocalizationsUz();
   }
 
   throw FlutterError(

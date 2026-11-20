@@ -131,9 +131,8 @@ jobs:
           mkdir -p build-win/models/dfn3 build-win/models/vision
           cp models/dfn3/dfn3_stream_int8.* build-win/models/dfn3/
           cp models/vision/*.onnx build-win/models/vision/
-          if [ -f models/detector/detector_v1.onnx ]; then
-            mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
-          fi
+          # the women's-singing model (models-v1 since 0.2.12) is part of the Windows app
+          mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
       - uses: actions/upload-artifact@v4
         with: { name: windows-programs, path: build-win }
 
@@ -194,13 +193,18 @@ jobs:
             Write-Host "$f : $($s.Status) $($s.SignerCertificate.Subject)"
             if ($s.Status -ne "Valid") { throw "$f is not validly signed ($($s.Status))" }
           }
+      # the Microsoft Store package (unsigned: the Store signs it), uploaded in Partner Center by the owner;
+      # tested installed and running by windows.yml's msix job
+      - name: Microsoft Store package
+        shell: pwsh
+        run: desktop/tool/make_msix.ps1 -App desktop/build/windows/x64/runner/Release -Out "waaiya-store-x64-$env:GITHUB_REF_NAME.msix"
       - name: Package
         shell: pwsh
         run: |
           Rename-Item desktop/build/windows/x64/runner/Release waaiya
           Compress-Archive -Path desktop/build/windows/x64/runner/waaiya -DestinationPath "waaiya-desktop-windows-x64-$env:GITHUB_REF_NAME.zip"
       - uses: actions/upload-artifact@v4
-        with: { name: windows-desktop, path: "waaiya-desktop-windows-x64-*.zip" }
+        with: { name: windows-desktop, path: "waaiya-*-x64-*.*" }
 
   # Linux desktop app: built on 22.04 (GLib 2.72) like flutter.yml, so it starts on older systems
   linux-desktop:

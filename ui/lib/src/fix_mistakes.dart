@@ -400,6 +400,7 @@ class _NotesCard extends StatelessWidget {
     final yes = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         content: Text(l.fixNotesDeleteAsk),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.fixCancel)),

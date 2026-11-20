@@ -33,7 +33,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Ini hanya menentukan tetapan pilihan yang anda lihat. Anda boleh mengubahnya kemudian.';
+      'Ini hanya menentukan tetapan pilihan yang anda lihat. Contohnya, “Senyapkan nyanyian wanita” hanya ditawarkan kepada lelaki. Anda boleh mengubahnya kemudian.';
 
   @override
   String get stateOnTitle => 'Penapisan dihidupkan';
@@ -46,7 +46,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Alat muzik dibuang daripada semua apl. Kelewatan kira-kira $delayMs ms.';
+    return 'Alat muzik dibuang daripada semua apl. Bunyi sampai lewat kira-kira $delayMs ms (1000 ms ialah satu saat).';
   }
 
   @override
@@ -224,7 +224,8 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingSingingTitle => 'Senyapkan nyanyian wanita';
 
   @override
-  String get settingSingingBody => 'Percakapan dan bacaan wanita dikekalkan.';
+  String get settingSingingBody =>
+      'Contohnya, lagu yang dinyanyikan oleh wanita disenyapkan, tetapi wanita yang memberi ceramah masih didengar.';
 
   @override
   String get settingSingingNoModel =>
@@ -394,14 +395,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Seluruh badan. Orang yang tidak dapat dipastikan dengan jelas oleh apl sebagai lelaki juga dikaburkan.';
+      'Menutup seluruh badan. Jika apl tidak pasti seseorang itu lelaki, orang itu juga ditutup.';
 
   @override
   String get blurNudityTitle => 'Kaburkan imej tidak sopan';
 
   @override
   String get blurNudityBody =>
-      'Kebogelan dan pakaian yang mendedahkan aurat, sesiapa pun: seluruh skrin ditutup.';
+      'Kebogelan atau pakaian yang mendedahkan aurat, pada sesiapa pun: seluruh skrin ditutup.';
 
   @override
   String get blurFailTitle => 'Tutup skrin jika pengaburan tidak sempat';
@@ -418,11 +419,11 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'Pengaburan perlu dipaparkan di atas apl lain. Terbaik: benarkannya dengan Shizuku (menghidupkan perkhidmatan kebolehaksesan Pengaburan Waaiya, supaya sentuhan masih sampai ke apl di bawahnya). Atau benarkan “Paparkan di atas apl lain” dalam tetapan Android (sentuhan pada kawasan yang dikaburkan kemudiannya hilang).';
+      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: “Benarkan dengan Shizuku”, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau “Benarkan dalam tetapan Android”, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Pengaburan perlu dipaparkan di atas apl lain. Terbaik: mulakan Shizuku (dan benarkan Waaiya di dalamnya): pengaburan kemudian melukis lapisannya sendiri, yang dapat dilalui oleh ketikan. Jika tidak, benarkan “Paparkan di atas apl lain” dalam tetapan Android; ketikan pada kawasan yang dikaburkan kemudiannya tidak sampai ke apl di bawahnya.';
+      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: mulakan Shizuku dan benarkan Waaiya di dalamnya, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau benarkan “Paparkan di atas apl lain” dalam tetapan Android, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
 
   @override
   String get blurFailUnavailable =>
@@ -1058,6 +1059,43 @@ class AppLocalizationsMs extends AppLocalizations {
       'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
 
   @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Disyorkan. Jika penapisan berhenti dengan sendirinya (kerana ralat, bukan oleh anda), apl lain kekal senyap sehingga anda memulakan semula atau menekan Berhenti, daripada memainkan muzik tanpa tapisan.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Mati: mono, yang kurang membebankan komputer. Hidup: memisahkan bahagian kiri dan kanan. Jika komputer terlalu perlahan untuk stereo, ia bertukar kepada mono dengan sendirinya.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya dengan penapis aktif, atau untuk menyimpannya tanpa muzik.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya dalam pelayar anda dengan penapis aktif.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Dibuka dalam pelayar anda. Waaiya memulakan penapis dahulu, jadi muzik juga dibuang di sana.';
+
+  @override
+  String get linkFilterFailed =>
+      'Penapis tidak bermula, jadi pautan tidak dibuka. Mulakannya di halaman Penapis dan cuba lagi.';
+
+  @override
+  String get linkSavedVideoDesktop => 'Dalam folder Video anda: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'Dalam folder Muzik anda: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Tunjuk dalam folder';
+
+  @override
+  String get linkSingingNote =>
+      'Nyanyian wanita juga disenyapkan, seperti dalam tetapan anda.';
+
+  @override
   String get singingKeepTitle => 'Kekalkan nyanyian (percubaan)';
 
   @override
@@ -1073,7 +1111,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Aplikasi ini memainkan bunyi asalnya: Waaiya tidak menapis dan tidak membisukannya.';
+      'Aplikasi yang anda pilih di sini dimainkan seperti asal: tanpa penapis dan tanpa senyap. Contohnya, aplikasi panggilan video, supaya panggilan tidak lewat.';
 
   @override
   String get fixAddApp => 'Tambah aplikasi';
@@ -1104,7 +1142,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'Tiada penutup selagi salah satu aplikasi ini bersendirian di skrin. Penutup kembali sebaik sahaja anda meninggalkannya, atau bila-bila masa Waaiya tidak pasti aplikasi mana yang dipaparkan.';
+      'Tiada penutup selagi salah satu aplikasi ini memenuhi skrin, contohnya aplikasi peta atau aplikasi bank anda. Penutup kembali sebaik sahaja anda meninggalkannya, atau bila-bila masa Waaiya tidak pasti aplikasi mana yang dipaparkan.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1119,7 +1157,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Semasa kabur berjalan, seret jari pada mana-mana bahagian skrin untuk menutupnya. Ia kekal tertutup sehingga anda membuangnya atau kabur berhenti.';
+      'Semasa kabur berjalan, anda boleh menutup sebahagian skrin sendiri, contohnya gambar yang terlepas daripada kabur: tekan “Tutup kawasan” dan seret jari anda di atasnya. Ia kekal tertutup sehingga anda membuangnya atau kabur berhenti.';
 
   @override
   String get fixHandNotRunning =>
@@ -1138,7 +1176,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Tandakan ketika ia berlaku. Catatan menyimpan masa, aplikasi dan tetapan. Ia kekal pada peranti ini dan tidak pernah dihantar.';
+      'Apabila Waaiya tersilap, tekan apa yang berlaku, contohnya “Muzik terlepas”. Catatan menyimpan masa, aplikasi dan tetapan, untuk membantu mencari puncanya. Ia kekal pada peranti ini dan tidak pernah dihantar.';
 
   @override
   String get fixMissedSound => 'Muzik terlepas';
@@ -1173,7 +1211,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'Padam semua catatan? Ini tidak boleh dibatalkan.';
 
   @override
-  String get fixNotesTitle => 'Catatan kesilapan pengesanan';
+  String get fixNotesTitle => 'Catatan kesilapan';
 
   @override
   String get worshipTitle => 'Waktu solat';
@@ -1305,7 +1343,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Dari setiap waktu solat, Jangan Ganggu untuk minit di bawah, kemudian kembali seperti asal.';
+      'Pada setiap waktu solat, telefon menjadi senyap (Jangan Ganggu) untuk minit di bawah, kemudian kembali seperti asal. Contohnya, dari Zohor pada 12:00 hingga 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1494,19 +1532,19 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Putuskan sekarang, ketika tenang: perubahan yang mengurangkan perlindungan menunggu sebelum berkuat kuasa. Ibu bapa juga boleh menetapkan PIN.';
+      'Untuk saat lemah apabila anda mungkin mahu mematikan penapis. Pilih masa menunggu sekarang, semasa anda tenang: butang henti tidak terus menghentikan penapis, dan anda membuat keputusan semula selepas masa itu tamat. Ibu bapa juga boleh menetapkan PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Tempoh menunggu: $value';
+    return 'Tunggu sebelum mematikan: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Tempoh menunggu';
+  String get protectDelayTitle => 'Tunggu sebelum mematikan';
 
   @override
   String get protectDelayBody =>
-      'Menghentikan penapis, mematikan penutup atau apa sahaja yang mengurangkan perlindungan menunggu selama ini. Kemudian anda mengesahkannya dalam 15 minit, atau tiada apa yang berubah. Menghidupkan sesuatu sentiasa berkuat kuasa serta-merta.';
+      'Contohnya dengan 30 minit: anda menekan butang untuk berhenti, tetapi penapis terus berfungsi. Selepas 30 minit, halaman ini bertanya sama ada anda masih mahu berhenti. Tekan “Sahkan” dalam masa 15 minit dan ia berhenti; jika tidak, tiada apa yang berubah. Begitu juga untuk mematikan penutup atau perlindungan lain. Menghidupkan sesuatu sentiasa berlaku serta-merta.';
 
   @override
   String get protectDelayOff => 'Tiada';
@@ -1551,11 +1589,11 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Dengan PIN, setiap perubahan yang mengurangkan perlindungan memintanya dahulu. Menukar tempoh menunggu atau PIN juga memintanya.';
+      'Dengan PIN, menghentikan penapis atau mematikan mana-mana perlindungan akan meminta PIN dahulu. Contohnya, ibu bapa menetapkan PIN supaya anak tidak boleh mematikan penapis. Menukar masa menunggu atau PIN juga memintanya.';
 
   @override
   String get protectPinForgot =>
-      'Jika PIN terlupa, tiada cara menetap semula: hanya mengosongkan data Waaiya atau memasangnya semula, yang juga mengosongkan semua tetapannya.';
+      'Tulis PIN di tempat yang selamat: jika terlupa, tiada cara untuk menetapkannya semula. Satu-satunya jalan ialah mengosongkan data Waaiya atau memasangnya semula, yang juga memadam semua tetapannya.';
 
   @override
   String get protectPinTitle => 'Masukkan PIN';
@@ -1605,12 +1643,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: berkuat kuasa pada $time.';
+    return '$what: menunggu hingga $time. Kemudian sahkan di “Tetapan”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: tempoh menunggu tamat. Masih mahu? Sahkan sebelum $time, atau tiada apa yang berubah.';
+    return '$what: masa menunggu sudah tamat. Masih mahukannya? Tekan “Sahkan” sebelum $time; jika tidak, tiada apa yang berubah.';
   }
 
   @override
@@ -1618,7 +1656,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what berkuat kuasa pada $time, jika anda masih mahukannya ketika itu. Anda mengesahkannya di sini dalam 15 minit selepas itu.';
+    return '$what tidak berlaku sekarang. Pada $time, jika anda masih mahukannya, sahkan di “Tetapan” dalam masa 15 minit. Jika anda tidak berbuat apa-apa, tiada apa yang berubah.';
   }
 
   @override
@@ -1626,12 +1664,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Sudah menunggu: berkuat kuasa pada $time.';
+    return 'Sudah menunggu hingga $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Berkuat kuasa pada $time. Sahkan ketika itu.';
+    return 'Menunggu hingga $time. Kemudian sahkan di “Tetapan”.';
   }
 
   @override
@@ -1641,15 +1679,19 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'Perubahan ini ditahan oleh tetapan perlindungan.';
+      'Bukan sekarang: tetapan perlindungan anda membuat perubahan ini menunggu, atau meminta PIN.';
 
   @override
   String get protectLimits =>
-      'Apa yang tidak dapat dihalang: henti paksa, nyahpasang, mengosongkan data Waaiya dan tetapan Android sendiri. Menyekatnya memerlukan kuasa pentadbir peranti atau kebolehcapaian yang tidak digunakan oleh Waaiya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
+      'Apa yang tidak dapat dihalang: henti paksa, nyahpasang, mengosongkan data Waaiya dan tetapan Android sendiri. Menyekatnya memerlukan kebenaran khas Android yang tidak digunakan oleh Waaiya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
 
   @override
   String get protectLimitsDesktop =>
       'Apa yang tidak dapat dihalang: arahan waaiya dalam terminal, membuang Waaiya atau memadam folder tetapannya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
+
+  @override
+  String get protectLimitsWindows =>
+      'Apa yang tidak dapat dihalang: arahan waaiya-filter.exe dalam terminal, membuang Waaiya atau memadam folder tetapannya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
 
   @override
   String get protectWhatStop => 'Hentikan penapis';
@@ -1673,11 +1715,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get protectWhatStrictness => 'Jadikan kabur kurang ketat';
 
   @override
-  String get protectWhatGender => 'Tukar siapa yang menggunakan telefon';
+  String get protectWhatGender => 'Tukar siapa yang menggunakan Waaiya';
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Tukar tempoh menunggu kepada: $value';
+    return 'Tukar masa tunggu sebelum mematikan kepada: $value';
   }
 
   @override
@@ -1688,4 +1730,8 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Tukar tetapan';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya membuang alat muzik daripada bunyi setiap apl pada komputer ini. Percakapan dan bacaan al-Quran dikekalkan. Buat masa ini, suara nyanyian turut dibuang.';
 }

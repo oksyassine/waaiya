@@ -19,7 +19,7 @@ void main() {
     var b = await DesktopBackend.open(
         file: fresh, licencesDir: dir, findEngine: false, findBlur: false, systemLocale: 'fr_FR.UTF-8');
     expect(b.state.language, 'fr');
-    b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false, findBlur: false, systemLocale: 'de_DE');
+    b = await DesktopBackend.open(file: file, licencesDir: dir, findEngine: false, findBlur: false, systemLocale: 'zh_CN');
     expect(b.state.language, 'ar');
     expect(b.state.filter.simulated, isTrue);
     expect(b.state.capabilities.shizukuSetup, isFalse);

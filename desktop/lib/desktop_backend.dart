@@ -11,6 +11,7 @@ import 'package:waaiya_ui/src/fix_mistakes_notes.dart';
 import 'package:waaiya_ui/src/protection_core.dart';
 
 import 'linux_blur.dart';
+import 'links.dart';
 import 'linux_engine.dart';
 import 'version.dart';
 import 'windows_engine.dart';
@@ -35,8 +36,9 @@ import 'windows_engine.dart';
 /// `waaiya` command line is not guarded: it stays the way out, and the card says so.
 class DesktopBackend extends MemoryBackend {
   DesktopBackend._(this.settingsFile, this.licencesDir, this.engine, this.blur, this.startTimeout, AppState initial,
-      Duration? poll)
-      : super(initial: initial) {
+      Duration? poll, {this.windows = true, Future<bool> Function(String)? openUrl})
+      : _openUrl = openUrl ?? ((u) => openWithSystem(u, windows: windows)),
+        super(initial: initial) {
     if (engine != null && poll != null) _timer = Timer.periodic(poll, (_) => refresh());
     _blurSub = blur?.reports.listen(_onBlur);
   }
@@ -55,6 +57,13 @@ class DesktopBackend extends MemoryBackend {
   StreamSubscription<BlurReport?>? _blurSub;
 
   Timer? _timer;
+
+  /// "Save without music" (null: no save tools in this bundle, e.g. the Microsoft Store package: watch only).
+  LinkSaver? links;
+  final bool windows;
+
+  /// Opens a link in the default browser (tests: recorded instead).
+  final Future<bool> Function(String url) _openUrl;
 
   /// The last start/stop problem (`filter.error`); kept until the next start, cleared once the filter runs.
   BackendMessage? _error;
@@ -90,6 +99,12 @@ class DesktopBackend extends MemoryBackend {
     Duration? poll = const Duration(seconds: 3),
     Duration startTimeout = defaultStartTimeout,
     String? systemLocale,
+    LinkTools? linkTools,
+    bool findLinkTools = true,
+    String? linkWorkDir,
+    (String, String)? linkFolders,
+    ProcessStarter? linkProcesses,
+    Future<bool> Function(String url)? openUrl,
     ProtectionClock? protectionClock,
     int protectionIterations = ProtectionRules.iterations,
   }) async {
@@ -122,6 +137,7 @@ class DesktopBackend extends MemoryBackend {
       final v = saved[key];
       if (v != null && SettingKeys.validate(key, v) == null) settings[key] = v;
     }
+    if (linkTools == null && findLinkTools && engine is WindowsEngine) linkTools = LinkTools.find(engine.dir.path);
     final detector = engine?.hasDetector ?? false;
     final initial = AppState(
       platform: platform,
@@ -142,6 +158,10 @@ class DesktopBackend extends MemoryBackend {
         autostart: engine != null,
         screenBlur: blur != null,
         blurStandalone: blur != null,
+        // Watch needs the filter (Windows; Linux once its bundle has the save tools); Save needs the tools too
+        links: engine != null && (windows || linkTools != null),
+        linkPage: true,
+        linkSave: engine != null && linkTools != null,
       ),
       // the covers let every click through (empty input region), so the full-screen fail cover is safe here
       blur: blur != null ? const BlurInfo(overlayAllowed: true, touchPassThrough: true) : const BlurInfo(),
@@ -150,9 +170,25 @@ class DesktopBackend extends MemoryBackend {
         'fix': _fixSection(engine, notes.count),
       },
     );
-    final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll);
+    final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll,
+        windows: windows, openUrl: openUrl);
+    if (linkTools != null && engine != null) {
+      final env = Platform.environment;
+      final work = linkWorkDir ??
+          (windows
+              ? '${env['LOCALAPPDATA'] ?? env['USERPROFILE'] ?? '.'}\\Waaiya\\links'
+              : '${env['HOME'] ?? '.'}/.cache/waaiya/links');
+      final folders = linkFolders ?? await savedFolders(windows: windows);
+      b.links = LinkSaver(linkTools,
+          workDir: work,
+          videosDir: folders.$1,
+          musicDir: folders.$2,
+          windows: windows,
+          start: linkProcesses,
+          onStatus: (st) => b.emit(b.state.copyWith(linkSave: st)));
+    }
     b._initFix(notes);
-    b._initProtect(protectFile, protectionClock ?? (linux ? LinuxBootClock() : ProcessClock()), protectionIterations);
+    b._initProtect(protectFile, protectionClock ?? (linux ? LinuxBootClock() : (windows ? WindowsTickClock() : ProcessClock())), protectionIterations);
     await b.refresh(); // a filter already running (started at login) shows at once
     await b._applyBlur();
     return b;
@@ -187,9 +223,13 @@ class DesktopBackend extends MemoryBackend {
 
   // --- Fix mistakes on the spot (lane A): apps heard unfiltered (Linux engine), wrong-detection notes ---
 
-  /// `features.fix` on desktop: no blur-off apps and no hand covers here (not offered: hidden).
-  static Map<Object?, Object?> _fixSection(FilterHost? engine, int notes) =>
-      {'filterApps': engine is LinuxEngine, 'notes': notes};
+  /// `features.fix` on desktop: no blur-off apps and no hand covers here (not offered: hidden). Windows: the names
+  /// Windows shows for the apps' files ("chrome.exe" -> "Google Chrome").
+  static Map<Object?, Object?> _fixSection(FilterHost? engine, int notes) => {
+        'filterApps': engine is LinuxEngine || engine is WindowsEngine,
+        'notes': notes,
+        if (engine is WindowsEngine) 'labels': {for (final a in engine.playingApps()) a.exe: a.name},
+      };
 
   late final FixNotes _notes;
 
@@ -199,6 +239,15 @@ class DesktopBackend extends MemoryBackend {
     // the daemon reads the app's list (also one chosen before the engine was installed)
     if (e is LinuxEngine) e.writeFilterOffApps(state.settings.filterOffApps);
     methods['fix.apps'] = (_) async {
+      if (e is WindowsEngine) {
+        // the apps with sound now (the filter's list) and the ones already chosen; the setting holds file names
+        final now = {for (final a in e.playingApps()) a.exe: a.name};
+        _emitFix(_notes.count); // the chosen list's names follow
+        return [
+          for (final n in {...now.keys, ...state.settings.filterOffApps})
+            {'package': n, 'label': now[n] ?? (n.toLowerCase().endsWith('.exe') ? n.substring(0, n.length - 4) : n)},
+        ];
+      }
       // the apps playing sound now, and the ones already chosen (names are what the daemon matches)
       final playing = e is LinuxEngine ? await e.playingApps() : const <String>[];
       return [
@@ -329,12 +378,12 @@ class DesktopBackend extends MemoryBackend {
     ));
   }
 
-  // --- Keep singing (setting keep_singing; Linux engine only) ---
+  // --- Keep singing (setting keep_singing; the Linux and Windows engines) ---
 
-  /// `features.singing`: `available` = the bundled Linux engine has the voice_v1 model; `active` = the filter runs
+  /// `features.singing`: `available` = the bundled engine has the voice_v1 model; `active` = the filter runs
   /// with it (it loaded: a model that did not load is silent, FilterState.modelFailed).
   static Map<String, Object?> _singingFeature(FilterHost? e, bool keepSinging, bool filtering) {
-    final available = e is LinuxEngine && e.hasSingingModel;
+    final available = (e is LinuxEngine && e.hasSingingModel) || (e is WindowsEngine && e.hasSingingModel);
     return {'available': available, 'active': available && keepSinging && filtering};
   }
 
@@ -343,7 +392,8 @@ class DesktopBackend extends MemoryBackend {
         'singing': _singingFeature(engine, state.settings.keepSinging, state.filter.state == FilterState.filtering),
       }));
 
-  /// `waaiya keep-singing on|off`; Linux only (no other host has the model). "on" only with the model bundled; "off"
+  /// `waaiya keep-singing on|off`; Linux only (the Windows filter reads the setting from the settings file and swaps
+  /// the model itself, with no gap). "on" only with the model bundled; "off"
   /// whenever the engine still has it on (also left on by an earlier bundle without the model: it would stay silent).
   static Future<BackendMessage?> _setKeepSinging(FilterHost e, bool on) async {
     if (e is! LinuxEngine) return null;
@@ -544,6 +594,94 @@ class DesktopBackend extends MemoryBackend {
     await refresh();
   }
 
+  // --- Links ---
+
+  /// The last link Open resolved: Save reuses it (resolving YouTube takes 15-20 s), while its download addresses are
+  /// fresh (they expire after some hours).
+  ResolvedLink? _resolved;
+  DateTime _resolvedAt = DateTime.fromMillisecondsSinceEpoch(0);
+
+  Future<ResolvedLink> _resolve(LinkSaver l, String url) async {
+    final r = _resolved;
+    if (r != null && r.meta.url == url && DateTime.now().difference(_resolvedAt) < const Duration(minutes: 30)) return r;
+    try {
+      final fresh = await l.resolve(url);
+      _resolved = fresh;
+      _resolvedAt = DateTime.now();
+      return fresh;
+    } on LinkError catch (e) {
+      throw BackendException(e.code, e.detail);
+    }
+  }
+
+  /// With the save tools: yt-dlp says what the link is. Without (the Store package): the link's host, no network.
+  @override
+  Future<LinkMeta> resolveLink(String url) async {
+    final u = findLink(url);
+    if (u == null) throw const BackendException('invalid_url');
+    final l = links;
+    if (l == null) return LinkMeta(url: u.toString(), site: u.host);
+    _resolved = null; // Open always asks the site again
+    return (await _resolve(l, u.toString())).meta;
+  }
+
+  /// The filter first, then the browser: never opens the link unfiltered.
+  @override
+  Future<void> watchLink(String url) async {
+    final u = findLink(url);
+    if (u == null) throw const BackendException('invalid_url');
+    if (engine == null) throw const BackendException('filter_failed', 'no filter in this build');
+    if (state.filter.state != FilterState.filtering) {
+      if (!state.filter.running) await startFilter();
+      // "filtering" only once the apps' sound goes through the filter (start() waits for that, up to 8 s)
+      final end = DateTime.now().add(const Duration(seconds: 10));
+      while (state.filter.state != FilterState.filtering && DateTime.now().isBefore(end)) {
+        if (!state.filter.running) break;
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+        await refresh();
+      }
+      if (state.filter.state != FilterState.filtering) {
+        throw BackendException('filter_failed', state.filter.error?.detail ?? '');
+      }
+    }
+    if (!await _openUrl(u.toString())) throw const BackendException('failed', 'the browser did not open');
+  }
+
+  @override
+  Future<void> saveLink(String url) async {
+    final l = links;
+    if (l == null) throw const BackendException('unsupported', 'saveLink');
+    if (l.busy) throw const BackendException('busy');
+    final u = findLink(url);
+    if (u == null) throw const BackendException('invalid_url');
+    // women's singing as in the live filter; never without the detector (fail-closed)
+    final st = state.settings;
+    final singing = st.isMan && st.muteWomenSinging;
+    if (singing && engine?.hasDetector != true) {
+      throw const BackendException('failed', "the women's singing detector is not in this installation");
+    }
+    final r = await _resolve(l, u.toString());
+    if (r.meta.isLive) throw const BackendException('live');
+    if (r.choice == null) throw const BackendException('no_format');
+    if (l.busy) throw const BackendException('busy');
+    unawaited(l.save(r, singing: singing));
+  }
+
+  @override
+  Future<void> cancelLinkSave() async => links?.cancel();
+
+  @override
+  Future<void> openSavedLink() async {
+    final p = state.linkSave.path;
+    if (p != null && File(p).existsSync()) await openWithSystem(p, windows: windows);
+  }
+
+  @override
+  Future<void> showSavedLink() async {
+    final p = state.linkSave.path;
+    if (p != null) await showInFolder(p, windows: windows);
+  }
+
   // --- diagnostics ---
 
   @override
@@ -556,7 +694,10 @@ class DesktopBackend extends MemoryBackend {
       ..writeln('Filter: ${s.filter.state.name}${s.filter.problem != null ? ', ${s.filter.problem}' : ''}'
           '${s.filter.error != null ? ', error ${s.filter.error!.code}' : ''}')
       ..writeln('Blur: ${s.blur.state?.name ?? 'off'}${s.blur.error != null ? ', ${s.blur.error!.code}: ${s.blur.error!.detail}' : ''}'
-          '${s.blur.uncovered > 0 ? ', ${s.blur.uncovered} monitor(s) not covered' : ''}');
+          '${s.blur.uncovered > 0 ? ', ${s.blur.uncovered} monitor(s) not covered' : ''}')
+      ..writeln('Links: ${s.capabilities.linkSave ? 'watch and save' : s.capabilities.links ? 'watch only' : 'off'}'
+          '${s.linkSave.phase != LinkSavePhase.idle ? ', last save ${s.linkSave.phase.name}' : ''}'
+          '${s.linkSave.error != null ? ' (${s.linkSave.error!.code}: ${s.linkSave.error!.detail})' : ''}');
     final bl = blur;
     if (bl != null) {
       final r = bl.last;
@@ -605,10 +746,18 @@ class DesktopBackend extends MemoryBackend {
     LicenceDoc('EfficientAT detector backbone (MIT)', 'EfficientAT-LICENSE.txt'),
   ];
 
+  static const _linkDocs = [
+    LicenceDoc('yt-dlp (Unlicense)', 'yt-dlp-LICENSE.txt'),
+    LicenceDoc('yt-dlp: the parts inside its program', 'yt-dlp-THIRD_PARTY_LICENSES.txt'),
+    LicenceDoc('QuickJS-ng (MIT)', 'QuickJS-ng-LICENSE.txt'),
+    LicenceDoc('FFmpeg (LGPL 2.1 or later)', 'ffmpeg-LGPL-2.1.txt'),
+    LicenceDoc('FFmpeg: source and build', 'ffmpeg-SOURCE.txt'),
+  ];
+
   /// The base texts, plus the engine's when they are in the bundle.
   List<LicenceDoc> get _docs => [
         ..._baseDocs,
-        ...[..._engineDocs, ..._blurDocs]
+        ...[..._engineDocs, ..._blurDocs, ..._linkDocs]
             .where((d) => File('${licencesDir.path}${Platform.pathSeparator}${d.file}').existsSync()),
       ];
 

@@ -28,7 +28,7 @@
   "@genderWoman": {
     "description": "Android string gender_woman"
   },
-  "onboardWhy": "هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.",
+  "onboardWhy": "هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.",
   "@onboardWhy": {
     "description": "Android string onboard_why"
   },
@@ -44,7 +44,7 @@
   "@stateStarting": {
     "description": "Android string state_starting"
   },
-  "stateOnDetail": "تُزال الآلات من كل التطبيقات. التأخير نحو {delayMs} ميلي ثانية.",
+  "stateOnDetail": "تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو {delayMs} ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).",
   "@stateOnDetail": {
     "description": "Android string state_on_detail",
     "placeholders": {
@@ -259,7 +259,7 @@
   "@settingSingingTitle": {
     "description": "Android string setting_singing_title"
   },
-  "settingSingingBody": "يُبقي كلام النساء وتلاوتهن.",
+  "settingSingingBody": "مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.",
   "@settingSingingBody": {
     "description": "Android string setting_singing_body"
   },
@@ -467,7 +467,7 @@
   "@blurWomenTitle": {
     "description": "Android string blur_women_title"
   },
-  "blurWomenBody": "الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.",
+  "blurWomenBody": "يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.",
   "@blurWomenBody": {
     "description": "Android string blur_women_body"
   },
@@ -475,7 +475,7 @@
   "@blurNudityTitle": {
     "description": "Android string blur_nudity_title"
   },
-  "blurNudityBody": "العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.",
+  "blurNudityBody": "العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.",
   "@blurNudityBody": {
     "description": "Android string blur_nudity_body"
   },
@@ -495,11 +495,11 @@
   "@blurSetupManual": {
     "description": "Android string blur_setup_manual"
   },
-  "blurStatusNeedsSetup": "يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).",
+  "blurStatusNeedsSetup": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
   "@blurStatusNeedsSetup": {
     "description": "Android string blur_status_needs_setup"
   },
-  "blurStatusNeedsOverlay": "يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.",
+  "blurStatusNeedsOverlay": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
   "@blurStatusNeedsOverlay": {
     "description": "Android string blur_status_needs_overlay"
   },
@@ -1272,6 +1272,46 @@
   "@diagNoteDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
+  "settingHoldSilenceBodyDesktop": "مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.",
+  "@settingHoldSilenceBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "settingStereoBodyDesktop": "مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.",
+  "@settingStereoBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkEntryBodyDesktop": "الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.",
+  "@linkEntryBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkEntryBodyWatch": "الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.",
+  "@linkEntryBodyWatch": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkWatchNoteDesktop": "يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.",
+  "@linkWatchNoteDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkFilterFailed": "لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.",
+  "@linkFilterFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSavedVideoDesktop": "في مجلد الفيديو: Waaiya",
+  "@linkSavedVideoDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSavedAudioDesktop": "في مجلد الموسيقى: Waaiya",
+  "@linkSavedAudioDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkShowInFolder": "إظهار في المجلد",
+  "@linkShowInFolder": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSingingNote": "يُكتم غناء النساء أيضاً، كما في إعداداتك.",
+  "@linkSingingNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "singingKeepTitle": "إبقاء أصوات الغناء (تجريبي)",
   "@singingKeepTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
@@ -1288,7 +1328,7 @@
   "@fixFilterAppsTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "fixFilterAppsBody": "تُشغَّل هذه التطبيقات بصوتها الأصلي: لا تصفّيها واعية ولا تُسكتها.",
+  "fixFilterAppsBody": "التطبيقات التي تختارها هنا تُسمع كما هي: بلا تصفية وبلا إسكات. مثلًا: تطبيق مكالمات الفيديو، حتى لا يتأخّر الصوت في المكالمات.",
   "@fixFilterAppsBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1324,7 +1364,7 @@
   "@fixBlurAppsTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "fixBlurAppsBody": "لا تغطية ما دام أحد هذه التطبيقات وحده على الشاشة. تعود التغطية فور مغادرته، أو متى لم تتيقّن واعية من التطبيق الظاهر.",
+  "fixBlurAppsBody": "لا تغطية ما دام أحد هذه التطبيقات يملأ الشاشة، مثل تطبيق الخرائط أو تطبيق البنك. وتعود التغطية فور مغادرته، أو كلما لم تتيقّن واعية من التطبيق الظاهر.",
   "@fixBlurAppsBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1340,7 +1380,7 @@
   "@fixHandTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "fixHandBody": "أثناء عمل التمويه، اسحب إصبعك على أي جزء من الشاشة لتغطيته. يبقى مغطًّى حتى تزيله أو يتوقف التمويه.",
+  "fixHandBody": "أثناء عمل التمويه يمكنك تغطية جزء من الشاشة بنفسك، مثل صورة فاتت التمويه: اضغط «تغطية جزء» واسحب إصبعك فوقها. تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.",
   "@fixHandBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1360,7 +1400,7 @@
   "@fixNoteTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "fixNoteBody": "سجّله لحظة حدوثه. تحفظ الملاحظة الوقت والتطبيق والإعدادات، وتبقى على هذا الجهاز ولا تُرسَل أبدًا.",
+  "fixNoteBody": "حين تخطئ واعية، اضغط على ما حدث، مثل «مرّت موسيقى». تحفظ الملاحظة الوقت والتطبيق والإعدادات، لتساعد على معرفة السبب. وتبقى على هذا الجهاز ولا تُرسَل أبدًا.",
   "@fixNoteBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1400,7 +1440,7 @@
   "@fixNotesDeleteAsk": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "fixNotesTitle": "ملاحظات أخطاء الكشف",
+  "fixNotesTitle": "ملاحظات الأخطاء",
   "@fixNotesTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1560,7 +1600,7 @@
   "@worshipSilentTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "worshipSilentBody": "من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.",
+  "worshipSilentBody": "عند كل وقت صلاة يصبح الهاتف صامتًا («عدم الإزعاج») للدقائق المحدّدة أدناه، ثم يعود كما كان. مثلًا: من الظهر الساعة 12:00 حتى 12:20.",
   "@worshipSilentBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1756,19 +1796,19 @@
   "@protectTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectBody": "قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.",
+  "protectBody": "للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.",
   "@protectBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectDelay": "مدة الانتظار: {value}",
+  "protectDelay": "الانتظار قبل الإيقاف: {value}",
   "@protectDelay": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectDelayTitle": "مدة الانتظار",
+  "protectDelayTitle": "الانتظار قبل الإيقاف",
   "@protectDelayTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectDelayBody": "إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.",
+  "protectDelayBody": "مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.",
   "@protectDelayBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1824,11 +1864,11 @@
   "@protectPinRemove": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectPinBody": "مع الرمز، يُطلب أولًا قبل كل تغيير يُضعف الحماية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.",
+  "protectPinBody": "مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.",
   "@protectPinBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectPinForgot": "إن نُسي الرمز فلا سبيل لاسترجاعه: لا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.",
+  "protectPinForgot": "اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.",
   "@protectPinForgot": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1888,11 +1928,11 @@
   "@protectConfirm": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectPending": "{what}: يسري عند {time}.",
+  "protectPending": "{what}: ينتظر حتى {time}، ثم أكِّده في «الإعدادات».",
   "@protectPending": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectReady": "{what}: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل {time}، وإلا فلن يتغيّر شيء.",
+  "protectReady": "{what}: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل {time}، وإلا فلن يتغيّر شيء.",
   "@protectReady": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1900,7 +1940,7 @@
   "@protectWaitTitle": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectWaitBody": "{what} يسري عند {time} إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.",
+  "protectWaitBody": "{what} لن يحدث الآن. عند {time}، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.",
   "@protectWaitBody": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1908,11 +1948,11 @@
   "@protectWaitStart": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectAlreadyWaiting": "ينتظر بالفعل: يسري عند {time}.",
+  "protectAlreadyWaiting": "ينتظر بالفعل حتى {time}.",
   "@protectAlreadyWaiting": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectStarted": "يسري عند {time}. أكِّده حينها.",
+  "protectStarted": "ينتظر حتى {time}، ثم أكِّده في «الإعدادات».",
   "@protectStarted": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1920,16 +1960,20 @@
   "@protectTomorrow": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectHeldBack": "إعدادات الحماية تؤخّر هذا التغيير.",
+  "protectHeldBack": "ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.",
   "@protectHeldBack": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectLimits": "ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات مدير الجهاز أو خدمة الوصول، وواعية لا تستعملها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "protectLimits": "ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
   "@protectLimits": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
   "protectLimitsDesktop": "ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
   "@protectLimitsDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLimitsWindows": "ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimitsWindows": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
   "protectWhatStop": "إيقاف التصفية",
@@ -1952,11 +1996,11 @@
   "@protectWhatStrictness": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectWhatGender": "تغيير من يستعمل الهاتف",
+  "protectWhatGender": "تغيير من يستعمل واعية",
   "@protectWhatGender": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "protectWhatDelay": "تغيير مدة الانتظار إلى: {value}",
+  "protectWhatDelay": "تغيير الانتظار قبل الإيقاف إلى: {value}",
   "@protectWhatDelay": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
@@ -1970,6 +2014,10 @@
   },
   "protectWhatSetting": "تغيير إعداد",
   "@protectWhatSetting": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "onboardBodyDesktop": "تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.",
+  "@onboardBodyDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
   }
 }

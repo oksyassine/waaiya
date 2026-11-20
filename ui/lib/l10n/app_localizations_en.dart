@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'This only decides which optional settings you see. You can change it later.';
+      'This only decides which optional settings you see. For example, “Mute women\'s singing” is offered only to men. You can change it later.';
 
   @override
   String get stateOnTitle => 'Filtering is on';
@@ -46,7 +46,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Instruments are removed from all apps. Delay about $delayMs ms.';
+    return 'Instruments are removed from all apps. The sound comes about $delayMs ms late (1000 ms is one second).';
   }
 
   @override
@@ -224,7 +224,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingSingingTitle => 'Mute women\'s singing';
 
   @override
-  String get settingSingingBody => 'Women\'s speech and recitation are kept.';
+  String get settingSingingBody =>
+      'For example, a song sung by a woman is muted, but a woman giving a talk is still heard.';
 
   @override
   String get settingSingingNoModel =>
@@ -391,14 +392,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Whole body. People the app cannot clearly tell are men are blurred too.';
+      'Covers the whole body. If the app is not sure that a person is a man, it covers them too.';
 
   @override
   String get blurNudityTitle => 'Blur immodest images';
 
   @override
   String get blurNudityBody =>
-      'Nudity and revealing clothing, of anyone: the whole screen is covered.';
+      'Nudity or revealing clothes, on anyone: the whole screen is covered.';
 
   @override
   String get blurFailTitle => 'Cover the screen if the blur cannot keep up';
@@ -415,11 +416,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'The blur needs to draw over other apps. Best: allow it with Shizuku (turns on the Waaiya Blur accessibility service, so touches still reach the app underneath). Or allow \"Display over other apps\" in Android settings (touches on a blurred area are then lost).';
+      'To blur, Waaiya has to draw over other apps. Best: “Allow with Shizuku”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'The blur needs to draw over other apps. Best: start Shizuku (and allow Waaiya in it): the blur then draws its own layer, which taps pass through. Otherwise allow \"Display over other apps\" in Android settings; a tap on a blurred area then does not reach the app underneath.';
+      'To blur, Waaiya has to draw over other apps. Best: start Shizuku and allow Waaiya in it, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.';
 
   @override
   String get blurFailUnavailable =>
@@ -1053,6 +1054,43 @@ class AppLocalizationsEn extends AppLocalizations {
       'What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.';
 
   @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Recommended. If filtering stops by itself (an error, not you), other apps stay silent until you start again or press Stop, instead of playing music unfiltered.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Off: mono, which uses less of the computer. On: keeps the left and right sides apart. If the computer is too slow for stereo, it switches to mono by itself.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Paste a YouTube, TikTok or Instagram link to watch it with the filter on, or to save it without music.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Paste a YouTube, TikTok or Instagram link to watch it in your browser with the filter on.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Opens in your browser. Waaiya starts the filter first, so the music is removed there too.';
+
+  @override
+  String get linkFilterFailed =>
+      'The filter did not start, so the link was not opened. Start it on the Filter page and try again.';
+
+  @override
+  String get linkSavedVideoDesktop => 'In your Videos folder: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'In your Music folder: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Show in folder';
+
+  @override
+  String get linkSingingNote =>
+      'Women\'s singing is muted too, as in your settings.';
+
+  @override
   String get singingKeepTitle => 'Keep singing (test)';
 
   @override
@@ -1068,7 +1106,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'These apps play their original sound: Waaiya neither filters nor silences them.';
+      'Apps you choose here play as they are: no filter and no silence. For example, a video-call app, so that calls have no delay.';
 
   @override
   String get fixAddApp => 'Add an app';
@@ -1099,7 +1137,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'No covers while one of these apps is alone on the screen. The covers come back as soon as you leave it, or whenever Waaiya is not sure which app is shown.';
+      'No covers while one of these apps fills the screen, for example a maps app or your bank\'s app. The covers come back as soon as you leave it, or whenever Waaiya is not sure which app is shown.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1114,7 +1152,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'While the blur runs, drag over any part of the screen to cover it. It stays covered until you remove it or the blur stops.';
+      'While the blur runs, you can cover a part of the screen yourself, for example a picture the blur missed: tap “Cover an area” and drag your finger over it. It stays covered until you remove it or the blur stops.';
 
   @override
   String get fixHandNotRunning =>
@@ -1133,7 +1171,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Mark it when it happens. A note keeps the time, the app and the settings. It stays on this device and is never sent.';
+      'When Waaiya gets something wrong, tap what happened, for example “Music got through”. The note keeps the time, the app and the settings, to help find the cause. It stays on this device and is never sent.';
 
   @override
   String get fixMissedSound => 'Music got through';
@@ -1168,7 +1206,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Delete all the notes? This cannot be undone.';
 
   @override
-  String get fixNotesTitle => 'Wrong-detection notes';
+  String get fixNotesTitle => 'Notes about mistakes';
 
   @override
   String get worshipTitle => 'Prayer times';
@@ -1301,7 +1339,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'From each prayer time, Do Not Disturb for the minutes below, then back to how you had it.';
+      'At each prayer time the phone goes silent (Do Not Disturb) for the minutes below, then comes back as it was. For example, from Dhuhr at 12:00 until 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1489,19 +1527,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Decide now, while you are calm: a change that lowers protection waits before it takes effect. A parent can also set a PIN.';
+      'For a weak moment when you might want to turn the filter off. Set a wait now, while you are calm: then pressing the button to stop does not stop it at once, and you decide again when the wait is over. A parent can also set a PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Waiting period: $value';
+    return 'Wait before turning off: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Waiting period';
+  String get protectDelayTitle => 'Wait before turning off';
 
   @override
   String get protectDelayBody =>
-      'Stopping the filter, turning off a cover or anything else that lowers protection waits this long. Then you confirm it within 15 minutes, or nothing changes. Turning things on always works at once.';
+      'For example, with 30 minutes: you press the button to stop, but the filter keeps working. After 30 minutes, this page asks whether you still want to stop. Press “Confirm” within 15 minutes and it stops; otherwise nothing changes. It is the same for turning off a cover or any other protection. Turning things on always works at once.';
 
   @override
   String get protectDelayOff => 'None';
@@ -1546,11 +1584,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'With a PIN, every change that lowers protection asks for it first. Changing the waiting period or the PIN asks for it too.';
+      'With a PIN, stopping the filter or turning off any protection asks for the PIN first. For example, a parent sets one so that a child cannot turn the filter off. Changing the wait or the PIN asks for it too.';
 
   @override
   String get protectPinForgot =>
-      'If the PIN is forgotten, there is no reset: only clearing Waaiya\'s data or reinstalling it, which also clears all its settings.';
+      'Write the PIN down somewhere safe: if it is forgotten, there is no reset. The only way out is to clear Waaiya\'s data or reinstall it, which also erases all its settings.';
 
   @override
   String get protectPinTitle => 'Enter the PIN';
@@ -1600,12 +1638,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: takes effect at $time.';
+    return '$what: waiting until $time. Then confirm it in “Settings”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: the wait is over. Still want it? Confirm before $time, or nothing changes.';
+    return '$what: the wait is over. Do you still want it? Press “Confirm” before $time; otherwise nothing changes.';
   }
 
   @override
@@ -1613,7 +1651,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what takes effect at $time, if you still want it then. You confirm it here within 15 minutes after that.';
+    return '$what does not happen now. At $time, if you still want it, confirm it in “Settings” within 15 minutes. If you do nothing, nothing changes.';
   }
 
   @override
@@ -1621,12 +1659,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Already waiting: it takes effect at $time.';
+    return 'Already waiting until $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'It takes effect at $time. Confirm it then.';
+    return 'Waiting until $time. Then confirm it in “Settings”.';
   }
 
   @override
@@ -1636,15 +1674,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'This change is held back by the protection settings.';
+      'Not now: your protection settings make this change wait, or ask for the PIN.';
 
   @override
   String get protectLimits =>
-      'What this cannot stop: force stop, uninstalling, clearing Waaiya\'s data and Android\'s own settings. Blocking those needs device-admin or accessibility powers that Waaiya does not use. This protects against a weak moment, not against a determined person.';
+      'What this cannot stop: force stop, uninstalling, clearing Waaiya\'s data and Android\'s own settings. Blocking those would need special Android permissions that Waaiya does not use. This protects against a weak moment, not against a determined person.';
 
   @override
   String get protectLimitsDesktop =>
       'What this cannot stop: the waaiya command in a terminal, removing Waaiya or deleting its settings folder. This protects against a weak moment, not against a determined person.';
+
+  @override
+  String get protectLimitsWindows =>
+      'What this cannot stop: the waaiya-filter.exe command in a terminal, removing Waaiya or deleting its settings folder. This protects against a weak moment, not against a determined person.';
 
   @override
   String get protectWhatStop => 'Stop the filter';
@@ -1668,11 +1710,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get protectWhatStrictness => 'Make the blur less strict';
 
   @override
-  String get protectWhatGender => 'Change who uses the phone';
+  String get protectWhatGender => 'Change who uses Waaiya';
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Change the waiting period to: $value';
+    return 'Change the wait before turning off to: $value';
   }
 
   @override
@@ -1683,4 +1725,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Change a setting';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya removes musical instruments from the sound of every app on this computer. Speech and Quran recitation are kept. For now, singing voices are removed too.';
 }

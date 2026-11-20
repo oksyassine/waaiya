@@ -67,9 +67,63 @@ void main() {
     tmp.deleteSync(recursive: true);
   });
 
+  test('Store package: "Start at login" is the file the startup task looks for, not a Run value', () async {
+    expect(WindowsEngine.isPackagedPath(r'C:\Program Files\WindowsApps\Oks.Waaiya_1.2.13.0_x64__wa2h0h9gfqbyp\engine'),
+        isTrue);
+    expect(WindowsEngine.isPackagedPath(r'C:\Users\a\Downloads\waaiya\engine'), isFalse);
+    final tmp = Directory.systemTemp.createTempSync('waaiya-win-');
+    final e = WindowsEngine(tmp, environment: {'LOCALAPPDATA': tmp.path}, packaged: true);
+    final marker = File('${e.stateDir}\\autostart');
+    expect(await e.setAutostart(true), isNull);
+    expect(marker.existsSync(), isTrue);
+    expect((await e.status()).autostart, isTrue);
+    expect(await e.setAutostart(false), isNull);
+    expect(marker.existsSync(), isFalse);
+    expect((await e.status()).autostart, isFalse);
+    expect(await e.setAutostart(false), isNull); // already off
+    tmp.deleteSync(recursive: true);
+  });
+
   test('Windows build from the OS version string', () {
     expect(WindowsEngine.windowsBuild('"Windows 10 Pro" 10.0 (Build 19045)'), 19045);
     expect(WindowsEngine.windowsBuild('"Windows 10 Pro" 10.0 (Build 18363)'), 18363);
     expect(WindowsEngine.windowsBuild('Linux 6.8'), isNull);
+  });
+
+  test("a failed start shows only the log lines written since it, never an older run's", () {
+    const log = '2026-11-12 22:17:21.304 sessions: pid 12580 active\n'
+        '2026-11-12 22:17:21.673 audio: playing to "Speakers"\n'
+        r'2026-11-20 10:31:02.120 run: model C:\x\dfn3.onnx' '\n'
+        '2026-11-20 10:31:02.300 audio: no output device';
+    final since = DateTime(2026, 11, 20, 10, 31, 1);
+    final d = WindowsEngine.startFailure(log, since);
+    expect(d, contains('no output device'));
+    expect(d, isNot(contains('2026-11-12')));
+    expect(WindowsEngine.startFailure(log.split('\n').take(2).join('\n'), since), contains('did not answer'));
+  });
+
+  test('a test run is not a packaged app', () {
+    expect(WindowsEngine.isPackagedProcess(), isFalse);
+  });
+
+  test("the apps with sound come from the filter's state: file name and the name Windows shows", () {
+    const st = '{"pid":1,"state":"filtering","apps":[{"exe":"chrome.exe","name":"Google Chrome"},'
+        '{"exe":"tone.exe"},{"name":"no file"},{"exe":""}]}';
+    final a = WindowsEngine.appsFrom(st);
+    expect(a.map((x) => x.exe), ['chrome.exe', 'tone.exe']);
+    expect(a.first.name, 'Google Chrome');
+    expect(a[1].name, 'tone.exe'); // no description: the file name
+    expect(WindowsEngine.appsFrom('{"apps":"x"}'), isEmpty);
+    expect(WindowsEngine.appsFrom('half {'), isEmpty);
+  });
+
+  test('the waiting period counts on the time since Windows started, which a clock change does not move', () {
+    final c = WindowsTickClock();
+    if (!Platform.isWindows) return;
+    final a = c.elapsedMs();
+    expect(a, greaterThan(0));
+    sleep(const Duration(milliseconds: 50));
+    expect(c.elapsedMs() - a, inInclusiveRange(40, 2000));
+    expect(c.bootId(), 'windows'); // a restart shows as a lower count, never as more time
   });
 }
