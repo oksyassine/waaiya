@@ -1039,4 +1039,110 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get singingKeepNoModel =>
       'Bu sürümde şarkı modeli yok, bu yüzden bu seçenek açıkken ses sessiz kalır. Kapatın.';
+
+  @override
+  String get fixFilterAppsTitle => 'Filtresiz duyulan uygulamalar';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Bu uygulamalar özgün seslerini çalar: Waaiya onları ne filtreler ne de susturur.';
+
+  @override
+  String get fixAddApp => 'Uygulama ekle';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return '$app kaldır';
+  }
+
+  @override
+  String get fixNoApps => 'Seçili uygulama yok.';
+
+  @override
+  String get fixPickTitle => 'Bir uygulama seçin';
+
+  @override
+  String get fixPickEmpty => 'Başka uygulama bulunamadı.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Şu anda ses çalan uygulamalar ve önceden seçilenler.';
+
+  @override
+  String get fixCancel => 'İptal';
+
+  @override
+  String get fixBlurAppsTitle => 'Bulanıklaştırılmayan uygulamalar';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Bu uygulamalardan biri ekranda tek başınayken örtü yok. Ondan çıktığınız anda ya da Waaiya hangi uygulamanın gösterildiğinden emin olmadığında örtüler geri gelir.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Tek seferlik kurulum gerekir: o olmadan Waaiya ekranda hangi uygulamanın olduğunu bilemez, bu yüzden bulanıklık her yerde kalır.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Bu telefonda henüz yok: kurulumu Waaiya\'nın yardımcısıyla yapılıyor ve o, ekranda hangi uygulamanın olduğunu bilemez. Bulanıklık her yerde kalır.';
+
+  @override
+  String get fixHandTitle => 'Bir alanı elle örtün';
+
+  @override
+  String get fixHandBody =>
+      'Bulanıklık çalışırken, örtmek için ekranın herhangi bir yerinde parmağınızı sürükleyin. Siz kaldırana ya da bulanıklık durana kadar örtülü kalır.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Bulanıklık çalışırken kullanılabilir: filtreleme açık ve bir bulanıklık seçeneği açık.';
+
+  @override
+  String get fixCoverArea => 'Bir alanı ört';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Elle konan örtüleri kaldır ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Bir hatayı not edin';
+
+  @override
+  String get fixNoteBody =>
+      'Olduğu anda işaretleyin. Not; saati, uygulamayı ve ayarları saklar. Bu cihazda kalır ve asla gönderilmez.';
+
+  @override
+  String get fixMissedSound => 'Müzik geçti';
+
+  @override
+  String get fixWrongSound => 'Ses yanlışlıkla silindi';
+
+  @override
+  String get fixMissedScreen => 'Bir şey örtülmedi';
+
+  @override
+  String get fixWrongScreen => 'Yanlışlıkla örtüldü';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Not edildi (bu cihazda $count not).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Bu cihazdaki notlar: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Notları göster';
+
+  @override
+  String get fixNotesDelete => 'Notları sil';
+
+  @override
+  String get fixNotesDeleteAsk => 'Tüm notlar silinsin mi? Bu geri alınamaz.';
+
+  @override
+  String get fixNotesTitle => 'Yanlış algılama notları';
 }

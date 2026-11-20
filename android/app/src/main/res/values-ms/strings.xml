@@ -337,4 +337,16 @@
     <string name="shortcut_stop_short">Henti</string>
     <string name="shortcut_stop_long">Hentikan penapisan</string>
     <string name="notif_channel_silenced">Apl dikekalkan senyap</string>
+    <string name="notif_fix_notif_channel">Betulkan kesilapan</string>
+    <string name="notif_fix_notif_title">Betulkan kesilapan</string>
+    <string name="notif_fix_notif_text">Tutup kawasan dengan tangan, atau catat apa yang terlepas atau tersembunyi secara silap. Catatan kekal pada telefon ini.</string>
+    <string name="notif_fix_cover_area">Tutup kawasan</string>
+    <string name="notif_fix_remove_covers">Buang penutup tangan</string>
+    <string name="notif_fix_note_missed">Ada yang terlepas</string>
+    <string name="notif_fix_note_wrong">Tersembunyi secara silap</string>
+    <string name="notif_fix_noted">Dicatat (%1$d catatan pada telefon ini)</string>
+    <string name="notif_fix_picker_hint">Seret jari pada kawasan yang hendak ditutup.</string>
+    <string name="notif_fix_picker_cover">Tutupkan</string>
+    <string name="notif_fix_picker_cancel">Batal</string>
+    <string name="notif_fix_picker_no_blur">Kabur skrin tidak berjalan. Hidupkan dahulu satu pilihan kabur semasa penapisan.</string>
 </resources>

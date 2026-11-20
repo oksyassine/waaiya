@@ -1047,4 +1047,111 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get singingKeepNoModel =>
       'Cette version n\'a pas le modèle du chant : le son reste silencieux tant que cette option est activée. Désactivez-la.';
+
+  @override
+  String get fixFilterAppsTitle => 'Applications entendues sans filtre';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Ces applications jouent leur son d\'origine : Waaiya ne les filtre pas et ne les coupe pas.';
+
+  @override
+  String get fixAddApp => 'Ajouter une application';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'Retirer $app';
+  }
+
+  @override
+  String get fixNoApps => 'Aucune application choisie.';
+
+  @override
+  String get fixPickTitle => 'Choisir une application';
+
+  @override
+  String get fixPickEmpty => 'Aucune autre application trouvée.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Les applications qui jouent du son maintenant, et celles déjà choisies.';
+
+  @override
+  String get fixCancel => 'Annuler';
+
+  @override
+  String get fixBlurAppsTitle => 'Applications sans flou';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Aucun cache tant qu\'une de ces applications est seule à l\'écran. Les caches reviennent dès que vous la quittez, ou dès que Waaiya n\'est pas sûre de l\'application affichée.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Nécessite la configuration unique : sans elle, Waaiya ne sait pas quelle application est à l\'écran, donc le flou reste partout.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Pas encore disponible sur ce téléphone : sa configuration passe par l\'assistant de Waaiya, qui ne sait pas quelle application est à l\'écran. Le flou reste partout.';
+
+  @override
+  String get fixHandTitle => 'Couvrir une zone à la main';
+
+  @override
+  String get fixHandBody =>
+      'Pendant que le flou fonctionne, faites glisser le doigt sur une partie de l\'écran pour la couvrir. Elle reste couverte jusqu\'à ce que vous la retiriez ou que le flou s\'arrête.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Disponible pendant que le flou fonctionne : filtrage activé et une option de flou activée.';
+
+  @override
+  String get fixCoverArea => 'Couvrir une zone';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Retirer les caches manuels ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Noter une erreur';
+
+  @override
+  String get fixNoteBody =>
+      'Notez-la au moment où elle arrive. Une note garde l\'heure, l\'application et les réglages. Elle reste sur cet appareil et n\'est jamais envoyée.';
+
+  @override
+  String get fixMissedSound => 'De la musique est passée';
+
+  @override
+  String get fixWrongSound => 'Voix retirée par erreur';
+
+  @override
+  String get fixMissedScreen => 'Quelque chose n\'a pas été couvert';
+
+  @override
+  String get fixWrongScreen => 'Couvert par erreur';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Noté ($count notes sur cet appareil).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Notes sur cet appareil : $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Afficher les notes';
+
+  @override
+  String get fixNotesDelete => 'Supprimer les notes';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Supprimer toutes les notes ? Impossible d\'annuler.';
+
+  @override
+  String get fixNotesTitle => 'Notes d\'erreurs de détection';
 }

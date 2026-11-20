@@ -221,8 +221,17 @@ def main():
 
         # the filter crashes twice: restarted each time, and 'status' counts the restarts (the app's crash-loop check)
         check("restarts: 0 in the last minute" in waaiya("status").stdout, "status: no restarts yet")
+        def live_filter():
+            try:
+                pid = int(open(os.path.join(state, "filter.pid")).read())
+                os.killpg(pid, 0)
+                return pid
+            except (OSError, ValueError):
+                return None  # the reload above may still be replacing the filter
+
         for _ in range(2):
-            pid = int(open(os.path.join(state, "filter.pid")).read())
+            wait(lambda: live_filter() is not None, 10, "a running filter")
+            pid = live_filter()
             os.killpg(pid, signal.SIGKILL)
             wait(lambda: os.path.exists(os.path.join(state, "filter.pid"))
                  and open(os.path.join(state, "filter.pid")).read().strip() not in ("", str(pid)), 10, "a new filter")

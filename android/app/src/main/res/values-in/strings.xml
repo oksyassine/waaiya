@@ -337,4 +337,16 @@
     <string name="shortcut_stop_short">Berhenti</string>
     <string name="shortcut_stop_long">Hentikan filter</string>
     <string name="notif_channel_silenced">Aplikasi tetap bisu</string>
+    <string name="notif_fix_notif_channel">Perbaiki kesalahan</string>
+    <string name="notif_fix_notif_title">Perbaiki kesalahan</string>
+    <string name="notif_fix_notif_text">Tutup area dengan tangan, atau catat yang terlewat atau tersembunyi karena salah. Catatan tetap di ponsel ini.</string>
+    <string name="notif_fix_cover_area">Tutup area</string>
+    <string name="notif_fix_remove_covers">Hapus penutup manual</string>
+    <string name="notif_fix_note_missed">Ada yang lolos</string>
+    <string name="notif_fix_note_wrong">Tersembunyi karena salah</string>
+    <string name="notif_fix_noted">Dicatat (%1$d catatan di ponsel ini)</string>
+    <string name="notif_fix_picker_hint">Seret jari di area yang ingin ditutup.</string>
+    <string name="notif_fix_picker_cover">Tutup</string>
+    <string name="notif_fix_picker_cancel">Batal</string>
+    <string name="notif_fix_picker_no_blur">Buram layar tidak berjalan. Aktifkan dulu opsi buram saat penyaringan.</string>
 </resources>

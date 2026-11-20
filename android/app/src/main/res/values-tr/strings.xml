@@ -337,4 +337,16 @@
     <string name="shortcut_stop_short">Durdur</string>
     <string name="shortcut_stop_long">Filtrelemeyi durdur</string>
     <string name="notif_channel_silenced">Sessiz tutulan uygulamalar</string>
+    <string name="notif_fix_notif_channel">Bir hatayı düzelt</string>
+    <string name="notif_fix_notif_title">Bir hatayı düzelt</string>
+    <string name="notif_fix_notif_text">Bir alanı elle örtün ya da kaçırılanı veya yanlışlıkla gizleneni not edin. Notlar bu telefonda kalır.</string>
+    <string name="notif_fix_cover_area">Bir alanı ört</string>
+    <string name="notif_fix_remove_covers">Elle konan örtüleri kaldır</string>
+    <string name="notif_fix_note_missed">Bir şey kaçtı</string>
+    <string name="notif_fix_note_wrong">Yanlışlıkla gizlendi</string>
+    <string name="notif_fix_noted">Not edildi (bu telefonda %1$d not)</string>
+    <string name="notif_fix_picker_hint">Örtülecek alanın üzerinde parmağınızı sürükleyin.</string>
+    <string name="notif_fix_picker_cover">Ört</string>
+    <string name="notif_fix_picker_cancel">İptal</string>
+    <string name="notif_fix_picker_no_blur">Ekran bulanıklığı çalışmıyor. Önce filtreleme sırasında bir bulanıklık seçeneğini açın.</string>
 </resources>

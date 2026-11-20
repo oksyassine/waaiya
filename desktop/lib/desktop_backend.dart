@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:flutter/widgets.dart' show Locale;
 
 import 'package:waaiya_ui/waaiya_ui.dart';
+// ignore: implementation_imports
+import 'package:waaiya_ui/src/fix_mistakes_notes.dart';
 
 import 'linux_blur.dart';
 import 'linux_engine.dart';
@@ -83,6 +85,8 @@ class DesktopBackend extends MemoryBackend {
     Duration startTimeout = defaultStartTimeout,
     String? systemLocale,
   }) async {
+    // "Fix mistakes" notes: next to a given settings file (tests), else in the state folder
+    final notes = FixNotes(file != null ? File('${file.parent.path}${Platform.pathSeparator}fix_notes.txt') : defaultNotesFile());
     file ??= defaultSettingsFile();
     systemLocale ??= Platform.localeName;
     platform ??= Platform.operatingSystem;
@@ -129,9 +133,13 @@ class DesktopBackend extends MemoryBackend {
       ),
       // the covers let every click through (empty input region), so the full-screen fail cover is safe here
       blur: blur != null ? const BlurInfo(overlayAllowed: true, touchPassThrough: true) : const BlurInfo(),
-      features: {'singing': _singingFeature(engine, settings[SettingKeys.keepSinging] == true, false)},
+      features: {
+        'singing': _singingFeature(engine, settings[SettingKeys.keepSinging] == true, false),
+        'fix': _fixSection(engine, notes.count),
+      },
     );
     final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll);
+    b._initFix(notes);
     await b.refresh(); // a filter already running (started at login) shows at once
     await b._applyBlur();
     return b;
@@ -153,6 +161,65 @@ class DesktopBackend extends MemoryBackend {
     }
     return File('$dir${sep}settings.json');
   }
+
+  /// $XDG_STATE_HOME/waaiya/fix_notes.txt (default ~/.local/state); Windows and macOS: next to the settings.
+  static File defaultNotesFile() {
+    final env = Platform.environment;
+    if (Platform.isLinux) {
+      final xdg = env['XDG_STATE_HOME'];
+      return File('${xdg != null && xdg.isNotEmpty ? xdg : '${env['HOME'] ?? '.'}/.local/state'}/waaiya/fix_notes.txt');
+    }
+    return File('${defaultSettingsFile().parent.path}${Platform.pathSeparator}fix_notes.txt');
+  }
+
+  // --- Fix mistakes on the spot (lane A): apps heard unfiltered (Linux engine), wrong-detection notes ---
+
+  /// `features.fix` on desktop: no blur-off apps and no hand covers here (not offered: hidden).
+  static Map<Object?, Object?> _fixSection(FilterHost? engine, int notes) =>
+      {'filterApps': engine is LinuxEngine, 'notes': notes};
+
+  late final FixNotes _notes;
+
+  void _initFix(FixNotes notes) {
+    _notes = notes;
+    final e = engine;
+    // the daemon reads the app's list (also one chosen before the engine was installed)
+    if (e is LinuxEngine) e.writeFilterOffApps(state.settings.filterOffApps);
+    methods['fix.apps'] = (_) async {
+      // the apps playing sound now, and the ones already chosen (names are what the daemon matches)
+      final playing = e is LinuxEngine ? await e.playingApps() : const <String>[];
+      return [
+        for (final n in {...playing, ...state.settings.filterOffApps}) {'package': n, 'label': n},
+      ];
+    };
+    methods['fix.note'] = (args) async {
+      final kind = args['kind'];
+      if (kind is! String || !FixNotes.kinds.contains(kind)) throw const BackendException('bad_args', 'kind');
+      final s = state;
+      final n = _notes.add(
+        time: DateTime.now(),
+        kind: kind,
+        where: args['where'] is String ? args['where'] as String : 'app',
+        filter: '${s.filter.state.name}${s.settings.muteWomenSinging ? ", women's singing muted" : ''}'
+            '${s.settings.filterOffApps.isNotEmpty ? ', unfiltered apps: ${s.settings.filterOffApps.join(', ')}' : ''}',
+        blur: '${s.blur.state?.name ?? 'off'}${s.settings.blurWomen ? ', women' : ''}'
+            '${s.settings.blurNudity ? ', nudity' : ''}, strictness ${s.settings.blurStrictness}',
+        models: 'Waaiya ${s.version} (${s.platform}); engine ${engine?.bundledVersion ?? 'none'}'
+            '${(engine?.hasDetector ?? false) ? ', detector' : ''}',
+      );
+      _emitFix(n);
+      return n;
+    };
+    methods['fix.notes'] = (_) async => _notes.text('Waaiya ${state.version}: wrong-detection notes (kept on this computer only)');
+    methods['fix.clearNotes'] = (_) async {
+      _notes.clear();
+      _emitFix(0);
+      return null;
+    };
+  }
+
+  void _emitFix(int notes) =>
+      emit(state.copyWith(features: {...state.features, 'fix': _fixSection(engine, notes)}));
 
   @override
   Future<void> saved() async {
@@ -345,6 +412,8 @@ class DesktopBackend extends MemoryBackend {
     await super.setSetting(key, value);
     if (_blurKeys.contains(key)) await _applyBlur();
     final e = engine;
+    // apps heard unfiltered: the daemon reads the file every second, nothing to restart
+    if (key == SettingKeys.filterOffApps && e is LinuxEngine) e.writeFilterOffApps(state.settings.filterOffApps);
     if (e == null) return;
     if (key == SettingKeys.holdSilence) {
       // read by the daemon when the filter stops by itself: nothing to restart

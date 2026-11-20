@@ -248,16 +248,24 @@ class FilterService : Service() {
         val frameBytes = ch * 4
         val fmt = AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
             .setSampleRate(Engine.SAMPLE_RATE).setChannelMask(AudioFormat.CHANNEL_IN_STEREO).build()
-        val cap = AudioPlaybackCaptureConfiguration.Builder(mp)
-            .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
-            .addMatchingUsage(AudioAttributes.USAGE_GAME)
-            .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN)
-            .excludeUid(Process.myUid())
-            .build()
         val minIn = AudioRecord.getMinBufferSize(Engine.SAMPLE_RATE, AudioFormat.CHANNEL_IN_STEREO, AudioFormat.ENCODING_PCM_FLOAT)
-        val record = try {
-            AudioRecord.Builder().setAudioFormat(fmt).setAudioPlaybackCaptureConfig(cap)
+        // Apps the user chose to hear unfiltered (FixMistakes, setting filter_off_apps) are left out of the capture
+        // (SessionMuter leaves their original alone too). Android fixes a capture's excluded uids when it is built.
+        fun openRecord(excluded: Set<Int>): AudioRecord {
+            val cap = AudioPlaybackCaptureConfiguration.Builder(mp)
+                .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
+                .addMatchingUsage(AudioAttributes.USAGE_GAME)
+                .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN)
+                .excludeUid(Process.myUid())
+                .apply { excluded.forEach { excludeUid(it) } }
+                .build()
+            return AudioRecord.Builder().setAudioFormat(fmt).setAudioPlaybackCaptureConfig(cap)
                 .setBufferSizeInBytes(maxOf(minIn, hop * frameBytes * 4)).build()
+        }
+        var excluded = FixMistakes.filterOffUids(this, Settings(this))
+        var excludeFailed: Set<Int>? = null
+        var record = try {
+            openRecord(excluded)
         } catch (e: SecurityException) { publish(State.NO_CAPTURE_PERMISSION); stopSelf(); return
         } catch (e: Exception) { Log.e(TAG, "capture did not open", e); endedBySystem(State.CAPTURE_FAILED); return }
         val outFmt = AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
@@ -379,6 +387,23 @@ class FilterService : Service() {
                                     catch (t: Throwable) { Log.e(TAG, "filter: model reload failed", t); return@Thread }
                             synchronized(swapLock) { if (loopDone) e.close() else loaded = e to ks }
                         }, "im-model-load").start()
+                    }
+                    // the apps left unfiltered changed (FixMistakes): a new capture with the new list on the same
+                    // projection, opened and started before the old one is released, so there is no gap. If it cannot
+                    // open, the old capture goes on: an app just added stays filtered (fail-closed); it is not
+                    // retried until the list changes again.
+                    val ex = FixMistakes.filterOffUids(this, settings)
+                    if (ex != excluded && ex != excludeFailed) {
+                        runCatching {
+                            val r = openRecord(ex)
+                            try { r.startRecording(); r } catch (t: Throwable) { r.release(); throw t }
+                        }
+                            .onSuccess { r ->
+                                runCatching { record.stop() }; record.release()
+                                record = r; excluded = ex; excludeFailed = null
+                                Log.i(TAG, "filter: capture rebuilt, ${ex.size} app(s) left unfiltered")
+                            }
+                            .onFailure { excludeFailed = ex; Log.w(TAG, "filter: capture with the new app list did not open", it) }
                     }
                 }
                 if (loading) synchronized(swapLock) { loaded.also { loaded = null } }?.let { (e, ks) ->

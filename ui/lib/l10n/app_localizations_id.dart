@@ -1039,4 +1039,111 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get singingKeepNoModel =>
       'Versi ini tidak memiliki model nyanyian, jadi suara tetap senyap selama opsi ini aktif. Matikan opsi ini.';
+
+  @override
+  String get fixFilterAppsTitle => 'Aplikasi yang didengar tanpa filter';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Aplikasi ini memutar suara aslinya: Waaiya tidak menyaring dan tidak membisukannya.';
+
+  @override
+  String get fixAddApp => 'Tambah aplikasi';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'Hapus $app';
+  }
+
+  @override
+  String get fixNoApps => 'Belum ada aplikasi yang dipilih.';
+
+  @override
+  String get fixPickTitle => 'Pilih aplikasi';
+
+  @override
+  String get fixPickEmpty => 'Tidak ada aplikasi lain.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Aplikasi yang sedang memutar suara, dan yang sudah dipilih.';
+
+  @override
+  String get fixCancel => 'Batal';
+
+  @override
+  String get fixBlurAppsTitle => 'Aplikasi tanpa buram';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Tidak ada penutup selama salah satu aplikasi ini sendirian di layar. Penutup kembali begitu Anda meninggalkannya, atau kapan pun Waaiya tidak yakin aplikasi mana yang tampil.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Perlu penyiapan sekali: tanpanya Waaiya tidak tahu aplikasi mana yang ada di layar, jadi buram tetap aktif di mana-mana.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Belum tersedia di ponsel ini: penyiapannya melalui pembantu Waaiya, yang tidak tahu aplikasi mana yang ada di layar. Buram tetap aktif di mana-mana.';
+
+  @override
+  String get fixHandTitle => 'Tutup area dengan tangan';
+
+  @override
+  String get fixHandBody =>
+      'Saat buram berjalan, seret jari di bagian layar mana pun untuk menutupinya. Bagian itu tetap tertutup sampai Anda menghapusnya atau buram berhenti.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Tersedia saat buram berjalan: penyaringan aktif dan satu opsi buram aktif.';
+
+  @override
+  String get fixCoverArea => 'Tutup area';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Hapus penutup manual ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Catat kesalahan';
+
+  @override
+  String get fixNoteBody =>
+      'Tandai saat terjadi. Catatan menyimpan waktu, aplikasi, dan pengaturan. Catatan tetap di perangkat ini dan tidak pernah dikirim.';
+
+  @override
+  String get fixMissedSound => 'Musik lolos';
+
+  @override
+  String get fixWrongSound => 'Suara terhapus karena salah';
+
+  @override
+  String get fixMissedScreen => 'Ada yang tidak tertutup';
+
+  @override
+  String get fixWrongScreen => 'Tertutup karena salah';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Dicatat ($count catatan di perangkat ini).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Catatan di perangkat ini: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Tampilkan catatan';
+
+  @override
+  String get fixNotesDelete => 'Hapus catatan';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Hapus semua catatan? Ini tidak dapat dibatalkan.';
+
+  @override
+  String get fixNotesTitle => 'Catatan kesalahan deteksi';
 }
