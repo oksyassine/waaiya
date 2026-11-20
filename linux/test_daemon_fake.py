@@ -219,6 +219,16 @@ def main():
               "reload: no stream was moved to the real output (no unfiltered sound)")
         check(pa_state()["default"] == "islamic_mute", "reload: the virtual output stays the default")
 
+        # the filter crashes twice: restarted each time, and 'status' counts the restarts (the app's crash-loop check)
+        check("restarts: 0 in the last minute" in waaiya("status").stdout, "status: no restarts yet")
+        for _ in range(2):
+            pid = int(open(os.path.join(state, "filter.pid")).read())
+            os.killpg(pid, signal.SIGKILL)
+            wait(lambda: os.path.exists(os.path.join(state, "filter.pid"))
+                 and open(os.path.join(state, "filter.pid")).read().strip() not in ("", str(pid)), 10, "a new filter")
+        check("restarts: 2 in the last minute" in waaiya("status").stdout, "status: two restarts counted")
+        check(d.poll() is None and sink_of("10") == "islamic_mute", "after the crashes the stream is still filtered")
+
         # the model did not load (the filter runs silent): status says so
         with open(os.path.join(state, "filter.status"), "w") as f:
             f.write("model_failed cannot load model\n")

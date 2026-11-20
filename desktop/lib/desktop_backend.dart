@@ -250,7 +250,10 @@ class DesktopBackend extends MemoryBackend {
       // running: but is the sound actually filtered? (the engine says what it loaded)
       s = st.modelFailed ? FilterState.modelFailed : FilterState.filtering;
       if (st.detectorFailed && state.settings.muteWomenSinging) problem = FilterProblem.detectorFailed;
-      _error = null;
+      // up at this poll, but it keeps crashing and restarting (apps are silent during each restart)
+      _error = st.crashLoop
+          ? BackendMessage('service_failed', 'the filter restarted ${st.restarts} times in the last minute\n${await e.journal()}')
+          : null;
       _startingSince = null;
       _ranSinceAction = true;
     } else if (starting) {

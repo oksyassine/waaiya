@@ -200,7 +200,8 @@ for r in json.load(sys.stdin):  # newest first
 ' "$DETECTOR" 2>/dev/null || return 1
 }
 
-# The women's-singing detector is optional: no release ships it yet. Never fails the run.
+# The women's-singing detector (in the models-v1 release since 0.2.12). Never fails the run here: a local build
+# without it only loses women's singing; CI checks for the file itself and fails without it.
 detector() {
     local tag
     if ! tag="$(detector_release)"; then
