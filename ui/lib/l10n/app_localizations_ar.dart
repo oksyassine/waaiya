@@ -1013,4 +1013,15 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+
+  @override
+  String get singingKeepTitle => 'إبقاء أصوات الغناء (تجريبي)';
+
+  @override
+  String get singingKeepBody =>
+      'تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.';
+
+  @override
+  String get singingKeepNoModel =>
+      'هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.';
 }

@@ -286,5 +286,8 @@
   "engineDetectorFailed": "Kadınların şarkı sesi algılayıcısı yüklenemedi, bu yüzden o seçenek açıkken sesler susturulur.",
   "blurStatusUncovered": "Bir ekran bulanıklaştırma tarafından örtülmüyor: onunla paylaşılmadı ya da sonradan takıldı. Bir bulanıklaştırma seçeneğini kapatıp açın ve ekran paylaşımı penceresinde her ekranı seçin.",
   "blurStatusModelsMissingDesktop": "Bulanıklaştırma modelleri bu kurulumda eksik, bu yüzden hiçbir şeyi örtemiyor; ekranın üstünde kırmızı bir çubuk kalır. Waaiya'yı yeniden kurun.",
-  "diagNoteDesktop": "Waaiya'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez."
+  "diagNoteDesktop": "Waaiya'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.",
+  "singingKeepTitle": "Şarkı seslerini koru (deneme)",
+  "singingKeepBody": "Enstrümanlar kaldırılır ama şarkı sesleri kalır, bu yüzden arkasında neşid olan bir sohbette neşidin sesi de kalır; bunun kabul edilebilir olup olmadığı sizin seçiminizdir.",
+  "singingKeepNoModel": "Bu sürümde şarkı modeli yok, bu yüzden bu seçenek açıkken ses sessiz kalır. Kapatın."
 }

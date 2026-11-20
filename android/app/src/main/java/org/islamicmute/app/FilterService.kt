@@ -53,6 +53,8 @@ class FilterService : Service() {
         /** Share of the time the women's-singing filter muted the sound (0..1), -1 when it is off. */
         val gateShare: Double,
         val muter: SessionMuter.Info?,
+        /** The running engine is the keep-singing model (voice_v1, setting keep_singing). */
+        val keepSinging: Boolean = false,
     )
 
     companion object {
@@ -275,7 +277,15 @@ class FilterService : Service() {
         val settings = Settings(this)
         // Always created with one model instance per channel, then switched to mono: only such an engine can go
         // back to stereo, so the user's mono / stereo choice applies live in both directions.
-        val engine = Engine.open(this, ch)
+        // Keep singing (setting keep_singing, a test): the voice_v1 model instead of the default one; a change while
+        // filtering loads the other model on a helper thread while this one keeps filtering, then swaps (no gap
+        // beyond the new model's own delay). A model that does not load runs silent (MODEL_FAILED), never unfiltered.
+        var singing = settings.keepSinging
+        var engine = Engine.open(this, ch, singing = singing)
+        val swapLock = Object()
+        var loaded: Pair<Engine, Boolean>? = null  // swapLock: the engine the helper thread made, and its model choice
+        var loopDone = false                       // swapLock: the loop has ended, a late engine closes itself
+        var loading = false                        // audio thread: a helper thread is loading a model
         // Mono unless the user chose stereo; a phone that needed mono last time starts in mono: no second round of cuts
         var stereoChosen = settings.audioStereo
         val monitor = LoadMonitor(hopMs = hop * 1000.0 / Engine.SAMPLE_RATE, mono = !stereoChosen || settings.audioMono,
@@ -314,8 +324,10 @@ class FilterService : Service() {
                 minBufferFrames = minOutFrames, readErrors = readErrors, captureDb = captureDb,
                 engineErrors = engine.runErrors,
                 gateShare = if (policy == 0) -1.0 else if (gateSamples == 0) 0.0 else gateOn.toDouble() / gateSamples,
-                muter = muter?.info())
+                muter = muter?.info(), keepSinging = singing)
+            Diagnostics.power?.noteRun(engine.modelName, monitor.mono)
         }
+        Diagnostics.filterStarted(this)
         report()
         try {
             record.startRecording()
@@ -355,6 +367,31 @@ class FilterService : Service() {
                         report(); notifyListeners()
                     }
                     if (policy != 0) { gateSamples++; if (engine.detectorStatus() == 1) gateOn++ }
+                    val ks = settings.keepSinging
+                    if (ks != singing && !loading) {
+                        loading = true
+                        Log.i(TAG, "filter: keep singing ${if (ks) "on" else "off"}, loading the model")
+                        Thread({
+                            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
+                            // an exception here (no room to copy the model out) keeps the running engine: its sound is
+                            // still filtered, by the model chosen before
+                            val e = try { Engine.open(this, ch, singing = ks) }
+                                    catch (t: Throwable) { Log.e(TAG, "filter: model reload failed", t); return@Thread }
+                            synchronized(swapLock) { if (loopDone) e.close() else loaded = e to ks }
+                        }, "im-model-load").start()
+                    }
+                }
+                if (loading) synchronized(swapLock) { loaded.also { loaded = null } }?.let { (e, ks) ->
+                    // hop boundary: the new engine takes over; the old one is closed on this thread, which used it
+                    val old = engine
+                    engine = e; singing = ks; loading = false
+                    if (monitor.mono) engine.setMono(true)
+                    engine.setPolicy(policy)
+                    old.close()
+                    delayMs = engine.alignedLatency * 1000 / Engine.SAMPLE_RATE
+                    Log.i(TAG, "filter: model reloaded: ${engine.modelName}, keep singing $ks, failed ${engine.failed}")
+                    report()  // before publish: the screen reads the new health when it hears of the change
+                    publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING)
                 }
                 for (x in inBuf) { val a = if (x < 0) -x else x; if (a > peak) peak = a }
                 val t0 = System.nanoTime()
@@ -407,6 +444,7 @@ class FilterService : Service() {
             if (Build.VERSION.SDK_INT >= 31) runCatching { hint?.close() }
             runCatching { record.stop() }; record.release()
             runCatching { track.stop() }; track.release()
+            synchronized(swapLock) { loopDone = true; loaded?.first?.close(); loaded = null }
             engine.close()
         }
     }

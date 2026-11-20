@@ -286,5 +286,8 @@
   "engineDetectorFailed": "Pengesan nyanyian wanita tidak dimuatkan, jadi suara disenyapkan selagi pilihan itu dihidupkan.",
   "blurStatusUncovered": "Satu monitor tidak ditutup oleh pengaburan: ia tidak dikongsi dengannya, atau ia dipasang kemudian. Matikan dan hidupkan semula satu pilihan pengaburan, dan pilih setiap skrin dalam tetingkap perkongsian skrin.",
   "blurStatusModelsMissingDesktop": "Model pengaburan tiada dalam pemasangan ini, jadi ia tidak dapat menutup apa-apa; bar merah kekal di bahagian atas skrin. Pasang semula Waaiya.",
-  "diagNoteDesktop": "Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa."
+  "diagNoteDesktop": "Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.",
+  "singingKeepTitle": "Kekalkan nyanyian (percubaan)",
+  "singingKeepBody": "Alat muzik dibuang tetapi suara nyanyian kekal, jadi ceramah dengan nasyid di belakangnya juga mengekalkan suara nasyid; sama ada itu boleh diterima ialah pilihan anda.",
+  "singingKeepNoModel": "Versi ini tiada model nyanyian, jadi bunyi kekal senyap selagi pilihan ini dihidupkan. Matikannya."
 }

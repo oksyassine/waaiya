@@ -81,6 +81,18 @@ class LinuxEngine implements FilterHost {
   @override
   bool get hasDetector => File('${dir.path}/models/detector/detector_v1.onnx').existsSync();
 
+  /// The "keep singing" model (voice_v1) is bundled (`waaiya install` puts it next to the default model).
+  bool get hasSingingModel =>
+      File('${dir.path}/models/voice/v3/voice_v1_fp16.onnx').existsSync() &&
+      File('${dir.path}/models/voice/v3/voice_v1_fp16.state_init.bin').existsSync();
+
+  /// `waaiya keep-singing on|off` (setting `keep_singing`, a test; applies at the next start, or at once with
+  /// [reload]). Fail-closed in the script: on without the model, the output is silent.
+  Future<BackendMessage?> setKeepSinging(bool on) => _set('keep-singing', on);
+
+  /// What `waaiya keep-singing` last set (`$CFG/keep_singing`); null: never set.
+  bool? get keepSingingSet => _onOff('keep_singing');
+
   /// Can the filter run here at all? Null when it can, else the reason.
   @override
   Future<BackendMessage?> preflight() async {

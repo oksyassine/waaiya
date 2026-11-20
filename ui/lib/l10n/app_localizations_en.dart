@@ -1023,4 +1023,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.';
+
+  @override
+  String get singingKeepTitle => 'Keep singing (test)';
+
+  @override
+  String get singingKeepBody =>
+      'Instruments are removed but singing voices are kept, so a lecture with a nasheed under it keeps the nasheed\'s voice too; whether that is acceptable is your choice.';
+
+  @override
+  String get singingKeepNoModel =>
+      'This version has no singing model, so the sound stays silent while this is on. Turn it off.';
 }

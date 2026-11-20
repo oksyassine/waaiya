@@ -1026,4 +1026,15 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. خود برنامه چیزی نمی‌فرستد.';
+
+  @override
+  String get singingKeepTitle => 'نگه داشتن صدای آواز (آزمایشی)';
+
+  @override
+  String get singingKeepBody =>
+      'سازها حذف می‌شوند ولی صدای آواز می‌ماند، پس سخنرانی‌ای که زیرش نشید پخش می‌شود صدای نشید را هم نگه می‌دارد؛ پذیرفتنی بودن آن به انتخاب شماست.';
+
+  @override
+  String get singingKeepNoModel =>
+      'این نسخه مدل آواز را ندارد، پس تا وقتی این گزینه روشن است صدا خاموش می‌ماند. آن را خاموش کنید.';
 }

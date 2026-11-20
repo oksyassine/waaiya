@@ -286,5 +286,8 @@
   "engineDetectorFailed": "Pendeteksi nyanyian perempuan tidak termuat, jadi suara orang dibisukan selama opsi itu aktif.",
   "blurStatusUncovered": "Ada monitor yang tidak ditutupi buram: monitor itu tidak dibagikan, atau baru dicolokkan kemudian. Nonaktifkan lalu aktifkan lagi salah satu opsi buram, dan pilih semua layar di jendela berbagi layar.",
   "blurStatusModelsMissingDesktop": "Model buram tidak ada di instalasi ini, jadi buram tidak bisa menutupi apa pun; bilah merah tetap di bagian atas layar. Instal ulang Waaiya.",
-  "diagNoteDesktop": "Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun."
+  "diagNoteDesktop": "Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.",
+  "singingKeepTitle": "Pertahankan nyanyian (uji coba)",
+  "singingKeepBody": "Alat musik dihapus tetapi suara nyanyian tetap ada, sehingga ceramah dengan nasyid di latarnya juga tetap menyimpan suara nasyid; apakah itu dapat diterima adalah pilihan Anda.",
+  "singingKeepNoModel": "Versi ini tidak memiliki model nyanyian, jadi suara tetap senyap selama opsi ini aktif. Matikan opsi ini."
 }
