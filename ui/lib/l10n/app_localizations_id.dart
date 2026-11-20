@@ -224,8 +224,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingSingingTitle => 'Bisukan nyanyian perempuan';
 
   @override
-  String get settingSingingBody =>
-      'Suara bicara dan tilawah perempuan tetap terdengar.';
+  String get settingSingingBody => 'Suara bicara perempuan tetap terdengar.';
 
   @override
   String get settingSingingNoModel =>

@@ -65,7 +65,7 @@
     <string name="setting_stereo_title">Stereo sound</string>
     <string name="setting_stereo_body">Off: mono, which uses about half the battery and keeps up on more phones. On: keeps the left and right sides apart. If the phone is too slow for stereo, it still switches to mono by itself.</string>
     <string name="setting_singing_title">Mute women\'s singing</string>
-    <string name="setting_singing_body">Women\'s speech and recitation are kept.</string>
+    <string name="setting_singing_body">Women\'s speech is kept.</string>
     <string name="setting_singing_no_model">This version has no singing detector, so all voices are muted while this is on.</string>
     <string name="setting_restart">Stop and start filtering to apply changes.</string>
     <string name="setting_gender_title">I am</string>

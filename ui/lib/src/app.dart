@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart' show CupertinoLocalizations;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../l10n/app_localizations.dart';
 import 'backend.dart';
@@ -44,7 +46,7 @@ class _WaaiyaAppState extends State<WaaiyaApp> {
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       locale: Locale(state?.language ?? 'ar'),
       supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: const [...AppLocalizations.localizationsDelegates, _EnglishMaterial(), _EnglishCupertino()],
       theme: waaiyaTheme(Brightness.light),
       darkTheme: waaiyaTheme(Brightness.dark),
       builder: (context, child) => state == null
@@ -96,4 +98,26 @@ Future<T?> runAction<T>(BuildContext context, Future<T> Function(WaaiyaBackend b
     messenger?.showSnackBar(SnackBar(content: Text(l.actionFailed(e.message.isEmpty ? e.code : e.message))));
     return null;
   }
+}
+
+/// Flutter has no built-in texts (date pickers, "Copy", tooltips) for some of the app's languages (Hausa, Somali):
+/// those get the English ones, while every Waaiya text is in the language.
+class _EnglishMaterial extends LocalizationsDelegate<MaterialLocalizations> {
+  const _EnglishMaterial();
+  @override
+  bool isSupported(Locale locale) => !GlobalMaterialLocalizations.delegate.isSupported(locale);
+  @override
+  Future<MaterialLocalizations> load(Locale locale) => GlobalMaterialLocalizations.delegate.load(const Locale('en'));
+  @override
+  bool shouldReload(_EnglishMaterial old) => false;
+}
+
+class _EnglishCupertino extends LocalizationsDelegate<CupertinoLocalizations> {
+  const _EnglishCupertino();
+  @override
+  bool isSupported(Locale locale) => !GlobalCupertinoLocalizations.delegate.isSupported(locale);
+  @override
+  Future<CupertinoLocalizations> load(Locale locale) => GlobalCupertinoLocalizations.delegate.load(const Locale('en'));
+  @override
+  bool shouldReload(_EnglishCupertino old) => false;
 }

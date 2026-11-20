@@ -221,7 +221,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingSingingTitle => 'كتم غناء النساء';
 
   @override
-  String get settingSingingBody => 'يُبقي كلام النساء وتلاوتهن.';
+  String get settingSingingBody => 'يُبقي كلام النساء.';
 
   @override
   String get settingSingingNoModel =>

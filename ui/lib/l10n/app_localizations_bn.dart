@@ -225,7 +225,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get settingSingingTitle => 'নারীদের গান নীরব করুন';
 
   @override
-  String get settingSingingBody => 'নারীদের কথা ও তিলাওয়াত রেখে দেওয়া হয়।';
+  String get settingSingingBody => 'নারীদের কথা রেখে দেওয়া হয়।';
 
   @override
   String get settingSingingNoModel =>

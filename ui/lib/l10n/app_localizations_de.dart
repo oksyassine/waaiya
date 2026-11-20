@@ -1,0 +1,1075 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for German (`de`).
+class AppLocalizationsDe extends AppLocalizations {
+  AppLocalizationsDe([String locale = 'de']) : super(locale);
+
+  @override
+  String get appName => 'Waaiya';
+
+  @override
+  String get tagline =>
+      'Entfernt Musikinstrumente aus allen Apps und behält Sprache und Rezitation.';
+
+  @override
+  String get onboardTitle => 'Willkommen';
+
+  @override
+  String get onboardBody =>
+      'Waaiya entfernt Musikinstrumente aus dem Ton aller Apps auf diesem Telefon. Sprache und Koranrezitation bleiben erhalten. Vorerst werden auch Gesangsstimmen entfernt.';
+
+  @override
+  String get onboardQuestion => 'Ich bin';
+
+  @override
+  String get genderMan => 'Ein Mann';
+
+  @override
+  String get genderWoman => 'Eine Frau';
+
+  @override
+  String get onboardWhy =>
+      'Davon hängt nur ab, welche optionalen Einstellungen Sie sehen. Sie können es später ändern.';
+
+  @override
+  String get stateOnTitle => 'Der Filter ist an';
+
+  @override
+  String get stateOffTitle => 'Der Filter ist aus';
+
+  @override
+  String get stateStarting => 'Wird gestartet…';
+
+  @override
+  String stateOnDetail(int delayMs) {
+    return 'Instrumente werden aus allen Apps entfernt. Verzögerung etwa $delayMs ms.';
+  }
+
+  @override
+  String get stateOffDetail => 'Tippen Sie zum Starten auf die Taste.';
+
+  @override
+  String get stateModelFailed =>
+      'Das Tonmodell konnte nicht geladen werden, deshalb ist der Ton zur Sicherheit stummgeschaltet.';
+
+  @override
+  String get stateCaptureDenied =>
+      'Die Mikrofonberechtigung wird benötigt, um den Ton anderer Apps zu empfangen.';
+
+  @override
+  String get stateStoppedBySystem =>
+      'Android hat den Filter beendet. Tippen Sie auf die Taste, um ihn wieder zu starten.';
+
+  @override
+  String get stateSilencedTitle => 'Filter gestoppt';
+
+  @override
+  String get stateSilenced =>
+      'Filter gestoppt: Andere Apps sind stummgeschaltet. Tippen Sie auf die Taste, um wieder zu starten, oder auf Stopp, um sie ungefiltert zu hören.';
+
+  @override
+  String get releaseSilence => 'Stopp: Apps ungefiltert hören';
+
+  @override
+  String get powerStartCd => 'Filter starten';
+
+  @override
+  String get powerStopCd => 'Filter stoppen';
+
+  @override
+  String get captureHint =>
+      'Android fragt, ob Sie Ihren Bildschirm teilen möchten. Nur der Ton wird verwendet: Nichts wird aufgenommen oder gesendet.';
+
+  @override
+  String get needRecordAudio =>
+      'Waaiya braucht die Mikrofonberechtigung, um den Ton anderer Apps zu empfangen. Es nimmt Sie nie auf.';
+
+  @override
+  String get setupBannerTitle => 'Noch ein Schritt';
+
+  @override
+  String get setupBannerBody =>
+      'Ohne die einmalige Einrichtung unten hören Sie die Musik und den gefilterten Ton zusammen.';
+
+  @override
+  String get step1Title => 'Shizuku installieren';
+
+  @override
+  String get step1Body => 'Eine kostenlose Hilfs-App aus dem Play Store.';
+
+  @override
+  String get step1Action => 'Shizuku holen';
+
+  @override
+  String get step2Title => 'Shizuku starten';
+
+  @override
+  String get step2Body =>
+      'Shizuku startet über WLAN mit „Debugging über WLAN“ von Android. Tippen Sie auf die Taste, um die Schritte zu sehen, und kommen Sie dann zurück.';
+
+  @override
+  String get step2Action => 'Shizuku öffnen';
+
+  @override
+  String get step2Update => 'Shizuku aktualisieren';
+
+  @override
+  String get step2TooOld =>
+      'Ihre Shizuku-Version ist zu alt. Aktualisieren Sie sie im Play Store.';
+
+  @override
+  String get step2Denied =>
+      'Shizuku ist so eingestellt, dass Waaiya immer abgelehnt wird. Erlauben Sie Waaiya in Shizuku in der Liste der Apps.';
+
+  @override
+  String get step3Title => 'Berechtigung erteilen';
+
+  @override
+  String get step3Body => 'Einmal tippen, dann „Zulassen“ wählen.';
+
+  @override
+  String get step3Action => 'Berechtigung erteilen';
+
+  @override
+  String get step3Busy => 'Wird eingerichtet…';
+
+  @override
+  String get setupDoneRestart =>
+      'Fertig. Stoppen und starten Sie den Filter einmal, damit es wirkt.';
+
+  @override
+  String setupFailed(String details) {
+    return 'Die Einrichtung wurde nicht abgeschlossen. Details:\n$details';
+  }
+
+  @override
+  String get shizukuRefused =>
+      'Die Shizuku-Berechtigung wurde abgelehnt. Tippen Sie auf die Taste, um es erneut zu versuchen.';
+
+  @override
+  String get setupSlow =>
+      'Shizuku braucht länger als sonst. Warten Sie noch: Auf manchen Telefonen braucht sein Helfer beim ersten Mal bis zu einer Minute zum Starten.';
+
+  @override
+  String get setupTimeout =>
+      'Shizuku hat nicht innerhalb von 2 Minuten geantwortet. Öffnen Sie Shizuku, prüfen Sie, ob dort steht, dass es läuft, und tippen Sie dann erneut auf die Taste. Wenn die Einrichtung später fertig wird, aktualisiert sich dieser Bildschirm von selbst.';
+
+  @override
+  String get setupRefusedXiaomi =>
+      'Dieses Telefon hat die Berechtigungen abgelehnt. Schalten Sie auf Xiaomi, Redmi und POCO in den Entwickleroptionen „USB-Debugging (Sicherheitseinstellungen)“ ein (dafür müssen Sie sich bei einem Xiaomi-Konto anmelden) und versuchen Sie es dann erneut.';
+
+  @override
+  String get setupRefusedColoros =>
+      'Dieses Telefon hat die Berechtigungen abgelehnt. Schalten Sie auf OPPO, OnePlus und realme in den Entwickleroptionen „Disable permission monitoring“ (Berechtigungsüberwachung deaktivieren) ein. In den neuesten Versionen heißt es „Disable system optimization“ (Systemoptimierung deaktivieren) und wird eventuell nur angezeigt, wenn das Telefon auf Englisch eingestellt ist. Um es zu finden, suchen Sie in den Einstellungen nach „Berechtigung“ (oder „permission“). Versuchen Sie es dann erneut.';
+
+  @override
+  String get setupNoteXiaomi =>
+      'Xiaomi, Redmi und POCO: Wenn die Benachrichtigung kein Feld zum Eingeben des Codes hat, stellen Sie in den Benachrichtigungseinstellungen den Benachrichtigungsstil auf „Android“ oder geben Sie den Code mit geteiltem Bildschirm in Waaiya ein.';
+
+  @override
+  String get stepDoneCd => 'Erledigt';
+
+  @override
+  String stepTodoCd(int step) {
+    return 'Schritt $step';
+  }
+
+  @override
+  String get computerToggle => 'Stattdessen einen Computer verwenden';
+
+  @override
+  String get computerBody =>
+      'Schalten Sie USB-Debugging ein, verbinden Sie das Telefon und führen Sie Folgendes aus:';
+
+  @override
+  String get copy => 'Kopieren';
+
+  @override
+  String get copied => 'Kopiert';
+
+  @override
+  String get computerNote =>
+      'Die zweite Zeile ist optional: Sie verhindert die Frage zur Bildschirmfreigabe bei jedem Start.';
+
+  @override
+  String get settingsTitle => 'Einstellungen';
+
+  @override
+  String get settingSilenceTitle =>
+      'Apps stummschalten, die das Filtern blockieren';
+
+  @override
+  String get settingSilenceBody =>
+      'Empfohlen. Manche Apps erlauben nicht, dass ihr Ton gefiltert wird; dies schaltet sie stumm, statt Musik durchzulassen.';
+
+  @override
+  String get settingHoldSilenceTitle =>
+      'Apps stumm lassen, wenn der Filter von selbst stoppt';
+
+  @override
+  String get settingHoldSilenceBody =>
+      'Empfohlen. Wenn Android den Filter beendet (nicht Sie), bleiben andere Apps stumm, bis Sie wieder starten oder auf Stopp tippen, statt Musik ungefiltert abzuspielen. Erfordert die einmalige Einrichtung.';
+
+  @override
+  String get settingStereoTitle => 'Stereoton';
+
+  @override
+  String get settingStereoBody =>
+      'Aus: Mono, das etwa halb so viel Akku braucht und auf mehr Telefonen mithält. An: Die linke und die rechte Seite bleiben getrennt. Wenn das Telefon für Stereo zu langsam ist, wechselt es trotzdem von selbst zu Mono.';
+
+  @override
+  String get settingSingingTitle => 'Frauengesang stummschalten';
+
+  @override
+  String get settingSingingBody => 'Die Sprache von Frauen bleibt erhalten.';
+
+  @override
+  String get settingSingingNoModel =>
+      'Diese Version hat keinen Gesangsdetektor, deshalb werden alle Stimmen stummgeschaltet, solange dies an ist.';
+
+  @override
+  String get settingRestart =>
+      'Stoppen und starten Sie den Filter, damit die Änderungen wirken.';
+
+  @override
+  String get settingGenderTitle => 'Ich bin';
+
+  @override
+  String get change => 'Ändern';
+
+  @override
+  String get playerTitle => 'Videos perfekt synchron';
+
+  @override
+  String get playerBody =>
+      'Teilen Sie ein Video mit Waaiya (oder nutzen Sie „Öffnen mit“), um es gefiltert und ohne Verzögerung anzusehen.';
+
+  @override
+  String get licences => 'Open-Source-Lizenzen';
+
+  @override
+  String get licencesIntro =>
+      'Waaiya ist freie Software unter der GNU Affero General Public License v3 oder höher. Quellcode: https://github.com/oksyassine/waaiya';
+
+  @override
+  String get licencesCc =>
+      'Creative Commons Namensnennung 4.0 (Trainingsdaten): https://creativecommons.org/licenses/by/4.0/';
+
+  @override
+  String get licencesFull => 'Vollständige Texte';
+
+  @override
+  String get back => 'Zurück';
+
+  @override
+  String get linkEntryTitle => 'Link öffnen';
+
+  @override
+  String get linkEntryBody =>
+      'Fügen Sie einen YouTube-, TikTok- oder Instagram-Link ein, um das Video ohne Musik anzusehen oder zu speichern.';
+
+  @override
+  String get linkTitle => 'Link öffnen';
+
+  @override
+  String get linkHint => 'https://… (YouTube, TikTok, Instagram…)';
+
+  @override
+  String get linkFieldLabel => 'Video- oder Audiolink';
+
+  @override
+  String get linkPaste => 'Einfügen';
+
+  @override
+  String get linkOpen => 'Öffnen';
+
+  @override
+  String get linkResolving => 'Link wird geöffnet…';
+
+  @override
+  String linkMeta(String first, String second) {
+    return '$first · $second';
+  }
+
+  @override
+  String get linkWatch => 'Ohne Musik ansehen';
+
+  @override
+  String get linkSave => 'Ohne Musik speichern';
+
+  @override
+  String get linkListen => 'Ohne Musik anhören';
+
+  @override
+  String get linkAudioOnly =>
+      'Das Video dieses Links kann noch nicht geöffnet werden, nur sein Ton.';
+
+  @override
+  String get linkDownloading => 'Wird heruntergeladen…';
+
+  @override
+  String get linkFiltering => 'Musik wird entfernt…';
+
+  @override
+  String get linkCancel => 'Abbrechen';
+
+  @override
+  String get linkCancelled => 'Abgebrochen. Es wurde nichts gespeichert.';
+
+  @override
+  String get linkTimedOut =>
+      'Android hat das Speichern beendet: Es erlaubt diese Art von Arbeit nur wenige Stunden am Tag. Es wurde nichts gespeichert; öffnen Sie Waaiya und versuchen Sie es erneut.';
+
+  @override
+  String get linkExportFailed =>
+      'Das konnte nicht gespeichert werden. Es wurde nichts gespeichert.';
+
+  @override
+  String get linkSaved => 'Ohne Musik gespeichert';
+
+  @override
+  String get linkSavedVideo => 'In Ihrer Galerie: Movies › Waaiya';
+
+  @override
+  String get linkSavedAudio => 'In Ihrer Musik: Music › Waaiya';
+
+  @override
+  String get linkPlay => 'Abspielen';
+
+  @override
+  String get linkShare => 'Teilen';
+
+  @override
+  String get linkShareNote => 'Teilen Sie nur Videos, die Sie teilen dürfen.';
+
+  @override
+  String get linkLive => 'Livestreams können nicht gespeichert werden.';
+
+  @override
+  String get linkBusy =>
+      'Ein anderes Video wird gerade gespeichert. Bitte warten Sie, bis es fertig ist.';
+
+  @override
+  String get linkInvalid =>
+      'Bitte fügen Sie einen Weblink ein (beginnend mit https://).';
+
+  @override
+  String get linkLogin =>
+      'Die Website zeigt dieses Video nicht ohne Konto. Öffentliche Beiträge lassen sich meist öffnen: Versuchen Sie es in ein paar Minuten erneut. Private Beiträge können nicht geöffnet werden.';
+
+  @override
+  String get linkUnsupported => 'Diese Website wird nicht unterstützt.';
+
+  @override
+  String get linkPlaylist =>
+      'Das ist eine Playlist. Bitte öffnen Sie ein einzelnes Video.';
+
+  @override
+  String get linkNoFormat =>
+      'Dieses Video hat ein Format, das Waaiya noch nicht filtern kann.';
+
+  @override
+  String get linkFailed =>
+      'Dieser Link konnte nicht geöffnet werden. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.';
+
+  @override
+  String get linkPlayFailed =>
+      'Das konnte nicht abgespielt werden. Es wurde nichts ungefiltert abgespielt.';
+
+  @override
+  String get linkLimited =>
+      'Die Website begrenzt gerade die Anfragen. Versuchen Sie es in ein paar Minuten erneut.';
+
+  @override
+  String get blurTitle => 'Bildschirm-Unschärfe';
+
+  @override
+  String get blurBody =>
+      'Verdeckt Menschen und Bilder auf dem Bildschirm, in jeder App, solange der Filter an ist. Das läuft auf dem Telefon; nichts wird irgendwohin gesendet.';
+
+  @override
+  String get blurWomenTitle => 'Frauen unscharf machen';
+
+  @override
+  String get blurWomenBody =>
+      'Der ganze Körper. Menschen, bei denen die App nicht klar erkennt, dass es Männer sind, werden auch unscharf gemacht.';
+
+  @override
+  String get blurNudityTitle => 'Freizügige Bilder unscharf machen';
+
+  @override
+  String get blurNudityBody =>
+      'Nacktheit und freizügige Kleidung, bei allen Menschen: Der ganze Bildschirm wird verdeckt.';
+
+  @override
+  String get blurFailTitle =>
+      'Bildschirm verdecken, wenn die Unschärfe nicht mithält';
+
+  @override
+  String get blurFailBody =>
+      'An: Der ganze Bildschirm wird verdeckt, wenn das Telefon zu langsam ist oder die Unschärfe ausfällt. Aus: Der Bildschirm bleibt mit einer Warnung sichtbar.';
+
+  @override
+  String get blurSetupShizuku => 'Mit Shizuku erlauben';
+
+  @override
+  String get blurSetupManual => 'In den Android-Einstellungen erlauben';
+
+  @override
+  String get blurStatusNeedsSetup =>
+      'Die Unschärfe muss über anderen Apps angezeigt werden. Am besten: Erlauben Sie es mit Shizuku (das schaltet die Bedienungshilfe „Waaiya-Unschärfe“ ein, damit Berührungen weiterhin die App darunter erreichen). Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“ (Berührungen auf einem unscharfen Bereich gehen dann verloren).';
+
+  @override
+  String get blurStatusNeedsOverlay =>
+      'Die Unschärfe muss über anderen Apps angezeigt werden. Am besten: Starten Sie Shizuku (und erlauben Sie dort Waaiya): Die Unschärfe zeichnet dann eine eigene Ebene, durch die Berührungen hindurchgehen. Sonst erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“; ein Tippen auf einen unscharfen Bereich erreicht dann nicht die App darunter.';
+
+  @override
+  String get blurFailUnavailable =>
+      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer oder Shizuku (Android 12 oder neuer), dann wird diese Option verfügbar: Die Abdeckungen werden dann so gezeichnet, dass Berührungen hindurchgehen. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar, wenn die Unschärfe nicht mithält.';
+
+  @override
+  String get blurFailNeedsA11y =>
+      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie Shizuku (Android 12 oder neuer) oder schalten Sie die Bedienungshilfe „Waaiya-Unschärfe“ ein (oben „Mit Shizuku erlauben“), dann wird diese Option verfügbar. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar.';
+
+  @override
+  String get languageTitle => 'Sprache';
+
+  @override
+  String settingLanguageTitle(String language) {
+    return 'Sprache: $language';
+  }
+
+  @override
+  String get languageAr => 'العربية';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get blurStatusRestart =>
+      'Stoppen und starten Sie den Filter, damit die Einstellungen der Unschärfe wirken.';
+
+  @override
+  String get blurStatusStarting => 'Unschärfe wird gestartet…';
+
+  @override
+  String get blurStatusOn => 'Unschärfe an.';
+
+  @override
+  String get blurStatusOnVisible =>
+      'Unschärfe an, im vorsichtigen Modus: Dieses Telefon zeigt die Unschärfe in seiner eigenen Bildschirmaufnahme, deshalb bleibt ein unscharfer Bereich unscharf, bis sich die Szene ändert.';
+
+  @override
+  String get blurStatusModels =>
+      'Dieser Version fehlt ein Unschärfe-Modell für die gewählte Option.';
+
+  @override
+  String get blurStatusFailing => 'Die Unschärfe hält gerade nicht mit.';
+
+  @override
+  String get blurStatusNoOverlay =>
+      'Die Unschärfe kann nicht über anderen Apps angezeigt werden: Erlauben Sie es oben.';
+
+  @override
+  String blurStatusNoCapture(String details) {
+    return 'Die Unschärfe kann den Bildschirm nicht sehen. Details:\n$details';
+  }
+
+  @override
+  String blurSetupFailed(String details) {
+    return 'Shizuku konnte es nicht erlauben:\n$details';
+  }
+
+  @override
+  String get step2Guide => 'So starten Sie Shizuku';
+
+  @override
+  String get blurFailOldAndroid =>
+      'Ausgegraut: Auf dieser Android-Version würde eine Abdeckung über den ganzen Bildschirm jedes Tippen blockieren und Sie könnten feststecken (Abdeckungen mit Shizuku erfordern Android 12 oder neuer). Wenn die Unschärfe nicht mithält, bleibt der Bildschirm mit einer Warnung sichtbar.';
+
+  @override
+  String get guideTitle => 'Shizuku Schritt für Schritt starten';
+
+  @override
+  String get guideOpenDev => 'Entwickleroptionen';
+
+  @override
+  String get guideOpenShizuku => 'Shizuku öffnen';
+
+  @override
+  String get guideClose => 'Schließen';
+
+  @override
+  String get guideBody =>
+      'Sie brauchen WLAN und Android 11 oder neuer. Das Koppeln erfolgt nur einmal; nach einem Neustart des Telefons wiederholen Sie nur Schritt 7.\n\n1. Verbinden Sie das Telefon mit einem WLAN.\n\n2. Schalten Sie die Entwickleroptionen ein: Einstellungen › Telefoninfo › Softwareinformationen › 7-mal auf „Buildnummer“ tippen. (Auf anderen Telefonen: Einstellungen › Über das Telefon › Build-Nummer.)\n\n3. Öffnen Sie Shizuku. Wenn es fragt, ob es Benachrichtigungen anzeigen darf, erlauben Sie es: Der Kopplungscode wird in einer Benachrichtigung von Shizuku eingegeben.\n\n4. Tippen Sie in Shizuku unter „Start via Wireless debugging“ (Über Debugging über WLAN starten) auf „Pairing“ (Koppeln). Tippen Sie auf der Seite, die sich öffnet, auf „Developer options“ (Entwickleroptionen), schalten Sie „Debugging über WLAN“ ein und bestätigen Sie mit „Zulassen“.\n\n5. Tippen Sie auf die Worte „Debugging über WLAN“ (nicht auf den Schalter) und dann auf „Gerät mit Kopplungscode koppeln“. Ein 6-stelliger Code erscheint.\n\n6. Lassen Sie diesen Bildschirm offen und ziehen Sie die Benachrichtigungen herunter. Wenn in der Benachrichtigung von Shizuku „Pairing service found“ (Kopplungsdienst gefunden) steht, tippen Sie auf „Enter pairing code“ (Kopplungscode eingeben) und geben Sie den Code ein. Shizuku meldet, dass das Koppeln erfolgreich war.\n\n7. Gehen Sie zurück zu Shizuku und tippen Sie unter „Start via Wireless debugging“ auf „Start“ (Starten). Warten Sie, bis „Shizuku is running“ (Shizuku läuft) angezeigt wird.\n\n8. Kommen Sie zurück zu Waaiya und tippen Sie auf „Berechtigung erteilen“ und dann auf „Zulassen“.\n\nNach einem Neustart des Telefons stoppt Shizuku: Verbinden Sie sich mit dem WLAN, schalten Sie „Debugging über WLAN“ wieder ein, falls es aus ist, öffnen Sie Shizuku und tippen Sie auf „Start“. Kein neues Koppeln nötig.';
+
+  @override
+  String get wsetupRouteTitle => 'Auf diesem Telefon einrichten';
+
+  @override
+  String get wsetupRouteBody =>
+      'Vier kurze Schritte, nur einmal. Keine zusätzliche App und kein Computer. Waaiya hakt jeden Schritt ab, sobald er erledigt ist.';
+
+  @override
+  String get wizDevTitle => 'Entwickleroptionen einschalten';
+
+  @override
+  String get wizDevBody =>
+      'Tippen Sie unter „Über das Telefon“ 7-mal auf „Build-Nummer“ und kommen Sie dann hierher zurück. Wenn Sie es nicht finden, suchen Sie in den Einstellungen nach „Build-Nummer“.';
+
+  @override
+  String get wizDevBodySamsung =>
+      'Tippen Sie unter „Telefoninfo“ › „Softwareinformationen“ 7-mal auf „Buildnummer“ und kommen Sie dann hierher zurück.';
+
+  @override
+  String get wizDevBodyXiaomi =>
+      'Tippen Sie unter „Über das Telefon“ 7-mal auf „OS-Version“ (auf älteren Telefonen „MIUI-Version“; auf manchen steht es unter „Detaillierte Infos und Spezifikationen“) und kommen Sie dann hierher zurück.';
+
+  @override
+  String get wizDevBodyColoros =>
+      'Tippen Sie unter „Über das Gerät“ (oder „Über das Telefon“) › „Version“ 7-mal auf „Build-Nummer“ und kommen Sie dann hierher zurück.';
+
+  @override
+  String get wizDevBodyVivo =>
+      'Tippen Sie unter „Über das Telefon“ 7-mal auf „Softwareversion“ (auf manchen Telefonen: Softwareinformationen › „Build-Nummer“) und kommen Sie dann hierher zurück.';
+
+  @override
+  String get wizDevBodyHuawei =>
+      'Tippen Sie unter „Über das Telefon“ 7-mal auf „Build-Nummer“ und kommen Sie dann hierher zurück.';
+
+  @override
+  String get wizDevBodyTranssion =>
+      'Tippen Sie unter „Mein Telefon“ (oder „Über das Telefon“) 7-mal auf „Build-Nummer“ und kommen Sie dann hierher zurück.';
+
+  @override
+  String get setupNoteHuawei =>
+      'Huawei: Viele Huawei-Telefone haben kein „Debugging über WLAN“. Wenn Sie es in den Entwickleroptionen nicht finden, verwenden Sie einen Computer („Andere Wege“ unten).';
+
+  @override
+  String get wsetupFilterOn =>
+      'Der Filter ist an: Auf dieser Android-Version kann der Code nicht in einer Benachrichtigung eingegeben werden, solange er läuft. Stoppen Sie zuerst den Filter oder nutzen Sie den geteilten Bildschirm und „Code hier eingeben“.';
+
+  @override
+  String get wizDevSearch =>
+      'Die Namen können je nach Sprache des Telefons anders sein: Wenn Sie es nicht finden, nutzen Sie die Suche oben in den Einstellungen.';
+
+  @override
+  String get wizDevAction => '„Über das Telefon“ öffnen';
+
+  @override
+  String get wizWifiTitle => 'Mit WLAN verbinden';
+
+  @override
+  String get wizWifiBody =>
+      'Jedes WLAN-Netz reicht; Internet wird nicht benötigt.';
+
+  @override
+  String get wizWifiAction => 'WLAN-Einstellungen öffnen';
+
+  @override
+  String get wizWdTitle => 'Debugging über WLAN einschalten';
+
+  @override
+  String get wizWdBody =>
+      'Waaiya öffnet die Entwickleroptionen bei „Debugging über WLAN“. Schalten Sie es ein und tippen Sie auf „Zulassen“.';
+
+  @override
+  String get wizWdAction => 'Entwickleroptionen öffnen';
+
+  @override
+  String get wizPairTitle => 'Kopplungscode eingeben';
+
+  @override
+  String get wizPairBody =>
+      'Tippen Sie auf die Worte „Debugging über WLAN“ und dann auf „Gerät mit Kopplungscode koppeln“. Geben Sie die 6 Ziffern in der Benachrichtigung von Waaiya ein. Waaiya erledigt den Rest.';
+
+  @override
+  String get wizPairBodyPaired =>
+      'Waaiya ist bereits mit diesem Telefon gekoppelt: Es wird kein Code benötigt. Tippen Sie auf die Taste und Waaiya schließt von selbst ab.';
+
+  @override
+  String get wizPairAction => 'Weiter';
+
+  @override
+  String get wizAgain => 'Einrichtung erneut ausführen';
+
+  @override
+  String get setupShizukuReadyTitle => 'Mit Shizuku, das bereits läuft';
+
+  @override
+  String get setupOtherWaysPlain => 'Andere Wege zur Einrichtung';
+
+  @override
+  String get wizSkip => 'Weiter zu „Debugging über WLAN“';
+
+  @override
+  String get setupOtherWays => 'Andere Wege: Shizuku oder ein Computer';
+
+  @override
+  String get wsetupEnterHere => 'Code hier eingeben';
+
+  @override
+  String get wsetupCancel => 'Abbrechen';
+
+  @override
+  String get wsetupAndroid10 =>
+      'Android 10 kann die Einrichtung nicht allein durchführen: Es braucht einen Computer, entweder direkt (unten) oder um Shizuku einmal zu starten.';
+
+  @override
+  String get wsetupShizukuHeading => 'Oder mit der App Shizuku';
+
+  @override
+  String get wsetupShizukuNote =>
+      'Mit Shizuku gehen Berührungen außerdem durch die Bildschirmabdeckungen hindurch.';
+
+  @override
+  String get wsetupChannel => 'Einmalige Einrichtung';
+
+  @override
+  String get wsetupNotifTitle =>
+      'Waaiya-Einrichtung: Warten auf den Kopplungscode';
+
+  @override
+  String get wsetupFoundTitle => 'Kopplungsbildschirm gefunden';
+
+  @override
+  String get wsetupBusyTitle => 'Waaiya-Einrichtung';
+
+  @override
+  String get wsetupDoneTitle => 'Einrichtung abgeschlossen';
+
+  @override
+  String get wsetupDoneBody =>
+      'Waaiya kann jetzt den Originalton stummschalten. Sie können „Debugging über WLAN“ ausschalten.';
+
+  @override
+  String get wsetupDoneHelperBody =>
+      'Fertig. Dieses Telefon lässt Apps diese Berechtigungen nicht behalten, deshalb schaltet stattdessen der Waaiya-Helfer den Originalton stumm. Der Helfer stoppt, wenn das Telefon neu startet und wenn Waaiya aktualisiert wird. Wenn Sie Waaiya danach öffnen, startet es den Helfer von selbst wieder, falls „Debugging über WLAN“ an ist; falls nicht, zeigt es eine Taste dafür an.';
+
+  @override
+  String get helperMissingTitle => 'Der Waaiya-Helfer ist gestoppt';
+
+  @override
+  String get helperMissingBody =>
+      'Dieses Telefon behält die Berechtigungen von Waaiya nicht, deshalb nutzt Waaiya seinen Helfer. Der Helfer stoppt, wenn das Telefon neu startet und wenn Waaiya aktualisiert wird. Verbinden Sie sich mit dem WLAN, schalten Sie in den Entwickleroptionen „Debugging über WLAN“ ein und tippen Sie dann auf „Waaiya-Helfer starten“.';
+
+  @override
+  String get helperChannel => 'Waaiya-Helfer';
+
+  @override
+  String get helperStarting => 'Helfer wird gestartet…';
+
+  @override
+  String get helperModeNote =>
+      'Dieses Telefon lässt Apps diese Berechtigungen nicht behalten: Der Waaiya-Helfer übernimmt die Arbeit. Er stoppt, wenn das Telefon neu startet und wenn Waaiya aktualisiert wird. Wenn Sie Waaiya danach öffnen, startet es den Helfer von selbst wieder, falls „Debugging über WLAN“ an ist; falls nicht, zeigt es eine Taste dafür an.';
+
+  @override
+  String get helperTipXiaomi =>
+      'Optional, um die Berechtigungen dauerhaft zu behalten (kein Helfer nach Neustarts): Schalten Sie in den Entwickleroptionen „USB-Debugging (Sicherheitseinstellungen)“ ein (dafür müssen Sie sich bei einem Xiaomi-Konto anmelden) und führen Sie die Einrichtung dann erneut durch.';
+
+  @override
+  String get helperTipColoros =>
+      'Optional, um die Berechtigungen dauerhaft zu behalten (kein Helfer nach Neustarts): Schalten Sie in den Entwickleroptionen „Disable permission monitoring“ (Berechtigungsüberwachung deaktivieren) ein – in den neuesten Versionen „Disable system optimization“ (Systemoptimierung deaktivieren), eventuell nur sichtbar, wenn das Telefon auf Englisch eingestellt ist – und führen Sie die Einrichtung dann erneut durch.';
+
+  @override
+  String get stateOnHelperMissing =>
+      'Der Originalton ist nicht stummgeschaltet, deshalb hören Sie die Musik zusammen mit dem gefilterten Ton: Der Waaiya-Helfer ist gestoppt. Verbinden Sie sich mit dem WLAN, schalten Sie „Debugging über WLAN“ ein und tippen Sie dann auf „Waaiya-Helfer starten“.';
+
+  @override
+  String get setupRefusedTryWireless =>
+      'Oder nutzen Sie auf dieser Seite „Auf diesem Telefon einrichten“: Der Waaiya-Helfer funktioniert dann ohne diesen Schalter.';
+
+  @override
+  String get helperStartAnywayTitle => 'Der Waaiya-Helfer ist gestoppt';
+
+  @override
+  String get helperStartAnywayBody =>
+      'Ohne ihn hören Sie die Musik zusammen mit dem gefilterten Ton. Starten Sie zuerst den Helfer („Debugging über WLAN“ muss an sein) oder starten Sie den Filter trotzdem.';
+
+  @override
+  String get wsetupFailedTitle => 'Einrichtung nicht abgeschlossen';
+
+  @override
+  String get wsetupPairing => 'Wird gekoppelt…';
+
+  @override
+  String get wsetupConnecting =>
+      'Verbindung wird hergestellt und Berechtigungen werden erteilt…';
+
+  @override
+  String get wsetupNeedWifi =>
+      'Verbinden Sie sich zuerst mit einem WLAN-Netz (Internet wird nicht benötigt): „Debugging über WLAN“ funktioniert nur im WLAN.';
+
+  @override
+  String get wsetupNeedWirelessDebugging =>
+      'Schalten Sie in den Entwickleroptionen „Debugging über WLAN“ ein, tippen Sie dann auf den Namen und auf „Gerät mit Kopplungscode koppeln“.';
+
+  @override
+  String get wsetupOpenDialog =>
+      'Tippen Sie unter „Debugging über WLAN“ auf „Gerät mit Kopplungscode koppeln“. Lassen Sie den Code auf dem Bildschirm und tippen Sie hier auf „Code eingeben“.';
+
+  @override
+  String get wsetupEnterCodeBody =>
+      'Tippen Sie auf „Code eingeben“ und geben Sie den 6-stelligen Code ein, der in den Einstellungen angezeigt wird.';
+
+  @override
+  String get wsetupCodeWaiting =>
+      'Code erhalten. Warten auf den Bildschirm „Gerät mit Kopplungscode koppeln“: Lassen Sie ihn offen.';
+
+  @override
+  String get wsetupWrongCode =>
+      'Dieser Code wurde nicht akzeptiert. Prüfen Sie die 6 Ziffern auf dem Bildschirm und geben Sie sie erneut ein. Wenn der Kopplungsbildschirm geschlossen wurde, öffnen Sie ihn erneut: Der Code ändert sich.';
+
+  @override
+  String get wsetupPairingFailed =>
+      'Das Koppeln hat nicht funktioniert. Schließen Sie den Kopplungsbildschirm, öffnen Sie „Gerät mit Kopplungscode koppeln“ erneut und geben Sie den neuen Code ein.';
+
+  @override
+  String get wsetupWaitingConnect =>
+      'Gekoppelt. Lassen Sie „Debugging über WLAN“ an: Waaiya stellt die Verbindung her.';
+
+  @override
+  String get wsetupNotPaired =>
+      'Dieses Telefon kennt Waaiya nicht mehr (die Kopplung wurde entfernt oder ist abgelaufen). Öffnen Sie „Gerät mit Kopplungscode koppeln“ und geben Sie den Code ein.';
+
+  @override
+  String get wsetupConnectFailed =>
+      'Keine Verbindung zu „Debugging über WLAN“ möglich. Schalten Sie es aus und wieder ein: Waaiya versucht es von selbst erneut.';
+
+  @override
+  String get wsetupGrantFailed =>
+      'Verbunden, aber die Berechtigungen fehlen noch. Verwenden Sie unten Shizuku oder einen Computer.';
+
+  @override
+  String get wsetupTimeout =>
+      'Nach 10 Minuten ohne Abschluss gestoppt. Sie können es erneut versuchen.';
+
+  @override
+  String get wsetupCodeUnreadable =>
+      'Geben Sie die 6 Ziffern des Kopplungscodes ein.';
+
+  @override
+  String get wsetupCodeHint => '6-stelliger Code';
+
+  @override
+  String get wsetupEnterCode => 'Code eingeben';
+
+  @override
+  String wsetupDetail(String details) {
+    return 'Details: $details';
+  }
+
+  @override
+  String get wsetupErrTimeout => 'keine rechtzeitige Antwort';
+
+  @override
+  String get wsetupErrRefused => 'Verbindung abgelehnt';
+
+  @override
+  String get wsetupDevOff =>
+      'Die Entwickleroptionen sind aus. Tippen Sie unter „Über das Telefon“ 7-mal auf „Build-Nummer“ und kommen Sie dann zurück.';
+
+  @override
+  String get wsetupOpenAbout => 'Über das Telefon';
+
+  @override
+  String get wsetupNotifOff =>
+      'Benachrichtigungen sind für Waaiya ausgeschaltet, deshalb kann der Code nicht in einer Benachrichtigung eingegeben werden. Nutzen Sie den geteilten Bildschirm (Einstellungen in einer Hälfte, Waaiya in der anderen) und tippen Sie auf „Code hier eingeben“.';
+
+  @override
+  String get wsetupCodeDialogTitle => 'Kopplungscode';
+
+  @override
+  String get wsetupCodeDialogBody =>
+      'Nur mit geteiltem Bildschirm (Einstellungen in einer Hälfte, Waaiya in der anderen): Wenn Sie die Einstellungen verlassen, schließt sich der Kopplungsbildschirm und sein Code funktioniert nicht mehr. Geben Sie den 6-stelligen Code ein, der unter „Gerät mit Kopplungscode koppeln“ angezeigt wird.';
+
+  @override
+  String get wsetupCodeOk => 'Koppeln';
+
+  @override
+  String get blurStrictTitle => 'Wer unverdeckt bleibt';
+
+  @override
+  String blurStrictValue(String level) {
+    return 'Wer unverdeckt bleibt: $level';
+  }
+
+  @override
+  String get blurStrict0 =>
+      'Streng: nur Menschen, bei denen die App fast sicher ist, dass es Männer sind';
+
+  @override
+  String get blurStrict1 =>
+      'Ausgewogen: etwa doppelt so viele Männer bleiben unverdeckt';
+
+  @override
+  String get blurStrict2 => 'Locker: ein paar mehr Männer als bei Ausgewogen';
+
+  @override
+  String get blurStrict0Short => 'streng';
+
+  @override
+  String get blurStrict1Short => 'ausgewogen';
+
+  @override
+  String get blurStrict2Short => 'locker';
+
+  @override
+  String get blurStrictHelp =>
+      'Wer nach Einschätzung der App nicht sicher ein Mann ist, wird verdeckt. Streng lässt etwa 7 von 100 Männern unverdeckt, Ausgewogen etwa 14, Locker etwa 16. Jede weniger strenge Stufe lässt außerdem etwa 1 von 100 Frauen mehr unverdeckt.';
+
+  @override
+  String get stateOnNotMuted =>
+      'Der Originalton ist noch nicht stummgeschaltet, deshalb hören Sie die Musik zusammen mit dem gefilterten Ton. Schließen Sie unten die einmalige Einrichtung ab.';
+
+  @override
+  String get stateOnMuteFailing =>
+      'Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (unten auf diesem Bildschirm).';
+
+  @override
+  String get stateTooSlow =>
+      'Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus. „Link öffnen“ unten funktioniert trotzdem: Es filtert das Video, bevor es abgespielt wird.';
+
+  @override
+  String get stateMonoNote =>
+      'Der Ton ist in Mono, damit dieses Telefon mithält.';
+
+  @override
+  String stateBlockedSilenced(String apps) {
+    return 'Stummgeschaltet, weil es das Filtern nicht erlaubt: $apps.';
+  }
+
+  @override
+  String stateBlockedUnfiltered(String apps) {
+    return 'Wird ungefiltert abgespielt, weil es das Filtern nicht erlaubt: $apps.';
+  }
+
+  @override
+  String get stateCaptureFailed =>
+      'Android hat Waaiya den Ton anderer Apps nicht gegeben. Tippen Sie auf die Taste, um wieder zu starten.';
+
+  @override
+  String get stateCaptureCancelled =>
+      'Der Start wurde bei der Frage von Android zur Bildschirmfreigabe abgebrochen. Waaiya braucht dort „Starten“, um den Ton zu empfangen. Nichts wird aufgenommen oder gesendet.';
+
+  @override
+  String get startNoSetupTitle => 'Die Musik ist weiterhin zu hören';
+
+  @override
+  String get startNoSetupBody =>
+      'Die einmalige Einrichtung ist noch nicht erledigt. Ohne sie kann Waaiya den Originalton nicht stummschalten: Sie hören die Musik und den gefilterten Ton zusammen.\n\n„Link öffnen“ funktioniert ohne Einrichtung.';
+
+  @override
+  String get startNoSetupSetup => 'Einrichtung durchführen';
+
+  @override
+  String get startNoSetupAnyway => 'Trotzdem starten';
+
+  @override
+  String get diagButton => 'Problem? Diagnosebericht';
+
+  @override
+  String get diagTitle => 'Diagnosebericht';
+
+  @override
+  String get diagNote =>
+      'Was Waaiya auf diesem Telefon sieht. Kopieren Sie es oder teilen Sie es mit der Person, die Ihnen hilft. Die App selbst sendet nichts.';
+
+  @override
+  String get notifStoppedTitle => 'Waaiya gestoppt';
+
+  @override
+  String get notifStoppedText =>
+      'Der Ton wird nicht mehr gefiltert. Tippen Sie, um wieder zu starten.';
+
+  @override
+  String get wsetupGuide => 'Schritte mit Bildern';
+
+  @override
+  String get navFilter => 'Filter';
+
+  @override
+  String get navScreen => 'Bildschirm';
+
+  @override
+  String get navLinks => 'Links';
+
+  @override
+  String get navSetup => 'Einrichtung';
+
+  @override
+  String get navSettings => 'Einstellungen';
+
+  @override
+  String get setupDoneTitle => 'Einrichtung abgeschlossen';
+
+  @override
+  String get setupDoneBody =>
+      'Waaiya kann den Originalton anderer Apps stummschalten. Wiederholen Sie die Einrichtung nur, wenn sich etwas geändert hat (die Einrichtung wurde rückgängig gemacht oder Waaiya meldet, dass sie fehlt).';
+
+  @override
+  String get setupRedo => 'Einrichtung erneut anzeigen';
+
+  @override
+  String get setupGo => 'Zur Einrichtung';
+
+  @override
+  String get helperTitle => 'Berührungen durch die Abdeckungen';
+
+  @override
+  String get helperBodyOff =>
+      'Ohne Hilfe blockiert eine Abdeckung die Berührungen darunter. Der Waaiya-Helfer zeichnet die Abdeckungen so, dass Berührungen hindurchgehen. Schalten Sie „Debugging über WLAN“ ein (WLAN wird benötigt) und tippen Sie auf die Taste; beim ersten Mal koppeln Sie einmal wie bei der Einrichtung. Tippen Sie nach einem Neustart des Telefons erneut darauf.';
+
+  @override
+  String get helperStart => 'Waaiya-Helfer starten';
+
+  @override
+  String get helperOn =>
+      'Der Waaiya-Helfer zeichnet die Abdeckungen: Berührungen gehen hindurch. Er stoppt, wenn das Telefon neu startet oder wenn USB-Debugging ausgeschaltet wird; tippen Sie dann erneut auf die Taste.';
+
+  @override
+  String get helperShizukuOn =>
+      'Shizuku zeichnet die Abdeckungen: Berührungen gehen hindurch.';
+
+  @override
+  String get helperOrShizuku => 'Oder mit Shizuku:';
+
+  @override
+  String get filterOptionsTitle => 'Filteroptionen';
+
+  @override
+  String get settingsGeneralTitle => 'Allgemein';
+
+  @override
+  String get desktopPreview =>
+      'Vorschau: Der Filter ist auf diesem Computer noch nicht eingebunden. Die Taste zeigt nur, wie die App funktionieren wird.';
+
+  @override
+  String actionFailed(String details) {
+    return 'Das hat nicht funktioniert: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay =>
+      'Instrumente werden aus allen Apps entfernt.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Audiowerkzeuge nicht gefunden (pactl). Waaiya braucht PulseAudio oder PipeWire mit pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'Der Soundserver läuft nicht (PulseAudio oder PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'Dieses System hat keine systemd-Benutzersitzung, die den Filter im Hintergrund ausführt.';
+
+  @override
+  String get engineErrorNoOutput =>
+      'Keine Lautsprecher oder Kopfhörer gefunden.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Der Filter konnte nicht installiert werden. Details:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'Der Filter ist nicht gestartet. Details:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'Der Filter wurde mit einem Fehler beendet. Details:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Bei der Anmeldung starten';
+
+  @override
+  String get autostartBody => 'Den Ton filtern, sobald Sie sich anmelden.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Verdeckt Menschen und Bilder auf dem Bildschirm, über jedem Fenster, solange Waaiya geöffnet ist (egal, ob der Tonfilter an oder aus ist). Das läuft auf diesem Computer; nichts wird irgendwohin gesendet. Wenn Sie das Waaiya-Fenster schließen, stoppt die Unschärfe.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'An: Der ganze Bildschirm wird verdeckt, wenn der Computer zu langsam ist oder die Unschärfe ausfällt; Klicks erreichen trotzdem die Fenster darunter. Aus: Der Bildschirm bleibt sichtbar, mit einem roten Balken oben.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Unschärfe an. Dieser Desktop zeigt die Unschärfe in seiner eigenen Bildschirmaufnahme, deshalb bleibt ein unscharfer Bereich unscharf, bis sich die Szene ändert.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'Die Unschärfe kann auf diesem Desktop nicht über anderen Fenstern angezeigt werden. Details:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Wählen Sie im Fenster zur Bildschirmfreigabe Ihren Bildschirm aus und erlauben Sie die Freigabe. Waaiya fragt nur einmal; das Bild bleibt auf diesem Computer.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'Die Unschärfe wurde unerwartet beendet. Schalten Sie eine Unschärfe-Option aus und wieder ein, um es erneut zu versuchen. Details:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'Der Detektor für Frauengesang wurde nicht geladen, deshalb werden Stimmen stummgeschaltet, solange diese Option an ist.';
+
+  @override
+  String get blurStatusUncovered =>
+      'Ein Monitor wird nicht von der Unschärfe abgedeckt: Er wurde nicht für sie freigegeben oder erst später angeschlossen. Schalten Sie eine Unschärfe-Option aus und wieder ein und wählen Sie im Fenster zur Bildschirmfreigabe jeden Bildschirm aus.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'Die Modelle der Unschärfe fehlen in dieser Installation, deshalb kann sie nichts verdecken; oben auf dem Bildschirm bleibt ein roter Balken. Installieren Sie Waaiya neu.';
+
+  @override
+  String get diagNoteDesktop =>
+      'Was Waaiya auf diesem Computer sieht. Kopieren Sie es und geben Sie es der Person, die Ihnen hilft. Die App selbst sendet nichts.';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Empfohlen. Wenn der Filter von selbst stoppt (durch einen Fehler, nicht durch Sie), bleiben andere Apps stumm, bis Sie wieder starten oder auf Stopp klicken, statt Musik ungefiltert abzuspielen.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Aus: Mono, das den Computer weniger belastet. An: Die linke und die rechte Seite bleiben getrennt. Wenn der Computer für Stereo zu langsam ist, wechselt er von selbst zu Mono.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Fügen Sie einen YouTube-, TikTok- oder Instagram-Link ein, um das Video mit eingeschaltetem Filter anzusehen oder ohne Musik zu speichern.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Fügen Sie einen YouTube-, TikTok- oder Instagram-Link ein, um das Video in Ihrem Browser mit eingeschaltetem Filter anzusehen.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Wird in Ihrem Browser geöffnet. Waaiya startet zuerst den Filter, damit die Musik auch dort entfernt wird.';
+
+  @override
+  String get linkFilterFailed =>
+      'Der Filter ist nicht gestartet, deshalb wurde der Link nicht geöffnet. Starten Sie ihn auf der Seite Filter und versuchen Sie es erneut.';
+
+  @override
+  String get linkSavedVideoDesktop => 'In Ihrem Ordner „Videos“: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'In Ihrem Ordner „Musik“: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Im Ordner anzeigen';
+
+  @override
+  String get linkSingingNote =>
+      'Frauengesang wird ebenfalls stummgeschaltet, wie in Ihren Einstellungen.';
+}

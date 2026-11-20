@@ -65,7 +65,7 @@
     <string name="setting_stereo_title">صوت ستيريو</string>
     <string name="setting_stereo_body">مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.</string>
     <string name="setting_singing_title">كتم غناء النساء</string>
-    <string name="setting_singing_body">يُبقي كلام النساء وتلاوتهن.</string>
+    <string name="setting_singing_body">يُبقي كلام النساء.</string>
     <string name="setting_singing_no_model">هذه النسخة بلا كاشف للغناء، لذا تُكتم كل الأصوات ما دام هذا الخيار مفعّلًا.</string>
     <string name="setting_restart">أوقف التصفية ثم شغّلها لتطبيق التغييرات.</string>
     <string name="setting_gender_title">أنا</string>

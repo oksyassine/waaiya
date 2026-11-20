@@ -225,8 +225,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingSingingTitle => 'Couper le chant des femmes';
 
   @override
-  String get settingSingingBody =>
-      'La parole et la récitation des femmes sont conservées.';
+  String get settingSingingBody => 'La parole des femmes est conservée.';
 
   @override
   String get settingSingingNoModel =>

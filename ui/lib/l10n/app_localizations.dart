@@ -7,13 +7,22 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
 import 'app_localizations_bn.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
 import 'app_localizations_fa.dart';
 import 'app_localizations_fr.dart';
+import 'app_localizations_ha.dart';
 import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
 import 'app_localizations_ms.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_so.dart';
+import 'app_localizations_sw.dart';
 import 'app_localizations_tr.dart';
 import 'app_localizations_ur.dart';
+import 'app_localizations_uz.dart';
 
 // ignore_for_file: type=lint
 
@@ -103,13 +112,22 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
     Locale('bn'),
+    Locale('de'),
     Locale('en'),
+    Locale('es'),
     Locale('fa'),
     Locale('fr'),
+    Locale('ha'),
     Locale('id'),
+    Locale('it'),
     Locale('ms'),
+    Locale('nl'),
+    Locale('ru'),
+    Locale('so'),
+    Locale('sw'),
     Locale('tr'),
     Locale('ur'),
+    Locale('uz'),
   ];
 
   /// Android string app_name
@@ -481,7 +499,7 @@ abstract class AppLocalizations {
   /// Android string setting_singing_body
   ///
   /// In ar, this message translates to:
-  /// **'يُبقي كلام النساء وتلاوتهن.'**
+  /// **'يُبقي كلام النساء.'**
   String get settingSingingBody;
 
   /// Android string setting_singing_no_model
@@ -1908,13 +1926,22 @@ class _AppLocalizationsDelegate
   bool isSupported(Locale locale) => <String>[
     'ar',
     'bn',
+    'de',
     'en',
+    'es',
     'fa',
     'fr',
+    'ha',
     'id',
+    'it',
     'ms',
+    'nl',
+    'ru',
+    'so',
+    'sw',
     'tr',
     'ur',
+    'uz',
   ].contains(locale.languageCode);
 
   @override
@@ -1928,20 +1955,38 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsAr();
     case 'bn':
       return AppLocalizationsBn();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
     case 'fa':
       return AppLocalizationsFa();
     case 'fr':
       return AppLocalizationsFr();
+    case 'ha':
+      return AppLocalizationsHa();
     case 'id':
       return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
     case 'ms':
       return AppLocalizationsMs();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'so':
+      return AppLocalizationsSo();
+    case 'sw':
+      return AppLocalizationsSw();
     case 'tr':
       return AppLocalizationsTr();
     case 'ur':
       return AppLocalizationsUr();
+    case 'uz':
+      return AppLocalizationsUz();
   }
 
   throw FlutterError(

@@ -259,7 +259,7 @@
   "@settingSingingTitle": {
     "description": "Android string setting_singing_title"
   },
-  "settingSingingBody": "يُبقي كلام النساء وتلاوتهن.",
+  "settingSingingBody": "يُبقي كلام النساء.",
   "@settingSingingBody": {
     "description": "Android string setting_singing_body"
   },

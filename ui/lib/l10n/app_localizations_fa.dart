@@ -225,7 +225,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingSingingTitle => 'بی‌صدا کردن آواز زنان';
 
   @override
-  String get settingSingingBody => 'گفتار و تلاوت زنان حفظ می‌شود.';
+  String get settingSingingBody => 'گفتار زنان حفظ می‌شود.';
 
   @override
   String get settingSingingNoModel =>

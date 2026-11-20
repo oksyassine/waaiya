@@ -17,7 +17,8 @@ void main() {
     expect(appLanguageOf('fr_FR.UTF-8'), 'fr');
     expect(appLanguageOf('in'), 'id');
     expect(appLanguageOf('id-ID'), 'id');
-    expect(appLanguageOf('de_DE'), isNull);
+    expect(appLanguageOf('de_DE'), 'de');
+    expect(appLanguageOf('zh_CN'), isNull);
     expect(appLanguageOf(null), isNull);
   });
 

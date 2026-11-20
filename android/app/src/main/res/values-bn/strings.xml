@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">স্টেরিও শব্দ</string>
     <string name="setting_stereo_body">বন্ধ: মোনো, যা প্রায় অর্ধেক ব্যাটারি খরচ করে এবং বেশি ফোনে ঠিকমতো চলে। চালু: বাম ও ডান দিক আলাদা রাখে। ফোন স্টেরিওর জন্য বেশি ধীর হলে এটি নিজেই মোনোতে চলে যায়।</string>
     <string name="setting_singing_title">নারীদের গান নীরব করুন</string>
-    <string name="setting_singing_body">নারীদের কথা ও তিলাওয়াত রেখে দেওয়া হয়।</string>
+    <string name="setting_singing_body">নারীদের কথা রেখে দেওয়া হয়।</string>
     <string name="setting_singing_no_model">এই সংস্করণে গান শনাক্তকারী নেই, তাই এটি চালু থাকলে সব কণ্ঠ নীরব করা হয়।</string>
     <string name="setting_restart">পরিবর্তন কার্যকর করতে ফিল্টারিং বন্ধ করে আবার চালু করুন।</string>
     <string name="setting_gender_title">আমি</string>

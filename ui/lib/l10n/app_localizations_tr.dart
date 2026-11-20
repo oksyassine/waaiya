@@ -225,7 +225,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingSingingTitle => 'Kadınların şarkı sesini sustur';
 
   @override
-  String get settingSingingBody => 'Kadınların konuşması ve tilaveti korunur.';
+  String get settingSingingBody => 'Kadınların konuşması korunur.';
 
   @override
   String get settingSingingNoModel =>

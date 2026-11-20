@@ -61,7 +61,7 @@
   "settingStereoTitle": "Suara stereo",
   "settingStereoBody": "Nonaktif: mono, yang memakai sekitar separuh baterai dan lancar di lebih banyak ponsel. Aktif: memisahkan sisi kiri dan kanan. Jika ponsel terlalu lambat untuk stereo, otomatis beralih ke mono.",
   "settingSingingTitle": "Bisukan nyanyian perempuan",
-  "settingSingingBody": "Suara bicara dan tilawah perempuan tetap terdengar.",
+  "settingSingingBody": "Suara bicara perempuan tetap terdengar.",
   "settingSingingNoModel": "Versi ini tidak punya pendeteksi nyanyian, jadi semua suara orang dibisukan selama opsi ini aktif.",
   "settingRestart": "Hentikan lalu mulai filter untuk menerapkan perubahan.",
   "settingGenderTitle": "Saya",

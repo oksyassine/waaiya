@@ -61,7 +61,7 @@
   "settingStereoTitle": "Stereo ses",
   "settingStereoBody": "Kapalı: mono; pilin yaklaşık yarısını kullanır ve daha çok telefonda yetişir. Açık: sol ve sağ tarafları ayrı tutar. Telefon stereo için fazla yavaşsa yine kendiliğinden monoya geçer.",
   "settingSingingTitle": "Kadınların şarkı sesini sustur",
-  "settingSingingBody": "Kadınların konuşması ve tilaveti korunur.",
+  "settingSingingBody": "Kadınların konuşması korunur.",
   "settingSingingNoModel": "Bu sürümde şarkı algılayıcı yok, bu yüzden bu seçenek açıkken tüm sesler susturulur.",
   "settingRestart": "Değişiklikleri uygulamak için filtrelemeyi durdurup başlatın.",
   "settingGenderTitle": "Cinsiyetiniz",

@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Stereo ses</string>
     <string name="setting_stereo_body">Kapalı: mono; pilin yaklaşık yarısını kullanır ve daha çok telefonda yetişir. Açık: sol ve sağ tarafları ayrı tutar. Telefon stereo için fazla yavaşsa yine kendiliğinden monoya geçer.</string>
     <string name="setting_singing_title">Kadınların şarkı sesini sustur</string>
-    <string name="setting_singing_body">Kadınların konuşması ve tilaveti korunur.</string>
+    <string name="setting_singing_body">Kadınların konuşması korunur.</string>
     <string name="setting_singing_no_model">Bu sürümde şarkı algılayıcı yok, bu yüzden bu seçenek açıkken tüm sesler susturulur.</string>
     <string name="setting_restart">Değişiklikleri uygulamak için filtrelemeyi durdurup başlatın.</string>
     <string name="setting_gender_title">Cinsiyetiniz</string>

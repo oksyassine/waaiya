@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">صدای استریو</string>
     <string name="setting_stereo_body">خاموش: مونو، که حدود نصف باتری مصرف می‌کند و در تلفن‌های بیشتری عقب نمی‌ماند. روشن: سمت چپ و راست را جدا نگه می‌دارد. اگر تلفن برای استریو خیلی کند باشد، باز هم خودش به مونو برمی‌گردد.</string>
     <string name="setting_singing_title">بی‌صدا کردن آواز زنان</string>
-    <string name="setting_singing_body">گفتار و تلاوت زنان حفظ می‌شود.</string>
+    <string name="setting_singing_body">گفتار زنان حفظ می‌شود.</string>
     <string name="setting_singing_no_model">این نسخه آشکارساز آواز ندارد، برای همین تا وقتی این گزینه روشن است، همهٔ صداهای انسانی قطع می‌شوند.</string>
     <string name="setting_restart">برای اعمال تغییرات، پالایش را متوقف و دوباره شروع کنید.</string>
     <string name="setting_gender_title">من</string>

@@ -61,7 +61,7 @@
   "settingStereoTitle": "Son stéréo",
   "settingStereoBody": "Désactivé : mono, qui consomme environ deux fois moins de batterie et suit le rythme sur plus de téléphones. Activé : garde la gauche et la droite séparées. Si le téléphone est trop lent pour la stéréo, il repasse quand même en mono tout seul.",
   "settingSingingTitle": "Couper le chant des femmes",
-  "settingSingingBody": "La parole et la récitation des femmes sont conservées.",
+  "settingSingingBody": "La parole des femmes est conservée.",
   "settingSingingNoModel": "Cette version n'a pas de détecteur de chant : toutes les voix sont donc coupées tant que cette option est activée.",
   "settingRestart": "Arrêtez puis relancez le filtrage pour appliquer les changements.",
   "settingGenderTitle": "Je suis",

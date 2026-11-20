@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Bunyi stereo</string>
     <string name="setting_stereo_body">Mati: mono, yang menggunakan kira-kira separuh bateri dan lancar pada lebih banyak telefon. Hidup: mengekalkan sisi kiri dan kanan berasingan. Jika telefon terlalu perlahan untuk stereo, ia tetap beralih kepada mono dengan sendirinya.</string>
     <string name="setting_singing_title">Senyapkan nyanyian wanita</string>
-    <string name="setting_singing_body">Percakapan dan bacaan wanita dikekalkan.</string>
+    <string name="setting_singing_body">Percakapan wanita dikekalkan.</string>
     <string name="setting_singing_no_model">Versi ini tiada pengesan nyanyian, jadi semua suara disenyapkan selagi ini dihidupkan.</string>
     <string name="setting_restart">Hentikan dan mulakan penapisan untuk menggunakan perubahan.</string>
     <string name="setting_gender_title">Saya seorang</string>

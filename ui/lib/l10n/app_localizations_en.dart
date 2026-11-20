@@ -224,7 +224,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingSingingTitle => 'Mute women\'s singing';
 
   @override
-  String get settingSingingBody => 'Women\'s speech and recitation are kept.';
+  String get settingSingingBody => 'Women\'s speech is kept.';
 
   @override
   String get settingSingingNoModel =>

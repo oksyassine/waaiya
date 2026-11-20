@@ -22,7 +22,7 @@ object Lang {
     const val AR = "ar"
     const val EN = "en"
     /** The app's languages, as BCP 47 tags ("id", which Android's java.util.Locale may call "in"). */
-    val ALL = listOf(AR, EN, "fr", "ur", "id", "tr", "bn", "fa", "ms")
+    val ALL = listOf(AR, EN, "fr", "ur", "id", "tr", "bn", "fa", "ms", "es", "nl", "de", "it", "ru", "uz", "sw", "ha", "so")
     private const val PREF = "lang"
 
     /** [ALL]'s tag for a locale's language, or null when Waaiya does not have it. */

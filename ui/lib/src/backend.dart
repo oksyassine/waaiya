@@ -683,6 +683,15 @@ const appLanguages = <String, String>{
   'bn': 'বাংলা',
   'fa': 'فارسی',
   'ms': 'Bahasa Melayu',
+  'es': 'Español',
+  'nl': 'Nederlands',
+  'de': 'Deutsch',
+  'it': 'Italiano',
+  'ru': 'Русский',
+  'uz': 'Oʻzbekcha',
+  'sw': 'Kiswahili',
+  'ha': 'Hausa',
+  'so': 'Soomaali',
 };
 
 /// [appLanguages]' tag for a system locale name such as "fr_FR.UTF-8", "id-ID" or "in", or null.

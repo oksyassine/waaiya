@@ -224,7 +224,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingSingingTitle => 'خواتین کا گانا خاموش کریں';
 
   @override
-  String get settingSingingBody => 'خواتین کی بات چیت اور تلاوت باقی رہتی ہے۔';
+  String get settingSingingBody => 'خواتین کی بات چیت باقی رہتی ہے۔';
 
   @override
   String get settingSingingNoModel =>
