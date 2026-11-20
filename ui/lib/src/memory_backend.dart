@@ -19,6 +19,17 @@ class MemoryBackend implements WaaiyaBackend {
     _controller.add(s);
   }
 
+  /// Feature methods for [invoke], by name (`worship.times`...). Tests and the desktop backend fill it; a missing
+  /// name is `unsupported`.
+  final Map<String, Future<Object?> Function(Map<String, Object?> args)> methods = {};
+
+  @override
+  Future<Object?> invoke(String method, [Map<String, Object?> args = const {}]) {
+    final m = methods[method];
+    if (m == null) throw BackendException('unsupported', method);
+    return m(args);
+  }
+
   /// Persistence hook for subclasses: called after every settings or language change.
   Future<void> saved() async {}
 

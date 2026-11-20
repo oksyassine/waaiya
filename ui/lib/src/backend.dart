@@ -24,6 +24,44 @@ abstract final class SettingKeys {
   /// desktop notice.
   static const holdSilence = 'hold_silence';
 
+  // 0.2.13 features (docs/FEATURES_CONTRACT.md). Changes that weaken protection may be refused with
+  // BackendException('protected') by the waiting period or the PIN (Protection.checkSetting on Android).
+
+  /// Apps the live filter leaves alone: comma-separated package names (Android) or application names (desktop).
+  static const filterOffApps = 'filter_off_apps';
+
+  /// Apps the screen blur leaves alone while in the foreground: comma-separated package names.
+  static const blurOffApps = 'blur_off_apps';
+
+  /// Keep singing voices (voice_v1 model, a test): off by default.
+  static const keepSinging = 'keep_singing';
+
+  /// Phone silent for [prayerSilentMinutes] from each prayer time; media muted [prayerAdhanMinutes] at the adhan.
+  static const prayerSilent = 'prayer_silent';
+  static const prayerSilentMinutes = 'prayer_silent_minutes';
+  static const prayerAdhanMute = 'prayer_adhan_mute';
+  static const prayerAdhanMinutes = 'prayer_adhan_minutes';
+
+  /// A bundled city id, or "custom:LAT,LON,TZID"; "" = not chosen.
+  static const prayerPlace = 'prayer_place';
+
+  /// Calculation method index and Asr rule (0 standard, 1 Hanafi): the user's choice, never decided by the app.
+  static const prayerMethod = 'prayer_method';
+  static const prayerAsr = 'prayer_asr';
+
+  /// Waiting period in minutes before switching off or weakening takes effect; 0 = none.
+  static const protectDelayMinutes = 'protect_delay_minutes';
+
+  /// Integer settings and their allowed range (inclusive).
+  static const Map<String, (int, int)> ranges = {
+    blurStrictness: (0, 2),
+    prayerSilentMinutes: (5, 90),
+    prayerAdhanMinutes: (1, 30),
+    prayerMethod: (0, 15),
+    prayerAsr: (0, 1),
+    protectDelayMinutes: (0, 1440),
+  };
+
   /// Key -> default value. The value's type is the key's type.
   static const Map<String, Object> defaults = {
     gender: '',
@@ -35,6 +73,17 @@ abstract final class SettingKeys {
     blurStrictness: 0,
     audioStereo: false,
     holdSilence: true,
+    filterOffApps: '',
+    blurOffApps: '',
+    keepSinging: false,
+    prayerSilent: false,
+    prayerSilentMinutes: 20,
+    prayerAdhanMute: false,
+    prayerAdhanMinutes: 5,
+    prayerPlace: '',
+    prayerMethod: 0,
+    prayerAsr: 0,
+    protectDelayMinutes: 0,
   };
 
   /// Returns an error text when [key]/[value] is not a valid setting, else null.
@@ -42,7 +91,10 @@ abstract final class SettingKeys {
     final def = defaults[key];
     if (def == null) return 'unknown setting "$key"';
     if (def is bool && value is! bool) return '"$key" takes a bool';
-    if (def is int && (value is! int || value < 0 || value > 2)) return '"$key" takes 0, 1 or 2';
+    if (def is int) {
+      final (lo, hi) = ranges[key] ?? (0, 2);
+      if (value is! int || value < lo || value > hi) return '"$key" takes $lo to $hi';
+    }
     if (def is String) {
       if (value is! String) return '"$key" takes a string';
       if (key == gender && !const {'', 'man', 'woman'}.contains(value)) return 'gender is "", "man" or "woman"';
@@ -63,6 +115,17 @@ class WaaiyaSettings {
     this.blurStrictness = 0,
     this.audioStereo = false,
     this.holdSilence = true,
+    this.filterOffApps = const [],
+    this.blurOffApps = const [],
+    this.keepSinging = false,
+    this.prayerSilent = false,
+    this.prayerSilentMinutes = 20,
+    this.prayerAdhanMute = false,
+    this.prayerAdhanMinutes = 5,
+    this.prayerPlace = '',
+    this.prayerMethod = 0,
+    this.prayerAsr = 0,
+    this.protectDelayMinutes = 0,
   });
 
   factory WaaiyaSettings.fromMap(Map<Object?, Object?> m) => WaaiyaSettings(
@@ -75,6 +138,17 @@ class WaaiyaSettings {
         blurStrictness: _int(m[SettingKeys.blurStrictness]).clamp(0, 2),
         audioStereo: _bool(m[SettingKeys.audioStereo], false),
         holdSilence: _bool(m[SettingKeys.holdSilence], true),
+        filterOffApps: _csv(m[SettingKeys.filterOffApps]),
+        blurOffApps: _csv(m[SettingKeys.blurOffApps]),
+        keepSinging: _bool(m[SettingKeys.keepSinging], false),
+        prayerSilent: _bool(m[SettingKeys.prayerSilent], false),
+        prayerSilentMinutes: _intOr(m[SettingKeys.prayerSilentMinutes], 20).clamp(5, 90),
+        prayerAdhanMute: _bool(m[SettingKeys.prayerAdhanMute], false),
+        prayerAdhanMinutes: _intOr(m[SettingKeys.prayerAdhanMinutes], 5).clamp(1, 30),
+        prayerPlace: _str(m[SettingKeys.prayerPlace]) ?? '',
+        prayerMethod: _int(m[SettingKeys.prayerMethod]).clamp(0, 15),
+        prayerAsr: _int(m[SettingKeys.prayerAsr]).clamp(0, 1),
+        protectDelayMinutes: _int(m[SettingKeys.protectDelayMinutes]).clamp(0, 1440),
       );
 
   /// "man", "woman" or "" (not answered yet: the onboarding is shown).
@@ -90,6 +164,19 @@ class WaaiyaSettings {
   final bool audioStereo;
   final bool holdSilence;
 
+  /// Sorted, no empty entries ([SettingKeys.filterOffApps]; stored comma-separated).
+  final List<String> filterOffApps;
+  final List<String> blurOffApps;
+  final bool keepSinging;
+  final bool prayerSilent;
+  final int prayerSilentMinutes;
+  final bool prayerAdhanMute;
+  final int prayerAdhanMinutes;
+  final String prayerPlace;
+  final int prayerMethod;
+  final int prayerAsr;
+  final int protectDelayMinutes;
+
   bool get isMan => gender == 'man';
   bool get blurOn => blurWomen || blurNudity;
 
@@ -103,6 +190,17 @@ class WaaiyaSettings {
         SettingKeys.blurStrictness: blurStrictness,
         SettingKeys.audioStereo: audioStereo,
         SettingKeys.holdSilence: holdSilence,
+        SettingKeys.filterOffApps: filterOffApps.join(','),
+        SettingKeys.blurOffApps: blurOffApps.join(','),
+        SettingKeys.keepSinging: keepSinging,
+        SettingKeys.prayerSilent: prayerSilent,
+        SettingKeys.prayerSilentMinutes: prayerSilentMinutes,
+        SettingKeys.prayerAdhanMute: prayerAdhanMute,
+        SettingKeys.prayerAdhanMinutes: prayerAdhanMinutes,
+        SettingKeys.prayerPlace: prayerPlace,
+        SettingKeys.prayerMethod: prayerMethod,
+        SettingKeys.prayerAsr: prayerAsr,
+        SettingKeys.protectDelayMinutes: protectDelayMinutes,
       };
 }
 
@@ -588,6 +686,7 @@ class AppState {
     this.detectorModel = false,
     this.capabilities = const Capabilities(),
     this.navigate,
+    this.features = const {},
   });
 
   /// Tolerant: a missing or unknown key takes its default (keys are added, never renamed).
@@ -602,6 +701,7 @@ class AppState {
         detectorModel: _bool(_map(m['models'])['detector'], false),
         capabilities: Capabilities.fromMap(_map(m['capabilities'])),
         navigate: PageRequest.fromMap(m['navigate']),
+        features: {for (final e in _map(m['features']).entries) if (e.key is String) e.key as String: _map(e.value)},
       );
 
   final String platform;
@@ -621,12 +721,20 @@ class AppState {
   /// A page the platform asks to show once (a Quick Settings tile's "Open Waaiya"); null most of the time.
   final PageRequest? navigate;
 
+  /// One map per 0.2.13 feature, read by that feature's own file (docs/FEATURES_CONTRACT.md): `fix`
+  /// (fix_mistakes.dart), `worship` (worship.dart), `protect` (protection.dart), `singing` (singing_option.dart).
+  /// A missing section is an empty map.
+  final Map<String, Map<Object?, Object?>> features;
+
+  Map<Object?, Object?> feature(String name) => features[name] ?? const {};
+
   AppState copyWith({
     String? language,
     WaaiyaSettings? settings,
     FilterInfo? filter,
     SetupInfo? setup,
     BlurInfo? blur,
+    Map<String, Map<Object?, Object?>>? features,
   }) =>
       AppState(
         platform: platform,
@@ -638,6 +746,7 @@ class AppState {
         blur: blur ?? this.blur,
         detectorModel: detectorModel,
         capabilities: capabilities,
+        features: features ?? this.features,
       );
 
   Map<String, Object?> toMap() => {
@@ -650,6 +759,7 @@ class AppState {
         'blur': blur.toMap(),
         'models': {'detector': detectorModel},
         'capabilities': capabilities.toMap(),
+        'features': features,
       };
 }
 
@@ -762,6 +872,12 @@ abstract interface class WaaiyaBackend {
 
   /// Android's share sheet with [text] (the diagnostics report).
   Future<void> shareText(String text);
+
+  /// A 0.2.13 feature method, named `<feature>.<name>` (docs/FEATURES_CONTRACT.md), e.g. `worship.times`. Android:
+  /// the same MethodChannel method name, routed by UiBridge to the feature's Kotlin object. Throws
+  /// [BackendException] `unsupported` where the platform lacks it, `protected` when the waiting period or the PIN
+  /// holds the change back.
+  Future<Object?> invoke(String method, [Map<String, Object?> args = const {}]);
 }
 
 // --- tolerant readers ---
@@ -770,6 +886,12 @@ Map<Object?, Object?> _map(Object? v) => v is Map ? v : const {};
 String? _str(Object? v) => v is String ? v : null;
 bool _bool(Object? v, bool def) => v is bool ? v : def;
 int _int(Object? v) => v is int ? v : (v is num ? v.toInt() : 0);
+int _intOr(Object? v, int def) => v is num ? v.toInt() : def;
+List<String> _csv(Object? v) => v is String
+    ? (v.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList()..sort())
+    : v is List
+        ? (v.whereType<String>().toSet().toList()..sort())
+        : const [];
 
 /// "MODEL_FAILED" <-> FilterState.modelFailed.
 String _enumName(Enum e) => e.name.replaceAllMapped(RegExp('[A-Z]'), (m) => '_${m[0]}').toUpperCase();

@@ -29,6 +29,11 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private var sink: EventChannel.EventSink? = null
     private var disposed = false
 
+    private val featureHost = object : FeatureHost {
+        override val activity get() = this@UiBridge.activity
+        override fun refresh() = this@UiBridge.refresh()
+    }
+
     private var shizukuBusy = false
     private var shizukuMessage: Pair<String, String>? = null
     private var blurBusy = false
@@ -202,6 +207,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "setSetting" -> { setSetting(call.argument<String>("key"), call.argument<Any>("value")); result.success(null) }
                 "startFilter" -> startFilter(result)
                 "stopFilter" -> {
+                    if (!Protection.mayStopFilter(activity)) throw FeatureException("protected", "stopFilter")
                     activity.startService(Intent(activity, FilterService::class.java).setAction(FilterService.ACTION_STOP))
                     result.success(null)
                 }
@@ -264,8 +270,15 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     if (LicencesActivity.DOCS.none { it.second == file }) throw BadArgs("licence file $file")
                     result.success(licenceAsset(file!!))
                 }
-                else -> result.notImplemented()
+                else -> {
+                    val (feature, method) = Features.byMethod(call.method) ?: run { result.notImplemented(); return }
+                    @Suppress("UNCHECKED_CAST")
+                    val args = (call.arguments as? Map<String, Any?>) ?: emptyMap()
+                    result.success(feature.call(featureHost, method, args))
+                }
             }
+        } catch (e: FeatureException) {
+            result.error(e.code, e.message, null)
         } catch (e: BadArgs) {
             result.error("bad_args", e.message, null)
         } catch (e: Exception) {
@@ -290,6 +303,17 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_strictness" to settings.blurStrictness,
             "audio_stereo" to settings.audioStereo,
             "hold_silence" to settings.holdSilence,
+            "filter_off_apps" to settings.filterOffApps.sorted().joinToString(","),
+            "blur_off_apps" to settings.blurOffApps.sorted().joinToString(","),
+            "keep_singing" to settings.keepSinging,
+            "prayer_silent" to settings.prayerSilent,
+            "prayer_silent_minutes" to settings.prayerSilentMinutes,
+            "prayer_adhan_mute" to settings.prayerAdhanMute,
+            "prayer_adhan_minutes" to settings.prayerAdhanMinutes,
+            "prayer_place" to settings.prayerPlace,
+            "prayer_method" to settings.prayerMethod,
+            "prayer_asr" to settings.prayerAsr,
+            "protect_delay_minutes" to settings.protectDelayMinutes,
         ),
         "filter" to mapOf(
             "state" to FilterService.state.name,
@@ -355,6 +379,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "message" to blurMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
         ),
         "models" to mapOf("detector" to ModelStore.hasDetector(activity)),
+        "features" to Features.ALL.associate { it.name to it.snapshot(featureHost) },
         "capabilities" to mapOf(
             "shizukuSetup" to true, "adbSetup" to true, "captureConsent" to true,
             "screenBlur" to true, "links" to true, "womenSinging" to true,
@@ -364,6 +389,9 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private fun setSetting(key: String?, value: Any?) {
         if (key == null) throw BadArgs("key")
         fun bool() = value as? Boolean ?: throw BadArgs("$key takes a bool")
+        fun int(lo: Int, hi: Int) = (value as? Int)?.takeIf { it in lo..hi } ?: throw BadArgs("$key takes $lo to $hi")
+        fun apps() = Settings.csv(value as? String ?: throw BadArgs("$key takes comma-separated package names"))
+        Protection.checkSetting(activity, key, value)  // throws "protected" when the waiting period or PIN holds it
         when (key) {
             "gender" -> settings.gender = (value as? String)?.takeIf { it in listOf("", "man", "woman") }
                 ?: throw BadArgs("gender is \"\", \"man\" or \"woman\"")
@@ -377,6 +405,17 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             // read by the running filter (stereo) and when Android ends filtering (hold): apply at once
             "audio_stereo" -> settings.audioStereo = bool()
             "hold_silence" -> settings.holdSilence = bool()
+            "filter_off_apps" -> settings.filterOffApps = apps()
+            "blur_off_apps" -> settings.blurOffApps = apps()
+            "keep_singing" -> settings.keepSinging = bool()
+            "prayer_silent" -> settings.prayerSilent = bool()
+            "prayer_silent_minutes" -> settings.prayerSilentMinutes = int(5, 90)
+            "prayer_adhan_mute" -> settings.prayerAdhanMute = bool()
+            "prayer_adhan_minutes" -> settings.prayerAdhanMinutes = int(1, 30)
+            "prayer_place" -> settings.prayerPlace = value as? String ?: throw BadArgs("$key takes a string")
+            "prayer_method" -> settings.prayerMethod = int(0, 15)
+            "prayer_asr" -> settings.prayerAsr = int(0, 1)
+            "protect_delay_minutes" -> settings.protectDelayMinutes = int(0, 1440)
             else -> throw BadArgs("unknown setting $key")
         }
         // No restart: the running filter and blur re-read Settings every 0.5 s.

@@ -27,6 +27,9 @@ class ChannelBackend implements WaaiyaBackend {
   }
 
   @override
+  Future<Object?> invoke(String method, [Map<String, Object?> args = const {}]) => _call<Object?>(method, args);
+
+  @override
   Future<AppState> getState() async => AppState.fromMap(await _call<Map<Object?, Object?>>('getState') ?? const {});
 
   @override
