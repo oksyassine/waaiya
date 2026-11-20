@@ -144,7 +144,7 @@ val requiredModels = linkedMapOf(
     "blur_seg.onnx" to modelFile("imBlurSeg", modelVision.resolve("seg.onnx")),
 )
 // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
-// Optional in every build: no release asset has it yet (scripts/fetch_deps.sh detector), so a build without it warns.
+// In the models-v1 release since 0.2.12 (scripts/fetch_deps.sh detector); a local build without it warns (CI fails).
 val detectorModel = modelFile("imDetector", rootProject.file("../models/detector/detector_v1.onnx"))
 // Sync, not Copy: build/modelAssets ends up holding exactly the files found now, so a model whose source is gone
 // cannot ship from a stale copy left there by an older build.

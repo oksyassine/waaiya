@@ -12,7 +12,7 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Android: Quick Settings tiles, icon shortcuts | done (0.2.11) | "Waaiya" tile and Start/Stop shortcuts on the icon; "Notification text" tile (Android 15+) shows notification text while filtering |
 | Open a link (YouTube, TikTok, Instagram) | done | Video links stay video; saved files keep the original picture with filtered sound |
 | Screen blur (Android) | released | Person detector with tiles, woman/man classifier v2, outlines, steady covers: `eval/results/blur_*.md`. 0.2.10: one window per cover group without Shizuku, checked Shizuku layer, self-test on every host change. Speed on phones not measured |
-| Women's-singing detector | engine + Linux + Android wired; model v1 bundled | `models/detector/test_detector_engine.py` |
+| Women's-singing detector | engine + Linux + Android + Windows wired; model v1 bundled, in the `models-v1` release since 0.2.12 | `models/detector/test_detector_engine.py` |
 | Model shrink | done: int8 weights 2.4 MB, within 0.2 dB | `eval/results/shrink.md` |
 | Own voice model (keeps singing) | trained on Kaggle, not the default | roadmap item 6 |
 | Flutter UI (Android main screen since 0.2.11, pages with a bottom bar), Linux desktop app | Android: released; desktop: preview | Sound filter and X11 blur work; Wayland blur untested on real sessions |

@@ -40,8 +40,10 @@ jobs:
       - name: Flutter module
         working-directory: ui_module
         run: flutter pub get
-      - name: Default model and ONNX Runtime licence texts
-        run: scripts/fetch_deps.sh
+      - name: Default model, women's-singing model and ONNX Runtime licence texts
+        run: |
+          scripts/fetch_deps.sh
+          [ -f models/detector/detector_v1.onnx ] || { echo "::error::women's-singing model not fetched"; exit 1; }
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Build debug APK (arm64-v8a, armeabi-v7a), lint, JVM tests (load monitor, session list parser)
