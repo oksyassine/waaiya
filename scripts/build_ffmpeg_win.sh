@@ -37,7 +37,7 @@ cd "$WORK/ffmpeg-$FFMPEG_VERSION"
     --disable-debug --disable-doc --disable-network \
     --disable-ffplay --disable-ffprobe \
     --disable-everything \
-    --enable-protocol=file,pipe \
+    --enable-protocol=file,pipe,fd \
     --enable-decoder=aac,aac_latm,mp3,mp3float,opus,vorbis,flac,pcm_s16le,pcm_s24le,pcm_f32le,pcm_s16be \
     --enable-encoder=aac,pcm_f32le,pcm_s16le \
     --enable-demuxer=mov,matroska,mpegts,mp3,wav,pcm_f32le,aac,flac,ogg \

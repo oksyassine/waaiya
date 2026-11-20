@@ -485,7 +485,7 @@ class LinkSaver {
     const rate = 48000, ch = 2;
     final dec = await _spawn(tools.ffmpeg, [
       '-nostdin', '-hide_banner', '-loglevel', 'error', '-i', audioIn, '-map', '0:a:0', '-vn', //
-      '-f', 'f32le', '-ac', '$ch', '-ar', '$rate', '-',
+      '-f', 'f32le', '-ac', '$ch', '-ar', '$rate', 'pipe:1',
     ]);
     final imp = await _spawn(tools.imProcess, [
       '-m', tools.model, '--raw', '--channels', '$ch', '--rate', '$rate', //
@@ -493,7 +493,7 @@ class LinkSaver {
     ]);
     final enc = await _spawn(tools.ffmpeg, [
       '-nostdin', '-hide_banner', '-loglevel', 'error', '-y', //
-      '-f', 'f32le', '-ac', '$ch', '-ar', '$rate', '-i', '-',
+      '-f', 'f32le', '-ac', '$ch', '-ar', '$rate', '-i', 'pipe:0',
       if (videoIn != null) ...['-i', videoIn, '-map', '1:v:0', '-map', '0:a:0', '-c:v', 'copy'] else ...['-map', '0:a:0'],
       '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', out,
     ]);

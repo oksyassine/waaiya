@@ -342,7 +342,7 @@ class FakeTools {
       File(out).writeAsStringSync(out.contains('video') ? 'video' : 'audio');
       return p.finish(0);
     }
-    if (exe == 'ffmpeg' && args.last == '-') {
+    if (exe == 'ffmpeg' && args.last == 'pipe:1') {
       p.emit('pcm' * 1000); // decoded sound
       return p.finish(0);
     }
