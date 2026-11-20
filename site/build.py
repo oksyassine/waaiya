@@ -247,6 +247,21 @@ def fonts(a):
     return "\n".join(out)
 
 
+def bands_css(a):
+    """The music strips: crisp lines drawn at their shown size (make_assets.py), 1x and 2x, light and dark."""
+    def img(theme, h):
+        one, two = f"{a}bands-{theme}-{h}.png", f"{a}bands-{theme}-{h}@2x.png"
+        return (f"background-image:url({two});background-image:-webkit-image-set(url({one}) 1x,url({two}) 2x);"
+                f"background-image:image-set(url({one}) 1x,url({two}) 2x)")
+    dark = ":root:not([data-theme=\"light\"]) .music i{%s}"
+    return (f".music i{{{img('light', 48)}}}"
+            f"@media (prefers-color-scheme: dark){{{dark % img('dark', 48)}}}"
+            f":root[data-theme=\"dark\"] .music i{{{img('dark', 48)}}}"
+            f"@media (max-width: 560px){{.music i{{{img('light', 32)}}}"
+            f"@media (prefers-color-scheme: dark){{{dark % img('dark', 32)}}}"
+            f":root[data-theme=\"dark\"] .music i{{{img('dark', 32)}}}}}")
+
+
 def e(s):
     """Escape, then turn [[run]] into an isolated left-to-right run."""
     s = html.escape(s, quote=True)
@@ -373,7 +388,7 @@ def page(lang, root):
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(d){{d.classList.add("js");var s=null;try{{s=localStorage.getItem("waaiya.filter")}}catch(x){{}}var q=/[?&]filter=(on|off)/.exec(location.search);if(q)s=q[1];d.setAttribute("data-filter",s==="on"?"on":"off")}})(document.documentElement)</script>
 <style>{fonts(a)}
-{CSS.replace('url(assets-bands)', f'url({a}bands.webp)')}</style>
+{CSS}\n{bands_css(a)}</style>
 <script type="application/ld+json">{jsonld(lang, t, url)}</script>
 </head>
 <body>
@@ -555,7 +570,7 @@ def privacy(lang, root):
 <title>Waaiya: {e(T['en']['privacy_title'])} · {e(T['ar']['privacy_title'])}</title>{robots}
 <link rel="icon" href="{root}assets/logo.png">
 <style>{fonts(root + 'assets/')}
-{CSS.replace('url(assets-bands)', 'none')}</style></head>
+{CSS}</style></head>
 <body class="doc"><a class="doc-home" href="{root}{'en/' if lang == 'en' else ''}">Waaiya</a><main class="prose">{body}</main></body></html>
 """
 

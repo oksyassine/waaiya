@@ -1,7 +1,7 @@
 :root {
   --bg: #F6F7F5; --step: #ECEFEC; --step2: #E2E7E4; --surface: #FFFFFF; --ink: #17201C; --muted: #3E4843;
   --accent: #0D6B5E; --on-accent: #FFFFFF; --deep: #053D35; --on-deep: #E6F2EF; --soft: #D3EFE8; --mint: #5CC4B2;
-  --dim: #17201C; --on-dim: #E6ECE9; --band: rgba(13, 107, 94, 0.42); --ring: #8A9893;
+  --dim: #17201C; --on-dim: #E6ECE9; --ring: #8A9893;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --m: clamp(16px, 2.8vw, 40px);
   --gap: clamp(88px, 10vw, 168px);
@@ -16,13 +16,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0E1513; --step: #151E1B; --step2: #22302B; --surface: #18221F; --ink: #E6ECE9; --muted: #AEBBB5;
-    --accent: #5CC4B2; --on-accent: #06201B; --soft: #12332D; --dim: #070C0B; --band: rgba(92, 196, 178, 0.26); --ring: #7D8B86;
+    --accent: #5CC4B2; --on-accent: #06201B; --soft: #12332D; --dim: #070C0B; --ring: #7D8B86;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0E1513; --step: #151E1B; --step2: #22302B; --surface: #18221F; --ink: #E6ECE9; --muted: #AEBBB5;
-  --accent: #5CC4B2; --on-accent: #06201B; --soft: #12332D; --dim: #070C0B; --band: rgba(92, 196, 178, 0.26); --ring: #7D8B86;
+  --accent: #5CC4B2; --on-accent: #06201B; --soft: #12332D; --dim: #070C0B; --ring: #7D8B86;
   color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -104,11 +104,7 @@ html:not(.js) .s-before { opacity: 0; }
 
 /* ---------- the music: steady bands from the real spectrogram, between the sections, while filtering is off ---------- */
 .music { height: var(--gap); position: relative; }
-.music i {
-  position: absolute; inset: 18% 0; display: block; background: var(--band);
-  -webkit-mask: url(assets-bands) repeat-x center / auto 100%; mask: url(assets-bands) repeat-x center / auto 100%;
-  clip-path: inset(0 0 0 0);
-}
+.music i { position: absolute; left: 0; right: 0; top: calc(50% - 24px); height: 48px; display: block; background-repeat: repeat-x; background-position: 0 0; background-size: 1600px 48px; clip-path: inset(0 0 0 0); }
 html:not(.js) .music i { display: none; }
 .js.sweep-rtl[data-filter="on"] .music i { clip-path: inset(0 100% 0 0); }
 .js.sweep-ltr[data-filter="on"] .music i { clip-path: inset(0 0 0 100%); }
@@ -366,6 +362,7 @@ a.dl-main { color: var(--accent); text-decoration: underline; text-decoration-th
   .btn-hero { width: 100%; }
   .power-l { width: 96px; height: 96px; }
   .stage-img { min-height: 30svh; }
+  .music i { top: calc(50% - 16px); height: 32px; background-size: 1600px 32px; }
   .hero { min-height: 0; }
   .opt { grid-template-columns: 1fr auto; min-height: 132px; padding: 20px var(--m); column-gap: 20px; }
   .ltabs { grid-template-columns: repeat(2, 1fr); }

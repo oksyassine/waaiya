@@ -9,8 +9,9 @@ Inputs (not committed, see site/.work/README in the report):
   site/.work/out.wav  the same 10 s after the real filter: build/im-process -m models/dfn3/dfn3_stream_int8.onnx
 Outputs in site/assets/:
   spec-*-dark.webp / spec-*-light.webp   spectrograms before / after, one shared dB scale (an honest comparison)
-  bands.webp          the steady music bands: what the filter removed (before minus after), smoothed along time,
-                      as an alpha mask the page tints; mirrored so it tiles sideways without a seam
+  bands-<theme>-<h>[@2x].png  the music's steady lines between the sections: the frequency rows the filter removed
+                      most (before minus after), cut into the stretches each note was held, drawn crisp at the
+                      size they are shown (48 px desktop, 32 px phone; 1x and 2x; light and dark colours)
   filtered.m4a/.webm  ONLY the filtered sound (out.wav), mono. The unfiltered mix is never published.
   lang/<code>.webp    the Windows app's filter page in each of its 18 languages (desktop/windows/msix/screenshots)
   speaker.webp        a frame of the intro film's loudspeaker shot (/srv/build/waaiya-intro/flow), for the cover demo
@@ -86,6 +87,70 @@ def smooth_time(a, k):
     return (c[:, 2 * k + 1:] - c[:, :-2 * k - 1]) / (2 * k + 1)
 
 
+def band_strips(removed, out):
+    """Crisp strips of the music's steady lines, drawn at the size they are shown (no scaling): each line is one of
+    the frequency rows the filter removed most, cut into the stretches where that note was held. 1x and 2x, light
+    and dark colours, 48 px (desktop) and 32 px (phone) tall, one tile = the 10 s, 1600 px wide."""
+    rows, frames = removed.shape
+    energy = smooth_time(removed, 12)
+    order = np.argsort(energy.mean(axis=1))[::-1]
+    for h in (48, 32):
+        n = h // 4
+        picked = []
+        for r in order:
+            if all(abs(r - q) >= rows // (n * 3) for q in picked):
+                picked.append(r)
+            if len(picked) == n:
+                break
+        picked.sort()
+        segs = []
+        for r in picked:
+            e = energy[r]
+            on = e > max(np.percentile(e, 45), 0.12)
+            strong = e > np.percentile(e, 80)
+            segs.append((on, strong))
+        for scale in (1, 2):
+            W, H = 1600 * scale, h * scale
+            for theme, rgb in (("light", (13, 107, 94)), ("dark", (92, 196, 178))):
+                img = np.zeros((H, W, 4), np.uint8)
+                img[..., :3] = rgb
+                for i, (on, strong) in enumerate(segs):
+                    x = np.arange(W) * frames // W
+                    lit = on[x].copy()
+                    # hold notes: fill short gaps, drop crumbs, so each line reads as a sustained tone
+                    lit = close_gaps(lit, 10 * scale)
+                    lit = drop_short(lit, 28 * scale)
+                    a = np.where(strong[x], 255, 150).astype(np.uint8) * lit
+                    y0 = (i * 4 + 1) * scale
+                    img[y0:y0 + 2 * scale, :, 3] = a
+                Image.fromarray(img, "RGBA").save(out / f"bands-{theme}-{h}{'@2x' if scale == 2 else ''}.png", optimize=True)
+
+
+def close_gaps(lit, g):
+    lit = lit.copy()
+    idx = np.flatnonzero(lit)
+    for a, b in zip(idx[:-1], idx[1:]):
+        if 1 < b - a <= g:
+            lit[a:b] = True
+    return lit
+
+
+def drop_short(lit, m):
+    lit = lit.copy()
+    j, W = 0, len(lit)
+    while j < W:
+        if lit[j]:
+            k = j
+            while k < W and lit[k]:
+                k += 1
+            if k - j < m:
+                lit[j:k] = False
+            j = k
+        else:
+            j += 1
+    return lit
+
+
 def main():
     before, after = spec(WORK / "mix.wav"), spec(WORK / "out.wav")
     ref = before.max()
@@ -94,18 +159,7 @@ def main():
     picture(after, ref, DARK, size).save(A / "spec-after-dark.webp", quality=80, method=6)
     picture(after, ref, LIGHT, (1600, 560)).save(A / "spec-after-light.webp", quality=82, method=6)
 
-    # the steady bands: what the filter took away, held along time (sustained notes are the music's signature)
-    removed = np.clip(before - after, 0, 40) / 40
-    loud = np.clip((before - (ref - 60)) / 60, 0, 1)
-    band = smooth_time(removed * loud, 60)
-    band = band / np.percentile(band, 99.5)
-    alpha = (np.clip(band, 0, 1) ** 1.6 * 255).astype(np.uint8)
-    m = Image.fromarray(alpha, "L").resize((1600, 420), Image.LANCZOS)
-    tile = Image.new("L", (3200, 420))
-    tile.paste(m, (0, 0))
-    tile.paste(m.transpose(Image.FLIP_LEFT_RIGHT), (1600, 0))
-    rgba = Image.merge("RGBA", (Image.new("L", tile.size, 255),) * 3 + (tile,))
-    rgba.save(A / "bands.webp", quality=70, method=6)
+    band_strips(np.clip(before - after, 0, 40) / 40 * np.clip((before - (ref - 60)) / 60, 0, 1), A)
 
     # only the filtered sound, mono
     for args, name in ((["-c:a", "aac", "-b:a", "64k"], "filtered.m4a"), (["-c:a", "libopus", "-b:a", "48k"], "filtered.webm")):
