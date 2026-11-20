@@ -337,4 +337,16 @@
     <string name="shortcut_stop_short">বন্ধ করুন</string>
     <string name="shortcut_stop_long">ফিল্টারিং বন্ধ করুন</string>
     <string name="notif_channel_silenced">নীরব রাখা অ্যাপ</string>
+    <string name="fix_notif_channel">একটি ভুল ঠিক করুন</string>
+    <string name="fix_notif_title">একটি ভুল ঠিক করুন</string>
+    <string name="fix_notif_text">হাতে একটি অংশ ঢাকুন, অথবা যা বাদ পড়েছে বা ভুল করে লুকানো হয়েছে তা লিখে রাখুন। নোট এই ফোনেই থাকে।</string>
+    <string name="fix_cover_area">একটি অংশ ঢাকুন</string>
+    <string name="fix_remove_covers">হাতের আবরণ সরান</string>
+    <string name="fix_note_missed">কিছু বাদ পড়েছে</string>
+    <string name="fix_note_wrong">ভুল করে লুকানো</string>
+    <string name="fix_noted">লেখা হয়েছে (এই ফোনে %1$dটি নোট)</string>
+    <string name="fix_picker_hint">যে অংশ ঢাকতে চান তার ওপর আঙুল টানুন।</string>
+    <string name="fix_picker_cover">ঢেকে দিন</string>
+    <string name="fix_picker_cancel">বাতিল</string>
+    <string name="fix_picker_no_blur">স্ক্রিন ঝাপসা চলছে না। আগে ফিল্টারিং চলাকালীন একটি ঝাপসা বিকল্প চালু করুন।</string>
 </resources>

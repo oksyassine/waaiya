@@ -1026,4 +1026,111 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. خود برنامه چیزی نمی‌فرستد.';
+
+  @override
+  String get fixFilterAppsTitle => 'برنامه‌هایی که بدون فیلتر شنیده می‌شوند';
+
+  @override
+  String get fixFilterAppsBody =>
+      'این برنامه‌ها صدای اصلی خود را پخش می‌کنند: واعیه نه آن‌ها را فیلتر می‌کند و نه بی‌صدا.';
+
+  @override
+  String get fixAddApp => 'افزودن برنامه';
+
+  @override
+  String fixRemoveApp(String app) {
+    return 'حذف $app';
+  }
+
+  @override
+  String get fixNoApps => 'هیچ برنامه‌ای انتخاب نشده.';
+
+  @override
+  String get fixPickTitle => 'یک برنامه انتخاب کنید';
+
+  @override
+  String get fixPickEmpty => 'برنامهٔ دیگری پیدا نشد.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'برنامه‌هایی که اکنون صدا پخش می‌کنند، و آن‌هایی که از قبل انتخاب شده‌اند.';
+
+  @override
+  String get fixCancel => 'لغو';
+
+  @override
+  String get fixBlurAppsTitle => 'برنامه‌های بدون محوسازی';
+
+  @override
+  String get fixBlurAppsBody =>
+      'تا وقتی یکی از این برنامه‌ها به‌تنهایی روی صفحه است، پوششی نیست. به‌محض ترک آن، یا هر وقت واعیه مطمئن نباشد کدام برنامه نمایش داده می‌شود، پوشش‌ها برمی‌گردند.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'به راه‌اندازی یک‌باره نیاز دارد: بدون آن واعیه نمی‌داند کدام برنامه روی صفحه است، پس محوسازی همه‌جا می‌ماند.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'هنوز روی این گوشی در دسترس نیست: راه‌اندازی آن از طریق دستیار واعیه انجام می‌شود که نمی‌داند کدام برنامه روی صفحه است. محوسازی همه‌جا می‌ماند.';
+
+  @override
+  String get fixHandTitle => 'پوشاندن یک بخش با دست';
+
+  @override
+  String get fixHandBody =>
+      'هنگام کار محوسازی، انگشت خود را روی هر بخشی از صفحه بکشید تا پوشانده شود. تا وقتی آن را بردارید یا محوسازی متوقف شود پوشیده می‌ماند.';
+
+  @override
+  String get fixHandNotRunning =>
+      'هنگام کار محوسازی در دسترس است: فیلتر روشن و یکی از گزینه‌های محوسازی روشن.';
+
+  @override
+  String get fixCoverArea => 'پوشاندن یک بخش';
+
+  @override
+  String fixRemoveCovers(int count) {
+    return 'برداشتن پوشش‌های دستی ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'ثبت یک اشتباه';
+
+  @override
+  String get fixNoteBody =>
+      'همان لحظه علامت بزنید. یادداشت زمان، برنامه و تنظیمات را نگه می‌دارد. روی همین دستگاه می‌ماند و هرگز فرستاده نمی‌شود.';
+
+  @override
+  String get fixMissedSound => 'موسیقی رد شد';
+
+  @override
+  String get fixWrongSound => 'صدا به‌اشتباه حذف شد';
+
+  @override
+  String get fixMissedScreen => 'چیزی پوشانده نشد';
+
+  @override
+  String get fixWrongScreen => 'به‌اشتباه پوشانده شد';
+
+  @override
+  String fixNoted(int count) {
+    return 'ثبت شد ($count یادداشت روی این دستگاه).';
+  }
+
+  @override
+  String fixNotesCount(int count) {
+    return 'یادداشت‌های روی این دستگاه: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'نمایش یادداشت‌ها';
+
+  @override
+  String get fixNotesDelete => 'حذف یادداشت‌ها';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'همهٔ یادداشت‌ها حذف شوند؟ این کار برگشت‌پذیر نیست.';
+
+  @override
+  String get fixNotesTitle => 'یادداشت‌های تشخیص اشتباه';
 }

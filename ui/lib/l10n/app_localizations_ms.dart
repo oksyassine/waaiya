@@ -1028,4 +1028,111 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+
+  @override
+  String get fixFilterAppsTitle => 'Aplikasi yang didengar tanpa penapis';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Aplikasi ini memainkan bunyi asalnya: Waaiya tidak menapis dan tidak membisukannya.';
+
+  @override
+  String get fixAddApp => 'Tambah aplikasi';
+
+  @override
+  String fixRemoveApp(String app) {
+    return 'Buang $app';
+  }
+
+  @override
+  String get fixNoApps => 'Tiada aplikasi dipilih.';
+
+  @override
+  String get fixPickTitle => 'Pilih aplikasi';
+
+  @override
+  String get fixPickEmpty => 'Tiada aplikasi lain ditemui.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Aplikasi yang sedang memainkan bunyi, dan yang telah dipilih.';
+
+  @override
+  String get fixCancel => 'Batal';
+
+  @override
+  String get fixBlurAppsTitle => 'Aplikasi tanpa kabur';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Tiada penutup selagi salah satu aplikasi ini bersendirian di skrin. Penutup kembali sebaik sahaja anda meninggalkannya, atau bila-bila masa Waaiya tidak pasti aplikasi mana yang dipaparkan.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Perlu persediaan sekali: tanpanya Waaiya tidak tahu aplikasi mana di skrin, jadi kabur kekal di mana-mana.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Belum tersedia pada telefon ini: persediaannya melalui pembantu Waaiya, yang tidak tahu aplikasi mana di skrin. Kabur kekal di mana-mana.';
+
+  @override
+  String get fixHandTitle => 'Tutup kawasan dengan tangan';
+
+  @override
+  String get fixHandBody =>
+      'Semasa kabur berjalan, seret jari pada mana-mana bahagian skrin untuk menutupnya. Ia kekal tertutup sehingga anda membuangnya atau kabur berhenti.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Tersedia semasa kabur berjalan: penapisan hidup dan satu pilihan kabur hidup.';
+
+  @override
+  String get fixCoverArea => 'Tutup kawasan';
+
+  @override
+  String fixRemoveCovers(int count) {
+    return 'Buang penutup tangan ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Catat kesilapan';
+
+  @override
+  String get fixNoteBody =>
+      'Tandakan ketika ia berlaku. Catatan menyimpan masa, aplikasi dan tetapan. Ia kekal pada peranti ini dan tidak pernah dihantar.';
+
+  @override
+  String get fixMissedSound => 'Muzik terlepas';
+
+  @override
+  String get fixWrongSound => 'Suara terbuang secara silap';
+
+  @override
+  String get fixMissedScreen => 'Ada yang tidak ditutup';
+
+  @override
+  String get fixWrongScreen => 'Ditutup secara silap';
+
+  @override
+  String fixNoted(int count) {
+    return 'Dicatat ($count catatan pada peranti ini).';
+  }
+
+  @override
+  String fixNotesCount(int count) {
+    return 'Catatan pada peranti ini: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Tunjukkan catatan';
+
+  @override
+  String get fixNotesDelete => 'Padam catatan';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Padam semua catatan? Ini tidak boleh dibatalkan.';
+
+  @override
+  String get fixNotesTitle => 'Catatan kesilapan pengesanan';
 }

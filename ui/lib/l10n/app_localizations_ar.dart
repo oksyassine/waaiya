@@ -1013,4 +1013,110 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+
+  @override
+  String get fixFilterAppsTitle => 'تطبيقات تُسمع بلا تصفية';
+
+  @override
+  String get fixFilterAppsBody =>
+      'تُشغَّل هذه التطبيقات بصوتها الأصلي: لا تصفّيها واعية ولا تُسكتها.';
+
+  @override
+  String get fixAddApp => 'إضافة تطبيق';
+
+  @override
+  String fixRemoveApp(String app) {
+    return 'إزالة $app';
+  }
+
+  @override
+  String get fixNoApps => 'لم يُختر أي تطبيق.';
+
+  @override
+  String get fixPickTitle => 'اختر تطبيقًا';
+
+  @override
+  String get fixPickEmpty => 'لم يُعثر على تطبيق آخر.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'التطبيقات التي تُشغّل صوتًا الآن، والتي اختيرت من قبل.';
+
+  @override
+  String get fixCancel => 'إلغاء';
+
+  @override
+  String get fixBlurAppsTitle => 'تطبيقات بلا تمويه';
+
+  @override
+  String get fixBlurAppsBody =>
+      'لا تغطية ما دام أحد هذه التطبيقات وحده على الشاشة. تعود التغطية فور مغادرته، أو متى لم تتيقّن واعية من التطبيق الظاهر.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'يحتاج الإعداد لمرة واحدة: من دونه لا تعرف واعية أي تطبيق على الشاشة، فيبقى التمويه في كل مكان.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'غير متاح على هذا الهاتف بعد: إعداده يمرّ عبر مساعد واعية، وهو لا يعرف أي تطبيق على الشاشة. يبقى التمويه في كل مكان.';
+
+  @override
+  String get fixHandTitle => 'تغطية جزء باليد';
+
+  @override
+  String get fixHandBody =>
+      'أثناء عمل التمويه، اسحب إصبعك على أي جزء من الشاشة لتغطيته. يبقى مغطًّى حتى تزيله أو يتوقف التمويه.';
+
+  @override
+  String get fixHandNotRunning =>
+      'متاح أثناء عمل التمويه: التصفية تعمل وأحد خيارات التمويه مفعّل.';
+
+  @override
+  String get fixCoverArea => 'تغطية جزء';
+
+  @override
+  String fixRemoveCovers(int count) {
+    return 'إزالة التغطية اليدوية ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'تسجيل خطأ';
+
+  @override
+  String get fixNoteBody =>
+      'سجّله لحظة حدوثه. تحفظ الملاحظة الوقت والتطبيق والإعدادات، وتبقى على هذا الجهاز ولا تُرسَل أبدًا.';
+
+  @override
+  String get fixMissedSound => 'مرّت موسيقى';
+
+  @override
+  String get fixWrongSound => 'حُذف صوت خطأً';
+
+  @override
+  String get fixMissedScreen => 'لم يُغطَّ شيء';
+
+  @override
+  String get fixWrongScreen => 'غُطّي خطأً';
+
+  @override
+  String fixNoted(int count) {
+    return 'سُجّلت الملاحظة (عدد الملاحظات على هذا الجهاز: $count).';
+  }
+
+  @override
+  String fixNotesCount(int count) {
+    return 'الملاحظات على هذا الجهاز: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'عرض الملاحظات';
+
+  @override
+  String get fixNotesDelete => 'حذف الملاحظات';
+
+  @override
+  String get fixNotesDeleteAsk => 'حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get fixNotesTitle => 'ملاحظات أخطاء الكشف';
 }

@@ -1026,4 +1026,110 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। অ্যাপ নিজে কিছুই পাঠায় না।';
+
+  @override
+  String get fixFilterAppsTitle => 'ফিল্টার ছাড়া শোনা অ্যাপ';
+
+  @override
+  String get fixFilterAppsBody =>
+      'এই অ্যাপগুলো তাদের আসল শব্দ বাজায়: ওয়াইয়া এগুলো ফিল্টারও করে না, নীরবও করে না।';
+
+  @override
+  String get fixAddApp => 'একটি অ্যাপ যোগ করুন';
+
+  @override
+  String fixRemoveApp(String app) {
+    return '$app সরান';
+  }
+
+  @override
+  String get fixNoApps => 'কোনো অ্যাপ বেছে নেওয়া হয়নি।';
+
+  @override
+  String get fixPickTitle => 'একটি অ্যাপ বেছে নিন';
+
+  @override
+  String get fixPickEmpty => 'আর কোনো অ্যাপ পাওয়া যায়নি।';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'এখন শব্দ বাজাচ্ছে এমন অ্যাপ, এবং আগে বেছে নেওয়া অ্যাপ।';
+
+  @override
+  String get fixCancel => 'বাতিল';
+
+  @override
+  String get fixBlurAppsTitle => 'ঝাপসা ছাড়া অ্যাপ';
+
+  @override
+  String get fixBlurAppsBody =>
+      'এই অ্যাপগুলোর কোনো একটি একা স্ক্রিনে থাকলে কোনো আবরণ নেই। সেটি ছাড়লেই আবরণ ফিরে আসে, অথবা যখনই ওয়াইয়া নিশ্চিত নয় কোন অ্যাপ দেখানো হচ্ছে।';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'একবারের সেটআপ দরকার: এটি ছাড়া ওয়াইয়া জানতে পারে না স্ক্রিনে কোন অ্যাপ, তাই ঝাপসা সব জায়গায় থাকে।';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'এই ফোনে এখনও নেই: এর সেটআপ ওয়াইয়ার সহকারীর মাধ্যমে হয়, যে জানে না স্ক্রিনে কোন অ্যাপ। ঝাপসা সব জায়গায় থাকে।';
+
+  @override
+  String get fixHandTitle => 'হাতে একটি অংশ ঢাকুন';
+
+  @override
+  String get fixHandBody =>
+      'ঝাপসা চলার সময় স্ক্রিনের যেকোনো অংশে আঙুল টেনে সেটি ঢাকুন। আপনি সরানো পর্যন্ত বা ঝাপসা বন্ধ হওয়া পর্যন্ত এটি ঢাকা থাকে।';
+
+  @override
+  String get fixHandNotRunning =>
+      'ঝাপসা চলার সময় পাওয়া যায়: ফিল্টারিং চালু এবং একটি ঝাপসা বিকল্প চালু।';
+
+  @override
+  String get fixCoverArea => 'একটি অংশ ঢাকুন';
+
+  @override
+  String fixRemoveCovers(int count) {
+    return 'হাতের আবরণ সরান ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'একটি ভুল লিখে রাখুন';
+
+  @override
+  String get fixNoteBody =>
+      'ঘটার সময়ই চিহ্নিত করুন। নোটে সময়, অ্যাপ ও সেটিংস থাকে। এটি এই ডিভাইসেই থাকে এবং কখনো পাঠানো হয় না।';
+
+  @override
+  String get fixMissedSound => 'গান পার হয়ে গেছে';
+
+  @override
+  String get fixWrongSound => 'কণ্ঠ ভুল করে সরানো হয়েছে';
+
+  @override
+  String get fixMissedScreen => 'কিছু ঢাকা হয়নি';
+
+  @override
+  String get fixWrongScreen => 'ভুল করে ঢাকা হয়েছে';
+
+  @override
+  String fixNoted(int count) {
+    return 'লেখা হয়েছে (এই ডিভাইসে $countটি নোট)।';
+  }
+
+  @override
+  String fixNotesCount(int count) {
+    return 'এই ডিভাইসে নোট: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'নোট দেখান';
+
+  @override
+  String get fixNotesDelete => 'নোট মুছুন';
+
+  @override
+  String get fixNotesDeleteAsk => 'সব নোট মুছবেন? এটি ফেরানো যাবে না।';
+
+  @override
+  String get fixNotesTitle => 'ভুল শনাক্তকরণের নোট';
 }

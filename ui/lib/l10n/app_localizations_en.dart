@@ -1023,4 +1023,111 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.';
+
+  @override
+  String get fixFilterAppsTitle => 'Apps heard unfiltered';
+
+  @override
+  String get fixFilterAppsBody =>
+      'These apps play their original sound: Waaiya neither filters nor silences them.';
+
+  @override
+  String get fixAddApp => 'Add an app';
+
+  @override
+  String fixRemoveApp(String app) {
+    return 'Remove $app';
+  }
+
+  @override
+  String get fixNoApps => 'No app chosen.';
+
+  @override
+  String get fixPickTitle => 'Choose an app';
+
+  @override
+  String get fixPickEmpty => 'No other app found.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Apps playing sound now, and the ones already chosen.';
+
+  @override
+  String get fixCancel => 'Cancel';
+
+  @override
+  String get fixBlurAppsTitle => 'Apps left uncovered';
+
+  @override
+  String get fixBlurAppsBody =>
+      'No covers while one of these apps is alone on the screen. The covers come back as soon as you leave it, or whenever Waaiya is not sure which app is shown.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Needs the one-time setup: without it Waaiya cannot tell which app is on screen, so the blur stays on everywhere.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Not available on this phone yet: its setup goes through Waaiya\'s helper, which cannot tell which app is on screen. The blur stays on everywhere.';
+
+  @override
+  String get fixHandTitle => 'Cover an area by hand';
+
+  @override
+  String get fixHandBody =>
+      'While the blur runs, drag over any part of the screen to cover it. It stays covered until you remove it or the blur stops.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Available while the blur runs: filtering on and a blur option on.';
+
+  @override
+  String get fixCoverArea => 'Cover an area';
+
+  @override
+  String fixRemoveCovers(int count) {
+    return 'Remove hand covers ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Note a mistake';
+
+  @override
+  String get fixNoteBody =>
+      'Mark it when it happens. A note keeps the time, the app and the settings. It stays on this device and is never sent.';
+
+  @override
+  String get fixMissedSound => 'Music got through';
+
+  @override
+  String get fixWrongSound => 'Voice removed by mistake';
+
+  @override
+  String get fixMissedScreen => 'Something was not covered';
+
+  @override
+  String get fixWrongScreen => 'Covered by mistake';
+
+  @override
+  String fixNoted(int count) {
+    return 'Noted ($count notes on this device).';
+  }
+
+  @override
+  String fixNotesCount(int count) {
+    return 'Notes on this device: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Show the notes';
+
+  @override
+  String get fixNotesDelete => 'Delete notes';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Delete all the notes? This cannot be undone.';
+
+  @override
+  String get fixNotesTitle => 'Wrong-detection notes';
 }

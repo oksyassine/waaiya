@@ -152,6 +152,14 @@
             android:taskAffinity=""
             android:launchMode="singleTask" />
 
+        <!-- "Cover an area" (FixMistakes): a see-through screen over the current app where a rectangle is dragged. -->
+        <activity android:name=".FixMistakesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.IslamicMute.Invisible"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:launchMode="singleTask" />
+
         <!-- Screen blur's accessibility service (touches pass through the covers) is only in builds made with
              -PimBlurA11y: src/blurA11y/AndroidManifest.xml. Play Protect blocks sideloaded apps that declare one. -->
         <service android:name=".FilterService"

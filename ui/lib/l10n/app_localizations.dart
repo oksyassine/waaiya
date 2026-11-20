@@ -1833,6 +1833,186 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
   String get diagNoteDesktop;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تطبيقات تُسمع بلا تصفية'**
+  String get fixFilterAppsTitle;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تُشغَّل هذه التطبيقات بصوتها الأصلي: لا تصفّيها واعية ولا تُسكتها.'**
+  String get fixFilterAppsBody;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة تطبيق'**
+  String get fixAddApp;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة {app}'**
+  String fixRemoveApp(String app);
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُختر أي تطبيق.'**
+  String get fixNoApps;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر تطبيقًا'**
+  String get fixPickTitle;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُعثر على تطبيق آخر.'**
+  String get fixPickEmpty;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'التطبيقات التي تُشغّل صوتًا الآن، والتي اختيرت من قبل.'**
+  String get fixPickPlayingDesktop;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get fixCancel;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تطبيقات بلا تمويه'**
+  String get fixBlurAppsTitle;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تغطية ما دام أحد هذه التطبيقات وحده على الشاشة. تعود التغطية فور مغادرته، أو متى لم تتيقّن واعية من التطبيق الظاهر.'**
+  String get fixBlurAppsBody;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'يحتاج الإعداد لمرة واحدة: من دونه لا تعرف واعية أي تطبيق على الشاشة، فيبقى التمويه في كل مكان.'**
+  String get fixBlurAppsNeedsSetup;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'غير متاح على هذا الهاتف بعد: إعداده يمرّ عبر مساعد واعية، وهو لا يعرف أي تطبيق على الشاشة. يبقى التمويه في كل مكان.'**
+  String get fixBlurAppsHelperMode;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغطية جزء باليد'**
+  String get fixHandTitle;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'أثناء عمل التمويه، اسحب إصبعك على أي جزء من الشاشة لتغطيته. يبقى مغطًّى حتى تزيله أو يتوقف التمويه.'**
+  String get fixHandBody;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'متاح أثناء عمل التمويه: التصفية تعمل وأحد خيارات التمويه مفعّل.'**
+  String get fixHandNotRunning;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغطية جزء'**
+  String get fixCoverArea;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة التغطية اليدوية ({count})'**
+  String fixRemoveCovers(int count);
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل خطأ'**
+  String get fixNoteTitle;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّله لحظة حدوثه. تحفظ الملاحظة الوقت والتطبيق والإعدادات، وتبقى على هذا الجهاز ولا تُرسَل أبدًا.'**
+  String get fixNoteBody;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرّت موسيقى'**
+  String get fixMissedSound;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُذف صوت خطأً'**
+  String get fixWrongSound;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُغطَّ شيء'**
+  String get fixMissedScreen;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'غُطّي خطأً'**
+  String get fixWrongScreen;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'سُجّلت الملاحظة (عدد الملاحظات على هذا الجهاز: {count}).'**
+  String fixNoted(int count);
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاحظات على هذا الجهاز: {count}'**
+  String fixNotesCount(int count);
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض الملاحظات'**
+  String get fixNotesShow;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الملاحظات'**
+  String get fixNotesDelete;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.'**
+  String get fixNotesDeleteAsk;
+
+  /// Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظات أخطاء الكشف'**
+  String get fixNotesTitle;
 }
 
 class _AppLocalizationsDelegate

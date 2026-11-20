@@ -71,6 +71,49 @@ class LinuxEngine implements FilterHost {
     }
   }
 
+  /// Apps heard unfiltered (setting `filter_off_apps`, "Fix mistakes"): `$CFG/filter_off_apps`, one application name
+  /// per line, read by the daemon every second (no reload, no restart). An empty list removes the file. Written
+  /// whether the engine is installed or not, so the daemon finds it at its next start.
+  void writeFilterOffApps(List<String> names) {
+    final f = File('$configDir/filter_off_apps');
+    final clean = [for (final n in names) if (n.trim().isNotEmpty && !n.contains('\n')) n];
+    try {
+      if (clean.isEmpty) {
+        if (f.existsSync()) f.deleteSync();
+        return;
+      }
+      Directory(configDir).createSync(recursive: true);
+      final tmp = File('${f.path}.tmp');
+      tmp.writeAsStringSync('${clean.join('\n')}\n');
+      tmp.renameSync(f.path); // never half a list
+    } on IOException {
+      // the daemon keeps the last list it read; the app shows the setting as chosen
+    }
+  }
+
+  /// Application names playing sound now (`pactl list sink-inputs`), without the filter's own stream.
+  Future<List<String>> playingApps() async {
+    try {
+      final r = await Process.run('pactl', ['list', 'sink-inputs'],
+          environment: {...env, 'LC_ALL': 'C'}, includeParentEnvironment: false);
+      return r.exitCode == 0 ? appNames('${r.stdout}') : const [];
+    } on ProcessException {
+      return const [];
+    }
+  }
+
+  /// The `application.name` values of a `pactl list sink-inputs` output, once each, ours left out (the same names
+  /// the daemon matches).
+  static List<String> appNames(String out) {
+    final seen = <String>{};
+    for (final m in RegExp(r'^\s*application\.name = "(.*)"\s*$', multiLine: true).allMatches(out)) {
+      final v = m.group(1)!;
+      if (const {'islamic-mute', 'Islamic Mute', 'Waaiya filter'}.contains(v) || v.isEmpty) continue;
+      seen.add(v);
+    }
+    return seen.toList();
+  }
+
   @override
   String get bundledVersion => _readTrim('${dir.path}/VERSION') ?? '';
 

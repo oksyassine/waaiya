@@ -1025,4 +1025,110 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'اس کمپیوٹر پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں اور جو آپ کی مدد کر رہا ہو اسے دے دیں۔ ایپ خود کچھ نہیں بھیجتی۔';
+
+  @override
+  String get fixFilterAppsTitle => 'بغیر فلٹر سنی جانے والی ایپس';
+
+  @override
+  String get fixFilterAppsBody =>
+      'یہ ایپس اپنی اصل آواز چلاتی ہیں: وعیہ نہ انہیں فلٹر کرتی ہے نہ خاموش۔';
+
+  @override
+  String get fixAddApp => 'ایپ شامل کریں';
+
+  @override
+  String fixRemoveApp(String app) {
+    return '$app ہٹائیں';
+  }
+
+  @override
+  String get fixNoApps => 'کوئی ایپ منتخب نہیں۔';
+
+  @override
+  String get fixPickTitle => 'ایپ منتخب کریں';
+
+  @override
+  String get fixPickEmpty => 'کوئی اور ایپ نہیں ملی۔';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'اس وقت آواز چلانے والی ایپس، اور پہلے سے منتخب ایپس۔';
+
+  @override
+  String get fixCancel => 'منسوخ کریں';
+
+  @override
+  String get fixBlurAppsTitle => 'بغیر دھندلاہٹ والی ایپس';
+
+  @override
+  String get fixBlurAppsBody =>
+      'جب تک ان میں سے کوئی ایپ اکیلی اسکرین پر ہو، کوئی پردہ نہیں۔ اسے چھوڑتے ہی پردے واپس آ جاتے ہیں، یا جب بھی وعیہ کو یقین نہ ہو کہ کون سی ایپ دکھ رہی ہے۔';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'ایک بار کا سیٹ اپ درکار ہے: اس کے بغیر وعیہ نہیں جان سکتی کہ اسکرین پر کون سی ایپ ہے، اس لیے دھندلاہٹ ہر جگہ رہتی ہے۔';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'اس فون پر ابھی دستیاب نہیں: اس کا سیٹ اپ وعیہ کے مددگار سے ہوتا ہے، جو نہیں جانتا کہ اسکرین پر کون سی ایپ ہے۔ دھندلاہٹ ہر جگہ رہتی ہے۔';
+
+  @override
+  String get fixHandTitle => 'ہاتھ سے کوئی حصہ ڈھانپیں';
+
+  @override
+  String get fixHandBody =>
+      'دھندلاہٹ چلتے وقت، اسکرین کے کسی بھی حصے پر انگلی گھسیٹ کر اسے ڈھانپیں۔ یہ تب تک ڈھکا رہتا ہے جب تک آپ اسے ہٹائیں یا دھندلاہٹ رک جائے۔';
+
+  @override
+  String get fixHandNotRunning =>
+      'دھندلاہٹ چلنے کے دوران دستیاب: فلٹرنگ آن اور دھندلاہٹ کا کوئی آپشن آن۔';
+
+  @override
+  String get fixCoverArea => 'کوئی حصہ ڈھانپیں';
+
+  @override
+  String fixRemoveCovers(int count) {
+    return 'ہاتھ کے پردے ہٹائیں ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'غلطی نوٹ کریں';
+
+  @override
+  String get fixNoteBody =>
+      'جب ہو تبھی نشان لگائیں۔ نوٹ میں وقت، ایپ اور ترتیبات محفوظ ہوتی ہیں۔ یہ اسی آلے پر رہتا ہے اور کبھی بھیجا نہیں جاتا۔';
+
+  @override
+  String get fixMissedSound => 'موسیقی گزر گئی';
+
+  @override
+  String get fixWrongSound => 'آواز غلطی سے ہٹ گئی';
+
+  @override
+  String get fixMissedScreen => 'کچھ ڈھکا نہیں گیا';
+
+  @override
+  String get fixWrongScreen => 'غلطی سے ڈھکا گیا';
+
+  @override
+  String fixNoted(int count) {
+    return 'نوٹ ہو گیا (اس آلے پر $count نوٹس)۔';
+  }
+
+  @override
+  String fixNotesCount(int count) {
+    return 'اس آلے پر نوٹس: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'نوٹس دکھائیں';
+
+  @override
+  String get fixNotesDelete => 'نوٹس حذف کریں';
+
+  @override
+  String get fixNotesDeleteAsk => 'تمام نوٹس حذف کریں؟ یہ واپس نہیں ہو سکتا۔';
+
+  @override
+  String get fixNotesTitle => 'غلط شناخت کے نوٹس';
 }
