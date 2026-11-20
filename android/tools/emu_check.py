@@ -202,7 +202,7 @@ def main():
                     help="debug APK: make the blur's capture fail and check the screen says so")
     a = ap.parse_args()
     e, c = Emu(a.serial), Checks()
-    # First launch (0.2.13): the phone's language when Waaiya has it, else Arabic. The checks find the screens'
+    # First launch (0.2.12): the phone's language when Waaiya has it, else Arabic. The checks find the screens'
     # words in that language (the name `ar` stays: it was Arabic only).
     phone = (e.sh("getprop persist.sys.locale").strip() or e.sh("getprop ro.product.locale").strip()).split("-")[0]
     lang = {"in": "id"}.get(phone, phone)

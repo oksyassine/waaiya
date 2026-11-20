@@ -7,6 +7,9 @@ SYSFLAG  = $(if $(SYSROOT),--sysroot=$(SYSROOT))
 CFLAGS  ?= -O2 -g -Wall -Wextra -std=c11 -D_POSIX_C_SOURCE=200809L
 CFLAGS  += $(SYSFLAG) -Iengine/include -I$(ORT)/include -fvisibility=hidden -fPIC
 LDLIBS   = -L$(ORT)/lib -lonnxruntime -lm
+# with the local sysroot, ONNX Runtime's C++ runtime dependencies are still the system's
+LDLIBS  += $(if $(SYSROOT),-Wl$(comma)-rpath-link$(comma)/usr/lib/x86_64-linux-gnu)
+comma   := ,
 BUILD    = build
 
 all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so \
@@ -73,6 +76,10 @@ $(BUILD)/im-pulse: cli/im_pulse.c cli/pulse_dl.h $(ENGINE_OBJ)
 
 $(BUILD)/islamic_mute_ladspa.so: linux/ladspa/im_ladspa.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -shared $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN' -Wl,--no-undefined
+
+# test shim: refuses internet sockets (linux/test_no_network.sh); exported symbols, so not $(CFLAGS)
+$(BUILD)/no-network.so: linux/no_network.c | $(BUILD)
+	$(CC) $(SYSFLAG) -O2 -Wall -Wextra -shared -fPIC $< -o $@ -ldl
 
 clean:
 	rm -rf $(BUILD)

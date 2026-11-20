@@ -1,4 +1,4 @@
-# Status (2026-11-19, 0.2.13 in preparation)
+# Status (2026-11-20, 0.2.12 in preparation: one release with the 0.2.12 test build, nine languages and the Windows Store package)
 
 What comes next, and why: `docs/ROADMAP.md`.
 
@@ -12,11 +12,11 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Android: Quick Settings tiles, icon shortcuts | done (0.2.11) | "Waaiya" tile and Start/Stop shortcuts on the icon; "Notification text" tile (Android 15+) shows notification text while filtering |
 | Open a link (YouTube, TikTok, Instagram) | done | Video links stay video; saved files keep the original picture with filtered sound |
 | Screen blur (Android) | released | Person detector with tiles, woman/man classifier v2, outlines, steady covers: `eval/results/blur_*.md`. 0.2.10: one window per cover group without Shizuku, checked Shizuku layer, self-test on every host change. Speed on phones not measured |
-| Women's-singing detector | engine + Linux + Android wired; model v1 bundled | `models/detector/test_detector_engine.py` |
+| Women's-singing detector | engine + Linux + Android + Windows wired; model v1 bundled, in the `models-v1` release since 0.2.12 | `models/detector/test_detector_engine.py` |
 | Model shrink | done: int8 weights 2.4 MB, within 0.2 dB | `eval/results/shrink.md` |
 | Own voice model (keeps singing) | trained on Kaggle, not the default | roadmap item 6 |
 | Flutter UI (Android main screen since 0.2.11, pages with a bottom bar), Linux desktop app | Android: released; desktop: preview | Sound filter and X11 blur work; Wayland blur untested on real sessions |
-| Languages | Arabic and English written for the project; French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay machine-translated (0.2.13), not reviewed by native speakers | `ui/tool/check_translation.py` (every text, format arguments, escaping), `ui/test/languages_test.dart` (each page in each language on a small phone, no overflow), setup pictures retaken per language (`android/tools/guide_shots.py`) |
+| Languages | Arabic and English written for the project; French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay machine-translated (0.2.12), not reviewed by native speakers | `ui/tool/check_translation.py` (every text, format arguments, escaping), `ui/test/languages_test.dart` (each page in each language on a small phone, no overflow), setup pictures retaken per language (`android/tools/guide_shots.py`) |
 | Windows desktop app (filter + blur) | preview (branch `windows-filter`) | CI on Windows Server 2022 and 2025 with a virtual output: `windows/test/audio_test.py` (route C2 measured: level back within 0.03 dB, HNR > 120 dB; tone suppressed about 47 dB, about 50 ms delay; new apps lowered before their first sound; crash, stop, restore), `windows/test/blur_test.py` (covers out of the capture on 2025, in it on 2022; click-through; fail-closed; models). Not yet on a real PC |
 | macOS, iOS | not started | `docs/PLATFORMS.md`; macOS needs an Apple Developer ID (the capture permission is tied to the signature) |
 

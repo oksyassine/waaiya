@@ -1,6 +1,6 @@
 /* im-pulse: the Linux live filter in one process, talking to PulseAudio (or pipewire-pulse) directly.
  *
- *   record <source> (the "Islamic Mute" null-sink monitor) -> engine, whole hops -> play <sink> (real output)
+ *   record <source> (the Waaiya null-sink monitor) -> engine, whole hops -> play <sink> (real output)
  *
  * Replaces  parec | im-stream | pacat.  Why: pipes and pacat's server-side buffer hide how much audio is
  * queued, so every playback underrun added 6-10 ms of delay that stayed until restart. Here the record
@@ -441,7 +441,7 @@ int main(int argc, char **argv) {
 
     A.ml = pa.pa_threaded_mainloop_new();
     if (!A.ml) { logf_("cannot create mainloop"); return 1; }
-    A.ctx = pa.pa_context_new(pa.pa_threaded_mainloop_get_api(A.ml), "Islamic Mute");
+    A.ctx = pa.pa_context_new(pa.pa_threaded_mainloop_get_api(A.ml), "Waaiya filter");
     pa.pa_context_set_state_callback(A.ctx, ctx_state_cb, NULL);
     pa.pa_threaded_mainloop_lock(A.ml);
     int rc = 1;

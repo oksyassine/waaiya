@@ -470,7 +470,9 @@ int im_engine_model_rate(const im_engine *e) { return e ? e->rate : 0; }
 int im_engine_failed(const im_engine *e) { return e ? e->failed : 1; }
 unsigned long im_engine_run_errors(const im_engine *e) { return e ? e->run_errors : 0; }
 const char *im_engine_model_name(const im_engine *e) { return e ? e->model_name : ""; }
-void im_engine_set_enabled(im_engine *e, int enabled) { if (e) e->enabled = enabled ? 1 : 0; }
+/* Fail-closed: an engine without a working model never passes the input through (it would be the unfiltered
+ * sound); the A/B switch only bypasses a working filter. */
+void im_engine_set_enabled(im_engine *e, int enabled) { if (e) e->enabled = (enabled || e->failed) ? 1 : 0; }
 
 int im_engine_set_mono(im_engine *e, int mono) {
     if (!e) return 0;

@@ -69,7 +69,7 @@ pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "$(backend)" !
 
 # Sink inputs that should be filtered but play elsewhere (the sound server restored an app's last device, an app
 # picked one itself): moved to the virtual output. Never our own output: pacat (client "islamic-mute") or
-# im-pulse (client "Islamic Mute", which also asks not to be moved); moving it in would loop the filter into itself.
+# im-pulse (client "Waaiya filter", "Islamic Mute" before 0.2.12, which also asks not to be moved); moving it in would loop the filter into itself.
 move_strays() {
     local sid; sid="$(pactl list short sinks 2>/dev/null | awk -v s="$SINK" '$2 == s {print $1}')"
     [ -n "$sid" ] || return 0
@@ -77,7 +77,7 @@ move_strays() {
         function out() { if (id != "" && !own && sink != "" && sink != sid) print id }
         /^Sink Input #/ { out(); id = substr($3, 2); sink = ""; own = 0 }
         /^[ \t]*Sink: / { sink = $2 }
-        /application.name = "(islamic-mute|Islamic Mute)"/ { own = 1 }
+        /application.name = "(islamic-mute|Islamic Mute|Waaiya filter)"/ { own = 1 }
         END { out() }' | while read -r i; do
         pactl move-sink-input "$i" "$SINK" 2>/dev/null || true
     done
@@ -198,6 +198,7 @@ run_cmd() {
     # 'reload': a new filter with the current settings; the virtual output and every stream on it stay
     trap 'reload=1' HUP
     echo $$ > "$STATE/run.pid"
+    rm -f "$STATE/filter.crashes"
     start_pipe
     if [ $make_default = 1 ]; then pactl set-default-sink "$SINK"; move_all_to "$SINK"; fi
 
@@ -224,6 +225,8 @@ run_cmd() {
             fails+=("$SECONDS"); local recent=() f
             for f in "${fails[@]}"; do [ $((SECONDS - f)) -le 60 ] && recent+=("$f"); done
             fails=("${recent[@]}")
+            # every unexpected stop, for 'status' (a crash loop can sit between two of the app's polls)
+            date +%s >> "$STATE/filter.crashes"
             if [ ${#fails[@]} -ge 5 ] && ! keep_silent; then give_up "the filter keeps stopping"; fi
             log "filter stopped unexpectedly, restarting"; stop_pipe; start_pipe
         fi
@@ -303,6 +306,8 @@ status_cmd() {
         if [ -n "$fp" ] && kill -0 "$fp" 2>/dev/null; then echo "filter:   running"; else echo "filter:   restarting"; fi
     elif sink_exists "$SINK"; then echo "filter:   down (virtual output kept: apps are silent)"
     else echo "filter:   stopped"; fi
+    # unexpected filter stops in the last minute (each one restarted it; apps stay silent meanwhile)
+    echo "restarts: $(awk -v now="$(date +%s)" 'now - $1 <= 60 { n++ } END { print n + 0 }' "$STATE/filter.crashes" 2>/dev/null || echo 0) in the last minute"
     st="$(head -1 "$STATE/filter.status" 2>/dev/null || true)"
     case "$st" in
         ok) echo "engine:   ok" ;;

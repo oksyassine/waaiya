@@ -183,6 +183,7 @@ class LinuxEngine implements FilterHost {
       filter: filter,
       engine: field('engine') ?? '',
       raw: out.trim(),
+      restarts: int.tryParse(RegExp(r'^(\d+)').firstMatch(field('restarts') ?? '')?.group(1) ?? '') ?? 0,
     );
   }
 
