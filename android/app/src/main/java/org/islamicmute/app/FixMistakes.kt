@@ -334,6 +334,7 @@ object FixMistakes : Feature {
     fun sessionStarted(context: Context) {
         val ctx = context.applicationContext
         session = true
+        shownKinds = null
         startPoller(ctx)
         if (receiver == null) {
             val r = object : BroadcastReceiver() {
@@ -375,6 +376,7 @@ object FixMistakes : Feature {
     fun sessionEnded(context: Context) {
         val ctx = context.applicationContext
         session = false
+        shownKinds = null
         ScreenBlur.removeListener(blurListener)
         clearHandCovers(null)
         receiver?.let { runCatching { ctx.unregisterReceiver(it) } }
@@ -413,8 +415,18 @@ object FixMistakes : Feature {
         }
     }
 
-    /** The actions changed (blur on or off, hand covers added or removed): the filter's notification is built again. */
+    /** The actions shown on the filter's notification; null: not shown yet in this session. */
+    @Volatile private var shownKinds: List<String>? = null
+
+    /**
+     * Blur on or off, hand covers added or removed: the filter's notification is built again, only when its actions
+     * change (the blur's state also changes as covers come and go).
+     */
     private fun actionsChanged() {
-        if (session) FilterService.refreshNotification()
+        if (!session) return
+        val kinds = FixMistakesActions.kinds(ScreenBlur.state != null, handCoverCount)
+        if (kinds == shownKinds) return
+        shownKinds = kinds
+        FilterService.refreshNotification()
     }
 }
