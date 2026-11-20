@@ -194,6 +194,10 @@ running): a probe that Windows had to end during an uninstall was started again 
 when the package was installed again, with an error window. Tested: uninstall while filtering, then install again
 from another folder: no restart, no window.
 
+Windows App Certification Kit on the final package (1.2.12.0, commit 703bd88), run on the owner's PC with their
+approval: **overall PASS**, 22 passed; the two optional tests that flag (Flutter's NOTICES.Z; "blocked executables"
+letter matches and CreateProcessW) are explained in STORE_LISTING.md.
+
 ## Still to do for 0.2.12 (in order; items 1, 3 and most of 4 done above)
 
 1. Links on Windows (above), tested end to end on the PC with real YouTube/TikTok/Instagram links.

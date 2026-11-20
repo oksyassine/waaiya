@@ -14,6 +14,16 @@ Before submitting: run the Windows App Certification Kit on the package (Microso
 administrator): `appcert.exe test -appxpackagepath <waaiya-store.msix> -reportoutputpath <report.xml>`, or the
 "Windows App Cert Kit" app, "Validate Store App".
 
+Result on the owner's PC (2026-11-20, package 1.2.12.0 from commit 703bd88, Windows 11 build 26200): **PASS**,
+22 tests passed. Two optional tests flag, as for most desktop apps, and neither blocks certification:
+- "Archive files usage": `data\flutter_assets\NOTICES.Z` is Flutter's own compressed licence list, in every Flutter
+  app.
+- "Blocked executables": the programs can start processes (CreateProcessW: the app starts its own filter and blur;
+  the filter starts its own restorer), and short letter runs such as "reg", "cmd", "csi" appear inside binaries and
+  the model files. The Store version never runs reg.exe or cmd.exe: "Start at login" is a file in the app's data
+  folder, and the only reg.exe call (finding the Videos folder) belongs to "Save without music", which the Store
+  package does not have.
+
 ## 1. Pricing and availability
 
 | Field | Value |
