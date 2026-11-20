@@ -16,8 +16,7 @@ kwa moja, kwenye kompyuta yako.
 - Kufifisha skrini (si lazima): hufunika wanawake, au picha zisizo za staha, juu ya kila dirisha; mibofyo bado hufika
   kwenye madirisha yaliyo chini.
 - Programu zinazosikika bila kuchujwa: chagua programu zinazosikika kwa sauti yake asili; hazichujwi wala hazinyamazishwi.
-- Bakiza uimbaji (majaribio): ala za muziki huondolewa lakini sauti za kuimba hubaki, kwa wanaokubali hilo.
-- Ulinzi kwa nyakati za udhaifu: muda wa kusubiri kabla ya chochote kinachopunguza ulinzi, na PIN ya mzazi ya hiari.
+- Ulinzi kwa nyakati za udhaifu: kusimamisha kunaweza kusubiri (kwa mfano dakika 30) kisha kukuuliza tena, na mzazi anaweza kuweka PIN.
 - Andika kosa: weka alama kwenye muziki uliopita au sauti iliyoondolewa kimakosa; maelezo hubaki kwenye kompyuta yako.
 - Anza unapoingia, ukitaka.
 - Kila kitu hufanya kazi kwenye kompyuta yako. Hakuna kinachotumwa popote: hakuna akaunti, hakuna takwimu, hakuna
@@ -37,7 +36,6 @@ Toleo la kwanza kwenye Microsoft Store.
 - Ukurasa mpya wa Viungo: tazama kiungo cha YouTube, TikTok au Instagram kichujio kikiwa kimewashwa.
 - Nyamazisha uimbaji wa wanawake (toleo la mwanzo), sasa kwenye Windows pia.
 - Programu zinazosikika bila kuchujwa
-- Bakiza uimbaji (majaribio)
 - Ulinzi kwa nyakati za udhaifu
 - Andika kosa
 - Lugha 18 (mpya: Kihispania, Kiholanzi, Kijerumani, Kiitaliano, Kirusi, Kiuzbeki, Kiswahili, Kihausa, Kisomali).
@@ -54,7 +52,6 @@ Toleo la kwanza kwenye Microsoft Store.
 - Hitilafu ikitokea kimya, kamwe si muziki usiochujwa
 - Kufifisha skrini juu ya kila dirisha (si lazima)
 - Programu zinazosikika bila kuchujwa
-- Bakiza uimbaji (majaribio)
 - Ulinzi kwa nyakati za udhaifu
 - Andika kosa
 - Anza unapoingia

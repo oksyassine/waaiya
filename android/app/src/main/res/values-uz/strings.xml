@@ -370,11 +370,11 @@
     <string name="worship_sms_default">Hozir namoz vaqti, javob bera olmayman. Keyinroq oʻzim qoʻngʻiroq qilaman.</string>
     <string name="notif_worship_sms_title">SMS orqali javob berildi</string>
     <string name="notif_worship_sms_text">Namoz vaqtidagi javobingiz {number} raqamiga yuborildi.</string>
-    <string name="notif_protect_channel">Kutish muddati</string>
+    <string name="notif_protect_channel">Oʻchirishdan oldin kutish</string>
     <string name="notif_protect_what_stop">Filtrni toʻxtatish</string>
     <string name="notif_protect_what_pin">PIN-kodni oʻzgartirish yoki olib tashlash</string>
     <string name="notif_protect_what_setting">Himoyani pasaytiradigan oʻzgarish</string>
-    <string name="notif_protect_waiting_text">Agar oʻshanda ham xohlasangiz, %1$s da kuchga kiradi. “Bekor qilish” hammasini avvalgidek qoldiradi.</string>
+    <string name="notif_protect_waiting_text">%1$s gacha kutilmoqda. Hali ham xohlasangiz, soʻng ilovada tasdiqlang. Bekor qilish hammasini oʻz holicha qoldiradi.</string>
     <string name="notif_protect_ready_text">Hali ham xohlaysizmi? %1$s gacha Waaiyada tasdiqlang, aks holda hech narsa oʻzgarmaydi.</string>
     <string name="notif_protect_cancel">Bekor qilish</string>
 </resources>

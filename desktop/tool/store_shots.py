@@ -148,7 +148,9 @@ def main():
             for i, name in enumerate(PAGES):
                 slot = len(PAGES) - 1 - i if lang in RTL else i
                 click(o.x + int((slot + 0.5) * cr.right / len(PAGES)), o.y + cr.bottom - int(40 * s))
-                user32.SetCursorPos(o.x + int(4 * s), o.y + int(4 * s))  # no hover highlight in the picture
+                # no hover highlight in the picture: the middle of the title bar (a corner of the page would show
+                # the scroll bar, which is on the left in Arabic, Urdu and Persian)
+                user32.SetCursorPos(o.x + cr.right // 2, o.y - int(15 * s))
                 time.sleep(0.9)
                 x0, y0, x1, y1 = frame(h)
                 save_png(os.path.join(d, name + ".png"), x0, y0, x1 - x0, y1 - y0)

@@ -15,8 +15,7 @@ Koranrecitatie. Het werkt met elke app (browsers, videospelers, games), live, op
 - Optionele schermvervaging: bedekt vrouwen, of onzedige beelden, over elk venster; klikken bereiken nog steeds de
   vensters eronder.
 - Apps die je ongefilterd hoort: kies apps die hun oorspronkelijke geluid houden; ze worden niet gefilterd en niet gedempt.
-- Zang behouden (test): instrumenten worden verwijderd maar zangstemmen blijven, voor wie dat aanvaardt.
-- Bescherming voor zwakke momenten: een wachttijd vóór alles wat de bescherming verlaagt, en een optionele ouder-pincode.
+- Bescherming voor zwakke momenten: stoppen kan eerst wachten (bijvoorbeeld 30 minuten) en het daarna opnieuw vragen, en een ouder kan een pincode instellen.
 - Een fout noteren: markeer muziek die doorkwam of een stem die per vergissing verdween; notities blijven op je computer.
 - Starten bij inloggen, als je wilt.
 - Alles draait op je computer. Er wordt niets verstuurd: geen account, geen analyse, geen advertenties.
@@ -35,7 +34,6 @@ Eerste versie in de Microsoft Store.
 - Nieuwe pagina Links: bekijk een link van YouTube, TikTok of Instagram met het filter aan.
 - Zang van vrouwen dempen (vroege versie), nu ook op Windows.
 - Apps die je ongefilterd hoort
-- Zang behouden (test)
 - Bescherming voor zwakke momenten
 - Een fout noteren
 - 18 talen (nieuw: Spaans, Nederlands, Duits, Italiaans, Russisch, Oezbeeks, Swahili, Hausa, Somalisch).
@@ -52,7 +50,6 @@ Eerste versie in de Microsoft Store.
 - Bij een fout stilte, nooit ongefilterde muziek
 - Optionele schermvervaging over elk venster
 - Apps die je ongefilterd hoort
-- Zang behouden (test)
 - Bescherming voor zwakke momenten
 - Een fout noteren
 - Starten bij inloggen

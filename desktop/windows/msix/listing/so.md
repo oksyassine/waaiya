@@ -16,8 +16,7 @@ ciyaaraha), si toos ah, kombiyuutarkaaga.
 - Qarinta shaashadda (ikhtiyaari): waxay daboolaysaa haweenka, ama sawirrada aan asturnayn, daaqad kasta dusheeda;
   gujintu weli way gaartaa daaqadaha hoose.
 - Barnaamijyada la maqlo iyagoo aan la shaandheyn: dooro barnaamijyada lagu maqlo codkooda asalka ah; lama sifeeyo lamana aamusiyo.
-- Hay heesaha (tijaabo): qalabka muusigga waa la saaraa laakiin codadka heesaha waa la reebaa, kuwa taas aqbala.
-- Ilaalin waqtiyada daciifnimada: muddo sugid ah ka hor wax kasta oo dhimaya ilaalinta, iyo PIN waalid oo ikhtiyaari ah.
+- Ilaalin waqtiyada daciifnimada: joojinta waa la sugsiin karaa (tusaale 30 daqiiqo) kadibna mar kale ayaa lagu weydiinayaa, waalidkuna wuu dhigi karaa PIN.
 - Qor khalad: calaamadee muusig dhaafay ama cod si qalad ah loo saaray; qoraallada waxay ku jiraan kombiyuutarkaaga.
 - Bilow marka aad soo gasho, haddii aad rabto.
 - Wax walba kombiyuutarkaaga ayay ka shaqeeyaan. Meelna waxba looma diro: akoon ma jiro, falanqayn ma jirto,
@@ -37,7 +36,6 @@ Noocii ugu horreeyay ee Microsoft Store.
 - Bog cusub oo Linkiyada ah: daawo link YouTube, TikTok ama Instagram adigoo shaandhadu daaran tahay.
 - Aamusii heesaha haweenka (nooc hore), hadda Windows-ka sidoo kale.
 - Barnaamijyada la maqlo iyagoo aan la shaandheyn
-- Hay heesaha (tijaabo)
 - Ilaalin waqtiyada daciifnimada
 - Qor khalad
 - 18 luqadood (cusub: Isbaanish, Holandays, Jarmal, Talyaani, Ruush, Usbeki, Sawaaxili, Hawsa, Soomaali).
@@ -55,7 +53,6 @@ Noocii ugu horreeyay ee Microsoft Store.
 - Khalad marka uu dhaco aamusnaan, marna muusig aan la shaandheyn
 - Qarinta shaashadda daaqad kasta dusheeda (ikhtiyaari)
 - Barnaamijyada la maqlo iyagoo aan la shaandheyn
-- Hay heesaha (tijaabo)
 - Ilaalin waqtiyada daciifnimada
 - Qor khalad
 - Bilow marka aad soo gasho

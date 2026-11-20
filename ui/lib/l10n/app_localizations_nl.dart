@@ -1536,19 +1536,19 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Beslis nu, nu je rustig bent: een wijziging die de bescherming verlaagt, wacht eerst voordat ze ingaat. Een ouder kan ook een pincode instellen.';
+      'Voor een zwak moment waarop je het filter misschien wilt uitzetten. Kies nu, terwijl je rustig bent, een wachttijd: dan stopt de stopknop het filter niet meteen, en je beslist opnieuw als de wachttijd voorbij is. Een ouder kan ook een pincode instellen.';
 
   @override
   String protectDelay(Object value) {
-    return 'Wachttijd: $value';
+    return 'Wachten voor het uitzetten: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Wachttijd';
+  String get protectDelayTitle => 'Wachten voor het uitzetten';
 
   @override
   String get protectDelayBody =>
-      'Het filteren stoppen, een afdekking uitzetten of iets anders dat de bescherming verlaagt, wacht zo lang. Daarna bevestig je het binnen 15 minuten, anders verandert er niets. Iets aanzetten werkt altijd meteen.';
+      'Bijvoorbeeld met 30 minuten: je drukt op de knop om te stoppen, maar het filter blijft werken. Na 30 minuten vraagt deze pagina of je nog steeds wilt stoppen. Druk binnen 15 minuten op ‘Bevestigen’ en het stopt; anders verandert er niets. Hetzelfde geldt voor het uitzetten van een afdekking of een andere bescherming. Iets aanzetten werkt altijd meteen.';
 
   @override
   String get protectDelayOff => 'Geen';
@@ -1647,12 +1647,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: gaat in vanaf $time.';
+    return '$what: wacht tot $time. Bevestig het daarna in ‘Instellingen’.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: het wachten is voorbij. Wil je het nog? Bevestig vóór $time, anders verandert er niets.';
+    return '$what: het wachten is voorbij. Wil je het nog steeds? Druk vóór $time op ‘Bevestigen’; anders verandert er niets.';
   }
 
   @override
@@ -1660,7 +1660,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what gaat in vanaf $time, als je het dan nog wilt. Daarna bevestig je het hier binnen 15 minuten.';
+    return '$what gebeurt nu niet. Om $time bevestig je het binnen 15 minuten in ‘Instellingen’, als je het dan nog wilt. Doe je niets, dan verandert er niets.';
   }
 
   @override
@@ -1668,12 +1668,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Wacht al: gaat in vanaf $time.';
+    return 'Wacht al tot $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Gaat in vanaf $time. Bevestig het dan.';
+    return 'Wacht tot $time. Bevestig het daarna in ‘Instellingen’.';
   }
 
   @override
@@ -1723,7 +1723,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Wachttijd wijzigen naar: $value';
+    return 'Wachten voor het uitzetten wijzigen in: $value';
   }
 
   @override

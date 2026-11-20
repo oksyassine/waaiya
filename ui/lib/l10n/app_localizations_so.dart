@@ -1546,19 +1546,19 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Hadda go\'aanso, adigoo deggan: isbeddel yareeya ilaalinta wuu sugaa ka hor inta uusan dhaqan gelin. Waalid sidoo kale wuu dejin karaa PIN.';
+      'Waqtiga daciifnimada marka laga yaabo inaad rabto inaad damiso shaandhaynta. Hadda, adigoo deggan, dooro muddo sugid ah: markaas badhanka joojinta isla markiiba ma joojiyo shaandhaynta, waxaadna mar kale go\'aansanaysaa marka muddadu dhammaato. Waalidku sidoo kale wuu dhigi karaa PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Muddada sugitaanka: $value';
+    return 'Sugid ka hor damin: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Muddada sugitaanka';
+  String get protectDelayTitle => 'Sugid ka hor damin';
 
   @override
   String get protectDelayBody =>
-      'Joojinta shaandhaynta, demista dabool ama wax kasta oo kale oo yareeya ilaalinta waxay sugaan muddadan. Kadib waxaad xaqiijinaysaa 15 daqiiqo gudahood, haddii kale waxba isma beddelaan. Daarista waxyaabaha had iyo jeer isla markiiba way shaqaysaa.';
+      'Tusaale ahaan, 30 daqiiqo: waxaad riixdaa badhanka joojinta, laakiin shaandhayntu way sii shaqaynaysaa. 30 daqiiqo kadib, boggani wuxuu ku weydiinayaa inaad weli rabto inaad joojiso. Riix “Xaqiiji” 15 daqiiqo gudahood waana istaagaysaa; haddii kale waxba isma beddelaan. Sidaas oo kale ayay tahay demista dabool ama ilaalin kale. Daarista waxyaabaha had iyo jeer isla markiiba way shaqaysaa.';
 
   @override
   String get protectDelayOff => 'Midna';
@@ -1657,12 +1657,12 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: wuxuu dhaqan gelayaa $time.';
+    return '$what: waa la sugayaa ilaa $time. Kadib ku xaqiiji “Dejinta”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: sugitaankii wuu dhammaaday. Weli ma rabtaa? Xaqiiji ka hor $time, haddii kale waxba isma beddelaan.';
+    return '$what: sugiddii way dhammaatay. Weli ma rabtaa? Riix “Xaqiiji” ka hor $time; haddii kale waxba isma beddelaan.';
   }
 
   @override
@@ -1670,7 +1670,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what: wuxuu dhaqan gelayaa $time, haddii aad markaas weli rabto. Halkan ayaad ku xaqiijinaysaa 15 daqiiqo gudahood intaas kadib.';
+    return '$what hadda ma dhacayo. Saacadda $time, haddii aad weli rabto, ku xaqiiji “Dejinta” 15 daqiiqo gudahood. Haddii aadan waxba samayn, waxba isma beddelaan.';
   }
 
   @override
@@ -1678,12 +1678,12 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Horay ayuu u sugayaa: wuxuu dhaqan gelayaa $time.';
+    return 'Horeba waa la sugayaa ilaa $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Wuxuu dhaqan gelayaa $time. Markaas xaqiiji.';
+    return 'Waa la sugayaa ilaa $time. Kadib ku xaqiiji “Dejinta”.';
   }
 
   @override
@@ -1732,7 +1732,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'U beddel muddada sugitaanka: $value';
+    return 'U beddel sugidda ka hor damin: $value';
   }
 
   @override

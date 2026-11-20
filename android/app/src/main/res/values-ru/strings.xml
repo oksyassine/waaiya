@@ -370,11 +370,11 @@
     <string name="worship_sms_default">Сейчас время намаза, я не могу ответить. Я вам перезвоню.</string>
     <string name="notif_worship_sms_title">Отправлен ответ по SMS</string>
     <string name="notif_worship_sms_text">Ваш ответ на время намаза отправлен на номер {number}.</string>
-    <string name="notif_protect_channel">Время ожидания</string>
+    <string name="notif_protect_channel">Ожидание перед выключением</string>
     <string name="notif_protect_what_stop">Остановка фильтра</string>
     <string name="notif_protect_what_pin">Изменение или удаление PIN-кода</string>
     <string name="notif_protect_what_setting">Изменение, которое ослабляет защиту</string>
-    <string name="notif_protect_waiting_text">Вступит в силу в %1$s, если вы тогда всё ещё этого захотите. «Отмена» оставит всё как есть.</string>
+    <string name="notif_protect_waiting_text">Ожидание до %1$s. Затем подтвердите в приложении, если всё ещё хотите. «Отмена» оставляет всё как есть.</string>
     <string name="notif_protect_ready_text">Всё ещё хотите этого? Подтвердите в Waaiya до %1$s, иначе ничего не изменится.</string>
     <string name="notif_protect_cancel">Отмена</string>
 </resources>

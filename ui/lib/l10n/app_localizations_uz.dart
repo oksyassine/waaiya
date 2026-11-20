@@ -1535,19 +1535,19 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Hozir, xotirjam paytingizda qaror qiling: himoyani pasaytiradigan oʻzgarish kuchga kirishidan oldin kutadi. Ota-ona PIN-kod ham oʻrnatishi mumkin.';
+      'Filtrni oʻchirgingiz kelib qolishi mumkin boʻlgan zaif lahza uchun. Hozir, xotirjam paytingizda, kutish vaqtini tanlang: shunda toʻxtatish tugmasi filtrni darhol toʻxtatmaydi va vaqt tugagach yana qaror qilasiz. Ota-ona PIN kod ham qoʻyishi mumkin.';
 
   @override
   String protectDelay(Object value) {
-    return 'Kutish muddati: $value';
+    return 'Oʻchirishdan oldin kutish: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Kutish muddati';
+  String get protectDelayTitle => 'Oʻchirishdan oldin kutish';
 
   @override
   String get protectDelayBody =>
-      'Filtrni toʻxtatish, qoplamani oʻchirish yoki himoyani pasaytiradigan boshqa har qanday narsa shuncha vaqt kutadi. Soʻng uni 15 daqiqa ichida tasdiqlaysiz, aks holda hech narsa oʻzgarmaydi. Biror narsani yoqish har doim darhol ishlaydi.';
+      'Masalan, 30 daqiqa bilan: toʻxtatish tugmasini bosasiz, lekin filtr ishlashda davom etadi. 30 daqiqadan soʻng bu sahifa hali ham toʻxtatmoqchimisiz, deb soʻraydi. 15 daqiqa ichida “Tasdiqlash” tugmasini bossangiz, u toʻxtaydi; aks holda hech narsa oʻzgarmaydi. Qoplamani yoki boshqa himoyani oʻchirish ham shunday. Biror narsani yoqish har doim darhol ishlaydi.';
 
   @override
   String get protectDelayOff => 'Yoʻq';
@@ -1646,12 +1646,12 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: $time da kuchga kiradi.';
+    return '$what: $time gacha kutilmoqda. Soʻng “Sozlamalar” boʻlimida tasdiqlang.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: kutish tugadi. Hali ham xohlaysizmi? $time gacha tasdiqlang, aks holda hech narsa oʻzgarmaydi.';
+    return '$what: kutish tugadi. Hali ham xohlaysizmi? $time dan oldin “Tasdiqlash” tugmasini bosing; aks holda hech narsa oʻzgarmaydi.';
   }
 
   @override
@@ -1659,7 +1659,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what: agar oʻshanda ham xohlasangiz, $time da kuchga kiradi. Shundan keyin 15 daqiqa ichida buni shu yerda tasdiqlaysiz.';
+    return '$what hozir boʻlmaydi. $time da, agar hali ham xohlasangiz, uni 15 daqiqa ichida “Sozlamalar” boʻlimida tasdiqlang. Hech narsa qilmasangiz, hech narsa oʻzgarmaydi.';
   }
 
   @override
@@ -1667,12 +1667,12 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Allaqachon kutilmoqda: $time da kuchga kiradi.';
+    return '$time gacha allaqachon kutilmoqda.';
   }
 
   @override
   String protectStarted(Object time) {
-    return '$time da kuchga kiradi. Oʻshanda tasdiqlang.';
+    return '$time gacha kutilmoqda. Soʻng “Sozlamalar” boʻlimida tasdiqlang.';
   }
 
   @override
@@ -1722,7 +1722,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Kutish muddatini oʻzgartirish: $value';
+    return 'Oʻchirishdan oldingi kutishni oʻzgartirish: $value';
   }
 
   @override

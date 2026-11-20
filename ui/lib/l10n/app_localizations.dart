@@ -2695,25 +2695,25 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.'**
+  /// **'للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.'**
   String get protectBody;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'مدة الانتظار: {value}'**
+  /// **'الانتظار قبل الإيقاف: {value}'**
   String protectDelay(Object value);
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'مدة الانتظار'**
+  /// **'الانتظار قبل الإيقاف'**
   String get protectDelayTitle;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.'**
+  /// **'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.'**
   String get protectDelayBody;
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2893,13 +2893,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'{what}: يسري عند {time}.'**
+  /// **'{what}: ينتظر حتى {time}، ثم أكِّده في «الإعدادات».'**
   String protectPending(Object time, Object what);
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'{what}: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل {time}، وإلا فلن يتغيّر شيء.'**
+  /// **'{what}: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل {time}، وإلا فلن يتغيّر شيء.'**
   String protectReady(Object time, Object what);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2911,7 +2911,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'{what} يسري عند {time} إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.'**
+  /// **'{what} لن يحدث الآن. عند {time}، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.'**
   String protectWaitBody(Object time, Object what);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -2923,13 +2923,13 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'ينتظر بالفعل: يسري عند {time}.'**
+  /// **'ينتظر بالفعل حتى {time}.'**
   String protectAlreadyWaiting(Object time);
 
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'يسري عند {time}. أكِّده حينها.'**
+  /// **'ينتظر حتى {time}، ثم أكِّده في «الإعدادات».'**
   String protectStarted(Object time);
 
   /// Flutter only. Not reviewed yet except in English.
@@ -3001,7 +3001,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'تغيير مدة الانتظار إلى: {value}'**
+  /// **'تغيير الانتظار قبل الإيقاف إلى: {value}'**
   String protectWhatDelay(Object value);
 
   /// Flutter only. Not reviewed yet except in English.

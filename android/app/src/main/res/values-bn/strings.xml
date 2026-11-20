@@ -370,11 +370,11 @@
     <string name="worship_sms_default">এখন নামাজের সময়, এখন ধরতে পারছি না। পরে আপনাকে ফোন করব।</string>
     <string name="notif_worship_sms_title">এসএমএসে উত্তর দেওয়া হয়েছে</string>
     <string name="notif_worship_sms_text">আপনার নামাজের সময়ের উত্তর {number}-এ পাঠানো হয়েছে।</string>
-    <string name="notif_protect_channel">অপেক্ষার সময়</string>
+    <string name="notif_protect_channel">বন্ধ করার আগে অপেক্ষা</string>
     <string name="notif_protect_what_stop">ফিল্টার বন্ধ করা</string>
     <string name="notif_protect_what_pin">পিন বদলানো বা মুছে ফেলা</string>
     <string name="notif_protect_what_setting">সুরক্ষা কমানোর একটি পরিবর্তন</string>
-    <string name="notif_protect_waiting_text">%1$s-এ কার্যকর হবে, যদি তখনও আপনি চান। বাতিল করলে সব আগের মতো থাকবে।</string>
+    <string name="notif_protect_waiting_text">%1$s পর্যন্ত অপেক্ষা। তখনও চাইলে অ্যাপে নিশ্চিত করুন। বাতিল করলে সবকিছু যেমন আছে তেমন থাকে।</string>
     <string name="notif_protect_ready_text">এখনও চান? %1$s-এর আগে Waaiya-তে নিশ্চিত করুন, নইলে কিছুই বদলাবে না।</string>
     <string name="notif_protect_cancel">বাতিল</string>
 </resources>

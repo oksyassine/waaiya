@@ -369,11 +369,11 @@
     <string name="worship_sms_default">Het is gebedstijd, ik kan nu niet opnemen. Ik bel je terug.</string>
     <string name="notif_worship_sms_title">Beantwoord met sms</string>
     <string name="notif_worship_sms_text">Je antwoord voor gebedstijd is verstuurd naar {number}.</string>
-    <string name="notif_protect_channel">Wachttijd</string>
+    <string name="notif_protect_channel">Wachten voor het uitzetten</string>
     <string name="notif_protect_what_stop">Filteren stoppen</string>
     <string name="notif_protect_what_pin">De pincode wijzigen of verwijderen</string>
     <string name="notif_protect_what_setting">Een wijziging die de bescherming verlaagt</string>
-    <string name="notif_protect_waiting_text">Gaat in vanaf %1$s, als je het dan nog wilt. Annuleren laat alles zoals het is.</string>
+    <string name="notif_protect_waiting_text">Wacht tot %1$s. Bevestig het daarna in de app als je het nog wilt. Annuleren laat alles zoals het is.</string>
     <string name="notif_protect_ready_text">Wil je het nog? Bevestig het in Waaiya vóór %1$s, anders verandert er niets.</string>
     <string name="notif_protect_cancel">Annuleren</string>
 </resources>

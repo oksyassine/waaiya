@@ -370,11 +370,11 @@
     <string name="worship_sms_default">Sekarang waktu solat, saya tidak dapat menjawab. Saya akan telefon semula.</string>
     <string name="notif_worship_sms_title">Dibalas dengan SMS</string>
     <string name="notif_worship_sms_text">Balasan waktu solat anda dihantar kepada {number}.</string>
-    <string name="notif_protect_channel">Tempoh menunggu</string>
+    <string name="notif_protect_channel">Tunggu sebelum mematikan</string>
     <string name="notif_protect_what_stop">Menghentikan penapis</string>
     <string name="notif_protect_what_pin">Menukar atau membuang PIN</string>
     <string name="notif_protect_what_setting">Perubahan yang mengurangkan perlindungan</string>
-    <string name="notif_protect_waiting_text">Berkuat kuasa pada %1$s, jika anda masih mahukannya ketika itu. Batal mengekalkan semuanya seperti sedia ada.</string>
+    <string name="notif_protect_waiting_text">Menunggu hingga %1$s. Kemudian sahkan dalam aplikasi jika anda masih mahukannya. Batal mengekalkan semuanya seperti sedia ada.</string>
     <string name="notif_protect_ready_text">Masih mahu? Sahkan dalam Waaiya sebelum %1$s, atau tiada apa yang berubah.</string>
     <string name="notif_protect_cancel">Batal</string>
 </resources>

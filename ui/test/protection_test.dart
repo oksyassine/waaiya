@@ -181,12 +181,12 @@ void main() {
     expect(find.text('This change waits'), findsOneWidget);
     await _tap(tester, find.byKey(const Key('protect_wait_start')));
     expect(b.state.settings.holdSilence, isTrue, reason: 'not applied yet');
-    expect(find.textContaining('It takes effect at'), findsOneWidget);
+    expect(find.textContaining('Waiting until'), findsOneWidget);
     await tester.pump(const Duration(seconds: 5)); // the message goes
     await tester.pumpAndSettle();
     await _go(tester, 'settings');
     expect(find.textContaining('Keep apps silent'), findsWidgets);
-    expect(find.textContaining(': takes effect at'), findsOneWidget);
+    expect(find.textContaining(': waiting until'), findsOneWidget);
     expect(find.byKey(const Key('protect_confirm')), findsNothing);
     // the same change again does not restart the wait
     await _go(tester, 'filter');
@@ -196,7 +196,7 @@ void main() {
     await tester.pumpAndSettle();
     await _go(tester, 'settings');
     await _tap(tester, find.byKey(const Key('protect_cancel')));
-    expect(find.textContaining('takes effect at'), findsNothing);
+    expect(find.textContaining('waiting until'), findsNothing);
     expect(b.state.settings.holdSilence, isTrue);
   });
 
@@ -208,7 +208,7 @@ void main() {
     b.clock.pass(const Duration(minutes: 1));
     b.show();
     await tester.pumpAndSettle();
-    expect(find.textContaining('Still want it?'), findsOneWidget);
+    expect(find.textContaining('Do you still want it?'), findsOneWidget);
     expect(b.state.settings.holdSilence, isTrue, reason: 'never applied silently');
     await _tap(tester, find.byKey(const Key('protect_confirm')));
     expect(b.state.settings.holdSilence, isFalse);
@@ -254,7 +254,7 @@ void main() {
     await _tap(tester, find.byKey(const Key('protect_pin_remove')));
     await _typePin(tester, '1357');
     expect(b.gate.core.pinSet, isTrue, reason: 'removing the PIN waits');
-    expect(find.textContaining('Remove the PIN: takes effect at'), findsOneWidget);
+    expect(find.textContaining('Remove the PIN: waiting until'), findsOneWidget);
   });
 
   testWidgets('raising the waiting period with a PIN asks the PIN only', (tester) async {

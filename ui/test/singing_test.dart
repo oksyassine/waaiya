@@ -4,6 +4,7 @@ import 'package:waaiya_ui/l10n/app_localizations.dart';
 import 'package:waaiya_ui/src/app.dart';
 import 'package:waaiya_ui/src/backend.dart';
 import 'package:waaiya_ui/src/memory_backend.dart';
+import 'package:waaiya_ui/src/singing_option.dart';
 
 /// Keep singing (lane D): `SingingOptionSwitch`, setting `keep_singing`, snapshot `features.singing`.
 void main() {
@@ -30,9 +31,15 @@ void main() {
     expect(find.byKey(const Key('keep_singing')), findsNothing);
   });
 
-  testWidgets('off by default; the switch turns keep_singing on and off', (tester) async {
+  testWidgets('not offered for now, even with the model: hidden on every platform', (tester) async {
+    expect(SingingOptionSwitch.offered, isFalse);
     expect(WaaiyaSettings.fromMap(SettingKeys.defaults).keepSinging, isFalse);
-    final b = await pump(tester, state(available: true));
+    await pump(tester, state(available: true));
+    expect(find.byKey(const Key('keep_singing')), findsNothing);
+  });
+
+  testWidgets('still on from before: shown, so it can be turned off, then gone', (tester) async {
+    final b = await pump(tester, state(available: true, on: true));
     final l = await AppLocalizations.delegate.load(const Locale('en'));
     final sw = find.byKey(const Key('keep_singing'));
     await tester.ensureVisible(sw);
@@ -42,11 +49,9 @@ void main() {
     expect(l.singingKeepTitle, contains('(test)'));
     await tester.tap(sw);
     await tester.pumpAndSettle();
-    expect(b.state.settings.keepSinging, isTrue);
-    expect(b.state.settings.toMap()[SettingKeys.keepSinging], isTrue);
-    await tester.tap(sw);
-    await tester.pumpAndSettle();
     expect(b.state.settings.keepSinging, isFalse);
+    expect(b.state.settings.toMap()[SettingKeys.keepSinging], isFalse);
+    expect(find.byKey(const Key('keep_singing')), findsNothing);
   });
 
   testWidgets('on without the model: shown with a warning, so it can be turned off', (tester) async {
@@ -63,7 +68,7 @@ void main() {
   });
 
   testWidgets('Arabic text', (tester) async {
-    await pump(tester, state(available: true, language: 'ar'));
+    await pump(tester, state(available: true, on: true, language: 'ar'));
     final ar = await AppLocalizations.delegate.load(const Locale('ar'));
     await tester.ensureVisible(find.byKey(const Key('keep_singing')));
     await tester.pumpAndSettle();

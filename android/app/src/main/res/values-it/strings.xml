@@ -370,11 +370,11 @@
     <string name="worship_sms_default">È l\'ora della preghiera, ora non posso rispondere. Ti richiamo io.</string>
     <string name="notif_worship_sms_title">Risposto via SMS</string>
     <string name="notif_worship_sms_text">La tua risposta per l\'ora della preghiera è stata inviata al {number}.</string>
-    <string name="notif_protect_channel">Periodo di attesa</string>
+    <string name="notif_protect_channel">Attesa prima di spegnere</string>
     <string name="notif_protect_what_stop">Interruzione del filtro</string>
     <string name="notif_protect_what_pin">Modifica o rimozione del PIN</string>
     <string name="notif_protect_what_setting">Una modifica che riduce la protezione</string>
-    <string name="notif_protect_waiting_text">Ha effetto alle %1$s, se allora lo vorrai ancora. Annulla lascia tutto com\'è.</string>
+    <string name="notif_protect_waiting_text">In attesa fino alle %1$s. Poi confermalo nell\'app se lo vuoi ancora. Annulla lascia tutto com\'è.</string>
     <string name="notif_protect_ready_text">Lo vuoi ancora? Conferma in Waaiya prima delle %1$s, altrimenti non cambia nulla.</string>
     <string name="notif_protect_cancel">Annulla</string>
 </resources>

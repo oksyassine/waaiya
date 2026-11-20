@@ -1527,19 +1527,19 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'ابھی، سکون کی حالت میں فیصلہ کریں: تحفظ کم کرنے والی تبدیلی نافذ ہونے سے پہلے انتظار کرتی ہے۔ والدین PIN بھی لگا سکتے ہیں۔';
+      'کمزوری کے اس لمحے کے لیے جب آپ فلٹر بند کرنا چاہیں۔ ابھی، سکون کی حالت میں، انتظار کا وقت چنیں: پھر بند کرنے کا بٹن فلٹر کو فوراً بند نہیں کرتا، اور وقت پورا ہونے پر آپ دوبارہ فیصلہ کرتے ہیں۔ والدین PIN بھی لگا سکتے ہیں۔';
 
   @override
   String protectDelay(Object value) {
-    return 'انتظار کا وقت: $value';
+    return 'بند کرنے سے پہلے انتظار: $value';
   }
 
   @override
-  String get protectDelayTitle => 'انتظار کا وقت';
+  String get protectDelayTitle => 'بند کرنے سے پہلے انتظار';
 
   @override
   String get protectDelayBody =>
-      'فلٹر روکنا، کوئی پردہ بند کرنا یا تحفظ کم کرنے والی کوئی بھی چیز اتنی دیر انتظار کرتی ہے۔ پھر آپ 15 منٹ کے اندر اس کی تصدیق کرتے ہیں، ورنہ کچھ نہیں بدلتا۔ کسی چیز کو چالو کرنا ہمیشہ فوراً نافذ ہوتا ہے۔';
+      'مثال کے طور پر 30 منٹ کے ساتھ: آپ بند کرنے کا بٹن دباتے ہیں، مگر فلٹر چلتا رہتا ہے۔ 30 منٹ بعد یہ صفحہ پوچھتا ہے کہ کیا آپ اب بھی بند کرنا چاہتے ہیں۔ 15 منٹ کے اندر “تصدیق کریں” دبائیں تو یہ بند ہو جاتا ہے، ورنہ کچھ نہیں بدلتا۔ کوئی پردہ یا کوئی اور حفاظت بند کرنے میں بھی یہی ہوتا ہے۔ کچھ چالو کرنا ہمیشہ فوراً ہوتا ہے۔';
 
   @override
   String get protectDelayOff => 'کوئی نہیں';
@@ -1638,12 +1638,12 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: $time پر نافذ ہوگی۔';
+    return '$what: $time تک انتظار۔ پھر “ترتیبات” میں تصدیق کریں۔';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: انتظار ختم ہو گیا۔ اب بھی چاہتے ہیں؟ $time سے پہلے تصدیق کریں، ورنہ کچھ نہیں بدلے گا۔';
+    return '$what: انتظار ختم ہو گیا۔ کیا آپ اب بھی یہ چاہتے ہیں؟ $time سے پہلے “تصدیق کریں” دبائیں، ورنہ کچھ نہیں بدلے گا۔';
   }
 
   @override
@@ -1651,7 +1651,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what $time پر نافذ ہوگی، اگر آپ تب بھی چاہیں۔ اس کے بعد 15 منٹ کے اندر آپ یہاں تصدیق کرتے ہیں۔';
+    return '$what ابھی نہیں ہوگا۔ $time پر، اگر آپ تب بھی چاہیں، تو 15 منٹ کے اندر “ترتیبات” میں اس کی تصدیق کریں۔ اگر آپ کچھ نہ کریں تو کچھ نہیں بدلے گا۔';
   }
 
   @override
@@ -1659,12 +1659,12 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'پہلے سے انتظار میں: $time پر نافذ ہوگی۔';
+    return 'پہلے سے $time تک انتظار جاری ہے۔';
   }
 
   @override
   String protectStarted(Object time) {
-    return '$time پر نافذ ہوگی۔ تب تصدیق کریں۔';
+    return '$time تک انتظار۔ پھر “ترتیبات” میں تصدیق کریں۔';
   }
 
   @override
@@ -1713,7 +1713,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'انتظار کا وقت بدلنا: $value';
+    return 'بند کرنے سے پہلے انتظار بدل کر یہ کریں: $value';
   }
 
   @override

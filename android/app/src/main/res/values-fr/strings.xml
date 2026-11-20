@@ -370,11 +370,11 @@
     <string name="worship_sms_default">C\'est l\'heure de la prière, je ne peux pas répondre maintenant. Je vous rappelle.</string>
     <string name="notif_worship_sms_title">Réponse envoyée par SMS</string>
     <string name="notif_worship_sms_text">Votre réponse de l\'heure de prière a été envoyée au {number}.</string>
-    <string name="notif_protect_channel">Délai d\'attente</string>
+    <string name="notif_protect_channel">Délai avant l\'arrêt</string>
     <string name="notif_protect_what_stop">Arrêt du filtre</string>
     <string name="notif_protect_what_pin">Changement ou suppression du code</string>
     <string name="notif_protect_what_setting">Un changement qui baisse la protection</string>
-    <string name="notif_protect_waiting_text">Prend effet à %1$s, si vous le voulez toujours à ce moment. Annuler laisse tout comme avant.</string>
+    <string name="notif_protect_waiting_text">En attente jusqu\'à %1$s. Confirmez ensuite dans l\'application si vous le voulez toujours. Annuler laisse tout tel quel.</string>
     <string name="notif_protect_ready_text">Vous le voulez toujours ? Confirmez dans Waaiya avant %1$s, sinon rien ne change.</string>
     <string name="notif_protect_cancel">Annuler</string>
 </resources>

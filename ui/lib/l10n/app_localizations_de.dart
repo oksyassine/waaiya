@@ -1544,19 +1544,19 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Entscheiden Sie jetzt, solange Sie ruhig sind: Eine Änderung, die den Schutz senkt, wartet, bevor sie wirkt. Ein Elternteil kann auch eine PIN festlegen.';
+      'Für einen schwachen Moment, in dem Sie den Filter vielleicht ausschalten möchten. Wählen Sie jetzt, in Ruhe, eine Wartezeit: Dann stoppt die Stopp-Taste den Filter nicht sofort, und Sie entscheiden neu, wenn die Wartezeit vorbei ist. Eltern können auch eine PIN festlegen.';
 
   @override
   String protectDelay(Object value) {
-    return 'Wartezeit: $value';
+    return 'Warten vor dem Ausschalten: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Wartezeit';
+  String get protectDelayTitle => 'Warten vor dem Ausschalten';
 
   @override
   String get protectDelayBody =>
-      'Den Filter stoppen, eine Abdeckung ausschalten oder alles andere, was den Schutz senkt, wartet so lange. Danach bestätigen Sie es innerhalb von 15 Minuten, sonst ändert sich nichts. Etwas einschalten geht immer sofort.';
+      'Zum Beispiel mit 30 Minuten: Sie drücken die Taste zum Stoppen, aber der Filter arbeitet weiter. Nach 30 Minuten fragt diese Seite, ob Sie immer noch stoppen möchten. Drücken Sie innerhalb von 15 Minuten „Bestätigen“, dann stoppt er; sonst ändert sich nichts. Genauso beim Ausschalten einer Abdeckung oder eines anderen Schutzes. Etwas einschalten geht immer sofort.';
 
   @override
   String get protectDelayOff => 'Keine';
@@ -1655,12 +1655,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: wirkt ab $time.';
+    return '$what: wartet bis $time. Danach in „Einstellungen“ bestätigen.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: Die Wartezeit ist vorbei. Wollen Sie es noch? Bestätigen Sie vor $time, sonst ändert sich nichts.';
+    return '$what: Die Wartezeit ist vorbei. Möchten Sie es noch? Drücken Sie vor $time „Bestätigen“; sonst ändert sich nichts.';
   }
 
   @override
@@ -1668,7 +1668,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what wirkt ab $time, wenn Sie es dann noch wollen. Danach bestätigen Sie es hier innerhalb von 15 Minuten.';
+    return '$what geschieht jetzt nicht. Um $time bestätigen Sie es innerhalb von 15 Minuten in „Einstellungen“, wenn Sie es dann noch möchten. Wenn Sie nichts tun, ändert sich nichts.';
   }
 
   @override
@@ -1676,12 +1676,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Wartet bereits: wirkt ab $time.';
+    return 'Wartet bereits bis $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Wirkt ab $time. Bestätigen Sie es dann.';
+    return 'Wartet bis $time. Danach in „Einstellungen“ bestätigen.';
   }
 
   @override
@@ -1731,7 +1731,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Wartezeit ändern auf: $value';
+    return 'Warten vor dem Ausschalten ändern auf: $value';
   }
 
   @override

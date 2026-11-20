@@ -15,8 +15,7 @@ kwamfutarku.
 - Dusashe allo na zaɓi: yana rufe mata, ko hotunan tsiraici, a saman kowace taga; dannawa tana ci gaba da kaiwa
   tagogin da ke ƙasa.
 - Manhajojin da ake ji ba tare da tacewa ba: zaɓi manhajojin da za a ji da sautinsu na asali; ba a tace su, kuma ba a yi musu shiru.
-- Bar waƙa (gwaji): ana cire kayan kiɗa amma ana barin muryoyin waƙa, ga waɗanda suka yarda da hakan.
-- Kariya don lokutan rauni: lokacin jira kafin duk abin da zai rage kariya, da PIN na iyaye idan ana so.
+- Kariya don lokutan rauni: ana iya sa tsayawa ta jira (misali minti 30) sannan ta sake tambayar ku, kuma iyaye za su iya saka PIN.
 - Rubuta kuskure: yi alama kan kiɗan da ya wuce ko muryar da aka cire bisa kuskure; bayanan suna nan a kwamfutarka.
 - Fara lokacin shiga kwamfuta, idan kuna so.
 - Komai yana aiki a kwamfutarku. Ba a tura komai zuwa ko'ina ba: babu asusu, babu ƙididdiga, babu talla.
@@ -35,7 +34,6 @@ Sigar farko a Microsoft Store.
 - Sabon shafin Mahaɗai: kalla mahaɗar YouTube, TikTok ko Instagram da tacewa a kunne.
 - Kashe waƙar mata (sigar farko), yanzu a Windows ma.
 - Manhajojin da ake ji ba tare da tacewa ba
-- Bar waƙa (gwaji)
 - Kariya don lokutan rauni
 - Rubuta kuskure
 - Harsuna 18 (sababbi: Sifaniyanci, Holanci, Jamusanci, Italiyanci, Rashanci, Uzbek, Swahili, Hausa, Somaliyanci).
@@ -52,7 +50,6 @@ Sigar farko a Microsoft Store.
 - Idan an samu matsala shiru, ba kiɗa ba tare da tacewa ba
 - Dusashe allo na zaɓi a saman kowace taga
 - Manhajojin da ake ji ba tare da tacewa ba
-- Bar waƙa (gwaji)
 - Kariya don lokutan rauni
 - Rubuta kuskure
 - Fara lokacin shiga kwamfuta

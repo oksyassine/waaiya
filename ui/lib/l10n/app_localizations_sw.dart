@@ -1545,19 +1545,19 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Amua sasa, ukiwa mtulivu: badiliko linalopunguza ulinzi husubiri kabla ya kuanza kutumika. Mzazi pia anaweza kuweka PIN.';
+      'Kwa wakati wa udhaifu ambapo huenda ukataka kuzima kichujio. Chagua sasa, ukiwa mtulivu, muda wa kusubiri: kisha kitufe cha kusimamisha hakisimamishi kichujio mara moja, na unaamua tena muda ukiisha. Mzazi pia anaweza kuweka PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Muda wa kusubiri: $value';
+    return 'Kusubiri kabla ya kuzima: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Muda wa kusubiri';
+  String get protectDelayTitle => 'Kusubiri kabla ya kuzima';
 
   @override
   String get protectDelayBody =>
-      'Kusimamisha kichujio, kuzima kifuniko au kitu kingine chochote kinachopunguza ulinzi husubiri muda huu. Kisha unakithibitisha ndani ya dakika 15, la sivyo hakuna kinachobadilika. Kuwasha vitu hufanya kazi mara moja kila wakati.';
+      'Kwa mfano, kwa dakika 30: unabonyeza kitufe cha kusimamisha, lakini kichujio kinaendelea kufanya kazi. Baada ya dakika 30, ukurasa huu unakuuliza kama bado unataka kusimamisha. Bonyeza “Thibitisha” ndani ya dakika 15 nacho kinasimama; la sivyo hakuna kinachobadilika. Ndivyo ilivyo pia kwa kuzima kifuniko au ulinzi mwingine wowote. Kuwasha vitu hufanya kazi mara moja kila wakati.';
 
   @override
   String get protectDelayOff => 'Hakuna';
@@ -1656,12 +1656,12 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: itaanza kutumika ifikapo $time.';
+    return '$what: kinasubiri hadi $time. Kisha thibitisha katika “Mipangilio”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: kusubiri kumekwisha. Bado unaitaka? Thibitisha kabla ya $time, la sivyo hakuna kitakachobadilika.';
+    return '$what: kusubiri kumeisha. Bado unakitaka? Bonyeza “Thibitisha” kabla ya $time; la sivyo hakuna kinachobadilika.';
   }
 
   @override
@@ -1669,7 +1669,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what: itaanza kutumika ifikapo $time, ikiwa bado unaitaka wakati huo. Utaithibitisha hapa ndani ya dakika 15 baada ya hapo.';
+    return '$what hakitokei sasa. Saa $time, kama bado unakitaka, kithibitishe katika “Mipangilio” ndani ya dakika 15. Usipofanya chochote, hakuna kinachobadilika.';
   }
 
   @override
@@ -1677,12 +1677,12 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Tayari inasubiri: itaanza kutumika ifikapo $time.';
+    return 'Tayari kinasubiri hadi $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Itaanza kutumika ifikapo $time. Ithibitishe wakati huo.';
+    return 'Kinasubiri hadi $time. Kisha thibitisha katika “Mipangilio”.';
   }
 
   @override
@@ -1732,7 +1732,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Kubadilisha muda wa kusubiri kuwa: $value';
+    return 'Badilisha kusubiri kabla ya kuzima kuwa: $value';
   }
 
   @override

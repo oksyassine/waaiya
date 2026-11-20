@@ -16,8 +16,7 @@ komputer anda.
 - Pengaburan skrin pilihan: menutup wanita, atau imej tidak sopan, di atas setiap tetingkap; klik masih sampai ke
   tetingkap di bawahnya.
 - Aplikasi yang didengar tanpa penapis: pilih aplikasi yang didengar dengan bunyi asalnya; tidak ditapis dan tidak disenyapkan.
-- Kekalkan nyanyian (percubaan): alat muzik dibuang tetapi suara nyanyian dikekalkan, bagi yang menerimanya.
-- Perlindungan untuk saat lemah: tempoh menunggu sebelum apa-apa yang menurunkan perlindungan, dan PIN ibu bapa pilihan.
+- Perlindungan untuk saat lemah: henti boleh ditetapkan untuk menunggu (contohnya 30 minit) dan kemudian bertanya semula, dan ibu bapa boleh menetapkan PIN.
 - Catat kesilapan: tandakan muzik yang terlepas atau suara yang terbuang secara silap; nota kekal di komputer anda.
 - Mula semasa log masuk, jika anda mahu.
 - Semuanya berjalan pada komputer anda. Tiada apa-apa dihantar ke mana-mana: tiada akaun, tiada analitik, tiada iklan.
@@ -37,7 +36,6 @@ Versi pertama di Microsoft Store.
 - Halaman Pautan baharu: tonton pautan YouTube, TikTok atau Instagram dengan penapis aktif.
 - Senyapkan nyanyian wanita (versi awal), kini di Windows juga.
 - Aplikasi yang didengar tanpa penapis
-- Kekalkan nyanyian (percubaan)
 - Perlindungan untuk saat lemah
 - Catat kesilapan
 - 18 bahasa (baharu: Sepanyol, Belanda, Jerman, Itali, Rusia, Uzbek, Swahili, Hausa, Somali).
@@ -55,7 +53,6 @@ Versi pertama di Microsoft Store.
 - Gagal dalam keadaan senyap, tidak pernah muzik tanpa tapisan
 - Pilihan: pengaburan skrin di atas setiap tetingkap
 - Aplikasi yang didengar tanpa penapis
-- Kekalkan nyanyian (percubaan)
 - Perlindungan untuk saat lemah
 - Catat kesilapan
 - Mula semasa log masuk

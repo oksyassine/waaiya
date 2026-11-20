@@ -370,11 +370,11 @@
     <string name="worship_sms_default">نماز کا وقت ہے، ابھی جواب نہیں دے سکتا۔ میں آپ کو بعد میں کال کروں گا۔</string>
     <string name="notif_worship_sms_title">SMS سے جواب دیا گیا</string>
     <string name="notif_worship_sms_text">آپ کا نماز کے وقت کا جواب {number} کو بھیج دیا گیا۔</string>
-    <string name="notif_protect_channel">انتظار کا وقت</string>
+    <string name="notif_protect_channel">بند کرنے سے پہلے انتظار</string>
     <string name="notif_protect_what_stop">فلٹر روکنا</string>
     <string name="notif_protect_what_pin">PIN بدلنا یا ہٹانا</string>
     <string name="notif_protect_what_setting">تحفظ کم کرنے والی تبدیلی</string>
-    <string name="notif_protect_waiting_text">%1$s پر نافذ ہوگی، اگر آپ تب بھی چاہیں۔ منسوخ کرنے سے سب کچھ ویسا ہی رہے گا۔</string>
+    <string name="notif_protect_waiting_text">%1$s تک انتظار۔ اگر آپ تب بھی چاہیں تو پھر ایپ میں تصدیق کریں۔ “منسوخ کریں” سے سب کچھ ویسا ہی رہتا ہے۔</string>
     <string name="notif_protect_ready_text">اب بھی چاہتے ہیں؟ %1$s سے پہلے واعية میں تصدیق کریں، ورنہ کچھ نہیں بدلے گا۔</string>
     <string name="notif_protect_cancel">منسوخ کریں</string>
 </resources>

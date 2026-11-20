@@ -268,3 +268,29 @@ The `features` branch (#14) is merged into `windows-store`. What Windows has of 
   `ui/tool/check_translation.py`); a Somali label in the tone list wraps now on a small phone.
 - Local build without CI: llvm-mingw for Windows hosts in `third_party/llvm-mingw-win` (ignored by git) and
   `scripts/fetch_deps.sh ort-win`; the flags are windows/Makefile's.
+- Checked by hand in the packaged app on this PC: the Keep singing switch, the "apps heard unfiltered" card
+  (choosing Telegram switched to one capture per app, 2 captures, 0 leaks; removing it went back to one capture),
+  the notes card, a 1-minute wait that held Stop across an app restart, then Confirm.
+- The protection card's last line on Windows names `waaiya-filter.exe` (Linux names the `waaiya` command;
+  `protectLimitsWindows`, 18 languages). Ending the filter in Task Manager is not a way round it: the apps stay
+  silent (fail-closed) until it is stopped properly.
+
+### Store listing after the 0.2.13 features
+- `listing/<language>.md`: the four features in the description, the product features (13 of 20) and what's new.
+  The description sentences are new for each language (machine translations, as before, except English and Arabic);
+  the titles are the app's own.
+- `store_import.py` now joins the wrapped lines: before, each 120-column line break would have shown in the Store.
+- `store_shots.py` parks the mouse on the title bar: in right-to-left languages the scroll bar sits where it used to
+  park it, and showed in the pictures.
+- Version: the package is still 1.2.12.0 (app 0.2.12) although it has the 0.2.13 features; the number is the
+  owner's call (`desktop/pubspec.yaml` and `make_msix.ps1 -Version`).
+
+### Owner's decisions after the check (2026-11-20)
+- **Keep singing is hidden on every platform** (`SingingOptionSwitch.offered = false` in ui/lib/src/singing_option.dart):
+  it is meant to apply by itself for women, with no setting; until that is built it is not offered. Someone who had
+  turned it on still sees the switch until they turn it off. The setting, the engines (Android, Linux, Windows) and
+  the bundled model stay; the Store texts no longer mention it.
+- **The waiting period was not clear**: it is now "Wait before turning off", explained with an example (press
+  Stop, the filter keeps working, after the wait the Settings page asks again; Confirm within 15 minutes or nothing
+  changes). Rewritten in the 18 languages (app texts and the two Android notification texts); English and Arabic
+  written by hand, the others machine translations.

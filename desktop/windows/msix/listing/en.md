@@ -13,8 +13,7 @@ Quran recitation. It works with every app (browsers, video players, games), live
 - Optional screen blur: covers women, or immodest images, over every window; clicks still reach the windows
   underneath.
 - Apps heard unfiltered: choose apps that keep their original sound; they are neither filtered nor silenced.
-- Keep singing (test): removes the instruments but keeps singing voices, for those who accept that.
-- Protection for weak moments: a waiting period before anything that lowers protection, and an optional parent PIN.
+- Protection for weak moments: Stop can be set to wait (for example 30 minutes) and then ask you again, and a parent can set a PIN.
 - Note a mistake: mark music that got through, or a voice removed by mistake; notes stay on your computer.
 - Start at login, if you want.
 - Everything runs on your computer. Nothing is sent anywhere: no account, no analytics, no ads.
@@ -33,7 +32,6 @@ First version in the Microsoft Store.
 - New Links page: watch a YouTube, TikTok or Instagram link with the filter on.
 - Mute women's singing (early version), now on Windows too.
 - Apps heard unfiltered
-- Keep singing (test)
 - Protection for weak moments
 - Note a mistake
 - 18 languages (new: Spanish, Dutch, German, Italian, Russian, Uzbek, Swahili, Hausa, Somali).
@@ -49,7 +47,6 @@ First version in the Microsoft Store.
 - Fails closed: silence, never unfiltered music
 - Optional screen blur over every window
 - Apps heard unfiltered
-- Keep singing (test)
 - Protection for weak moments
 - Note a mistake
 - Start at login

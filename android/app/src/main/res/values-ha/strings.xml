@@ -369,11 +369,11 @@
     <string name="worship_sms_default">Lokacin salla ne, ba zan iya amsawa yanzu ba. Zan kira ka daga baya.</string>
     <string name="notif_worship_sms_title">An amsa ta SMS</string>
     <string name="notif_worship_sms_text">An aika amsarku ta lokacin salla zuwa {number}.</string>
-    <string name="notif_protect_channel">Lokacin jira</string>
+    <string name="notif_protect_channel">Jira kafin kashewa</string>
     <string name="notif_protect_what_stop">Dakatar da tacewa</string>
     <string name="notif_protect_what_pin">Canza ko cire PIN</string>
     <string name="notif_protect_what_setting">Canjin da ke rage kariya</string>
-    <string name="notif_protect_waiting_text">Zai fara aiki a %1$s, idan har yanzu kuna so a lokacin. Soke yana barin komai yadda yake.</string>
+    <string name="notif_protect_waiting_text">Ana jira har %1$s. Sannan ku tabbatar a manhajar idan har yanzu kuna so. Soke yana barin komai yadda yake.</string>
     <string name="notif_protect_ready_text">Har yanzu kuna so? Ku tabbatar a Waaiya kafin %1$s, in ba haka ba babu abin da zai canza.</string>
     <string name="notif_protect_cancel">Soke</string>
 </resources>

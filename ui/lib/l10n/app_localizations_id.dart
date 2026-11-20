@@ -1530,19 +1530,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Putuskan sekarang, saat tenang: perubahan yang menurunkan perlindungan menunggu sebelum berlaku. Orang tua juga dapat memasang PIN.';
+      'Untuk saat lemah ketika Anda mungkin ingin mematikan filter. Pilih waktu tunggu sekarang, saat Anda tenang: tombol berhenti tidak langsung menghentikan filter, dan Anda memutuskan lagi setelah waktu tunggu selesai. Orang tua juga dapat memasang PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Masa tunggu: $value';
+    return 'Tunggu sebelum mematikan: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Masa tunggu';
+  String get protectDelayTitle => 'Tunggu sebelum mematikan';
 
   @override
   String get protectDelayBody =>
-      'Menghentikan filter, mematikan penutup, atau apa pun yang menurunkan perlindungan menunggu selama ini. Lalu Anda mengonfirmasinya dalam 15 menit, atau tidak ada yang berubah. Menyalakan sesuatu selalu langsung berlaku.';
+      'Misalnya dengan 30 menit: Anda menekan tombol untuk berhenti, tetapi filter tetap bekerja. Setelah 30 menit, halaman ini bertanya apakah Anda masih ingin berhenti. Tekan “Konfirmasi” dalam 15 menit maka filter berhenti; jika tidak, tidak ada yang berubah. Begitu juga untuk mematikan penutup atau perlindungan lain. Menyalakan sesuatu selalu langsung berlaku.';
 
   @override
   String get protectDelayOff => 'Tidak ada';
@@ -1641,12 +1641,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: berlaku pukul $time.';
+    return '$what: menunggu sampai $time. Lalu konfirmasi di “Setelan”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: masa tunggu selesai. Masih ingin? Konfirmasi sebelum $time, atau tidak ada yang berubah.';
+    return '$what: waktu tunggu selesai. Masih menginginkannya? Tekan “Konfirmasi” sebelum $time; jika tidak, tidak ada yang berubah.';
   }
 
   @override
@@ -1654,7 +1654,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what berlaku pukul $time, jika saat itu Anda masih menginginkannya. Anda mengonfirmasinya di sini dalam 15 menit setelahnya.';
+    return '$what tidak terjadi sekarang. Pada $time, jika Anda masih menginginkannya, konfirmasi di “Setelan” dalam 15 menit. Jika Anda tidak melakukan apa-apa, tidak ada yang berubah.';
   }
 
   @override
@@ -1662,12 +1662,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Sudah menunggu: berlaku pukul $time.';
+    return 'Sudah menunggu sampai $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Berlaku pukul $time. Konfirmasi saat itu.';
+    return 'Menunggu sampai $time. Lalu konfirmasi di “Setelan”.';
   }
 
   @override
@@ -1717,7 +1717,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Ubah masa tunggu menjadi: $value';
+    return 'Ubah waktu tunggu sebelum mematikan menjadi: $value';
   }
 
   @override

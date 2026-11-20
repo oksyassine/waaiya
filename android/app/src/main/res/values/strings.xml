@@ -371,11 +371,11 @@
     <string name="worship_sms_default">It\'s prayer time, I can\'t answer now. I\'ll call you back.</string>
     <string name="notif_worship_sms_title">Replied by SMS</string>
     <string name="notif_worship_sms_text">Your prayer-time reply was sent to {number}.</string>
-    <string name="notif_protect_channel">Waiting period</string>
+    <string name="notif_protect_channel">Wait before turning off</string>
     <string name="notif_protect_what_stop">Stopping the filter</string>
     <string name="notif_protect_what_pin">Changing or removing the PIN</string>
     <string name="notif_protect_what_setting">A change that lowers protection</string>
-    <string name="notif_protect_waiting_text">Takes effect at %1$s, if you still want it then. Cancel keeps things as they are.</string>
+    <string name="notif_protect_waiting_text">Waiting until %1$s. Then confirm it in the app if you still want it. Cancel keeps things as they are.</string>
     <string name="notif_protect_ready_text">Still want it? Confirm in Waaiya before %1$s, or nothing changes.</string>
     <string name="notif_protect_cancel">Cancel</string>
 </resources>

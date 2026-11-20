@@ -15,8 +15,7 @@ Kuran tilavetini. Her uygulamayla (tarayıcılar, video oynatıcılar, oyunlar) 
 - İsteğe bağlı ekran bulanıklaştırma: kadınları veya uygunsuz görüntüleri tüm pencerelerin üzerinde örter; tıklamalar
   alttaki pencerelere ulaşmaya devam eder.
 - Filtresiz duyulan uygulamalar: özgün sesiyle duyulacak uygulamaları seçin; ne süzülür ne susturulur.
-- Şarkı seslerini koru (deneme): çalgılar kaldırılır ama şarkı söyleyen sesler kalır; bunu kabul edenler için.
-- Zayıf anlar için koruma: korumayı azaltan her şeyden önce bir bekleme süresi ve isteğe bağlı ebeveyn PIN'i.
+- Zayıf anlar için koruma: durdurma beklemeye ayarlanabilir (örneğin 30 dakika) ve sonra size yeniden sorar; bir ebeveyn PIN de belirleyebilir.
 - Bir hatayı not edin: geçen müziği ya da yanlışlıkla silinen sesi işaretleyin; notlar bilgisayarınızda kalır.
 - İsterseniz oturum açılınca başlat.
 - Her şey bilgisayarınızda çalışır. Hiçbir yere bir şey gönderilmez: hesap yok, analiz yok, reklam yok.
@@ -35,7 +34,6 @@ Microsoft Store'daki ilk sürüm.
 - Yeni Bağlantılar sayfası: bir YouTube, TikTok veya Instagram bağlantısını filtre açıkken izleyin.
 - Kadınların şarkı sesini sustur (ilk sürüm), artık Windows'ta da.
 - Filtresiz duyulan uygulamalar
-- Şarkı seslerini koru (deneme)
 - Zayıf anlar için koruma
 - Bir hatayı not edin
 - 18 dil (yeni: İspanyolca, Felemenkçe, Almanca, İtalyanca, Rusça, Özbekçe, Svahili, Hausaca, Somalice).
@@ -52,7 +50,6 @@ Microsoft Store'daki ilk sürüm.
 - Hata olursa sessizlik, asla filtresiz müzik değil
 - İsteğe bağlı: tüm pencerelerin üzerinde ekran bulanıklaştırma
 - Filtresiz duyulan uygulamalar
-- Şarkı seslerini koru (deneme)
 - Zayıf anlar için koruma
 - Bir hatayı not edin
 - Oturum açılınca başlat

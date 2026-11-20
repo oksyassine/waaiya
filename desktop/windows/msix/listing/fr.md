@@ -17,8 +17,7 @@ votre ordinateur.
 - En option, le floutage de l'écran : il couvre les femmes, ou les images indécentes, au-dessus de toutes les fenêtres ;
   les clics atteignent toujours les fenêtres en dessous.
 - Applications entendues sans filtre : choisissez des applications qui gardent leur son d'origine ; elles ne sont ni filtrées ni rendues muettes.
-- Garder le chant (essai) : retire les instruments mais garde les voix chantées, pour qui l'accepte.
-- Protection pour les moments de faiblesse : un délai d'attente avant tout ce qui baisse la protection, et un code PIN parental facultatif.
+- Protection pour les moments de faiblesse : l'arrêt peut attendre (par exemple 30 minutes) puis vous redemander, et un parent peut définir un code PIN.
 - Noter une erreur : signalez une musique passée ou une voix retirée par erreur ; les notes restent sur votre ordinateur.
 - Démarrer à l'ouverture de session, si vous le souhaitez.
 - Tout tourne sur votre ordinateur. Rien n'est envoyé nulle part : ni compte, ni statistiques, ni publicité.
@@ -37,7 +36,6 @@ Première version dans le Microsoft Store.
 - Nouvelle page Liens : regardez un lien YouTube, TikTok ou Instagram avec le filtre actif.
 - Couper le chant des femmes (première version), maintenant aussi sur Windows.
 - Applications entendues sans filtre
-- Garder le chant (essai)
 - Protection pour les moments de faiblesse
 - Noter une erreur
 - 18 langues (nouvelles : espagnol, néerlandais, allemand, italien, russe, ouzbek, swahili, haoussa, somali).
@@ -55,7 +53,6 @@ Première version dans le Microsoft Store.
 - En cas d'échec, le silence, jamais la musique non filtrée
 - En option : floutage de l'écran au-dessus de toutes les fenêtres
 - Applications entendues sans filtre
-- Garder le chant (essai)
 - Protection pour les moments de faiblesse
 - Noter une erreur
 - Démarrer à l'ouverture de session

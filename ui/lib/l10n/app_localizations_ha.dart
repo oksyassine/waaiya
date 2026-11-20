@@ -1536,19 +1536,19 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Ku yanke shawara yanzu, yayin da kuke cikin nutsuwa: canjin da ke rage kariya yana jira kafin ya fara aiki. Iyaye ma za su iya saita PIN.';
+      'Don lokacin rauni da za ku so kashe tacewa. Ku zaɓi lokacin jira yanzu, cikin natsuwa: sai maɓallin tsayawa ba zai dakatar da tacewa nan take ba, kuma za ku sake yanke shawara idan lokacin ya ƙare. Iyaye ma za su iya saka PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Lokacin jira: $value';
+    return 'Jira kafin kashewa: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Lokacin jira';
+  String get protectDelayTitle => 'Jira kafin kashewa';
 
   @override
   String get protectDelayBody =>
-      'Dakatar da tacewa, kashe murfi ko duk wani abu da ke rage kariya yana jiran wannan lokaci. Sannan ku tabbatar cikin minti 15, in ba haka ba babu abin da zai canza. Kunna abubuwa koyaushe yana aiki nan take.';
+      'Misali, da minti 30: kuna danna maɓallin tsayawa, amma tacewa tana ci gaba da aiki. Bayan minti 30, wannan shafi zai tambaye ku ko har yanzu kuna son dakatarwa. Ku danna “Tabbatar” cikin minti 15 sai ta tsaya; in ba haka ba babu abin da zai canza. Haka nan ma kashe murfi ko wata kariya. Kunna abubuwa koyaushe yana aiki nan take.';
 
   @override
   String get protectDelayOff => 'Babu';
@@ -1647,12 +1647,12 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: zai fara aiki a $time.';
+    return '$what: ana jira har $time. Sannan ku tabbatar a “Saituna”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: jiran ya ƙare. Har yanzu kuna so? Ku tabbatar kafin $time, in ba haka ba babu abin da zai canza.';
+    return '$what: jira ya ƙare. Har yanzu kuna so? Ku danna “Tabbatar” kafin $time; in ba haka ba babu abin da zai canza.';
   }
 
   @override
@@ -1660,7 +1660,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what: zai fara aiki a $time, idan har yanzu kuna so a lokacin. Kuna tabbatar da shi a nan cikin minti 15 bayan haka.';
+    return '$what ba zai faru yanzu ba. A $time, idan har yanzu kuna so, ku tabbatar a “Saituna” cikin minti 15. Idan ba ku yi komai ba, babu abin da zai canza.';
   }
 
   @override
@@ -1668,12 +1668,12 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Ana jira tuni: zai fara aiki a $time.';
+    return 'Ana jira tuni har $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Zai fara aiki a $time. Ku tabbatar da shi a lokacin.';
+    return 'Ana jira har $time. Sannan ku tabbatar a “Saituna”.';
   }
 
   @override
@@ -1722,7 +1722,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Canza lokacin jira zuwa: $value';
+    return 'Canja jira kafin kashewa zuwa: $value';
   }
 
   @override

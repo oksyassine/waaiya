@@ -369,11 +369,11 @@
     <string name="worship_sms_default">Ni wakati wa swala, siwezi kujibu sasa. Nitakupigia baadaye.</string>
     <string name="notif_worship_sms_title">Imejibiwa kwa SMS</string>
     <string name="notif_worship_sms_text">Jibu lako la wakati wa swala limetumwa kwa {number}.</string>
-    <string name="notif_protect_channel">Muda wa kusubiri</string>
+    <string name="notif_protect_channel">Kusubiri kabla ya kuzima</string>
     <string name="notif_protect_what_stop">Kusimamisha kichujio</string>
     <string name="notif_protect_what_pin">Kubadilisha au kuondoa PIN</string>
     <string name="notif_protect_what_setting">Badiliko linalopunguza ulinzi</string>
-    <string name="notif_protect_waiting_text">Itaanza kutumika ifikapo %1$s, ikiwa bado unaitaka wakati huo. Ghairi huacha kila kitu kama kilivyo.</string>
+    <string name="notif_protect_waiting_text">Kinasubiri hadi %1$s. Kisha thibitisha katika programu kama bado unakitaka. Ghairi huacha kila kitu kama kilivyo.</string>
     <string name="notif_protect_ready_text">Bado unaitaka? Thibitisha katika Waaiya kabla ya %1$s, la sivyo hakuna kitakachobadilika.</string>
     <string name="notif_protect_cancel">Ghairi</string>
 </resources>

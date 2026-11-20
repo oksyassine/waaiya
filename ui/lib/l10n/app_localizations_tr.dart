@@ -1529,19 +1529,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Şimdi, sakinken karar verin: korumayı azaltan bir değişiklik geçerli olmadan önce bekler. Bir ebeveyn ayrıca PIN koyabilir.';
+      'Filtreyi kapatmak isteyebileceğiniz zayıf bir an için. Şimdi, sakinken bir bekleme süresi seçin: o zaman durdurma düğmesi filtreyi hemen durdurmaz ve süre bitince yeniden karar verirsiniz. Bir ebeveyn PIN de belirleyebilir.';
 
   @override
   String protectDelay(Object value) {
-    return 'Bekleme süresi: $value';
+    return 'Kapatmadan önce bekleme: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Bekleme süresi';
+  String get protectDelayTitle => 'Kapatmadan önce bekleme';
 
   @override
   String get protectDelayBody =>
-      'Filtreyi durdurmak, bir örtüyü kapatmak veya korumayı azaltan herhangi bir şey bu kadar bekler. Sonra 15 dakika içinde onaylarsınız, yoksa hiçbir şey değişmez. Bir şeyi açmak her zaman hemen geçerli olur.';
+      'Örneğin 30 dakika ile: durdurmak için düğmeye basarsınız ama filtre çalışmaya devam eder. 30 dakika sonra bu sayfa hâlâ durdurmak isteyip istemediğinizi sorar. 15 dakika içinde “Onayla” düğmesine basarsanız durur; basmazsanız hiçbir şey değişmez. Bir örtüyü ya da başka bir korumayı kapatmak da böyledir. Bir şeyi açmak her zaman hemen olur.';
 
   @override
   String get protectDelayOff => 'Yok';
@@ -1640,12 +1640,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: $time saatinde geçerli olur.';
+    return '$what: $time saatine kadar bekliyor. Sonra “Ayarlar” sayfasında onaylayın.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: bekleme bitti. Hâlâ istiyor musunuz? $time saatinden önce onaylayın, yoksa hiçbir şey değişmez.';
+    return '$what: bekleme bitti. Hâlâ istiyor musunuz? $time saatinden önce “Onayla” düğmesine basın; yoksa hiçbir şey değişmez.';
   }
 
   @override
@@ -1653,7 +1653,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what, o zaman hâlâ isterseniz $time saatinde geçerli olur. Ardından 15 dakika içinde burada onaylarsınız.';
+    return '$what şimdi olmaz. $time saatinde hâlâ istiyorsanız, 15 dakika içinde “Ayarlar” sayfasında onaylayın. Hiçbir şey yapmazsanız hiçbir şey değişmez.';
   }
 
   @override
@@ -1661,12 +1661,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Zaten bekliyor: $time saatinde geçerli olur.';
+    return 'Zaten $time saatine kadar bekliyor.';
   }
 
   @override
   String protectStarted(Object time) {
-    return '$time saatinde geçerli olur. O zaman onaylayın.';
+    return '$time saatine kadar bekliyor. Sonra “Ayarlar” sayfasında onaylayın.';
   }
 
   @override
@@ -1716,7 +1716,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Bekleme süresini değiştir: $value';
+    return 'Kapatmadan önceki beklemeyi şuna değiştir: $value';
   }
 
   @override

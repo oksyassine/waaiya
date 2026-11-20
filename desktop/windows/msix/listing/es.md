@@ -17,8 +17,7 @@ directo, en su ordenador.
 - Desenfoque de pantalla opcional: cubre a las mujeres, o las imágenes indecentes, sobre todas las ventanas; los clics
   siguen llegando a las ventanas de debajo.
 - Aplicaciones que se oyen sin filtrar: elija aplicaciones que conservan su sonido original; no se filtran ni se silencian.
-- Conservar el canto (prueba): quita los instrumentos pero conserva las voces que cantan, para quien lo acepte.
-- Protección para los momentos de debilidad: un tiempo de espera antes de todo lo que baja la protección, y un PIN parental opcional.
+- Protección para los momentos de debilidad: detener puede esperar (por ejemplo 30 minutos) y luego volver a preguntarle, y un padre o una madre puede poner un PIN.
 - Anotar un error: marque la música que pasó o una voz quitada por error; las notas se quedan en su ordenador.
 - Iniciar al iniciar sesión, si lo desea.
 - Todo funciona en su ordenador. No se envía nada a ninguna parte: sin cuenta, sin estadísticas, sin anuncios.
@@ -37,7 +36,6 @@ Primera versión en Microsoft Store.
 - Nueva página Enlaces: vea un enlace de YouTube, TikTok o Instagram con el filtro activado.
 - Silenciar el canto de mujeres (primera versión), ahora también en Windows.
 - Aplicaciones que se oyen sin filtrar
-- Conservar el canto (prueba)
 - Protección para los momentos de debilidad
 - Anotar un error
 - 18 idiomas (nuevos: español, neerlandés, alemán, italiano, ruso, uzbeko, suajili, hausa, somalí).
@@ -55,7 +53,6 @@ Primera versión en Microsoft Store.
 - Si falla, silencio, nunca música sin filtrar
 - Opcional: desenfoque de pantalla sobre todas las ventanas
 - Aplicaciones que se oyen sin filtrar
-- Conservar el canto (prueba)
 - Protección para los momentos de debilidad
 - Anotar un error
 - Iniciar al iniciar sesión

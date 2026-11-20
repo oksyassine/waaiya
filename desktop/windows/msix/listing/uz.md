@@ -16,8 +16,7 @@ kompyuteringizda.
 - Ixtiyoriy ekranni xiralashtirish: barcha oynalar ustidan ayollarni yoki odobsiz tasvirlarni yopadi; sichqoncha
   bosishlari baribir ostidagi oynalarga yetib boradi.
 - Filtrsiz eshitiladigan ilovalar: asl ovozi bilan eshitiladigan ilovalarni tanlang; ular na filtrlanadi, na o‘chiriladi.
-- Qoʻshiqni saqlash (sinov): cholg‘ular olib tashlanadi, lekin qo‘shiq ovozlari qoladi; buni qabul qilganlar uchun.
-- Zaif damlar uchun himoya: himoyani pasaytiradigan har qanday o‘zgarishdan oldin kutish vaqti va ixtiyoriy ota-ona PIN kodi.
+- Zaif damlar uchun himoya: toʻxtatishni kutishga qoʻyish mumkin (masalan, 30 daqiqa), soʻng sizdan yana soʻraladi; ota-ona PIN kod qoʻyishi mumkin.
 - Xatoni qayd etish: o‘tib ketgan musiqa yoki xato bilan olib tashlangan ovozni belgilang; qaydlar kompyuteringizda qoladi.
 - Xohlasangiz, tizimga kirganda ishga tushirish.
 - Hammasi kompyuteringizda ishlaydi. Hech narsa hech qayerga yuborilmaydi: hisob yoʻq, tahlil yoʻq, reklama yoʻq.
@@ -36,7 +35,6 @@ Microsoft Store doʻkonidagi birinchi versiya.
 - Yangi Havolalar sahifasi: YouTube, TikTok yoki Instagram havolasini filtr yoqilgan holda koʻring.
 - Ayollar qoʻshigʻini oʻchirish (dastlabki versiya), endi Windows uchun ham.
 - Filtrsiz eshitiladigan ilovalar
-- Qoʻshiqni saqlash (sinov)
 - Zaif damlar uchun himoya
 - Xatoni qayd etish
 - 18 til (yangi: ispan, niderland, nemis, italyan, rus, oʻzbek, suahili, hausa, somali).
@@ -53,7 +51,6 @@ Microsoft Store doʻkonidagi birinchi versiya.
 - Xatoda sukunat, hech qachon filtrsiz musiqa emas
 - Barcha oynalar ustidan ixtiyoriy ekranni xiralashtirish
 - Filtrsiz eshitiladigan ilovalar
-- Qoʻshiqni saqlash (sinov)
 - Zaif damlar uchun himoya
 - Xatoni qayd etish
 - Tizimga kirganda ishga tushirish

@@ -1528,19 +1528,19 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'এখনই, শান্ত অবস্থায় ঠিক করুন: সুরক্ষা কমানো কোনো পরিবর্তন কার্যকর হওয়ার আগে অপেক্ষা করে। অভিভাবক একটি পিনও রাখতে পারেন।';
+      'দুর্বল মুহূর্তের জন্য, যখন আপনি ফিল্টার বন্ধ করতে চাইতে পারেন। এখন, শান্ত অবস্থায়, একটি অপেক্ষার সময় বেছে নিন: তখন বন্ধ করার বোতাম ফিল্টার সঙ্গে সঙ্গে বন্ধ করে না, আর সময় শেষ হলে আপনি আবার সিদ্ধান্ত নেন। অভিভাবক একটি PIN-ও সেট করতে পারেন।';
 
   @override
   String protectDelay(Object value) {
-    return 'অপেক্ষার সময়: $value';
+    return 'বন্ধ করার আগে অপেক্ষা: $value';
   }
 
   @override
-  String get protectDelayTitle => 'অপেক্ষার সময়';
+  String get protectDelayTitle => 'বন্ধ করার আগে অপেক্ষা';
 
   @override
   String get protectDelayBody =>
-      'ফিল্টার বন্ধ করা, কোনো ঢাকা বন্ধ করা বা সুরক্ষা কমানো যেকোনো কিছু এতক্ষণ অপেক্ষা করে। তারপর ১৫ মিনিটের মধ্যে নিশ্চিত করুন, নইলে কিছুই বদলাবে না। কিছু চালু করা সবসময় সঙ্গে সঙ্গে কাজ করে।';
+      'উদাহরণ, ৩০ মিনিট হলে: আপনি বন্ধ করার বোতাম চাপেন, কিন্তু ফিল্টার চলতেই থাকে। ৩০ মিনিট পরে এই পাতা জিজ্ঞেস করে আপনি এখনও বন্ধ করতে চান কি না। ১৫ মিনিটের মধ্যে “নিশ্চিত করুন” চাপলে এটি বন্ধ হয়; নইলে কিছুই বদলায় না। কোনো ঢাকা বা অন্য কোনো সুরক্ষা বন্ধ করার ক্ষেত্রেও একই। কিছু চালু করা সবসময় সঙ্গে সঙ্গে হয়।';
 
   @override
   String get protectDelayOff => 'নেই';
@@ -1639,12 +1639,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: $time-এ কার্যকর হবে।';
+    return '$what: $time পর্যন্ত অপেক্ষা। তারপর “সেটিংস”-এ নিশ্চিত করুন।';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: অপেক্ষা শেষ। এখনও চান? $time-এর আগে নিশ্চিত করুন, নইলে কিছুই বদলাবে না।';
+    return '$what: অপেক্ষা শেষ। আপনি কি এখনও এটি চান? $time-এর আগে “নিশ্চিত করুন” চাপুন; নইলে কিছুই বদলাবে না।';
   }
 
   @override
@@ -1652,7 +1652,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what $time-এ কার্যকর হবে, যদি তখনও চান। তার পরের ১৫ মিনিটের মধ্যে এখানে নিশ্চিত করবেন।';
+    return '$what এখন হবে না। $time-এ, যদি তখনও চান, ১৫ মিনিটের মধ্যে “সেটিংস”-এ নিশ্চিত করুন। কিছু না করলে কিছুই বদলাবে না।';
   }
 
   @override
@@ -1660,12 +1660,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'ইতিমধ্যে অপেক্ষায়: $time-এ কার্যকর হবে।';
+    return 'ইতিমধ্যে $time পর্যন্ত অপেক্ষা চলছে।';
   }
 
   @override
   String protectStarted(Object time) {
-    return '$time-এ কার্যকর হবে। তখন নিশ্চিত করুন।';
+    return '$time পর্যন্ত অপেক্ষা। তারপর “সেটিংস”-এ নিশ্চিত করুন।';
   }
 
   @override
@@ -1714,7 +1714,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'অপেক্ষার সময় বদলানো: $value';
+    return 'বন্ধ করার আগে অপেক্ষা বদলে করুন: $value';
   }
 
   @override

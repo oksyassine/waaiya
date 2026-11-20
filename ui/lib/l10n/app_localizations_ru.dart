@@ -1531,19 +1531,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Решите сейчас, пока вы спокойны: изменение, которое ослабляет защиту, вступает в силу не сразу, а после ожидания. Родитель также может задать PIN-код.';
+      'Для минуты слабости, когда вам может захотеться выключить фильтр. Выберите сейчас, пока вы спокойны, время ожидания: тогда кнопка остановки не останавливает фильтр сразу, и вы решаете заново, когда ожидание закончится. Родитель может также задать PIN-код.';
 
   @override
   String protectDelay(Object value) {
-    return 'Время ожидания: $value';
+    return 'Ожидание перед выключением: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Время ожидания';
+  String get protectDelayTitle => 'Ожидание перед выключением';
 
   @override
   String get protectDelayBody =>
-      'Остановка фильтра, отключение заслонки и всё остальное, что ослабляет защиту, ждёт столько времени. Затем вы подтверждаете это в течение 15 минут, иначе ничего не изменится. Включение всегда срабатывает сразу.';
+      'Например, с 30 минутами: вы нажимаете кнопку остановки, но фильтр продолжает работать. Через 30 минут эта страница спрашивает, хотите ли вы всё ещё остановить его. Нажмите «Подтвердить» в течение 15 минут, и он остановится; иначе ничего не изменится. То же самое при отключении заслонки или любой другой защиты. Включение всегда срабатывает сразу.';
 
   @override
   String get protectDelayOff => 'Нет';
@@ -1642,12 +1642,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: вступит в силу в $time.';
+    return '$what: ожидание до $time. Затем подтвердите в разделе «Параметры».';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: ожидание закончилось. Всё ещё хотите этого? Подтвердите до $time, иначе ничего не изменится.';
+    return '$what: ожидание закончилось. Вы всё ещё этого хотите? Нажмите «Подтвердить» до $time; иначе ничего не изменится.';
   }
 
   @override
@@ -1655,7 +1655,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what: вступит в силу в $time, если вы тогда всё ещё этого захотите. Подтвердить нужно здесь в течение 15 минут после этого.';
+    return '$what не произойдёт сейчас. В $time, если вы всё ещё этого хотите, подтвердите в разделе «Параметры» в течение 15 минут. Если ничего не делать, ничего не изменится.';
   }
 
   @override
@@ -1663,12 +1663,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Уже ожидает: вступит в силу в $time.';
+    return 'Уже ожидание до $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Вступит в силу в $time. Тогда и подтвердите.';
+    return 'Ожидание до $time. Затем подтвердите в разделе «Параметры».';
   }
 
   @override
@@ -1717,7 +1717,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Изменить время ожидания на: $value';
+    return 'Изменить ожидание перед выключением на: $value';
   }
 
   @override

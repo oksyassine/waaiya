@@ -369,11 +369,11 @@
     <string name="worship_sms_default">إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.</string>
     <string name="notif_worship_sms_title">تم الرد برسالة</string>
     <string name="notif_worship_sms_text">أُرسل ردّ وقت الصلاة إلى {number}.</string>
-    <string name="notif_protect_channel">مدة الانتظار</string>
+    <string name="notif_protect_channel">الانتظار قبل الإيقاف</string>
     <string name="notif_protect_what_stop">إيقاف التصفية</string>
     <string name="notif_protect_what_pin">تغيير الرمز أو حذفه</string>
     <string name="notif_protect_what_setting">تغيير يُضعف الحماية</string>
-    <string name="notif_protect_waiting_text">يسري عند %1$s إن بقيتَ تريده حينها. «إلغاء» يُبقي كل شيء كما هو.</string>
+    <string name="notif_protect_waiting_text">ينتظر حتى %1$s، ثم أكِّده في التطبيق إن بقيت تريده. «إلغاء» يُبقي كل شيء كما هو.</string>
     <string name="notif_protect_ready_text">أما زلت تريده؟ أكِّده في واعية قبل %1$s، وإلا فلن يتغيّر شيء.</string>
     <string name="notif_protect_cancel">إلغاء</string>
 </resources>

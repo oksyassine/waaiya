@@ -369,11 +369,11 @@
     <string name="worship_sms_default">Waa waqtigii salaadda, hadda ma jawaabi karo. Dib ayaan kuu soo wici doonaa.</string>
     <string name="notif_worship_sms_title">Waxaa lagu jawaabay SMS</string>
     <string name="notif_worship_sms_text">Jawaabtaadii waqtiga salaadda waxaa loo diray {number}.</string>
-    <string name="notif_protect_channel">Muddada sugitaanka</string>
+    <string name="notif_protect_channel">Sugid ka hor damin</string>
     <string name="notif_protect_what_stop">Joojinta shaandhaynta</string>
     <string name="notif_protect_what_pin">Beddelka ama ka saarista PIN-ka</string>
     <string name="notif_protect_what_setting">Isbeddel yareeya ilaalinta</string>
-    <string name="notif_protect_waiting_text">Wuxuu dhaqan gelayaa %1$s, haddii aad markaas weli rabto. Ka noqo wax walba sidooda ayay ku daysaa.</string>
+    <string name="notif_protect_waiting_text">Waa la sugayaa ilaa %1$s. Kadib ku xaqiiji app-ka haddii aad weli rabto. “Ka noqo” wax walba sidooda ayuu u daayaa.</string>
     <string name="notif_protect_ready_text">Weli ma rabtaa? Ku xaqiiji Waaiya ka hor %1$s, haddii kale waxba isma beddelayaan.</string>
     <string name="notif_protect_cancel">Ka noqo</string>
 </resources>

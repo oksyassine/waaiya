@@ -1526,19 +1526,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Decide now, while you are calm: a change that lowers protection waits before it takes effect. A parent can also set a PIN.';
+      'For a weak moment when you might want to turn the filter off. Set a wait now, while you are calm: then pressing the button to stop does not stop it at once, and you decide again when the wait is over. A parent can also set a PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Waiting period: $value';
+    return 'Wait before turning off: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Waiting period';
+  String get protectDelayTitle => 'Wait before turning off';
 
   @override
   String get protectDelayBody =>
-      'Stopping the filter, turning off a cover or anything else that lowers protection waits this long. Then you confirm it within 15 minutes, or nothing changes. Turning things on always works at once.';
+      'For example, with 30 minutes: you press the button to stop, but the filter keeps working. After 30 minutes, this page asks whether you still want to stop. Press “Confirm” within 15 minutes and it stops; otherwise nothing changes. It is the same for turning off a cover or any other protection. Turning things on always works at once.';
 
   @override
   String get protectDelayOff => 'None';
@@ -1583,7 +1583,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'With a PIN, every change that lowers protection asks for it first. Changing the waiting period or the PIN asks for it too.';
+      'With a PIN, every change that lowers protection asks for it first. Changing the wait or the PIN asks for it too.';
 
   @override
   String get protectPinForgot =>
@@ -1637,12 +1637,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: takes effect at $time.';
+    return '$what: waiting until $time. Then confirm it in “Settings”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: the wait is over. Still want it? Confirm before $time, or nothing changes.';
+    return '$what: the wait is over. Do you still want it? Press “Confirm” before $time; otherwise nothing changes.';
   }
 
   @override
@@ -1650,7 +1650,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what takes effect at $time, if you still want it then. You confirm it here within 15 minutes after that.';
+    return '$what does not happen now. At $time, if you still want it, confirm it in “Settings” within 15 minutes. If you do nothing, nothing changes.';
   }
 
   @override
@@ -1658,12 +1658,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Already waiting: it takes effect at $time.';
+    return 'Already waiting until $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'It takes effect at $time. Confirm it then.';
+    return 'Waiting until $time. Then confirm it in “Settings”.';
   }
 
   @override
@@ -1713,7 +1713,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Change the waiting period to: $value';
+    return 'Change the wait before turning off to: $value';
   }
 
   @override

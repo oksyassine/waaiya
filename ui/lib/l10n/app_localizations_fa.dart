@@ -1528,19 +1528,19 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'همین حالا که آرامید تصمیم بگیرید: هر تغییری که محافظت را کم کند پیش از اعمال شدن صبر می‌کند. والدین می‌توانند رمز هم بگذارند.';
+      'برای لحظهٔ ضعفی که ممکن است بخواهید فیلتر را خاموش کنید. همین حالا که آرام هستید یک مدت انتظار انتخاب کنید: آن‌وقت دکمهٔ توقف فیلتر را فوراً متوقف نمی‌کند و پس از پایان این مدت دوباره تصمیم می‌گیرید. والدین هم می‌توانند PIN بگذارند.';
 
   @override
   String protectDelay(Object value) {
-    return 'مدت انتظار: $value';
+    return 'انتظار پیش از خاموش کردن: $value';
   }
 
   @override
-  String get protectDelayTitle => 'مدت انتظار';
+  String get protectDelayTitle => 'انتظار پیش از خاموش کردن';
 
   @override
   String get protectDelayBody =>
-      'توقف فیلتر، خاموش کردن پوشش یا هر چیزی که محافظت را کم کند این مدت صبر می‌کند. سپس آن را ظرف ۱۵ دقیقه تأیید می‌کنید، وگرنه چیزی تغییر نمی‌کند. روشن کردن همیشه فوراً اعمال می‌شود.';
+      'مثلاً با ۳۰ دقیقه: دکمهٔ توقف را می‌زنید، اما فیلتر به کارش ادامه می‌دهد. پس از ۳۰ دقیقه این صفحه می‌پرسد که آیا هنوز می‌خواهید متوقف کنید. اگر ظرف ۱۵ دقیقه «تأیید» را بزنید متوقف می‌شود؛ وگرنه چیزی تغییر نمی‌کند. خاموش کردن پوشش یا هر محافظت دیگری هم همین‌طور است. روشن کردن همیشه فوراً انجام می‌شود.';
 
   @override
   String get protectDelayOff => 'بدون انتظار';
@@ -1639,12 +1639,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: ساعت $time اعمال می‌شود.';
+    return '$what: در انتظار تا $time. سپس در «تنظیمات» تأیید کنید.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: انتظار تمام شد. هنوز می‌خواهید؟ پیش از $time تأیید کنید، وگرنه چیزی تغییر نمی‌کند.';
+    return '$what: انتظار تمام شد. هنوز آن را می‌خواهید؟ پیش از $time «تأیید» را بزنید؛ وگرنه چیزی تغییر نمی‌کند.';
   }
 
   @override
@@ -1652,7 +1652,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what ساعت $time اعمال می‌شود، اگر آن موقع هنوز بخواهید. سپس ظرف ۱۵ دقیقه همین‌جا تأییدش می‌کنید.';
+    return '$what اکنون انجام نمی‌شود. در ساعت $time، اگر هنوز بخواهید، ظرف ۱۵ دقیقه در «تنظیمات» تأییدش کنید. اگر کاری نکنید، چیزی تغییر نمی‌کند.';
   }
 
   @override
@@ -1660,12 +1660,12 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'از قبل در انتظار است: ساعت $time اعمال می‌شود.';
+    return 'از قبل در انتظار تا $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'ساعت $time اعمال می‌شود. آن موقع تأییدش کنید.';
+    return 'در انتظار تا $time. سپس در «تنظیمات» تأیید کنید.';
   }
 
   @override
@@ -1714,7 +1714,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'تغییر مدت انتظار به: $value';
+    return 'تغییر انتظار پیش از خاموش کردن به: $value';
   }
 
   @override

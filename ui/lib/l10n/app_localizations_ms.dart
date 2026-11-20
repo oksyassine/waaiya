@@ -1531,19 +1531,19 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Putuskan sekarang, ketika tenang: perubahan yang mengurangkan perlindungan menunggu sebelum berkuat kuasa. Ibu bapa juga boleh menetapkan PIN.';
+      'Untuk saat lemah apabila anda mungkin mahu mematikan penapis. Pilih masa menunggu sekarang, semasa anda tenang: butang henti tidak terus menghentikan penapis, dan anda membuat keputusan semula selepas masa itu tamat. Ibu bapa juga boleh menetapkan PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Tempoh menunggu: $value';
+    return 'Tunggu sebelum mematikan: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Tempoh menunggu';
+  String get protectDelayTitle => 'Tunggu sebelum mematikan';
 
   @override
   String get protectDelayBody =>
-      'Menghentikan penapis, mematikan penutup atau apa sahaja yang mengurangkan perlindungan menunggu selama ini. Kemudian anda mengesahkannya dalam 15 minit, atau tiada apa yang berubah. Menghidupkan sesuatu sentiasa berkuat kuasa serta-merta.';
+      'Contohnya dengan 30 minit: anda menekan butang untuk berhenti, tetapi penapis terus berfungsi. Selepas 30 minit, halaman ini bertanya sama ada anda masih mahu berhenti. Tekan “Sahkan” dalam masa 15 minit dan ia berhenti; jika tidak, tiada apa yang berubah. Begitu juga untuk mematikan penutup atau perlindungan lain. Menghidupkan sesuatu sentiasa berlaku serta-merta.';
 
   @override
   String get protectDelayOff => 'Tiada';
@@ -1642,12 +1642,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: berkuat kuasa pada $time.';
+    return '$what: menunggu hingga $time. Kemudian sahkan di “Tetapan”.';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: tempoh menunggu tamat. Masih mahu? Sahkan sebelum $time, atau tiada apa yang berubah.';
+    return '$what: masa menunggu sudah tamat. Masih mahukannya? Tekan “Sahkan” sebelum $time; jika tidak, tiada apa yang berubah.';
   }
 
   @override
@@ -1655,7 +1655,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what berkuat kuasa pada $time, jika anda masih mahukannya ketika itu. Anda mengesahkannya di sini dalam 15 minit selepas itu.';
+    return '$what tidak berlaku sekarang. Pada $time, jika anda masih mahukannya, sahkan di “Tetapan” dalam masa 15 minit. Jika anda tidak berbuat apa-apa, tiada apa yang berubah.';
   }
 
   @override
@@ -1663,12 +1663,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Sudah menunggu: berkuat kuasa pada $time.';
+    return 'Sudah menunggu hingga $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Berkuat kuasa pada $time. Sahkan ketika itu.';
+    return 'Menunggu hingga $time. Kemudian sahkan di “Tetapan”.';
   }
 
   @override
@@ -1718,7 +1718,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Tukar tempoh menunggu kepada: $value';
+    return 'Tukar masa tunggu sebelum mematikan kepada: $value';
   }
 
   @override

@@ -1513,19 +1513,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.';
+      'للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.';
 
   @override
   String protectDelay(Object value) {
-    return 'مدة الانتظار: $value';
+    return 'الانتظار قبل الإيقاف: $value';
   }
 
   @override
-  String get protectDelayTitle => 'مدة الانتظار';
+  String get protectDelayTitle => 'الانتظار قبل الإيقاف';
 
   @override
   String get protectDelayBody =>
-      'إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.';
+      'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.';
 
   @override
   String get protectDelayOff => 'بلا انتظار';
@@ -1624,12 +1624,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: يسري عند $time.';
+    return '$what: ينتظر حتى $time، ثم أكِّده في «الإعدادات».';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل $time، وإلا فلن يتغيّر شيء.';
+    return '$what: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل $time، وإلا فلن يتغيّر شيء.';
   }
 
   @override
@@ -1637,7 +1637,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what يسري عند $time إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.';
+    return '$what لن يحدث الآن. عند $time، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.';
   }
 
   @override
@@ -1645,12 +1645,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'ينتظر بالفعل: يسري عند $time.';
+    return 'ينتظر بالفعل حتى $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'يسري عند $time. أكِّده حينها.';
+    return 'ينتظر حتى $time، ثم أكِّده في «الإعدادات».';
   }
 
   @override
@@ -1699,7 +1699,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'تغيير مدة الانتظار إلى: $value';
+    return 'تغيير الانتظار قبل الإيقاف إلى: $value';
   }
 
   @override

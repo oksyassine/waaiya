@@ -15,8 +15,7 @@ Koranrezitation. Es funktioniert mit jeder App (Browser, Videoplayer, Spiele), l
 - Optionale Bildschirm-Unschärfe: verdeckt Frauen oder freizügige Bilder über jedem Fenster; Klicks erreichen trotzdem
   die Fenster darunter.
 - Apps, die ungefiltert zu hören sind: wählen Sie Apps, die ihren Originalton behalten; sie werden weder gefiltert noch stummgeschaltet.
-- Gesang behalten (Test): entfernt die Instrumente, behält aber Gesangsstimmen, für alle, die das akzeptieren.
-- Schutz für schwache Momente: eine Wartezeit vor allem, was den Schutz senkt, und eine optionale Eltern-PIN.
+- Schutz für schwache Momente: Stoppen kann warten (zum Beispiel 30 Minuten) und dann erneut fragen, und Eltern können eine PIN festlegen.
 - Einen Fehler notieren: markieren Sie Musik, die durchkam, oder eine versehentlich entfernte Stimme; Notizen bleiben auf Ihrem Computer.
 - Bei der Anmeldung starten, wenn Sie möchten.
 - Alles läuft auf Ihrem Computer. Nichts wird irgendwohin gesendet: kein Konto, keine Analyse, keine Werbung.
@@ -35,7 +34,6 @@ Erste Version im Microsoft Store.
 - Neue Seite Links: einen YouTube-, TikTok- oder Instagram-Link mit eingeschaltetem Filter ansehen.
 - Frauengesang stummschalten (frühe Version), jetzt auch unter Windows.
 - Apps, die ungefiltert zu hören sind
-- Gesang behalten (Test)
 - Schutz für schwache Momente
 - Einen Fehler notieren
 - 18 Sprachen (neu: Spanisch, Niederländisch, Deutsch, Italienisch, Russisch, Usbekisch, Swahili, Hausa, Somali).
@@ -52,7 +50,6 @@ Erste Version im Microsoft Store.
 - Im Fehlerfall Stille, nie ungefilterte Musik
 - Optionale Bildschirm-Unschärfe über jedem Fenster
 - Apps, die ungefiltert zu hören sind
-- Gesang behalten (Test)
 - Schutz für schwache Momente
 - Einen Fehler notieren
 - Bei der Anmeldung starten

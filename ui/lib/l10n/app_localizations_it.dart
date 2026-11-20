@@ -1540,19 +1540,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get protectBody =>
-      'Decidi ora, a mente lucida: una modifica che riduce la protezione aspetta prima di avere effetto. Un genitore può anche impostare un PIN.';
+      'Per un momento di debolezza in cui potresti voler spegnere il filtro. Scegli ora, con calma, un\'attesa: così il pulsante di arresto non ferma subito il filtro, e decidi di nuovo quando l\'attesa è finita. Un genitore può anche impostare un PIN.';
 
   @override
   String protectDelay(Object value) {
-    return 'Periodo di attesa: $value';
+    return 'Attesa prima di spegnere: $value';
   }
 
   @override
-  String get protectDelayTitle => 'Periodo di attesa';
+  String get protectDelayTitle => 'Attesa prima di spegnere';
 
   @override
   String get protectDelayBody =>
-      'Interrompere il filtro, disattivare una copertura o qualsiasi altra cosa che riduce la protezione aspetta questo tempo. Poi la confermi entro 15 minuti, altrimenti non cambia nulla. Attivare qualcosa funziona sempre subito.';
+      'Per esempio, con 30 minuti: premi il pulsante per fermare, ma il filtro continua a funzionare. Dopo 30 minuti questa pagina ti chiede se vuoi ancora fermarlo. Premi «Conferma» entro 15 minuti e si ferma; altrimenti non cambia nulla. Lo stesso vale per disattivare una copertura o qualsiasi altra protezione. Attivare qualcosa funziona sempre subito.';
 
   @override
   String get protectDelayOff => 'Nessuno';
@@ -1651,12 +1651,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String protectPending(Object time, Object what) {
-    return '$what: ha effetto alle $time.';
+    return '$what: in attesa fino alle $time. Poi confermalo in «Impostazioni».';
   }
 
   @override
   String protectReady(Object time, Object what) {
-    return '$what: l\'attesa è finita. Lo vuoi ancora? Conferma prima delle $time, altrimenti non cambia nulla.';
+    return '$what: l\'attesa è finita. Lo vuoi ancora? Premi «Conferma» prima delle $time; altrimenti non cambia nulla.';
   }
 
   @override
@@ -1664,7 +1664,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what: ha effetto alle $time, se allora lo vorrai ancora. Lo confermi qui entro i 15 minuti successivi.';
+    return '$what non avviene ora. Alle $time, se lo vuoi ancora, confermalo in «Impostazioni» entro 15 minuti. Se non fai nulla, non cambia nulla.';
   }
 
   @override
@@ -1672,12 +1672,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String protectAlreadyWaiting(Object time) {
-    return 'Già in attesa: ha effetto alle $time.';
+    return 'Già in attesa fino alle $time.';
   }
 
   @override
   String protectStarted(Object time) {
-    return 'Ha effetto alle $time. Confermalo allora.';
+    return 'In attesa fino alle $time. Poi confermalo in «Impostazioni».';
   }
 
   @override
@@ -1727,7 +1727,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String protectWhatDelay(Object value) {
-    return 'Cambiare il periodo di attesa in: $value';
+    return 'Cambia l\'attesa prima di spegnere in: $value';
   }
 
   @override

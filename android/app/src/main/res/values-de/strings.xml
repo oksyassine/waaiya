@@ -369,11 +369,11 @@
     <string name="worship_sms_default">Es ist Gebetszeit, ich kann gerade nicht rangehen. Ich rufe zurück.</string>
     <string name="notif_worship_sms_title">Per SMS geantwortet</string>
     <string name="notif_worship_sms_text">Ihre Antwort zur Gebetszeit wurde an {number} gesendet.</string>
-    <string name="notif_protect_channel">Wartezeit</string>
+    <string name="notif_protect_channel">Warten vor dem Ausschalten</string>
     <string name="notif_protect_what_stop">Den Filter stoppen</string>
     <string name="notif_protect_what_pin">Die PIN ändern oder entfernen</string>
     <string name="notif_protect_what_setting">Eine Änderung, die den Schutz senkt</string>
-    <string name="notif_protect_waiting_text">Wirkt ab %1$s, wenn Sie es dann noch wollen. Abbrechen lässt alles, wie es ist.</string>
+    <string name="notif_protect_waiting_text">Wartet bis %1$s. Danach in der App bestätigen, wenn Sie es noch möchten. Abbrechen lässt alles, wie es ist.</string>
     <string name="notif_protect_ready_text">Wollen Sie es noch? Bestätigen Sie es in Waaiya vor %1$s, sonst ändert sich nichts.</string>
     <string name="notif_protect_cancel">Abbrechen</string>
 </resources>
