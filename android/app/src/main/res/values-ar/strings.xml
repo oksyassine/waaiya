@@ -8,12 +8,12 @@
     <string name="onboard_question">أنا</string>
     <string name="gender_man">رجل</string>
     <string name="gender_woman">امرأة</string>
-    <string name="onboard_why">هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.</string>
+    <string name="onboard_why">هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.</string>
 
     <string name="state_on_title">التصفية تعمل</string>
     <string name="state_off_title">التصفية متوقفة</string>
     <string name="state_starting">جارٍ التشغيل…</string>
-    <string name="state_on_detail">تُزال الآلات من كل التطبيقات. التأخير نحو %1$d ميلي ثانية.</string>
+    <string name="state_on_detail">تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو %1$d ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).</string>
     <string name="state_off_detail">اضغط الزر للتشغيل.</string>
     <string name="state_model_failed">تعذّر تحميل نموذج الصوت، فكُتم الصوت احتياطًا.</string>
     <string name="state_capture_denied">يلزم إذن الميكروفون لاستقبال صوت التطبيقات الأخرى.</string>
@@ -65,7 +65,7 @@
     <string name="setting_stereo_title">صوت ستيريو</string>
     <string name="setting_stereo_body">مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.</string>
     <string name="setting_singing_title">كتم غناء النساء</string>
-    <string name="setting_singing_body">يُبقي كلام النساء.</string>
+    <string name="setting_singing_body">مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.</string>
     <string name="setting_singing_no_model">هذه النسخة بلا كاشف للغناء، لذا تُكتم كل الأصوات ما دام هذا الخيار مفعّلًا.</string>
     <string name="setting_restart">أوقف التصفية ثم شغّلها لتطبيق التغييرات.</string>
     <string name="setting_gender_title">أنا</string>
@@ -125,15 +125,15 @@
     <string name="blur_title">تمويه الشاشة</string>
     <string name="blur_body">يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.</string>
     <string name="blur_women_title">تمويه النساء</string>
-    <string name="blur_women_body">الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.</string>
+    <string name="blur_women_body">يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.</string>
     <string name="blur_nudity_title">تمويه الصور غير المحتشمة</string>
-    <string name="blur_nudity_body">العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.</string>
+    <string name="blur_nudity_body">العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.</string>
     <string name="blur_fail_title">تغطية الشاشة إذا عجز التمويه عن المتابعة</string>
     <string name="blur_fail_body">مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="blur_setup_shizuku">السماح عبر Shizuku</string>
     <string name="blur_setup_manual">السماح من إعدادات أندرويد</string>
-    <string name="blur_status_needs_setup">يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).</string>
-    <string name="blur_status_needs_overlay">يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.</string>
+    <string name="blur_status_needs_setup">ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.</string>
+    <string name="blur_status_needs_overlay">ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.</string>
     <string name="blur_fail_unavailable">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="blur_fail_needs_a11y">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="language_title">اللغة</string>

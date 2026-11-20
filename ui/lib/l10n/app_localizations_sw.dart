@@ -33,7 +33,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Hili huamua tu ni mipangilio gani ya hiari utakayoiona. Unaweza kulibadilisha baadaye.';
+      'Hili huamua tu ni mipangilio gani ya hiari utakayoiona. Kwa mfano, “Nyamazisha uimbaji wa wanawake” hutolewa kwa wanaume tu. Unaweza kulibadilisha baadaye.';
 
   @override
   String get stateOnTitle => 'Uchujaji umewashwa';
@@ -46,7 +46,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Ala za muziki zinaondolewa kwenye programu zote. Sauti inachelewa takriban ms $delayMs.';
+    return 'Ala za muziki zinaondolewa kwenye programu zote. Sauti inachelewa takriban ms $delayMs (ms 1000 ni sekunde moja).';
   }
 
   @override
@@ -224,7 +224,8 @@ class AppLocalizationsSw extends AppLocalizations {
   String get settingSingingTitle => 'Nyamazisha uimbaji wa wanawake';
 
   @override
-  String get settingSingingBody => 'Mazungumzo ya wanawake yanabaki.';
+  String get settingSingingBody =>
+      'Kwa mfano, wimbo unaoimbwa na mwanamke hunyamazishwa, lakini mwanamke anayetoa hotuba bado husikika.';
 
   @override
   String get settingSingingNoModel =>
@@ -395,14 +396,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Mwili mzima. Watu ambao programu haiwezi kutambua wazi kuwa ni wanaume hufifishwa pia.';
+      'Hufunika mwili mzima. Ikiwa programu haina uhakika kuwa mtu ni mwanamume, humfunika pia.';
 
   @override
   String get blurNudityTitle => 'Fifisha picha zisizo za staha';
 
   @override
   String get blurNudityBody =>
-      'Uchi na mavazi yanayoacha mwili wazi, ya mtu yeyote: skrini nzima hufunikwa.';
+      'Uchi au mavazi yanayoacha mwili wazi, kwa mtu yeyote: skrini nzima hufunikwa.';
 
   @override
   String get blurFailTitle =>
@@ -420,11 +421,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'Ufifishaji unahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: uruhusu kwa Shizuku (huwasha huduma ya ufikivu ya Ufifishaji wa Waaiya, ili miguso iendelee kufika kwenye programu iliyo chini). Au ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android (miguso kwenye eneo lililofifishwa hupotea hapo).';
+      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: “Ruhusu kwa Shizuku”, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au “Ruhusu katika mipangilio ya Android”, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Ufifishaji unahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: washa Shizuku (na uiruhusu Waaiya ndani yake): ufifishaji kisha huchora tabaka lake lenyewe, ambalo miguso hupita ndani yake. La sivyo, ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android; kugusa eneo lililofifishwa hapo hakufiki kwenye programu iliyo chini.';
+      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: washa Shizuku na uiruhusu Waaiya ndani yake, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
 
   @override
   String get blurFailUnavailable =>
@@ -1118,7 +1119,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Programu hizi hucheza sauti yao asili: Waaiya haizichuji wala haizinyamazishi.';
+      'Programu unazochagua hapa hucheza kama zilivyo: bila kichujio na bila kunyamazishwa. Kwa mfano, programu ya simu za video, ili simu zisichelewe.';
 
   @override
   String get fixAddApp => 'Ongeza programu';
@@ -1149,7 +1150,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'Hakuna vifuniko wakati mojawapo ya programu hizi iko peke yake kwenye skrini. Vifuniko hurudi mara tu unapoiacha, au wakati wowote Waaiya haina uhakika ni programu gani inaonyeshwa.';
+      'Hakuna vifuniko wakati mojawapo ya programu hizi inajaza skrini, kwa mfano programu ya ramani au programu ya benki yako. Vifuniko hurudi mara tu unapoiacha, au wakati wowote Waaiya haina uhakika ni programu gani inaonyeshwa.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1164,7 +1165,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Ufifishaji ukiwa unafanya kazi, buruta juu ya sehemu yoyote ya skrini ili uifunike. Hubaki imefunikwa hadi uiondoe au ufifishaji usimame.';
+      'Ufifishaji ukiwa unafanya kazi, unaweza kufunika sehemu ya skrini mwenyewe, kwa mfano picha ambayo ufifishaji uliikosa: bonyeza “Funika eneo” kisha buruta kidole chako juu yake. Hubaki imefunikwa hadi uiondoe au ufifishaji usimame.';
 
   @override
   String get fixHandNotRunning =>
@@ -1183,7 +1184,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Liwekee alama linapotokea. Dokezo huhifadhi saa, programu na mipangilio. Hubaki kwenye kifaa hiki na halitumwi kamwe.';
+      'Waaiya inapokosea, bonyeza kilichotokea, kwa mfano “Muziki ulipita”. Dokezo huhifadhi saa, programu na mipangilio, ili kusaidia kupata chanzo. Hubaki kwenye kifaa hiki na halitumwi kamwe.';
 
   @override
   String get fixMissedSound => 'Muziki ulipita';
@@ -1218,7 +1219,7 @@ class AppLocalizationsSw extends AppLocalizations {
       'Futa madokezo yote? Hili haliwezi kutenduliwa.';
 
   @override
-  String get fixNotesTitle => 'Madokezo ya utambuzi usio sahihi';
+  String get fixNotesTitle => 'Madokezo ya makosa';
 
   @override
   String get worshipTitle => 'Nyakati za swala';
@@ -1354,7 +1355,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Kuanzia kila wakati wa swala, Usisumbue huwashwa kwa dakika zilizo hapa chini, kisha simu hurudi jinsi ulivyoiweka.';
+      'Kila wakati wa swala, simu hukaa kimya (Usisumbue) kwa dakika zilizo hapa chini, kisha hurudi kama ilivyokuwa. Kwa mfano, kuanzia Adhuhuri 12:00 hadi 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1602,11 +1603,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Ukiwa na PIN, kila badiliko linalopunguza ulinzi huiomba kwanza. Kubadilisha muda wa kusubiri au PIN huiomba pia.';
+      'Ukiwa na PIN, kusimamisha kichujio au kuzima ulinzi wowote huomba PIN kwanza. Kwa mfano, mzazi huweka PIN ili mtoto asiweze kuzima kichujio. Kubadilisha muda wa kusubiri au PIN huiomba pia.';
 
   @override
   String get protectPinForgot =>
-      'PIN ikisahauliwa, hakuna njia ya kuiweka upya: ni kufuta data ya Waaiya au kuisakinisha upya tu, jambo ambalo pia hufuta mipangilio yake yote.';
+      'Andika PIN mahali salama: ikisahauliwa, hakuna njia ya kuiweka upya. Njia pekee ni kufuta data ya Waaiya au kuisakinisha upya, jambo ambalo pia hufuta mipangilio yake yote.';
 
   @override
   String get protectPinTitle => 'Weka PIN';
@@ -1692,11 +1693,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'Badiliko hili limezuiliwa na mipangilio ya ulinzi.';
+      'Si sasa: mipangilio yako ya ulinzi hufanya badiliko hili lisubiri, au huomba PIN.';
 
   @override
   String get protectLimits =>
-      'Kile ambacho hiki hakiwezi kuzuia: kulazimisha kusimama, kuondoa programu, kufuta data ya Waaiya na mipangilio ya Android yenyewe. Kuzuia hayo kunahitaji mamlaka ya msimamizi wa kifaa au ya ufikivu ambayo Waaiya haitumii. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
+      'Kile ambacho hiki hakiwezi kuzuia: kulazimisha kusimama, kuondoa programu, kufuta data ya Waaiya na mipangilio ya Android yenyewe. Kuzuia hayo kungehitaji ruhusa maalum za Android ambazo Waaiya haitumii. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1728,7 +1729,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get protectWhatStrictness => 'Kupunguza ukali wa ufifishaji';
 
   @override
-  String get protectWhatGender => 'Kubadilisha anayetumia simu';
+  String get protectWhatGender => 'Kubadilisha anayetumia Waaiya';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1743,4 +1744,8 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Kubadilisha mpangilio';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.';
 }

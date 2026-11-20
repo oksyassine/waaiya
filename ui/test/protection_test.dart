@@ -298,7 +298,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('power')));
     await tester.pumpAndSettle();
-    expect(find.text('This change is held back by the protection settings.'), findsOneWidget);
+    expect(find.text('Not now: your protection settings make this change wait, or ask for the PIN.'), findsOneWidget);
     expect(b.state.filter.running, isTrue);
   });
 

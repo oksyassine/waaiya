@@ -9,12 +9,12 @@
     <string name="onboard_question">Soy</string>
     <string name="gender_man">Un hombre</string>
     <string name="gender_woman">Una mujer</string>
-    <string name="onboard_why">Esto solo decide qué ajustes opcionales ve. Puede cambiarlo más tarde.</string>
+    <string name="onboard_why">Esto solo decide qué ajustes opcionales ve. Por ejemplo, «Silenciar el canto de mujeres» solo se ofrece a los hombres. Puede cambiarlo más tarde.</string>
 
     <string name="state_on_title">El filtrado está activado</string>
     <string name="state_off_title">El filtrado está desactivado</string>
     <string name="state_starting">Iniciando…</string>
-    <string name="state_on_detail">Se quitan los instrumentos de todas las aplicaciones. Retraso de unos %1$d ms.</string>
+    <string name="state_on_detail">Se quitan los instrumentos de todas las aplicaciones. El sonido llega unos %1$d ms tarde (1000 ms son un segundo).</string>
     <string name="state_off_detail">Toque el botón para empezar.</string>
     <string name="state_model_failed">No se pudo cargar el modelo de sonido, así que el sonido se silencia por seguridad.</string>
     <string name="state_capture_denied">Se necesita el permiso del micrófono para recibir el sonido de otras aplicaciones.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Sonido estéreo</string>
     <string name="setting_stereo_body">Desactivado: mono, que gasta aproximadamente la mitad de batería y funciona con fluidez en más teléfonos. Activado: mantiene separados los lados izquierdo y derecho. Si el teléfono es demasiado lento para el estéreo, igualmente pasa a mono solo.</string>
     <string name="setting_singing_title">Silenciar el canto de mujeres</string>
-    <string name="setting_singing_body">Se conserva el habla de las mujeres.</string>
+    <string name="setting_singing_body">Por ejemplo, se silencia una canción cantada por una mujer, pero se sigue oyendo a una mujer que da una charla.</string>
     <string name="setting_singing_no_model">Esta versión no tiene detector de canto, así que se silencian todas las voces mientras esta opción esté activada.</string>
     <string name="setting_restart">Detenga e inicie el filtrado para aplicar los cambios.</string>
     <string name="setting_gender_title">Soy</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Desenfoque de pantalla</string>
     <string name="blur_body">Cubre personas e imágenes en la pantalla, en todas las aplicaciones, mientras el filtrado está activado. Funciona en el teléfono; no se envía nada a ningún sitio.</string>
     <string name="blur_women_title">Desenfocar a las mujeres</string>
-    <string name="blur_women_body">Todo el cuerpo. Las personas que la aplicación no puede identificar claramente como hombres también se desenfocan.</string>
+    <string name="blur_women_body">Cubre todo el cuerpo. Si la aplicación no está segura de que una persona es un hombre, también la cubre.</string>
     <string name="blur_nudity_title">Desenfocar imágenes indecentes</string>
-    <string name="blur_nudity_body">Desnudez y ropa reveladora, de cualquier persona: se cubre toda la pantalla.</string>
+    <string name="blur_nudity_body">Desnudez o ropa reveladora, en cualquier persona: se cubre toda la pantalla.</string>
     <string name="blur_fail_title">Cubrir la pantalla si el desenfoque no da abasto</string>
     <string name="blur_fail_body">Activado: se cubre toda la pantalla cuando el teléfono es demasiado lento o el desenfoque falla. Desactivado: la pantalla sigue visible con un aviso.</string>
     <string name="blur_setup_shizuku">Permitir con Shizuku</string>
     <string name="blur_setup_manual">Permitir en los ajustes de Android</string>
-    <string name="blur_status_needs_setup">El desenfoque necesita mostrarse sobre otras aplicaciones. Lo mejor: permitirlo con Shizuku (activa el servicio de accesibilidad Desenfoque Waaiya, para que los toques sigan llegando a la aplicación de debajo). O permita «Mostrar sobre otras aplicaciones» en los ajustes de Android (entonces se pierden los toques en una zona desenfocada).</string>
-    <string name="blur_status_needs_overlay">El desenfoque necesita mostrarse sobre otras aplicaciones. Lo mejor: inicie Shizuku (y permita Waaiya en él): así el desenfoque dibuja su propia capa, que los toques atraviesan. Si no, permita «Mostrar sobre otras aplicaciones» en los ajustes de Android; entonces un toque en una zona desenfocada no llega a la aplicación de debajo.</string>
+    <string name="blur_status_needs_setup">Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: «Permitir con Shizuku», para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O «Permitir en los ajustes de Android», pero entonces un toque en una zona desenfocada no hace nada.</string>
+    <string name="blur_status_needs_overlay">Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: inicie Shizuku y permita Waaiya en él, para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O permita «Mostrar sobre otras aplicaciones» en los ajustes de Android, pero entonces un toque en una zona desenfocada no hace nada.</string>
     <string name="blur_fail_unavailable">No disponible por ahora: una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado. Inicie el ayudante de Waaiya o Shizuku (Android 12 o posterior) y esta opción se habilita: así las cubiertas se dibujan de forma que los toques las atraviesan. Hasta entonces, cuando el desenfoque no da abasto, la pantalla sigue visible con un aviso.</string>
     <string name="blur_fail_needs_a11y">No disponible por ahora: una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado. Inicie Shizuku (Android 12 o posterior) o active el servicio de accesibilidad Desenfoque Waaiya (Permitir con Shizuku, arriba) y esta opción se habilita. Hasta entonces, la pantalla sigue visible con un aviso.</string>
     <string name="language_title">Idioma</string>

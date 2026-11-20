@@ -33,7 +33,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Dit bepaalt alleen welke extra instellingen je ziet. Je kunt het later wijzigen.';
+      'Dit bepaalt alleen welke extra instellingen je ziet. Bijvoorbeeld: “Zang van vrouwen dempen” krijgen alleen mannen te zien. Je kunt het later wijzigen.';
 
   @override
   String get stateOnTitle => 'Filteren staat aan';
@@ -46,7 +46,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Instrumenten worden uit alle apps verwijderd. Vertraging ongeveer $delayMs ms.';
+    return 'Instrumenten worden uit alle apps verwijderd. Het geluid komt ongeveer $delayMs ms later (1000 ms is één seconde).';
   }
 
   @override
@@ -224,7 +224,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settingSingingTitle => 'Zang van vrouwen dempen';
 
   @override
-  String get settingSingingBody => 'De spraak van vrouwen blijft behouden.';
+  String get settingSingingBody =>
+      'Bijvoorbeeld: een lied dat een vrouw zingt, wordt gedempt, maar een vrouw die een lezing geeft, hoor je nog steeds.';
 
   @override
   String get settingSingingNoModel =>
@@ -393,14 +394,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Het hele lichaam. Mensen van wie de app niet duidelijk ziet dat het mannen zijn, worden ook vervaagd.';
+      'Bedekt het hele lichaam. Als de app niet zeker weet dat iemand een man is, wordt die persoon ook bedekt.';
 
   @override
   String get blurNudityTitle => 'Onzedige beelden vervagen';
 
   @override
   String get blurNudityBody =>
-      'Naaktheid en onthullende kleding, van wie dan ook: het hele scherm wordt bedekt.';
+      'Naaktheid of onthullende kleding, bij wie dan ook: het hele scherm wordt bedekt.';
 
   @override
   String get blurFailTitle =>
@@ -418,11 +419,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'De vervaging moet over andere apps heen kunnen tekenen. Het beste: sta het toe met Shizuku (dat zet de toegankelijkheidsservice Waaiya-vervaging aan, zodat tikken nog steeds de app eronder bereiken). Of sta “Weergeven over andere apps” toe in de Android-instellingen (tikken op een vervaagd gebied gaan dan verloren).';
+      'Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: “Toestaan met Shizuku”, dan komen je tikken nog steeds bij de app onder de vervaging. Of “Toestaan in Android-instellingen”, maar dan doet een tik op een vervaagd gebied niets.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'De vervaging moet over andere apps heen kunnen tekenen. Het beste: start Shizuku (en sta Waaiya daarin toe): de vervaging tekent dan een eigen laag waar tikken doorheen gaan. Sta anders “Weergeven over andere apps” toe in de Android-instellingen; een tik op een vervaagd gebied bereikt dan niet de app eronder.';
+      'Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: start Shizuku en sta Waaiya daarin toe, dan komen je tikken nog steeds bij de app onder de vervaging. Of sta “Weergeven over andere apps” toe in de Android-instellingen, maar dan doet een tik op een vervaagd gebied niets.';
 
   @override
   String get blurFailUnavailable =>
@@ -1111,7 +1112,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Deze apps spelen hun originele geluid: Waaiya filtert ze niet en dempt ze niet.';
+      'Apps die je hier kiest, spelen af zoals ze zijn: geen filter en geen stilte. Bijvoorbeeld een app voor videobellen, zodat gesprekken geen vertraging hebben.';
 
   @override
   String get fixAddApp => 'App toevoegen';
@@ -1142,7 +1143,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'Geen afdekkingen zolang een van deze apps alleen op het scherm staat. De afdekkingen komen terug zodra je de app verlaat, of als Waaiya niet zeker weet welke app er te zien is.';
+      'Geen afdekkingen zolang een van deze apps het hele scherm vult, bijvoorbeeld een kaarten-app of de app van je bank. De afdekkingen komen terug zodra je de app verlaat, of als Waaiya niet zeker weet welke app er te zien is.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1157,7 +1158,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Terwijl de vervaging draait, sleep je over een deel van het scherm om het te bedekken. Het blijft bedekt tot je het weghaalt of de vervaging stopt.';
+      'Terwijl de vervaging draait, kun je zelf een deel van het scherm bedekken, bijvoorbeeld een plaatje dat de vervaging heeft gemist: tik op ‘Gebied bedekken’ en sleep je vinger eroverheen. Het blijft bedekt tot je het weghaalt of de vervaging stopt.';
 
   @override
   String get fixHandNotRunning =>
@@ -1176,7 +1177,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Markeer het als het gebeurt. Een notitie bewaart de tijd, de app en de instellingen. Ze blijft op dit apparaat en wordt nooit verstuurd.';
+      'Als Waaiya iets fout doet, tik dan op wat er gebeurde, bijvoorbeeld ‘Er kwam muziek door’. De notitie bewaart de tijd, de app en de instellingen, zodat de oorzaak makkelijker te vinden is. Ze blijft op dit apparaat en wordt nooit verstuurd.';
 
   @override
   String get fixMissedSound => 'Er kwam muziek door';
@@ -1211,7 +1212,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Alle notities verwijderen? Dit kan niet ongedaan worden gemaakt.';
 
   @override
-  String get fixNotesTitle => 'Notities over verkeerde herkenning';
+  String get fixNotesTitle => 'Notities over fouten';
 
   @override
   String get worshipTitle => 'Gebedstijden';
@@ -1346,7 +1347,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Vanaf elke gebedstijd staat Niet storen aan voor de minuten hieronder, daarna is alles weer zoals je het had.';
+      'Op elke gebedstijd wordt de telefoon stil (Niet storen) voor de minuten hieronder, daarna is alles weer zoals het was. Bijvoorbeeld van Dhuhr om 12:00 tot 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1593,11 +1594,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Met een pincode vraagt elke wijziging die de bescherming verlaagt eerst om de pincode. Ook het wijzigen van de wachttijd of de pincode vraagt erom.';
+      'Met een pincode moet je eerst de pincode invoeren om het filteren te stoppen of een bescherming uit te zetten. Een ouder stelt er bijvoorbeeld een in, zodat een kind het filteren niet kan uitzetten. Ook voor het wijzigen van de wachttijd of de pincode is de pincode nodig.';
 
   @override
   String get protectPinForgot =>
-      'Als je de pincode vergeten bent, kun je hem niet herstellen: alleen de gegevens van Waaiya wissen of Waaiya opnieuw installeren, en daarmee worden ook alle instellingen gewist.';
+      'Schrijf de pincode op en bewaar hem op een veilige plek: als je hem vergeet, kun je hem niet herstellen. De enige uitweg is de gegevens van Waaiya wissen of Waaiya opnieuw installeren, en daarmee worden ook alle instellingen gewist.';
 
   @override
   String get protectPinTitle => 'Voer de pincode in';
@@ -1683,11 +1684,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'Deze wijziging wordt tegengehouden door de beschermingsinstellingen.';
+      'Nu niet: door je beschermingsinstellingen moet deze wijziging wachten, of is de pincode nodig.';
 
   @override
   String get protectLimits =>
-      'Wat dit niet kan tegenhouden: geforceerd stoppen, verwijderen, de gegevens van Waaiya wissen en de eigen instellingen van Android. Om dat te blokkeren zijn beheerders- of toegankelijkheidsrechten nodig die Waaiya niet gebruikt. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.';
+      'Wat dit niet kan tegenhouden: geforceerd stoppen, verwijderen, de gegevens van Waaiya wissen en de eigen instellingen van Android. Om dat te blokkeren zijn speciale Android-rechten nodig die Waaiya niet gebruikt. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1719,7 +1720,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get protectWhatStrictness => 'Vervaging minder streng maken';
 
   @override
-  String get protectWhatGender => 'Wijzigen wie de telefoon gebruikt';
+  String get protectWhatGender => 'Wijzigen wie Waaiya gebruikt';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1734,4 +1735,8 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Een instelling wijzigen';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze computer. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd.';
 }

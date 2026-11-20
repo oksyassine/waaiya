@@ -31,6 +31,7 @@ class WorshipTonesSection extends StatelessWidget {
         await showDialog<void>(
           context: context,
           builder: (dialog) => AlertDialog(
+            scrollable: true, // large text on a small screen: nothing is cut off
             content: Text(l.worshipToneFailed),
             actions: [
               TextButton(
@@ -86,7 +87,13 @@ class WorshipTonesSection extends StatelessWidget {
                     ),
                   )
                 else
-                  TextButton(key: Key('worship_use_$id'), onPressed: () => _set(context, id), child: Text(l.worshipToneSet)),
+                  // may take two lines with large text on a small phone
+                  Flexible(
+                    child: TextButton(
+                        key: Key('worship_use_$id'),
+                        onPressed: () => _set(context, id),
+                        child: Text(l.worshipToneSet, textAlign: TextAlign.center)),
+                  ),
               ],
             ),
           ),

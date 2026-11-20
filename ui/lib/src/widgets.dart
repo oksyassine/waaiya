@@ -189,12 +189,26 @@ class ValueRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Row(
-          children: [
-            Expanded(child: Text(label, style: Theme.of(context).textTheme.bodyLarge)),
-            TextButton(onPressed: onPressed, child: Text(action)),
-          ],
+        child: LabelAndActions(
+          label: Text(label, style: Theme.of(context).textTheme.bodyLarge),
+          actions: [TextButton(onPressed: onPressed, child: Text(action))],
         ),
+      );
+}
+
+/// A label with its buttons at the end of the same line; when they do not fit (a long language, large text, a
+/// small phone) the buttons go under the label instead of off the screen.
+class LabelAndActions extends StatelessWidget {
+  const LabelAndActions({super.key, required this.label, required this.actions});
+
+  final Widget label;
+  final List<Widget> actions;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [label, Wrap(children: actions)],
       );
 }
 

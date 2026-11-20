@@ -9,12 +9,12 @@
     <string name="onboard_question">Waxaan ahay</string>
     <string name="gender_man">Nin</string>
     <string name="gender_woman">Haweeney</string>
-    <string name="onboard_why">Tani waxay go\'aamisaa oo kaliya dejinta ikhtiyaariga ah ee aad aragto. Hadhow waad beddeli kartaa.</string>
+    <string name="onboard_why">Tani waxay go\'aamisaa oo kaliya dejinta ikhtiyaariga ah ee aad aragto. Tusaale ahaan, “Aamusii heesaha haweenka” waxaa la siiyaa ragga oo kaliya. Hadhow waad beddeli kartaa.</string>
 
     <string name="state_on_title">Shaandhayntu way daaran tahay</string>
     <string name="state_off_title">Shaandhayntu way damsan tahay</string>
     <string name="state_starting">Waa la bilaabayaa…</string>
-    <string name="state_on_detail">Qalabka muusigga waa laga saaray dhammaan barnaamijyada. Dib u dhaca waa qiyaastii %1$d ms.</string>
+    <string name="state_on_detail">Qalabka muusigga waa laga saaray dhammaan barnaamijyada. Codku wuxuu daahaa qiyaastii %1$d ms (1000 ms waa hal ilbiriqsi).</string>
     <string name="state_off_detail">Taabo badhanka si aad u bilowdo.</string>
     <string name="state_model_failed">Moodeelka codka lama soo shubi karin, sidaas darteed codka waa la aamusiiyay badbaado awgeed.</string>
     <string name="state_capture_denied">Ogolaanshaha makarafoonka ayaa loo baahan yahay si loo helo codka barnaamijyada kale.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Cod stereo ah</string>
     <string name="setting_stereo_body">Damsan: mono, oo isticmaala qiyaastii kala badh batariga, kuna socda taleefanno badan. Daaran: wuxuu kala ilaaliyaa dhinaca bidix iyo midig. Haddii taleefanku aad ugu gaabis yahay stereo, iskiis ayuu ugu wareegaa mono.</string>
     <string name="setting_singing_title">Aamusii heesaha haweenka</string>
-    <string name="setting_singing_body">Hadalka haweenka waa la hayaa.</string>
+    <string name="setting_singing_body">Tusaale ahaan, hees ay haweeney qaadayso waa la aamusiyaa, laakiin haweeney hadal jeedinaysa weli waa la maqlaa.</string>
     <string name="setting_singing_no_model">Noocan ma laha aaladda garata heesaha, sidaas darteed dhammaan codadka waa la aamusiiyaa inta tani daaran tahay.</string>
     <string name="setting_restart">Jooji oo dib u bilow shaandhaynta si isbeddelladu u shaqeeyaan.</string>
     <string name="setting_gender_title">Waxaan ahay</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Qarinta shaashadda</string>
     <string name="blur_body">Waxay daboolaysaa dadka iyo sawirrada shaashadda, barnaamij kasta, inta shaandhayntu daaran tahay. Taleefanka ayay ka shaqaysaa; meelna waxba looma diro.</string>
     <string name="blur_women_title">Qari haweenka</string>
-    <string name="blur_women_body">Jirka oo dhan. Dadka uu barnaamijku si cad u garan waayo inay rag yihiin iyagana waa la qariyaa.</string>
+    <string name="blur_women_body">Jirka oo dhan waa la daboolaa. Haddii barnaamijku uusan hubin in qofku nin yahay, isna waa la daboolaa.</string>
     <string name="blur_nudity_title">Qari sawirrada aan asturnayn</string>
-    <string name="blur_nudity_body">Qaawanaanta iyo dharka jirka muujiya, qof kasta ha ahaadee: shaashadda oo dhan waa la daboolaa.</string>
+    <string name="blur_nudity_body">Qaawanaan ama dhar jirka muujiya, qof kasta ha ahaadee: shaashadda oo dhan waa la daboolaa.</string>
     <string name="blur_fail_title">Dabool shaashadda haddii qarintu aanay la jaanqaadi karin</string>
     <string name="blur_fail_body">Daaran: shaashadda oo dhan waa la daboolaa marka taleefanku aad u gaabis yahay ama qarintu fashilanto. Damsan: shaashaddu way muuqanaysaa iyadoo digniin leh.</string>
     <string name="blur_setup_shizuku">Ku ogolow Shizuku</string>
     <string name="blur_setup_manual">Ku ogolow dejinta Android</string>
-    <string name="blur_status_needs_setup">Qarintu waxay u baahan tahay inay ka muuqato barnaamijyada kale dushooda. Midda ugu fiican: ku ogolow Shizuku (waxay daartaa adeegga helitaanka (accessibility) ee “Qarinta Waaiya”, si taabashadu weli u gaarto barnaamijka hoose). Ama ka ogolow “Display over other apps” dejinta Android (taabashada meel la qariyay markaas way lumaysaa).</string>
-    <string name="blur_status_needs_overlay">Qarintu waxay u baahan tahay inay ka muuqato barnaamijyada kale dushooda. Midda ugu fiican: bilow Shizuku (oo Waaiya ku ogolow gudaheeda): qarintu markaas waxay sawirtaa lakab u gaar ah, oo taabashadu ka gudubto. Haddii kale ka ogolow “Display over other apps” dejinta Android; taabasho meel la qariyay markaas ma gaarto barnaamijka hoose.</string>
+    <string name="blur_status_needs_setup">Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: “Ku ogolow Shizuku”, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama “Ku ogolow dejinta Android”, laakiin markaas taabashada meel la qariyay waxba ma qabato.</string>
+    <string name="blur_status_needs_overlay">Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: bilow Shizuku oo Waaiya ku ogolow gudaheeda, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama ka ogolow “Display over other apps” dejinta Android, laakiin markaas taabashada meel la qariyay waxba ma qabato.</string>
     <string name="blur_fail_unavailable">Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya ama Shizuku (Android 12 ama ka cusub), doorashadanina way furmaysaa: daboollada markaas waxaa loo sawiraa si taabashadu uga gudubto. Ilaa markaas, marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.</string>
     <string name="blur_fail_needs_a11y">Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow Shizuku (Android 12 ama ka cusub) ama daar adeegga helitaanka (accessibility) ee “Qarinta Waaiya” (Ku ogolow Shizuku, kor), doorashadanina way furmaysaa. Ilaa markaas, shaashaddu way muuqanaysaa iyadoo digniin leh.</string>
     <string name="language_title">Luqadda</string>

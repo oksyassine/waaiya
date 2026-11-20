@@ -165,6 +165,7 @@ Future<void> askProtected(
     final go = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.protectWaitTitle),
         content: Text(waitText),
         actions: [
@@ -439,9 +440,9 @@ class _ProtectionCardState extends State<ProtectionCard> {
           if (p.pinSet)
             Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Row(
-                children: [
-                  Expanded(child: Text(l.protectPinIsSet, style: text.bodyLarge)),
+              child: LabelAndActions(
+                label: Text(l.protectPinIsSet, style: text.bodyLarge),
+                actions: [
                   TextButton(key: const Key('protect_pin_change'), onPressed: () => _setPin(p), child: Text(l.change)),
                   TextButton(key: const Key('protect_pin_remove'), onPressed: _clearPin, child: Text(l.protectPinRemove)),
                 ],

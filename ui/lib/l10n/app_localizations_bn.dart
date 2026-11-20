@@ -33,7 +33,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'এটি শুধু ঠিক করে আপনি কোন ঐচ্ছিক সেটিংস দেখবেন। পরে এটি বদলাতে পারবেন।';
+      'এটি শুধু ঠিক করে আপনি কোন ঐচ্ছিক সেটিংস দেখবেন। যেমন, “নারীদের গান নীরব করুন” শুধু পুরুষদের দেখানো হয়। পরে এটি বদলাতে পারবেন।';
 
   @override
   String get stateOnTitle => 'ফিল্টারিং চালু আছে';
@@ -46,7 +46,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে। বিলম্ব প্রায় $delayMs ms।';
+    return 'সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে। শব্দ প্রায় $delayMs মিলিসেকেন্ড দেরিতে আসে (১০০০ মিলিসেকেন্ডে এক সেকেন্ড)।';
   }
 
   @override
@@ -225,7 +225,8 @@ class AppLocalizationsBn extends AppLocalizations {
   String get settingSingingTitle => 'নারীদের গান নীরব করুন';
 
   @override
-  String get settingSingingBody => 'নারীদের কথা রেখে দেওয়া হয়।';
+  String get settingSingingBody =>
+      'যেমন, কোনো নারীর গাওয়া গান নীরব করা হয়, কিন্তু কোনো নারী বক্তব্য দিলে তা ঠিকই শোনা যায়।';
 
   @override
   String get settingSingingNoModel =>
@@ -394,14 +395,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'পুরো শরীর। যাদের অ্যাপ স্পষ্টভাবে পুরুষ বলে চিনতে পারে না, তাদেরও ব্লার করা হয়।';
+      'পুরো শরীর ঢেকে দেয়। কেউ পুরুষ কিনা অ্যাপ নিশ্চিত না হলে, তাকেও ঢেকে দেয়।';
 
   @override
   String get blurNudityTitle => 'অশালীন ছবি ব্লার করুন';
 
   @override
   String get blurNudityBody =>
-      'যে কারও নগ্নতা ও খোলামেলা পোশাক: পুরো স্ক্রিন ঢেকে দেওয়া হয়।';
+      'যে কারও নগ্নতা বা খোলামেলা পোশাক: পুরো স্ক্রিন ঢেকে দেওয়া হয়।';
 
   @override
   String get blurFailTitle => 'ব্লার তাল রাখতে না পারলে স্ক্রিন ঢেকে দিন';
@@ -418,11 +419,11 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'ব্লারকে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: Shizuku দিয়ে অনুমতি দিন (এটি Waaiya Blur অ্যাক্সেসিবিলিটি সার্ভিস চালু করে, ফলে স্পর্শ নিচের অ্যাপে পৌঁছায়)। অথবা Android সেটিংসে “অন্যান্য অ্যাপের উপরে দেখানো” অনুমতি দিন (তখন ব্লার করা জায়গায় স্পর্শ হারিয়ে যায়)।';
+      'ব্লার করতে Waaiya-কে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: “Shizuku দিয়ে অনুমতি দিন”, যাতে আপনার ট্যাপ তখনও ব্লারের নিচের অ্যাপে পৌঁছায়। অথবা “Android সেটিংসে অনুমতি দিন”, কিন্তু তখন ব্লার করা জায়গায় ট্যাপ করলে কিছুই হয় না।';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'ব্লারকে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: Shizuku চালু করুন (এবং সেখানে Waaiya-কে অনুমতি দিন): তখন ব্লার নিজের একটি স্তর আঁকে, যার ভেতর দিয়ে ট্যাপ চলে যায়। নইলে Android সেটিংসে “অন্যান্য অ্যাপের উপরে দেখানো” অনুমতি দিন; তখন ব্লার করা জায়গায় ট্যাপ নিচের অ্যাপে পৌঁছায় না।';
+      'ব্লার করতে Waaiya-কে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: Shizuku চালু করুন এবং সেখানে Waaiya-কে অনুমতি দিন, যাতে আপনার ট্যাপ তখনও ব্লারের নিচের অ্যাপে পৌঁছায়। অথবা Android সেটিংসে “অন্যান্য অ্যাপের উপরে দেখানো” অনুমতি দিন, কিন্তু তখন ব্লার করা জায়গায় ট্যাপ করলে কিছুই হয় না।';
 
   @override
   String get blurFailUnavailable =>
@@ -1108,7 +1109,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'এই অ্যাপগুলো তাদের আসল শব্দ বাজায়: ওয়াইয়া এগুলো ফিল্টারও করে না, নীরবও করে না।';
+      'এখানে যে অ্যাপগুলো বেছে নেবেন, সেগুলো যেমন আছে তেমনই বাজে: কোনো ফিল্টার নেই, নীরবও করা হয় না। যেমন, ভিডিও কলের অ্যাপ, যাতে কলে কোনো দেরি না হয়।';
 
   @override
   String get fixAddApp => 'একটি অ্যাপ যোগ করুন';
@@ -1139,22 +1140,22 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'এই অ্যাপগুলোর কোনো একটি একা স্ক্রিনে থাকলে কোনো আবরণ নেই। সেটি ছাড়লেই আবরণ ফিরে আসে, অথবা যখনই ওয়াইয়া নিশ্চিত নয় কোন অ্যাপ দেখানো হচ্ছে।';
+      'এই অ্যাপগুলোর কোনো একটি পুরো স্ক্রিন জুড়ে থাকলে কোনো আবরণ থাকে না, যেমন ম্যাপের অ্যাপ বা আপনার ব্যাংকের অ্যাপ। সেটি ছাড়লেই আবরণ ফিরে আসে, অথবা যখনই Waaiya নিশ্চিত নয় কোন অ্যাপ দেখানো হচ্ছে।';
 
   @override
   String get fixBlurAppsNeedsSetup =>
-      'একবারের সেটআপ দরকার: এটি ছাড়া ওয়াইয়া জানতে পারে না স্ক্রিনে কোন অ্যাপ, তাই ঝাপসা সব জায়গায় থাকে।';
+      'একবারের সেটআপ দরকার: এটি ছাড়া Waaiya জানতে পারে না স্ক্রিনে কোন অ্যাপ, তাই ঝাপসা সব জায়গায় থাকে।';
 
   @override
   String get fixBlurAppsHelperMode =>
-      'ওয়াইয়ার সহায়ক চলছে না, তাই পর্দায় কোন অ্যাপ আছে তা পড়া যাচ্ছে না। সেটআপ পাতা থেকে সহায়ক আবার চালু না হওয়া পর্যন্ত ঝাপসা সব জায়গায় থাকবে।';
+      'Waaiyaর সহায়ক চলছে না, তাই পর্দায় কোন অ্যাপ আছে তা পড়া যাচ্ছে না। সেটআপ পাতা থেকে সহায়ক আবার চালু না হওয়া পর্যন্ত ঝাপসা সব জায়গায় থাকবে।';
 
   @override
   String get fixHandTitle => 'হাতে একটি অংশ ঢাকুন';
 
   @override
   String get fixHandBody =>
-      'ঝাপসা চলার সময় স্ক্রিনের যেকোনো অংশে আঙুল টেনে সেটি ঢাকুন। আপনি সরানো পর্যন্ত বা ঝাপসা বন্ধ হওয়া পর্যন্ত এটি ঢাকা থাকে।';
+      'ঝাপসা চলার সময় আপনি নিজেই স্ক্রিনের একটি অংশ ঢাকতে পারেন, যেমন এমন কোনো ছবি যা ঝাপসা ধরতে পারেনি: “একটি অংশ ঢাকুন” চাপুন এবং তার উপর আঙুল টানুন। আপনি সরানো পর্যন্ত বা ঝাপসা বন্ধ হওয়া পর্যন্ত এটি ঢাকা থাকে।';
 
   @override
   String get fixHandNotRunning =>
@@ -1173,7 +1174,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'ঘটার সময়ই চিহ্নিত করুন। নোটে সময়, অ্যাপ ও সেটিংস থাকে। এটি এই ডিভাইসেই থাকে এবং কখনো পাঠানো হয় না।';
+      'Waaiya কোনো ভুল করলে, যা ঘটেছে তাতে চাপুন, যেমন “গান পার হয়ে গেছে”। নোটে সময়, অ্যাপ ও সেটিংস থাকে, যাতে কারণ খুঁজে পেতে সাহায্য হয়। এটি এই ডিভাইসেই থাকে এবং কখনো পাঠানো হয় না।';
 
   @override
   String get fixMissedSound => 'গান পার হয়ে গেছে';
@@ -1207,7 +1208,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get fixNotesDeleteAsk => 'সব নোট মুছবেন? এটি ফেরানো যাবে না।';
 
   @override
-  String get fixNotesTitle => 'ভুল শনাক্তকরণের নোট';
+  String get fixNotesTitle => 'ভুলের নোট';
 
   @override
   String get worshipTitle => 'নামাজের সময়';
@@ -1340,7 +1341,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'প্রতিটি নামাজের সময় থেকে নিচের মিনিট পর্যন্ত বিরক্ত করবেন না চালু, তারপর আগের মতো।';
+      'প্রতিটি নামাজের সময়ে ফোন নিচের মিনিটগুলোর জন্য নীরব হয়ে যায় (বিরক্ত করবেন না), তারপর আগের মতো হয়ে যায়। যেমন, যোহরের সময় ১২:০০ থেকে ১২:২০ পর্যন্ত।';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1585,11 +1586,11 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'পিন থাকলে, সুরক্ষা কমানো প্রতিটি পরিবর্তন আগে পিন চায়। অপেক্ষার সময় বা পিন বদলাতেও পিন লাগে।';
+      'পিন থাকলে, ফিল্টার বন্ধ করতে বা কোনো সুরক্ষা বন্ধ করতে আগে পিন চাওয়া হয়। যেমন, বাবা বা মা একটি পিন রাখেন, যাতে শিশু ফিল্টার বন্ধ করতে না পারে। অপেক্ষার সময় বা পিন বদলাতেও পিন লাগে।';
 
   @override
   String get protectPinForgot =>
-      'পিন ভুলে গেলে রিসেট নেই: শুধু Waaiya-এর ডেটা মুছে ফেলা বা আবার ইনস্টল করা, যাতে এর সব সেটিংসও মুছে যায়।';
+      'পিনটি কোথাও নিরাপদে লিখে রাখুন: ভুলে গেলে রিসেট করার কোনো উপায় নেই। একমাত্র উপায় Waaiya-এর ডেটা মুছে ফেলা বা আবার ইনস্টল করা, যাতে এর সব সেটিংসও মুছে যায়।';
 
   @override
   String get protectPinTitle => 'পিন দিন';
@@ -1674,11 +1675,12 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get protectHeldBack => 'সুরক্ষা সেটিংস এই পরিবর্তন আটকে রেখেছে।';
+  String get protectHeldBack =>
+      'এখন নয়: আপনার সুরক্ষা সেটিংসের কারণে এই পরিবর্তনের জন্য অপেক্ষা করতে হবে, অথবা পিন লাগবে।';
 
   @override
   String get protectLimits =>
-      'যা এটি আটকাতে পারে না: জোর করে বন্ধ করা, আনইনস্টল করা, Waaiya-এর ডেটা মুছে ফেলা এবং Android-এর নিজস্ব সেটিংস। এগুলো আটকাতে ডিভাইস অ্যাডমিন বা অ্যাক্সেসিবিলিটি ক্ষমতা লাগে, যা Waaiya ব্যবহার করে না। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
+      'যা এটি আটকাতে পারে না: জোর করে বন্ধ করা, আনইনস্টল করা, Waaiya-এর ডেটা মুছে ফেলা এবং Android-এর নিজস্ব সেটিংস। এগুলো আটকাতে Android-এর বিশেষ অনুমতি লাগে, যা Waaiya ব্যবহার করে না। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
 
   @override
   String get protectLimitsDesktop =>
@@ -1710,7 +1712,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get protectWhatStrictness => 'ব্লার কম কড়া করা';
 
   @override
-  String get protectWhatGender => 'ফোন কে ব্যবহার করেন তা বদলানো';
+  String get protectWhatGender => 'Waaiya কে ব্যবহার করেন তা বদলানো';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1725,4 +1727,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'একটি সেটিং বদলানো';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya এই কম্পিউটারের সব অ্যাপের শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। আপাতত গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
 }

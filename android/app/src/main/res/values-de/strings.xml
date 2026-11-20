@@ -9,12 +9,12 @@
     <string name="onboard_question">Ich bin</string>
     <string name="gender_man">Ein Mann</string>
     <string name="gender_woman">Eine Frau</string>
-    <string name="onboard_why">Davon hängt nur ab, welche optionalen Einstellungen Sie sehen. Sie können es später ändern.</string>
+    <string name="onboard_why">Davon hängt nur ab, welche optionalen Einstellungen Sie sehen. Zum Beispiel wird „Frauengesang stummschalten“ nur Männern angeboten. Sie können es später ändern.</string>
 
     <string name="state_on_title">Der Filter ist an</string>
     <string name="state_off_title">Der Filter ist aus</string>
     <string name="state_starting">Wird gestartet…</string>
-    <string name="state_on_detail">Instrumente werden aus allen Apps entfernt. Verzögerung etwa %1$d ms.</string>
+    <string name="state_on_detail">Instrumente werden aus allen Apps entfernt. Der Ton kommt etwa %1$d ms später (1000 ms sind eine Sekunde).</string>
     <string name="state_off_detail">Tippen Sie zum Starten auf die Taste.</string>
     <string name="state_model_failed">Das Tonmodell konnte nicht geladen werden, deshalb ist der Ton zur Sicherheit stummgeschaltet.</string>
     <string name="state_capture_denied">Die Mikrofonberechtigung wird benötigt, um den Ton anderer Apps zu empfangen.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Stereoton</string>
     <string name="setting_stereo_body">Aus: Mono, das etwa halb so viel Akku braucht und auf mehr Telefonen mithält. An: Die linke und die rechte Seite bleiben getrennt. Wenn das Telefon für Stereo zu langsam ist, wechselt es trotzdem von selbst zu Mono.</string>
     <string name="setting_singing_title">Frauengesang stummschalten</string>
-    <string name="setting_singing_body">Die Sprache von Frauen bleibt erhalten.</string>
+    <string name="setting_singing_body">Zum Beispiel wird ein Lied, das eine Frau singt, stummgeschaltet, aber eine Frau, die einen Vortrag hält, ist weiter zu hören.</string>
     <string name="setting_singing_no_model">Diese Version hat keinen Gesangsdetektor, deshalb werden alle Stimmen stummgeschaltet, solange dies an ist.</string>
     <string name="setting_restart">Stoppen und starten Sie den Filter, damit die Änderungen wirken.</string>
     <string name="setting_gender_title">Ich bin</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Bildschirm-Unschärfe</string>
     <string name="blur_body">Verdeckt Menschen und Bilder auf dem Bildschirm, in jeder App, solange der Filter an ist. Das läuft auf dem Telefon; nichts wird irgendwohin gesendet.</string>
     <string name="blur_women_title">Frauen unscharf machen</string>
-    <string name="blur_women_body">Der ganze Körper. Menschen, bei denen die App nicht klar erkennt, dass es Männer sind, werden auch unscharf gemacht.</string>
+    <string name="blur_women_body">Verdeckt den ganzen Körper. Wenn die App nicht sicher ist, dass eine Person ein Mann ist, verdeckt sie diese Person auch.</string>
     <string name="blur_nudity_title">Freizügige Bilder unscharf machen</string>
-    <string name="blur_nudity_body">Nacktheit und freizügige Kleidung, bei allen Menschen: Der ganze Bildschirm wird verdeckt.</string>
+    <string name="blur_nudity_body">Nacktheit oder freizügige Kleidung, bei jedem Menschen: Der ganze Bildschirm wird verdeckt.</string>
     <string name="blur_fail_title">Bildschirm verdecken, wenn die Unschärfe nicht mithält</string>
     <string name="blur_fail_body">An: Der ganze Bildschirm wird verdeckt, wenn das Telefon zu langsam ist oder die Unschärfe ausfällt. Aus: Der Bildschirm bleibt mit einer Warnung sichtbar.</string>
     <string name="blur_setup_shizuku">Mit Shizuku erlauben</string>
     <string name="blur_setup_manual">In den Android-Einstellungen erlauben</string>
-    <string name="blur_status_needs_setup">Die Unschärfe muss über anderen Apps angezeigt werden. Am besten: Erlauben Sie es mit Shizuku (das schaltet die Bedienungshilfe „Waaiya-Unschärfe“ ein, damit Berührungen weiterhin die App darunter erreichen). Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“ (Berührungen auf einem unscharfen Bereich gehen dann verloren).</string>
-    <string name="blur_status_needs_overlay">Die Unschärfe muss über anderen Apps angezeigt werden. Am besten: Starten Sie Shizuku (und erlauben Sie dort Waaiya): Die Unschärfe zeichnet dann eine eigene Ebene, durch die Berührungen hindurchgehen. Sonst erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“; ein Tippen auf einen unscharfen Bereich erreicht dann nicht die App darunter.</string>
+    <string name="blur_status_needs_setup">Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: „Mit Shizuku erlauben“, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder „In den Android-Einstellungen erlauben“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.</string>
+    <string name="blur_status_needs_overlay">Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: Starten Sie Shizuku und erlauben Sie dort Waaiya, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.</string>
     <string name="blur_fail_unavailable">Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer oder Shizuku (Android 12 oder neuer), dann wird diese Option verfügbar: Die Abdeckungen werden dann so gezeichnet, dass Berührungen hindurchgehen. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar, wenn die Unschärfe nicht mithält.</string>
     <string name="blur_fail_needs_a11y">Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie Shizuku (Android 12 oder neuer) oder schalten Sie die Bedienungshilfe „Waaiya-Unschärfe“ ein (oben „Mit Shizuku erlauben“), dann wird diese Option verfügbar. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar.</string>
     <string name="language_title">Sprache</string>

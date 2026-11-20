@@ -294,3 +294,16 @@ The `features` branch (#14) is merged into `windows-store`. What Windows has of 
   Stop, the filter keeps working, after the wait the Settings page asks again; Confirm within 15 minutes or nothing
   changes). Rewritten in the 18 languages (app texts and the two Android notification texts); English and Arabic
   written by hand, the others machine translations.
+
+### Release audit (2026-11-20, before 0.2.13)
+- `ui/test/audit_test.dart`: every page in the 18 languages on a small phone (360 x 640), Windows and Linux (800 x
+  600 window), at text size 1.0, 1.3 and 2.0, with prayer times, apps unfiltered and a waiting change shown; the wait
+  and PIN dialogs at text 2.0; Flutter's checks for tap size (48 x 48), screen-reader labels and contrast, light
+  and dark; no "phone" in any Windows or Linux text. Found and fixed: the "Label ... Change" rows, the PIN row and
+  the plain-tone rows ran off the screen (fr, ur, nl, de, ru, uz; up to 175 px): the buttons now go under the label
+  when they do not fit (`LabelAndActions`); 8 text dialogs did not scroll (cut off with large text); the first
+  screen said "this phone" on computers (`onboardBodyDesktop`).
+- 19 texts rewritten in simpler words with examples (first screen, delay in ms, women's singing, blur, the blur
+  set-up messages, apps unfiltered, apps uncovered, cover by hand, notes, prayer silence, PIN, "not now", what
+  protection cannot stop), in the 18 languages; a button named in a text is filled from that button's own label.
+  English and Arabic by hand, the others machine translations. The app name had 3 stray spellings (ur, fa, bn).

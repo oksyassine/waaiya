@@ -354,6 +354,7 @@ Future<void> _start(BuildContext context) async {
     final go = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.startNoSetupTitle),
         content: Text(l.startNoSetupBody),
         actions: [
@@ -373,6 +374,7 @@ Future<void> _start(BuildContext context) async {
     final go = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.helperStartAnywayTitle),
         content: Text(l.helperStartAnywayBody),
         actions: [

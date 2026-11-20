@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.';
+      'هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.';
 
   @override
   String get stateOnTitle => 'التصفية تعمل';
@@ -46,7 +46,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'تُزال الآلات من كل التطبيقات. التأخير نحو $delayMs ميلي ثانية.';
+    return 'تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو $delayMs ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).';
   }
 
   @override
@@ -221,7 +221,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingSingingTitle => 'كتم غناء النساء';
 
   @override
-  String get settingSingingBody => 'يُبقي كلام النساء.';
+  String get settingSingingBody =>
+      'مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.';
 
   @override
   String get settingSingingNoModel =>
@@ -385,14 +386,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.';
+      'يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.';
 
   @override
   String get blurNudityTitle => 'تمويه الصور غير المحتشمة';
 
   @override
   String get blurNudityBody =>
-      'العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.';
+      'العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.';
 
   @override
   String get blurFailTitle => 'تغطية الشاشة إذا عجز التمويه عن المتابعة';
@@ -409,11 +410,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).';
+      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.';
+      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurFailUnavailable =>
@@ -1094,7 +1095,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'تُشغَّل هذه التطبيقات بصوتها الأصلي: لا تصفّيها واعية ولا تُسكتها.';
+      'التطبيقات التي تختارها هنا تُسمع كما هي: بلا تصفية وبلا إسكات. مثلًا: تطبيق مكالمات الفيديو، حتى لا يتأخّر الصوت في المكالمات.';
 
   @override
   String get fixAddApp => 'إضافة تطبيق';
@@ -1125,7 +1126,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'لا تغطية ما دام أحد هذه التطبيقات وحده على الشاشة. تعود التغطية فور مغادرته، أو متى لم تتيقّن واعية من التطبيق الظاهر.';
+      'لا تغطية ما دام أحد هذه التطبيقات يملأ الشاشة، مثل تطبيق الخرائط أو تطبيق البنك. وتعود التغطية فور مغادرته، أو كلما لم تتيقّن واعية من التطبيق الظاهر.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1140,7 +1141,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'أثناء عمل التمويه، اسحب إصبعك على أي جزء من الشاشة لتغطيته. يبقى مغطًّى حتى تزيله أو يتوقف التمويه.';
+      'أثناء عمل التمويه يمكنك تغطية جزء من الشاشة بنفسك، مثل صورة فاتت التمويه: اضغط «تغطية جزء» واسحب إصبعك فوقها. تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.';
 
   @override
   String get fixHandNotRunning =>
@@ -1159,7 +1160,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'سجّله لحظة حدوثه. تحفظ الملاحظة الوقت والتطبيق والإعدادات، وتبقى على هذا الجهاز ولا تُرسَل أبدًا.';
+      'حين تخطئ واعية، اضغط على ما حدث، مثل «مرّت موسيقى». تحفظ الملاحظة الوقت والتطبيق والإعدادات، لتساعد على معرفة السبب. وتبقى على هذا الجهاز ولا تُرسَل أبدًا.';
 
   @override
   String get fixMissedSound => 'مرّت موسيقى';
@@ -1193,7 +1194,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fixNotesDeleteAsk => 'حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.';
 
   @override
-  String get fixNotesTitle => 'ملاحظات أخطاء الكشف';
+  String get fixNotesTitle => 'ملاحظات الأخطاء';
 
   @override
   String get worshipTitle => 'أوقات الصلاة';
@@ -1325,7 +1326,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.';
+      'عند كل وقت صلاة يصبح الهاتف صامتًا («عدم الإزعاج») للدقائق المحدّدة أدناه، ثم يعود كما كان. مثلًا: من الظهر الساعة 12:00 حتى 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1570,11 +1571,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'مع الرمز، يُطلب أولًا قبل كل تغيير يُضعف الحماية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.';
+      'مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.';
 
   @override
   String get protectPinForgot =>
-      'إن نُسي الرمز فلا سبيل لاسترجاعه: لا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.';
+      'اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.';
 
   @override
   String get protectPinTitle => 'أدخل الرمز';
@@ -1659,11 +1660,12 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get protectHeldBack => 'إعدادات الحماية تؤخّر هذا التغيير.';
+  String get protectHeldBack =>
+      'ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.';
 
   @override
   String get protectLimits =>
-      'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات مدير الجهاز أو خدمة الوصول، وواعية لا تستعملها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+      'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1695,7 +1697,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get protectWhatStrictness => 'جعل التغطية أقل صرامة';
 
   @override
-  String get protectWhatGender => 'تغيير من يستعمل الهاتف';
+  String get protectWhatGender => 'تغيير من يستعمل واعية';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1710,4 +1712,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'تغيير إعداد';
+
+  @override
+  String get onboardBodyDesktop =>
+      'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.';
 }

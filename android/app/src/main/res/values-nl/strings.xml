@@ -9,12 +9,12 @@
     <string name="onboard_question">Ik ben</string>
     <string name="gender_man">Een man</string>
     <string name="gender_woman">Een vrouw</string>
-    <string name="onboard_why">Dit bepaalt alleen welke extra instellingen je ziet. Je kunt het later wijzigen.</string>
+    <string name="onboard_why">Dit bepaalt alleen welke extra instellingen je ziet. Bijvoorbeeld: “Zang van vrouwen dempen” krijgen alleen mannen te zien. Je kunt het later wijzigen.</string>
 
     <string name="state_on_title">Filteren staat aan</string>
     <string name="state_off_title">Filteren staat uit</string>
     <string name="state_starting">Starten…</string>
-    <string name="state_on_detail">Instrumenten worden uit alle apps verwijderd. Vertraging ongeveer %1$d ms.</string>
+    <string name="state_on_detail">Instrumenten worden uit alle apps verwijderd. Het geluid komt ongeveer %1$d ms later (1000 ms is één seconde).</string>
     <string name="state_off_detail">Tik op de knop om te starten.</string>
     <string name="state_model_failed">Het geluidsmodel kon niet laden, dus het geluid is voor de zekerheid gedempt.</string>
     <string name="state_capture_denied">De toestemming voor de microfoon is nodig om het geluid van andere apps te ontvangen.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Stereogeluid</string>
     <string name="setting_stereo_body">Uit: mono, dat ongeveer half zoveel batterij gebruikt en op meer telefoons bijblijft. Aan: houdt links en rechts gescheiden. Als de telefoon te traag is voor stereo, schakelt hij toch vanzelf over naar mono.</string>
     <string name="setting_singing_title">Zang van vrouwen dempen</string>
-    <string name="setting_singing_body">De spraak van vrouwen blijft behouden.</string>
+    <string name="setting_singing_body">Bijvoorbeeld: een lied dat een vrouw zingt, wordt gedempt, maar een vrouw die een lezing geeft, hoor je nog steeds.</string>
     <string name="setting_singing_no_model">Deze versie heeft geen zangdetector, dus alle stemmen worden gedempt zolang dit aan staat.</string>
     <string name="setting_restart">Stop het filteren en start het opnieuw om wijzigingen toe te passen.</string>
     <string name="setting_gender_title">Ik ben</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Schermvervaging</string>
     <string name="blur_body">Bedekt mensen en afbeeldingen op het scherm, in elke app, terwijl het filteren aan staat. Het werkt op de telefoon zelf; er wordt niets verstuurd.</string>
     <string name="blur_women_title">Vrouwen vervagen</string>
-    <string name="blur_women_body">Het hele lichaam. Mensen van wie de app niet duidelijk ziet dat het mannen zijn, worden ook vervaagd.</string>
+    <string name="blur_women_body">Bedekt het hele lichaam. Als de app niet zeker weet dat iemand een man is, wordt die persoon ook bedekt.</string>
     <string name="blur_nudity_title">Onzedige beelden vervagen</string>
-    <string name="blur_nudity_body">Naaktheid en onthullende kleding, van wie dan ook: het hele scherm wordt bedekt.</string>
+    <string name="blur_nudity_body">Naaktheid of onthullende kleding, bij wie dan ook: het hele scherm wordt bedekt.</string>
     <string name="blur_fail_title">Scherm bedekken als de vervaging het niet bijhoudt</string>
     <string name="blur_fail_body">Aan: het hele scherm wordt bedekt als de telefoon te traag is of de vervaging mislukt. Uit: het scherm blijft zichtbaar met een waarschuwing.</string>
     <string name="blur_setup_shizuku">Toestaan met Shizuku</string>
     <string name="blur_setup_manual">Toestaan in Android-instellingen</string>
-    <string name="blur_status_needs_setup">De vervaging moet over andere apps heen kunnen tekenen. Het beste: sta het toe met Shizuku (dat zet de toegankelijkheidsservice Waaiya-vervaging aan, zodat tikken nog steeds de app eronder bereiken). Of sta “Weergeven over andere apps” toe in de Android-instellingen (tikken op een vervaagd gebied gaan dan verloren).</string>
-    <string name="blur_status_needs_overlay">De vervaging moet over andere apps heen kunnen tekenen. Het beste: start Shizuku (en sta Waaiya daarin toe): de vervaging tekent dan een eigen laag waar tikken doorheen gaan. Sta anders “Weergeven over andere apps” toe in de Android-instellingen; een tik op een vervaagd gebied bereikt dan niet de app eronder.</string>
+    <string name="blur_status_needs_setup">Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: “Toestaan met Shizuku”, dan komen je tikken nog steeds bij de app onder de vervaging. Of “Toestaan in Android-instellingen”, maar dan doet een tik op een vervaagd gebied niets.</string>
+    <string name="blur_status_needs_overlay">Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: start Shizuku en sta Waaiya daarin toe, dan komen je tikken nog steeds bij de app onder de vervaging. Of sta “Weergeven over andere apps” toe in de Android-instellingen, maar dan doet een tik op een vervaagd gebied niets.</string>
     <string name="blur_fail_unavailable">Voorlopig grijs: een afdekking over het hele scherm zou elke tik blokkeren en je zou vast kunnen komen te zitten. Start de helper van Waaiya of Shizuku (Android 12 of nieuwer) en deze optie wordt beschikbaar: de afdekkingen worden dan zo getekend dat tikken erdoorheen gaan. Tot die tijd blijft het scherm zichtbaar met een waarschuwing als de vervaging het niet bijhoudt.</string>
     <string name="blur_fail_needs_a11y">Voorlopig grijs: een afdekking over het hele scherm zou elke tik blokkeren en je zou vast kunnen komen te zitten. Start Shizuku (Android 12 of nieuwer) of zet de toegankelijkheidsservice Waaiya-vervaging aan (Toestaan met Shizuku, hierboven), en deze optie wordt beschikbaar. Tot die tijd blijft het scherm zichtbaar met een waarschuwing.</string>
     <string name="language_title">Taal</string>

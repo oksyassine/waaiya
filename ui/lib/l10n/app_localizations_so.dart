@@ -33,7 +33,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Tani waxay go\'aamisaa oo kaliya dejinta ikhtiyaariga ah ee aad aragto. Hadhow waad beddeli kartaa.';
+      'Tani waxay go\'aamisaa oo kaliya dejinta ikhtiyaariga ah ee aad aragto. Tusaale ahaan, “Aamusii heesaha haweenka” waxaa la siiyaa ragga oo kaliya. Hadhow waad beddeli kartaa.';
 
   @override
   String get stateOnTitle => 'Shaandhayntu way daaran tahay';
@@ -46,7 +46,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Qalabka muusigga waa laga saaray dhammaan barnaamijyada. Dib u dhaca waa qiyaastii $delayMs ms.';
+    return 'Qalabka muusigga waa laga saaray dhammaan barnaamijyada. Codku wuxuu daahaa qiyaastii $delayMs ms (1000 ms waa hal ilbiriqsi).';
   }
 
   @override
@@ -226,7 +226,8 @@ class AppLocalizationsSo extends AppLocalizations {
   String get settingSingingTitle => 'Aamusii heesaha haweenka';
 
   @override
-  String get settingSingingBody => 'Hadalka haweenka waa la hayaa.';
+  String get settingSingingBody =>
+      'Tusaale ahaan, hees ay haweeney qaadayso waa la aamusiyaa, laakiin haweeney hadal jeedinaysa weli waa la maqlaa.';
 
   @override
   String get settingSingingNoModel =>
@@ -397,14 +398,14 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Jirka oo dhan. Dadka uu barnaamijku si cad u garan waayo inay rag yihiin iyagana waa la qariyaa.';
+      'Jirka oo dhan waa la daboolaa. Haddii barnaamijku uusan hubin in qofku nin yahay, isna waa la daboolaa.';
 
   @override
   String get blurNudityTitle => 'Qari sawirrada aan asturnayn';
 
   @override
   String get blurNudityBody =>
-      'Qaawanaanta iyo dharka jirka muujiya, qof kasta ha ahaadee: shaashadda oo dhan waa la daboolaa.';
+      'Qaawanaan ama dhar jirka muujiya, qof kasta ha ahaadee: shaashadda oo dhan waa la daboolaa.';
 
   @override
   String get blurFailTitle =>
@@ -422,11 +423,11 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'Qarintu waxay u baahan tahay inay ka muuqato barnaamijyada kale dushooda. Midda ugu fiican: ku ogolow Shizuku (waxay daartaa adeegga helitaanka (accessibility) ee “Qarinta Waaiya”, si taabashadu weli u gaarto barnaamijka hoose). Ama ka ogolow “Display over other apps” dejinta Android (taabashada meel la qariyay markaas way lumaysaa).';
+      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: “Ku ogolow Shizuku”, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama “Ku ogolow dejinta Android”, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Qarintu waxay u baahan tahay inay ka muuqato barnaamijyada kale dushooda. Midda ugu fiican: bilow Shizuku (oo Waaiya ku ogolow gudaheeda): qarintu markaas waxay sawirtaa lakab u gaar ah, oo taabashadu ka gudubto. Haddii kale ka ogolow “Display over other apps” dejinta Android; taabasho meel la qariyay markaas ma gaarto barnaamijka hoose.';
+      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: bilow Shizuku oo Waaiya ku ogolow gudaheeda, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama ka ogolow “Display over other apps” dejinta Android, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
 
   @override
   String get blurFailUnavailable =>
@@ -1122,7 +1123,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Barnaamijyadan waxay daaraan codkooda asalka ah: Waaiya ma shaandhayso mana aamusiiso.';
+      'Barnaamijyada aad halkan ka doorato codkooda sidiisa ayaa loo maqlaa: shaandhayn ma jirto, aamusinna ma jirto. Tusaale ahaan, barnaamijka wicitaannada fiidiyowga, si wicitaannadu aysan u daahin.';
 
   @override
   String get fixAddApp => 'Ku dar barnaamij';
@@ -1153,7 +1154,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'Dabool ma jiro marka mid ka mid ah barnaamijyadan uu kaligiis shaashadda ku jiro. Daboolladu way soo laabtaan isla marka aad ka baxdo, ama mar kasta oo Waaiya aysan hubin barnaamijka la muujinayo.';
+      'Dabool ma jiro marka mid ka mid ah barnaamijyadan uu buuxiyo shaashadda, tusaale ahaan barnaamijka khariidadaha ama barnaamijka bangigaaga. Daboolladu way soo laabtaan isla marka aad ka baxdo, ama mar kasta oo Waaiya aysan hubin barnaamijka la muujinayo.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1168,7 +1169,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Inta qarintu shaqaynayso, ku jiid qayb kasta oo shaashadda ah si aad u daboosho. Way daboolnaanaysaa ilaa aad ka saarto ama qarintu joogsato.';
+      'Inta qarintu shaqaynayso, adigu waxaad dabooli kartaa qayb ka mid ah shaashadda, tusaale ahaan sawir ay qarintu seegtay: riix “Dabool meel” oo farta ku jiid dushiisa. Way daboolnaanaysaa ilaa aad ka saarto ama qarintu joogsato.';
 
   @override
   String get fixHandNotRunning =>
@@ -1187,7 +1188,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Calaamadee marka uu dhaco. Qoraalku wuxuu hayaa waqtiga, barnaamijka iyo dejinta. Wuxuu ku jiraa qalabkan, waligiisna lama diro.';
+      'Marka Waaiya ay wax khaldo, riix waxa dhacay, tusaale ahaan “Muusig ayaa soo dhaafay”. Qoraalku wuxuu hayaa waqtiga, barnaamijka iyo dejinta, si uu u caawiyo helidda sababta. Wuxuu ku jiraa qalabkan, waligiisna lama diro.';
 
   @override
   String get fixMissedSound => 'Muusig ayaa soo dhaafay';
@@ -1222,7 +1223,7 @@ class AppLocalizationsSo extends AppLocalizations {
       'Ma la tirtiraa dhammaan qoraallada? Tan dib looma celin karo.';
 
   @override
-  String get fixNotesTitle => 'Qoraallada garasho khaldan';
+  String get fixNotesTitle => 'Qoraallada khaladaadka';
 
   @override
   String get worshipTitle => 'Waqtiyada salaadda';
@@ -1356,7 +1357,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Laga bilaabo waqti kasta oo salaad, “Do Not Disturb” waa la daaraa daqiiqadaha hoose, kadibna taleefanku sidii aad u haysay ayuu ku noqdaa.';
+      'Waqti kasta oo salaad, taleefanku wuu aamusaa (“Do Not Disturb”) daqiiqadaha hoose, kadibna sidii uu ahaa ayuu ku noqdaa. Tusaale ahaan, laga bilaabo Duhurka 12:00 ilaa 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1603,11 +1604,11 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Marka PIN jiro, isbeddel kasta oo yareeya ilaalinta marka hore wuu weydiiyaa. Beddelka muddada sugitaanka ama PIN-ka sidoo kale wuu weydiiyaa.';
+      'Marka PIN jiro, joojinta shaandhaynta ama demista ilaalin kasta marka hore waxay weydiisaa PIN-ka. Tusaale ahaan, waalidku wuxuu dhigaa PIN si ilmuhu uusan u demin shaandhaynta. Beddelka muddada sugitaanka ama PIN-ka sidoo kale wuu weydiiyaa.';
 
   @override
   String get protectPinForgot =>
-      'Haddii PIN-ka la illaawo, dib u dejin ma jirto: kaliya tirtirista xogta Waaiya ama dib u rakibisteeda, taas oo sidoo kale tirtirta dhammaan dejinteeda.';
+      'PIN-ka ku qor meel ammaan ah: haddii la illaawo, dib u dejin ma jirto. Waddada kaliya waa tirtirista xogta Waaiya ama dib u rakibisteeda, taas oo sidoo kale tirtirta dhammaan dejinteeda.';
 
   @override
   String get protectPinTitle => 'Geli PIN-ka';
@@ -1692,11 +1693,12 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String get protectHeldBack => 'Isbeddelkan waxaa hakiyay dejinta ilaalinta.';
+  String get protectHeldBack =>
+      'Hadda ma aha: dejinta ilaalintaadu waxay ka dhigaysaa isbeddelkan mid sugaya, ama waxay weydiinaysaa PIN-ka.';
 
   @override
   String get protectLimits =>
-      'Waxa aysan tani joojin karin: ku-qasab joojinta (force stop), ka saarista barnaamijka, tirtirista xogta Waaiya iyo dejinta Android lafteeda. Xannibaaddooda waxay u baahan tahay awoodaha maamulaha qalabka (device admin) ama helitaanka (accessibility), oo Waaiya aysan isticmaalin. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go\'aansaday.';
+      'Waxa aysan tani joojin karin: ku-qasab joojinta (force stop), ka saarista barnaamijka, tirtirista xogta Waaiya iyo dejinta Android lafteeda. Xannibaaddooda waxay u baahan lahayd oggolaansho gaar ah oo Android ah, oo Waaiya aysan isticmaalin. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go\'aansaday.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1728,7 +1730,7 @@ class AppLocalizationsSo extends AppLocalizations {
   String get protectWhatStrictness => 'Ka dhig qarinta mid ka adkaan yar';
 
   @override
-  String get protectWhatGender => 'Beddel cidda isticmaasha taleefanka';
+  String get protectWhatGender => 'Beddel cidda isticmaasha Waaiya';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1743,4 +1745,8 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Beddel dejin';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya waxay ka saartaa qalabka muusigga codka barnaamij kasta oo kombiyuutarkan ku jira. Hadalka iyo akhriska Qur\'aanka waa la hayaa. Hadda, codadka heesaha sidoo kale waa la saaraa.';
 }

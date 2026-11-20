@@ -153,6 +153,7 @@ Future<bool> worshipAsk(BuildContext context, String name, String why) async {
   final go = await showDialog<bool>(
     context: context,
     builder: (dialog) => AlertDialog(
+      scrollable: true, // large text on a small screen: nothing is cut off
       content: Text(why),
       actions: [
         TextButton(onPressed: () => Navigator.pop(dialog, false), child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel)),

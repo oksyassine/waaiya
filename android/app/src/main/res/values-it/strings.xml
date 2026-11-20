@@ -9,12 +9,12 @@
     <string name="onboard_question">Sono</string>
     <string name="gender_man">Un uomo</string>
     <string name="gender_woman">Una donna</string>
-    <string name="onboard_why">Serve solo a decidere quali impostazioni facoltative vedi. Puoi cambiarlo in seguito.</string>
+    <string name="onboard_why">Serve solo a decidere quali impostazioni facoltative vedi. Per esempio, «Silenzia il canto femminile» viene proposto solo agli uomini. Puoi cambiarlo in seguito.</string>
 
     <string name="state_on_title">Il filtro è attivo</string>
     <string name="state_off_title">Il filtro è disattivato</string>
     <string name="state_starting">Avvio…</string>
-    <string name="state_on_detail">Gli strumenti vengono rimossi da tutte le app. Ritardo di circa %1$d ms.</string>
+    <string name="state_on_detail">Gli strumenti vengono rimossi da tutte le app. Il suono arriva circa %1$d ms in ritardo (1000 ms sono un secondo).</string>
     <string name="state_off_detail">Tocca il pulsante per iniziare.</string>
     <string name="state_model_failed">Non è stato possibile caricare il modello audio, quindi per sicurezza l\'audio è disattivato.</string>
     <string name="state_capture_denied">Serve l\'autorizzazione del microfono per ricevere l\'audio delle altre app.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Audio stereo</string>
     <string name="setting_stereo_body">Disattivato: mono, che consuma circa metà della batteria e funziona senza scatti su più telefoni. Attivato: mantiene separati i lati sinistro e destro. Se il telefono è troppo lento per lo stereo, passa comunque al mono da solo.</string>
     <string name="setting_singing_title">Silenzia il canto femminile</string>
-    <string name="setting_singing_body">Il parlato delle donne viene mantenuto.</string>
+    <string name="setting_singing_body">Per esempio, una canzone cantata da una donna viene silenziata, ma una donna che fa un discorso si sente ancora.</string>
     <string name="setting_singing_no_model">Questa versione non ha un rilevatore di canto, quindi tutte le voci vengono silenziate finché questa opzione è attiva.</string>
     <string name="setting_restart">Interrompi e riavvia il filtro per applicare le modifiche.</string>
     <string name="setting_gender_title">Sono</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Sfocatura dello schermo</string>
     <string name="blur_body">Copre le persone e le immagini sullo schermo, in tutte le app, mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.</string>
     <string name="blur_women_title">Sfoca le donne</string>
-    <string name="blur_women_body">Tutto il corpo. Vengono sfocate anche le persone che l\'app non riconosce chiaramente come uomini.</string>
+    <string name="blur_women_body">Copre tutto il corpo. Se l\'app non è sicura che una persona sia un uomo, copre anche lei.</string>
     <string name="blur_nudity_title">Sfoca le immagini indecenti</string>
-    <string name="blur_nudity_body">Nudità e abiti succinti, di chiunque: viene coperto tutto lo schermo.</string>
+    <string name="blur_nudity_body">Nudità o abiti succinti, su chiunque: viene coperto tutto lo schermo.</string>
     <string name="blur_fail_title">Copri lo schermo se la sfocatura non sta al passo</string>
     <string name="blur_fail_body">Attivato: tutto lo schermo viene coperto quando il telefono è troppo lento o la sfocatura non funziona. Disattivato: lo schermo resta visibile con un avviso.</string>
     <string name="blur_setup_shizuku">Consenti con Shizuku</string>
     <string name="blur_setup_manual">Consenti nelle impostazioni di Android</string>
-    <string name="blur_status_needs_setup">La sfocatura deve essere mostrata sopra le altre app. Meglio: consentila con Shizuku (attiva il servizio di accessibilità Sfocatura Waaiya, così i tocchi arrivano comunque all\'app sottostante). Oppure consenti “Mostra sopra altre app” nelle impostazioni di Android (in questo caso i tocchi su un\'area sfocata vanno persi).</string>
-    <string name="blur_status_needs_overlay">La sfocatura deve essere mostrata sopra le altre app. Meglio: avvia Shizuku (e consenti Waaiya al suo interno): la sfocatura disegna così un proprio livello, che i tocchi attraversano. Altrimenti consenti “Mostra sopra altre app” nelle impostazioni di Android; in questo caso un tocco su un\'area sfocata non arriva all\'app sottostante.</string>
+    <string name="blur_status_needs_setup">Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: «Consenti con Shizuku», così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure «Consenti nelle impostazioni di Android», ma allora un tocco su un\'area sfocata non fa nulla.</string>
+    <string name="blur_status_needs_overlay">Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: avvia Shizuku e consenti Waaiya al suo interno, così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure consenti «Mostra sopra altre app» nelle impostazioni di Android, ma allora un tocco su un\'area sfocata non fa nulla.</string>
     <string name="blur_fail_unavailable">Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya o Shizuku (Android 12 o versioni successive) e l\'opzione si attiva: le coperture vengono allora disegnate in modo che i tocchi le attraversino. Fino ad allora, quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.</string>
     <string name="blur_fail_needs_a11y">Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia Shizuku (Android 12 o versioni successive) o attiva il servizio di accessibilità Sfocatura Waaiya (Consenti con Shizuku, qui sopra) e l\'opzione si attiva. Fino ad allora, lo schermo resta visibile con un avviso.</string>
     <string name="language_title">Lingua</string>

@@ -33,7 +33,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Esto solo decide qué ajustes opcionales ve. Puede cambiarlo más tarde.';
+      'Esto solo decide qué ajustes opcionales ve. Por ejemplo, «Silenciar el canto de mujeres» solo se ofrece a los hombres. Puede cambiarlo más tarde.';
 
   @override
   String get stateOnTitle => 'El filtrado está activado';
@@ -46,7 +46,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Se quitan los instrumentos de todas las aplicaciones. Retraso de unos $delayMs ms.';
+    return 'Se quitan los instrumentos de todas las aplicaciones. El sonido llega unos $delayMs ms tarde (1000 ms son un segundo).';
   }
 
   @override
@@ -225,7 +225,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingSingingTitle => 'Silenciar el canto de mujeres';
 
   @override
-  String get settingSingingBody => 'Se conserva el habla de las mujeres.';
+  String get settingSingingBody =>
+      'Por ejemplo, se silencia una canción cantada por una mujer, pero se sigue oyendo a una mujer que da una charla.';
 
   @override
   String get settingSingingNoModel =>
@@ -394,14 +395,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Todo el cuerpo. Las personas que la aplicación no puede identificar claramente como hombres también se desenfocan.';
+      'Cubre todo el cuerpo. Si la aplicación no está segura de que una persona es un hombre, también la cubre.';
 
   @override
   String get blurNudityTitle => 'Desenfocar imágenes indecentes';
 
   @override
   String get blurNudityBody =>
-      'Desnudez y ropa reveladora, de cualquier persona: se cubre toda la pantalla.';
+      'Desnudez o ropa reveladora, en cualquier persona: se cubre toda la pantalla.';
 
   @override
   String get blurFailTitle =>
@@ -419,11 +420,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'El desenfoque necesita mostrarse sobre otras aplicaciones. Lo mejor: permitirlo con Shizuku (activa el servicio de accesibilidad Desenfoque Waaiya, para que los toques sigan llegando a la aplicación de debajo). O permita «Mostrar sobre otras aplicaciones» en los ajustes de Android (entonces se pierden los toques en una zona desenfocada).';
+      'Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: «Permitir con Shizuku», para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O «Permitir en los ajustes de Android», pero entonces un toque en una zona desenfocada no hace nada.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'El desenfoque necesita mostrarse sobre otras aplicaciones. Lo mejor: inicie Shizuku (y permita Waaiya en él): así el desenfoque dibuja su propia capa, que los toques atraviesan. Si no, permita «Mostrar sobre otras aplicaciones» en los ajustes de Android; entonces un toque en una zona desenfocada no llega a la aplicación de debajo.';
+      'Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: inicie Shizuku y permita Waaiya en él, para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O permita «Mostrar sobre otras aplicaciones» en los ajustes de Android, pero entonces un toque en una zona desenfocada no hace nada.';
 
   @override
   String get blurFailUnavailable =>
@@ -1114,7 +1115,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Estas aplicaciones suenan con su sonido original: Waaiya no las filtra ni las silencia.';
+      'Las aplicaciones que elija aquí suenan tal cual: sin filtro y sin silencio. Por ejemplo, una aplicación de videollamadas, para que las llamadas no tengan retraso.';
 
   @override
   String get fixAddApp => 'Añadir una aplicación';
@@ -1145,7 +1146,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'No hay cubiertas mientras una de estas aplicaciones está sola en la pantalla. Las cubiertas vuelven en cuanto sale de ella, o siempre que Waaiya no está seguro de qué aplicación se muestra.';
+      'No hay cubiertas mientras una de estas aplicaciones ocupa toda la pantalla, por ejemplo una aplicación de mapas o la de su banco. Las cubiertas vuelven en cuanto sale de ella, o siempre que Waaiya no está seguro de qué aplicación se muestra.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1160,7 +1161,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Mientras el desenfoque está en marcha, deslice el dedo sobre cualquier parte de la pantalla para cubrirla. Queda cubierta hasta que la quite o el desenfoque se detenga.';
+      'Mientras el desenfoque está en marcha, puede cubrir por su cuenta una parte de la pantalla, por ejemplo una imagen que el desenfoque no cubrió: toque «Cubrir una zona» y deslice el dedo sobre ella. Queda cubierta hasta que quite la cubierta o el desenfoque se detenga.';
 
   @override
   String get fixHandNotRunning =>
@@ -1179,7 +1180,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Márquelo cuando ocurra. Una nota guarda la hora, la aplicación y los ajustes. Se queda en este dispositivo y nunca se envía.';
+      'Cuando Waaiya se equivoque, toque lo que pasó, por ejemplo «Se oyó música». La nota guarda la hora, la aplicación y los ajustes, para ayudar a encontrar la causa. Se queda en este dispositivo y nunca se envía.';
 
   @override
   String get fixMissedSound => 'Se oyó música';
@@ -1214,7 +1215,7 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Borrar todas las notas? No se puede deshacer.';
 
   @override
-  String get fixNotesTitle => 'Notas de detecciones erróneas';
+  String get fixNotesTitle => 'Notas sobre errores';
 
   @override
   String get worshipTitle => 'Horarios de oración';
@@ -1348,7 +1349,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Desde cada hora de oración, «No molestar» durante los minutos de abajo; luego todo vuelve a como lo tenía.';
+      'En cada hora de oración, el teléfono se queda en silencio («No molestar») durante los minutos de abajo y luego vuelve a como estaba. Por ejemplo, desde el Dhuhr a las 12:00 hasta las 12:20.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1597,11 +1598,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Con un PIN, cada cambio que baja la protección lo pide primero. Cambiar el periodo de espera o el PIN también lo pide.';
+      'Con un PIN, detener el filtro o desactivar cualquier protección pide primero el PIN. Por ejemplo, un padre o una madre pone uno para que un niño no pueda apagar el filtro. Cambiar el periodo de espera o el PIN también lo pide.';
 
   @override
   String get protectPinForgot =>
-      'Si se olvida el PIN, no hay forma de restablecerlo: solo borrar los datos de Waaiya o reinstalar Waaiya, lo que también borra todos sus ajustes.';
+      'Anote el PIN en un lugar seguro: si se olvida, no hay forma de restablecerlo. La única salida es borrar los datos de Waaiya o reinstalar Waaiya, lo que también borra todos sus ajustes.';
 
   @override
   String get protectPinTitle => 'Escriba el PIN';
@@ -1687,11 +1688,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'Los ajustes de protección retienen este cambio.';
+      'Ahora no: sus ajustes de protección hacen esperar este cambio o piden el PIN.';
 
   @override
   String get protectLimits =>
-      'Lo que esto no puede impedir: forzar la detención, desinstalar, borrar los datos de Waaiya y los propios ajustes de Android. Bloquear eso requiere permisos de administrador del dispositivo o de accesibilidad que Waaiya no usa. Esto protege de un momento de debilidad, no de una persona decidida.';
+      'Lo que esto no puede impedir: forzar la detención, desinstalar, borrar los datos de Waaiya y los propios ajustes de Android. Bloquear eso necesitaría permisos especiales de Android que Waaiya no usa. Esto protege de un momento de debilidad, no de una persona decidida.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1723,7 +1724,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get protectWhatStrictness => 'Hacer el desenfoque menos estricto';
 
   @override
-  String get protectWhatGender => 'Cambiar quién usa el teléfono';
+  String get protectWhatGender => 'Cambiar quién usa Waaiya';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1738,4 +1739,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Cambiar un ajuste';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya quita los instrumentos musicales del sonido de todas las aplicaciones de este ordenador. Se conservan el habla y la recitación del Corán. Por ahora, también se quitan las voces que cantan.';
 }

@@ -33,7 +33,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'Bu faqat qaysi qoʻshimcha sozlamalarni koʻrishingizni belgilaydi. Keyinroq oʻzgartirishingiz mumkin.';
+      'Bu faqat qaysi qoʻshimcha sozlamalarni koʻrishingizni belgilaydi. Masalan, “Ayollar qoʻshigʻini oʻchirish” faqat erkaklarga taklif qilinadi. Keyinroq oʻzgartirishingiz mumkin.';
 
   @override
   String get stateOnTitle => 'Filtrlash yoqilgan';
@@ -46,7 +46,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Barcha ilovalardan musiqa asboblari olib tashlanmoqda. Kechikish taxminan $delayMs ms.';
+    return 'Barcha ilovalardan musiqa asboblari olib tashlanmoqda. Ovoz taxminan $delayMs ms kech keladi (1000 ms — bu bir soniya).';
   }
 
   @override
@@ -225,7 +225,8 @@ class AppLocalizationsUz extends AppLocalizations {
   String get settingSingingTitle => 'Ayollar qoʻshigʻini oʻchirish';
 
   @override
-  String get settingSingingBody => 'Ayollarning nutqi saqlanadi.';
+  String get settingSingingBody =>
+      'Masalan, ayol aytgan qoʻshiq oʻchiriladi, lekin maʼruza qilayotgan ayolning ovozi baribir eshitiladi.';
 
   @override
   String get settingSingingNoModel =>
@@ -395,14 +396,14 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'Butun tana. Ilova erkak ekanini aniq ajrata olmagan odamlar ham xiralashtiriladi.';
+      'Butun tanani yopadi. Agar ilova odamning erkak ekaniga ishonch hosil qila olmasa, uni ham yopadi.';
 
   @override
   String get blurNudityTitle => 'Odobsiz tasvirlarni xiralashtirish';
 
   @override
   String get blurNudityBody =>
-      'Har qanday kishining yalangʻochligi va ochiq-sochiq kiyimi: butun ekran yopiladi.';
+      'Har qanday kishining yalangʻochligi yoki ochiq-sochiq kiyimi: butun ekran yopiladi.';
 
   @override
   String get blurFailTitle => 'Xiralashtirish ulgurmasa, ekranni yopish';
@@ -419,11 +420,11 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'Xiralashtirish boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku orqali ruxsat bering (u “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqadi, shunda bosishlar ostidagi ilovaga yetib boradi). Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering (bunda xiralashtirilgan joyga bosishlar yoʻqoladi).';
+      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: “Shizuku orqali ruxsat berish”, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki “Android sozlamalarida ruxsat berish”, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Xiralashtirish boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku ilovasini ishga tushiring (va unda Waaiyaga ruxsat bering): shunda xiralashtirish oʻz qatlamini chizadi va bosishlar undan oʻtib ketadi. Aks holda Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering; bunda xiralashtirilgan joyga bosish ostidagi ilovaga yetib bormaydi.';
+      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku ilovasini ishga tushiring va unda Waaiyaga ruxsat bering, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
 
   @override
   String get blurFailUnavailable =>
@@ -1111,7 +1112,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'Bu ilovalar oʻz asl ovozini chaladi: Waaiya ularni filtrlamaydi ham, ovozsiz ham qilmaydi.';
+      'Bu yerda tanlagan ilovalaringiz oʻz holicha ijro etiladi: filtr ham yoʻq, ovozsiz qilish ham yoʻq. Masalan, video qoʻngʻiroq ilovasi, shunda qoʻngʻiroqlarda kechikish boʻlmaydi.';
 
   @override
   String get fixAddApp => 'Ilova qoʻshish';
@@ -1142,7 +1143,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'Ekranda faqat shu ilovalardan biri turganda qoplamalar boʻlmaydi. Undan chiqishingiz bilan yoki Waaiya qaysi ilova koʻrsatilayotganiga ishonch hosil qila olmaganda, qoplamalar qaytadi.';
+      'Shu ilovalardan biri butun ekranni egallab turganda qoplamalar boʻlmaydi, masalan, xarita ilovasi yoki bankingiz ilovasi. Undan chiqishingiz bilan yoki Waaiya qaysi ilova koʻrsatilayotganiga ishonch hosil qila olmaganda, qoplamalar qaytadi.';
 
   @override
   String get fixBlurAppsNeedsSetup =>
@@ -1157,7 +1158,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get fixHandBody =>
-      'Xiralashtirish ishlayotganda ekranning istalgan qismini yopish uchun uning ustidan suring. Siz uni olib tashlamaguningizcha yoki xiralashtirish toʻxtamaguncha u yopiq qoladi.';
+      'Xiralashtirish ishlayotganda ekranning bir qismini oʻzingiz yopishingiz mumkin, masalan, xiralashtirish oʻtkazib yuborgan rasmni: “Joyni yopish” tugmasini bosing va barmogʻingizni uning ustidan suring. Siz uni olib tashlamaguningizcha yoki xiralashtirish toʻxtamaguncha u yopiq qoladi.';
 
   @override
   String get fixHandNotRunning =>
@@ -1176,7 +1177,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'Xato yuz berganda uni belgilang. Qaydda vaqt, ilova va sozlamalar saqlanadi. U shu qurilmada qoladi va hech qachon yuborilmaydi.';
+      'Waaiya biror narsada xato qilsa, nima boʻlganini bosing, masalan, “Musiqa oʻtib ketdi”. Sababni topishga yordam berish uchun qaydda vaqt, ilova va sozlamalar saqlanadi. U shu qurilmada qoladi va hech qachon yuborilmaydi.';
 
   @override
   String get fixMissedSound => 'Musiqa oʻtib ketdi';
@@ -1211,7 +1212,7 @@ class AppLocalizationsUz extends AppLocalizations {
       'Barcha qaydlar oʻchirilsinmi? Buni ortga qaytarib boʻlmaydi.';
 
   @override
-  String get fixNotesTitle => 'Notoʻgʻri aniqlash qaydlari';
+  String get fixNotesTitle => 'Xatolar haqida qaydlar';
 
   @override
   String get worshipTitle => 'Namoz vaqtlari';
@@ -1343,7 +1344,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'Har bir namoz vaqtidan boshlab quyidagi daqiqalar davomida “Bezovta qilinmasin” rejimi yoqiladi, soʻng hammasi avvalgi holiga qaytadi.';
+      'Har bir namoz vaqtida telefon quyidagi daqiqalar davomida ovozsiz boʻladi (“Bezovta qilinmasin”), soʻng hammasi avvalgi holiga qaytadi. Masalan, Peshin vaqtida soat 12:00 dan 12:20 gacha.';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1592,11 +1593,11 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'PIN-kod oʻrnatilgan boʻlsa, himoyani pasaytiradigan har bir oʻzgarish avval uni soʻraydi. Kutish muddatini yoki PIN-kodni oʻzgartirish ham uni soʻraydi.';
+      'PIN-kod oʻrnatilgan boʻlsa, filtrni toʻxtatish yoki istalgan himoyani oʻchirish avval PIN-kodni soʻraydi. Masalan, ota-ona bola filtrni oʻchira olmasligi uchun PIN-kod oʻrnatadi. Kutish muddatini yoki PIN-kodni oʻzgartirish ham uni soʻraydi.';
 
   @override
   String get protectPinForgot =>
-      'Agar PIN-kod unutilsa, uni tiklab boʻlmaydi: faqat Waaiya maʼlumotlarini tozalash yoki uni qayta oʻrnatish mumkin, bu esa uning barcha sozlamalarini ham oʻchirib yuboradi.';
+      'PIN-kodni yozib, xavfsiz joyda saqlang: agar u unutilsa, uni tiklab boʻlmaydi. Yagona yoʻl — Waaiya maʼlumotlarini tozalash yoki uni qayta oʻrnatish, bu esa uning barcha sozlamalarini ham oʻchirib yuboradi.';
 
   @override
   String get protectPinTitle => 'PIN-kodni kiriting';
@@ -1682,11 +1683,11 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'Bu oʻzgarishni himoya sozlamalari ushlab turibdi.';
+      'Hozir emas: himoya sozlamalaringiz boʻyicha bu oʻzgarish kutishi kerak yoki PIN-kod soʻraladi.';
 
   @override
   String get protectLimits =>
-      'Bu nimani toʻxtata olmaydi: majburiy toʻxtatish, oʻchirib tashlash, Waaiya maʼlumotlarini tozalash va Androidning oʻz sozlamalari. Ularni bloklash uchun qurilma administratori yoki maxsus imkoniyatlar huquqlari kerak, Waaiya esa ulardan foydalanmaydi. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
+      'Bu nimani toʻxtata olmaydi: majburiy toʻxtatish, oʻchirib tashlash, Waaiya maʼlumotlarini tozalash va Androidning oʻz sozlamalari. Ularni bloklash uchun maxsus Android ruxsatlari kerak, Waaiya esa ulardan foydalanmaydi. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1718,7 +1719,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get protectWhatStrictness => 'Xiralashtirishni kamroq qatʼiy qilish';
 
   @override
-  String get protectWhatGender => 'Telefondan kim foydalanishini oʻzgartirish';
+  String get protectWhatGender => 'Waaiyadan kim foydalanishini oʻzgartirish';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1733,4 +1734,8 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'Sozlamani oʻzgartirish';
+
+  @override
+  String get onboardBodyDesktop =>
+      'Waaiya bu kompyuterdagi barcha ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Hozircha qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
 }

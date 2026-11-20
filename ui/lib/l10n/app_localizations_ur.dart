@@ -33,7 +33,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'اس سے صرف یہ طے ہوتا ہے کہ آپ کو کون سی اختیاری ترتیبات نظر آئیں۔ آپ اسے بعد میں بدل سکتے ہیں۔';
+      'اس سے صرف یہ طے ہوتا ہے کہ آپ کو کون سی اختیاری ترتیبات نظر آئیں۔ مثال کے طور پر، “خواتین کا گانا خاموش کریں” صرف مردوں کو دکھایا جاتا ہے۔ آپ اسے بعد میں بدل سکتے ہیں۔';
 
   @override
   String get stateOnTitle => 'فلٹرنگ آن ہے';
@@ -46,7 +46,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'تمام ایپس سے آلات ہٹائے جا رہے ہیں۔ تاخیر تقریباً $delayMs ملی سیکنڈ۔';
+    return 'تمام ایپس سے آلات ہٹائے جا رہے ہیں۔ آواز تقریباً $delayMs ملی سیکنڈ دیر سے آتی ہے (1000 ملی سیکنڈ ایک سیکنڈ ہے)۔';
   }
 
   @override
@@ -224,7 +224,8 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingSingingTitle => 'خواتین کا گانا خاموش کریں';
 
   @override
-  String get settingSingingBody => 'خواتین کی بات چیت باقی رہتی ہے۔';
+  String get settingSingingBody =>
+      'مثال کے طور پر، کسی عورت کا گایا ہوا گانا خاموش ہو جاتا ہے، لیکن بیان دیتی ہوئی عورت کی آواز سنائی دیتی رہتی ہے۔';
 
   @override
   String get settingSingingNoModel =>
@@ -395,14 +396,14 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'پورا جسم۔ جن لوگوں کے بارے میں ایپ واضح طور پر نہیں بتا سکتی کہ وہ مرد ہیں، انہیں بھی دھندلا کیا جاتا ہے۔';
+      'پورا جسم ڈھانپا جاتا ہے۔ اگر ایپ کو یقین نہ ہو کہ کوئی شخص مرد ہے، تو اسے بھی ڈھانپ دیا جاتا ہے۔';
 
   @override
   String get blurNudityTitle => 'غیر شائستہ تصاویر دھندلا کریں';
 
   @override
   String get blurNudityBody =>
-      'کسی کی بھی برہنگی اور جسم ظاہر کرنے والا لباس: پوری اسکرین ڈھانپ دی جاتی ہے۔';
+      'برہنگی یا جسم دکھانے والا لباس، کسی پر بھی: پوری اسکرین ڈھانپ دی جاتی ہے۔';
 
   @override
   String get blurFailTitle => 'اگر دھندلاہٹ ساتھ نہ دے سکے تو اسکرین ڈھانپ دیں';
@@ -419,11 +420,11 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'دھندلاہٹ کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: Shizuku کے ساتھ اجازت دیں (اس سے واعية دھندلاہٹ کی ایکسیسبیلٹی سروس آن ہو جاتی ہے، تاکہ ٹچ نیچے والی ایپ تک پہنچتے رہیں)۔ یا Android ترتیبات میں “دیگر ایپس پر دکھائیں” کی اجازت دیں (پھر دھندلے حصے پر ٹچ ضائع ہو جاتے ہیں)۔';
+      'دھندلا کرنے کے لیے واعية کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: “Shizuku کے ساتھ اجازت دیں”، تاکہ آپ کے ٹچ دھندلاہٹ کے نیچے والی ایپ تک پہنچتے رہیں۔ یا “Android ترتیبات میں اجازت دیں”، لیکن پھر دھندلے حصے پر ٹچ کرنے سے کچھ نہیں ہوتا۔';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'دھندلاہٹ کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: Shizuku شروع کریں (اور اس میں واعية کو اجازت دیں): پھر دھندلاہٹ اپنی الگ تہہ بناتی ہے جس سے ٹچ گزر جاتے ہیں۔ ورنہ Android ترتیبات میں “دیگر ایپس پر دکھائیں” کی اجازت دیں؛ پھر دھندلے حصے پر ٹچ نیچے والی ایپ تک نہیں پہنچتا۔';
+      'دھندلا کرنے کے لیے واعية کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: Shizuku شروع کریں اور اس میں واعية کو اجازت دیں، تاکہ آپ کے ٹچ دھندلاہٹ کے نیچے والی ایپ تک پہنچتے رہیں۔ یا Android ترتیبات میں “دیگر ایپس پر دکھائیں” کی اجازت دیں، لیکن پھر دھندلے حصے پر ٹچ کرنے سے کچھ نہیں ہوتا۔';
 
   @override
   String get blurFailUnavailable =>
@@ -1107,7 +1108,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get fixFilterAppsBody =>
-      'یہ ایپس اپنی اصل آواز چلاتی ہیں: وعیہ نہ انہیں فلٹر کرتی ہے نہ خاموش۔';
+      'یہاں آپ جو ایپس چنیں وہ اپنی اصل آواز میں چلتی ہیں: نہ فلٹر، نہ خاموشی۔ مثال کے طور پر، ویڈیو کال کی ایپ، تاکہ کالوں میں تاخیر نہ ہو۔';
 
   @override
   String get fixAddApp => 'ایپ شامل کریں';
@@ -1138,22 +1139,22 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get fixBlurAppsBody =>
-      'جب تک ان میں سے کوئی ایپ اکیلی اسکرین پر ہو، کوئی پردہ نہیں۔ اسے چھوڑتے ہی پردے واپس آ جاتے ہیں، یا جب بھی وعیہ کو یقین نہ ہو کہ کون سی ایپ دکھ رہی ہے۔';
+      'جب تک ان میں سے کوئی ایپ پوری اسکرین پر ہو، مثلاً نقشے کی ایپ یا آپ کے بینک کی ایپ، کوئی پردہ نہیں لگتا۔ اسے چھوڑتے ہی پردے واپس آ جاتے ہیں، یا جب بھی واعية کو یقین نہ ہو کہ کون سی ایپ دکھ رہی ہے۔';
 
   @override
   String get fixBlurAppsNeedsSetup =>
-      'ایک بار کا سیٹ اپ درکار ہے: اس کے بغیر وعیہ نہیں جان سکتی کہ اسکرین پر کون سی ایپ ہے، اس لیے دھندلاہٹ ہر جگہ رہتی ہے۔';
+      'ایک بار کا سیٹ اپ درکار ہے: اس کے بغیر واعية نہیں جان سکتی کہ اسکرین پر کون سی ایپ ہے، اس لیے دھندلاہٹ ہر جگہ رہتی ہے۔';
 
   @override
   String get fixBlurAppsHelperMode =>
-      'واعیہ کا مددگار نہیں چل رہا، اس لیے اسکرین پر موجود ایپ معلوم نہیں ہو سکتی۔ جب تک سیٹ اپ صفحے سے مددگار دوبارہ شروع نہ ہو، دھندلاہٹ ہر جگہ رہے گی۔';
+      'واعية کا مددگار نہیں چل رہا، اس لیے اسکرین پر موجود ایپ معلوم نہیں ہو سکتی۔ جب تک سیٹ اپ صفحے سے مددگار دوبارہ شروع نہ ہو، دھندلاہٹ ہر جگہ رہے گی۔';
 
   @override
   String get fixHandTitle => 'ہاتھ سے کوئی حصہ ڈھانپیں';
 
   @override
   String get fixHandBody =>
-      'دھندلاہٹ چلتے وقت، اسکرین کے کسی بھی حصے پر انگلی گھسیٹ کر اسے ڈھانپیں۔ یہ تب تک ڈھکا رہتا ہے جب تک آپ اسے ہٹائیں یا دھندلاہٹ رک جائے۔';
+      'دھندلاہٹ چلتے وقت آپ خود اسکرین کا کوئی حصہ ڈھانپ سکتے ہیں، مثلاً کوئی تصویر جو دھندلاہٹ سے رہ گئی ہو: “کوئی حصہ ڈھانپیں” دبائیں اور اس پر انگلی گھسیٹیں۔ یہ تب تک ڈھکا رہتا ہے جب تک آپ اسے ہٹا نہ دیں یا دھندلاہٹ رک نہ جائے۔';
 
   @override
   String get fixHandNotRunning =>
@@ -1172,7 +1173,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get fixNoteBody =>
-      'جب ہو تبھی نشان لگائیں۔ نوٹ میں وقت، ایپ اور ترتیبات محفوظ ہوتی ہیں۔ یہ اسی آلے پر رہتا ہے اور کبھی بھیجا نہیں جاتا۔';
+      'جب واعية سے کوئی غلطی ہو، تو جو ہوا اسے دبائیں، مثلاً “موسیقی گزر گئی”۔ نوٹ میں وقت، ایپ اور ترتیبات محفوظ ہوتی ہیں، تاکہ وجہ معلوم کرنے میں مدد ملے۔ یہ اسی آلے پر رہتا ہے اور کبھی بھیجا نہیں جاتا۔';
 
   @override
   String get fixMissedSound => 'موسیقی گزر گئی';
@@ -1206,7 +1207,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get fixNotesDeleteAsk => 'تمام نوٹس حذف کریں؟ یہ واپس نہیں ہو سکتا۔';
 
   @override
-  String get fixNotesTitle => 'غلط شناخت کے نوٹس';
+  String get fixNotesTitle => 'غلطیوں کے نوٹس';
 
   @override
   String get worshipTitle => 'نماز کے اوقات';
@@ -1338,7 +1339,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get worshipSilentBody =>
-      'ہر نماز کے وقت سے نیچے دیے گئے منٹوں تک «ڈسٹرب نہ کریں»، پھر فون پہلے جیسا۔';
+      'ہر نماز کے وقت فون نیچے دیے گئے منٹوں تک خاموش ہو جاتا ہے («ڈسٹرب نہ کریں»)، پھر پہلے جیسا ہو جاتا ہے۔ مثلاً ظہر کے وقت 12:00 سے 12:20 تک۔';
 
   @override
   String worshipSilentMinutes(Object minutes) {
@@ -1584,11 +1585,11 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'PIN کے ساتھ، تحفظ کم کرنے والی ہر تبدیلی پہلے اسے مانگتی ہے۔ انتظار کا وقت یا PIN بدلنے کے لیے بھی یہ مانگا جاتا ہے۔';
+      'PIN لگا ہو تو فلٹر روکنے یا کوئی بھی تحفظ بند کرنے سے پہلے PIN مانگا جاتا ہے۔ مثلاً ماں یا باپ PIN لگا دیتے ہیں تاکہ بچہ فلٹر بند نہ کر سکے۔ انتظار کا وقت یا PIN بدلنے کے لیے بھی یہ مانگا جاتا ہے۔';
 
   @override
   String get protectPinForgot =>
-      'اگر PIN بھول جائے تو ری سیٹ کا کوئی طریقہ نہیں: صرف واعية کا ڈیٹا صاف کرنا یا دوبارہ انسٹال کرنا، جس سے اس کی تمام ترتیبات بھی صاف ہو جاتی ہیں۔';
+      'PIN کسی محفوظ جگہ لکھ لیں: اگر بھول گیا تو اسے ری سیٹ کرنے کا کوئی طریقہ نہیں۔ واحد راستہ واعية کا ڈیٹا صاف کرنا یا اسے دوبارہ انسٹال کرنا ہے، جس سے اس کی تمام ترتیبات بھی مٹ جاتی ہیں۔';
 
   @override
   String get protectPinTitle => 'PIN درج کریں';
@@ -1673,11 +1674,12 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get protectHeldBack => 'تحفظ کی ترتیبات نے یہ تبدیلی روک رکھی ہے۔';
+  String get protectHeldBack =>
+      'ابھی نہیں: آپ کی تحفظ کی ترتیبات کے مطابق یہ تبدیلی انتظار کرے گی، یا PIN مانگا جائے گا۔';
 
   @override
   String get protectLimits =>
-      'جو یہ نہیں روک سکتا: زبردستی بند کرنا، ان انسٹال کرنا، واعية کا ڈیٹا صاف کرنا اور خود Android کی ترتیبات۔ انہیں روکنے کے لیے ڈیوائس ایڈمن یا ایکسیسبیلٹی کے اختیارات چاہئیں جو واعية استعمال نہیں کرتا۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
+      'جو یہ نہیں روک سکتا: زبردستی بند کرنا، ان انسٹال کرنا، واعية کا ڈیٹا صاف کرنا اور خود Android کی ترتیبات۔ انہیں روکنے کے لیے Android کی خاص اجازتیں چاہئیں جو واعية استعمال نہیں کرتی۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
 
   @override
   String get protectLimitsDesktop =>
@@ -1709,7 +1711,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get protectWhatStrictness => 'دھندلاہٹ کو کم سخت کرنا';
 
   @override
-  String get protectWhatGender => 'فون کون استعمال کرتا ہے، بدلنا';
+  String get protectWhatGender => 'واعية کون استعمال کرتا ہے، بدلنا';
 
   @override
   String protectWhatDelay(Object value) {
@@ -1724,4 +1726,8 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get protectWhatSetting => 'کوئی ترتیب بدلنا';
+
+  @override
+  String get onboardBodyDesktop =>
+      'واعية اس کمپیوٹر کی ہر ایپ کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ فی الحال گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
 }

@@ -9,12 +9,12 @@
     <string name="onboard_question">Men</string>
     <string name="gender_man">Erkakman</string>
     <string name="gender_woman">Ayolman</string>
-    <string name="onboard_why">Bu faqat qaysi qoʻshimcha sozlamalarni koʻrishingizni belgilaydi. Keyinroq oʻzgartirishingiz mumkin.</string>
+    <string name="onboard_why">Bu faqat qaysi qoʻshimcha sozlamalarni koʻrishingizni belgilaydi. Masalan, “Ayollar qoʻshigʻini oʻchirish” faqat erkaklarga taklif qilinadi. Keyinroq oʻzgartirishingiz mumkin.</string>
 
     <string name="state_on_title">Filtrlash yoqilgan</string>
     <string name="state_off_title">Filtrlash oʻchirilgan</string>
     <string name="state_starting">Ishga tushirilmoqda…</string>
-    <string name="state_on_detail">Barcha ilovalardan musiqa asboblari olib tashlanmoqda. Kechikish taxminan %1$d ms.</string>
+    <string name="state_on_detail">Barcha ilovalardan musiqa asboblari olib tashlanmoqda. Ovoz taxminan %1$d ms kech keladi (1000 ms — bu bir soniya).</string>
     <string name="state_off_detail">Boshlash uchun tugmani bosing.</string>
     <string name="state_model_failed">Ovoz modeli yuklanmadi, shuning uchun xavfsizlik uchun ovoz oʻchirildi.</string>
     <string name="state_capture_denied">Boshqa ilovalarning ovozini qabul qilish uchun mikrofon ruxsati kerak.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Stereo ovoz</string>
     <string name="setting_stereo_body">Oʻchirilgan: mono, u batareyani taxminan ikki baravar kam sarflaydi va koʻproq telefonlarda uzilishsiz ishlaydi. Yoqilgan: chap va oʻng tomonlarni alohida saqlaydi. Telefon stereo uchun juda sekin boʻlsa, baribir oʻzi monoga oʻtadi.</string>
     <string name="setting_singing_title">Ayollar qoʻshigʻini oʻchirish</string>
-    <string name="setting_singing_body">Ayollarning nutqi saqlanadi.</string>
+    <string name="setting_singing_body">Masalan, ayol aytgan qoʻshiq oʻchiriladi, lekin maʼruza qilayotgan ayolning ovozi baribir eshitiladi.</string>
     <string name="setting_singing_no_model">Bu versiyada qoʻshiq aniqlagichi yoʻq, shuning uchun bu yoqilganda barcha ovozlar oʻchiriladi.</string>
     <string name="setting_restart">Oʻzgarishlarni qoʻllash uchun filtrlashni toʻxtatib, qayta boshlang.</string>
     <string name="setting_gender_title">Men</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Ekranni xiralashtirish</string>
     <string name="blur_body">Filtrlash yoqilganda barcha ilovalarda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.</string>
     <string name="blur_women_title">Ayollarni xiralashtirish</string>
-    <string name="blur_women_body">Butun tana. Ilova erkak ekanini aniq ajrata olmagan odamlar ham xiralashtiriladi.</string>
+    <string name="blur_women_body">Butun tanani yopadi. Agar ilova odamning erkak ekaniga ishonch hosil qila olmasa, uni ham yopadi.</string>
     <string name="blur_nudity_title">Odobsiz tasvirlarni xiralashtirish</string>
-    <string name="blur_nudity_body">Har qanday kishining yalangʻochligi va ochiq-sochiq kiyimi: butun ekran yopiladi.</string>
+    <string name="blur_nudity_body">Har qanday kishining yalangʻochligi yoki ochiq-sochiq kiyimi: butun ekran yopiladi.</string>
     <string name="blur_fail_title">Xiralashtirish ulgurmasa, ekranni yopish</string>
     <string name="blur_fail_body">Yoqilgan: telefon juda sekin boʻlsa yoki xiralashtirish ishlamay qolsa, butun ekran yopiladi. Oʻchirilgan: ekran ogohlantirish bilan koʻrinib turadi.</string>
     <string name="blur_setup_shizuku">Shizuku orqali ruxsat berish</string>
     <string name="blur_setup_manual">Android sozlamalarida ruxsat berish</string>
-    <string name="blur_status_needs_setup">Xiralashtirish boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku orqali ruxsat bering (u “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqadi, shunda bosishlar ostidagi ilovaga yetib boradi). Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering (bunda xiralashtirilgan joyga bosishlar yoʻqoladi).</string>
-    <string name="blur_status_needs_overlay">Xiralashtirish boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku ilovasini ishga tushiring (va unda Waaiyaga ruxsat bering): shunda xiralashtirish oʻz qatlamini chizadi va bosishlar undan oʻtib ketadi. Aks holda Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering; bunda xiralashtirilgan joyga bosish ostidagi ilovaga yetib bormaydi.</string>
+    <string name="blur_status_needs_setup">Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: “Shizuku orqali ruxsat berish”, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki “Android sozlamalarida ruxsat berish”, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.</string>
+    <string name="blur_status_needs_overlay">Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku ilovasini ishga tushiring va unda Waaiyaga ruxsat bering, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.</string>
     <string name="blur_fail_unavailable">Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini yoki Shizuku ilovasini ishga tushiring (Android 12 yoki yangiroq) va bu sozlama yoqiladi: shunda qoplamalar bosishlar ulardan oʻtib ketadigan qilib chiziladi. Ungacha xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.</string>
     <string name="blur_fail_needs_a11y">Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Shizuku ilovasini ishga tushiring (Android 12 yoki yangiroq) yoki “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqing (yuqoridagi “Shizuku orqali ruxsat berish”) va bu sozlama yoqiladi. Ungacha ekran ogohlantirish bilan koʻrinib turadi.</string>
     <string name="language_title">Til</string>

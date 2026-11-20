@@ -31,6 +31,7 @@ class WorshipSmsSection extends StatelessWidget {
     final r = await showDialog<String>(
       context: context,
       builder: (dialog) => AlertDialog(
+        scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.worshipSmsTextTitle),
         content: TextField(
           key: const Key('worship_sms_text_field'),

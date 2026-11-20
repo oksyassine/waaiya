@@ -9,12 +9,12 @@
     <string name="onboard_question">Ni ne</string>
     <string name="gender_man">Namiji</string>
     <string name="gender_woman">Mace</string>
-    <string name="onboard_why">Wannan yana zaɓar waɗanne ƙarin saituna za ku gani ne kawai. Za ku iya canza shi daga baya.</string>
+    <string name="onboard_why">Wannan yana zaɓar waɗanne ƙarin saituna za ku gani ne kawai. Misali, “Kashe waƙar mata” ana nuna shi ga maza kawai. Za ku iya canza shi daga baya.</string>
 
     <string name="state_on_title">Tacewa tana kunne</string>
     <string name="state_off_title">Tacewa a kashe take</string>
     <string name="state_starting">Ana farawa…</string>
-    <string name="state_on_detail">Ana cire kayan kiɗa daga dukkan manhajoji. Jinkiri kusan %1$d ms.</string>
+    <string name="state_on_detail">Ana cire kayan kiɗa daga dukkan manhajoji. Sauti yana zuwa a makare da kusan %1$d ms (1000 ms daƙiƙa ɗaya ne).</string>
     <string name="state_off_detail">Taɓa maɓallin don farawa.</string>
     <string name="state_model_failed">Tsarin tace sauti bai iya buɗuwa ba, don haka an kashe sauti don kariya.</string>
     <string name="state_capture_denied">Ana buƙatar izinin makirufo don karɓar sautin sauran manhajoji.</string>
@@ -66,7 +66,7 @@
     <string name="setting_stereo_title">Sautin stereo</string>
     <string name="setting_stereo_body">A kashe: mono, wanda ke amfani da kusan rabin batir kuma yana tafiya daidai a wayoyi da yawa. A kunne: yana raba gefen hagu da na dama. Idan wayar ta yi jinkiri sosai don stereo, za ta koma mono da kanta.</string>
     <string name="setting_singing_title">Kashe waƙar mata</string>
-    <string name="setting_singing_body">Ana barin maganar mata.</string>
+    <string name="setting_singing_body">Misali, ana kashe waƙar da mace ke rerawa, amma ana ci gaba da jin mace da ke yin jawabi.</string>
     <string name="setting_singing_no_model">Wannan sigar ba ta da mai gane waƙa, don haka ana kashe dukkan muryoyi yayin da wannan ke kunne.</string>
     <string name="setting_restart">Ku dakatar da tacewa sannan ku sake farawa don canje-canjen su yi aiki.</string>
     <string name="setting_gender_title">Ni ne</string>
@@ -126,15 +126,15 @@
     <string name="blur_title">Dusashe allo</string>
     <string name="blur_body">Yana rufe mutane da hotuna a allo, a kowace manhaja, yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.</string>
     <string name="blur_women_title">Dusashe mata</string>
-    <string name="blur_women_body">Dukkan jiki. Ana dusashe mutanen da manhajar ba ta tabbatar maza ne ba su ma.</string>
+    <string name="blur_women_body">Ana rufe dukkan jiki. Idan manhajar ba ta tabbata cewa mutum namiji ne ba, ana rufe shi shi ma.</string>
     <string name="blur_nudity_title">Dusashe hotunan tsiraici</string>
-    <string name="blur_nudity_body">Tsiraici da tufafin da ke bayyana jiki, na kowa: ana rufe dukkan allo.</string>
+    <string name="blur_nudity_body">Tsiraici ko tufafin da ke bayyana jiki, a jikin kowa: ana rufe dukkan allo.</string>
     <string name="blur_fail_title">Rufe allo idan dusashewa ta kasa tafiya daidai</string>
     <string name="blur_fail_body">A kunne: ana rufe dukkan allo idan wayar ta yi jinkiri sosai ko dusashewa ta kasa. A kashe: allon yana bayyana tare da gargaɗi.</string>
     <string name="blur_setup_shizuku">Ba da izini da Shizuku</string>
     <string name="blur_setup_manual">Ba da izini a saitunan Android</string>
-    <string name="blur_status_needs_setup">Dusashewa tana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku ba da izini da Shizuku (yana kunna sabis ɗin sauƙaƙa amfani “Dusashewar Waaiya”, don taɓawa ta ci gaba da kaiwa manhajar da ke ƙasa). Ko kuma ku ba da izinin “Display over other apps” a saitunan Android (daga nan taɓawa a wurin da aka dusashe za ta ɓace).</string>
-    <string name="blur_status_needs_overlay">Dusashewa tana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku kunna Shizuku (ku kuma ba Waaiya izini a ciki): daga nan dusashewa za ta zana nata shafi wanda taɓawa ke ratsawa. In ba haka ba, ku ba da izinin “Display over other apps” a saitunan Android; daga nan taɓawa a wurin da aka dusashe ba za ta kai manhajar da ke ƙasa ba.</string>
+    <string name="blur_status_needs_setup">Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: “Ba da izini da Shizuku”, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma “Ba da izini a saitunan Android”, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.</string>
+    <string name="blur_status_needs_overlay">Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku kunna Shizuku ku kuma ba Waaiya izini a ciki, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma ku ba da izinin “Display over other apps” a saitunan Android, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.</string>
     <string name="blur_fail_unavailable">Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya ko Shizuku (Android 12 ko sabo) sai ya kunnu: daga nan ana zana murfin ta yadda taɓawa ke ratsa su. Kafin nan, idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.</string>
     <string name="blur_fail_needs_a11y">Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna Shizuku (Android 12 ko sabo) ko ku kunna sabis ɗin sauƙaƙa amfani “Dusashewar Waaiya” (“Ba da izini da Shizuku” a sama) sai ya kunnu. Kafin nan, allon yana bayyana tare da gargaɗi.</string>
     <string name="language_title">Harshe</string>
