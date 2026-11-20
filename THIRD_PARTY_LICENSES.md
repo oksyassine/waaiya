@@ -102,8 +102,8 @@ always a derivative. Practical policy for this project:
    **Owner's decision, 2026-11-20: c.** `detector_v1.onnx` and `voice_v1_fp16.onnx` (the "keep singing" model, a
    test option) are published in the `models-v1` release with this disclosure. Checked the same day: the dataset's
    Kaggle metadata (`kaggle datasets metadata abdo3id/diverse-quran-reciters`) still says licence "unknown" and
-   names no source for the recordings ("3,396 verses recited by men and 210 by women"). Next steps: ask the
-   uploader for the source of the recordings; if a reciter or publisher objects, retrain with `USE_QURAN = False`
+   names no source for the recordings ("3,396 verses recited by men and 210 by women"). The owner chose not to contact the
+   uploader (2026-11-20). If a reciter or publisher objects, retrain with `USE_QURAN = False`
    (option b) and replace the files.
 
 ## 6. How models are distributed
