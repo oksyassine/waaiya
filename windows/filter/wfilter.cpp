@@ -30,6 +30,7 @@
 #include <appmodel.h>
 #include <avrt.h>
 #include <shlobj.h>
+#include <tlhelp32.h>
 
 #include <algorithm>
 #include <atomic>
@@ -373,26 +374,28 @@ void read_state_head(const std::wstring &dir, unsigned long *pid, long long *t) 
     if (q) *t = strtoll(q + 4, nullptr, 10);
 }
 
-// The process holding the lock has not written its state for over 5 s (it rewrites it at least every 2 s): it is
-// stuck. Ended, so that this one can take over.
-bool end_stuck(const std::wstring &dir) {
+bool state_fresh(const std::wstring &dir) {
     unsigned long pid;
     long long t;
     read_state_head(dir, &pid, &t);
-    if (pid == 0 || pid == GetCurrentProcessId() || unix_ms() - t < 5000) return false;
-    HANDLE h = OpenProcess(PROCESS_TERMINATE | SYNCHRONIZE, FALSE, pid);
+    return unix_ms() - t < 5000;
+}
+
+// Ends [pid] if it is a waaiya-filter.exe (never another program that got the same pid) of this login session.
+bool end_filter_pid(DWORD pid) {
+    if (pid == 0 || pid == GetCurrentProcessId()) return false;
+    DWORD mine = 0, theirs = 1;
+    ProcessIdToSessionId(GetCurrentProcessId(), &mine);
+    if (!ProcessIdToSessionId(pid, &theirs) || theirs != mine) return false;
+    HANDLE h = OpenProcess(PROCESS_TERMINATE | SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
     if (!h) return false;
     wchar_t name[MAX_PATH] = L"";
     DWORD n = MAX_PATH;
-    HANDLE q = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
     bool ours = false;
-    if (q) { // only a waaiya-filter.exe, never another program that got the same pid
-        if (QueryFullProcessImageNameW(q, 0, name, &n)) {
-            std::wstring s = name;
-            for (auto &ch : s) ch = (wchar_t)towlower(ch);
-            ours = s.size() >= 17 && s.compare(s.size() - 17, 17, L"waaiya-filter.exe") == 0;
-        }
-        CloseHandle(q);
+    if (QueryFullProcessImageNameW(h, 0, name, &n)) {
+        std::wstring s = name;
+        for (auto &ch : s) ch = (wchar_t)towlower(ch);
+        ours = s.size() >= 17 && s.compare(s.size() - 17, 17, L"waaiya-filter.exe") == 0;
     }
     if (ours) {
         TerminateProcess(h, 3);
@@ -400,6 +403,33 @@ bool end_stuck(const std::wstring &dir) {
     }
     CloseHandle(h);
     return ours;
+}
+
+// The process holding the lock has not written its state for over 5 s (it rewrites it at least every 2 s): it is
+// stuck. Ended, so that this one can take over. The state may name a process that is gone: an older run's state,
+// left by a filter that hung before writing its own (seen on a PC: a 0.2.10 filter hung for a week behind a state
+// that said "stopped"). Then the lock's holder is one of the other waaiya-filter.exe of this session, none of which
+// answers (the caller asked them first): they are ended.
+bool end_stuck(const std::wstring &dir) {
+    unsigned long pid;
+    long long t;
+    read_state_head(dir, &pid, &t);
+    if (unix_ms() - t < 5000) return false;
+    if (end_filter_pid(pid)) return true;
+    bool any = false;
+    HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (snap == INVALID_HANDLE_VALUE) return false;
+    PROCESSENTRY32W e = {};
+    e.dwSize = sizeof e;
+    for (BOOL ok = Process32FirstW(snap, &e); ok; ok = Process32NextW(snap, &e)) {
+        if (_wcsicmp(e.szExeFile, L"waaiya-filter.exe") == 0 && end_filter_pid(e.th32ProcessID)) {
+            logf("ended a waaiya-filter.exe that held the lock without writing its state (pid %lu)",
+                 (unsigned long)e.th32ProcessID);
+            any = true;
+        }
+    }
+    CloseHandle(snap);
+    return any;
 }
 
 struct Paths {
@@ -768,7 +798,8 @@ int cmd_stop(const Paths &p) {
                 buf[k] = 0;
                 fclose(f);
             }
-            if (strstr(buf, "\"restoring\"") || strstr(buf, "\"stopped\"")) {
+            // only a fresh state answers: an old one may say "stopped" while a stuck filter holds the lock
+            if ((strstr(buf, "\"restoring\"") || strstr(buf, "\"stopped\"")) && state_fresh(p.dir)) {
                 CloseHandle(mtx);
                 return 0;
             }

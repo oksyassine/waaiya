@@ -116,8 +116,11 @@ int _shortSide(Map<String, Object?> f) {
 /// im_links.py `_best_video`: the largest within [maxSide]; if every one is larger, the smallest.
 Map<String, Object?> _bestVideo(List<Map<String, Object?>> fs, int maxSide) {
   num rate(Map<String, Object?> f) => _n(f['tbr']) > 0 ? _n(f['tbr']) : _n(f['vbr']);
+  // at the same size, a plain file (its size is known: progress, one request) before HLS pieces
+  int plain(Map<String, Object?> f) => const {'http', 'https'}.contains(_s(f['protocol'])) ? 1 : 0;
   int cmp(Map<String, Object?> a, Map<String, Object?> b) {
-    final c = _shortSide(a).compareTo(_shortSide(b));
+    var c = _shortSide(a).compareTo(_shortSide(b));
+    if (c == 0) c = plain(a).compareTo(plain(b));
     return c != 0 ? c : rate(a).compareTo(rate(b));
   }
 
@@ -390,12 +393,18 @@ class LinkSaver {
       final parts = choice.parts;
       final sizes = parts.map((f) => _n(f['filesize']) > 0 ? _n(f['filesize']) : _n(f['filesize_approx'])).toList();
       final total = sizes.every((s) => s > 0) ? sizes.fold<num>(0, (a, b) => a + b) : 0;
+      if (total == 0) _set(_with(progress: -1));
       var before = 0;
       final files = <String>[];
       for (var i = 0; i < parts.length; i++) {
         final name = identical(parts[i], choice.audio) ? 'audio' : 'video';
-        final f = await _download(infoFile.path, _s(parts[i]['format_id']), dir.path, name, (n) {
-          if (total > 0) _set(_with(progress: ((before + n) / total).clamp(0, 1).toDouble()));
+        final f = await _download(infoFile.path, _s(parts[i]['format_id']), dir.path, name, (n, partTotal) {
+          if (total > 0) {
+            _set(_with(progress: ((before + n) / total).clamp(0, 1).toDouble()));
+          } else if (partTotal > 0) {
+            // sizes unknown beforehand (HLS): yt-dlp's estimate for this part, the parts counting alike
+            _set(_with(progress: ((i + (n / partTotal).clamp(0, 1)) / parts.length).toDouble()));
+          }
         });
         before += await File(f).length();
         files.add(f);
@@ -440,7 +449,8 @@ class LinkSaver {
   }
 
   /// One format with yt-dlp (it handles HLS, DASH and the sites' headers and cookies); returns the file.
-  Future<String> _download(String infoJson, String formatId, String dir, String name, void Function(int) progress) async {
+  Future<String> _download(
+      String infoJson, String formatId, String dir, String name, void Function(int done, int total) progress) async {
     _checkCancel();
     final p = await _spawn(tools.ytDlp, [
       ..._ytBase,
@@ -463,7 +473,7 @@ class LinkSaver {
     final errDone = p.stderr.transform(const Utf8Decoder(allowMalformed: true)).forEach(err.write);
     final outDone = p.stdout.transform(const Utf8Decoder(allowMalformed: true)).transform(const LineSplitter()).forEach((l) {
       final pr = parseProgress(l);
-      if (pr != null) progress(pr.$1);
+      if (pr != null) progress(pr.$1, pr.$2);
     });
     final code = await p.exitCode;
     await Future.wait([errDone, outDone]);

@@ -44,6 +44,17 @@ void main() {
       expect(c.hasVideo, isTrue);
     });
 
+    test('at the same size, a plain file before HLS pieces (known size: real progress)', () {
+      final c = pickFormats({
+        'formats': [
+          f('312', v: 'avc1.64002A', a: 'none', w: 1920, h: 1080, tbr: 9000, protocol: 'm3u8_native'),
+          f('299', v: 'avc1.64002A', a: 'none', w: 1920, h: 1080, tbr: 3000),
+          f('140', v: 'none', a: 'mp4a.40.2', ext: 'm4a'),
+        ],
+      });
+      expect(c.video!['format_id'], '299');
+    });
+
     test('portrait videos count by their short side (a 1080x1920 reel is 1080p)', () {
       final c = pickFormats({
         'formats': [

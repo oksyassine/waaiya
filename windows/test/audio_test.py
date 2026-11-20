@@ -14,6 +14,7 @@ What it checks, in order (each step prints its numbers; a failed check exits 1 a
   6. the filter killed: apps stay silent (fail-closed); stop without a filter gives the levels back
   7. an app that ended while lowered gets its level back when it plays again after the stop
 """
+import ctypes
 import json
 import math
 import os
@@ -98,6 +99,14 @@ def capture(name, seconds=3, pid=None):
     x = read_f32(path) if r.returncode == 0 else []
     print(f"  {name}: {db(x):.2f} dBFS", flush=True)
     return x
+
+
+def suspend(pid):
+    """Freezes a process (every thread), as a hung one."""
+    k = ctypes.windll.kernel32
+    h = k.OpenProcess(0x0800, False, pid)  # PROCESS_SUSPEND_RESUME
+    ctypes.windll.ntdll.NtSuspendProcess(ctypes.c_void_p(h))
+    k.CloseHandle(h)
 
 
 def volume(pid, wait=5):
@@ -293,6 +302,30 @@ def main():
     va = volume(apid)
     check(va is not None and abs(va - 1) < 1e-4, f"stop gives the level back ({va})")
     a.kill()
+
+    print("=== 11. a hung filter behind an old state (seen on a PC: 0.2.10 hung, state.json still said stopped)",
+          flush=True)
+    c, cpid = tone("tone-d")
+    f, flog = start_filter()
+    vc = volume(cpid)
+    check(vc is not None and abs(vc - 1e-4) < 1e-6, f"lowered ({vc})")
+    suspend(f.pid)  # frozen: holds the lock, writes nothing
+    with open(os.path.join(STATE_DIR, "state.json"), "w", encoding="utf-8") as sf:
+        sf.write('{"pid":4,"t":%d,"state":"stopped","engine":""}\n' % int(time.time() * 1000 - 3600_000))
+    subprocess.run([FILTER, "stop", "--dir", STATE_DIR], timeout=30)
+    try:
+        f.wait(timeout=10)
+    except subprocess.TimeoutExpired:
+        pass
+    check(f.poll() is not None, "stop ended the hung filter")
+    time.sleep(1.5)
+    vb = volume(cpid)
+    check(vb is not None and abs(vb - 1) < 1e-4, f"stop gave the level back ({vb})")
+    g, glog = start_filter()
+    s = state()
+    check(s.get("pid") == g.pid and s.get("state") == "filtering", f"a new filter starts ({s.get('state')})")
+    stop_filter(g, glog)
+    c.kill()
 
     print()
     if failures:
