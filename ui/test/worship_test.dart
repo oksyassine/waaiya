@@ -13,7 +13,7 @@ const _methods = [
   'qatar', 'singapore', 'turkey', 'france', 'morocco', 'indonesia', 'malaysia', 'dubai',
 ];
 
-Map<String, Object?> _worship({bool place = true, bool permissions = true}) => {
+Map<String, Object?> _worship({bool place = true, bool permissions = true, bool sms = false}) => {
       'supported': true,
       'placeSet': place,
       'placeValid': place,
@@ -47,7 +47,34 @@ Map<String, Object?> _worship({bool place = true, bool permissions = true}) => {
       ],
       'ringtone': 'ring_2',
       'notificationTone': '',
+      'smsSupported': sms,
+      'smsPhone': permissions,
+      'smsSend': permissions,
+      'smsRoaming': false,
+      'smsLog': [
+        if (sms) {'at': 0, 'hm': '12:03', 'number': '+201001234567'},
+      ],
     };
+
+/// Records every feature method; askPermission answers [granted] at once.
+List<String> _record(MemoryBackend b, {bool granted = true, Object? setTone}) {
+  final calls = <String>[];
+  for (final m in ['askPermission', 'unmuteNow', 'endSilentNow', 'openSoundSettings', 'previewTone', 'setTone',
+      'cities', 'customPlace']) {
+    b.methods['worship.$m'] = (args) async {
+      calls.add(m == 'askPermission' ? 'ask ${args['name']}' : m == 'setTone' ? 'setTone ${args['id']}' : m);
+      if (m == 'askPermission') return {'id': calls.length, 'done': true, 'granted': granted};
+      if (m == 'setTone') return setTone;
+      return m == 'cities' ? const [] : null;
+    };
+  }
+  return calls;
+}
+
+Future<void> _continue(WidgetTester tester) async {
+  await tester.tap(find.byKey(const Key('worship_ask_continue')));
+  await tester.pumpAndSettle();
+}
 
 AppState _state({String language = 'en', Map<String, Object?>? worship, WaaiyaSettings? settings, String platform = 'android'}) =>
     AppState(
@@ -55,7 +82,7 @@ AppState _state({String language = 'en', Map<String, Object?>? worship, WaaiyaSe
       language: language,
       settings: settings ?? const WaaiyaSettings(gender: 'man'),
       capabilities: Capabilities.android,
-      features: {if (worship != null) 'worship': worship},
+      features: {'worship': ?worship},
     );
 
 Future<void> _openSettings(WidgetTester tester, MemoryBackend b) async {
@@ -207,29 +234,113 @@ void main() {
     expect(b.state.settings.prayerSilent, isFalse);
   });
 
-  testWidgets('missing permissions are shown with a button; Unmute now; a refused tone opens Sound settings', (tester) async {
+  testWidgets('the card asks for nothing by itself: not when it first shows, not while scrolling', (tester) async {
+    final b = MemoryBackend(initial: _state(
+        worship: _worship(permissions: false, sms: true),
+        settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'cairo')));
+    final calls = _record(b);
+    await _openSettings(tester, b);
+    final list = find.byType(Scrollable).first;
+    for (var i = 0; i < 10; i++) {
+      await tester.drag(list, const Offset(0, -400));
+      await tester.pumpAndSettle();
+    }
+    expect(find.byKey(const Key('worship_sms_switch')), findsOneWidget);
+    expect(calls, isEmpty);
+    expect(find.byType(AlertDialog), findsNothing);
+  });
+
+  testWidgets('turning on the SMS reply asks Phone, then SMS, each after one sentence, then turns it on', (tester) async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    final b = MemoryBackend(initial: _state(
+        worship: _worship(permissions: false, sms: true),
+        settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'cairo')));
+    final calls = _record(b);
+    await _openSettings(tester, b);
+    await _show(tester, find.byKey(const Key('worship_sms_switch')));
+    await tester.tap(find.byKey(const Key('worship_sms_switch')));
+    await tester.pumpAndSettle();
+    expect(find.text(l.worshipWhyPhone), findsOneWidget);
+    expect(calls, isEmpty);  // nothing before the sentence is read
+    await _continue(tester);
+    expect(find.text(l.worshipWhySms), findsOneWidget);
+    await _continue(tester);
+    expect(calls, ['ask phone', 'ask sms']);
+    expect(b.state.settings.prayerSmsReply, isTrue);
+  });
+
+  testWidgets('a refused permission leaves the switch off, says which one, and offers Try again', (tester) async {
+    final l = await AppLocalizations.delegate.load(const Locale('en'));
+    final b = MemoryBackend(initial: _state(
+        worship: _worship(permissions: false, sms: true),
+        settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'cairo')));
+    final calls = _record(b);
+    // Android's question is open (done: false); the answer comes back in the snapshot's `ask`
+    b.methods['worship.askPermission'] = (args) async {
+      calls.add('ask ${args['name']}');
+      return {'id': 7, 'done': false, 'granted': false};
+    };
+    await _openSettings(tester, b);
+    await _show(tester, find.byKey(const Key('worship_sms_switch')));
+    await tester.tap(find.byKey(const Key('worship_sms_switch')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('worship_ask_continue')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));  // the question is open; the user answers
+    b.emit(b.state.copyWith(features: {
+      'worship': {..._worship(permissions: false, sms: true), 'ask': {'id': 7, 'name': 'phone', 'done': true, 'granted': false}},
+    }));
+    await tester.pumpAndSettle();
+    expect(calls, ['ask phone']);
+    expect(b.state.settings.prayerSmsReply, isFalse);
+    await _show(tester, find.byKey(const Key('worship_sms_missing')));
+    expect(find.text(l.worshipMissingPhone), findsOneWidget);
+    expect(find.text(l.worshipTryAgain), findsOneWidget);
+
+    // the silence: Do Not Disturb access refused -> the switch stays off
+    b.methods['worship.askPermission'] = (args) async {
+      calls.add('ask ${args['name']}');
+      return {'id': 8, 'done': true, 'granted': false};
+    };
+    await _show(tester, find.byKey(const Key('worship_silent')));
+    await tester.tap(find.byKey(const Key('worship_silent')));
+    await tester.pumpAndSettle();
+    expect(find.text(l.worshipWhyDnd), findsOneWidget);
+    await _continue(tester);
+    expect(calls.last, 'ask dnd');
+    expect(b.state.settings.prayerSilent, isFalse);
+    expect(find.text(l.worshipMissingDnd), findsOneWidget);
+  });
+
+  testWidgets('turning on the silence asks Do Not Disturb, then exact alarms and notifications', (tester) async {
+    final b = MemoryBackend(initial: _state(
+        worship: _worship(permissions: false),
+        settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'cairo')));
+    final calls = _record(b);
+    await _openSettings(tester, b);
+    await _show(tester, find.byKey(const Key('worship_silent')));
+    await tester.tap(find.byKey(const Key('worship_silent')));
+    await tester.pumpAndSettle();
+    for (var i = 0; i < 3; i++) {
+      await _continue(tester);
+    }
+    expect(calls, ['ask dnd', 'ask exact', 'ask notifications']);
+    expect(b.state.settings.prayerSilent, isTrue);
+  });
+
+  testWidgets('permissions taken back later: Allow asks again; Unmute now; a refused tone opens Sound settings', (tester) async {
     final l = await AppLocalizations.delegate.load(const Locale('en'));
     final b = MemoryBackend(initial: _state(
         worship: _worship(permissions: false),
         settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'cairo', prayerSilent: true, prayerAdhanMute: true)));
-    final calls = <String>[];
-    for (final m in ['openDndAccess', 'openExactAlarms', 'openNotificationSettings', 'unmuteNow', 'openSoundSettings', 'previewTone']) {
-      b.methods['worship.$m'] = (args) async {
-        calls.add(m);
-        return null;
-      };
-    }
-    b.methods['worship.setTone'] = (args) async {
-      calls.add('setTone ${args['id']}');
-      return 'failed';
-    };
+    final calls = _record(b, setTone: 'failed');
     await _openSettings(tester, b);
-    for (final (key, method) in [('worship_dnd', 'openDndAccess'), ('worship_exact', 'openExactAlarms'),
-        ('worship_notifications', 'openNotificationSettings')]) {
+    for (final (key, name) in [('worship_dnd', 'dnd'), ('worship_exact', 'exact'), ('worship_notifications', 'notifications')]) {
       await _show(tester, find.byKey(Key(key)));
       await tester.tap(find.descendant(of: find.byKey(Key(key)), matching: find.byType(TextButton)));
       await tester.pumpAndSettle();
-      expect(calls.last, method);
+      await _continue(tester);
+      expect(calls.last, 'ask $name');
     }
     await _show(tester, find.text(l.worshipUnmute));
     await tester.tap(find.text(l.worshipUnmute));
@@ -246,7 +357,9 @@ void main() {
     await _show(tester, find.byKey(const Key('worship_use_notification_1')));
     await tester.tap(find.byKey(const Key('worship_use_notification_1')));
     await tester.pumpAndSettle();
-    expect(calls.last, 'setTone notification_1');
+    expect(find.text(l.worshipWhyWrite), findsOneWidget);  // "Modify system settings" only now
+    await _continue(tester);
+    expect(calls.sublist(calls.length - 2), ['ask write', 'setTone notification_1']);
     expect(find.text(l.worshipToneFailed), findsOneWidget);
     await tester.tap(find.byKey(const Key('worship_open_sound')));
     await tester.pumpAndSettle();
@@ -257,8 +370,9 @@ void main() {
     testWidgets('$tag: the card with everything on fits a small phone', (tester) async {
       final b = MemoryBackend(initial: _state(
           language: tag,
-          worship: _worship(permissions: false),
-          settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'cairo', prayerSilent: true, prayerAdhanMute: true)));
+          worship: _worship(permissions: false, sms: true),
+          settings: const WaaiyaSettings(
+              gender: 'man', prayerPlace: 'cairo', prayerSilent: true, prayerAdhanMute: true, prayerSmsReply: true)));
       await _openSettings(tester, b);
       final list = find.byType(Scrollable).first;
       for (var i = 0; i < 10; i++) {

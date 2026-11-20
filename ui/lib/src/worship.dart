@@ -5,6 +5,8 @@
 /// snapshot's facts and calls the methods. Platforms without the section (desktop) do not show the card.
 library;
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
@@ -13,6 +15,7 @@ import 'backend.dart';
 import 'home.dart';
 import 'widgets.dart';
 import 'worship_place.dart';
+import 'worship_sms.dart';
 import 'worship_tones.dart';
 
 /// One prayer time of today at the place: `name` is fajr, sunrise, dhuhr, asr, maghrib or isha.
@@ -76,6 +79,26 @@ class WorshipInfo {
         ]
       : const [];
   String get ringtone => _s('ringtone') ?? '';
+  bool get smsSupported => _b('smsSupported');
+  bool get smsPhone => _b('smsPhone');
+  bool get smsSend => _b('smsSend');
+  bool get smsRoaming => _b('smsRoaming');
+
+  /// SMS replies sent, newest first: ("HH:mm", number).
+  List<(String, String)> get smsLog => m['smsLog'] is List
+      ? [for (final e in (m['smsLog'] as List).whereType<Map>()) ('${e['hm']}', '${e['number']}')]
+      : const [];
+
+  /// Whether the permission named as in `worship.askPermission` is allowed now.
+  bool allowed(String name) => switch (name) {
+        'dnd' => dndAccess,
+        'exact' => exactAlarms,
+        'notifications' => notifications,
+        'write' => writeSettings,
+        'phone' => smsPhone,
+        'sms' => smsSend,
+        _ => false,
+      };
   String get notificationTone => _s('notificationTone') ?? '';
 }
 
@@ -118,10 +141,103 @@ String worshipMethodName(AppLocalizations l, int index) =>
 const worshipSilentMinutes = [5, 10, 15, 20, 25, 30, 40, 45, 60, 90];
 const worshipMuteMinutes = [1, 2, 3, 5, 10, 15, 20, 30];
 
-/// Settings page, under the general settings: place, method, Asr rule, today's times, the two switches with their
-/// minutes, what the phone still has to allow, and the plain tones.
-class WorshipCard extends StatelessWidget {
+/// Asks Android for one permission ([WorshipInfo.allowed] names), only because the user just turned on the option
+/// that needs it: one sentence saying why ([why]), then Android's question or settings page
+/// (`worship.askPermission`), then waits until the user is back. True when allowed. Nothing is ever asked without
+/// such a tap (owner's decision, 2026-11-20).
+Future<bool> worshipAsk(BuildContext context, String name, String why) async {
+  final backend = WaaiyaScope.of(context).backend;
+  if (WorshipInfo((await backend.getState()).feature('worship')).allowed(name)) return true;
+  if (!context.mounted) return false;
+  final l = AppLocalizations.of(context);
+  final go = await showDialog<bool>(
+    context: context,
+    builder: (dialog) => AlertDialog(
+      content: Text(why),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(dialog, false), child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel)),
+        TextButton(key: const Key('worship_ask_continue'), onPressed: () => Navigator.pop(dialog, true), child: Text(l.worshipContinue)),
+      ],
+    ),
+  );
+  if (go != true || !context.mounted) return false;
+  // listen before asking, so that a quick answer cannot slip by
+  Map<Object?, Object?>? last;
+  Object? wanted;
+  final back = Completer<void>();
+  bool matches(Map<Object?, Object?>? a) => a != null && wanted != null && a['id'] == wanted && a['done'] == true;
+  final sub = backend.states.listen((s) {
+    final a = s.feature('worship')['ask'];
+    if (a is Map) last = a;
+    if (matches(last) && !back.isCompleted) back.complete();
+  });
+  try {
+    final r = await runAction(context, (b) => b.invoke('worship.askPermission', {'name': name}));
+    if (r is! Map) return false;
+    if (r['done'] == true) return r['granted'] == true;
+    // Android's question or page is open: the snapshot's `ask` says when the user is back
+    wanted = r['id'];
+    if (!matches(last)) await back.future.timeout(const Duration(minutes: 5));
+    return last?['granted'] == true;
+  } on TimeoutException {
+    return false;
+  } finally {
+    unawaited(sub.cancel());  // not awaited: a generator-backed stream may finish its cancel only later
+  }
+}
+
+/// Settings page, under the general settings: place, method, Asr rule, today's times, the switches with their
+/// minutes, what the phone still has to allow, the SMS reply during prayer, and the plain tones.
+class WorshipCard extends StatefulWidget {
   const WorshipCard({super.key});
+
+  @override
+  State<WorshipCard> createState() => _WorshipCardState();
+}
+
+class _WorshipCardState extends State<WorshipCard> {
+  /// The permission refused when the user last turned an option on (`dnd`, `phone`, `sms`), shown with Try again.
+  String? _missing;
+
+  void _set(String key, Object v) => HomeScreen.set(context, key, v);
+
+  /// Exact alarms and notifications make the options better but are not needed: asked once, after turning on.
+  Future<void> _askExtras() async {
+    final l = AppLocalizations.of(context);
+    await worshipAsk(context, 'exact', l.worshipWhyExact);
+    if (mounted) await worshipAsk(context, 'notifications', l.worshipWhyNotifications);
+  }
+
+  Future<void> _turnOnSilent() async {
+    final l = AppLocalizations.of(context);
+    if (!await worshipAsk(context, 'dnd', l.worshipWhyDnd)) {
+      if (mounted) setState(() => _missing = 'dnd');
+      return;
+    }
+    if (!mounted) return;
+    setState(() => _missing = null);
+    await HomeScreen.set(context, SettingKeys.prayerSilent, true);
+    if (mounted) await _askExtras();
+  }
+
+  Future<void> _turnOnMute() async {
+    await HomeScreen.set(context, SettingKeys.prayerAdhanMute, true);
+    if (mounted) await _askExtras();
+  }
+
+  Future<void> _turnOnSms() async {
+    final l = AppLocalizations.of(context);
+    for (final (name, why) in [('phone', l.worshipWhyPhone), ('sms', l.worshipWhySms)]) {
+      if (!mounted) return;
+      if (!await worshipAsk(context, name, why)) {
+        if (mounted) setState(() => _missing = name);
+        return;
+      }
+    }
+    if (!mounted) return;
+    setState(() => _missing = null);
+    await HomeScreen.set(context, SettingKeys.prayerSmsReply, true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +247,9 @@ class WorshipCard extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final st = s.settings;
     final text = Theme.of(context).textTheme;
-    void set(String key, Object v) => HomeScreen.set(context, key, v);
+    void set(String key, Object v) => _set(key, v);
     void invoke(String method) => runAction(context, (b) => b.invoke('worship.$method'));
+    void ask(String name, String why) => worshipAsk(context, name, why);
 
     Future<void> chooseMinutes(String key, List<int> options, int current) async {
       final i = await chooseOne(context,
@@ -196,7 +313,7 @@ class WorshipCard extends StatelessWidget {
             title: l.worshipSilentTitle,
             body: l.worshipSilentBody,
             value: st.prayerSilent,
-            onChanged: w.placeValid || st.prayerSilent ? (v) => set(SettingKeys.prayerSilent, v) : null,
+            onChanged: w.placeValid || st.prayerSilent ? (v) => v ? _turnOnSilent() : set(SettingKeys.prayerSilent, v) : null,
           ),
           if (st.prayerSilent)
             ValueRow(
@@ -211,7 +328,7 @@ class WorshipCard extends StatelessWidget {
             title: l.worshipMuteTitle,
             body: l.worshipMuteBody,
             value: st.prayerAdhanMute,
-            onChanged: w.placeValid || st.prayerAdhanMute ? (v) => set(SettingKeys.prayerAdhanMute, v) : null,
+            onChanged: w.placeValid || st.prayerAdhanMute ? (v) => v ? _turnOnMute() : set(SettingKeys.prayerAdhanMute, v) : null,
           ),
           if (st.prayerAdhanMute)
             ValueRow(
@@ -221,6 +338,9 @@ class WorshipCard extends StatelessWidget {
               onPressed: () => chooseMinutes(SettingKeys.prayerAdhanMinutes, worshipMuteMinutes, st.prayerAdhanMinutes),
             ),
           if (!w.placeValid) StatusText(l.worshipNeedPlace),
+          if (_missing == 'dnd' && !st.prayerSilent)
+            _LineWithButton(key: const Key('worship_missing'), text: l.worshipMissingDnd, isError: true,
+                button: l.worshipTryAgain, onPressed: _turnOnSilent),
           // what is happening now, and what comes next
           if (w.silentUntil > 0 && w.silentUntilHm != null)
             _LineWithButton(text: l.worshipSilentNow(w.silentUntilHm!), button: l.worshipEndSilent,
@@ -233,13 +353,21 @@ class WorshipCard extends StatelessWidget {
           // what the phone still has to allow
           if (st.prayerSilent && !w.dndAccess)
             _LineWithButton(key: const Key('worship_dnd'), text: l.worshipDndNeeded, isError: true,
-                button: l.worshipAllow, onPressed: () => invoke('openDndAccess')),
+                button: l.worshipAllow, onPressed: () => ask('dnd', l.worshipWhyDnd)),
           if (on && !w.exactAlarms)
             _LineWithButton(key: const Key('worship_exact'), text: l.worshipExactNeeded, isError: true,
-                button: l.worshipAllow, onPressed: () => invoke('openExactAlarms')),
+                button: l.worshipAllow, onPressed: () => ask('exact', l.worshipWhyExact)),
           if (on && !w.notifications)
-            _LineWithButton(key: const Key('worship_notifications'), text: l.worshipNotifNeeded,
-                button: l.worshipAllow, onPressed: () => invoke('openNotificationSettings')),
+            _LineWithButton(key: const Key('worship_notifications'), text: l.worshipNotificationsNeeded,
+                button: l.worshipAllow, onPressed: () => ask('notifications', l.worshipWhyNotifications)),
+          if (w.smsSupported) ...[
+            const Divider(height: 32),
+            WorshipSmsSection(
+              info: w,
+              missing: _missing == 'phone' || _missing == 'sms' ? _missing : null,
+              turnOn: _turnOnSms,
+            ),
+          ],
           const Divider(height: 32),
           WorshipTonesSection(info: w),
         ],

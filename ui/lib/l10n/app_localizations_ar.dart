@@ -925,6 +925,124 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsGeneralTitle => 'عام';
 
   @override
+  String get worshipPrayerFajr => 'الفجر';
+
+  @override
+  String get worshipPrayerSunrise => 'الشروق';
+
+  @override
+  String get worshipPrayerDhuhr => 'الظهر';
+
+  @override
+  String get worshipPrayerAsr => 'العصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'المغرب';
+
+  @override
+  String get worshipPrayerIsha => 'العشاء';
+
+  @override
+  String get worshipEndSilent => 'إنهاء الصمت الآن';
+
+  @override
+  String get worshipUnmute => 'إلغاء الكتم الآن';
+
+  @override
+  String get worshipSmsDefault =>
+      'إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.';
+
+  @override
+  String get desktopPreview =>
+      'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
+
+  @override
+  String actionFailed(String details) {
+    return 'تعذّر ذلك: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'تُزال الآلات من كل التطبيقات.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'خادم الصوت لا يعمل (PulseAudio أو PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.';
+
+  @override
+  String get engineErrorNoOutput => 'لم يُعثر على مكبّرات صوت أو سماعات.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'تعذّر تثبيت التصفية. التفاصيل:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'لم تبدأ التصفية. التفاصيل:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'توقّفت التصفية بسبب خطأ. التفاصيل:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'التشغيل عند تسجيل الدخول';
+
+  @override
+  String get autostartBody => 'تصفية الصوت فور تسجيل الدخول.';
+
+  @override
+  String get blurBodyDesktop =>
+      'يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.';
+
+  @override
+  String get blurStatusUncovered =>
+      'إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.';
+
+  @override
+  String get diagNoteDesktop =>
+      'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+
+  @override
   String get worshipTitle => 'أوقات الصلاة';
 
   @override
@@ -1043,24 +1161,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get worshipMethodDubai => 'دبي';
 
   @override
-  String get worshipPrayerFajr => 'الفجر';
-
-  @override
-  String get worshipPrayerSunrise => 'الشروق';
-
-  @override
-  String get worshipPrayerDhuhr => 'الظهر';
-
-  @override
-  String get worshipPrayerAsr => 'العصر';
-
-  @override
-  String get worshipPrayerMaghrib => 'المغرب';
-
-  @override
-  String get worshipPrayerIsha => 'العشاء';
-
-  @override
   String get worshipToday => 'اليوم';
 
   @override
@@ -1118,12 +1218,6 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'إنهاء الصمت الآن';
-
-  @override
-  String get worshipUnmute => 'إلغاء الكتم الآن';
-
-  @override
   String get worshipDndNeeded =>
       'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.';
 
@@ -1135,7 +1229,7 @@ class AppLocalizationsAr extends AppLocalizations {
       '«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.';
 
   @override
@@ -1179,139 +1273,85 @@ class AppLocalizationsAr extends AppLocalizations {
   String get worshipOpenSound => 'فتح إعدادات الصوت';
 
   @override
-  String get worshipNotifChannel => 'أوقات الصلاة';
+  String get worshipSmsTitle => 'الرد على المكالمات برسالة أثناء الصلاة';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: الهاتف صامت';
+  String get worshipSmsBody =>
+      'في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبداً إلى الأرقام المخفية أو القصيرة.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'بعد: $seconds ثانية من الرنين';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return '«عدم الإزعاج» مفعَّل حتى $time.';
+  String get worshipSmsDelayTitle => 'ثوانٍ من الرنين قبل الرسالة';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds ثانية';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'انتهى وقت الصمت';
-
-  @override
-  String get worshipNotifSilentEndText => 'أُوقف «عدم الإزعاج» من جديد.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'غيّرتَ «عدم الإزعاج» بنفسك، فتركته واعية كما هو.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'لم تستطع واعية تفعيل «عدم الإزعاج». اسمح بذلك من صفحة الإعدادات في واعية.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: الوسائط مكتومة';
+  String worshipSmsText(Object text) {
+    return 'الرسالة: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'صوت الوسائط مكتوم حتى $time.';
-  }
+  String get worshipSmsTextTitle => 'رسالتك';
 
   @override
-  String get worshipNotifMuteEndTitle => 'عاد صوت الوسائط';
+  String get worshipSmsTextDefault => 'استخدام الرسالة الافتراضية';
 
   @override
-  String get worshipNotifMuteEndText => 'مستوى صوت الوسائط كما كان.';
+  String get worshipSmsCost =>
+      'كل رد رسالة عادية من شريحتك بسعر باقتك. ولا يُرسل شيء أثناء التجوال.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'غيّرتَ صوت الوسائط بنفسك، فتركته واعية كما هو.';
+  String get worshipSmsRoaming => 'أنت في التجوال الآن: لن تُرسل رسائل.';
 
   @override
-  String get desktopPreview =>
-      'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
+  String get worshipSmsLogTitle => 'الردود المرسلة (محفوظة على هذا الهاتف فقط)';
 
   @override
-  String actionFailed(String details) {
-    return 'تعذّر ذلك: $details';
-  }
+  String get worshipContinue => 'متابعة';
 
   @override
-  String get stateOnDetailNoDelay => 'تُزال الآلات من كل التطبيقات.';
+  String get worshipWhyDnd =>
+      'لجعل الهاتف صامتاً في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.';
 
   @override
-  String get engineErrorNoPactl =>
-      'لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.';
+  String get worshipWhyExact =>
+      'للعمل في الوقت تماماً، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'خادم الصوت لا يعمل (PulseAudio أو PipeWire).';
+  String get worshipWhyNotifications =>
+      'اسمح بالإشعارات لترى كل تغيير وتستطيع التراجع عنه.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.';
+  String get worshipWhyWrite =>
+      'لتغيير نغمة الرنين أو صوت الإشعارات، اسمح لواعية بتعديل إعدادات النظام في الصفحة التالية.';
 
   @override
-  String get engineErrorNoOutput => 'لم يُعثر على مكبّرات صوت أو سماعات.';
+  String get worshipWhyPhone =>
+      'لمعرفة أن مكالمة ترنّ ومعرفة رقمها، تحتاج واعية إذنَي «الهاتف» و«سجلّ المكالمات». لا يخرج شيء من الهاتف إلا ردّك.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'تعذّر تثبيت التصفية. التفاصيل:\n$details';
-  }
+  String get worshipWhySms =>
+      'لإرسال ردّك، تحتاج واعية إذن إرسال الرسائل. ولا ترسل إلا هذا الرد، مرة واحدة على الأكثر لكل رقم في كل صلاة.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'لم تبدأ التصفية. التفاصيل:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفاً.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'توقّفت التصفية بسبب خطأ. التفاصيل:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفاً.';
 
   @override
-  String get autostartTitle => 'التشغيل عند تسجيل الدخول';
+  String get worshipMissingSms =>
+      'لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفاً.';
 
   @override
-  String get autostartBody => 'تصفية الصوت فور تسجيل الدخول.';
-
-  @override
-  String get blurBodyDesktop =>
-      'يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.';
-
-  @override
-  String get blurStatusUncovered =>
-      'إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.';
-
-  @override
-  String get diagNoteDesktop =>
-      'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+  String get worshipTryAgain => 'حاول مرة أخرى';
 }

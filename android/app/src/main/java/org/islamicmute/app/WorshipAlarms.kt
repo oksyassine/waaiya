@@ -129,7 +129,7 @@ object WorshipAlarms {
     private fun startSilent(c: Context, prayer: WorshipSchedule.PrayerTime, until: Long, zone: ZoneId): Boolean {
         val nm = c.getSystemService(NotificationManager::class.java)
         if (!nm.isNotificationPolicyAccessGranted) {
-            notify(c, NOTIF_SILENT, prayerName(c, prayer.prayer), c.getString(R.string.worship_notif_no_access), null)
+            notify(c, NOTIF_SILENT, prayerName(c, prayer.prayer), c.getString(R.string.notif_worship_no_access), null)
             return false
         }
         if (!WorshipSchedule.shouldSilence(nm.currentInterruptionFilter)) return false  // the user's own DND: leave it
@@ -144,8 +144,8 @@ object WorshipAlarms {
     private fun announceSilent(c: Context, prayer: WorshipSchedule.PrayerTime, until: Long, zone: ZoneId) {
         val end = PendingIntent.getBroadcast(c, 3, Intent(c, WorshipReceiver::class.java).setAction(ACTION_END_SILENT),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        notify(c, NOTIF_SILENT, c.getString(R.string.worship_notif_silent_title).replace("{prayer}", prayerName(c, prayer.prayer)),
-            c.getString(R.string.worship_notif_silent_text).replace("{time}", hm(until, zone)),
+        notify(c, NOTIF_SILENT, c.getString(R.string.notif_worship_silent_title).replace("{prayer}", prayerName(c, prayer.prayer)),
+            c.getString(R.string.notif_worship_silent_text).replace("{time}", hm(until, zone)),
             Notification.Action.Builder(null, c.getString(R.string.worship_end_silent), end).build())
     }
 
@@ -157,8 +157,8 @@ object WorshipAlarms {
                 nm.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL); true
             } else false
         }.getOrElse { Log.w(TAG, "restore DND", it); false }
-        notify(c, NOTIF_SILENT, c.getString(R.string.worship_notif_silent_end_title),
-            c.getString(if (restored) R.string.worship_notif_silent_end_text else R.string.worship_notif_silent_left), null,
+        notify(c, NOTIF_SILENT, c.getString(R.string.notif_worship_silent_end_title),
+            c.getString(if (restored) R.string.notif_worship_silent_end_text else R.string.notif_worship_silent_left), null,
             timeoutMs = 30 * 60_000L)
     }
 
@@ -187,8 +187,8 @@ object WorshipAlarms {
     private fun announceMute(c: Context, prayer: WorshipSchedule.PrayerTime, until: Long, zone: ZoneId) {
         val unmute = PendingIntent.getBroadcast(c, 2, Intent(c, WorshipReceiver::class.java).setAction(ACTION_UNMUTE),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        notify(c, NOTIF_MUTE, c.getString(R.string.worship_notif_mute_title).replace("{prayer}", prayerName(c, prayer.prayer)),
-            c.getString(R.string.worship_notif_mute_text).replace("{time}", hm(until, zone)),
+        notify(c, NOTIF_MUTE, c.getString(R.string.notif_worship_mute_title).replace("{prayer}", prayerName(c, prayer.prayer)),
+            c.getString(R.string.notif_worship_mute_text).replace("{time}", hm(until, zone)),
             Notification.Action.Builder(null, c.getString(R.string.worship_unmute), unmute).build())
     }
 
@@ -200,8 +200,8 @@ object WorshipAlarms {
             } else false
         }.getOrElse { Log.w(TAG, "unmute", it); false }
         if (now) c.getSystemService(NotificationManager::class.java).cancel(NOTIF_MUTE)
-        else notify(c, NOTIF_MUTE, c.getString(R.string.worship_notif_mute_end_title),
-            c.getString(if (restored) R.string.worship_notif_mute_end_text else R.string.worship_notif_mute_left), null,
+        else notify(c, NOTIF_MUTE, c.getString(R.string.notif_worship_mute_end_title),
+            c.getString(if (restored) R.string.notif_worship_mute_end_text else R.string.notif_worship_mute_left), null,
             timeoutMs = 30 * 60_000L)
     }
 
@@ -248,7 +248,7 @@ object WorshipAlarms {
     private fun notify(c: Context, id: Int, title: String, text: String, action: Notification.Action?, timeoutMs: Long = 0) {
         runCatching {
             val nm = c.getSystemService(NotificationManager::class.java)
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, c.getString(R.string.worship_notif_channel),
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, c.getString(R.string.notif_worship_channel),
                 NotificationManager.IMPORTANCE_LOW))
             val open = UiActivity.open(c, "settings")?.let {
                 PendingIntent.getActivity(c, 7300, it, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -286,6 +286,7 @@ class WorshipReceiver : BroadcastReceiver() {
             WorshipAlarms.ACTION_TICK -> runCatching { WorshipAlarms.tick(context) }
             WorshipAlarms.ACTION_UNMUTE -> runCatching { WorshipAlarms.unmuteNow(context) }
             WorshipAlarms.ACTION_END_SILENT -> runCatching { WorshipAlarms.endSilentNow(context) }
+            WorshipSms.ACTION_CHECK -> runCatching { WorshipSms.check(context) }
         }
     }
 }

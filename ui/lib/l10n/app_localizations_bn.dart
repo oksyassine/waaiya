@@ -938,6 +938,124 @@ class AppLocalizationsBn extends AppLocalizations {
   String get settingsGeneralTitle => 'সাধারণ';
 
   @override
+  String get worshipPrayerFajr => 'ফজর';
+
+  @override
+  String get worshipPrayerSunrise => 'সূর্যোদয়';
+
+  @override
+  String get worshipPrayerDhuhr => 'যোহর';
+
+  @override
+  String get worshipPrayerAsr => 'আসর';
+
+  @override
+  String get worshipPrayerMaghrib => 'মাগরিব';
+
+  @override
+  String get worshipPrayerIsha => 'এশা';
+
+  @override
+  String get worshipEndSilent => 'এখনই নীরবতা শেষ করুন';
+
+  @override
+  String get worshipUnmute => 'এখনই শব্দ চালু করুন';
+
+  @override
+  String get worshipSmsDefault =>
+      'এখন নামাজের সময়, এখন ধরতে পারছি না। পরে আপনাকে ফোন করব।';
+
+  @override
+  String get desktopPreview =>
+      'প্রিভিউ: এই কম্পিউটারে ফিল্টার ইঞ্জিন এখনো সংযুক্ত নয়। বোতামটি শুধু দেখায় অ্যাপটি কীভাবে কাজ করবে।';
+
+  @override
+  String actionFailed(String details) {
+    return 'এটি কাজ করেনি: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে।';
+
+  @override
+  String get engineErrorNoPactl =>
+      'শব্দের টুল (pactl) পাওয়া যায়নি। Waaiya-র PulseAudio, অথবা pipewire-pulse সহ PipeWire দরকার।';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'সাউন্ড সার্ভার চলছে না (PulseAudio বা PipeWire)।';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'এই সিস্টেমে systemd ইউজার সেশন নেই, যা পটভূমিতে ফিল্টার চালায়।';
+
+  @override
+  String get engineErrorNoOutput => 'কোনো স্পিকার বা হেডফোন পাওয়া যায়নি।';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'ফিল্টার ইনস্টল করা যায়নি। বিস্তারিত:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'ফিল্টার চালু হয়নি। বিস্তারিত:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'একটি ত্রুটির কারণে ফিল্টার থেমে গেছে। বিস্তারিত:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'লগইনের সময় চালু করুন';
+
+  @override
+  String get autostartBody => 'লগইন করার সাথে সাথেই শব্দ ফিল্টার করুন।';
+
+  @override
+  String get blurBodyDesktop =>
+      'Waaiya খোলা থাকাকালে সব উইন্ডোর উপরে স্ক্রিনের মানুষ ও ছবি ঢেকে দেয় (শব্দের ফিল্টার চালু বা বন্ধ যা-ই থাকুক)। এটি এই কম্পিউটারেই চলে; কিছুই কোথাও পাঠানো হয় না। Waaiya-র উইন্ডো বন্ধ করলে ব্লার থেমে যায়।';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'চালু: কম্পিউটার বেশি ধীর হলে বা ব্লার ব্যর্থ হলে পুরো স্ক্রিন ঢেকে দেওয়া হয়; ক্লিক তবুও নিচের উইন্ডোতে পৌঁছায়। বন্ধ: উপরে একটি লাল বারসহ স্ক্রিন দেখা যায়।';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'ব্লার চালু আছে। এই ডেস্কটপ নিজের স্ক্রিন ক্যাপচারে ব্লার দেখায়, তাই দৃশ্য না বদলানো পর্যন্ত ব্লার করা জায়গা ব্লারই থাকে।';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'এই ডেস্কটপে ব্লার অন্য উইন্ডোর উপরে আঁকতে পারছে না। বিস্তারিত:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'স্ক্রিন শেয়ারের উইন্ডোতে আপনার স্ক্রিন বেছে নিয়ে অনুমতি দিন। Waaiya শুধু একবার জিজ্ঞাসা করে; ছবি এই কম্পিউটারেই থাকে।';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'ব্লার অপ্রত্যাশিতভাবে থেমে গেছে। আবার চেষ্টা করতে একটি ব্লার বিকল্প বন্ধ করে আবার চালু করুন। বিস্তারিত:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'নারীদের গান শনাক্তকারী লোড হয়নি, তাই ওই বিকল্প চালু থাকলে কণ্ঠ নীরব করা হয়।';
+
+  @override
+  String get blurStatusUncovered =>
+      'একটি মনিটর ব্লারে ঢাকা নেই: এটি ব্লারের সাথে শেয়ার করা হয়নি, অথবা পরে লাগানো হয়েছে। একটি ব্লার বিকল্প বন্ধ করে আবার চালু করুন, এবং স্ক্রিন শেয়ারের উইন্ডোতে প্রতিটি স্ক্রিন বেছে নিন।';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'এই ইনস্টলেশনে ব্লারের মডেলগুলো নেই, তাই এটি কিছুই ঢাকতে পারে না; স্ক্রিনের উপরে একটি লাল বার থেকে যায়। Waaiya আবার ইনস্টল করুন।';
+
+  @override
+  String get diagNoteDesktop =>
+      'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। অ্যাপ নিজে কিছুই পাঠায় না।';
+
+  @override
   String get worshipTitle => 'নামাজের সময়';
 
   @override
@@ -1057,24 +1175,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get worshipMethodDubai => 'দুবাই';
 
   @override
-  String get worshipPrayerFajr => 'ফজর';
-
-  @override
-  String get worshipPrayerSunrise => 'সূর্যোদয়';
-
-  @override
-  String get worshipPrayerDhuhr => 'যোহর';
-
-  @override
-  String get worshipPrayerAsr => 'আসর';
-
-  @override
-  String get worshipPrayerMaghrib => 'মাগরিব';
-
-  @override
-  String get worshipPrayerIsha => 'এশা';
-
-  @override
   String get worshipToday => 'আজ';
 
   @override
@@ -1132,12 +1232,6 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'এখনই নীরবতা শেষ করুন';
-
-  @override
-  String get worshipUnmute => 'এখনই শব্দ চালু করুন';
-
-  @override
   String get worshipDndNeeded =>
       'Waaiya-কে বিরক্ত করবেন না বদলানোর অনুমতি দিন, নইলে ফোন নীরব হতে পারবে না।';
 
@@ -1149,7 +1243,7 @@ class AppLocalizationsBn extends AppLocalizations {
       'Waaiya-র জন্য অ্যালার্ম ও রিমাইন্ডার অনুমতি নেই, তাই প্রতিটি পরিবর্তন ১০ মিনিট পর্যন্ত, ফোন ঘুমালে আরও দেরিতে হতে পারে।';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'নোটিফিকেশন বন্ধ: ফোন কখন নীরব হলো বা ফিরে এলো, দেখতে পাবেন না।';
 
   @override
@@ -1193,139 +1287,85 @@ class AppLocalizationsBn extends AppLocalizations {
   String get worshipOpenSound => 'সাউন্ড সেটিংস খুলুন';
 
   @override
-  String get worshipNotifChannel => 'নামাজের সময়';
+  String get worshipSmsTitle => 'নামাজের সময় কলের উত্তর এসএমএসে';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: ফোন নীরব';
+  String get worshipSmsBody =>
+      'প্রতিটি নামাজের সময়ের পরের নীরব মিনিটগুলোতে, বেজে যাওয়া কলে একটি এসএমএস যায়। প্রতি নামাজে প্রতি নম্বরে একবার; লুকানো বা ছোট নম্বরে কখনো নয়।';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'এত সময় বাজার পর: $seconds সেকেন্ড';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return '$time পর্যন্ত বিরক্ত করবেন না চালু।';
+  String get worshipSmsDelayTitle => 'এসএমএসের আগে কত সেকেন্ড বাজবে';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds সেকেন্ড';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'নীরবতার সময় শেষ';
-
-  @override
-  String get worshipNotifSilentEndText => 'বিরক্ত করবেন না আবার বন্ধ।';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'আপনি নিজেই বিরক্ত করবেন না বদলেছেন, তাই Waaiya সেটা যেমন ছিল রেখে দিয়েছে।';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'Waaiya বিরক্ত করবেন না চালু করতে পারেনি। Waaiya-র সেটিংস পাতায় অনুমতি দিন।';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: মিডিয়া বন্ধ';
+  String worshipSmsText(Object text) {
+    return 'বার্তা: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return '$time পর্যন্ত মিডিয়ার শব্দ বন্ধ।';
-  }
+  String get worshipSmsTextTitle => 'আপনার বার্তা';
 
   @override
-  String get worshipNotifMuteEndTitle => 'মিডিয়ার শব্দ ফিরে এসেছে';
+  String get worshipSmsTextDefault => 'ডিফল্ট ব্যবহার করুন';
 
   @override
-  String get worshipNotifMuteEndText => 'মিডিয়ার ভলিউম আগের মতো।';
+  String get worshipSmsCost =>
+      'প্রতিটি উত্তর আপনার সিম থেকে একটি সাধারণ এসএমএস, আপনার প্ল্যানের দামে। রোমিংয়ে কিছুই পাঠানো হয় না।';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'আপনি নিজেই মিডিয়ার ভলিউম বদলেছেন, তাই Waaiya সেটা যেমন ছিল রেখে দিয়েছে।';
+  String get worshipSmsRoaming => 'এখন রোমিংয়ে: কোনো এসএমএস পাঠানো হবে না।';
 
   @override
-  String get desktopPreview =>
-      'প্রিভিউ: এই কম্পিউটারে ফিল্টার ইঞ্জিন এখনো সংযুক্ত নয়। বোতামটি শুধু দেখায় অ্যাপটি কীভাবে কাজ করবে।';
+  String get worshipSmsLogTitle => 'পাঠানো উত্তর (শুধু এই ফোনে রাখা)';
 
   @override
-  String actionFailed(String details) {
-    return 'এটি কাজ করেনি: $details';
-  }
+  String get worshipContinue => 'চালিয়ে যান';
 
   @override
-  String get stateOnDetailNoDelay => 'সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে।';
+  String get worshipWhyDnd =>
+      'নামাজের সময় ফোন নীরব করতে, পরের পাতায় Waaiya-কে বিরক্ত করবেন না অ্যাক্সেস দিন।';
 
   @override
-  String get engineErrorNoPactl =>
-      'শব্দের টুল (pactl) পাওয়া যায়নি। Waaiya-র PulseAudio, অথবা pipewire-pulse সহ PipeWire দরকার।';
+  String get worshipWhyExact =>
+      'ঠিক সময়ে কাজ করতে, পরের পাতায় Waaiya-কে অ্যালার্ম ও রিমাইন্ডার সেট করার অনুমতি দিন। না দিলে পরিবর্তন ১০ মিনিট পর্যন্ত দেরিতে হতে পারে।';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'সাউন্ড সার্ভার চলছে না (PulseAudio বা PipeWire)।';
+  String get worshipWhyNotifications =>
+      'নোটিফিকেশনের অনুমতি দিন, যাতে প্রতিটি পরিবর্তন দেখতে ও ফিরিয়ে নিতে পারেন।';
 
   @override
-  String get engineErrorNoSystemd =>
-      'এই সিস্টেমে systemd ইউজার সেশন নেই, যা পটভূমিতে ফিল্টার চালায়।';
+  String get worshipWhyWrite =>
+      'রিংটোন বা নোটিফিকেশনের শব্দ বদলাতে, পরের পাতায় Waaiya-কে সিস্টেম সেটিংস বদলানোর অনুমতি দিন।';
 
   @override
-  String get engineErrorNoOutput => 'কোনো স্পিকার বা হেডফোন পাওয়া যায়নি।';
+  String get worshipWhyPhone =>
+      'কল বাজছে কিনা আর তার নম্বর জানতে Waaiya-র ফোন ও কল লগের অনুমতি লাগবে। আপনার উত্তর ছাড়া কিছুই ফোনের বাইরে যায় না।';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'ফিল্টার ইনস্টল করা যায়নি। বিস্তারিত:\n$details';
-  }
+  String get worshipWhySms =>
+      'আপনার উত্তর পাঠাতে Waaiya-র এসএমএস পাঠানোর অনুমতি লাগবে। এটি শুধু সেই উত্তরটি পাঠায়, প্রতি নামাজে প্রতি নম্বরে সর্বোচ্চ একবার।';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'ফিল্টার চালু হয়নি। বিস্তারিত:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'বিরক্ত করবেন না অ্যাক্সেস দেওয়া হয়নি, তাই নীরবতা বন্ধ থাকছে।';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'একটি ত্রুটির কারণে ফিল্টার থেমে গেছে। বিস্তারিত:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'ফোন ও কল লগের অনুমতি দেওয়া হয়নি, তাই এসএমএস উত্তর বন্ধ থাকছে।';
 
   @override
-  String get autostartTitle => 'লগইনের সময় চালু করুন';
+  String get worshipMissingSms =>
+      'এসএমএস পাঠানোর অনুমতি দেওয়া হয়নি, তাই এসএমএস উত্তর বন্ধ থাকছে।';
 
   @override
-  String get autostartBody => 'লগইন করার সাথে সাথেই শব্দ ফিল্টার করুন।';
-
-  @override
-  String get blurBodyDesktop =>
-      'Waaiya খোলা থাকাকালে সব উইন্ডোর উপরে স্ক্রিনের মানুষ ও ছবি ঢেকে দেয় (শব্দের ফিল্টার চালু বা বন্ধ যা-ই থাকুক)। এটি এই কম্পিউটারেই চলে; কিছুই কোথাও পাঠানো হয় না। Waaiya-র উইন্ডো বন্ধ করলে ব্লার থেমে যায়।';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'চালু: কম্পিউটার বেশি ধীর হলে বা ব্লার ব্যর্থ হলে পুরো স্ক্রিন ঢেকে দেওয়া হয়; ক্লিক তবুও নিচের উইন্ডোতে পৌঁছায়। বন্ধ: উপরে একটি লাল বারসহ স্ক্রিন দেখা যায়।';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'ব্লার চালু আছে। এই ডেস্কটপ নিজের স্ক্রিন ক্যাপচারে ব্লার দেখায়, তাই দৃশ্য না বদলানো পর্যন্ত ব্লার করা জায়গা ব্লারই থাকে।';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'এই ডেস্কটপে ব্লার অন্য উইন্ডোর উপরে আঁকতে পারছে না। বিস্তারিত:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'স্ক্রিন শেয়ারের উইন্ডোতে আপনার স্ক্রিন বেছে নিয়ে অনুমতি দিন। Waaiya শুধু একবার জিজ্ঞাসা করে; ছবি এই কম্পিউটারেই থাকে।';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'ব্লার অপ্রত্যাশিতভাবে থেমে গেছে। আবার চেষ্টা করতে একটি ব্লার বিকল্প বন্ধ করে আবার চালু করুন। বিস্তারিত:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'নারীদের গান শনাক্তকারী লোড হয়নি, তাই ওই বিকল্প চালু থাকলে কণ্ঠ নীরব করা হয়।';
-
-  @override
-  String get blurStatusUncovered =>
-      'একটি মনিটর ব্লারে ঢাকা নেই: এটি ব্লারের সাথে শেয়ার করা হয়নি, অথবা পরে লাগানো হয়েছে। একটি ব্লার বিকল্প বন্ধ করে আবার চালু করুন, এবং স্ক্রিন শেয়ারের উইন্ডোতে প্রতিটি স্ক্রিন বেছে নিন।';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'এই ইনস্টলেশনে ব্লারের মডেলগুলো নেই, তাই এটি কিছুই ঢাকতে পারে না; স্ক্রিনের উপরে একটি লাল বার থেকে যায়। Waaiya আবার ইনস্টল করুন।';
-
-  @override
-  String get diagNoteDesktop =>
-      'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। অ্যাপ নিজে কিছুই পাঠায় না।';
+  String get worshipTryAgain => 'আবার চেষ্টা করুন';
 }

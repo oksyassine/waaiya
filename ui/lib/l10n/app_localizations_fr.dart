@@ -946,6 +946,126 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsGeneralTitle => 'Général';
 
   @override
+  String get worshipPrayerFajr => 'Fajr';
+
+  @override
+  String get worshipPrayerSunrise => 'Lever du soleil';
+
+  @override
+  String get worshipPrayerDhuhr => 'Dhohr';
+
+  @override
+  String get worshipPrayerAsr => 'Asr';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maghrib';
+
+  @override
+  String get worshipPrayerIsha => 'Icha';
+
+  @override
+  String get worshipEndSilent => 'Arrêter le silence';
+
+  @override
+  String get worshipUnmute => 'Remettre le son';
+
+  @override
+  String get worshipSmsDefault =>
+      'C\'est l\'heure de la prière, je ne peux pas répondre maintenant. Je vous rappelle.';
+
+  @override
+  String get desktopPreview =>
+      'Aperçu : le moteur de filtrage n\'est pas encore connecté sur cet ordinateur. Le bouton montre seulement comment l\'application fonctionnera.';
+
+  @override
+  String actionFailed(String details) {
+    return 'Cela n\'a pas fonctionné : $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay =>
+      'Les instruments sont supprimés de toutes les applications.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Outils audio introuvables (pactl). Waaiya a besoin de PulseAudio, ou de PipeWire avec pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'Le serveur de son ne fonctionne pas (PulseAudio ou PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'Ce système n\'a pas de session utilisateur systemd, qui fait tourner le filtre en arrière-plan.';
+
+  @override
+  String get engineErrorNoOutput => 'Aucun haut-parleur ni casque trouvé.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Impossible d\'installer le filtre. Détails :\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'Le filtre n\'a pas démarré. Détails :\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'Le filtre s\'est arrêté avec une erreur. Détails :\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Démarrer à l\'ouverture de session';
+
+  @override
+  String get autostartBody =>
+      'Filtrer le son dès que vous ouvrez votre session.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Couvre les personnes et les images à l\'écran, par-dessus toutes les fenêtres, tant que Waaiya est ouvert (que le filtre audio soit activé ou non). Tout se fait sur cet ordinateur ; rien n\'est envoyé nulle part. Fermer la fenêtre de Waaiya arrête le flou.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'Activé : tout l\'écran est couvert quand l\'ordinateur est trop lent ou que le flou échoue ; les clics atteignent quand même les fenêtres en dessous. Désactivé : l\'écran reste visible avec une barre rouge en haut.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Flou activé. Ce bureau montre le flou dans sa propre capture d\'écran, donc une zone floutée reste floutée jusqu\'à ce que la scène change.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'Le flou ne peut pas s\'afficher par-dessus les autres fenêtres sur ce bureau. Détails :\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Choisissez votre écran dans la fenêtre de partage d\'écran et autorisez-le. Waaiya ne le demande qu\'une fois ; l\'image reste sur cet ordinateur.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'Le flou s\'est arrêté de façon inattendue. Désactivez puis réactivez une option de flou pour réessayer. Détails :\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'Le détecteur de chant des femmes ne s\'est pas chargé : les voix sont donc coupées tant que cette option est activée.';
+
+  @override
+  String get blurStatusUncovered =>
+      'Un écran n\'est pas couvert par le flou : il ne lui a pas été partagé, ou il a été branché plus tard. Désactivez puis réactivez une option de flou, et choisissez tous les écrans dans la fenêtre de partage d\'écran.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'Les modèles du flou manquent dans cette installation : il ne peut donc rien couvrir, et une barre rouge reste en haut de l\'écran. Réinstallez Waaiya.';
+
+  @override
+  String get diagNoteDesktop =>
+      'Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L\'application elle-même n\'envoie rien.';
+
+  @override
   String get worshipTitle => 'Heures de prière';
 
   @override
@@ -1067,24 +1187,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get worshipMethodDubai => 'Dubaï';
 
   @override
-  String get worshipPrayerFajr => 'Fajr';
-
-  @override
-  String get worshipPrayerSunrise => 'Lever du soleil';
-
-  @override
-  String get worshipPrayerDhuhr => 'Dhohr';
-
-  @override
-  String get worshipPrayerAsr => 'Asr';
-
-  @override
-  String get worshipPrayerMaghrib => 'Maghrib';
-
-  @override
-  String get worshipPrayerIsha => 'Icha';
-
-  @override
   String get worshipToday => 'Aujourd\'hui';
 
   @override
@@ -1142,12 +1244,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'Arrêter le silence';
-
-  @override
-  String get worshipUnmute => 'Remettre le son';
-
-  @override
   String get worshipDndNeeded =>
       'Autorisez Waaiya à modifier Ne pas déranger, sinon le téléphone ne peut pas passer en silencieux.';
 
@@ -1159,7 +1255,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Alarmes et rappels ne sont pas autorisés pour Waaiya : chaque changement peut arriver jusqu\'à 10 minutes en retard, ou plus quand le téléphone est en veille.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'Les notifications sont désactivées : vous ne verrez pas quand le téléphone passe en silencieux ou revient.';
 
   @override
@@ -1203,142 +1299,86 @@ class AppLocalizationsFr extends AppLocalizations {
   String get worshipOpenSound => 'Ouvrir les paramètres Son';
 
   @override
-  String get worshipNotifChannel => 'Heures de prière';
+  String get worshipSmsTitle => 'Répondre aux appels par SMS pendant la prière';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer : téléphone en silencieux';
+  String get worshipSmsBody =>
+      'Pendant les minutes de silence après chaque heure de prière, un appel laissé sans réponse reçoit un SMS. Une fois par numéro et par prière ; jamais aux numéros masqués ni aux numéros courts.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Après : $seconds s de sonnerie';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return 'Ne pas déranger est activé jusqu\'à $time.';
+  String get worshipSmsDelayTitle => 'Secondes de sonnerie avant le SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds s';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'Fin du silence';
-
-  @override
-  String get worshipNotifSilentEndText =>
-      'Ne pas déranger est de nouveau désactivé.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'Vous avez modifié Ne pas déranger vous-même, Waaiya l\'a donc laissé tel quel.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'Waaiya n\'a pas pu activer Ne pas déranger. Autorisez-le dans la page Paramètres de Waaiya.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer : médias coupés';
+  String worshipSmsText(Object text) {
+    return 'Message : $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'Le son des médias est coupé jusqu\'à $time.';
-  }
+  String get worshipSmsTextTitle => 'Votre message';
 
   @override
-  String get worshipNotifMuteEndTitle => 'Le son des médias est revenu';
+  String get worshipSmsTextDefault => 'Message par défaut';
 
   @override
-  String get worshipNotifMuteEndText => 'Le volume des médias est comme avant.';
+  String get worshipSmsCost =>
+      'Chaque réponse est un SMS normal envoyé depuis votre SIM, au prix de votre forfait. Rien n\'est envoyé en itinérance.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'Vous avez modifié le volume des médias vous-même, Waaiya l\'a donc laissé tel quel.';
+  String get worshipSmsRoaming => 'En itinérance : aucun SMS n\'est envoyé.';
 
   @override
-  String get desktopPreview =>
-      'Aperçu : le moteur de filtrage n\'est pas encore connecté sur cet ordinateur. Le bouton montre seulement comment l\'application fonctionnera.';
+  String get worshipSmsLogTitle =>
+      'Réponses envoyées (gardées sur ce téléphone seulement)';
 
   @override
-  String actionFailed(String details) {
-    return 'Cela n\'a pas fonctionné : $details';
-  }
+  String get worshipContinue => 'Continuer';
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Les instruments sont supprimés de toutes les applications.';
+  String get worshipWhyDnd =>
+      'Pour mettre le téléphone en silencieux aux heures de prière, autorisez l\'accès de Waaiya à Ne pas déranger sur la page suivante.';
 
   @override
-  String get engineErrorNoPactl =>
-      'Outils audio introuvables (pactl). Waaiya a besoin de PulseAudio, ou de PipeWire avec pipewire-pulse.';
+  String get worshipWhyExact =>
+      'Pour agir à l\'heure exacte, autorisez Waaiya à définir des alarmes et rappels sur la page suivante. Sinon, les changements peuvent arriver jusqu\'à 10 minutes en retard.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'Le serveur de son ne fonctionne pas (PulseAudio ou PipeWire).';
+  String get worshipWhyNotifications =>
+      'Autorisez les notifications pour voir chaque changement et pouvoir l\'annuler.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'Ce système n\'a pas de session utilisateur systemd, qui fait tourner le filtre en arrière-plan.';
+  String get worshipWhyWrite =>
+      'Pour changer votre sonnerie ou son de notification, autorisez Waaiya à modifier les paramètres système sur la page suivante.';
 
   @override
-  String get engineErrorNoOutput => 'Aucun haut-parleur ni casque trouvé.';
+  String get worshipWhyPhone =>
+      'Pour savoir qu\'un appel sonne et connaître son numéro, Waaiya a besoin des autorisations Téléphone et Journaux d\'appels. Rien ne quitte le téléphone sauf votre réponse.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'Impossible d\'installer le filtre. Détails :\n$details';
-  }
+  String get worshipWhySms =>
+      'Pour envoyer votre réponse, Waaiya a besoin de l\'autorisation d\'envoyer des SMS. Il n\'envoie que cette réponse, au plus une fois par numéro et par prière.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'Le filtre n\'a pas démarré. Détails :\n$details';
-  }
+  String get worshipMissingDnd =>
+      'L\'accès à Ne pas déranger n\'a pas été autorisé : le silence reste désactivé.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'Le filtre s\'est arrêté avec une erreur. Détails :\n$details';
-  }
+  String get worshipMissingPhone =>
+      'Les autorisations Téléphone et Journaux d\'appels n\'ont pas été accordées : la réponse par SMS reste désactivée.';
 
   @override
-  String get autostartTitle => 'Démarrer à l\'ouverture de session';
+  String get worshipMissingSms =>
+      'L\'autorisation d\'envoyer des SMS n\'a pas été accordée : la réponse par SMS reste désactivée.';
 
   @override
-  String get autostartBody =>
-      'Filtrer le son dès que vous ouvrez votre session.';
-
-  @override
-  String get blurBodyDesktop =>
-      'Couvre les personnes et les images à l\'écran, par-dessus toutes les fenêtres, tant que Waaiya est ouvert (que le filtre audio soit activé ou non). Tout se fait sur cet ordinateur ; rien n\'est envoyé nulle part. Fermer la fenêtre de Waaiya arrête le flou.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'Activé : tout l\'écran est couvert quand l\'ordinateur est trop lent ou que le flou échoue ; les clics atteignent quand même les fenêtres en dessous. Désactivé : l\'écran reste visible avec une barre rouge en haut.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'Flou activé. Ce bureau montre le flou dans sa propre capture d\'écran, donc une zone floutée reste floutée jusqu\'à ce que la scène change.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'Le flou ne peut pas s\'afficher par-dessus les autres fenêtres sur ce bureau. Détails :\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'Choisissez votre écran dans la fenêtre de partage d\'écran et autorisez-le. Waaiya ne le demande qu\'une fois ; l\'image reste sur cet ordinateur.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'Le flou s\'est arrêté de façon inattendue. Désactivez puis réactivez une option de flou pour réessayer. Détails :\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'Le détecteur de chant des femmes ne s\'est pas chargé : les voix sont donc coupées tant que cette option est activée.';
-
-  @override
-  String get blurStatusUncovered =>
-      'Un écran n\'est pas couvert par le flou : il ne lui a pas été partagé, ou il a été branché plus tard. Désactivez puis réactivez une option de flou, et choisissez tous les écrans dans la fenêtre de partage d\'écran.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'Les modèles du flou manquent dans cette installation : il ne peut donc rien couvrir, et une barre rouge reste en haut de l\'écran. Réinstallez Waaiya.';
-
-  @override
-  String get diagNoteDesktop =>
-      'Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L\'application elle-même n\'envoie rien.';
+  String get worshipTryAgain => 'Réessayer';
 }

@@ -25,11 +25,18 @@ import java.time.ZoneId
  *   with `silentUntilHm`/`muteUntilHm`;
  * - `dndAccess`, `exactAlarms`, `notifications`, `writeSettings` (permission states);
  * - `tones`: [{id, kind: ring|notification, number}], `ringtone` and `notificationTone`: the id of Waaiya's tone
- *   that is the phone's default now, or "".
+ *   that is the phone's default now, or "";
+ * - SMS reply during prayer ([WorshipSms]): `smsSupported` (false in Play builds), `smsPhone` (phone state and call
+ *   log allowed), `smsSend` (SMS allowed), `smsRoaming`, `smsLog`: [{at, hm, number}] newest first;
+ * - `ask`: the last permission asked with askPermission, {id, name, done, granted}.
  *
  * Methods `worship.<name>`: cities {query, limit}, times {date?, place?, method?, asr?}, customPlace {lat, lon, tz},
- * zones {query}, openDndAccess, openExactAlarms, openNotificationSettings, openWriteSettings, openSoundSettings,
+ * zones {query}, askPermission {name: dnd|exact|notifications|write|phone|sms} -> {id, done, granted} (done false:
+ * Android's question or settings page is open; `ask` in the snapshot says when the user is back), openSoundSettings,
  * previewTone {id}, stopTone, setTone {id}, unmuteNow, endSilentNow.
+ *
+ * Nothing is asked by itself: not at install, first launch or when the card shows. Each permission is asked only
+ * when the user turns on the option that needs it (owner's decision, 2026-11-20).
  */
 object Worship : Feature {
     override val name = "worship"
@@ -90,6 +97,14 @@ object Worship : Feature {
             "tones" to WorshipTones.ALL.map { mapOf("id" to it.id, "kind" to it.kind, "number" to it.number) },
             "ringtone" to WorshipTones.current(ctx, "ring"),
             "notificationTone" to WorshipTones.current(ctx, "notification"),
+            "smsSupported" to WorshipSms.supported(ctx),
+            "smsPhone" to WorshipSms.phoneAllowed(ctx),
+            "smsSend" to WorshipSms.smsAllowed(ctx),
+            "smsRoaming" to WorshipSms.roaming(ctx),
+            "smsLog" to WorshipSms.log(ctx).map { (at, n) ->
+                mapOf("at" to at, "hm" to WorshipAlarms.hm(at, ZoneId.systemDefault()), "number" to n)
+            },
+            "ask" to ask?.let { mapOf("id" to it.id, "name" to it.name, "done" to it.done, "granted" to granted(ctx, it.name)) },
         )
     }
 
@@ -131,15 +146,7 @@ object Worship : Feature {
                 ZoneId.getAvailableZoneIds().filter { it.contains('/') && WorshipCities.normalize(it).contains(q) }
                     .sorted().take(50)
             }
-            "openDndAccess" -> open(Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
-            "openExactAlarms" -> {
-                if (Build.VERSION.SDK_INT < 31) throw FeatureException("unsupported", "exact alarms need no permission here")
-                open(Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:${ctx.packageName}")))
-            }
-            "openNotificationSettings" -> open(Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, ctx.packageName))
-            "openWriteSettings" -> open(Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                Uri.parse("package:${ctx.packageName}")))
+            "askPermission" -> askPermission(host, str("name") ?: throw FeatureException("bad_args", "name"))
             "openSoundSettings" -> open(Intent(android.provider.Settings.ACTION_SOUND_SETTINGS))
             "previewTone" -> WorshipTones.preview(ctx, str("id"))
             "stopTone" -> WorshipTones.stop()
@@ -149,4 +156,88 @@ object Worship : Feature {
             else -> throw FeatureException("unsupported", "worship.$method")
         }.let { if (it == Unit) null else it }
     }
+
+    // --- asking for a permission, only when the user turns on the option that needs it ---
+
+    private class Ask(val id: Int, val name: String) {
+        var paused = false
+        var done = false
+    }
+
+    @Volatile private var ask: Ask? = null
+    private var askCount = 0
+    private var lifecycle: android.app.Application.ActivityLifecycleCallbacks? = null
+
+    fun granted(ctx: Context, name: String): Boolean = when (name) {
+        "dnd" -> WorshipAlarms.dndAccess(ctx)
+        "exact" -> WorshipAlarms.exactAllowed(ctx)
+        "notifications" -> WorshipAlarms.notificationsAllowed(ctx)
+        "write" -> WorshipTones.canWriteSettings(ctx)
+        "phone" -> WorshipSms.phoneAllowed(ctx)
+        "sms" -> WorshipSms.smsAllowed(ctx)
+        else -> throw FeatureException("bad_args", "permission $name")
+    }
+
+    /**
+     * Opens Android's question (runtime permissions) or its settings page (special access) for [name]. The answer is
+     * known when the screen comes back: `ask.done` in the snapshot. A runtime permission refused for good shows no
+     * question at all, so without a pause within 1.5 s the ask counts as done.
+     */
+    private fun askPermission(host: FeatureHost, name: String): Map<String, Any?> {
+        val act = host.activity
+        val id = ++askCount
+        if (granted(act, name)) return mapOf("id" to id, "done" to true, "granted" to true)
+        if (name == "phone" || name == "sms") {
+            if (!WorshipSms.supported(act)) throw FeatureException("unsupported", "no SMS reply in this build")
+        }
+        val a = Ask(id, name)
+        ask = a
+        lifecycle?.let { act.application.unregisterActivityLifecycleCallbacks(it) }
+        val cb = object : android.app.Application.ActivityLifecycleCallbacks {
+            override fun onActivityPaused(activity: android.app.Activity) { if (activity === act) a.paused = true }
+            override fun onActivityResumed(activity: android.app.Activity) {
+                if (activity !== act || !a.paused || a.done) return
+                a.done = true
+                act.application.unregisterActivityLifecycleCallbacks(this)
+                host.refresh()
+            }
+            override fun onActivityCreated(activity: android.app.Activity, b: android.os.Bundle?) {}
+            override fun onActivityStarted(activity: android.app.Activity) {}
+            override fun onActivityStopped(activity: android.app.Activity) {}
+            override fun onActivitySaveInstanceState(activity: android.app.Activity, b: android.os.Bundle) {}
+            override fun onActivityDestroyed(activity: android.app.Activity) {}
+        }
+        lifecycle = cb
+        act.application.registerActivityLifecycleCallbacks(cb)
+        val pkg = Uri.parse("package:${act.packageName}")
+        val runtime: Array<String>? = when (name) {
+            "phone" -> WorshipSms.PHONE_PERMISSIONS
+            "sms" -> WorshipSms.SMS_PERMISSIONS
+            "notifications" -> if (Build.VERSION.SDK_INT >= 33) arrayOf(android.Manifest.permission.POST_NOTIFICATIONS) else null
+            else -> null
+        }
+        if (runtime != null) {
+            act.requestPermissions(runtime, REQ_ASK)
+            android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                if (!a.paused && !a.done) {
+                    a.done = true
+                    act.application.unregisterActivityLifecycleCallbacks(cb)
+                    host.refresh()
+                }
+            }, 1500)
+        } else {
+            act.startActivity(when (name) {
+                "dnd" -> Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+                "exact" -> if (Build.VERSION.SDK_INT >= 31) Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, pkg)
+                    else throw FeatureException("unsupported", "exact alarms need no permission here")
+                "write" -> Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS, pkg)
+                else -> Intent(android.provider.Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .putExtra(android.provider.Settings.EXTRA_APP_PACKAGE, act.packageName)
+            })
+        }
+        return mapOf("id" to id, "done" to false, "granted" to false)
+    }
+
+    /** Request code of Waaiya's own permission questions here (UiBridge uses lower ones). */
+    private const val REQ_ASK = 7310
 }

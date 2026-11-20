@@ -937,6 +937,124 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsGeneralTitle => 'عام';
 
   @override
+  String get worshipPrayerFajr => 'فجر';
+
+  @override
+  String get worshipPrayerSunrise => 'طلوع آفتاب';
+
+  @override
+  String get worshipPrayerDhuhr => 'ظہر';
+
+  @override
+  String get worshipPrayerAsr => 'عصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'مغرب';
+
+  @override
+  String get worshipPrayerIsha => 'عشاء';
+
+  @override
+  String get worshipEndSilent => 'ابھی خاموشی ختم کریں';
+
+  @override
+  String get worshipUnmute => 'ابھی آواز کھولیں';
+
+  @override
+  String get worshipSmsDefault =>
+      'نماز کا وقت ہے، ابھی جواب نہیں دے سکتا۔ میں آپ کو بعد میں کال کروں گا۔';
+
+  @override
+  String get desktopPreview =>
+      'پیش نظارہ: اس کمپیوٹر پر فلٹر انجن ابھی منسلک نہیں ہے۔ بٹن صرف یہ دکھاتا ہے کہ ایپ کیسے کام کرے گی۔';
+
+  @override
+  String actionFailed(String details) {
+    return 'یہ کام نہیں ہوا: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'تمام ایپس سے آلات ہٹائے جا رہے ہیں۔';
+
+  @override
+  String get engineErrorNoPactl =>
+      'آواز کے ٹولز (pactl) نہیں ملے۔ واعية کو PulseAudio، یا pipewire-pulse کے ساتھ PipeWire درکار ہے۔';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'ساؤنڈ سرور (PulseAudio یا PipeWire) نہیں چل رہا۔';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'اس سسٹم میں systemd یوزر سیشن نہیں ہے، جو فلٹر کو پس منظر میں چلاتا ہے۔';
+
+  @override
+  String get engineErrorNoOutput => 'کوئی اسپیکر یا ہیڈفون نہیں ملا۔';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'فلٹر انسٹال نہیں ہو سکا۔ تفصیلات:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'فلٹر شروع نہیں ہوا۔ تفصیلات:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'فلٹر ایک خرابی کے ساتھ رک گیا۔ تفصیلات:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'لاگ ان پر شروع کریں';
+
+  @override
+  String get autostartBody => 'لاگ ان کرتے ہی آواز فلٹر کریں۔';
+
+  @override
+  String get blurBodyDesktop =>
+      'واعية کھلی رہنے تک، ہر ونڈو کے اوپر، اسکرین پر لوگوں اور تصاویر کو ڈھانپ دیتی ہے (آواز کا فلٹر آن ہو یا آف، یہ کام کرتی ہے)۔ یہ اسی کمپیوٹر پر چلتی ہے؛ کچھ بھی کہیں نہیں بھیجا جاتا۔ واعية کی ونڈو بند کرنے سے دھندلاہٹ رک جاتی ہے۔';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'آن: جب کمپیوٹر بہت سست ہو یا دھندلاہٹ ناکام ہو جائے تو پوری اسکرین ڈھانپ دی جاتی ہے؛ کلکس پھر بھی نیچے کی ونڈوز تک پہنچتے ہیں۔ آف: اسکرین اوپر ایک سرخ پٹی کے ساتھ نظر آتی رہتی ہے۔';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'دھندلاہٹ آن ہے۔ یہ ڈیسک ٹاپ دھندلاہٹ کو اپنے ہی اسکرین کیپچر میں دکھاتا ہے، اس لیے دھندلا حصہ منظر بدلنے تک دھندلا رہتا ہے۔';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'اس ڈیسک ٹاپ پر دھندلاہٹ دوسری ونڈوز کے اوپر ظاہر نہیں ہو سکتی۔ تفصیلات:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'اسکرین کے اشتراک والی ونڈو میں اپنی اسکرین منتخب کریں اور اجازت دیں۔ واعية صرف ایک بار پوچھتی ہے؛ تصویر اسی کمپیوٹر پر رہتی ہے۔';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'دھندلاہٹ غیر متوقع طور پر رک گئی۔ دوبارہ کوشش کے لیے دھندلاہٹ کا کوئی آپشن آف کر کے دوبارہ آن کریں۔ تفصیلات:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'خواتین کے گانے کا ڈیٹیکٹر لوڈ نہیں ہوا، اس لیے جب تک وہ آپشن آن ہے آوازیں خاموش رہتی ہیں۔';
+
+  @override
+  String get blurStatusUncovered =>
+      'ایک مانیٹر دھندلاہٹ سے ڈھکا نہیں ہے: یا تو اس کا اشتراک نہیں کیا گیا، یا وہ بعد میں لگایا گیا۔ دھندلاہٹ کا کوئی آپشن آف کر کے دوبارہ آن کریں، اور اسکرین کے اشتراک والی ونڈو میں ہر اسکرین منتخب کریں۔';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'اس انسٹالیشن میں دھندلاہٹ کے ماڈلز موجود نہیں، اس لیے یہ کچھ نہیں ڈھانپ سکتی؛ اسکرین کے اوپر ایک سرخ پٹی رہتی ہے۔ واعية دوبارہ انسٹال کریں۔';
+
+  @override
+  String get diagNoteDesktop =>
+      'اس کمپیوٹر پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں اور جو آپ کی مدد کر رہا ہو اسے دے دیں۔ ایپ خود کچھ نہیں بھیجتی۔';
+
+  @override
   String get worshipTitle => 'نماز کے اوقات';
 
   @override
@@ -1055,24 +1173,6 @@ class AppLocalizationsUr extends AppLocalizations {
   String get worshipMethodDubai => 'دبئی';
 
   @override
-  String get worshipPrayerFajr => 'فجر';
-
-  @override
-  String get worshipPrayerSunrise => 'طلوع آفتاب';
-
-  @override
-  String get worshipPrayerDhuhr => 'ظہر';
-
-  @override
-  String get worshipPrayerAsr => 'عصر';
-
-  @override
-  String get worshipPrayerMaghrib => 'مغرب';
-
-  @override
-  String get worshipPrayerIsha => 'عشاء';
-
-  @override
   String get worshipToday => 'آج';
 
   @override
@@ -1130,12 +1230,6 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'ابھی خاموشی ختم کریں';
-
-  @override
-  String get worshipUnmute => 'ابھی آواز کھولیں';
-
-  @override
   String get worshipDndNeeded =>
       'واعية کو «ڈسٹرب نہ کریں» بدلنے کی اجازت دیں، ورنہ فون خاموش نہیں ہو سکتا۔';
 
@@ -1147,7 +1241,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'واعية کے لیے «الارم اور یاد دہانیاں» کی اجازت نہیں، اس لیے ہر تبدیلی 10 منٹ تک، یا فون سوتے وقت اس سے زیادہ، دیر سے ہو سکتی ہے۔';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'اطلاعات بند ہیں: آپ نہیں دیکھ پائیں گے کہ فون کب خاموش ہوا یا واپس آیا۔';
 
   @override
@@ -1191,139 +1285,86 @@ class AppLocalizationsUr extends AppLocalizations {
   String get worshipOpenSound => 'آواز کی سیٹنگز کھولیں';
 
   @override
-  String get worshipNotifChannel => 'نماز کے اوقات';
+  String get worshipSmsTitle => 'نماز کے دوران کالوں کا جواب SMS سے';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: فون خاموش';
+  String get worshipSmsBody =>
+      'ہر نماز کے وقت کے بعد خاموشی کے منٹوں میں، بجتی رہ جانے والی کال کو ایک SMS جاتا ہے۔ ہر نمبر کو ہر نماز میں ایک بار؛ چھپے یا مختصر نمبروں کو کبھی نہیں۔';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'اتنی دیر بجنے کے بعد: $seconds سیکنڈ';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return '«ڈسٹرب نہ کریں» $time تک آن ہے۔';
+  String get worshipSmsDelayTitle => 'SMS سے پہلے بجنے کے سیکنڈ';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds سیکنڈ';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'خاموشی کا وقت ختم';
-
-  @override
-  String get worshipNotifSilentEndText => '«ڈسٹرب نہ کریں» پھر سے بند ہے۔';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'آپ نے خود «ڈسٹرب نہ کریں» بدلا، اس لیے واعية نے اسے ویسے ہی چھوڑ دیا۔';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'واعية «ڈسٹرب نہ کریں» آن نہیں کر سکا۔ واعية کے سیٹنگز صفحے پر اجازت دیں۔';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: میڈیا خاموش';
+  String worshipSmsText(Object text) {
+    return 'پیغام: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'میڈیا کی آواز $time تک بند ہے۔';
-  }
+  String get worshipSmsTextTitle => 'آپ کا پیغام';
 
   @override
-  String get worshipNotifMuteEndTitle => 'میڈیا کی آواز واپس آ گئی';
+  String get worshipSmsTextDefault => 'طے شدہ پیغام';
 
   @override
-  String get worshipNotifMuteEndText => 'میڈیا کا والیوم پہلے جیسا ہے۔';
+  String get worshipSmsCost =>
+      'ہر جواب آپ کی SIM سے ایک عام SMS ہے، آپ کے پیکج کی قیمت پر۔ رومنگ کے دوران کچھ نہیں بھیجا جاتا۔';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'آپ نے خود میڈیا کا والیوم بدلا، اس لیے واعية نے اسے ویسے ہی چھوڑ دیا۔';
+  String get worshipSmsRoaming =>
+      'ابھی رومنگ میں ہیں: کوئی SMS نہیں بھیجا جائے گا۔';
 
   @override
-  String get desktopPreview =>
-      'پیش نظارہ: اس کمپیوٹر پر فلٹر انجن ابھی منسلک نہیں ہے۔ بٹن صرف یہ دکھاتا ہے کہ ایپ کیسے کام کرے گی۔';
+  String get worshipSmsLogTitle => 'بھیجے گئے جوابات (صرف اسی فون پر محفوظ)';
 
   @override
-  String actionFailed(String details) {
-    return 'یہ کام نہیں ہوا: $details';
-  }
+  String get worshipContinue => 'جاری رکھیں';
 
   @override
-  String get stateOnDetailNoDelay => 'تمام ایپس سے آلات ہٹائے جا رہے ہیں۔';
+  String get worshipWhyDnd =>
+      'نماز کے اوقات میں فون خاموش کرنے کے لیے، اگلے صفحے پر واعية کو «ڈسٹرب نہ کریں» تک رسائی دیں۔';
 
   @override
-  String get engineErrorNoPactl =>
-      'آواز کے ٹولز (pactl) نہیں ملے۔ واعية کو PulseAudio، یا pipewire-pulse کے ساتھ PipeWire درکار ہے۔';
+  String get worshipWhyExact =>
+      'بالکل وقت پر کام کے لیے، اگلے صفحے پر واعية کو الارم اور یاد دہانیاں لگانے کی اجازت دیں۔ اس کے بغیر تبدیلیاں 10 منٹ تک دیر سے ہو سکتی ہیں۔';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'ساؤنڈ سرور (PulseAudio یا PipeWire) نہیں چل رہا۔';
+  String get worshipWhyNotifications =>
+      'اطلاعات کی اجازت دیں تاکہ آپ ہر تبدیلی دیکھ سکیں اور اسے واپس کر سکیں۔';
 
   @override
-  String get engineErrorNoSystemd =>
-      'اس سسٹم میں systemd یوزر سیشن نہیں ہے، جو فلٹر کو پس منظر میں چلاتا ہے۔';
+  String get worshipWhyWrite =>
+      'رنگ ٹون یا اطلاع کی آواز بدلنے کے لیے، اگلے صفحے پر واعية کو سسٹم سیٹنگز بدلنے کی اجازت دیں۔';
 
   @override
-  String get engineErrorNoOutput => 'کوئی اسپیکر یا ہیڈفون نہیں ملا۔';
+  String get worshipWhyPhone =>
+      'یہ جاننے کے لیے کہ کال بج رہی ہے اور اس کا نمبر کیا ہے، واعية کو «فون» اور «کال لاگز» کی اجازتیں چاہییں۔ آپ کے جواب کے سوا کچھ فون سے باہر نہیں جاتا۔';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'فلٹر انسٹال نہیں ہو سکا۔ تفصیلات:\n$details';
-  }
+  String get worshipWhySms =>
+      'آپ کا جواب بھیجنے کے لیے واعية کو SMS بھیجنے کی اجازت چاہیے۔ یہ صرف وہی جواب بھیجتا ہے، ہر نمبر کو ہر نماز میں زیادہ سے زیادہ ایک بار۔';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'فلٹر شروع نہیں ہوا۔ تفصیلات:\n$details';
-  }
+  String get worshipMissingDnd =>
+      '«ڈسٹرب نہ کریں» تک رسائی نہیں دی گئی، اس لیے خاموشی بند رہے گی۔';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'فلٹر ایک خرابی کے ساتھ رک گیا۔ تفصیلات:\n$details';
-  }
+  String get worshipMissingPhone =>
+      '«فون» اور «کال لاگز» کی اجازتیں نہیں دی گئیں، اس لیے SMS جواب بند رہے گا۔';
 
   @override
-  String get autostartTitle => 'لاگ ان پر شروع کریں';
+  String get worshipMissingSms =>
+      'SMS بھیجنے کی اجازت نہیں دی گئی، اس لیے SMS جواب بند رہے گا۔';
 
   @override
-  String get autostartBody => 'لاگ ان کرتے ہی آواز فلٹر کریں۔';
-
-  @override
-  String get blurBodyDesktop =>
-      'واعية کھلی رہنے تک، ہر ونڈو کے اوپر، اسکرین پر لوگوں اور تصاویر کو ڈھانپ دیتی ہے (آواز کا فلٹر آن ہو یا آف، یہ کام کرتی ہے)۔ یہ اسی کمپیوٹر پر چلتی ہے؛ کچھ بھی کہیں نہیں بھیجا جاتا۔ واعية کی ونڈو بند کرنے سے دھندلاہٹ رک جاتی ہے۔';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'آن: جب کمپیوٹر بہت سست ہو یا دھندلاہٹ ناکام ہو جائے تو پوری اسکرین ڈھانپ دی جاتی ہے؛ کلکس پھر بھی نیچے کی ونڈوز تک پہنچتے ہیں۔ آف: اسکرین اوپر ایک سرخ پٹی کے ساتھ نظر آتی رہتی ہے۔';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'دھندلاہٹ آن ہے۔ یہ ڈیسک ٹاپ دھندلاہٹ کو اپنے ہی اسکرین کیپچر میں دکھاتا ہے، اس لیے دھندلا حصہ منظر بدلنے تک دھندلا رہتا ہے۔';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'اس ڈیسک ٹاپ پر دھندلاہٹ دوسری ونڈوز کے اوپر ظاہر نہیں ہو سکتی۔ تفصیلات:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'اسکرین کے اشتراک والی ونڈو میں اپنی اسکرین منتخب کریں اور اجازت دیں۔ واعية صرف ایک بار پوچھتی ہے؛ تصویر اسی کمپیوٹر پر رہتی ہے۔';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'دھندلاہٹ غیر متوقع طور پر رک گئی۔ دوبارہ کوشش کے لیے دھندلاہٹ کا کوئی آپشن آف کر کے دوبارہ آن کریں۔ تفصیلات:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'خواتین کے گانے کا ڈیٹیکٹر لوڈ نہیں ہوا، اس لیے جب تک وہ آپشن آن ہے آوازیں خاموش رہتی ہیں۔';
-
-  @override
-  String get blurStatusUncovered =>
-      'ایک مانیٹر دھندلاہٹ سے ڈھکا نہیں ہے: یا تو اس کا اشتراک نہیں کیا گیا، یا وہ بعد میں لگایا گیا۔ دھندلاہٹ کا کوئی آپشن آف کر کے دوبارہ آن کریں، اور اسکرین کے اشتراک والی ونڈو میں ہر اسکرین منتخب کریں۔';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'اس انسٹالیشن میں دھندلاہٹ کے ماڈلز موجود نہیں، اس لیے یہ کچھ نہیں ڈھانپ سکتی؛ اسکرین کے اوپر ایک سرخ پٹی رہتی ہے۔ واعية دوبارہ انسٹال کریں۔';
-
-  @override
-  String get diagNoteDesktop =>
-      'اس کمپیوٹر پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں اور جو آپ کی مدد کر رہا ہو اسے دے دیں۔ ایپ خود کچھ نہیں بھیجتی۔';
+  String get worshipTryAgain => 'دوبارہ کوشش کریں';
 }

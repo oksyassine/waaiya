@@ -17,6 +17,9 @@ class WorshipTonesSection extends StatelessWidget {
   Future<void> _set(BuildContext context, String id) async {
     final l = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.maybeOf(context);
+    // "Modify system settings" is asked here, when the user picks a tone, and never before
+    if (!info.writeSettings && !await worshipAsk(context, 'write', l.worshipWhyWrite)) return;
+    if (!context.mounted) return;
     final r = await runAction(context, (b) => b.invoke('worship.setTone', {'id': id}));
     if (!context.mounted) return;
     switch (r) {

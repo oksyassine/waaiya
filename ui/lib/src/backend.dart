@@ -49,6 +49,12 @@ abstract final class SettingKeys {
   static const prayerMethod = 'prayer_method';
   static const prayerAsr = 'prayer_asr';
 
+  /// Reply by SMS to a call left ringing [prayerSmsDelaySeconds] inside a prayer window; [prayerSmsText] "" = the
+  /// default text in the app's language. Android builds with SMS only (not Play builds).
+  static const prayerSmsReply = 'prayer_sms_reply';
+  static const prayerSmsDelaySeconds = 'prayer_sms_delay_seconds';
+  static const prayerSmsText = 'prayer_sms_text';
+
   /// Waiting period in minutes before switching off or weakening takes effect; 0 = none.
   static const protectDelayMinutes = 'protect_delay_minutes';
 
@@ -59,6 +65,7 @@ abstract final class SettingKeys {
     prayerAdhanMinutes: (1, 30),
     prayerMethod: (0, 15),
     prayerAsr: (0, 1),
+    prayerSmsDelaySeconds: (3, 60),
     protectDelayMinutes: (0, 1440),
   };
 
@@ -83,6 +90,9 @@ abstract final class SettingKeys {
     prayerPlace: '',
     prayerMethod: 0,
     prayerAsr: 0,
+    prayerSmsReply: false,
+    prayerSmsDelaySeconds: 5,
+    prayerSmsText: '',
     protectDelayMinutes: 0,
   };
 
@@ -98,6 +108,7 @@ abstract final class SettingKeys {
     if (def is String) {
       if (value is! String) return '"$key" takes a string';
       if (key == gender && !const {'', 'man', 'woman'}.contains(value)) return 'gender is "", "man" or "woman"';
+      if (key == prayerSmsText && value.length > 300) return '"$key" takes at most 300 characters';
     }
     return null;
   }
@@ -125,6 +136,9 @@ class WaaiyaSettings {
     this.prayerPlace = '',
     this.prayerMethod = 0,
     this.prayerAsr = 0,
+    this.prayerSmsReply = false,
+    this.prayerSmsDelaySeconds = 5,
+    this.prayerSmsText = '',
     this.protectDelayMinutes = 0,
   });
 
@@ -148,6 +162,9 @@ class WaaiyaSettings {
         prayerPlace: _str(m[SettingKeys.prayerPlace]) ?? '',
         prayerMethod: _int(m[SettingKeys.prayerMethod]).clamp(0, 15),
         prayerAsr: _int(m[SettingKeys.prayerAsr]).clamp(0, 1),
+        prayerSmsReply: _bool(m[SettingKeys.prayerSmsReply], false),
+        prayerSmsDelaySeconds: _intOr(m[SettingKeys.prayerSmsDelaySeconds], 5).clamp(3, 60),
+        prayerSmsText: _str(m[SettingKeys.prayerSmsText]) ?? '',
         protectDelayMinutes: _int(m[SettingKeys.protectDelayMinutes]).clamp(0, 1440),
       );
 
@@ -175,6 +192,9 @@ class WaaiyaSettings {
   final String prayerPlace;
   final int prayerMethod;
   final int prayerAsr;
+  final bool prayerSmsReply;
+  final int prayerSmsDelaySeconds;
+  final String prayerSmsText;
   final int protectDelayMinutes;
 
   bool get isMan => gender == 'man';
@@ -200,6 +220,9 @@ class WaaiyaSettings {
         SettingKeys.prayerPlace: prayerPlace,
         SettingKeys.prayerMethod: prayerMethod,
         SettingKeys.prayerAsr: prayerAsr,
+        SettingKeys.prayerSmsReply: prayerSmsReply,
+        SettingKeys.prayerSmsDelaySeconds: prayerSmsDelaySeconds,
+        SettingKeys.prayerSmsText: prayerSmsText,
         SettingKeys.protectDelayMinutes: protectDelayMinutes,
       };
 }

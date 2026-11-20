@@ -1702,222 +1702,6 @@ abstract class AppLocalizations {
   /// **'عام'**
   String get settingsGeneralTitle;
 
-  /// Android string worship_title
-  ///
-  /// In ar, this message translates to:
-  /// **'أوقات الصلاة'**
-  String get worshipTitle;
-
-  /// Android string worship_body
-  ///
-  /// In ar, this message translates to:
-  /// **'اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.'**
-  String get worshipBody;
-
-  /// Android string worship_place
-  ///
-  /// In ar, this message translates to:
-  /// **'المكان: {place}'**
-  String worshipPlace(Object place);
-
-  /// Android string worship_place_none
-  ///
-  /// In ar, this message translates to:
-  /// **'المكان: لم يُختر بعد'**
-  String get worshipPlaceNone;
-
-  /// Android string worship_choose
-  ///
-  /// In ar, this message translates to:
-  /// **'اختيار'**
-  String get worshipChoose;
-
-  /// Android string worship_place_search
-  ///
-  /// In ar, this message translates to:
-  /// **'ابحث عن مدينة'**
-  String get worshipPlaceSearch;
-
-  /// Android string worship_place_no_match
-  ///
-  /// In ar, this message translates to:
-  /// **'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.'**
-  String get worshipPlaceNoMatch;
-
-  /// Android string worship_place_custom
-  ///
-  /// In ar, this message translates to:
-  /// **'إدخال الإحداثيات'**
-  String get worshipPlaceCustom;
-
-  /// Android string worship_lat
-  ///
-  /// In ar, this message translates to:
-  /// **'خط العرض (شمال +، جنوب −)'**
-  String get worshipLat;
-
-  /// Android string worship_lon
-  ///
-  /// In ar, this message translates to:
-  /// **'خط الطول (شرق +، غرب −)'**
-  String get worshipLon;
-
-  /// Android string worship_zone
-  ///
-  /// In ar, this message translates to:
-  /// **'المنطقة الزمنية، مثل Africa/Cairo'**
-  String get worshipZone;
-
-  /// Android string worship_custom_invalid
-  ///
-  /// In ar, this message translates to:
-  /// **'تحقّق من الأرقام ومن المنطقة الزمنية.'**
-  String get worshipCustomInvalid;
-
-  /// Android string worship_place_invalid
-  ///
-  /// In ar, this message translates to:
-  /// **'لا يمكن استخدام هذا المكان. اختره من جديد.'**
-  String get worshipPlaceInvalid;
-
-  /// Android string worship_method
-  ///
-  /// In ar, this message translates to:
-  /// **'طريقة الحساب: {method}'**
-  String worshipMethod(Object method);
-
-  /// Android string worship_method_title
-  ///
-  /// In ar, this message translates to:
-  /// **'طريقة الحساب'**
-  String get worshipMethodTitle;
-
-  /// Android string worship_method_note
-  ///
-  /// In ar, this message translates to:
-  /// **'اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.'**
-  String get worshipMethodNote;
-
-  /// Android string worship_asr
-  ///
-  /// In ar, this message translates to:
-  /// **'العصر: {rule}'**
-  String worshipAsr(Object rule);
-
-  /// Android string worship_asr_title
-  ///
-  /// In ar, this message translates to:
-  /// **'وقت العصر'**
-  String get worshipAsrTitle;
-
-  /// Android string worship_asr_standard
-  ///
-  /// In ar, this message translates to:
-  /// **'الجمهور (الشافعي والمالكي والحنبلي)'**
-  String get worshipAsrStandard;
-
-  /// Android string worship_asr_hanafi
-  ///
-  /// In ar, this message translates to:
-  /// **'الحنفي'**
-  String get worshipAsrHanafi;
-
-  /// Android string worship_method_mwl
-  ///
-  /// In ar, this message translates to:
-  /// **'رابطة العالم الإسلامي'**
-  String get worshipMethodMwl;
-
-  /// Android string worship_method_isna
-  ///
-  /// In ar, this message translates to:
-  /// **'الجمعية الإسلامية لأمريكا الشمالية (ISNA)'**
-  String get worshipMethodIsna;
-
-  /// Android string worship_method_egypt
-  ///
-  /// In ar, this message translates to:
-  /// **'الهيئة المصرية العامة للمساحة'**
-  String get worshipMethodEgypt;
-
-  /// Android string worship_method_umm_al_qura
-  ///
-  /// In ar, this message translates to:
-  /// **'أم القرى، مكة المكرمة'**
-  String get worshipMethodUmmAlQura;
-
-  /// Android string worship_method_karachi
-  ///
-  /// In ar, this message translates to:
-  /// **'جامعة العلوم الإسلامية، كراتشي'**
-  String get worshipMethodKarachi;
-
-  /// Android string worship_method_tehran
-  ///
-  /// In ar, this message translates to:
-  /// **'معهد الجيوفيزياء، جامعة طهران'**
-  String get worshipMethodTehran;
-
-  /// Android string worship_method_gulf
-  ///
-  /// In ar, this message translates to:
-  /// **'منطقة الخليج'**
-  String get worshipMethodGulf;
-
-  /// Android string worship_method_kuwait
-  ///
-  /// In ar, this message translates to:
-  /// **'الكويت'**
-  String get worshipMethodKuwait;
-
-  /// Android string worship_method_qatar
-  ///
-  /// In ar, this message translates to:
-  /// **'قطر'**
-  String get worshipMethodQatar;
-
-  /// Android string worship_method_singapore
-  ///
-  /// In ar, this message translates to:
-  /// **'سنغافورة (المجلس الإسلامي MUIS)'**
-  String get worshipMethodSingapore;
-
-  /// Android string worship_method_turkey
-  ///
-  /// In ar, this message translates to:
-  /// **'تركيا (رئاسة الشؤون الدينية)'**
-  String get worshipMethodTurkey;
-
-  /// Android string worship_method_france
-  ///
-  /// In ar, this message translates to:
-  /// **'فرنسا (اتحاد المنظمات الإسلامية، 12°)'**
-  String get worshipMethodFrance;
-
-  /// Android string worship_method_morocco
-  ///
-  /// In ar, this message translates to:
-  /// **'المغرب (وزارة الأوقاف)'**
-  String get worshipMethodMorocco;
-
-  /// Android string worship_method_indonesia
-  ///
-  /// In ar, this message translates to:
-  /// **'إندونيسيا (وزارة الشؤون الدينية)'**
-  String get worshipMethodIndonesia;
-
-  /// Android string worship_method_malaysia
-  ///
-  /// In ar, this message translates to:
-  /// **'ماليزيا (JAKIM)'**
-  String get worshipMethodMalaysia;
-
-  /// Android string worship_method_dubai
-  ///
-  /// In ar, this message translates to:
-  /// **'دبي'**
-  String get worshipMethodDubai;
-
   /// Android string worship_prayer_fajr
   ///
   /// In ar, this message translates to:
@@ -1954,90 +1738,6 @@ abstract class AppLocalizations {
   /// **'العشاء'**
   String get worshipPrayerIsha;
 
-  /// Android string worship_today
-  ///
-  /// In ar, this message translates to:
-  /// **'اليوم'**
-  String get worshipToday;
-
-  /// Android string worship_no_times
-  ///
-  /// In ar, this message translates to:
-  /// **'لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.'**
-  String get worshipNoTimes;
-
-  /// Android string worship_silent_title
-  ///
-  /// In ar, this message translates to:
-  /// **'صامت في أوقات الصلاة'**
-  String get worshipSilentTitle;
-
-  /// Android string worship_silent_body
-  ///
-  /// In ar, this message translates to:
-  /// **'من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.'**
-  String get worshipSilentBody;
-
-  /// Android string worship_silent_minutes
-  ///
-  /// In ar, this message translates to:
-  /// **'مدة الصمت: {minutes} دقيقة'**
-  String worshipSilentMinutes(Object minutes);
-
-  /// Android string worship_mute_title
-  ///
-  /// In ar, this message translates to:
-  /// **'كتم الوسائط عند الأذان'**
-  String get worshipMuteTitle;
-
-  /// Android string worship_mute_body
-  ///
-  /// In ar, this message translates to:
-  /// **'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.'**
-  String get worshipMuteBody;
-
-  /// Android string worship_mute_minutes
-  ///
-  /// In ar, this message translates to:
-  /// **'مدة الكتم: {minutes} دقيقة'**
-  String worshipMuteMinutes(Object minutes);
-
-  /// Android string worship_minutes_title
-  ///
-  /// In ar, this message translates to:
-  /// **'المدة'**
-  String get worshipMinutesTitle;
-
-  /// Android string worship_minutes_option
-  ///
-  /// In ar, this message translates to:
-  /// **'{minutes} دقيقة'**
-  String worshipMinutesOption(Object minutes);
-
-  /// Android string worship_need_place
-  ///
-  /// In ar, this message translates to:
-  /// **'اختر المكان أولاً.'**
-  String get worshipNeedPlace;
-
-  /// Android string worship_next
-  ///
-  /// In ar, this message translates to:
-  /// **'التالي: {prayer} الساعة {time}'**
-  String worshipNext(Object prayer, Object time);
-
-  /// Android string worship_silent_now
-  ///
-  /// In ar, this message translates to:
-  /// **'صامت حتى {time}.'**
-  String worshipSilentNow(Object time);
-
-  /// Android string worship_muted_now
-  ///
-  /// In ar, this message translates to:
-  /// **'الوسائط مكتومة حتى {time}.'**
-  String worshipMutedNow(Object time);
-
   /// Android string worship_end_silent
   ///
   /// In ar, this message translates to:
@@ -2050,167 +1750,11 @@ abstract class AppLocalizations {
   /// **'إلغاء الكتم الآن'**
   String get worshipUnmute;
 
-  /// Android string worship_dnd_needed
+  /// Android string worship_sms_default
   ///
   /// In ar, this message translates to:
-  /// **'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.'**
-  String get worshipDndNeeded;
-
-  /// Android string worship_allow
-  ///
-  /// In ar, this message translates to:
-  /// **'السماح'**
-  String get worshipAllow;
-
-  /// Android string worship_exact_needed
-  ///
-  /// In ar, this message translates to:
-  /// **'«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.'**
-  String get worshipExactNeeded;
-
-  /// Android string worship_notif_needed
-  ///
-  /// In ar, this message translates to:
-  /// **'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.'**
-  String get worshipNotifNeeded;
-
-  /// Android string worship_tones_title
-  ///
-  /// In ar, this message translates to:
-  /// **'نغمة رنين وصوت إشعارات بسيطان'**
-  String get worshipTonesTitle;
-
-  /// Android string worship_tones_body
-  ///
-  /// In ar, this message translates to:
-  /// **'لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:'**
-  String get worshipTonesBody;
-
-  /// Android string worship_tone_ring
-  ///
-  /// In ar, this message translates to:
-  /// **'نغمة رنين بسيطة {number}'**
-  String worshipToneRing(Object number);
-
-  /// Android string worship_tone_notification
-  ///
-  /// In ar, this message translates to:
-  /// **'صوت إشعار بسيط {number}'**
-  String worshipToneNotification(Object number);
-
-  /// Android string worship_tone_play
-  ///
-  /// In ar, this message translates to:
-  /// **'تشغيل'**
-  String get worshipTonePlay;
-
-  /// Android string worship_tone_set
-  ///
-  /// In ar, this message translates to:
-  /// **'استخدام'**
-  String get worshipToneSet;
-
-  /// Android string worship_tone_in_use
-  ///
-  /// In ar, this message translates to:
-  /// **'مستخدَمة'**
-  String get worshipToneInUse;
-
-  /// Android string worship_tone_done
-  ///
-  /// In ar, this message translates to:
-  /// **'تم.'**
-  String get worshipToneDone;
-
-  /// Android string worship_tone_permission
-  ///
-  /// In ar, this message translates to:
-  /// **'اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.'**
-  String get worshipTonePermission;
-
-  /// Android string worship_tone_failed
-  ///
-  /// In ar, this message translates to:
-  /// **'لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».'**
-  String get worshipToneFailed;
-
-  /// Android string worship_open_sound
-  ///
-  /// In ar, this message translates to:
-  /// **'فتح إعدادات الصوت'**
-  String get worshipOpenSound;
-
-  /// Android string worship_notif_channel
-  ///
-  /// In ar, this message translates to:
-  /// **'أوقات الصلاة'**
-  String get worshipNotifChannel;
-
-  /// Android string worship_notif_silent_title
-  ///
-  /// In ar, this message translates to:
-  /// **'{prayer}: الهاتف صامت'**
-  String worshipNotifSilentTitle(Object prayer);
-
-  /// Android string worship_notif_silent_text
-  ///
-  /// In ar, this message translates to:
-  /// **'«عدم الإزعاج» مفعَّل حتى {time}.'**
-  String worshipNotifSilentText(Object time);
-
-  /// Android string worship_notif_silent_end_title
-  ///
-  /// In ar, this message translates to:
-  /// **'انتهى وقت الصمت'**
-  String get worshipNotifSilentEndTitle;
-
-  /// Android string worship_notif_silent_end_text
-  ///
-  /// In ar, this message translates to:
-  /// **'أُوقف «عدم الإزعاج» من جديد.'**
-  String get worshipNotifSilentEndText;
-
-  /// Android string worship_notif_silent_left
-  ///
-  /// In ar, this message translates to:
-  /// **'غيّرتَ «عدم الإزعاج» بنفسك، فتركته واعية كما هو.'**
-  String get worshipNotifSilentLeft;
-
-  /// Android string worship_notif_no_access
-  ///
-  /// In ar, this message translates to:
-  /// **'لم تستطع واعية تفعيل «عدم الإزعاج». اسمح بذلك من صفحة الإعدادات في واعية.'**
-  String get worshipNotifNoAccess;
-
-  /// Android string worship_notif_mute_title
-  ///
-  /// In ar, this message translates to:
-  /// **'{prayer}: الوسائط مكتومة'**
-  String worshipNotifMuteTitle(Object prayer);
-
-  /// Android string worship_notif_mute_text
-  ///
-  /// In ar, this message translates to:
-  /// **'صوت الوسائط مكتوم حتى {time}.'**
-  String worshipNotifMuteText(Object time);
-
-  /// Android string worship_notif_mute_end_title
-  ///
-  /// In ar, this message translates to:
-  /// **'عاد صوت الوسائط'**
-  String get worshipNotifMuteEndTitle;
-
-  /// Android string worship_notif_mute_end_text
-  ///
-  /// In ar, this message translates to:
-  /// **'مستوى صوت الوسائط كما كان.'**
-  String get worshipNotifMuteEndText;
-
-  /// Android string worship_notif_mute_left
-  ///
-  /// In ar, this message translates to:
-  /// **'غيّرتَ صوت الوسائط بنفسك، فتركته واعية كما هو.'**
-  String get worshipNotifMuteLeft;
+  /// **'إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.'**
+  String get worshipSmsDefault;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
@@ -2343,6 +1887,528 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
   String get diagNoteDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقات الصلاة'**
+  String get worshipTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.'**
+  String get worshipBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكان: {place}'**
+  String worshipPlace(Object place);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكان: لم يُختر بعد'**
+  String get worshipPlaceNone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار'**
+  String get worshipChoose;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث عن مدينة'**
+  String get worshipPlaceSearch;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.'**
+  String get worshipPlaceNoMatch;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدخال الإحداثيات'**
+  String get worshipPlaceCustom;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'خط العرض (شمال +، جنوب −)'**
+  String get worshipLat;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'خط الطول (شرق +، غرب −)'**
+  String get worshipLon;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المنطقة الزمنية، مثل Africa/Cairo'**
+  String get worshipZone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحقّق من الأرقام ومن المنطقة الزمنية.'**
+  String get worshipCustomInvalid;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن استخدام هذا المكان. اختره من جديد.'**
+  String get worshipPlaceInvalid;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الحساب: {method}'**
+  String worshipMethod(Object method);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الحساب'**
+  String get worshipMethodTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.'**
+  String get worshipMethodNote;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'العصر: {rule}'**
+  String worshipAsr(Object rule);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت العصر'**
+  String get worshipAsrTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجمهور (الشافعي والمالكي والحنبلي)'**
+  String get worshipAsrStandard;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحنفي'**
+  String get worshipAsrHanafi;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رابطة العالم الإسلامي'**
+  String get worshipMethodMwl;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجمعية الإسلامية لأمريكا الشمالية (ISNA)'**
+  String get worshipMethodIsna;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الهيئة المصرية العامة للمساحة'**
+  String get worshipMethodEgypt;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أم القرى، مكة المكرمة'**
+  String get worshipMethodUmmAlQura;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'جامعة العلوم الإسلامية، كراتشي'**
+  String get worshipMethodKarachi;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'معهد الجيوفيزياء، جامعة طهران'**
+  String get worshipMethodTehran;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'منطقة الخليج'**
+  String get worshipMethodGulf;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكويت'**
+  String get worshipMethodKuwait;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'قطر'**
+  String get worshipMethodQatar;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'سنغافورة (المجلس الإسلامي MUIS)'**
+  String get worshipMethodSingapore;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تركيا (رئاسة الشؤون الدينية)'**
+  String get worshipMethodTurkey;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'فرنسا (اتحاد المنظمات الإسلامية، 12°)'**
+  String get worshipMethodFrance;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المغرب (وزارة الأوقاف)'**
+  String get worshipMethodMorocco;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إندونيسيا (وزارة الشؤون الدينية)'**
+  String get worshipMethodIndonesia;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ماليزيا (JAKIM)'**
+  String get worshipMethodMalaysia;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'دبي'**
+  String get worshipMethodDubai;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get worshipToday;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.'**
+  String get worshipNoTimes;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'صامت في أوقات الصلاة'**
+  String get worshipSilentTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.'**
+  String get worshipSilentBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة الصمت: {minutes} دقيقة'**
+  String worshipSilentMinutes(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'كتم الوسائط عند الأذان'**
+  String get worshipMuteTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.'**
+  String get worshipMuteBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة الكتم: {minutes} دقيقة'**
+  String worshipMuteMinutes(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة'**
+  String get worshipMinutesTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} دقيقة'**
+  String worshipMinutesOption(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر المكان أولاً.'**
+  String get worshipNeedPlace;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'التالي: {prayer} الساعة {time}'**
+  String worshipNext(Object prayer, Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'صامت حتى {time}.'**
+  String worshipSilentNow(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوسائط مكتومة حتى {time}.'**
+  String worshipMutedNow(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.'**
+  String get worshipDndNeeded;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'السماح'**
+  String get worshipAllow;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.'**
+  String get worshipExactNeeded;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.'**
+  String get worshipNotificationsNeeded;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'نغمة رنين وصوت إشعارات بسيطان'**
+  String get worshipTonesTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:'**
+  String get worshipTonesBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'نغمة رنين بسيطة {number}'**
+  String worshipToneRing(Object number);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'صوت إشعار بسيط {number}'**
+  String worshipToneNotification(Object number);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل'**
+  String get worshipTonePlay;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدام'**
+  String get worshipToneSet;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستخدَمة'**
+  String get worshipToneInUse;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم.'**
+  String get worshipToneDone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.'**
+  String get worshipTonePermission;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».'**
+  String get worshipToneFailed;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'فتح إعدادات الصوت'**
+  String get worshipOpenSound;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرد على المكالمات برسالة أثناء الصلاة'**
+  String get worshipSmsTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبداً إلى الأرقام المخفية أو القصيرة.'**
+  String get worshipSmsBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد: {seconds} ثانية من الرنين'**
+  String worshipSmsDelay(Object seconds);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثوانٍ من الرنين قبل الرسالة'**
+  String get worshipSmsDelayTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{seconds} ثانية'**
+  String worshipSmsSecondsOption(Object seconds);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرسالة: {text}'**
+  String worshipSmsText(Object text);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رسالتك'**
+  String get worshipSmsTextTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدام الرسالة الافتراضية'**
+  String get worshipSmsTextDefault;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل رد رسالة عادية من شريحتك بسعر باقتك. ولا يُرسل شيء أثناء التجوال.'**
+  String get worshipSmsCost;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت في التجوال الآن: لن تُرسل رسائل.'**
+  String get worshipSmsRoaming;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الردود المرسلة (محفوظة على هذا الهاتف فقط)'**
+  String get worshipSmsLogTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get worshipContinue;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لجعل الهاتف صامتاً في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.'**
+  String get worshipWhyDnd;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'للعمل في الوقت تماماً، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.'**
+  String get worshipWhyExact;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح بالإشعارات لترى كل تغيير وتستطيع التراجع عنه.'**
+  String get worshipWhyNotifications;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لتغيير نغمة الرنين أو صوت الإشعارات، اسمح لواعية بتعديل إعدادات النظام في الصفحة التالية.'**
+  String get worshipWhyWrite;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لمعرفة أن مكالمة ترنّ ومعرفة رقمها، تحتاج واعية إذنَي «الهاتف» و«سجلّ المكالمات». لا يخرج شيء من الهاتف إلا ردّك.'**
+  String get worshipWhyPhone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لإرسال ردّك، تحتاج واعية إذن إرسال الرسائل. ولا ترسل إلا هذا الرد، مرة واحدة على الأكثر لكل رقم في كل صلاة.'**
+  String get worshipWhySms;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفاً.'**
+  String get worshipMissingDnd;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفاً.'**
+  String get worshipMissingPhone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفاً.'**
+  String get worshipMissingSms;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاول مرة أخرى'**
+  String get worshipTryAgain;
 }
 
 class _AppLocalizationsDelegate

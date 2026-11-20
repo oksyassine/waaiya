@@ -939,6 +939,125 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
+  String get worshipPrayerFajr => 'Subuh';
+
+  @override
+  String get worshipPrayerSunrise => 'Syuruk';
+
+  @override
+  String get worshipPrayerDhuhr => 'Zohor';
+
+  @override
+  String get worshipPrayerAsr => 'Asar';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maghrib';
+
+  @override
+  String get worshipPrayerIsha => 'Isyak';
+
+  @override
+  String get worshipEndSilent => 'Tamatkan senyap sekarang';
+
+  @override
+  String get worshipUnmute => 'Nyahsenyap sekarang';
+
+  @override
+  String get worshipSmsDefault =>
+      'Sekarang waktu solat, saya tidak dapat menjawab. Saya akan telefon semula.';
+
+  @override
+  String get desktopPreview =>
+      'Pratonton: enjin penapis belum disambungkan pada komputer ini. Butang ini hanya menunjukkan cara apl akan berfungsi.';
+
+  @override
+  String actionFailed(String details) {
+    return 'Itu tidak berjaya: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'Alat muzik dibuang daripada semua apl.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Alat bunyi tidak ditemui (pactl). Waaiya memerlukan PulseAudio, atau PipeWire dengan pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'Pelayan bunyi tidak berjalan (PulseAudio atau PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'Sistem ini tiada sesi pengguna systemd, yang menjalankan penapis di latar belakang.';
+
+  @override
+  String get engineErrorNoOutput =>
+      'Tiada pembesar suara atau fon kepala ditemui.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Tidak dapat memasang penapis. Butiran:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'Penapis tidak bermula. Butiran:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'Penapis berhenti dengan ralat. Butiran:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Mula semasa log masuk';
+
+  @override
+  String get autostartBody => 'Tapis bunyi sebaik sahaja anda log masuk.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Menutup orang dan imej pada skrin, di atas setiap tetingkap, selagi Waaiya dibuka (ia berfungsi sama ada penapis bunyi dihidupkan atau dimatikan). Ia berjalan pada komputer ini; tiada apa-apa dihantar ke mana-mana. Menutup tetingkap Waaiya akan menghentikan pengaburan.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'Hidup: seluruh skrin ditutup apabila komputer terlalu perlahan atau pengaburan gagal; klik masih sampai ke tetingkap di bawahnya. Mati: skrin kekal kelihatan dengan bar merah di bahagian atas.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Pengaburan dihidupkan. Desktop ini menunjukkan pengaburan dalam tangkapan skrinnya sendiri, jadi kawasan yang dikaburkan kekal kabur sehingga adegan berubah.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'Pengaburan tidak dapat dipaparkan di atas tetingkap lain pada desktop ini. Butiran:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Pilih skrin anda dalam tetingkap perkongsian skrin dan benarkannya. Waaiya hanya meminta sekali; gambar kekal pada komputer ini.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'Pengaburan berhenti secara tiba-tiba. Matikan dan hidupkan semula satu pilihan pengaburan untuk mencuba lagi. Butiran:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'Pengesan nyanyian wanita tidak dimuatkan, jadi suara disenyapkan selagi pilihan itu dihidupkan.';
+
+  @override
+  String get blurStatusUncovered =>
+      'Satu monitor tidak ditutup oleh pengaburan: ia tidak dikongsi dengannya, atau ia dipasang kemudian. Matikan dan hidupkan semula satu pilihan pengaburan, dan pilih setiap skrin dalam tetingkap perkongsian skrin.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'Model pengaburan tiada dalam pemasangan ini, jadi ia tidak dapat menutup apa-apa; bar merah kekal di bahagian atas skrin. Pasang semula Waaiya.';
+
+  @override
+  String get diagNoteDesktop =>
+      'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+
+  @override
   String get worshipTitle => 'Waktu solat';
 
   @override
@@ -1057,24 +1176,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String get worshipMethodDubai => 'Dubai';
 
   @override
-  String get worshipPrayerFajr => 'Subuh';
-
-  @override
-  String get worshipPrayerSunrise => 'Syuruk';
-
-  @override
-  String get worshipPrayerDhuhr => 'Zohor';
-
-  @override
-  String get worshipPrayerAsr => 'Asar';
-
-  @override
-  String get worshipPrayerMaghrib => 'Maghrib';
-
-  @override
-  String get worshipPrayerIsha => 'Isyak';
-
-  @override
   String get worshipToday => 'Hari ini';
 
   @override
@@ -1132,12 +1233,6 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'Tamatkan senyap sekarang';
-
-  @override
-  String get worshipUnmute => 'Nyahsenyap sekarang';
-
-  @override
   String get worshipDndNeeded =>
       'Benarkan Waaiya mengubah Jangan Ganggu, jika tidak telefon tidak boleh senyap.';
 
@@ -1149,7 +1244,7 @@ class AppLocalizationsMs extends AppLocalizations {
       'Penggera & peringatan tidak dibenarkan untuk Waaiya, jadi setiap perubahan mungkin lewat sehingga 10 minit, atau lebih semasa telefon tidur.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'Pemberitahuan dimatikan: anda tidak akan nampak bila telefon senyap atau kembali.';
 
   @override
@@ -1193,140 +1288,86 @@ class AppLocalizationsMs extends AppLocalizations {
   String get worshipOpenSound => 'Buka tetapan Bunyi';
 
   @override
-  String get worshipNotifChannel => 'Waktu solat';
+  String get worshipSmsTitle => 'Balas panggilan dengan SMS semasa solat';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: telefon senyap';
+  String get worshipSmsBody =>
+      'Dalam minit senyap selepas setiap waktu solat, panggilan yang dibiarkan berdering menerima satu SMS. Sekali bagi setiap nombor bagi setiap solat; tidak sekali-kali kepada nombor tersembunyi atau kod pendek.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Selepas: $seconds saat berdering';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return 'Jangan Ganggu aktif hingga $time.';
+  String get worshipSmsDelayTitle => 'Saat berdering sebelum SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds saat';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'Waktu senyap tamat';
-
-  @override
-  String get worshipNotifSilentEndText => 'Jangan Ganggu dimatikan semula.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'Anda telah mengubah Jangan Ganggu sendiri, jadi Waaiya membiarkannya.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'Waaiya tidak dapat menghidupkan Jangan Ganggu. Benarkan di halaman Tetapan Waaiya.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: media disenyapkan';
+  String worshipSmsText(Object text) {
+    return 'Mesej: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'Bunyi media disenyapkan hingga $time.';
-  }
+  String get worshipSmsTextTitle => 'Mesej anda';
 
   @override
-  String get worshipNotifMuteEndTitle => 'Bunyi media kembali';
+  String get worshipSmsTextDefault => 'Guna lalai';
 
   @override
-  String get worshipNotifMuteEndText => 'Kelantangan media seperti asal.';
+  String get worshipSmsCost =>
+      'Setiap balasan ialah SMS biasa daripada SIM anda, pada harga pelan anda. Tiada apa-apa dihantar semasa perayauan.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'Anda telah mengubah kelantangan media sendiri, jadi Waaiya membiarkannya.';
+  String get worshipSmsRoaming => 'Sedang merayau: tiada SMS dihantar.';
 
   @override
-  String get desktopPreview =>
-      'Pratonton: enjin penapis belum disambungkan pada komputer ini. Butang ini hanya menunjukkan cara apl akan berfungsi.';
+  String get worshipSmsLogTitle =>
+      'Balasan dihantar (disimpan dalam telefon ini sahaja)';
 
   @override
-  String actionFailed(String details) {
-    return 'Itu tidak berjaya: $details';
-  }
+  String get worshipContinue => 'Teruskan';
 
   @override
-  String get stateOnDetailNoDelay => 'Alat muzik dibuang daripada semua apl.';
+  String get worshipWhyDnd =>
+      'Untuk menyenyapkan telefon pada waktu solat, benarkan akses Jangan Ganggu untuk Waaiya pada halaman seterusnya.';
 
   @override
-  String get engineErrorNoPactl =>
-      'Alat bunyi tidak ditemui (pactl). Waaiya memerlukan PulseAudio, atau PipeWire dengan pipewire-pulse.';
+  String get worshipWhyExact =>
+      'Untuk bertindak tepat pada masanya, benarkan Waaiya menetapkan penggera & peringatan pada halaman seterusnya. Tanpanya, perubahan mungkin lewat sehingga 10 minit.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'Pelayan bunyi tidak berjalan (PulseAudio atau PipeWire).';
+  String get worshipWhyNotifications =>
+      'Benarkan pemberitahuan supaya anda nampak setiap perubahan dan boleh membatalkannya.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'Sistem ini tiada sesi pengguna systemd, yang menjalankan penapis di latar belakang.';
+  String get worshipWhyWrite =>
+      'Untuk menukar nada dering atau bunyi pemberitahuan, benarkan Waaiya mengubah suai tetapan sistem pada halaman seterusnya.';
 
   @override
-  String get engineErrorNoOutput =>
-      'Tiada pembesar suara atau fon kepala ditemui.';
+  String get worshipWhyPhone =>
+      'Untuk mengetahui panggilan sedang berdering dan nombornya, Waaiya memerlukan kebenaran Telefon dan Log panggilan. Tiada apa-apa keluar dari telefon kecuali balasan anda.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'Tidak dapat memasang penapis. Butiran:\n$details';
-  }
+  String get worshipWhySms =>
+      'Untuk menghantar balasan anda, Waaiya memerlukan kebenaran menghantar SMS. Ia hanya menghantar balasan itu, paling banyak sekali bagi setiap nombor bagi setiap solat.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'Penapis tidak bermula. Butiran:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'Akses Jangan Ganggu tidak dibenarkan, jadi senyap kekal dimatikan.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'Penapis berhenti dengan ralat. Butiran:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'Kebenaran Telefon dan Log panggilan tidak diberikan, jadi balasan SMS kekal dimatikan.';
 
   @override
-  String get autostartTitle => 'Mula semasa log masuk';
+  String get worshipMissingSms =>
+      'Kebenaran menghantar SMS tidak diberikan, jadi balasan SMS kekal dimatikan.';
 
   @override
-  String get autostartBody => 'Tapis bunyi sebaik sahaja anda log masuk.';
-
-  @override
-  String get blurBodyDesktop =>
-      'Menutup orang dan imej pada skrin, di atas setiap tetingkap, selagi Waaiya dibuka (ia berfungsi sama ada penapis bunyi dihidupkan atau dimatikan). Ia berjalan pada komputer ini; tiada apa-apa dihantar ke mana-mana. Menutup tetingkap Waaiya akan menghentikan pengaburan.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'Hidup: seluruh skrin ditutup apabila komputer terlalu perlahan atau pengaburan gagal; klik masih sampai ke tetingkap di bawahnya. Mati: skrin kekal kelihatan dengan bar merah di bahagian atas.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'Pengaburan dihidupkan. Desktop ini menunjukkan pengaburan dalam tangkapan skrinnya sendiri, jadi kawasan yang dikaburkan kekal kabur sehingga adegan berubah.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'Pengaburan tidak dapat dipaparkan di atas tetingkap lain pada desktop ini. Butiran:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'Pilih skrin anda dalam tetingkap perkongsian skrin dan benarkannya. Waaiya hanya meminta sekali; gambar kekal pada komputer ini.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'Pengaburan berhenti secara tiba-tiba. Matikan dan hidupkan semula satu pilihan pengaburan untuk mencuba lagi. Butiran:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'Pengesan nyanyian wanita tidak dimuatkan, jadi suara disenyapkan selagi pilihan itu dihidupkan.';
-
-  @override
-  String get blurStatusUncovered =>
-      'Satu monitor tidak ditutup oleh pengaburan: ia tidak dikongsi dengannya, atau ia dipasang kemudian. Matikan dan hidupkan semula satu pilihan pengaburan, dan pilih setiap skrin dalam tetingkap perkongsian skrin.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'Model pengaburan tiada dalam pemasangan ini, jadi ia tidak dapat menutup apa-apa; bar merah kekal di bahagian atas skrin. Pasang semula Waaiya.';
-
-  @override
-  String get diagNoteDesktop =>
-      'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+  String get worshipTryAgain => 'Cuba lagi';
 }

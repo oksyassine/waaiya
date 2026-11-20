@@ -940,6 +940,124 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
+  String get worshipPrayerFajr => 'Subuh';
+
+  @override
+  String get worshipPrayerSunrise => 'Terbit';
+
+  @override
+  String get worshipPrayerDhuhr => 'Zuhur';
+
+  @override
+  String get worshipPrayerAsr => 'Asar';
+
+  @override
+  String get worshipPrayerMaghrib => 'Magrib';
+
+  @override
+  String get worshipPrayerIsha => 'Isya';
+
+  @override
+  String get worshipEndSilent => 'Akhiri senyap sekarang';
+
+  @override
+  String get worshipUnmute => 'Bunyikan sekarang';
+
+  @override
+  String get worshipSmsDefault =>
+      'Sedang waktu salat, saya tidak bisa menjawab sekarang. Nanti saya telepon balik.';
+
+  @override
+  String get desktopPreview =>
+      'Pratinjau: mesin filter belum terhubung di komputer ini. Tombol hanya menunjukkan cara kerja aplikasi.';
+
+  @override
+  String actionFailed(String details) {
+    return 'Itu tidak berhasil: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'Alat musik dihapus dari semua aplikasi.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Alat suara tidak ditemukan (pactl). Waaiya memerlukan PulseAudio, atau PipeWire dengan pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'Server suara tidak berjalan (PulseAudio atau PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'Sistem ini tidak punya sesi pengguna systemd, yang menjalankan filter di latar belakang.';
+
+  @override
+  String get engineErrorNoOutput => 'Speaker atau headphone tidak ditemukan.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Tidak bisa menginstal filter. Detail:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'Filter tidak berjalan. Detail:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'Filter berhenti karena error. Detail:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Mulai saat login';
+
+  @override
+  String get autostartBody => 'Filter suara begitu Anda login.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Menutupi orang dan gambar di layar, di atas semua jendela, selama Waaiya terbuka (berfungsi baik filter suara aktif maupun nonaktif). Berjalan di komputer ini; tidak ada yang dikirim ke mana pun. Menutup jendela Waaiya akan menghentikan buram.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'Aktif: seluruh layar ditutup saat komputer terlalu lambat atau buram gagal; klik tetap sampai ke jendela di bawahnya. Nonaktif: layar tetap terlihat dengan bilah merah di bagian atas.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Buram aktif. Desktop ini menampilkan buram di tangkapan layarnya sendiri, jadi area yang diburamkan tetap buram sampai adegannya berubah.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'Buram tidak bisa tampil di atas jendela lain di desktop ini. Detail:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Pilih layar Anda di jendela berbagi layar dan izinkan. Waaiya hanya meminta sekali; gambarnya tetap di komputer ini.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'Buram berhenti secara tak terduga. Nonaktifkan lalu aktifkan lagi salah satu opsi buram untuk mencoba lagi. Detail:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'Pendeteksi nyanyian perempuan tidak termuat, jadi suara orang dibisukan selama opsi itu aktif.';
+
+  @override
+  String get blurStatusUncovered =>
+      'Ada monitor yang tidak ditutupi buram: monitor itu tidak dibagikan, atau baru dicolokkan kemudian. Nonaktifkan lalu aktifkan lagi salah satu opsi buram, dan pilih semua layar di jendela berbagi layar.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'Model buram tidak ada di instalasi ini, jadi buram tidak bisa menutupi apa pun; bilah merah tetap di bagian atas layar. Instal ulang Waaiya.';
+
+  @override
+  String get diagNoteDesktop =>
+      'Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.';
+
+  @override
   String get worshipTitle => 'Waktu salat';
 
   @override
@@ -1058,24 +1176,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get worshipMethodDubai => 'Dubai';
 
   @override
-  String get worshipPrayerFajr => 'Subuh';
-
-  @override
-  String get worshipPrayerSunrise => 'Terbit';
-
-  @override
-  String get worshipPrayerDhuhr => 'Zuhur';
-
-  @override
-  String get worshipPrayerAsr => 'Asar';
-
-  @override
-  String get worshipPrayerMaghrib => 'Magrib';
-
-  @override
-  String get worshipPrayerIsha => 'Isya';
-
-  @override
   String get worshipToday => 'Hari ini';
 
   @override
@@ -1133,12 +1233,6 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'Akhiri senyap sekarang';
-
-  @override
-  String get worshipUnmute => 'Bunyikan sekarang';
-
-  @override
   String get worshipDndNeeded =>
       'Izinkan Waaiya mengubah Jangan Ganggu, jika tidak ponsel tidak bisa senyap.';
 
@@ -1150,7 +1244,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Alarm & pengingat tidak diizinkan untuk Waaiya, jadi setiap perubahan bisa terlambat hingga 10 menit, atau lebih saat ponsel tidur.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'Notifikasi mati: Anda tidak akan melihat kapan ponsel senyap atau kembali.';
 
   @override
@@ -1194,139 +1288,86 @@ class AppLocalizationsId extends AppLocalizations {
   String get worshipOpenSound => 'Buka setelan Suara';
 
   @override
-  String get worshipNotifChannel => 'Waktu salat';
+  String get worshipSmsTitle => 'Balas panggilan dengan SMS saat salat';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: ponsel senyap';
+  String get worshipSmsBody =>
+      'Selama menit senyap setelah setiap waktu salat, panggilan yang dibiarkan berdering mendapat satu SMS. Sekali per nomor per salat; tidak pernah ke nomor tersembunyi atau nomor pendek.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Setelah: $seconds detik berdering';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return 'Jangan Ganggu aktif sampai $time.';
+  String get worshipSmsDelayTitle => 'Detik berdering sebelum SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds detik';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'Waktu senyap selesai';
-
-  @override
-  String get worshipNotifSilentEndText => 'Jangan Ganggu sudah mati lagi.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'Anda mengubah Jangan Ganggu sendiri, jadi Waaiya membiarkannya.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'Waaiya tidak bisa menyalakan Jangan Ganggu. Izinkan di halaman Setelan Waaiya.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: media dibisukan';
+  String worshipSmsText(Object text) {
+    return 'Pesan: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'Suara media dibisukan sampai $time.';
-  }
+  String get worshipSmsTextTitle => 'Pesan Anda';
 
   @override
-  String get worshipNotifMuteEndTitle => 'Suara media kembali';
+  String get worshipSmsTextDefault => 'Pakai bawaan';
 
   @override
-  String get worshipNotifMuteEndText => 'Volume media seperti semula.';
+  String get worshipSmsCost =>
+      'Setiap balasan adalah SMS biasa dari SIM Anda, dengan tarif paket Anda. Tidak ada yang dikirim saat roaming.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'Anda mengubah volume media sendiri, jadi Waaiya membiarkannya.';
+  String get worshipSmsRoaming => 'Sedang roaming: tidak ada SMS yang dikirim.';
 
   @override
-  String get desktopPreview =>
-      'Pratinjau: mesin filter belum terhubung di komputer ini. Tombol hanya menunjukkan cara kerja aplikasi.';
+  String get worshipSmsLogTitle =>
+      'Balasan terkirim (hanya disimpan di ponsel ini)';
 
   @override
-  String actionFailed(String details) {
-    return 'Itu tidak berhasil: $details';
-  }
+  String get worshipContinue => 'Lanjut';
 
   @override
-  String get stateOnDetailNoDelay => 'Alat musik dihapus dari semua aplikasi.';
+  String get worshipWhyDnd =>
+      'Agar ponsel senyap saat waktu salat, izinkan akses Jangan Ganggu untuk Waaiya di halaman berikutnya.';
 
   @override
-  String get engineErrorNoPactl =>
-      'Alat suara tidak ditemukan (pactl). Waaiya memerlukan PulseAudio, atau PipeWire dengan pipewire-pulse.';
+  String get worshipWhyExact =>
+      'Agar tepat waktu, izinkan Waaiya menyetel alarm & pengingat di halaman berikutnya. Tanpanya, perubahan bisa terlambat hingga 10 menit.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'Server suara tidak berjalan (PulseAudio atau PipeWire).';
+  String get worshipWhyNotifications =>
+      'Izinkan notifikasi agar Anda melihat setiap perubahan dan bisa membatalkannya.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'Sistem ini tidak punya sesi pengguna systemd, yang menjalankan filter di latar belakang.';
+  String get worshipWhyWrite =>
+      'Untuk mengganti nada dering atau suara notifikasi, izinkan Waaiya mengubah setelan sistem di halaman berikutnya.';
 
   @override
-  String get engineErrorNoOutput => 'Speaker atau headphone tidak ditemukan.';
+  String get worshipWhyPhone =>
+      'Untuk mengetahui ada panggilan yang berdering dan nomornya, Waaiya memerlukan izin Telepon dan Log panggilan. Tidak ada yang keluar dari ponsel selain balasan Anda.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'Tidak bisa menginstal filter. Detail:\n$details';
-  }
+  String get worshipWhySms =>
+      'Untuk mengirim balasan Anda, Waaiya memerlukan izin mengirim SMS. Hanya balasan itu yang dikirim, paling banyak sekali per nomor per salat.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'Filter tidak berjalan. Detail:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'Akses Jangan Ganggu tidak diizinkan, jadi senyap tetap mati.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'Filter berhenti karena error. Detail:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'Izin Telepon dan Log panggilan tidak diberikan, jadi balasan SMS tetap mati.';
 
   @override
-  String get autostartTitle => 'Mulai saat login';
+  String get worshipMissingSms =>
+      'Izin mengirim SMS tidak diberikan, jadi balasan SMS tetap mati.';
 
   @override
-  String get autostartBody => 'Filter suara begitu Anda login.';
-
-  @override
-  String get blurBodyDesktop =>
-      'Menutupi orang dan gambar di layar, di atas semua jendela, selama Waaiya terbuka (berfungsi baik filter suara aktif maupun nonaktif). Berjalan di komputer ini; tidak ada yang dikirim ke mana pun. Menutup jendela Waaiya akan menghentikan buram.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'Aktif: seluruh layar ditutup saat komputer terlalu lambat atau buram gagal; klik tetap sampai ke jendela di bawahnya. Nonaktif: layar tetap terlihat dengan bilah merah di bagian atas.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'Buram aktif. Desktop ini menampilkan buram di tangkapan layarnya sendiri, jadi area yang diburamkan tetap buram sampai adegannya berubah.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'Buram tidak bisa tampil di atas jendela lain di desktop ini. Detail:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'Pilih layar Anda di jendela berbagi layar dan izinkan. Waaiya hanya meminta sekali; gambarnya tetap di komputer ini.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'Buram berhenti secara tak terduga. Nonaktifkan lalu aktifkan lagi salah satu opsi buram untuk mencoba lagi. Detail:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'Pendeteksi nyanyian perempuan tidak termuat, jadi suara orang dibisukan selama opsi itu aktif.';
-
-  @override
-  String get blurStatusUncovered =>
-      'Ada monitor yang tidak ditutupi buram: monitor itu tidak dibagikan, atau baru dicolokkan kemudian. Nonaktifkan lalu aktifkan lagi salah satu opsi buram, dan pilih semua layar di jendela berbagi layar.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'Model buram tidak ada di instalasi ini, jadi buram tidak bisa menutupi apa pun; bilah merah tetap di bagian atas layar. Instal ulang Waaiya.';
-
-  @override
-  String get diagNoteDesktop =>
-      'Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.';
+  String get worshipTryAgain => 'Coba lagi';
 }

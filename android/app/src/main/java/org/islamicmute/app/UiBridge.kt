@@ -313,6 +313,9 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "prayer_place" to settings.prayerPlace,
             "prayer_method" to settings.prayerMethod,
             "prayer_asr" to settings.prayerAsr,
+            "prayer_sms_reply" to settings.prayerSmsReply,
+            "prayer_sms_delay_seconds" to settings.prayerSmsDelaySeconds,
+            "prayer_sms_text" to settings.prayerSmsText,
             "protect_delay_minutes" to settings.protectDelayMinutes,
         ),
         "filter" to mapOf(
@@ -415,6 +418,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "prayer_place" -> settings.prayerPlace = value as? String ?: throw BadArgs("$key takes a string")
             "prayer_method" -> settings.prayerMethod = int(0, 15)
             "prayer_asr" -> settings.prayerAsr = int(0, 1)
+            "prayer_sms_reply" -> settings.prayerSmsReply = bool()
+            "prayer_sms_delay_seconds" -> settings.prayerSmsDelaySeconds = int(3, 60)
+            "prayer_sms_text" -> settings.prayerSmsText = (value as? String)?.takeIf { it.length <= 300 }
+                ?: throw BadArgs("$key takes a string of at most 300 characters")
             "protect_delay_minutes" -> settings.protectDelayMinutes = int(0, 1440)
             else -> throw BadArgs("unknown setting $key")
         }

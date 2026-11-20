@@ -938,6 +938,124 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsGeneralTitle => 'عمومی';
 
   @override
+  String get worshipPrayerFajr => 'صبح';
+
+  @override
+  String get worshipPrayerSunrise => 'طلوع آفتاب';
+
+  @override
+  String get worshipPrayerDhuhr => 'ظهر';
+
+  @override
+  String get worshipPrayerAsr => 'عصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'مغرب';
+
+  @override
+  String get worshipPrayerIsha => 'عشا';
+
+  @override
+  String get worshipEndSilent => 'پایان بی‌صدایی';
+
+  @override
+  String get worshipUnmute => 'الان صدا را برگردان';
+
+  @override
+  String get worshipSmsDefault =>
+      'وقت نماز است، الان نمی‌توانم جواب بدهم. بعداً با شما تماس می‌گیرم.';
+
+  @override
+  String get desktopPreview =>
+      'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
+
+  @override
+  String actionFailed(String details) {
+    return 'انجام نشد: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'سازها از همهٔ برنامه‌ها حذف می‌شوند.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'ابزارهای صدا (pactl) پیدا نشد. واعية به PulseAudio، یا PipeWire همراه با pipewire-pulse نیاز دارد.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'سرور صدا (PulseAudio یا PipeWire) در حال اجرا نیست.';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'این سیستم نشست کاربری systemd ندارد؛ همان چیزی که پالایشگر را در پس‌زمینه اجرا می‌کند.';
+
+  @override
+  String get engineErrorNoOutput => 'هیچ بلندگو یا هدفونی پیدا نشد.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'نصب پالایشگر ممکن نشد. جزئیات:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'پالایشگر شروع به کار نکرد. جزئیات:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'پالایشگر با خطا متوقف شد. جزئیات:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'شروع هنگام ورود';
+
+  @override
+  String get autostartBody => 'صدا به‌محض ورود شما به سیستم پالایش می‌شود.';
+
+  @override
+  String get blurBodyDesktop =>
+      'افراد و تصاویر روی صفحه را، روی همهٔ پنجره‌ها، تا وقتی واعية باز است می‌پوشاند (چه پالایش صدا روشن باشد چه خاموش). روی همین رایانه اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود. بستن پنجرهٔ واعية تاری را متوقف می‌کند.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'روشن: وقتی رایانه خیلی کند است یا تاری از کار می‌افتد، کل صفحه پوشانده می‌شود؛ کلیک‌ها همچنان به پنجره‌های زیرین می‌رسند. خاموش: صفحه با یک نوار قرمز در بالا نمایان می‌ماند.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'تاری روشن است. این میز کار تاری را در ضبط صفحهٔ خودش نشان می‌دهد، برای همین ناحیهٔ تارشده تا تغییر صحنه تار می‌ماند.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'تاری نمی‌تواند در این میز کار روی پنجره‌های دیگر نمایش داده شود. جزئیات:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'در پنجرهٔ هم‌رسانی صفحه، صفحهٔ خود را انتخاب کنید و اجازه دهید. واعية فقط یک بار می‌پرسد؛ تصویر روی همین رایانه می‌ماند.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'تاری به‌طور غیرمنتظره متوقف شد. برای تلاش دوباره، یکی از گزینه‌های تاری را خاموش و دوباره روشن کنید. جزئیات:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'آشکارساز آواز زنان بارگیری نشد، برای همین تا وقتی آن گزینه روشن است، صداهای انسانی قطع می‌شوند.';
+
+  @override
+  String get blurStatusUncovered =>
+      'یک نمایشگر زیر پوشش تاری نیست: یا با آن هم‌رسانی نشده، یا بعداً وصل شده است. یکی از گزینه‌های تاری را خاموش و دوباره روشن کنید و در پنجرهٔ هم‌رسانی صفحه همهٔ صفحه‌ها را انتخاب کنید.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'مدل‌های تاری در این نصب وجود ندارند، برای همین چیزی را نمی‌پوشاند؛ یک نوار قرمز در بالای صفحه می‌ماند. واعية را دوباره نصب کنید.';
+
+  @override
+  String get diagNoteDesktop =>
+      'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. خود برنامه چیزی نمی‌فرستد.';
+
+  @override
   String get worshipTitle => 'اوقات نماز';
 
   @override
@@ -1056,24 +1174,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get worshipMethodDubai => 'دبی';
 
   @override
-  String get worshipPrayerFajr => 'صبح';
-
-  @override
-  String get worshipPrayerSunrise => 'طلوع آفتاب';
-
-  @override
-  String get worshipPrayerDhuhr => 'ظهر';
-
-  @override
-  String get worshipPrayerAsr => 'عصر';
-
-  @override
-  String get worshipPrayerMaghrib => 'مغرب';
-
-  @override
-  String get worshipPrayerIsha => 'عشا';
-
-  @override
   String get worshipToday => 'امروز';
 
   @override
@@ -1131,12 +1231,6 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'پایان بی‌صدایی';
-
-  @override
-  String get worshipUnmute => 'الان صدا را برگردان';
-
-  @override
   String get worshipDndNeeded =>
       'به واعية اجازه دهید «مزاحم نشوید» را تغییر دهد، وگرنه گوشی بی‌صدا نمی‌شود.';
 
@@ -1148,7 +1242,7 @@ class AppLocalizationsFa extends AppLocalizations {
       '«هشدارها و یادآوری‌ها» برای واعية مجاز نیست، پس هر تغییر ممکن است تا ۱۰ دقیقه، یا وقتی گوشی در خواب است بیشتر، دیر انجام شود.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'اعلان‌ها خاموش است: نمی‌بینید گوشی کی بی‌صدا می‌شود یا برمی‌گردد.';
 
   @override
@@ -1192,139 +1286,86 @@ class AppLocalizationsFa extends AppLocalizations {
   String get worshipOpenSound => 'باز کردن تنظیمات صدا';
 
   @override
-  String get worshipNotifChannel => 'اوقات نماز';
+  String get worshipSmsTitle => 'پاسخ پیامکی به تماس‌ها هنگام نماز';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: گوشی بی‌صدا';
+  String get worshipSmsBody =>
+      'در دقیقه‌های بی‌صدای بعد از وقت هر نماز، به تماسی که بی‌پاسخ زنگ می‌خورد یک پیامک فرستاده می‌شود. برای هر شماره در هر نماز یک بار؛ هرگز به شماره‌های پنهان یا کوتاه.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'پس از: $seconds ثانیه زنگ';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return '«مزاحم نشوید» تا $time روشن است.';
+  String get worshipSmsDelayTitle => 'ثانیه‌های زنگ پیش از پیامک';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds ثانیه';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'زمان بی‌صدایی تمام شد';
-
-  @override
-  String get worshipNotifSilentEndText => '«مزاحم نشوید» دوباره خاموش شد.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'خودتان «مزاحم نشوید» را تغییر دادید، پس واعية آن را دست نزد.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'واعية نتوانست «مزاحم نشوید» را روشن کند. در صفحه تنظیمات واعية اجازه دهید.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: رسانه بی‌صدا';
+  String worshipSmsText(Object text) {
+    return 'پیام: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'صدای رسانه تا $time قطع است.';
-  }
+  String get worshipSmsTextTitle => 'پیام شما';
 
   @override
-  String get worshipNotifMuteEndTitle => 'صدای رسانه برگشت';
+  String get worshipSmsTextDefault => 'پیام پیش‌فرض';
 
   @override
-  String get worshipNotifMuteEndText => 'صدای رسانه مثل قبل است.';
+  String get worshipSmsCost =>
+      'هر پاسخ یک پیامک معمولی از سیم‌کارت شماست، با هزینه طرح شما. هنگام رومینگ چیزی فرستاده نمی‌شود.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'خودتان صدای رسانه را تغییر دادید، پس واعية آن را دست نزد.';
+  String get worshipSmsRoaming =>
+      'اکنون در رومینگ هستید: پیامکی فرستاده نمی‌شود.';
 
   @override
-  String get desktopPreview =>
-      'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
+  String get worshipSmsLogTitle => 'پاسخ‌های فرستاده‌شده (فقط روی همین گوشی)';
 
   @override
-  String actionFailed(String details) {
-    return 'انجام نشد: $details';
-  }
+  String get worshipContinue => 'ادامه';
 
   @override
-  String get stateOnDetailNoDelay => 'سازها از همهٔ برنامه‌ها حذف می‌شوند.';
+  String get worshipWhyDnd =>
+      'برای بی‌صدا کردن گوشی در وقت نماز، در صفحه بعد به واعية دسترسی «مزاحم نشوید» بدهید.';
 
   @override
-  String get engineErrorNoPactl =>
-      'ابزارهای صدا (pactl) پیدا نشد. واعية به PulseAudio، یا PipeWire همراه با pipewire-pulse نیاز دارد.';
+  String get worshipWhyExact =>
+      'برای انجام کار درست سر وقت، در صفحه بعد به واعية اجازه تنظیم هشدارها و یادآوری‌ها بدهید. بدون آن ممکن است تغییرات تا ۱۰ دقیقه دیر شوند.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'سرور صدا (PulseAudio یا PipeWire) در حال اجرا نیست.';
+  String get worshipWhyNotifications =>
+      'اعلان‌ها را مجاز کنید تا هر تغییر را ببینید و بتوانید آن را برگردانید.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'این سیستم نشست کاربری systemd ندارد؛ همان چیزی که پالایشگر را در پس‌زمینه اجرا می‌کند.';
+  String get worshipWhyWrite =>
+      'برای عوض کردن زنگ یا صدای اعلان، در صفحه بعد به واعية اجازه تغییر تنظیمات سیستم بدهید.';
 
   @override
-  String get engineErrorNoOutput => 'هیچ بلندگو یا هدفونی پیدا نشد.';
+  String get worshipWhyPhone =>
+      'برای اینکه بداند تماسی زنگ می‌خورد و شماره‌اش چیست، واعية به اجازه‌های «تلفن» و «گزارش تماس» نیاز دارد. جز پاسخ شما چیزی از گوشی بیرون نمی‌رود.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'نصب پالایشگر ممکن نشد. جزئیات:\n$details';
-  }
+  String get worshipWhySms =>
+      'برای فرستادن پاسخ شما، واعية به اجازه ارسال پیامک نیاز دارد. فقط همین پاسخ را می‌فرستد، حداکثر یک بار برای هر شماره در هر نماز.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'پالایشگر شروع به کار نکرد. جزئیات:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'دسترسی «مزاحم نشوید» داده نشد، پس بی‌صدایی خاموش می‌ماند.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'پالایشگر با خطا متوقف شد. جزئیات:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'اجازه‌های «تلفن» و «گزارش تماس» داده نشد، پس پاسخ پیامکی خاموش می‌ماند.';
 
   @override
-  String get autostartTitle => 'شروع هنگام ورود';
+  String get worshipMissingSms =>
+      'اجازه ارسال پیامک داده نشد، پس پاسخ پیامکی خاموش می‌ماند.';
 
   @override
-  String get autostartBody => 'صدا به‌محض ورود شما به سیستم پالایش می‌شود.';
-
-  @override
-  String get blurBodyDesktop =>
-      'افراد و تصاویر روی صفحه را، روی همهٔ پنجره‌ها، تا وقتی واعية باز است می‌پوشاند (چه پالایش صدا روشن باشد چه خاموش). روی همین رایانه اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود. بستن پنجرهٔ واعية تاری را متوقف می‌کند.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'روشن: وقتی رایانه خیلی کند است یا تاری از کار می‌افتد، کل صفحه پوشانده می‌شود؛ کلیک‌ها همچنان به پنجره‌های زیرین می‌رسند. خاموش: صفحه با یک نوار قرمز در بالا نمایان می‌ماند.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'تاری روشن است. این میز کار تاری را در ضبط صفحهٔ خودش نشان می‌دهد، برای همین ناحیهٔ تارشده تا تغییر صحنه تار می‌ماند.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'تاری نمی‌تواند در این میز کار روی پنجره‌های دیگر نمایش داده شود. جزئیات:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'در پنجرهٔ هم‌رسانی صفحه، صفحهٔ خود را انتخاب کنید و اجازه دهید. واعية فقط یک بار می‌پرسد؛ تصویر روی همین رایانه می‌ماند.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'تاری به‌طور غیرمنتظره متوقف شد. برای تلاش دوباره، یکی از گزینه‌های تاری را خاموش و دوباره روشن کنید. جزئیات:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'آشکارساز آواز زنان بارگیری نشد، برای همین تا وقتی آن گزینه روشن است، صداهای انسانی قطع می‌شوند.';
-
-  @override
-  String get blurStatusUncovered =>
-      'یک نمایشگر زیر پوشش تاری نیست: یا با آن هم‌رسانی نشده، یا بعداً وصل شده است. یکی از گزینه‌های تاری را خاموش و دوباره روشن کنید و در پنجرهٔ هم‌رسانی صفحه همهٔ صفحه‌ها را انتخاب کنید.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'مدل‌های تاری در این نصب وجود ندارند، برای همین چیزی را نمی‌پوشاند؛ یک نوار قرمز در بالای صفحه می‌ماند. واعية را دوباره نصب کنید.';
-
-  @override
-  String get diagNoteDesktop =>
-      'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. خود برنامه چیزی نمی‌فرستد.';
+  String get worshipTryAgain => 'دوباره امتحان کنید';
 }

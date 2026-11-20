@@ -177,6 +177,9 @@ android.sourceSets["main"].assets.srcDir(modelAssets)
 androidComponents {
     onVariants { v ->
         if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml")
+        // Worship: reply to calls by SMS during prayer (WorshipSms). Not in Play builds (-PimPlay): Google Play
+        // restricts SMS and call-log permissions.
+        if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/smsReply/AndroidManifest.xml")
     }
 }
 

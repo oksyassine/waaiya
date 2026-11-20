@@ -939,6 +939,125 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsGeneralTitle => 'Genel';
 
   @override
+  String get worshipPrayerFajr => 'İmsak';
+
+  @override
+  String get worshipPrayerSunrise => 'Güneş';
+
+  @override
+  String get worshipPrayerDhuhr => 'Öğle';
+
+  @override
+  String get worshipPrayerAsr => 'İkindi';
+
+  @override
+  String get worshipPrayerMaghrib => 'Akşam';
+
+  @override
+  String get worshipPrayerIsha => 'Yatsı';
+
+  @override
+  String get worshipEndSilent => 'Sessizliği şimdi bitir';
+
+  @override
+  String get worshipUnmute => 'Sesi şimdi aç';
+
+  @override
+  String get worshipSmsDefault =>
+      'Namaz vakti, şu an cevap veremiyorum. Sizi geri arayacağım.';
+
+  @override
+  String get desktopPreview =>
+      'Önizleme: filtre motoru bu bilgisayara henüz bağlı değil. Düğme yalnızca uygulamanın nasıl çalışacağını gösterir.';
+
+  @override
+  String actionFailed(String details) {
+    return 'Bu işe yaramadı: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay =>
+      'Tüm uygulamalardan müzik aletleri kaldırılıyor.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Ses araçları bulunamadı (pactl). Waaiya için PulseAudio ya da pipewire-pulse ile PipeWire gerekir.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'Ses sunucusu çalışmıyor (PulseAudio veya PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'Bu sistemde, filtreyi arka planda çalıştıran systemd kullanıcı oturumu yok.';
+
+  @override
+  String get engineErrorNoOutput => 'Hoparlör veya kulaklık bulunamadı.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Filtre kurulamadı. Ayrıntılar:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'Filtre başlamadı. Ayrıntılar:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'Filtre bir hatayla durdu. Ayrıntılar:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Oturum açılınca başlat';
+
+  @override
+  String get autostartBody => 'Oturum açar açmaz sesi filtrele.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Waaiya açıkken her pencerenin üzerinde ekrandaki insanları ve görüntüleri örter (ses filtresi açık da olsa kapalı da olsa çalışır). Bu bilgisayarda çalışır; hiçbir yere bir şey gönderilmez. Waaiya penceresini kapatmak bulanıklaştırmayı durdurur.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'Açık: bilgisayar çok yavaş kaldığında veya bulanıklaştırma başarısız olduğunda tüm ekran örtülür; tıklamalar alttaki pencerelere yine ulaşır. Kapalı: ekran, üstte kırmızı bir çubukla görünür kalır.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Bulanıklaştırma açık. Bu masaüstü bulanıklığı kendi ekran yakalamasında gösteriyor, bu yüzden bulanık bir alan sahne değişene kadar bulanık kalır.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'Bulanıklaştırma bu masaüstünde diğer pencerelerin üzerine çizemiyor. Ayrıntılar:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Ekran paylaşımı penceresinde ekranınızı seçin ve izin verin. Waaiya yalnızca bir kez sorar; görüntü bu bilgisayarda kalır.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'Bulanıklaştırma beklenmedik şekilde durdu. Yeniden denemek için bir bulanıklaştırma seçeneğini kapatıp açın. Ayrıntılar:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'Kadınların şarkı sesi algılayıcısı yüklenemedi, bu yüzden o seçenek açıkken sesler susturulur.';
+
+  @override
+  String get blurStatusUncovered =>
+      'Bir ekran bulanıklaştırma tarafından örtülmüyor: onunla paylaşılmadı ya da sonradan takıldı. Bir bulanıklaştırma seçeneğini kapatıp açın ve ekran paylaşımı penceresinde her ekranı seçin.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'Bulanıklaştırma modelleri bu kurulumda eksik, bu yüzden hiçbir şeyi örtemiyor; ekranın üstünde kırmızı bir çubuk kalır. Waaiya\'yı yeniden kurun.';
+
+  @override
+  String get diagNoteDesktop =>
+      'Waaiya\'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.';
+
+  @override
   String get worshipTitle => 'Namaz vakitleri';
 
   @override
@@ -1056,24 +1175,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get worshipMethodDubai => 'Dubai';
 
   @override
-  String get worshipPrayerFajr => 'İmsak';
-
-  @override
-  String get worshipPrayerSunrise => 'Güneş';
-
-  @override
-  String get worshipPrayerDhuhr => 'Öğle';
-
-  @override
-  String get worshipPrayerAsr => 'İkindi';
-
-  @override
-  String get worshipPrayerMaghrib => 'Akşam';
-
-  @override
-  String get worshipPrayerIsha => 'Yatsı';
-
-  @override
   String get worshipToday => 'Bugün';
 
   @override
@@ -1131,12 +1232,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'Sessizliği şimdi bitir';
-
-  @override
-  String get worshipUnmute => 'Sesi şimdi aç';
-
-  @override
   String get worshipDndNeeded =>
       'Waaiya\'nın Rahatsız Etmeyin\'i değiştirmesine izin verin, yoksa telefon sessize alınamaz.';
 
@@ -1148,7 +1243,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Waaiya için Alarmlar ve hatırlatıcılar izni yok; her değişiklik 10 dakikaya kadar, telefon uykudayken daha da geç gelebilir.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'Bildirimler kapalı: telefonun ne zaman sessize alındığını ya da geri döndüğünü görmeyeceksiniz.';
 
   @override
@@ -1192,140 +1287,86 @@ class AppLocalizationsTr extends AppLocalizations {
   String get worshipOpenSound => 'Ses ayarlarını aç';
 
   @override
-  String get worshipNotifChannel => 'Namaz vakitleri';
+  String get worshipSmsTitle => 'Namaz sırasında aramalara SMS ile yanıt ver';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: telefon sessizde';
+  String get worshipSmsBody =>
+      'Her namaz vaktinden sonraki sessiz dakikalarda, yanıtlanmadan çalan aramaya bir SMS gider. Her numaraya her namazda bir kez; gizli numaralara ve kısa numaralara asla.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Şu kadar çaldıktan sonra: $seconds sn';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return 'Rahatsız Etmeyin $time saatine kadar açık.';
+  String get worshipSmsDelayTitle => 'SMS\'ten önce çalma süresi (sn)';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds sn';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'Sessizlik bitti';
-
-  @override
-  String get worshipNotifSilentEndText => 'Rahatsız Etmeyin yeniden kapalı.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'Rahatsız Etmeyin\'i kendiniz değiştirdiniz, Waaiya onu olduğu gibi bıraktı.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'Waaiya Rahatsız Etmeyin\'i açamadı. Waaiya\'nın Ayarlar sayfasından izin verin.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: medya sessizde';
+  String worshipSmsText(Object text) {
+    return 'Mesaj: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'Medya sesi $time saatine kadar kapalı.';
-  }
+  String get worshipSmsTextTitle => 'Mesajınız';
 
   @override
-  String get worshipNotifMuteEndTitle => 'Medya sesi geri geldi';
+  String get worshipSmsTextDefault => 'Varsayılanı kullan';
 
   @override
-  String get worshipNotifMuteEndText => 'Medya ses düzeyi eskisi gibi.';
+  String get worshipSmsCost =>
+      'Her yanıt, SIM kartınızdan tarifenizin fiyatıyla gönderilen normal bir SMS\'tir. Dolaşımdayken hiçbir şey gönderilmez.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'Medya sesini kendiniz değiştirdiniz, Waaiya onu olduğu gibi bıraktı.';
+  String get worshipSmsRoaming => 'Şu an dolaşımdasınız: SMS gönderilmez.';
 
   @override
-  String get desktopPreview =>
-      'Önizleme: filtre motoru bu bilgisayara henüz bağlı değil. Düğme yalnızca uygulamanın nasıl çalışacağını gösterir.';
+  String get worshipSmsLogTitle =>
+      'Gönderilen yanıtlar (yalnızca bu telefonda tutulur)';
 
   @override
-  String actionFailed(String details) {
-    return 'Bu işe yaramadı: $details';
-  }
+  String get worshipContinue => 'Devam';
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Tüm uygulamalardan müzik aletleri kaldırılıyor.';
+  String get worshipWhyDnd =>
+      'Telefonu namaz vakitlerinde sessize almak için sonraki sayfada Waaiya\'ya Rahatsız Etmeyin erişimi verin.';
 
   @override
-  String get engineErrorNoPactl =>
-      'Ses araçları bulunamadı (pactl). Waaiya için PulseAudio ya da pipewire-pulse ile PipeWire gerekir.';
+  String get worshipWhyExact =>
+      'Tam zamanında çalışması için sonraki sayfada Waaiya\'nın alarm ve hatırlatıcı kurmasına izin verin. İzin olmadan değişiklikler 10 dakikaya kadar gecikebilir.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'Ses sunucusu çalışmıyor (PulseAudio veya PipeWire).';
+  String get worshipWhyNotifications =>
+      'Her değişikliği görmek ve geri alabilmek için bildirimlere izin verin.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'Bu sistemde, filtreyi arka planda çalıştıran systemd kullanıcı oturumu yok.';
+  String get worshipWhyWrite =>
+      'Zil sesinizi veya bildirim sesinizi değiştirmek için sonraki sayfada Waaiya\'nın sistem ayarlarını değiştirmesine izin verin.';
 
   @override
-  String get engineErrorNoOutput => 'Hoparlör veya kulaklık bulunamadı.';
+  String get worshipWhyPhone =>
+      'Bir aramanın çaldığını ve numarasını bilmek için Waaiya\'nın Telefon ve Arama kayıtları izinlerine ihtiyacı var. Yanıtınız dışında hiçbir şey telefondan çıkmaz.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'Filtre kurulamadı. Ayrıntılar:\n$details';
-  }
+  String get worshipWhySms =>
+      'Yanıtınızı göndermek için Waaiya\'nın SMS gönderme iznine ihtiyacı var. Yalnızca bu yanıtı, her numaraya her namazda en fazla bir kez gönderir.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'Filtre başlamadı. Ayrıntılar:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'Rahatsız Etmeyin erişimine izin verilmedi, bu yüzden sessizlik kapalı kalıyor.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'Filtre bir hatayla durdu. Ayrıntılar:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'Telefon ve Arama kayıtları izinleri verilmedi, bu yüzden SMS yanıtı kapalı kalıyor.';
 
   @override
-  String get autostartTitle => 'Oturum açılınca başlat';
+  String get worshipMissingSms =>
+      'SMS gönderme izni verilmedi, bu yüzden SMS yanıtı kapalı kalıyor.';
 
   @override
-  String get autostartBody => 'Oturum açar açmaz sesi filtrele.';
-
-  @override
-  String get blurBodyDesktop =>
-      'Waaiya açıkken her pencerenin üzerinde ekrandaki insanları ve görüntüleri örter (ses filtresi açık da olsa kapalı da olsa çalışır). Bu bilgisayarda çalışır; hiçbir yere bir şey gönderilmez. Waaiya penceresini kapatmak bulanıklaştırmayı durdurur.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'Açık: bilgisayar çok yavaş kaldığında veya bulanıklaştırma başarısız olduğunda tüm ekran örtülür; tıklamalar alttaki pencerelere yine ulaşır. Kapalı: ekran, üstte kırmızı bir çubukla görünür kalır.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'Bulanıklaştırma açık. Bu masaüstü bulanıklığı kendi ekran yakalamasında gösteriyor, bu yüzden bulanık bir alan sahne değişene kadar bulanık kalır.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'Bulanıklaştırma bu masaüstünde diğer pencerelerin üzerine çizemiyor. Ayrıntılar:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'Ekran paylaşımı penceresinde ekranınızı seçin ve izin verin. Waaiya yalnızca bir kez sorar; görüntü bu bilgisayarda kalır.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'Bulanıklaştırma beklenmedik şekilde durdu. Yeniden denemek için bir bulanıklaştırma seçeneğini kapatıp açın. Ayrıntılar:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'Kadınların şarkı sesi algılayıcısı yüklenemedi, bu yüzden o seçenek açıkken sesler susturulur.';
-
-  @override
-  String get blurStatusUncovered =>
-      'Bir ekran bulanıklaştırma tarafından örtülmüyor: onunla paylaşılmadı ya da sonradan takıldı. Bir bulanıklaştırma seçeneğini kapatıp açın ve ekran paylaşımı penceresinde her ekranı seçin.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'Bulanıklaştırma modelleri bu kurulumda eksik, bu yüzden hiçbir şeyi örtemiyor; ekranın üstünde kırmızı bir çubuk kalır. Waaiya\'yı yeniden kurun.';
-
-  @override
-  String get diagNoteDesktop =>
-      'Waaiya\'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.';
+  String get worshipTryAgain => 'Yeniden dene';
 }

@@ -935,6 +935,124 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsGeneralTitle => 'General';
 
   @override
+  String get worshipPrayerFajr => 'Fajr';
+
+  @override
+  String get worshipPrayerSunrise => 'Sunrise';
+
+  @override
+  String get worshipPrayerDhuhr => 'Dhuhr';
+
+  @override
+  String get worshipPrayerAsr => 'Asr';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maghrib';
+
+  @override
+  String get worshipPrayerIsha => 'Isha';
+
+  @override
+  String get worshipEndSilent => 'End silence now';
+
+  @override
+  String get worshipUnmute => 'Unmute now';
+
+  @override
+  String get worshipSmsDefault =>
+      'It\'s prayer time, I can\'t answer now. I\'ll call you back.';
+
+  @override
+  String get desktopPreview =>
+      'Preview: the filter engine is not connected on this computer yet. The button only shows how the app will work.';
+
+  @override
+  String actionFailed(String details) {
+    return 'That did not work: $details';
+  }
+
+  @override
+  String get stateOnDetailNoDelay => 'Instruments are removed from all apps.';
+
+  @override
+  String get engineErrorNoPactl =>
+      'Sound tools not found (pactl). Waaiya needs PulseAudio, or PipeWire with pipewire-pulse.';
+
+  @override
+  String get engineErrorNoSoundServer =>
+      'The sound server is not running (PulseAudio or PipeWire).';
+
+  @override
+  String get engineErrorNoSystemd =>
+      'This system has no systemd user session, which runs the filter in the background.';
+
+  @override
+  String get engineErrorNoOutput => 'No speakers or headphones found.';
+
+  @override
+  String engineErrorInstallFailed(String details) {
+    return 'Could not install the filter. Details:\n$details';
+  }
+
+  @override
+  String engineErrorStartFailed(String details) {
+    return 'The filter did not start. Details:\n$details';
+  }
+
+  @override
+  String engineErrorServiceFailed(String details) {
+    return 'The filter stopped with an error. Details:\n$details';
+  }
+
+  @override
+  String get autostartTitle => 'Start at login';
+
+  @override
+  String get autostartBody => 'Filter the sound as soon as you log in.';
+
+  @override
+  String get blurBodyDesktop =>
+      'Covers people and images on screen, over every window, while Waaiya is open (it works whether the sound filter is on or off). It runs on this computer; nothing is sent anywhere. Closing the Waaiya window stops the blur.';
+
+  @override
+  String get blurFailBodyDesktop =>
+      'On: the whole screen is covered when the computer is too slow or the blur fails; clicks still reach the windows underneath. Off: the screen stays visible with a red bar at the top.';
+
+  @override
+  String get blurStatusOnVisibleDesktop =>
+      'Blur on. This desktop shows the blur in its own screen capture, so a blurred area stays blurred until the scene changes.';
+
+  @override
+  String blurStatusNoOverlayDesktop(String details) {
+    return 'The blur cannot draw over other windows on this desktop. Details:\n$details';
+  }
+
+  @override
+  String get blurStatusShareDialog =>
+      'Choose your screen in the screen-sharing window and allow it. Waaiya asks only once; the picture stays on this computer.';
+
+  @override
+  String blurStatusExited(String details) {
+    return 'The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n$details';
+  }
+
+  @override
+  String get engineDetectorFailed =>
+      'The women\'s singing detector did not load, so voices are muted while that option is on.';
+
+  @override
+  String get blurStatusUncovered =>
+      'A monitor is not covered by the blur: it was not shared with it, or it was plugged in later. Turn a blur option off and on, and choose every screen in the screen-sharing window.';
+
+  @override
+  String get blurStatusModelsMissingDesktop =>
+      'The blur\'s models are missing from this installation, so it cannot cover anything; a red bar stays at the top of the screen. Reinstall Waaiya.';
+
+  @override
+  String get diagNoteDesktop =>
+      'What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.';
+
+  @override
   String get worshipTitle => 'Prayer times';
 
   @override
@@ -1054,24 +1172,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get worshipMethodDubai => 'Dubai';
 
   @override
-  String get worshipPrayerFajr => 'Fajr';
-
-  @override
-  String get worshipPrayerSunrise => 'Sunrise';
-
-  @override
-  String get worshipPrayerDhuhr => 'Dhuhr';
-
-  @override
-  String get worshipPrayerAsr => 'Asr';
-
-  @override
-  String get worshipPrayerMaghrib => 'Maghrib';
-
-  @override
-  String get worshipPrayerIsha => 'Isha';
-
-  @override
   String get worshipToday => 'Today';
 
   @override
@@ -1129,12 +1229,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get worshipEndSilent => 'End silence now';
-
-  @override
-  String get worshipUnmute => 'Unmute now';
-
-  @override
   String get worshipDndNeeded =>
       'Allow Waaiya to change Do Not Disturb, or the phone cannot go silent.';
 
@@ -1146,7 +1240,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Alarms and reminders are not allowed for Waaiya, so each change may come up to 10 minutes late, or later while the phone sleeps.';
 
   @override
-  String get worshipNotifNeeded =>
+  String get worshipNotificationsNeeded =>
       'Notifications are off: you will not see when the phone goes silent or comes back.';
 
   @override
@@ -1190,139 +1284,85 @@ class AppLocalizationsEn extends AppLocalizations {
   String get worshipOpenSound => 'Open Sound settings';
 
   @override
-  String get worshipNotifChannel => 'Prayer times';
+  String get worshipSmsTitle => 'Reply to calls by SMS during prayer';
 
   @override
-  String worshipNotifSilentTitle(Object prayer) {
-    return '$prayer: phone on silent';
+  String get worshipSmsBody =>
+      'In the silent minutes after each prayer time, a call left ringing gets one SMS. Once per number per prayer; never to hidden numbers or short codes.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'After: $seconds s of ringing';
   }
 
   @override
-  String worshipNotifSilentText(Object time) {
-    return 'Do Not Disturb is on until $time.';
+  String get worshipSmsDelayTitle => 'Seconds of ringing before the SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds s';
   }
 
   @override
-  String get worshipNotifSilentEndTitle => 'Silent time is over';
-
-  @override
-  String get worshipNotifSilentEndText => 'Do Not Disturb is off again.';
-
-  @override
-  String get worshipNotifSilentLeft =>
-      'You changed Do Not Disturb yourself, so Waaiya left it as it is.';
-
-  @override
-  String get worshipNotifNoAccess =>
-      'Waaiya could not turn on Do Not Disturb. Allow it on Waaiya\'s Settings page.';
-
-  @override
-  String worshipNotifMuteTitle(Object prayer) {
-    return '$prayer: media muted';
+  String worshipSmsText(Object text) {
+    return 'Message: $text';
   }
 
   @override
-  String worshipNotifMuteText(Object time) {
-    return 'Media sound is muted until $time.';
-  }
+  String get worshipSmsTextTitle => 'Your message';
 
   @override
-  String get worshipNotifMuteEndTitle => 'Media sound is back';
+  String get worshipSmsTextDefault => 'Use the default';
 
   @override
-  String get worshipNotifMuteEndText => 'The media volume is as you had it.';
+  String get worshipSmsCost =>
+      'Each reply is a normal SMS from your SIM, at your plan\'s price. Nothing is sent while roaming.';
 
   @override
-  String get worshipNotifMuteLeft =>
-      'You changed the media volume yourself, so Waaiya left it as it is.';
+  String get worshipSmsRoaming => 'Roaming now: no SMS is sent.';
 
   @override
-  String get desktopPreview =>
-      'Preview: the filter engine is not connected on this computer yet. The button only shows how the app will work.';
+  String get worshipSmsLogTitle => 'Replies sent (kept on this phone only)';
 
   @override
-  String actionFailed(String details) {
-    return 'That did not work: $details';
-  }
+  String get worshipContinue => 'Continue';
 
   @override
-  String get stateOnDetailNoDelay => 'Instruments are removed from all apps.';
+  String get worshipWhyDnd =>
+      'To make the phone silent at prayer times, allow Waaiya\'s Do Not Disturb access on the next page.';
 
   @override
-  String get engineErrorNoPactl =>
-      'Sound tools not found (pactl). Waaiya needs PulseAudio, or PipeWire with pipewire-pulse.';
+  String get worshipWhyExact =>
+      'To act exactly on time, allow Waaiya to set alarms and reminders on the next page. Without it, changes can come up to 10 minutes late.';
 
   @override
-  String get engineErrorNoSoundServer =>
-      'The sound server is not running (PulseAudio or PipeWire).';
+  String get worshipWhyNotifications =>
+      'Allow notifications so that you see each change and can undo it.';
 
   @override
-  String get engineErrorNoSystemd =>
-      'This system has no systemd user session, which runs the filter in the background.';
+  String get worshipWhyWrite =>
+      'To change your ringtone or notification sound, allow Waaiya to modify system settings on the next page.';
 
   @override
-  String get engineErrorNoOutput => 'No speakers or headphones found.';
+  String get worshipWhyPhone =>
+      'To know that a call is ringing and its number, Waaiya needs the Phone and Call logs permissions. Nothing leaves the phone except your reply.';
 
   @override
-  String engineErrorInstallFailed(String details) {
-    return 'Could not install the filter. Details:\n$details';
-  }
+  String get worshipWhySms =>
+      'To send your reply, Waaiya needs permission to send SMS. It sends only that reply, at most once per number per prayer.';
 
   @override
-  String engineErrorStartFailed(String details) {
-    return 'The filter did not start. Details:\n$details';
-  }
+  String get worshipMissingDnd =>
+      'Do Not Disturb access was not allowed, so the silence stays off.';
 
   @override
-  String engineErrorServiceFailed(String details) {
-    return 'The filter stopped with an error. Details:\n$details';
-  }
+  String get worshipMissingPhone =>
+      'The Phone and Call logs permissions were not allowed, so the SMS reply stays off.';
 
   @override
-  String get autostartTitle => 'Start at login';
+  String get worshipMissingSms =>
+      'Permission to send SMS was not allowed, so the SMS reply stays off.';
 
   @override
-  String get autostartBody => 'Filter the sound as soon as you log in.';
-
-  @override
-  String get blurBodyDesktop =>
-      'Covers people and images on screen, over every window, while Waaiya is open (it works whether the sound filter is on or off). It runs on this computer; nothing is sent anywhere. Closing the Waaiya window stops the blur.';
-
-  @override
-  String get blurFailBodyDesktop =>
-      'On: the whole screen is covered when the computer is too slow or the blur fails; clicks still reach the windows underneath. Off: the screen stays visible with a red bar at the top.';
-
-  @override
-  String get blurStatusOnVisibleDesktop =>
-      'Blur on. This desktop shows the blur in its own screen capture, so a blurred area stays blurred until the scene changes.';
-
-  @override
-  String blurStatusNoOverlayDesktop(String details) {
-    return 'The blur cannot draw over other windows on this desktop. Details:\n$details';
-  }
-
-  @override
-  String get blurStatusShareDialog =>
-      'Choose your screen in the screen-sharing window and allow it. Waaiya asks only once; the picture stays on this computer.';
-
-  @override
-  String blurStatusExited(String details) {
-    return 'The blur stopped unexpectedly. Turn a blur option off and on to try again. Details:\n$details';
-  }
-
-  @override
-  String get engineDetectorFailed =>
-      'The women\'s singing detector did not load, so voices are muted while that option is on.';
-
-  @override
-  String get blurStatusUncovered =>
-      'A monitor is not covered by the blur: it was not shared with it, or it was plugged in later. Turn a blur option off and on, and choose every screen in the screen-sharing window.';
-
-  @override
-  String get blurStatusModelsMissingDesktop =>
-      'The blur\'s models are missing from this installation, so it cannot cover anything; a red bar stays at the top of the screen. Reinstall Waaiya.';
-
-  @override
-  String get diagNoteDesktop =>
-      'What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.';
+  String get worshipTryAgain => 'Try again';
 }
