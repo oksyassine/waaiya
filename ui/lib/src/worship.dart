@@ -237,6 +237,8 @@ class _WorshipCardState extends State<WorshipCard> {
     if (!mounted) return;
     setState(() => _missing = null);
     await HomeScreen.set(context, SettingKeys.prayerSmsReply, true);
+    // without exact alarms the reply can only wait up to 9 s after the ring starts
+    if (mounted) await _askExtras();
   }
 
   @override
@@ -260,6 +262,7 @@ class _WorshipCardState extends State<WorshipCard> {
     }
 
     final on = st.prayerSilent || st.prayerAdhanMute;
+    final smsOn = w.smsSupported && st.prayerSmsReply;
     final times = w.times;
     return KeyedSubtree(
       key: const Key('worship_card'),
@@ -354,7 +357,7 @@ class _WorshipCardState extends State<WorshipCard> {
           if (st.prayerSilent && !w.dndAccess)
             _LineWithButton(key: const Key('worship_dnd'), text: l.worshipDndNeeded, isError: true,
                 button: l.worshipAllow, onPressed: () => ask('dnd', l.worshipWhyDnd)),
-          if (on && !w.exactAlarms)
+          if ((on || smsOn) && !w.exactAlarms)
             _LineWithButton(key: const Key('worship_exact'), text: l.worshipExactNeeded, isError: true,
                 button: l.worshipAllow, onPressed: () => ask('exact', l.worshipWhyExact)),
           if (on && !w.notifications)

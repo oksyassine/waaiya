@@ -84,8 +84,8 @@ object WorshipTimes {
      *
      * Checked against published timetables in src/test/resources/worship_reference.tsv (Umm al-Qura, Egypt,
      * Diyanet, JAKIM, MUIS, Kemenag; ISNA and UOIF through calculators that state the method): within 2 minutes.
-     * MWL has no independent timetable yet: a London calculator's sunrise and sunset are 2-3 minutes apart from
-     * these (another horizon or elevation), so its rows are kept there but not asserted.
+     * MWL has no independent timetable yet: a London calculator's rows match these to the minute but one day off
+     * (the page's dates are shifted), so they are kept there but not asserted.
      * The Kemenag, Morocco and Dubai offsets are the usual published precaution minutes; Morocco, Dubai, Karachi,
      * Tehran, Gulf, Kuwait and Qatar have no fetched timetable yet.
      */
