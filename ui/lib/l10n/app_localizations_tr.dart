@@ -1486,4 +1486,204 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'Yeniden dene';
+
+  @override
+  String get protectTitle => 'Zayıf anlar için koruma';
+
+  @override
+  String get protectBody =>
+      'Şimdi, sakinken karar verin: korumayı azaltan bir değişiklik geçerli olmadan önce bekler. Bir ebeveyn ayrıca PIN koyabilir.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Bekleme süresi: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Bekleme süresi';
+
+  @override
+  String get protectDelayBody =>
+      'Filtreyi durdurmak, bir örtüyü kapatmak veya korumayı azaltan herhangi bir şey bu kadar bekler. Sonra 15 dakika içinde onaylarsınız, yoksa hiçbir şey değişmez. Bir şeyi açmak her zaman hemen geçerli olur.';
+
+  @override
+  String get protectDelayOff => 'Yok';
+
+  @override
+  String get protectDelay1m => '1 dakika';
+
+  @override
+  String get protectDelay5m => '5 dakika';
+
+  @override
+  String get protectDelay15m => '15 dakika';
+
+  @override
+  String get protectDelay30m => '30 dakika';
+
+  @override
+  String get protectDelay1h => '1 saat';
+
+  @override
+  String get protectDelay4h => '4 saat';
+
+  @override
+  String get protectDelay24h => '24 saat';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes dakika';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: yok';
+
+  @override
+  String get protectPinIsSet => 'PIN: var';
+
+  @override
+  String get protectPinSet => 'PIN koy';
+
+  @override
+  String get protectPinRemove => 'Kaldır';
+
+  @override
+  String get protectPinBody =>
+      'PIN varken, korumayı azaltan her değişiklik önce onu ister. Bekleme süresini veya PIN\'i değiştirmek de onu ister.';
+
+  @override
+  String get protectPinForgot =>
+      'PIN unutulursa sıfırlama yoktur: yalnızca Waaiya\'nın verilerini silmek veya yeniden yüklemek kalır, bu da tüm ayarlarını siler.';
+
+  @override
+  String get protectPinTitle => 'PIN\'i girin';
+
+  @override
+  String get protectPinNewTitle => 'Bir PIN seçin';
+
+  @override
+  String get protectPinChangeTitle => 'PIN\'i değiştir';
+
+  @override
+  String get protectPinCurrent => 'Mevcut PIN';
+
+  @override
+  String get protectPinNew => 'Yeni PIN (4 ile 8 rakam)';
+
+  @override
+  String get protectPinAgain => 'Yeni PIN tekrar';
+
+  @override
+  String get protectPinBad => '4 ile 8 rakam kullanın.';
+
+  @override
+  String get protectPinDiffer => 'İki yeni PIN aynı değil.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'Yanlış PIN. Bir aradan önce $count deneme kaldı.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Çok fazla yanlış deneme. $time saatinde tekrar deneyin.';
+  }
+
+  @override
+  String get protectOk => 'Tamam';
+
+  @override
+  String get protectCancel => 'İptal';
+
+  @override
+  String get protectCancelChange => 'Değişikliği iptal et';
+
+  @override
+  String get protectConfirm => 'Onayla';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: $time saatinde geçerli olur.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: bekleme bitti. Hâlâ istiyor musunuz? $time saatinden önce onaylayın, yoksa hiçbir şey değişmez.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Bu değişiklik bekliyor';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what, o zaman hâlâ isterseniz $time saatinde geçerli olur. Ardından 15 dakika içinde burada onaylarsınız.';
+  }
+
+  @override
+  String get protectWaitStart => 'Beklemeyi başlat';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Zaten bekliyor: $time saatinde geçerli olur.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return '$time saatinde geçerli olur. O zaman onaylayın.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'yarın $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Bu değişiklik koruma ayarları tarafından bekletiliyor.';
+
+  @override
+  String get protectLimits =>
+      'Bunun engelleyemedikleri: zorla durdurma, kaldırma, Waaiya\'nın verilerini silme ve Android\'in kendi ayarları. Bunları engellemek, Waaiya\'nın kullanmadığı cihaz yöneticisi veya erişilebilirlik yetkileri gerektirir. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Bunun engelleyemedikleri: terminaldeki waaiya komutu, Waaiya\'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
+
+  @override
+  String get protectWhatStop => 'Filtreyi durdur';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Kapat: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Aç: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Şuraya uygulama ekle: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Bulanıklığı daha az sıkı yap';
+
+  @override
+  String get protectWhatGender => 'Telefonu kimin kullandığını değiştir';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Bekleme süresini değiştir: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'PIN\'i değiştir';
+
+  @override
+  String get protectWhatPinClear => 'PIN\'i kaldır';
+
+  @override
+  String get protectWhatSetting => 'Bir ayarı değiştir';
 }

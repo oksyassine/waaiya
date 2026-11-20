@@ -1483,4 +1483,204 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'Try again';
+
+  @override
+  String get protectTitle => 'Protection for weak moments';
+
+  @override
+  String get protectBody =>
+      'Decide now, while you are calm: a change that lowers protection waits before it takes effect. A parent can also set a PIN.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Waiting period: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Waiting period';
+
+  @override
+  String get protectDelayBody =>
+      'Stopping the filter, turning off a cover or anything else that lowers protection waits this long. Then you confirm it within 15 minutes, or nothing changes. Turning things on always works at once.';
+
+  @override
+  String get protectDelayOff => 'None';
+
+  @override
+  String get protectDelay1m => '1 minute';
+
+  @override
+  String get protectDelay5m => '5 minutes';
+
+  @override
+  String get protectDelay15m => '15 minutes';
+
+  @override
+  String get protectDelay30m => '30 minutes';
+
+  @override
+  String get protectDelay1h => '1 hour';
+
+  @override
+  String get protectDelay4h => '4 hours';
+
+  @override
+  String get protectDelay24h => '24 hours';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes minutes';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: not set';
+
+  @override
+  String get protectPinIsSet => 'PIN: set';
+
+  @override
+  String get protectPinSet => 'Set a PIN';
+
+  @override
+  String get protectPinRemove => 'Remove';
+
+  @override
+  String get protectPinBody =>
+      'With a PIN, every change that lowers protection asks for it first. Changing the waiting period or the PIN asks for it too.';
+
+  @override
+  String get protectPinForgot =>
+      'If the PIN is forgotten, there is no reset: only clearing Waaiya\'s data or reinstalling it, which also clears all its settings.';
+
+  @override
+  String get protectPinTitle => 'Enter the PIN';
+
+  @override
+  String get protectPinNewTitle => 'Choose a PIN';
+
+  @override
+  String get protectPinChangeTitle => 'Change the PIN';
+
+  @override
+  String get protectPinCurrent => 'Current PIN';
+
+  @override
+  String get protectPinNew => 'New PIN (4 to 8 digits)';
+
+  @override
+  String get protectPinAgain => 'New PIN again';
+
+  @override
+  String get protectPinBad => 'Use 4 to 8 digits.';
+
+  @override
+  String get protectPinDiffer => 'The two new PINs are not the same.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'Wrong PIN. $count tries left before a pause.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Too many wrong tries. Try again at $time.';
+  }
+
+  @override
+  String get protectOk => 'OK';
+
+  @override
+  String get protectCancel => 'Cancel';
+
+  @override
+  String get protectCancelChange => 'Cancel the change';
+
+  @override
+  String get protectConfirm => 'Confirm';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: takes effect at $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: the wait is over. Still want it? Confirm before $time, or nothing changes.';
+  }
+
+  @override
+  String get protectWaitTitle => 'This change waits';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what takes effect at $time, if you still want it then. You confirm it here within 15 minutes after that.';
+  }
+
+  @override
+  String get protectWaitStart => 'Start waiting';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Already waiting: it takes effect at $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'It takes effect at $time. Confirm it then.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'tomorrow at $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'This change is held back by the protection settings.';
+
+  @override
+  String get protectLimits =>
+      'What this cannot stop: force stop, uninstalling, clearing Waaiya\'s data and Android\'s own settings. Blocking those needs device-admin or accessibility powers that Waaiya does not use. This protects against a weak moment, not against a determined person.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'What this cannot stop: the waaiya command in a terminal, removing Waaiya or deleting its settings folder. This protects against a weak moment, not against a determined person.';
+
+  @override
+  String get protectWhatStop => 'Stop the filter';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Turn off: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Turn on: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Add an app to: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Make the blur less strict';
+
+  @override
+  String get protectWhatGender => 'Change who uses the phone';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Change the waiting period to: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Change the PIN';
+
+  @override
+  String get protectWhatPinClear => 'Remove the PIN';
+
+  @override
+  String get protectWhatSetting => 'Change a setting';
 }

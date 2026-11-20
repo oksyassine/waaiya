@@ -1484,4 +1484,203 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'دوبارہ کوشش کریں';
+
+  @override
+  String get protectTitle => 'کمزور لمحوں کے لیے تحفظ';
+
+  @override
+  String get protectBody =>
+      'ابھی، سکون کی حالت میں فیصلہ کریں: تحفظ کم کرنے والی تبدیلی نافذ ہونے سے پہلے انتظار کرتی ہے۔ والدین PIN بھی لگا سکتے ہیں۔';
+
+  @override
+  String protectDelay(Object value) {
+    return 'انتظار کا وقت: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'انتظار کا وقت';
+
+  @override
+  String get protectDelayBody =>
+      'فلٹر روکنا، کوئی پردہ بند کرنا یا تحفظ کم کرنے والی کوئی بھی چیز اتنی دیر انتظار کرتی ہے۔ پھر آپ 15 منٹ کے اندر اس کی تصدیق کرتے ہیں، ورنہ کچھ نہیں بدلتا۔ کسی چیز کو چالو کرنا ہمیشہ فوراً نافذ ہوتا ہے۔';
+
+  @override
+  String get protectDelayOff => 'کوئی نہیں';
+
+  @override
+  String get protectDelay1m => '1 منٹ';
+
+  @override
+  String get protectDelay5m => '5 منٹ';
+
+  @override
+  String get protectDelay15m => '15 منٹ';
+
+  @override
+  String get protectDelay30m => '30 منٹ';
+
+  @override
+  String get protectDelay1h => '1 گھنٹہ';
+
+  @override
+  String get protectDelay4h => '4 گھنٹے';
+
+  @override
+  String get protectDelay24h => '24 گھنٹے';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes منٹ';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: نہیں لگا';
+
+  @override
+  String get protectPinIsSet => 'PIN: لگا ہوا ہے';
+
+  @override
+  String get protectPinSet => 'PIN لگائیں';
+
+  @override
+  String get protectPinRemove => 'ہٹائیں';
+
+  @override
+  String get protectPinBody =>
+      'PIN کے ساتھ، تحفظ کم کرنے والی ہر تبدیلی پہلے اسے مانگتی ہے۔ انتظار کا وقت یا PIN بدلنے کے لیے بھی یہ مانگا جاتا ہے۔';
+
+  @override
+  String get protectPinForgot =>
+      'اگر PIN بھول جائے تو ری سیٹ کا کوئی طریقہ نہیں: صرف واعية کا ڈیٹا صاف کرنا یا دوبارہ انسٹال کرنا، جس سے اس کی تمام ترتیبات بھی صاف ہو جاتی ہیں۔';
+
+  @override
+  String get protectPinTitle => 'PIN درج کریں';
+
+  @override
+  String get protectPinNewTitle => 'PIN منتخب کریں';
+
+  @override
+  String get protectPinChangeTitle => 'PIN بدلیں';
+
+  @override
+  String get protectPinCurrent => 'موجودہ PIN';
+
+  @override
+  String get protectPinNew => 'نیا PIN (4 سے 8 ہندسے)';
+
+  @override
+  String get protectPinAgain => 'نیا PIN دوبارہ';
+
+  @override
+  String get protectPinBad => '4 سے 8 ہندسے استعمال کریں۔';
+
+  @override
+  String get protectPinDiffer => 'دونوں نئے PIN ایک جیسے نہیں ہیں۔';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'غلط PIN۔ وقفے سے پہلے $count کوششیں باقی ہیں۔';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'بہت زیادہ غلط کوششیں۔ $time پر دوبارہ کوشش کریں۔';
+  }
+
+  @override
+  String get protectOk => 'ٹھیک ہے';
+
+  @override
+  String get protectCancel => 'منسوخ کریں';
+
+  @override
+  String get protectCancelChange => 'تبدیلی منسوخ کریں';
+
+  @override
+  String get protectConfirm => 'تصدیق کریں';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: $time پر نافذ ہوگی۔';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: انتظار ختم ہو گیا۔ اب بھی چاہتے ہیں؟ $time سے پہلے تصدیق کریں، ورنہ کچھ نہیں بدلے گا۔';
+  }
+
+  @override
+  String get protectWaitTitle => 'یہ تبدیلی انتظار میں ہے';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what $time پر نافذ ہوگی، اگر آپ تب بھی چاہیں۔ اس کے بعد 15 منٹ کے اندر آپ یہاں تصدیق کرتے ہیں۔';
+  }
+
+  @override
+  String get protectWaitStart => 'انتظار شروع کریں';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'پہلے سے انتظار میں: $time پر نافذ ہوگی۔';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return '$time پر نافذ ہوگی۔ تب تصدیق کریں۔';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'کل $time پر';
+  }
+
+  @override
+  String get protectHeldBack => 'تحفظ کی ترتیبات نے یہ تبدیلی روک رکھی ہے۔';
+
+  @override
+  String get protectLimits =>
+      'جو یہ نہیں روک سکتا: زبردستی بند کرنا، ان انسٹال کرنا، واعية کا ڈیٹا صاف کرنا اور خود Android کی ترتیبات۔ انہیں روکنے کے لیے ڈیوائس ایڈمن یا ایکسیسبیلٹی کے اختیارات چاہئیں جو واعية استعمال نہیں کرتا۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
+
+  @override
+  String get protectLimitsDesktop =>
+      'جو یہ نہیں روک سکتا: ٹرمینل میں waaiya کمانڈ، واعية کو ہٹانا یا اس کی ترتیبات کا فولڈر حذف کرنا۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
+
+  @override
+  String get protectWhatStop => 'فلٹر روکنا';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'بند کرنا: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'چالو کرنا: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'ایپ شامل کرنا: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'دھندلاہٹ کو کم سخت کرنا';
+
+  @override
+  String get protectWhatGender => 'فون کون استعمال کرتا ہے، بدلنا';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'انتظار کا وقت بدلنا: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'PIN بدلنا';
+
+  @override
+  String get protectWhatPinClear => 'PIN ہٹانا';
+
+  @override
+  String get protectWhatSetting => 'کوئی ترتیب بدلنا';
 }

@@ -1499,4 +1499,205 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'Réessayer';
+
+  @override
+  String get protectTitle => 'Protection pour les moments de faiblesse';
+
+  @override
+  String get protectBody =>
+      'Décidez maintenant, au calme : un changement qui baisse la protection attend avant de prendre effet. Un parent peut aussi définir un code.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Délai d\'attente : $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Délai d\'attente';
+
+  @override
+  String get protectDelayBody =>
+      'Arrêter le filtre, désactiver un masque ou tout ce qui baisse la protection attend ce délai. Ensuite, vous le confirmez dans les 15 minutes, sinon rien ne change. Activer quelque chose fonctionne toujours tout de suite.';
+
+  @override
+  String get protectDelayOff => 'Aucun';
+
+  @override
+  String get protectDelay1m => '1 minute';
+
+  @override
+  String get protectDelay5m => '5 minutes';
+
+  @override
+  String get protectDelay15m => '15 minutes';
+
+  @override
+  String get protectDelay30m => '30 minutes';
+
+  @override
+  String get protectDelay1h => '1 heure';
+
+  @override
+  String get protectDelay4h => '4 heures';
+
+  @override
+  String get protectDelay24h => '24 heures';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes minutes';
+  }
+
+  @override
+  String get protectPinNone => 'Code : aucun';
+
+  @override
+  String get protectPinIsSet => 'Code : défini';
+
+  @override
+  String get protectPinSet => 'Définir un code';
+
+  @override
+  String get protectPinRemove => 'Supprimer';
+
+  @override
+  String get protectPinBody =>
+      'Avec un code, chaque changement qui baisse la protection le demande d\'abord. Changer le délai ou le code le demande aussi.';
+
+  @override
+  String get protectPinForgot =>
+      'Si le code est oublié, il n\'y a pas de réinitialisation : seulement effacer les données de Waaiya ou la réinstaller, ce qui efface aussi tous ses réglages.';
+
+  @override
+  String get protectPinTitle => 'Saisissez le code';
+
+  @override
+  String get protectPinNewTitle => 'Choisissez un code';
+
+  @override
+  String get protectPinChangeTitle => 'Changer le code';
+
+  @override
+  String get protectPinCurrent => 'Code actuel';
+
+  @override
+  String get protectPinNew => 'Nouveau code (4 à 8 chiffres)';
+
+  @override
+  String get protectPinAgain => 'Nouveau code, encore';
+
+  @override
+  String get protectPinBad => 'Utilisez 4 à 8 chiffres.';
+
+  @override
+  String get protectPinDiffer =>
+      'Les deux nouveaux codes ne sont pas identiques.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'Code erroné. Encore $count essais avant une pause.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Trop d\'essais erronés. Réessayez à $time.';
+  }
+
+  @override
+  String get protectOk => 'OK';
+
+  @override
+  String get protectCancel => 'Annuler';
+
+  @override
+  String get protectCancelChange => 'Annuler le changement';
+
+  @override
+  String get protectConfirm => 'Confirmer';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what : prend effet à $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what : l\'attente est finie. Vous le voulez toujours ? Confirmez avant $time, sinon rien ne change.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Ce changement attend';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what prend effet à $time, si vous le voulez toujours à ce moment. Vous le confirmez ici dans les 15 minutes qui suivent.';
+  }
+
+  @override
+  String get protectWaitStart => 'Commencer l\'attente';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Déjà en attente : prend effet à $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'Prend effet à $time. Confirmez-le alors.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'demain à $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Ce changement est retenu par les réglages de protection.';
+
+  @override
+  String get protectLimits =>
+      'Ce que cela ne peut pas empêcher : l\'arrêt forcé, la désinstallation, l\'effacement des données de Waaiya et les réglages d\'Android eux-mêmes. Les bloquer demande des pouvoirs d\'administrateur de l\'appareil ou d\'accessibilité que Waaiya n\'utilise pas. Cela protège d\'un moment de faiblesse, pas d\'une personne déterminée.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Ce que cela ne peut pas empêcher : la commande waaiya dans un terminal, la suppression de Waaiya ou de son dossier de réglages. Cela protège d\'un moment de faiblesse, pas d\'une personne déterminée.';
+
+  @override
+  String get protectWhatStop => 'Arrêter le filtre';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Désactiver : $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Activer : $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Ajouter une application à : $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Rendre le flou moins strict';
+
+  @override
+  String get protectWhatGender => 'Changer qui utilise le téléphone';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Changer le délai d\'attente à : $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Changer le code';
+
+  @override
+  String get protectWhatPinClear => 'Supprimer le code';
+
+  @override
+  String get protectWhatSetting => 'Changer un réglage';
 }

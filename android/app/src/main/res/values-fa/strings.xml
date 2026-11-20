@@ -373,4 +373,11 @@
     <string name="worship_sms_default">وقت نماز است، الان نمی‌توانم جواب بدهم. بعداً با شما تماس می‌گیرم.</string>
     <string name="notif_worship_sms_title">با پیامک پاسخ داده شد</string>
     <string name="notif_worship_sms_text">پاسخ وقت نماز شما به {number} فرستاده شد.</string>
+    <string name="notif_protect_channel">مدت انتظار</string>
+    <string name="notif_protect_what_stop">توقف فیلتر</string>
+    <string name="notif_protect_what_pin">تغییر یا حذف رمز</string>
+    <string name="notif_protect_what_setting">تغییری که محافظت را کم می‌کند</string>
+    <string name="notif_protect_waiting_text">در ساعت %1$s اعمال می‌شود، اگر آن موقع هنوز بخواهید. «لغو» همه چیز را همان‌طور نگه می‌دارد.</string>
+    <string name="notif_protect_ready_text">هنوز می‌خواهید؟ پیش از %1$s در واعية تأیید کنید، وگرنه چیزی تغییر نمی‌کند.</string>
+    <string name="notif_protect_cancel">لغو</string>
 </resources>

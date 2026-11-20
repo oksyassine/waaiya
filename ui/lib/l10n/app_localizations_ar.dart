@@ -1471,4 +1471,203 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get protectTitle => 'حماية في لحظات الضعف';
+
+  @override
+  String get protectBody =>
+      'قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'مدة الانتظار: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'مدة الانتظار';
+
+  @override
+  String get protectDelayBody =>
+      'إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.';
+
+  @override
+  String get protectDelayOff => 'بلا انتظار';
+
+  @override
+  String get protectDelay1m => 'دقيقة واحدة';
+
+  @override
+  String get protectDelay5m => '٥ دقائق';
+
+  @override
+  String get protectDelay15m => '١٥ دقيقة';
+
+  @override
+  String get protectDelay30m => '٣٠ دقيقة';
+
+  @override
+  String get protectDelay1h => 'ساعة واحدة';
+
+  @override
+  String get protectDelay4h => '٤ ساعات';
+
+  @override
+  String get protectDelay24h => '٢٤ ساعة';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get protectPinNone => 'الرمز: غير موضوع';
+
+  @override
+  String get protectPinIsSet => 'الرمز: موضوع';
+
+  @override
+  String get protectPinSet => 'ضع رمزًا';
+
+  @override
+  String get protectPinRemove => 'احذف';
+
+  @override
+  String get protectPinBody =>
+      'مع الرمز، يُطلب أولًا قبل كل تغيير يُضعف الحماية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.';
+
+  @override
+  String get protectPinForgot =>
+      'إن نُسي الرمز فلا سبيل لاسترجاعه: لا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.';
+
+  @override
+  String get protectPinTitle => 'أدخل الرمز';
+
+  @override
+  String get protectPinNewTitle => 'اختر رمزًا';
+
+  @override
+  String get protectPinChangeTitle => 'غيِّر الرمز';
+
+  @override
+  String get protectPinCurrent => 'الرمز الحالي';
+
+  @override
+  String get protectPinNew => 'الرمز الجديد (من ٤ إلى ٨ أرقام)';
+
+  @override
+  String get protectPinAgain => 'الرمز الجديد مرة أخرى';
+
+  @override
+  String get protectPinBad => 'استعمل من ٤ إلى ٨ أرقام.';
+
+  @override
+  String get protectPinDiffer => 'الرمزان الجديدان غير متطابقين.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'رمز خاطئ. بقيت $count محاولات قبل التوقّف قليلًا.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'محاولات خاطئة كثيرة. حاول مرة أخرى عند $time.';
+  }
+
+  @override
+  String get protectOk => 'حسنًا';
+
+  @override
+  String get protectCancel => 'إلغاء';
+
+  @override
+  String get protectCancelChange => 'ألغِ التغيير';
+
+  @override
+  String get protectConfirm => 'أكِّد';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: يسري عند $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل $time، وإلا فلن يتغيّر شيء.';
+  }
+
+  @override
+  String get protectWaitTitle => 'هذا التغيير ينتظر';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what يسري عند $time إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.';
+  }
+
+  @override
+  String get protectWaitStart => 'ابدأ الانتظار';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'ينتظر بالفعل: يسري عند $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'يسري عند $time. أكِّده حينها.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'غدًا عند $time';
+  }
+
+  @override
+  String get protectHeldBack => 'إعدادات الحماية تؤخّر هذا التغيير.';
+
+  @override
+  String get protectLimits =>
+      'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات مدير الجهاز أو خدمة الوصول، وواعية لا تستعملها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+
+  @override
+  String get protectWhatStop => 'إيقاف التصفية';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'إطفاء: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'تشغيل: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'إضافة تطبيق إلى: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'جعل التغطية أقل صرامة';
+
+  @override
+  String get protectWhatGender => 'تغيير من يستعمل الهاتف';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'تغيير مدة الانتظار إلى: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'تغيير الرمز';
+
+  @override
+  String get protectWhatPinClear => 'حذف الرمز';
+
+  @override
+  String get protectWhatSetting => 'تغيير إعداد';
 }
