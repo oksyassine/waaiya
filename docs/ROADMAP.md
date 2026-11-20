@@ -80,6 +80,22 @@ switch, and `emu_check.py` on Android 11 and 15 emulators with the setup missing
 Not provable without a phone, so still open: how many real phones need mono, sound quality by ear, Bluetooth.
 The diagnostics report is how those answers will come back.
 
+## Built after 0.2.12 (PR #14, branch `features`): items 2, 4, 5, 6, 8, 9
+
+Each feature is a separate part (docs/FEATURES_CONTRACT.md) with its own tests; off by default unless said.
+
+| Item | What the user gets | Where it stops |
+|---|---|---|
+| 5. Fix mistakes on the spot | Filter off for chosen apps (left out of the capture, not muted; Linux: their streams stay on the real output); blur off for chosen apps (only while a fresh reading shows that app alone on screen: DUMP or Waaiya's helper; otherwise the covers stay); cover an area by hand (a picker, opaque cover until removed or the blur stops); local "missed" / "covered wrongly" notes the user can share himself | The foreground app cannot be read without the setup or the helper; the accessibility build does not read app switches |
+| 6. Keep singing (test) | voice_v1 (fp16, 4.4 MB): instruments removed, singing and recitation kept (-1.8 / -2.7 dB instead of -24 / -13), music-only leak -55 dB; switches live while filtering; Android and Linux (eval/results/voice_v1_engine.md) | Arabic speech gets about 18 dB of suppression instead of 21; trained on Quran data of unknown licence (THIRD_PARTY_LICENSES.md section 4, published by the owner's decision) |
+| 2. Battery and heat | The diagnostics report gives battery % per hour while filtering, battery temperature, thermal status, CPU % of one core, the models and mono/stereo | Per-phone figures still need real phones |
+| 4. Waiting period and PIN | A waiting period (1 min to 24 h) before any switch-off or weakening takes effect, confirmed afterwards; a local PIN (PBKDF2) for parents; every Stop path (screen, notification, tile, shortcut) goes through one guard; a reboot or a clock change never shortens the wait; desktop too | Force-stop, uninstall, clearing data and Android's own settings cannot be blocked (said in the card); the `waaiya` command line on desktop |
+| 8. Worship helpers | Prayer times on the phone (365 cities or coordinates, 16 methods, Hanafi Asr, checked against official timetables within 2 min), silent (Do Not Disturb) from each prayer time, media muted at the adhan, an SMS reply to unanswered calls during prayer (custom text, after N s, once per number) | Permissions are asked only when an option is turned on; the SMS reply is not in the Play build (Play forbids call-log and SMS permissions for such apps) |
+| 9. Plain tones | Six plain tones (own work, CC0) to preview and set as ringtone or notification sound | Phones that refuse the system-settings permission get the Sound settings page |
+
+Also: privacy page (`docs/PRIVACY.md`), build-it-yourself notes (`docs/REPRODUCIBLE_BUILDS.md`), distribution plan and
+Play build options (`docs/DISTRIBUTION.md`).
+
 ## Next, in order
 
 1. **Setup without a second app.** Today the setup needs Shizuku or a computer; it is longer than any

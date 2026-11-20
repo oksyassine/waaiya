@@ -238,4 +238,8 @@ this file, `ui/lib/src/backend.dart`, `ui/lib/src/channel_backend.dart`,
   integer range.
 - Snapshot key `features`: `{fix, worship, protect, singing}`, one map per feature, filled only by that feature.
 - Method `<feature>.<name>` (`WaaiyaBackend.invoke`), routed on Android by `UiBridge` to the feature's Kotlin object.
-- New error code `protected`: the waiting period or the PIN holds a change back (`setSetting`, `stopFilter`).
+- New error code `protected`: the waiting period or the PIN holds a change back (`setSetting`, `stopFilter`). Its
+  message is JSON: `{need: pin|wait|pin_wait|waiting, what, value, delayMinutes, dueAt?}`; Flutter answers with
+  `protect.request {what, value?, pin?}` (`what` = a setting key or `stop`), `protect.confirm`, `protect.cancel`,
+  `protect.setPin {pin, oldPin?}`, `protect.clearPin`, `protect.promptShown`. `features.protect`: `pinSet`,
+  `delayMinutes`, `pending {what, value, dueAt, confirmUntil, ready}?`, `lockedUntil?`, `prompt?`.
