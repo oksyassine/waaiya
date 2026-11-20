@@ -181,7 +181,7 @@ html:not(.js) .tools { display: none; }
 /* ---------- wait before turning off ---------- */
 .wait { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 5vw, 96px); align-items: center; background: var(--soft); padding: clamp(64px, 8vw, 128px) var(--m); }
 .wait-text { display: grid; gap: 24px; }
-.wait-text p:not(.note) { font-size: var(--s3); line-height: 1.5; max-width: 32ch; }
+.wait-text p:not(.note) { font-size: var(--s3); line-height: 1.5; max-width: 36ch; }
 .card { justify-self: center; width: min(100%, 560px); background: var(--surface); color: var(--ink); border-radius: 16px; border: 1px solid var(--step2); padding: 24px; display: grid; gap: 16px; } /* taste-skill-ignore: data-ui fragment */
 .card-title { font-size: var(--s4); font-weight: 700; }
 .card-row { display: grid; gap: 4px; padding: 14px 16px; background: var(--step); border-radius: 10px; }
@@ -274,6 +274,9 @@ html:not(.js) .qq, html:not(.js) .qa { grid-row: auto; grid-column: 1; }
 .dl-go { min-height: 1.3em; height: 1.3em; font-size: 1em; padding: 0 0.45em; font-weight: 700; }
 .dl-go.soon { background: var(--step2); color: var(--ink); font-size: 0.5em; height: 2.6em; pointer-events: none; }
 html:not(.js) .dl-line select, html:not(.js) .dl-go { display: none; }
+.js .no-js, html:not(.js) .js-only { display: none; }
+html:not(.js) .sw { display: none; }
+html:not(.js) .opt[data-on="false"] .opt-c { display: block; }
 .dl-rows { margin-top: 48px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .dl-rows li { padding: 24px; display: grid; gap: 10px; align-content: start; transition: background-color 200ms ease; }
 .dl-rows li.on { background: var(--soft); }

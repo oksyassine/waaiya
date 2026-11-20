@@ -73,7 +73,7 @@ T = {
         cover_alt="مكبّر صوت عليه حبيبات رمل، من فيلم واعية",
         cover_note="تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.",
         wait_h="الانتظار قبل الإيقاف",
-        wait_p="اختر الآن، وأنت هادئ، مدةً للانتظار من دقيقة إلى [[24]] ساعة. عندها لا يوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين وضع رمز.",
+        wait_p="اختر الآن، وأنت هادئ، مدةً للانتظار من دقيقة إلى [[24]] ساعة. عندها ينتظر زرّ الإيقاف، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين وضع رمز.",
         wait_limits="هذه حماية من لحظة ضعف، لا من شخص مُصِرّ: لا شيء يمنع الإيقاف الإجباري أو حذف التطبيق، وواعية تقول ذلك بوضوح.",
         card_title="حماية في لحظات الضعف",
         card_delay="الانتظار قبل الإيقاف: [[10]] ثوانٍ",
@@ -170,7 +170,7 @@ T = {
         cover_alt="A loudspeaker with grains of sand on it, from Waaiya's film",
         cover_note="It stays covered until you remove it or the blur stops.",
         wait_h="Wait before turning off",
-        wait_p="Set a wait now, while you are calm: from 1 minute to 24 hours. Then pressing Stop does not stop the filter at once, and you decide again when the wait is over. A parent can also set a PIN.",
+        wait_p="Set a wait now, while you are calm: from 1 minute to 24 hours. Then Stop waits, and you decide again when the wait is over. A parent can also set a PIN.",
         wait_limits="This protects against a weak moment, not against a determined person: nothing can stop a force stop or uninstalling, and Waaiya says so plainly.",
         card_title="Protection for weak moments",
         card_delay="Wait before turning off: 10 seconds",
@@ -447,6 +447,12 @@ def page(lang, root):
   </div>
 </section>
 {strip}
+<section class="langs" id="lang" aria-labelledby="lang-h">
+  <div class="langs-head" data-enter><h2 id="lang-h" data-e>{e(t['lang_h'])}</h2><p data-e>{e(t['lang_p'])}</p></div>
+  <ul class="ltabs" aria-label="{e(t['lang_h'])}">{langs}</ul>
+  <figure class="lshot"><img src="{a}lang/{lang}.webp" width="1366" height="768" alt="{e(t['lang_alt'].format(name=lname[lang]))}" loading="lazy"><figcaption>{e(t['lang_cap'].format(name=lname[lang]))}</figcaption></figure>
+</section>
+{strip}
 <section class="wait" aria-labelledby="wait-h">
   <div class="card" data-ui>
     <p class="card-title">{e(t['card_title'])}</p>
@@ -460,12 +466,6 @@ def page(lang, root):
     <p data-e>{e(t['wait_p'])}</p>
     <p class="note" data-e>{e(t['wait_limits'])}</p>
   </div>
-</section>
-{strip}
-<section class="langs" id="lang" aria-labelledby="lang-h">
-  <div class="langs-head" data-enter><h2 id="lang-h" data-e>{e(t['lang_h'])}</h2><p data-e>{e(t['lang_p'])}</p></div>
-  <ul class="ltabs" aria-label="{e(t['lang_h'])}">{langs}</ul>
-  <figure class="lshot"><img src="{a}lang/{lang}.webp" width="1366" height="768" alt="{e(t['lang_alt'].format(name=lname[lang]))}" loading="lazy"><figcaption>{e(t['lang_cap'].format(name=lname[lang]))}</figcaption></figure>
 </section>
 {strip}
 <section class="phones" aria-labelledby="phone-h">
@@ -492,7 +492,7 @@ def page(lang, root):
 </section>
 {strip}
 <section class="dl" id="download" aria-labelledby="dl-h">
-  <h2 id="dl-h" class="dl-line"><span>{e(t['dl_a'])}</span> <select id="platform" aria-label="{e(t['dl_a'])}">{opts_sel}</select> <a class="btn dl-go" href="{APK}">{e(t['dl_btn'])}</a></h2>
+  <h2 id="dl-h" class="dl-line"><span class="js-only">{e(t['dl_a'])}</span><span class="no-js">{e(t['cta'])}</span> <select id="platform" aria-label="{e(t['dl_a'])}">{opts_sel}</select> <a class="btn dl-go" href="{APK}">{e(t['dl_btn'])}</a></h2>
   <ul class="dl-rows">{rows}</ul>
 </section>
 </main>
