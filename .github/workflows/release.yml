@@ -130,9 +130,8 @@ jobs:
           mkdir -p build-win/models/dfn3 build-win/models/vision
           cp models/dfn3/dfn3_stream_int8.* build-win/models/dfn3/
           cp models/vision/*.onnx build-win/models/vision/
-          if [ -f models/detector/detector_v1.onnx ]; then
-            mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
-          fi
+          # the women's-singing model (models-v1 since 0.2.12) is part of the Windows app
+          mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
       - uses: actions/upload-artifact@v4
         with: { name: windows-programs, path: build-win }
 

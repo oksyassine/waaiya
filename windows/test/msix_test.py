@@ -84,6 +84,8 @@ def main():
     pfn = ps(f"(Get-AppxPackage -Name {NAME}).PackageFamilyName")[1]
     at.check(pfn == PFN, f"package family name {pfn!r} is the Store's {PFN!r}")
     print("  installed in " + install_dir(), flush=True)
+    at.check(os.path.exists(os.path.join(install_dir(), "engine", "models", "detector", "detector_v1.onnx")),
+             "the women's-singing model is in the package")
     print("  manifest startup task: " + ps(f"(Get-AppxPackageManifest -Package (Get-AppxPackage -Name {NAME})).Package."
                                            "Applications.Application.Extensions.Extension.StartupTask | Out-String")[1])
     subprocess.run(["explorer.exe", f"shell:AppsFolder\\{PFN}!Waaiya"])
