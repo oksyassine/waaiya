@@ -63,9 +63,9 @@ void main() {
                 filter: const FilterInfo(state: FilterState.filtering, delayMs: 0, autostart: true),
                 setup: const SetupInfo(originalsMuted: true, consentSkipped: true),
                 blur: const BlurInfo(overlayAllowed: true, touchPassThrough: true),
-                detectorModel: true,
+                detectorModel: false, // no women's-singing model in the Windows build yet: its switch is hidden
                 capabilities: const Capabilities(
-                  womenSinging: true,
+                  womenSinging: false,
                   autostart: true,
                   screenBlur: true,
                   blurStandalone: true,

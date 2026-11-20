@@ -44,8 +44,8 @@ def install_dir():
 def in_package(*args):
     """Runs the packaged filter inside the package (as the app and the startup task run it)."""
     exe = os.path.join(install_dir(), "engine", "waaiya-filter.exe")
-    a = " ".join(args)
-    return ps(f"Invoke-CommandInDesktopPackage -PackageFamilyName {PFN} -AppId Waaiya -Command '{exe}' -Args '{a}'")
+    a = f" -Args '{' '.join(args)}'" if args else ""
+    return ps(f"Invoke-CommandInDesktopPackage -PackageFamilyName {PFN} -AppId Waaiya -Command '{exe}'{a}")
 
 
 def running(image):
@@ -131,6 +131,13 @@ def main():
     in_package("autostart")
     ok, v = wait_volume(pid, below=0.001)
     at.check(ok, f"startup task, 'Start at login' on: filtering ({v})")
+    in_package("stop")
+    ok, v = wait_volume(pid, above=0.99)
+    time.sleep(2)
+    kill_filters()
+    in_package()  # the startup task without its parameter: a packaged start with no command is the same
+    ok, v = wait_volume(pid, below=0.001)
+    at.check(ok, f"packaged start without arguments acts as the startup task ({v})")
     os.remove(os.path.join(d or DIRS[0], "autostart"))
 
     # 5. a Store update while filtering, then the next login

@@ -1,5 +1,8 @@
 # Microsoft Store: what to fill in (Partner Center, app "Waaiya", Store ID 9NBB296FSRJP)
 
+The Windows build has no women's-singing model yet (models/detector is not released), so the app hides that
+switch and the listing does not mention it; add it back when the model ships.
+
 The package declares English, Arabic and French (`AppxManifest.xml` `<Resources>`), so Partner Center asks for these
 three listings. The app itself has nine languages; more listings can be added later by adding the language to the
 manifest. Screenshots: `ui/tool/store_shots_test.dart` (2732x1536, one run per language) renders them.
@@ -52,7 +55,6 @@ Quran recitation. It works with every app (browsers, video players, games), live
 
 - One button: Waaiya filters the sound of all your other apps until you press it again.
 - Fails closed: if the filter cannot run, apps stay silent instead of playing music.
-- Optional: mute women's singing (women's speech and recitation are kept).
 - Optional screen blur: covers women, or immodest images, over every window; clicks still reach the windows
   underneath.
 - Start at login, if you want.
@@ -69,7 +71,6 @@ on a slow one Waaiya switches to mono by itself.
 - Removes music from every app, keeps speech and Quran recitation
 - Live, on your computer: nothing is sent anywhere
 - Fails closed: silence, never unfiltered music
-- Optional: mute women's singing
 - Optional screen blur over every window
 - Start at login
 - Free and open source
@@ -85,7 +86,6 @@ on a slow one Waaiya switches to mono by itself.
 
 - زرّ واحد: تصفّي واعية صوت كل تطبيقاتك الأخرى حتى تضغطه مرة أخرى.
 - عند الخلل صمت: إن تعذّر عمل التصفية، تبقى التطبيقات صامتة بدل أن تُسمِع الموسيقى.
-- اختياري: كتم غناء النساء (يبقى كلامهن وتلاوتهن).
 - اختياري: تمويه الشاشة فوق كل النوافذ، للنساء أو للصور غير المحتشمة، والنقرات تصل إلى النوافذ تحتها.
 - التشغيل عند الدخول إلى الحساب، إن أردت.
 - كل شيء يعمل على حاسوبك، ولا يُرسَل شيء إلى أي مكان: بلا حساب ولا إحصاءات ولا إعلانات.
@@ -101,7 +101,6 @@ on a slow one Waaiya switches to mono by itself.
 - تُزيل الموسيقى من كل التطبيقات، وتُبقي الكلام والتلاوة
 - مباشرةً على حاسوبك، ولا يُرسَل شيء
 - عند الخلل صمت، لا موسيقى دون تصفية
-- اختياري: كتم غناء النساء
 - اختياري: تمويه الشاشة فوق كل النوافذ
 - التشغيل عند الدخول إلى الحساب
 - مجانية ومفتوحة المصدر
@@ -119,7 +118,6 @@ votre ordinateur.
 - Un seul bouton : Waaiya filtre le son de toutes vos autres applis jusqu'à ce que vous appuyiez à nouveau.
 - En cas d'échec, le silence : si le filtre ne peut pas tourner, les applis restent muettes au lieu de jouer la
   musique.
-- En option : couper le chant des femmes (leurs paroles et leur récitation sont gardées).
 - En option : flouter l'écran au-dessus de toutes les fenêtres (les femmes, ou les images indécentes) ; les clics
   atteignent toujours les fenêtres en dessous.
 - Démarrage à l'ouverture de session, si vous le souhaitez.
@@ -136,7 +134,6 @@ meilleur son ; sur un ordinateur lent, Waaiya passe en mono d'elle-même.
 - Retire la musique de toutes les applis, garde la parole et la récitation du Coran
 - En direct, sur votre ordinateur : rien n'est envoyé
 - En cas d'échec, le silence, jamais la musique non filtrée
-- En option : couper le chant des femmes
 - En option : flou de l'écran au-dessus de toutes les fenêtres
 - Démarrage à l'ouverture de session
 - Gratuite et open source

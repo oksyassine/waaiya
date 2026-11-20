@@ -27,6 +27,7 @@
 #include "../common/wasapi.h"
 #include "sessions.h"
 
+#include <appmodel.h>
 #include <avrt.h>
 #include <shlobj.h>
 
@@ -827,7 +828,21 @@ void usage() {
 
 } // namespace
 
+// Running from the Microsoft Store package (it has a package identity)
+bool packaged() {
+    UINT32 n = 0;
+    return GetCurrentPackageFullName(&n, nullptr) != APPMODEL_ERROR_NO_PACKAGE;
+}
+
 int wmain(int argc, wchar_t **argv) {
+    // the package's startup task passes "autostart" (uap10:Parameters); without it, a packaged start with no
+    // command is that task too
+    static wchar_t autostart_cmd[] = L"autostart";
+    wchar_t *fallback[] = {argv[0], autostart_cmd, nullptr};
+    if (argc < 2 && packaged()) {
+        argc = 2;
+        argv = fallback;
+    }
     if (argc < 2) {
         usage();
         return 2;
