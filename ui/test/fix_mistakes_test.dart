@@ -11,11 +11,14 @@ import 'package:waaiya_ui/src/memory_backend.dart';
 /// setSetting (where the protection guard sits), including a refusal.
 class _Fix extends MemoryBackend {
   _Fix(AppState s, {this.refuse = false}) : super(initial: s) {
-    methods['fix.apps'] = (_) async => [
-          {'package': 'com.video', 'label': 'Video', 'icon': Uint8List.fromList([1, 2, 3])}, // not an image
-          {'package': 'com.music', 'label': 'Music'},
-          {'package': 'bad,name', 'label': 'Broken'},
-        ];
+    methods['fix.apps'] = (a) async {
+      calls.add('apps ${a['list']}');
+      return [
+        {'package': 'com.video', 'label': 'Video', 'icon': Uint8List.fromList([1, 2, 3])}, // not an image
+        {'package': 'com.music', 'label': 'Music'},
+        {'package': 'bad,name', 'label': 'Broken'},
+      ];
+    };
     methods['fix.note'] = (a) async {
       calls.add('note ${a['kind']} ${a['where']}');
       return 3;
@@ -148,6 +151,7 @@ void main() {
     expect(find.byKey(const Key('fix_pick_com.video')), findsNothing, reason: 'already chosen');
     expect(find.byKey(const Key('fix_pick_bad,name')), findsNothing, reason: 'a name with a comma is never offered');
     await _tap(tester, find.byKey(const Key('fix_pick_com.music')));
+    expect(b.calls, contains('apps filter_off_apps'), reason: 'the picker says which list it fills');
     expect(b.calls, contains('set filter_off_apps=com.music,com.video'));
     expect(b.state.settings.filterOffApps, ['com.music', 'com.video']);
 
@@ -162,6 +166,7 @@ void main() {
     await _go(tester, 'screen');
     await _tap(tester, find.byKey(const Key('fix_add_blur_off_apps')));
     await _tap(tester, find.byKey(const Key('fix_pick_com.video')));
+    expect(b.calls, contains('apps blur_off_apps'), reason: 'Android offers system apps such as Settings only here');
     expect(b.calls, contains('set blur_off_apps=com.video'));
     expect(b.state.settings.blurOffApps, isEmpty);
     expect(tester.takeException(), isNull);

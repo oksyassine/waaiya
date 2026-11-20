@@ -9,7 +9,8 @@
 ///   blurRunning (bool)       the blur runs now (hand covers can be drawn)
 ///   notes (int)              wrong-detection notes kept on this device (present = notes exist here)
 ///   labels (map)             package -> app name, for the apps in either list (Android; desktop names are shown as is)
-/// Methods: fix.apps -> [{package, label, icon?}] (desktop: the apps playing now and the chosen ones), fix.coverArea -> `opened` | `blur_off`, fix.removeCovers,
+/// Methods: fix.apps {list: filter_off_apps|blur_off_apps} -> [{package, label, icon?}] (Android: system-uid apps such
+/// as Settings only for the blur list; desktop: the apps playing now and the chosen ones), fix.coverArea -> `opened` | `blur_off`, fix.removeCovers,
 /// fix.note {kind: missed|wrong, where: filter|screen} -> count, fix.notes -> text, fix.clearNotes.
 library;
 
@@ -190,7 +191,7 @@ class _AppList extends StatelessWidget {
   }
 
   Future<void> _add(BuildContext context) async {
-    final found = await runAction(context, (b) => b.invoke('fix.apps'));
+    final found = await runAction(context, (b) => b.invoke('fix.apps', {'list': settingKey}));
     if (found is! List || !context.mounted) return;
     final choices = [for (final o in found) ?FixApp.fromMap(o)].where((a) => !apps.contains(a.id)).toList();
     final picked = await showDialog<FixApp>(context: context, builder: (ctx) => _AppPicker(choices: choices));

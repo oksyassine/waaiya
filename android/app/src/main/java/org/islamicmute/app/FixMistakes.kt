@@ -246,12 +246,16 @@ object FixMistakes : Feature {
         }
     }
 
-    /** Apps with a launcher icon (the manifest's <queries> makes them visible), not Waaiya, not system uids. */
-    private fun launchableApps(ctx: Context): List<Map<String, Any?>> {
+    /**
+     * Apps with a launcher icon (the manifest's <queries> makes them visible), not Waaiya. Apps sharing a system uid
+     * (Settings, some phones' gallery) only for the blur list ([systemToo]): the blur matches windows by package, but
+     * the capture and the muter work by uid, and leaving a system uid unfiltered would leave every app on it.
+     */
+    private fun launchableApps(ctx: Context, systemToo: Boolean): List<Map<String, Any?>> {
         val pm = ctx.packageManager
         val acts = pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0)
         return acts.map { it.activityInfo.applicationInfo }.distinctBy { it.packageName }
-            .filter { it.packageName != ctx.packageName && it.uid >= Process.FIRST_APPLICATION_UID }
+            .filter { it.packageName != ctx.packageName && (systemToo || it.uid >= Process.FIRST_APPLICATION_UID) }
             .map { ai ->
                 val l = runCatching { pm.getApplicationLabel(ai).toString() }.getOrDefault(ai.packageName)
                 synchronized(labels) { labels[ai.packageName] = l }
@@ -300,7 +304,8 @@ object FixMistakes : Feature {
         hostRef = WeakReference(host)
         val ctx = host.activity
         return when (method) {
-            "apps" -> launchableApps(ctx)
+            // {list: blur_off_apps | filter_off_apps}: which list the picker adds to (filter_off_apps when absent)
+            "apps" -> launchableApps(ctx, systemToo = args["list"] == "blur_off_apps")
             "coverArea" -> {
                 if (ScreenBlur.state == null) return "blur_off"
                 ctx.startActivity(FixMistakesActivity.intent(ctx))
