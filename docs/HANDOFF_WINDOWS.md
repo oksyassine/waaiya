@@ -131,7 +131,52 @@ Windows design:
 - yt-dlp updates (zip build only): at most daily, the newest yt-dlp.exe checked against the release's
   SHA2-256SUMS, kept in `%LOCALAPPDATA%\Waaiya\yt-dlp\`. Never in the Store package.
 
-## Still to do for 0.2.12 (in order)
+## Done on the owner's Windows PC (2026-11-20, second session)
+
+Owner decisions in this session:
+- The Store version has Links as **watch only** (no save tools in the package; `make_msix.ps1` removes them, CI
+  checks it). The zip from GitHub has "Save without music". Later, a separately signed full version (own package
+  name, e.g. `Oks.Waaiya.Full`, own code-signing certificate) can ship saving outside the Store.
+- **18 languages** in 0.2.12: added es, nl, de, it, ru, uz (Latin), sw, ha, so (machine translations).
+- "Mute women's singing" text says only "Women's speech is kept." (no recitation in the text; the behaviour is
+  unchanged until the owner decides).
+- Install method for tests on the PC: the unpacked package in Developer Mode (`make_msix.ps1 -Layout`, then
+  `Add-AppxPackage -Register`); no test certificate trusted on the PC.
+
+Built and tested here (Flutter 3.41.5 in `C:\Users\yassi\dev\flutter`, VS Build Tools already installed):
+- CI on #12: the flaky click-through check of the blur test fixed (waits for its window, retries).
+- Links on Windows (`desktop/lib/links.dart`, `ui/lib/src/links_page.dart`), as designed above. Tools: yt-dlp
+  2026.10.26 + QuickJS-ng v0.18.0 (`fetch_deps.sh links-win`), LGPL FFmpeg 9.0.2 (3 MB, `build_ffmpeg_win.sh`, built
+  in CI). Real links saved here: YouTube (a 10 min 1080p60 video: video copied, sound filtered, same length; the app
+  stays at ~140 MB, im-process ~50 MB) and TikTok. Cancel leaves nothing; a broken filter leaves nothing. Instagram:
+  the two test posts tried need an account now ("login" message shown, correct); **not tested with a working public
+  reel** (needs a link from the owner).
+- YouTube takes 15-20 s to open (QuickJS solving YouTube's challenge); Save reuses Open's answer. Filtering runs a
+  bit faster than real time here: a 10 min video takes about 10 min in all.
+- UI: press feedback on buttons, animated power button (breathes twice when filtering starts), page fades, card
+  slide-ins, smooth progress; all off with the system's "reduce animations".
+- Filter bug found on this PC and fixed (`wfilter.cpp`, test 11 in `audio_test.py`, green in CI): a 0.2.10 filter
+  hung for 8 days behind an older run's "stopped" state; stop believed it and start could not end it. The fixed stop
+  ended it here and gave two apps their volume back.
+
+End-to-end with the Store package (unpacked, Developer Mode):
+- install, start, filter (a test tone 45 dB quieter at the output), stereo on/off live, keep-silent (filter killed:
+  apps stay silent; "Stop: hear apps unfiltered" gives them back), Links watch (refuses to open unfiltered when the
+  filter cannot start): **works**.
+- women's singing: the detector loads and the switch reaches the filter, speech is kept; but **it mutes only ~8% of
+  a woman's song** (Adele), matching `models/detector/detector_eval.json` (9.5% caught on OpenSinger). Model v1 is
+  weak on real songs: the listing calls it an early version.
+- Store update while filtering: works, but other apps stay at 0.01% until Waaiya is opened (and the app then says
+  "stopped because of an error", the wrong word after an update).
+- **Uninstall while filtering: other apps stay at 0.01% for good** (nothing left to give the volume back). Fix to do:
+  the filter handles WM_QUERYENDSESSION/WM_ENDSESSION (hidden window) and gives the levels back.
+- Not done (needs the owner): screen blur by eye (covers are hidden from screenshots by design), Start at login with
+  a real sign-out/sign-in, the zip build's start at login.
+
+Store listing: `desktop/windows/msix/listing/<lang>.md` (18), `screenshots/<lang>/` (72 real captures, 1366x768,
+`desktop/tool/store_shots.py`), certification note and privacy policy updated in `STORE_LISTING.md`.
+
+## Still to do for 0.2.12 (in order; items 1, 3 and most of 4 done above)
 
 1. Links on Windows (above), tested end to end on the PC with real YouTube/TikTok/Instagram links.
 2. Women's singing on Windows checked on the PC (Settings: gender man -> "Mute women's singing" visible; a song by a

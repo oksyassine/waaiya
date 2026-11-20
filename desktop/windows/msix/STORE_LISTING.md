@@ -1,11 +1,19 @@
 # Microsoft Store: what to fill in (Partner Center, app "Waaiya", Store ID 9NBB296FSRJP)
 
-The Windows build has no women's-singing model yet (models/detector is not released), so the app hides that
-switch and the listing does not mention it; add it back when the model ships.
+The listing texts are in `listing/<language>.md`, one file per language (18): description, "What's new in this
+version", product features, keywords and screenshot captions. The package declares the same 18 languages
+(`AppxManifest.xml` `<Resources>`; Uzbek and Hausa as `uz-Latn` and `ha-Latn`, the only forms Windows accepts), so
+Partner Center asks for a listing in each. Arabic and English are written by the project; the other 16 are machine
+translations not reviewed yet.
 
-The package declares English, Arabic and French (`AppxManifest.xml` `<Resources>`), so Partner Center asks for these
-three listings. The app itself has nine languages; more listings can be added later by adding the language to the
-manifest. Screenshots: `ui/tool/store_shots_test.dart` (2732x1536, one run per language) renders them.
+What the Store version has, and does not have (owner's decisions, 2026-11-20):
+- The women's-singing model is in the package. Its first version catches only part of women's singing in real songs
+  (about 1 in 10 on songs outside its training data; speech is kept): the texts call it an early version.
+- Links: watch only (the link opens in the browser with the filter on). The Store's rules forbid saving from sites
+  whose terms do not allow it (YouTube's), so the Store package has no save tools (yt-dlp, ffmpeg); the zip from
+  GitHub has "Save without music". The Store version opens links in the browser and never contacts a site itself.
+
+Screenshots: `screenshots/<language>/` (real captures of the app on Windows, 2732x1536).
 
 ## Submission settings
 
@@ -40,105 +48,22 @@ manifest. Screenshots: `ui/tool/store_shots_test.dart` (2732x1536, one run per l
 > The optional screen blur (Screen page, off by default) draws click-through covers over people or immodest images
 > on screen, detected on the device.
 >
+> The Links page: the user pastes a video link; "Watch" starts the filter if it is not running, waits until it
+> filters, then opens the link in the user's default browser. The app itself does not contact the site and does not
+> download anything (no download tools are in this package).
+>
+> The optional "Mute women's singing" (Filter page, for men) uses a second on-device model in the package
+> (engine\models\detector\detector_v1.onnx).
+>
 > To test: open Waaiya, choose a gender on first launch, play any video with music in a browser, press the power
 > button on the Filter page: the music is removed and speech remains. Press it again to stop.
 >
 > Note: if the app is uninstalled while filtering, Windows ends the filter and other apps keep the lowered volume
 > until raised in the volume mixer; the app asks users to stop filtering first (README).
 
-## Listing: English
+## Listings
 
-**Description**
-
-Waaiya removes musical instruments from everything your computer plays and keeps the voice: speech, lectures and
-Quran recitation. It works with every app (browsers, video players, games), live, on your computer.
-
-- One button: Waaiya filters the sound of all your other apps until you press it again.
-- Fails closed: if the filter cannot run, apps stay silent instead of playing music.
-- Optional screen blur: covers women, or immodest images, over every window; clicks still reach the windows
-  underneath.
-- Start at login, if you want.
-- Everything runs on your computer. Nothing is sent anywhere: no account, no analytics, no ads.
-- Free and open source (AGPL-3.0): https://github.com/oksyassine/waaiya
-- In Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay.
-
-The name comes from the Quran: «وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ», "and that a heedful ear would retain it" (al-Ḥāqqah 69:12).
-
-Windows version: a preview. It needs Windows 10 version 2004 or newer. A fast computer gives the best sound;
-on a slow one Waaiya switches to mono by itself.
-
-**Product features** (one per line)
-- Removes music from every app, keeps speech and Quran recitation
-- Live, on your computer: nothing is sent anywhere
-- Fails closed: silence, never unfiltered music
-- Optional screen blur over every window
-- Start at login
-- Free and open source
-
-**Keywords**: music remover, halal, Quran, lectures, no music, vocal, filter
-
-## Listing: العربية
-
-**الوصف**
-
-واعية تُزيل الآلات الموسيقية من كل ما يشغّله حاسوبك، وتُبقي الصوت البشري: الكلام والدروس وتلاوة القرآن. تعمل مع كل
-التطبيقات (المتصفحات ومشغّلات الفيديو والألعاب)، مباشرةً، على حاسوبك.
-
-- زرّ واحد: تصفّي واعية صوت كل تطبيقاتك الأخرى حتى تضغطه مرة أخرى.
-- عند الخلل صمت: إن تعذّر عمل التصفية، تبقى التطبيقات صامتة بدل أن تُسمِع الموسيقى.
-- اختياري: تمويه الشاشة فوق كل النوافذ، للنساء أو للصور غير المحتشمة، والنقرات تصل إلى النوافذ تحتها.
-- التشغيل عند الدخول إلى الحساب، إن أردت.
-- كل شيء يعمل على حاسوبك، ولا يُرسَل شيء إلى أي مكان: بلا حساب ولا إحصاءات ولا إعلانات.
-- مجانية ومفتوحة المصدر (AGPL-3.0):‏ https://github.com/oksyassine/waaiya
-- بالعربية والإنجليزية والفرنسية والأردية والإندونيسية والتركية والبنغالية والفارسية والملايوية.
-
-الاسم من القرآن: «وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ» (الحاقة 12).
-
-نسخة ويندوز تجريبية، وتحتاج ويندوز 10 الإصدار 2004 أو أحدث. الحاسوب السريع يعطي أفضل صوت، وعلى البطيء تنتقل واعية إلى
-الصوت الأحادي من تلقاء نفسها.
-
-**الميزات**
-- تُزيل الموسيقى من كل التطبيقات، وتُبقي الكلام والتلاوة
-- مباشرةً على حاسوبك، ولا يُرسَل شيء
-- عند الخلل صمت، لا موسيقى دون تصفية
-- اختياري: تمويه الشاشة فوق كل النوافذ
-- التشغيل عند الدخول إلى الحساب
-- مجانية ومفتوحة المصدر
-
-**الكلمات المفتاحية**: إزالة الموسيقى، بدون موسيقى، حلال، قرآن، دروس، تلاوة، واعية
-
-## Listing: Français
-
-**Description**
-
-Waaiya retire les instruments de musique de tout ce que joue votre ordinateur et garde la voix : paroles, cours et
-récitation du Coran. Elle fonctionne avec toutes les applis (navigateurs, lecteurs vidéo, jeux), en direct, sur
-votre ordinateur.
-
-- Un seul bouton : Waaiya filtre le son de toutes vos autres applis jusqu'à ce que vous appuyiez à nouveau.
-- En cas d'échec, le silence : si le filtre ne peut pas tourner, les applis restent muettes au lieu de jouer la
-  musique.
-- En option : flouter l'écran au-dessus de toutes les fenêtres (les femmes, ou les images indécentes) ; les clics
-  atteignent toujours les fenêtres en dessous.
-- Démarrage à l'ouverture de session, si vous le souhaitez.
-- Tout tourne sur votre ordinateur. Rien n'est envoyé : ni compte, ni statistiques, ni publicité.
-- Gratuite et open source (AGPL-3.0) : https://github.com/oksyassine/waaiya
-- En arabe, anglais, français, ourdou, indonésien, turc, bengali, persan et malais.
-
-Le nom vient du Coran : « وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ », « et qu'une oreille attentive la retienne » (al-Hâqqa 69:12).
-
-Version Windows en préversion. Elle demande Windows 10 version 2004 ou plus récent. Un ordinateur rapide donne le
-meilleur son ; sur un ordinateur lent, Waaiya passe en mono d'elle-même.
-
-**Fonctionnalités**
-- Retire la musique de toutes les applis, garde la parole et la récitation du Coran
-- En direct, sur votre ordinateur : rien n'est envoyé
-- En cas d'échec, le silence, jamais la musique non filtrée
-- En option : flou de l'écran au-dessus de toutes les fenêtres
-- Démarrage à l'ouverture de session
-- Gratuite et open source
-
-**Mots-clés** : sans musique, supprimer la musique, halal, Coran, cours, voix, filtre
+See `listing/en.md`, `listing/ar.md` and the 16 other files in `listing/`.
 
 ## Privacy policy (to publish at the URL given in Properties)
 
@@ -149,7 +74,9 @@ meilleur son ; sur un ordinateur lent, Waaiya passe en mono d'elle-même.
 > There is no account, no analytics, no advertising and no tracking. Your settings stay in Waaiya's own folder on
 > your computer and are removed when you uninstall it.
 >
-> The Windows app does not use the network. (On Android only, "Open a link" contacts the site of the link you
-> open, and the bundled yt-dlp downloads its own updates from PyPI.)
+> The Windows app from the Microsoft Store does not use the network. Its Links page opens a link you paste in your
+> own web browser; Waaiya itself does not contact the site. The Windows app from GitHub (the zip) and the Android app
+> also save a link's video without music: then they contact the site of the link you opened to download it, and
+> nothing else. The Android app's yt-dlp downloads its own updates from PyPI.
 >
 > Source code: https://github.com/oksyassine/waaiya. Contact: https://github.com/oksyassine/waaiya/issues

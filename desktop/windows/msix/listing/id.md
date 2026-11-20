@@ -1,0 +1,62 @@
+# Microsoft Store listing: Bahasa Indonesia (id)
+<!-- Machine translation from the English, not reviewed by a native speaker yet. -->
+
+## Description
+
+Waaiya menghapus alat musik dari semua yang diputar komputer Anda dan mempertahankan suara manusia: suara bicara,
+kajian, dan tilawah Al-Quran. Waaiya bekerja di semua aplikasi (browser, pemutar video, game), secara langsung, di
+komputer Anda.
+
+- Satu tombol: Waaiya memfilter suara semua aplikasi Anda yang lain sampai Anda menekannya lagi.
+- Tautan: tempel tautan YouTube, TikTok, atau Instagram dan tonton di browser Anda dengan filter aktif. Waaiya
+  menyalakan filter lebih dulu dan tidak pernah membuka tautan tanpanya.
+- Bisukan nyanyian perempuan (opsional, untuk laki-laki): versi awal yang belum menangkap semua lagu; suara bicara
+  tetap terdengar.
+- Gagal dalam keadaan senyap: jika filter berhenti sendiri, aplikasi lain tetap senyap alih-alih memutar musik.
+- Buram layar opsional: menutupi perempuan, atau gambar yang membuka aurat, di atas semua jendela; klik tetap sampai ke
+  jendela di bawahnya.
+- Mulai saat login, jika Anda mau.
+- Semuanya berjalan di komputer Anda. Tidak ada yang dikirim ke mana pun: tanpa akun, tanpa analitik, tanpa iklan.
+- Gratis dan sumber terbuka (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Dalam 18 bahasa: Arab, Inggris, Prancis, Urdu, Indonesia, Turki, Bengali, Persia, Melayu, Spanyol, Belanda, Jerman,
+  Italia, Rusia, Uzbek, Swahili, Hausa, dan Somali.
+
+Namanya diambil dari Al-Quran: «وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ», "dan agar diperhatikan oleh telinga yang mau mendengar"
+(QS. Al-Haqqah 69:12).
+
+Membutuhkan Windows 10 versi 2004 atau yang lebih baru. Komputer yang cepat memberi suara terbaik; di komputer yang
+lambat, Waaiya beralih ke mono dengan sendirinya.
+
+## What's new in this version
+
+Versi pertama di Microsoft Store.
+- Halaman Tautan baru: tonton tautan YouTube, TikTok, atau Instagram dengan filter aktif.
+- Bisukan nyanyian perempuan (versi awal), kini juga di Windows.
+- 18 bahasa (baru: Spanyol, Belanda, Jerman, Italia, Rusia, Uzbek, Swahili, Hausa, Somali).
+- Desain lebih halus: tombol langsung merespons, animasi lembut (tanpa animasi jika Windows meminta lebih sedikit
+  gerakan).
+- Perbaikan: filter Waaiya lama yang berhenti merespons tidak lagi menghalangi filter yang baru; detail galat lebih
+  mudah dibaca.
+
+## Product features (one per line, at most 20)
+
+- Menghapus musik dari semua aplikasi, mempertahankan suara bicara dan tilawah Al-Quran
+- Tonton tautan YouTube, TikTok, dan Instagram dengan filter aktif
+- Opsional: bisukan nyanyian perempuan (versi awal)
+- Langsung di komputer Anda: tidak ada yang dikirim ke mana pun
+- Gagal dalam keadaan senyap, tidak pernah musik tanpa filter
+- Opsional: buram layar di atas semua jendela
+- Mulai saat login
+- 18 bahasa
+- Gratis dan sumber terbuka
+
+## Keywords (at most 7)
+
+penghapus musik, tanpa musik, halal, Al-Quran, kajian, tilawah, filter musik
+
+## Screenshot captions
+
+1. Satu tombol menghapus musik dari semua aplikasi.
+2. Tonton tautan dengan filter aktif.
+3. Opsional: buram layar di atas semua jendela.
+4. Setelan: bahasa, mulai saat login.
