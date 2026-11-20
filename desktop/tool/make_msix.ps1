@@ -1,6 +1,8 @@
 # The Microsoft Store package (MSIX) of a built and bundled Windows app (flutter build windows + bundle_windows.sh):
 #
 #   pwsh desktop/tool/make_msix.ps1 -App desktop/build/windows/x64/runner/Release -Out waaiya.msix [-Version 1.2.13.0]
+#   pwsh desktop/tool/make_msix.ps1 -App ... -Out <folder> -Layout   the unpacked package instead, to install on a PC in
+#        Developer Mode without signing: Add-AppxPackage -Register <folder>\AppxManifest.xml (same files and manifest)
 #
 # Version: the Store wants four numbers, the first not 0 and the last 0; the app's version (desktop/pubspec.yaml,
 # 0.2.13+15) becomes major+1.minor.patch.0 = 1.2.13.0, so it keeps growing with the app's. The package is not
@@ -9,7 +11,8 @@
 param(
     [Parameter(Mandatory = $true)][string]$App,
     [Parameter(Mandatory = $true)][string]$Out,
-    [string]$Version = ""
+    [string]$Version = "",
+    [switch]$Layout
 )
 $ErrorActionPreference = "Stop"
 $repo = (Resolve-Path (Join-Path $PSScriptRoot "../..")).Path
@@ -52,6 +55,13 @@ if ($LASTEXITCODE) { throw "makepri createconfig: exit $LASTEXITCODE" }
     /of (Join-Path $stage "resources.pri") /o
 if ($LASTEXITCODE) { throw "makepri new: exit $LASTEXITCODE" }
 
+if ($Layout) {
+    if (Test-Path $Out) { Remove-Item -Recurse -Force $Out }
+    Move-Item $stage $Out
+    Remove-Item -Recurse -Force $tmp
+    Write-Host "${Out}: the unpacked package, version $Version (Add-AppxPackage -Register $Out\AppxManifest.xml)"
+    exit 0
+}
 & "$bin\makeappx.exe" pack /d $stage /p $Out /o
 if ($LASTEXITCODE) { throw "makeappx pack: exit $LASTEXITCODE" }
 Remove-Item -Recurse -Force $tmp

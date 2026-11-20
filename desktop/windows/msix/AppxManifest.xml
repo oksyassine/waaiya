@@ -40,9 +40,9 @@
     <Resource Language="de" />
     <Resource Language="it" />
     <Resource Language="ru" />
-    <Resource Language="uz" />
+    <Resource Language="uz-Latn" />
     <Resource Language="sw" />
-    <Resource Language="ha" />
+    <Resource Language="ha-Latn" />
     <Resource Language="so" />
   </Resources>
 
