@@ -19,8 +19,9 @@ Before submitting: run the Windows App Certification Kit on the package (Microso
 administrator): `appcert.exe test -appxpackagepath <waaiya-store.msix> -reportoutputpath <report.xml>`, or the
 "Windows App Cert Kit" app, "Validate Store App".
 
-Result on the owner's PC (2026-11-20, package 1.2.12.0 from commit 703bd88, Windows 11 build 26200): **PASS**,
-22 tests passed. Two optional tests flag, as for most desktop apps, and neither blocks certification:
+Result on the owner's PC (2026-11-20, Windows 11 build 26200): **PASS**, 22 tests passed, for package 1.2.12.0
+from commit 703bd88 and again for the final package from commit 4904eb8 (after the release audit; the CI artifact
+`waaiya-store-msix` of Windows run 44768431112, SHA-256 1154587B…F180C2CB). Two optional tests flag, as for most desktop apps, and neither blocks certification:
 - "Archive files usage": `data\flutter_assets\NOTICES.Z` is Flutter's own compressed licence list, in every Flutter
   app.
 - "Blocked executables": the programs can start processes (CreateProcessW: the app starts its own filter and blur;
