@@ -102,8 +102,13 @@ def main():
     in_package("run")
     ok, v = wait_volume(pid, below=0.001)
     at.check(ok, f"the filter inside the package lowers another app (its level {v})")
+    time.sleep(2)
     d = state_dir()
     print(f"  3. state written to {d}", flush=True)
+    for base in (os.path.join(LOCAL, "Packages", PFN), os.path.join(LOCAL, "Waaiya")):
+        for root, _, files in os.walk(base):
+            if files:
+                print(f"     {root}: {', '.join(sorted(files)[:12])}", flush=True)
     at.check(d is not None, "the packaged filter writes its state")
     in_package("stop")
     ok, v = wait_volume(pid, above=0.99)
