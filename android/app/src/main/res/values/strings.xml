@@ -350,4 +350,28 @@
     <string name="notif_fix_picker_cover">Cover it</string>
     <string name="notif_fix_picker_cancel">Cancel</string>
     <string name="notif_fix_picker_no_blur">The screen blur is not running. Turn on a blur option while filtering first.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">Fajr</string>
+    <string name="worship_prayer_sunrise">Sunrise</string>
+    <string name="worship_prayer_dhuhr">Dhuhr</string>
+    <string name="worship_prayer_asr">Asr</string>
+    <string name="worship_prayer_maghrib">Maghrib</string>
+    <string name="worship_prayer_isha">Isha</string>
+    <string name="worship_end_silent">End silence now</string>
+    <string name="worship_unmute">Unmute now</string>
+    <string name="notif_worship_channel">Prayer times</string>
+    <string name="notif_worship_silent_title">{prayer}: phone on silent</string>
+    <string name="notif_worship_silent_text">Do Not Disturb is on until {time}.</string>
+    <string name="notif_worship_silent_end_title">Silent time is over</string>
+    <string name="notif_worship_silent_end_text">Do Not Disturb is off again.</string>
+    <string name="notif_worship_silent_left">You changed Do Not Disturb yourself, so Waaiya left it as it is.</string>
+    <string name="notif_worship_no_access">Waaiya could not turn on Do Not Disturb. Allow it on Waaiya\'s Settings page.</string>
+    <string name="notif_worship_mute_title">{prayer}: media muted</string>
+    <string name="notif_worship_mute_text">Media sound is muted until {time}.</string>
+    <string name="notif_worship_mute_end_title">Media sound is back</string>
+    <string name="notif_worship_mute_end_text">The media volume is as you had it.</string>
+    <string name="notif_worship_mute_left">You changed the media volume yourself, so Waaiya left it as it is.</string>
+    <string name="worship_sms_default">It\'s prayer time, I can\'t answer now. I\'ll call you back.</string>
+    <string name="notif_worship_sms_title">Replied by SMS</string>
+    <string name="notif_worship_sms_text">Your prayer-time reply was sent to {number}.</string>
 </resources>

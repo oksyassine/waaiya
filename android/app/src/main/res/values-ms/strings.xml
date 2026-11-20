@@ -349,4 +349,28 @@
     <string name="notif_fix_picker_cover">Tutupkan</string>
     <string name="notif_fix_picker_cancel">Batal</string>
     <string name="notif_fix_picker_no_blur">Kabur skrin tidak berjalan. Hidupkan dahulu satu pilihan kabur semasa penapisan.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">Subuh</string>
+    <string name="worship_prayer_sunrise">Syuruk</string>
+    <string name="worship_prayer_dhuhr">Zohor</string>
+    <string name="worship_prayer_asr">Asar</string>
+    <string name="worship_prayer_maghrib">Maghrib</string>
+    <string name="worship_prayer_isha">Isyak</string>
+    <string name="worship_end_silent">Tamatkan senyap sekarang</string>
+    <string name="worship_unmute">Nyahsenyap sekarang</string>
+    <string name="notif_worship_channel">Waktu solat</string>
+    <string name="notif_worship_silent_title">{prayer}: telefon senyap</string>
+    <string name="notif_worship_silent_text">Jangan Ganggu aktif hingga {time}.</string>
+    <string name="notif_worship_silent_end_title">Waktu senyap tamat</string>
+    <string name="notif_worship_silent_end_text">Jangan Ganggu dimatikan semula.</string>
+    <string name="notif_worship_silent_left">Anda telah mengubah Jangan Ganggu sendiri, jadi Waaiya membiarkannya.</string>
+    <string name="notif_worship_no_access">Waaiya tidak dapat menghidupkan Jangan Ganggu. Benarkan di halaman Tetapan Waaiya.</string>
+    <string name="notif_worship_mute_title">{prayer}: media disenyapkan</string>
+    <string name="notif_worship_mute_text">Bunyi media disenyapkan hingga {time}.</string>
+    <string name="notif_worship_mute_end_title">Bunyi media kembali</string>
+    <string name="notif_worship_mute_end_text">Kelantangan media seperti asal.</string>
+    <string name="notif_worship_mute_left">Anda telah mengubah kelantangan media sendiri, jadi Waaiya membiarkannya.</string>
+    <string name="worship_sms_default">Sekarang waktu solat, saya tidak dapat menjawab. Saya akan telefon semula.</string>
+    <string name="notif_worship_sms_title">Dibalas dengan SMS</string>
+    <string name="notif_worship_sms_text">Balasan waktu solat anda dihantar kepada {number}.</string>
 </resources>

@@ -348,4 +348,28 @@
     <string name="notif_fix_picker_cover">غطِّه</string>
     <string name="notif_fix_picker_cancel">إلغاء</string>
     <string name="notif_fix_picker_no_blur">تمويه الشاشة لا يعمل. شغّل أحد خيارات التمويه أثناء التصفية أولًا.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">الفجر</string>
+    <string name="worship_prayer_sunrise">الشروق</string>
+    <string name="worship_prayer_dhuhr">الظهر</string>
+    <string name="worship_prayer_asr">العصر</string>
+    <string name="worship_prayer_maghrib">المغرب</string>
+    <string name="worship_prayer_isha">العشاء</string>
+    <string name="worship_end_silent">إنهاء الصمت الآن</string>
+    <string name="worship_unmute">إلغاء الكتم الآن</string>
+    <string name="notif_worship_channel">أوقات الصلاة</string>
+    <string name="notif_worship_silent_title">{prayer}: الهاتف صامت</string>
+    <string name="notif_worship_silent_text">«عدم الإزعاج» مفعَّل حتى {time}.</string>
+    <string name="notif_worship_silent_end_title">انتهى وقت الصمت</string>
+    <string name="notif_worship_silent_end_text">أُوقف «عدم الإزعاج» من جديد.</string>
+    <string name="notif_worship_silent_left">غيّرتَ «عدم الإزعاج» بنفسك، فتركته واعية كما هو.</string>
+    <string name="notif_worship_no_access">لم تستطع واعية تفعيل «عدم الإزعاج». اسمح بذلك من صفحة الإعدادات في واعية.</string>
+    <string name="notif_worship_mute_title">{prayer}: الوسائط مكتومة</string>
+    <string name="notif_worship_mute_text">صوت الوسائط مكتوم حتى {time}.</string>
+    <string name="notif_worship_mute_end_title">عاد صوت الوسائط</string>
+    <string name="notif_worship_mute_end_text">مستوى صوت الوسائط كما كان.</string>
+    <string name="notif_worship_mute_left">غيّرتَ صوت الوسائط بنفسك، فتركته واعية كما هو.</string>
+    <string name="worship_sms_default">إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.</string>
+    <string name="notif_worship_sms_title">تم الرد برسالة</string>
+    <string name="notif_worship_sms_text">أُرسل ردّ وقت الصلاة إلى {number}.</string>
 </resources>

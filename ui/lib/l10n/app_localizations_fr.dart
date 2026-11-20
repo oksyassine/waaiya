@@ -946,6 +946,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsGeneralTitle => 'Général';
 
   @override
+  String get worshipPrayerFajr => 'Fajr';
+
+  @override
+  String get worshipPrayerSunrise => 'Lever du soleil';
+
+  @override
+  String get worshipPrayerDhuhr => 'Dhohr';
+
+  @override
+  String get worshipPrayerAsr => 'Asr';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maghrib';
+
+  @override
+  String get worshipPrayerIsha => 'Icha';
+
+  @override
+  String get worshipEndSilent => 'Arrêter le silence';
+
+  @override
+  String get worshipUnmute => 'Remettre le son';
+
+  @override
+  String get worshipSmsDefault =>
+      'C\'est l\'heure de la prière, je ne peux pas répondre maintenant. Je vous rappelle.';
+
+  @override
   String get desktopPreview =>
       'Aperçu : le moteur de filtrage n\'est pas encore connecté sur cet ordinateur. Le bouton montre seulement comment l\'application fonctionnera.';
 
@@ -1154,4 +1182,321 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fixNotesTitle => 'Notes d\'erreurs de détection';
+
+  @override
+  String get worshipTitle => 'Heures de prière';
+
+  @override
+  String get worshipBody =>
+      'Facultatif. Calculées sur ce téléphone à partir du lieu choisi. Rien n\'est envoyé.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Lieu : $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Lieu : non choisi';
+
+  @override
+  String get worshipChoose => 'Choisir';
+
+  @override
+  String get worshipPlaceSearch => 'Chercher une ville';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Aucune ville trouvée. Vous pouvez saisir des coordonnées à la place.';
+
+  @override
+  String get worshipPlaceCustom => 'Saisir des coordonnées';
+
+  @override
+  String get worshipLat => 'Latitude (nord +, sud −)';
+
+  @override
+  String get worshipLon => 'Longitude (est +, ouest −)';
+
+  @override
+  String get worshipZone => 'Fuseau horaire, par exemple Europe/Paris';
+
+  @override
+  String get worshipCustomInvalid =>
+      'Vérifiez les nombres et le fuseau horaire.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Ce lieu ne peut pas être utilisé. Choisissez-le de nouveau.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Calcul : $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Méthode de calcul';
+
+  @override
+  String get worshipMethodNote =>
+      'Choisie selon le pays de la ville. Prenez celle que suit votre mosquée.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Asr : $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Heure de l\'Asr';
+
+  @override
+  String get worshipAsrStandard => 'Standard (chaféite, malékite, hanbalite)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanafite';
+
+  @override
+  String get worshipMethodMwl => 'Ligue islamique mondiale';
+
+  @override
+  String get worshipMethodIsna => 'Islamic Society of North America (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Autorité générale égyptienne d\'arpentage';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Umm al-Qura, La Mecque';
+
+  @override
+  String get worshipMethodKarachi =>
+      'Université des sciences islamiques, Karachi';
+
+  @override
+  String get worshipMethodTehran =>
+      'Institut de géophysique, Université de Téhéran';
+
+  @override
+  String get worshipMethodGulf => 'Région du Golfe';
+
+  @override
+  String get worshipMethodKuwait => 'Koweït';
+
+  @override
+  String get worshipMethodQatar => 'Qatar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapour (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Turquie (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'France (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Maroc (ministère des Habous)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indonésie (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malaisie (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubaï';
+
+  @override
+  String get worshipToday => 'Aujourd\'hui';
+
+  @override
+  String get worshipNoTimes =>
+      'Pas d\'heures de prière ici aujourd\'hui : le soleil ne se lève pas ou ne se couche pas.';
+
+  @override
+  String get worshipSilentTitle => 'Silencieux aux heures de prière';
+
+  @override
+  String get worshipSilentBody =>
+      'À chaque heure de prière, Ne pas déranger pendant la durée ci-dessous, puis retour à votre réglage.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Silence pendant : $minutes min';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Couper les médias à l\'adhan';
+
+  @override
+  String get worshipMuteBody =>
+      'À chaque heure de prière, le son des médias (vidéos, audio, jeux) est coupé pendant la durée ci-dessous. La notification permet de le remettre aussitôt.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Coupé pendant : $minutes min';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Durée';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Choisissez d\'abord un lieu.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Prochaine : $prayer à $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'Silencieux jusqu\'à $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Médias coupés jusqu\'à $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'Autorisez Waaiya à modifier Ne pas déranger, sinon le téléphone ne peut pas passer en silencieux.';
+
+  @override
+  String get worshipAllow => 'Autoriser';
+
+  @override
+  String get worshipExactNeeded =>
+      'Alarmes et rappels ne sont pas autorisés pour Waaiya : chaque changement peut arriver jusqu\'à 10 minutes en retard, ou plus quand le téléphone est en veille.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Les notifications sont désactivées : vous ne verrez pas quand le téléphone passe en silencieux ou revient.';
+
+  @override
+  String get worshipTonesTitle => 'Sonnerie et son de notification simples';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya ne peut pas filtrer la sonnerie ni les sons de notification, seulement les remplacer. Choisissez un son simple, sans musique :';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Sonnerie simple $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Son de notification simple $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Écouter';
+
+  @override
+  String get worshipToneSet => 'Utiliser';
+
+  @override
+  String get worshipToneInUse => 'Utilisé';
+
+  @override
+  String get worshipToneDone => 'C\'est fait.';
+
+  @override
+  String get worshipTonePermission =>
+      'Autorisez Waaiya à modifier les paramètres système, revenez et appuyez de nouveau.';
+
+  @override
+  String get worshipToneFailed =>
+      'Ce téléphone n\'a pas laissé Waaiya le changer. Dans les paramètres Son, choisissez un son nommé « Waaiya plain ».';
+
+  @override
+  String get worshipOpenSound => 'Ouvrir les paramètres Son';
+
+  @override
+  String get worshipSmsTitle => 'Répondre aux appels par SMS pendant la prière';
+
+  @override
+  String get worshipSmsBody =>
+      'Pendant les minutes de silence après chaque heure de prière, un appel laissé sans réponse reçoit un SMS. Une fois par numéro et par prière ; jamais aux numéros masqués ni aux numéros courts.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Après : $seconds s de sonnerie';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'Secondes de sonnerie avant le SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Message : $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Votre message';
+
+  @override
+  String get worshipSmsTextDefault => 'Message par défaut';
+
+  @override
+  String get worshipSmsCost =>
+      'Chaque réponse est un SMS normal envoyé depuis votre SIM, au prix de votre forfait. Rien n\'est envoyé en itinérance.';
+
+  @override
+  String get worshipSmsRoaming => 'En itinérance : aucun SMS n\'est envoyé.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Réponses envoyées (gardées sur ce téléphone seulement)';
+
+  @override
+  String get worshipContinue => 'Continuer';
+
+  @override
+  String get worshipWhyDnd =>
+      'Pour mettre le téléphone en silencieux aux heures de prière, autorisez l\'accès de Waaiya à Ne pas déranger sur la page suivante.';
+
+  @override
+  String get worshipWhyExact =>
+      'Pour agir à l\'heure exacte, autorisez Waaiya à définir des alarmes et rappels sur la page suivante. Sinon, les changements peuvent arriver jusqu\'à 10 minutes en retard.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Autorisez les notifications pour voir chaque changement et pouvoir l\'annuler.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Pour changer votre sonnerie ou son de notification, autorisez Waaiya à modifier les paramètres système sur la page suivante.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Pour savoir qu\'un appel sonne et connaître son numéro, Waaiya a besoin des autorisations Téléphone et Journaux d\'appels. Rien ne quitte le téléphone sauf votre réponse.';
+
+  @override
+  String get worshipWhySms =>
+      'Pour envoyer votre réponse, Waaiya a besoin de l\'autorisation d\'envoyer des SMS. Il n\'envoie que cette réponse, au plus une fois par numéro et par prière.';
+
+  @override
+  String get worshipMissingDnd =>
+      'L\'accès à Ne pas déranger n\'a pas été autorisé : le silence reste désactivé.';
+
+  @override
+  String get worshipMissingPhone =>
+      'Les autorisations Téléphone et Journaux d\'appels n\'ont pas été accordées : la réponse par SMS reste désactivée.';
+
+  @override
+  String get worshipMissingSms =>
+      'L\'autorisation d\'envoyer des SMS n\'a pas été accordée : la réponse par SMS reste désactivée.';
+
+  @override
+  String get worshipTryAgain => 'Réessayer';
 }

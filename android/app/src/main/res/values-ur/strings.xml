@@ -349,4 +349,28 @@
     <string name="notif_fix_picker_cover">ڈھانپ دیں</string>
     <string name="notif_fix_picker_cancel">منسوخ کریں</string>
     <string name="notif_fix_picker_no_blur">اسکرین کی دھندلاہٹ نہیں چل رہی۔ پہلے فلٹرنگ کے دوران دھندلاہٹ کا کوئی آپشن آن کریں۔</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">فجر</string>
+    <string name="worship_prayer_sunrise">طلوع آفتاب</string>
+    <string name="worship_prayer_dhuhr">ظہر</string>
+    <string name="worship_prayer_asr">عصر</string>
+    <string name="worship_prayer_maghrib">مغرب</string>
+    <string name="worship_prayer_isha">عشاء</string>
+    <string name="worship_end_silent">ابھی خاموشی ختم کریں</string>
+    <string name="worship_unmute">ابھی آواز کھولیں</string>
+    <string name="notif_worship_channel">نماز کے اوقات</string>
+    <string name="notif_worship_silent_title">{prayer}: فون خاموش</string>
+    <string name="notif_worship_silent_text">«ڈسٹرب نہ کریں» {time} تک آن ہے۔</string>
+    <string name="notif_worship_silent_end_title">خاموشی کا وقت ختم</string>
+    <string name="notif_worship_silent_end_text">«ڈسٹرب نہ کریں» پھر سے بند ہے۔</string>
+    <string name="notif_worship_silent_left">آپ نے خود «ڈسٹرب نہ کریں» بدلا، اس لیے واعية نے اسے ویسے ہی چھوڑ دیا۔</string>
+    <string name="notif_worship_no_access">واعية «ڈسٹرب نہ کریں» آن نہیں کر سکا۔ واعية کے سیٹنگز صفحے پر اجازت دیں۔</string>
+    <string name="notif_worship_mute_title">{prayer}: میڈیا خاموش</string>
+    <string name="notif_worship_mute_text">میڈیا کی آواز {time} تک بند ہے۔</string>
+    <string name="notif_worship_mute_end_title">میڈیا کی آواز واپس آ گئی</string>
+    <string name="notif_worship_mute_end_text">میڈیا کا والیوم پہلے جیسا ہے۔</string>
+    <string name="notif_worship_mute_left">آپ نے خود میڈیا کا والیوم بدلا، اس لیے واعية نے اسے ویسے ہی چھوڑ دیا۔</string>
+    <string name="worship_sms_default">نماز کا وقت ہے، ابھی جواب نہیں دے سکتا۔ میں آپ کو بعد میں کال کروں گا۔</string>
+    <string name="notif_worship_sms_title">SMS سے جواب دیا گیا</string>
+    <string name="notif_worship_sms_text">آپ کا نماز کے وقت کا جواب {number} کو بھیج دیا گیا۔</string>
 </resources>

@@ -349,4 +349,28 @@
     <string name="notif_fix_picker_cover">Tutup</string>
     <string name="notif_fix_picker_cancel">Batal</string>
     <string name="notif_fix_picker_no_blur">Buram layar tidak berjalan. Aktifkan dulu opsi buram saat penyaringan.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">Subuh</string>
+    <string name="worship_prayer_sunrise">Terbit</string>
+    <string name="worship_prayer_dhuhr">Zuhur</string>
+    <string name="worship_prayer_asr">Asar</string>
+    <string name="worship_prayer_maghrib">Magrib</string>
+    <string name="worship_prayer_isha">Isya</string>
+    <string name="worship_end_silent">Akhiri senyap sekarang</string>
+    <string name="worship_unmute">Bunyikan sekarang</string>
+    <string name="notif_worship_channel">Waktu salat</string>
+    <string name="notif_worship_silent_title">{prayer}: ponsel senyap</string>
+    <string name="notif_worship_silent_text">Jangan Ganggu aktif sampai {time}.</string>
+    <string name="notif_worship_silent_end_title">Waktu senyap selesai</string>
+    <string name="notif_worship_silent_end_text">Jangan Ganggu sudah mati lagi.</string>
+    <string name="notif_worship_silent_left">Anda mengubah Jangan Ganggu sendiri, jadi Waaiya membiarkannya.</string>
+    <string name="notif_worship_no_access">Waaiya tidak bisa menyalakan Jangan Ganggu. Izinkan di halaman Setelan Waaiya.</string>
+    <string name="notif_worship_mute_title">{prayer}: media dibisukan</string>
+    <string name="notif_worship_mute_text">Suara media dibisukan sampai {time}.</string>
+    <string name="notif_worship_mute_end_title">Suara media kembali</string>
+    <string name="notif_worship_mute_end_text">Volume media seperti semula.</string>
+    <string name="notif_worship_mute_left">Anda mengubah volume media sendiri, jadi Waaiya membiarkannya.</string>
+    <string name="worship_sms_default">Sedang waktu salat, saya tidak bisa menjawab sekarang. Nanti saya telepon balik.</string>
+    <string name="notif_worship_sms_title">Dibalas dengan SMS</string>
+    <string name="notif_worship_sms_text">Balasan waktu salat Anda dikirim ke {number}.</string>
 </resources>

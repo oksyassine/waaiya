@@ -31,6 +31,9 @@ Settings (Android `Settings.kt`, Dart `SettingKeys`/`WaaiyaSettings`, `UiBridge.
 | `prayer_place` | String, `""`: bundled city id or `custom:LAT,LON,TZID` | C |
 | `prayer_method` | int, 0, 0..15 (index into the method list lane C defines) | C |
 | `prayer_asr` | int, 0, 0..1 (standard, Hanafi) | C |
+| `prayer_sms_reply` | bool, false (Android builds with SMS only, not `-PimPlay`) | C |
+| `prayer_sms_delay_seconds` | int, 5, 3..60 | C |
+| `prayer_sms_text` | String, `""` = the default text in the app's language; at most 300 characters | C |
 | `protect_delay_minutes` | int, 0, 0..1440 | B |
 
 - Snapshot: `features.<name>` is a map that only the owning lane fills (`Feature.snapshot`). Dart reads it with

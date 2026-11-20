@@ -938,6 +938,34 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsGeneralTitle => 'عمومی';
 
   @override
+  String get worshipPrayerFajr => 'صبح';
+
+  @override
+  String get worshipPrayerSunrise => 'طلوع آفتاب';
+
+  @override
+  String get worshipPrayerDhuhr => 'ظهر';
+
+  @override
+  String get worshipPrayerAsr => 'عصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'مغرب';
+
+  @override
+  String get worshipPrayerIsha => 'عشا';
+
+  @override
+  String get worshipEndSilent => 'پایان بی‌صدایی';
+
+  @override
+  String get worshipUnmute => 'الان صدا را برگردان';
+
+  @override
+  String get worshipSmsDefault =>
+      'وقت نماز است، الان نمی‌توانم جواب بدهم. بعداً با شما تماس می‌گیرم.';
+
+  @override
   String get desktopPreview =>
       'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
 
@@ -1144,4 +1172,318 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get fixNotesTitle => 'یادداشت‌های تشخیص اشتباه';
+
+  @override
+  String get worshipTitle => 'اوقات نماز';
+
+  @override
+  String get worshipBody =>
+      'اختیاری. روی همین گوشی از روی مکانی که انتخاب می‌کنید حساب می‌شود. چیزی فرستاده نمی‌شود.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'مکان: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'مکان: انتخاب نشده';
+
+  @override
+  String get worshipChoose => 'انتخاب';
+
+  @override
+  String get worshipPlaceSearch => 'جستجوی شهر';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'شهری پیدا نشد. می‌توانید به جای آن مختصات را وارد کنید.';
+
+  @override
+  String get worshipPlaceCustom => 'وارد کردن مختصات';
+
+  @override
+  String get worshipLat => 'عرض جغرافیایی (شمال +، جنوب −)';
+
+  @override
+  String get worshipLon => 'طول جغرافیایی (شرق +، غرب −)';
+
+  @override
+  String get worshipZone => 'منطقه زمانی، مثلاً Asia/Tehran';
+
+  @override
+  String get worshipCustomInvalid => 'عددها و منطقه زمانی را بررسی کنید.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'این مکان قابل استفاده نیست. دوباره انتخابش کنید.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'روش محاسبه: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'روش محاسبه';
+
+  @override
+  String get worshipMethodNote =>
+      'بر اساس کشور شهر انتخاب شد. روشی را که مسجدتان پیروی می‌کند انتخاب کنید.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'عصر: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'وقت عصر';
+
+  @override
+  String get worshipAsrStandard => 'رایج (شافعی، مالکی، حنبلی)';
+
+  @override
+  String get worshipAsrHanafi => 'حنفی';
+
+  @override
+  String get worshipMethodMwl => 'رابطه جهان اسلام';
+
+  @override
+  String get worshipMethodIsna => 'انجمن اسلامی آمریکای شمالی (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'سازمان عمومی نقشه‌برداری مصر';
+
+  @override
+  String get worshipMethodUmmAlQura => 'ام‌القری، مکه';
+
+  @override
+  String get worshipMethodKarachi => 'دانشگاه علوم اسلامی کراچی';
+
+  @override
+  String get worshipMethodTehran => 'مؤسسه ژئوفیزیک دانشگاه تهران';
+
+  @override
+  String get worshipMethodGulf => 'منطقه خلیج';
+
+  @override
+  String get worshipMethodKuwait => 'کویت';
+
+  @override
+  String get worshipMethodQatar => 'قطر';
+
+  @override
+  String get worshipMethodSingapore => 'سنگاپور (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'ترکیه (دیانت)';
+
+  @override
+  String get worshipMethodFrance => 'فرانسه (UOIF، ۱۲°)';
+
+  @override
+  String get worshipMethodMorocco => 'مراکش (وزارت اوقاف)';
+
+  @override
+  String get worshipMethodIndonesia => 'اندونزی (وزارت امور دینی)';
+
+  @override
+  String get worshipMethodMalaysia => 'مالزی (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'دبی';
+
+  @override
+  String get worshipToday => 'امروز';
+
+  @override
+  String get worshipNoTimes =>
+      'امروز اینجا وقت نماز نیست: خورشید طلوع یا غروب نمی‌کند.';
+
+  @override
+  String get worshipSilentTitle => 'بی‌صدا در وقت نماز';
+
+  @override
+  String get worshipSilentBody =>
+      'از وقت هر نماز، «مزاحم نشوید» به مدت زیر روشن می‌شود و بعد به حالت قبل برمی‌گردد.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'مدت بی‌صدا: $minutes دقیقه';
+  }
+
+  @override
+  String get worshipMuteTitle => 'بی‌صدا کردن رسانه هنگام اذان';
+
+  @override
+  String get worshipMuteBody =>
+      'در وقت هر نماز، صدای رسانه (ویدیو، صوت، بازی) به مدت زیر قطع می‌شود. از اعلان می‌توانید فوراً صدا را برگردانید.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'مدت قطع صدا: $minutes دقیقه';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'مدت';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes دقیقه';
+  }
+
+  @override
+  String get worshipNeedPlace => 'اول مکان را انتخاب کنید.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'بعدی: $prayer ساعت $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'بی‌صدا تا $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'رسانه تا $time بی‌صداست.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'به واعية اجازه دهید «مزاحم نشوید» را تغییر دهد، وگرنه گوشی بی‌صدا نمی‌شود.';
+
+  @override
+  String get worshipAllow => 'اجازه دادن';
+
+  @override
+  String get worshipExactNeeded =>
+      '«هشدارها و یادآوری‌ها» برای واعية مجاز نیست، پس هر تغییر ممکن است تا ۱۰ دقیقه، یا وقتی گوشی در خواب است بیشتر، دیر انجام شود.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'اعلان‌ها خاموش است: نمی‌بینید گوشی کی بی‌صدا می‌شود یا برمی‌گردد.';
+
+  @override
+  String get worshipTonesTitle => 'زنگ و صدای اعلان ساده';
+
+  @override
+  String get worshipTonesBody =>
+      'واعية نمی‌تواند زنگ و صدای اعلان‌ها را فیلتر کند، فقط می‌تواند آن‌ها را عوض کند. یک صدای ساده بدون موسیقی انتخاب کنید:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'زنگ ساده $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'صدای اعلان ساده $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'پخش';
+
+  @override
+  String get worshipToneSet => 'استفاده';
+
+  @override
+  String get worshipToneInUse => 'در حال استفاده';
+
+  @override
+  String get worshipToneDone => 'انجام شد.';
+
+  @override
+  String get worshipTonePermission =>
+      'به واعية اجازه تغییر تنظیمات سیستم را بدهید، برگردید و دوباره بزنید.';
+
+  @override
+  String get worshipToneFailed =>
+      'این گوشی اجازه تغییر به واعية نداد. در تنظیمات صدا، صدایی به نام «Waaiya plain» را انتخاب کنید.';
+
+  @override
+  String get worshipOpenSound => 'باز کردن تنظیمات صدا';
+
+  @override
+  String get worshipSmsTitle => 'پاسخ پیامکی به تماس‌ها هنگام نماز';
+
+  @override
+  String get worshipSmsBody =>
+      'در دقیقه‌های بی‌صدای بعد از وقت هر نماز، به تماسی که بی‌پاسخ زنگ می‌خورد یک پیامک فرستاده می‌شود. برای هر شماره در هر نماز یک بار؛ هرگز به شماره‌های پنهان یا کوتاه.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'پس از: $seconds ثانیه زنگ';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'ثانیه‌های زنگ پیش از پیامک';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds ثانیه';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'پیام: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'پیام شما';
+
+  @override
+  String get worshipSmsTextDefault => 'پیام پیش‌فرض';
+
+  @override
+  String get worshipSmsCost =>
+      'هر پاسخ یک پیامک معمولی از سیم‌کارت شماست، با هزینه طرح شما. هنگام رومینگ چیزی فرستاده نمی‌شود.';
+
+  @override
+  String get worshipSmsRoaming =>
+      'اکنون در رومینگ هستید: پیامکی فرستاده نمی‌شود.';
+
+  @override
+  String get worshipSmsLogTitle => 'پاسخ‌های فرستاده‌شده (فقط روی همین گوشی)';
+
+  @override
+  String get worshipContinue => 'ادامه';
+
+  @override
+  String get worshipWhyDnd =>
+      'برای بی‌صدا کردن گوشی در وقت نماز، در صفحه بعد به واعية دسترسی «مزاحم نشوید» بدهید.';
+
+  @override
+  String get worshipWhyExact =>
+      'برای انجام کار درست سر وقت، در صفحه بعد به واعية اجازه تنظیم هشدارها و یادآوری‌ها بدهید. بدون آن ممکن است تغییرات تا ۱۰ دقیقه دیر شوند.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'اعلان‌ها را مجاز کنید تا هر تغییر را ببینید و بتوانید آن را برگردانید.';
+
+  @override
+  String get worshipWhyWrite =>
+      'برای عوض کردن زنگ یا صدای اعلان، در صفحه بعد به واعية اجازه تغییر تنظیمات سیستم بدهید.';
+
+  @override
+  String get worshipWhyPhone =>
+      'برای اینکه بداند تماسی زنگ می‌خورد و شماره‌اش چیست، واعية به اجازه‌های «تلفن» و «گزارش تماس» نیاز دارد. جز پاسخ شما چیزی از گوشی بیرون نمی‌رود.';
+
+  @override
+  String get worshipWhySms =>
+      'برای فرستادن پاسخ شما، واعية به اجازه ارسال پیامک نیاز دارد. فقط همین پاسخ را می‌فرستد، حداکثر یک بار برای هر شماره در هر نماز.';
+
+  @override
+  String get worshipMissingDnd =>
+      'دسترسی «مزاحم نشوید» داده نشد، پس بی‌صدایی خاموش می‌ماند.';
+
+  @override
+  String get worshipMissingPhone =>
+      'اجازه‌های «تلفن» و «گزارش تماس» داده نشد، پس پاسخ پیامکی خاموش می‌ماند.';
+
+  @override
+  String get worshipMissingSms =>
+      'اجازه ارسال پیامک داده نشد، پس پاسخ پیامکی خاموش می‌ماند.';
+
+  @override
+  String get worshipTryAgain => 'دوباره امتحان کنید';
 }

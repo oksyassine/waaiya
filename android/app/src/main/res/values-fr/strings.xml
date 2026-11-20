@@ -349,4 +349,28 @@
     <string name="notif_fix_picker_cover">La couvrir</string>
     <string name="notif_fix_picker_cancel">Annuler</string>
     <string name="notif_fix_picker_no_blur">Le flou de l\'écran ne fonctionne pas. Activez d\'abord une option de flou pendant le filtrage.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">Fajr</string>
+    <string name="worship_prayer_sunrise">Lever du soleil</string>
+    <string name="worship_prayer_dhuhr">Dhohr</string>
+    <string name="worship_prayer_asr">Asr</string>
+    <string name="worship_prayer_maghrib">Maghrib</string>
+    <string name="worship_prayer_isha">Icha</string>
+    <string name="worship_end_silent">Arrêter le silence</string>
+    <string name="worship_unmute">Remettre le son</string>
+    <string name="notif_worship_channel">Heures de prière</string>
+    <string name="notif_worship_silent_title">{prayer} : téléphone en silencieux</string>
+    <string name="notif_worship_silent_text">Ne pas déranger est activé jusqu\'à {time}.</string>
+    <string name="notif_worship_silent_end_title">Fin du silence</string>
+    <string name="notif_worship_silent_end_text">Ne pas déranger est de nouveau désactivé.</string>
+    <string name="notif_worship_silent_left">Vous avez modifié Ne pas déranger vous-même, Waaiya l\'a donc laissé tel quel.</string>
+    <string name="notif_worship_no_access">Waaiya n\'a pas pu activer Ne pas déranger. Autorisez-le dans la page Paramètres de Waaiya.</string>
+    <string name="notif_worship_mute_title">{prayer} : médias coupés</string>
+    <string name="notif_worship_mute_text">Le son des médias est coupé jusqu\'à {time}.</string>
+    <string name="notif_worship_mute_end_title">Le son des médias est revenu</string>
+    <string name="notif_worship_mute_end_text">Le volume des médias est comme avant.</string>
+    <string name="notif_worship_mute_left">Vous avez modifié le volume des médias vous-même, Waaiya l\'a donc laissé tel quel.</string>
+    <string name="worship_sms_default">C\'est l\'heure de la prière, je ne peux pas répondre maintenant. Je vous rappelle.</string>
+    <string name="notif_worship_sms_title">Réponse envoyée par SMS</string>
+    <string name="notif_worship_sms_text">Votre réponse de l\'heure de prière a été envoyée au {number}.</string>
 </resources>

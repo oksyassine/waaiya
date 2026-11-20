@@ -133,7 +133,7 @@ class Settings(context: Context) {
         get() = p.getString("prayer_place", "") ?: ""
         set(v) = p.edit().putString("prayer_place", v).apply()
 
-    /** Calculation method (index into PrayerTimes.METHODS) and Asr rule (0 standard, 1 Hanafi): the user's choice. */
+    /** Calculation method (index into WorshipTimes.METHODS) and Asr rule (0 standard, 1 Hanafi): the user's choice. */
     var prayerMethod: Int
         get() = p.getInt("prayer_method", 0).coerceIn(0, 15)
         set(v) = p.edit().putInt("prayer_method", v.coerceIn(0, 15)).apply()
@@ -141,6 +141,23 @@ class Settings(context: Context) {
     var prayerAsr: Int
         get() = p.getInt("prayer_asr", 0).coerceIn(0, 1)
         set(v) = p.edit().putInt("prayer_asr", v.coerceIn(0, 1)).apply()
+
+    /**
+     * Reply by SMS to a call that rings unanswered for [prayerSmsDelaySeconds] inside a prayer window (the
+     * [prayerSilentMinutes] from each prayer time). Off by default; not in Play builds (WorshipSms).
+     */
+    var prayerSmsReply: Boolean
+        get() = p.getBoolean("prayer_sms_reply", false)
+        set(v) = p.edit().putBoolean("prayer_sms_reply", v).apply()
+
+    var prayerSmsDelaySeconds: Int
+        get() = p.getInt("prayer_sms_delay_seconds", 5).coerceIn(3, 60)
+        set(v) = p.edit().putInt("prayer_sms_delay_seconds", v.coerceIn(3, 60)).apply()
+
+    /** The SMS text; "" = the default text in the app's language. */
+    var prayerSmsText: String
+        get() = p.getString("prayer_sms_text", "") ?: ""
+        set(v) = p.edit().putString("prayer_sms_text", v).apply()
 
     /** Waiting period, in minutes, before switching off or weakening takes effect. 0 = none (the default). */
     var protectDelayMinutes: Int

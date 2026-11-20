@@ -939,6 +939,34 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
+  String get worshipPrayerFajr => 'Subuh';
+
+  @override
+  String get worshipPrayerSunrise => 'Syuruk';
+
+  @override
+  String get worshipPrayerDhuhr => 'Zohor';
+
+  @override
+  String get worshipPrayerAsr => 'Asar';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maghrib';
+
+  @override
+  String get worshipPrayerIsha => 'Isyak';
+
+  @override
+  String get worshipEndSilent => 'Tamatkan senyap sekarang';
+
+  @override
+  String get worshipUnmute => 'Nyahsenyap sekarang';
+
+  @override
+  String get worshipSmsDefault =>
+      'Sekarang waktu solat, saya tidak dapat menjawab. Saya akan telefon semula.';
+
+  @override
   String get desktopPreview =>
       'Pratonton: enjin penapis belum disambungkan pada komputer ini. Butang ini hanya menunjukkan cara apl akan berfungsi.';
 
@@ -1146,4 +1174,318 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get fixNotesTitle => 'Catatan kesilapan pengesanan';
+
+  @override
+  String get worshipTitle => 'Waktu solat';
+
+  @override
+  String get worshipBody =>
+      'Pilihan. Dikira pada telefon ini daripada tempat yang anda pilih. Tiada apa-apa dihantar.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Tempat: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Tempat: belum dipilih';
+
+  @override
+  String get worshipChoose => 'Pilih';
+
+  @override
+  String get worshipPlaceSearch => 'Cari bandar';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Bandar tidak dijumpai. Anda boleh memasukkan koordinat sebagai ganti.';
+
+  @override
+  String get worshipPlaceCustom => 'Masukkan koordinat';
+
+  @override
+  String get worshipLat => 'Latitud (utara +, selatan −)';
+
+  @override
+  String get worshipLon => 'Longitud (timur +, barat −)';
+
+  @override
+  String get worshipZone => 'Zon waktu, contohnya Asia/Kuala_Lumpur';
+
+  @override
+  String get worshipCustomInvalid => 'Semak nombor dan zon waktu.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Tempat ini tidak boleh digunakan. Pilih semula.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Kiraan: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Kaedah kiraan';
+
+  @override
+  String get worshipMethodNote =>
+      'Dipilih mengikut negara bandar itu. Pilih yang diikuti masjid anda.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Asar: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Waktu Asar';
+
+  @override
+  String get worshipAsrStandard => 'Standard (Syafie, Maliki, Hanbali)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanafi';
+
+  @override
+  String get worshipMethodMwl => 'Liga Dunia Islam';
+
+  @override
+  String get worshipMethodIsna => 'Islamic Society of North America (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Pihak Berkuasa Ukur Am Mesir';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Umm al-Qura, Makkah';
+
+  @override
+  String get worshipMethodKarachi => 'Universiti Sains Islam, Karachi';
+
+  @override
+  String get worshipMethodTehran => 'Institut Geofizik, Universiti Tehran';
+
+  @override
+  String get worshipMethodGulf => 'Rantau Teluk';
+
+  @override
+  String get worshipMethodKuwait => 'Kuwait';
+
+  @override
+  String get worshipMethodQatar => 'Qatar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapura (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Turki (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Perancis (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Maghribi (Kementerian Habous)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indonesia (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malaysia (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubai';
+
+  @override
+  String get worshipToday => 'Hari ini';
+
+  @override
+  String get worshipNoTimes =>
+      'Tiada waktu solat di sini hari ini: matahari tidak terbit atau tidak terbenam.';
+
+  @override
+  String get worshipSilentTitle => 'Senyap pada waktu solat';
+
+  @override
+  String get worshipSilentBody =>
+      'Dari setiap waktu solat, Jangan Ganggu untuk minit di bawah, kemudian kembali seperti asal.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Senyap selama: $minutes minit';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Senyapkan media ketika azan';
+
+  @override
+  String get worshipMuteBody =>
+      'Pada setiap waktu solat, bunyi media (video, audio, permainan) disenyapkan untuk minit di bawah. Pemberitahuan boleh menyahsenyapkannya serta-merta.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Disenyapkan selama: $minutes minit';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Tempoh';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes minit';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Pilih tempat dahulu.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Seterusnya: $prayer pukul $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'Senyap hingga $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Media disenyapkan hingga $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'Benarkan Waaiya mengubah Jangan Ganggu, jika tidak telefon tidak boleh senyap.';
+
+  @override
+  String get worshipAllow => 'Benarkan';
+
+  @override
+  String get worshipExactNeeded =>
+      'Penggera & peringatan tidak dibenarkan untuk Waaiya, jadi setiap perubahan mungkin lewat sehingga 10 minit, atau lebih semasa telefon tidur.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Pemberitahuan dimatikan: anda tidak akan nampak bila telefon senyap atau kembali.';
+
+  @override
+  String get worshipTonesTitle => 'Nada dering dan bunyi pemberitahuan ringkas';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya tidak dapat menapis nada dering atau bunyi pemberitahuan, hanya menggantikannya. Pilih nada ringkas tanpa muzik:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Nada dering ringkas $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Bunyi pemberitahuan ringkas $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Main';
+
+  @override
+  String get worshipToneSet => 'Guna';
+
+  @override
+  String get worshipToneInUse => 'Digunakan';
+
+  @override
+  String get worshipToneDone => 'Selesai.';
+
+  @override
+  String get worshipTonePermission =>
+      'Benarkan Waaiya mengubah suai tetapan sistem, kembali, dan ketik semula.';
+
+  @override
+  String get worshipToneFailed =>
+      'Telefon ini tidak membenarkan Waaiya mengubahnya. Dalam tetapan Bunyi, pilih nada bernama “Waaiya plain”.';
+
+  @override
+  String get worshipOpenSound => 'Buka tetapan Bunyi';
+
+  @override
+  String get worshipSmsTitle => 'Balas panggilan dengan SMS semasa solat';
+
+  @override
+  String get worshipSmsBody =>
+      'Dalam minit senyap selepas setiap waktu solat, panggilan yang dibiarkan berdering menerima satu SMS. Sekali bagi setiap nombor bagi setiap solat; tidak sekali-kali kepada nombor tersembunyi atau kod pendek.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Selepas: $seconds saat berdering';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'Saat berdering sebelum SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds saat';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Mesej: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Mesej anda';
+
+  @override
+  String get worshipSmsTextDefault => 'Guna lalai';
+
+  @override
+  String get worshipSmsCost =>
+      'Setiap balasan ialah SMS biasa daripada SIM anda, pada harga pelan anda. Tiada apa-apa dihantar semasa perayauan.';
+
+  @override
+  String get worshipSmsRoaming => 'Sedang merayau: tiada SMS dihantar.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Balasan dihantar (disimpan dalam telefon ini sahaja)';
+
+  @override
+  String get worshipContinue => 'Teruskan';
+
+  @override
+  String get worshipWhyDnd =>
+      'Untuk menyenyapkan telefon pada waktu solat, benarkan akses Jangan Ganggu untuk Waaiya pada halaman seterusnya.';
+
+  @override
+  String get worshipWhyExact =>
+      'Untuk bertindak tepat pada masanya, benarkan Waaiya menetapkan penggera & peringatan pada halaman seterusnya. Tanpanya, perubahan mungkin lewat sehingga 10 minit.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Benarkan pemberitahuan supaya anda nampak setiap perubahan dan boleh membatalkannya.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Untuk menukar nada dering atau bunyi pemberitahuan, benarkan Waaiya mengubah suai tetapan sistem pada halaman seterusnya.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Untuk mengetahui panggilan sedang berdering dan nombornya, Waaiya memerlukan kebenaran Telefon dan Log panggilan. Tiada apa-apa keluar dari telefon kecuali balasan anda.';
+
+  @override
+  String get worshipWhySms =>
+      'Untuk menghantar balasan anda, Waaiya memerlukan kebenaran menghantar SMS. Ia hanya menghantar balasan itu, paling banyak sekali bagi setiap nombor bagi setiap solat.';
+
+  @override
+  String get worshipMissingDnd =>
+      'Akses Jangan Ganggu tidak dibenarkan, jadi senyap kekal dimatikan.';
+
+  @override
+  String get worshipMissingPhone =>
+      'Kebenaran Telefon dan Log panggilan tidak diberikan, jadi balasan SMS kekal dimatikan.';
+
+  @override
+  String get worshipMissingSms =>
+      'Kebenaran menghantar SMS tidak diberikan, jadi balasan SMS kekal dimatikan.';
+
+  @override
+  String get worshipTryAgain => 'Cuba lagi';
 }

@@ -349,4 +349,28 @@
     <string name="notif_fix_picker_cover">Ört</string>
     <string name="notif_fix_picker_cancel">İptal</string>
     <string name="notif_fix_picker_no_blur">Ekran bulanıklığı çalışmıyor. Önce filtreleme sırasında bir bulanıklık seçeneğini açın.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">İmsak</string>
+    <string name="worship_prayer_sunrise">Güneş</string>
+    <string name="worship_prayer_dhuhr">Öğle</string>
+    <string name="worship_prayer_asr">İkindi</string>
+    <string name="worship_prayer_maghrib">Akşam</string>
+    <string name="worship_prayer_isha">Yatsı</string>
+    <string name="worship_end_silent">Sessizliği şimdi bitir</string>
+    <string name="worship_unmute">Sesi şimdi aç</string>
+    <string name="notif_worship_channel">Namaz vakitleri</string>
+    <string name="notif_worship_silent_title">{prayer}: telefon sessizde</string>
+    <string name="notif_worship_silent_text">Rahatsız Etmeyin {time} saatine kadar açık.</string>
+    <string name="notif_worship_silent_end_title">Sessizlik bitti</string>
+    <string name="notif_worship_silent_end_text">Rahatsız Etmeyin yeniden kapalı.</string>
+    <string name="notif_worship_silent_left">Rahatsız Etmeyin\'i kendiniz değiştirdiniz, Waaiya onu olduğu gibi bıraktı.</string>
+    <string name="notif_worship_no_access">Waaiya Rahatsız Etmeyin\'i açamadı. Waaiya\'nın Ayarlar sayfasından izin verin.</string>
+    <string name="notif_worship_mute_title">{prayer}: medya sessizde</string>
+    <string name="notif_worship_mute_text">Medya sesi {time} saatine kadar kapalı.</string>
+    <string name="notif_worship_mute_end_title">Medya sesi geri geldi</string>
+    <string name="notif_worship_mute_end_text">Medya ses düzeyi eskisi gibi.</string>
+    <string name="notif_worship_mute_left">Medya sesini kendiniz değiştirdiniz, Waaiya onu olduğu gibi bıraktı.</string>
+    <string name="worship_sms_default">Namaz vakti, şu an cevap veremiyorum. Sizi geri arayacağım.</string>
+    <string name="notif_worship_sms_title">SMS ile yanıtlandı</string>
+    <string name="notif_worship_sms_text">Namaz vakti yanıtınız {number} numarasına gönderildi.</string>
 </resources>
