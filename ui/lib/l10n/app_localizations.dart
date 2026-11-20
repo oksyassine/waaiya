@@ -1834,19 +1834,19 @@ abstract class AppLocalizations {
   /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
   String get diagNoteDesktop;
 
-  /// Flutter only (keep singing, lane D).
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'إبقاء أصوات الغناء (تجريبي)'**
   String get singingKeepTitle;
 
-  /// Flutter only (keep singing, lane D).
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.'**
   String get singingKeepBody;
 
-  /// Flutter only (keep singing, lane D).
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.'**

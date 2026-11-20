@@ -50,8 +50,8 @@ Status: **OK** = permissive, attribution only. **Flag** = needs a decision or re
 | `models/dfn3/dfn3_stream{,_fp16,_int8}.onnx` (16 / 4.4 / 2.4 MB) | Streaming re-export of the official DeepFilterNet3 checkpoint (downloaded by `df.enhance` from `github.com/Rikorose/DeepFilterNet/raw/main/models/DeepFilterNet3.zip`) | MIT OR Apache-2.0 (the repository licence; the zip carries no separate licence). Our export records `im.licence = MIT OR Apache-2.0` in the ONNX metadata | Upstream's training data (not re-checked here) | OK |
 | EfficientAT `mn04_as_mAP_432.pt` (detector backbone, 4 MB) | GitHub release `fschmid56/EfficientAT` v0.0.1 | MIT (repository licence; the release asset carries no separate licence) | AudioSet (labels CC BY 4.0; audio is YouTube content, not redistributed by anyone) | OK |
 | `mn10_as_mAP_471.pt` (only `zeroshot.py`, an experiment) | same | MIT | AudioSet | OK, not shipped |
-| `voice_v1.onnx` (future, Kaggle) | DeepFilterNet3 fine-tuned by `models/voice/train.py` | ours (AGPL-3.0-or-later) on top of MIT/Apache base, **subject to section 4** | LibriSpeech, Arabic Speech Corpus, VocalSet, Slakh2100, **Diverse Quran Reciters** (`USE_QURAN = True` in `kaggle/make_notebook.py`) | **Flag** (Quran data) |
-| `detector_v1.onnx` (future, Kaggle) | EfficientAT mn04 fine-tuned by `models/detector/train_detector.py` | ours (AGPL-3.0-or-later) on top of MIT base, **subject to section 4** | LibriSpeech, FLEURS ar_eg, VocalSet, Slakh2100, **Diverse Quran Reciters** (incl. the female reciter "Ayu Rumiyati") | **Flag** (Quran data) |
+| `voice_v1_fp16.onnx` (models-v1, "keep singing") | DeepFilterNet3 fine-tuned by `models/voice/train.py` | ours (AGPL-3.0-or-later) on top of MIT/Apache base, **subject to section 4** | LibriSpeech, Arabic Speech Corpus, VocalSet, Slakh2100, **Diverse Quran Reciters** (`USE_QURAN = True` in `kaggle/make_notebook.py`) | **Flag** (Quran data) |
+| `detector_v1.onnx` (models-v1) | EfficientAT mn04 fine-tuned by `models/detector/train_detector.py` | ours (AGPL-3.0-or-later) on top of MIT base, **subject to section 4** | LibriSpeech, FLEURS ar_eg, VocalSet, Slakh2100, **Diverse Quran Reciters** (incl. the female reciter "Ayu Rumiyati") | **Flag** (Quran data) |
 | `models/vision/person_yolox_nano.onnx` (3.6 MB; screen blur, people; Android and the Linux desktop bundle) | YOLOX-Nano official ONNX (`github.com/Megvii-BaseDetection/YOLOX` release 0.1.1rc0, sha256 c7891611…a0b7d), wrapped by `models/vision/export_vision.py` (pre/post-processing added, weights unchanged) | Apache-2.0 (repository licence) | COCO 2017 (annotations CC BY 4.0; images Flickr, per-image licences) | OK |
 | `models/vision/nsfw_marqo{,_int8}.onnx` (22 / 6.7 MB; screen blur, immodest images; int8 in Android and the Linux desktop bundle) | `Marqo/nsfw-image-detection-384` (Hugging Face, safetensors), exported by `export_vision.py`; int8 = dynamic quantisation of MatMul/Gemm | Apache-2.0 (model card `license: apache-2.0`) | Marqo's own 220k-image set (not public; not re-checked) | OK (upstream statement) |
 | `models/vision/gender_v2.onnx` (screen blur, woman/man per person; bundled on Android and the Linux desktop) | ours: timm `mobilenetv3_large_100` (ImageNet-21k pretrained, timm Apache-2.0) fine-tuned by `models/vision/train_gender_v2.py` | ours (AGPL-3.0-or-later) | Open Images V7 boxes Woman/Man/Girl/Boy, train split (section 4) | OK. ImageNet pre-training: the usual caveat (ImageNet images are research-licensed; the weights are widely redistributed) |
@@ -98,6 +98,13 @@ always a derivative. Practical policy for this project:
       possibly lower recitation retention, or replace it with self-recorded / commissioned recitation;
    c. publish anyway, disclosing the data source and the risk (not recommended).
    The code is unaffected either way: none of this data is in the repository.
+
+   **Owner's decision, 2026-11-20: c.** `detector_v1.onnx` and `voice_v1_fp16.onnx` (the "keep singing" model, a
+   test option) are published in the `models-v1` release with this disclosure. Checked the same day: the dataset's
+   Kaggle metadata (`kaggle datasets metadata abdo3id/diverse-quran-reciters`) still says licence "unknown" and
+   names no source for the recordings ("3,396 verses recited by men and 210 by women"). Next steps: ask the
+   uploader for the source of the recordings; if a reciter or publisher objects, retrain with `USE_QURAN = False`
+   (option b) and replace the files.
 
 ## 6. How models are distributed
 

@@ -1238,14 +1238,14 @@
   },
   "singingKeepTitle": "إبقاء أصوات الغناء (تجريبي)",
   "@singingKeepTitle": {
-    "description": "Flutter only (keep singing, lane D)."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "singingKeepBody": "تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.",
   "@singingKeepBody": {
-    "description": "Flutter only (keep singing, lane D)."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "singingKeepNoModel": "هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.",
   "@singingKeepNoModel": {
-    "description": "Flutter only (keep singing, lane D)."
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }

@@ -21,5 +21,8 @@
   "engine_detector_failed": "The women's singing detector did not load, so voices are muted while that option is on.",
   "blur_status_uncovered": "A monitor is not covered by the blur: it was not shared with it, or it was plugged in later. Turn a blur option off and on, and choose every screen in the screen-sharing window.",
   "blur_status_models_missing_desktop": "The blur's models are missing from this installation, so it cannot cover anything; a red bar stays at the top of the screen. Reinstall Waaiya.",
-  "diag_note_desktop": "What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing."
+  "diag_note_desktop": "What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.",
+  "singing_keep_title": "Keep singing (test)",
+  "singing_keep_body": "Instruments are removed but singing voices are kept, so a lecture with a nasheed under it keeps the nasheed's voice too; whether that is acceptable is your choice.",
+  "singing_keep_no_model": "This version has no singing model, so the sound stays silent while this is on. Turn it off."
 }
