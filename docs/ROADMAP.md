@@ -105,8 +105,8 @@ The diagnostics report is how those answers will come back.
    network connection, reproducible-build notes. Done in 0.2.12: `linux/test_no_network.sh` (CI) runs the file,
    stream and live filters and the detector with every internet socket refused and logged, and
    `NoNetworkTest.kt` keeps network APIs out of Android's filter, muter and blur code (only the link screen and the
-   setup may use them). Still to do: the Linux blur helper under the same check, the privacy page,
-   reproducible-build notes. Competitors' store labels contradict their claims
+   setup may use them); the Linux blur helper runs its X11 end-to-end test the same way. Still to do: the privacy
+   page, reproducible-build notes. Competitors' store labels contradict their claims
    (finding 2.6); this is cheap and sets Waaiya apart.
 8. **Worship helpers that reuse what Waaiya already holds** (needs 9, 16): silent at prayer times and an optional
    "mute media at the adhan", computed on the phone from a city the user picks, each action announced in a
