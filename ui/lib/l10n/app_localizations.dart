@@ -1833,6 +1833,18 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
   String get diagNoteDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.'**
+  String get settingHoldSilenceBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.'**
+  String get settingStereoBodyDesktop;
 }
 
 class _AppLocalizationsDelegate

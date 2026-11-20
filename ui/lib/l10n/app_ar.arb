@@ -1235,5 +1235,13 @@
   "diagNoteDesktop": "ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.",
   "@diagNoteDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "settingHoldSilenceBodyDesktop": "مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.",
+  "@settingHoldSilenceBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "settingStereoBodyDesktop": "مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.",
+  "@settingStereoBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }

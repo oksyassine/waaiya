@@ -1028,4 +1028,12 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Disyorkan. Jika penapisan berhenti dengan sendirinya (kerana ralat, bukan oleh anda), apl lain kekal senyap sehingga anda memulakan semula atau menekan Berhenti, daripada memainkan muzik tanpa tapisan.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Mati: mono, yang kurang membebankan komputer. Hidup: memisahkan bahagian kiri dan kanan. Jika komputer terlalu perlahan untuk stereo, ia bertukar kepada mono dengan sendirinya.';
 }

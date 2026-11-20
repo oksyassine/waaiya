@@ -286,5 +286,7 @@
   "engineDetectorFailed": "Pengesan nyanyian wanita tidak dimuatkan, jadi suara disenyapkan selagi pilihan itu dihidupkan.",
   "blurStatusUncovered": "Satu monitor tidak ditutup oleh pengaburan: ia tidak dikongsi dengannya, atau ia dipasang kemudian. Matikan dan hidupkan semula satu pilihan pengaburan, dan pilih setiap skrin dalam tetingkap perkongsian skrin.",
   "blurStatusModelsMissingDesktop": "Model pengaburan tiada dalam pemasangan ini, jadi ia tidak dapat menutup apa-apa; bar merah kekal di bahagian atas skrin. Pasang semula Waaiya.",
-  "diagNoteDesktop": "Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa."
+  "diagNoteDesktop": "Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.",
+  "settingHoldSilenceBodyDesktop": "Disyorkan. Jika penapisan berhenti dengan sendirinya (kerana ralat, bukan oleh anda), apl lain kekal senyap sehingga anda memulakan semula atau menekan Berhenti, daripada memainkan muzik tanpa tapisan.",
+  "settingStereoBodyDesktop": "Mati: mono, yang kurang membebankan komputer. Hidup: memisahkan bahagian kiri dan kanan. Jika komputer terlalu perlahan untuk stereo, ia bertukar kepada mono dengan sendirinya."
 }

@@ -21,5 +21,7 @@
   "engine_detector_failed": "Pendeteksi nyanyian perempuan tidak termuat, jadi suara orang dibisukan selama opsi itu aktif.",
   "blur_status_uncovered": "Ada monitor yang tidak ditutupi buram: monitor itu tidak dibagikan, atau baru dicolokkan kemudian. Nonaktifkan lalu aktifkan lagi salah satu opsi buram, dan pilih semua layar di jendela berbagi layar.",
   "blur_status_models_missing_desktop": "Model buram tidak ada di instalasi ini, jadi buram tidak bisa menutupi apa pun; bilah merah tetap di bagian atas layar. Instal ulang Waaiya.",
-  "diag_note_desktop": "Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun."
+  "diag_note_desktop": "Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.",
+  "setting_hold_silence_body_desktop": "Disarankan. Jika pemfilteran berhenti sendiri (karena galat, bukan oleh Anda), aplikasi lain tetap senyap sampai Anda memulai lagi atau menekan Berhenti, alih-alih memutar musik tanpa filter.",
+  "setting_stereo_body_desktop": "Nonaktif: mono, yang lebih ringan bagi komputer. Aktif: memisahkan sisi kiri dan kanan. Jika komputer terlalu lambat untuk stereo, otomatis beralih ke mono."
 }

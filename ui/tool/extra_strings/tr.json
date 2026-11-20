@@ -21,5 +21,7 @@
   "engine_detector_failed": "Kadınların şarkı sesi algılayıcısı yüklenemedi, bu yüzden o seçenek açıkken sesler susturulur.",
   "blur_status_uncovered": "Bir ekran bulanıklaştırma tarafından örtülmüyor: onunla paylaşılmadı ya da sonradan takıldı. Bir bulanıklaştırma seçeneğini kapatıp açın ve ekran paylaşımı penceresinde her ekranı seçin.",
   "blur_status_models_missing_desktop": "Bulanıklaştırma modelleri bu kurulumda eksik, bu yüzden hiçbir şeyi örtemiyor; ekranın üstünde kırmızı bir çubuk kalır. Waaiya'yı yeniden kurun.",
-  "diag_note_desktop": "Waaiya'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez."
+  "diag_note_desktop": "Waaiya'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.",
+  "setting_hold_silence_body_desktop": "Önerilir. Filtreleme kendiliğinden durursa (sizin yüzünüzden değil, bir hata nedeniyle), diğer uygulamalar müziği filtresiz çalmak yerine siz yeniden başlatana veya Durdur'a basana kadar sessiz kalır.",
+  "setting_stereo_body_desktop": "Kapalı: mono, bilgisayarı daha az yorar. Açık: sol ve sağ tarafları ayrı tutar. Bilgisayar stereo için fazla yavaşsa kendiliğinden monoya geçer."
 }

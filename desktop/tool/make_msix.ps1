@@ -19,7 +19,7 @@ if (-not $Version) {
     $v = (Select-String -Path (Join-Path $repo "desktop/pubspec.yaml") -Pattern '^version:\s*(\d+)\.(\d+)\.(\d+)').Matches[0].Groups
     $Version = "{0}.{1}.{2}.0" -f ([int]$v[1].Value + 1), $v[2].Value, $v[3].Value
 }
-if ($Version -notmatch '^[1-9]\d*\.\d+\.\d+\.0$') { throw "Store version $Version: four numbers, first not 0, last 0" }
+if ($Version -notmatch '^[1-9]\d*\.\d+\.\d+\.0$') { throw "Store version ${Version}: four numbers, first not 0, last 0" }
 
 $sdk = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\10.*\x64\makeappx.exe" |
     Sort-Object { [version]$_.Directory.Parent.Name } | Select-Object -Last 1

@@ -1026,4 +1026,12 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। অ্যাপ নিজে কিছুই পাঠায় না।';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'প্রস্তাবিত। ফিল্টার করা যদি নিজে থেকে থেমে যায় (কোনো ত্রুটিতে, আপনি থামাননি), তাহলে আবার চালু করা বা থামান চাপা পর্যন্ত অন্য অ্যাপগুলো নীরব থাকে, ফিল্টার ছাড়া গান বাজে না।';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'বন্ধ: মনো, যা কম্পিউটারের উপর কম চাপ দেয়। চালু: বাম ও ডান দিক আলাদা রাখে। কম্পিউটার স্টেরিওর জন্য খুব ধীর হলে নিজে থেকেই মনোতে চলে যায়।';
 }

@@ -286,5 +286,7 @@
   "engineDetectorFailed": "The women's singing detector did not load, so voices are muted while that option is on.",
   "blurStatusUncovered": "A monitor is not covered by the blur: it was not shared with it, or it was plugged in later. Turn a blur option off and on, and choose every screen in the screen-sharing window.",
   "blurStatusModelsMissingDesktop": "The blur's models are missing from this installation, so it cannot cover anything; a red bar stays at the top of the screen. Reinstall Waaiya.",
-  "diagNoteDesktop": "What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing."
+  "diagNoteDesktop": "What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.",
+  "settingHoldSilenceBodyDesktop": "Recommended. If filtering stops by itself (an error, not you), other apps stay silent until you start again or press Stop, instead of playing music unfiltered.",
+  "settingStereoBodyDesktop": "Off: mono, which uses less of the computer. On: keeps the left and right sides apart. If the computer is too slow for stereo, it switches to mono by itself."
 }

@@ -1028,4 +1028,12 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Waaiya\'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Önerilir. Filtreleme kendiliğinden durursa (sizin yüzünüzden değil, bir hata nedeniyle), diğer uygulamalar müziği filtresiz çalmak yerine siz yeniden başlatana veya Durdur\'a basana kadar sessiz kalır.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Kapalı: mono, bilgisayarı daha az yorar. Açık: sol ve sağ tarafları ayrı tutar. Bilgisayar stereo için fazla yavaşsa kendiliğinden monoya geçer.';
 }

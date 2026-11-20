@@ -195,23 +195,26 @@ class FilterOptionsCard extends StatelessWidget {
     final s = WaaiyaScope.of(context).state;
     final st = s.settings;
     final singingNoModel = st.muteWomenSinging && !s.detectorModel;
+    // the texts say "Android" and "phone"; a computer has its own (and no app there can refuse to be filtered)
+    final android = s.platform == 'android';
     void set(String key, Object v) => HomeScreen.set(context, key, v);
     return SectionCard(
       title: l.filterOptionsTitle,
       children: [
         const SizedBox(height: 8),
-        SettingSwitch(
-          id: 'switch_silence',
-          title: l.settingSilenceTitle,
-          body: l.settingSilenceBody,
-          value: st.silenceUnfilterable,
-          onChanged: (v) => set(SettingKeys.silenceUnfilterable, v),
-        ),
+        if (android)
+          SettingSwitch(
+            id: 'switch_silence',
+            title: l.settingSilenceTitle,
+            body: l.settingSilenceBody,
+            value: st.silenceUnfilterable,
+            onChanged: (v) => set(SettingKeys.silenceUnfilterable, v),
+          ),
         SettingSwitch(
           key: const Key('hold_silence'),
           id: 'switch_hold_silence',
           title: l.settingHoldSilenceTitle,
-          body: l.settingHoldSilenceBody,
+          body: android ? l.settingHoldSilenceBody : l.settingHoldSilenceBodyDesktop,
           value: st.holdSilence,
           onChanged: (v) => set(SettingKeys.holdSilence, v),
         ),
@@ -219,7 +222,7 @@ class FilterOptionsCard extends StatelessWidget {
           key: const Key('audio_stereo'),
           id: 'switch_stereo',
           title: l.settingStereoTitle,
-          body: l.settingStereoBody,
+          body: android ? l.settingStereoBody : l.settingStereoBodyDesktop,
           value: st.audioStereo,
           onChanged: (v) => set(SettingKeys.audioStereo, v),
         ),

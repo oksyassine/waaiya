@@ -1036,4 +1036,12 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L\'application elle-même n\'envoie rien.';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'Recommandé. Si le filtrage s\'arrête de lui-même (une erreur, pas vous), les autres applis restent muettes jusqu\'à ce que vous le relanciez ou appuyiez sur Arrêter, au lieu de jouer la musique sans filtre.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'Désactivé : mono, qui sollicite moins l\'ordinateur. Activé : garde la gauche et la droite séparées. Si l\'ordinateur est trop lent pour la stéréo, il repasse en mono de lui-même.';
 }

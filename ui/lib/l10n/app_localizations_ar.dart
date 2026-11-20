@@ -1013,4 +1013,12 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.';
 }
