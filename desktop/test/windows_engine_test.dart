@@ -89,4 +89,16 @@ void main() {
     expect(WindowsEngine.windowsBuild('"Windows 10 Pro" 10.0 (Build 18363)'), 18363);
     expect(WindowsEngine.windowsBuild('Linux 6.8'), isNull);
   });
+
+  test("a failed start shows only the log lines written since it, never an older run's", () {
+    const log = '2026-11-12 22:17:21.304 sessions: pid 12580 active\n'
+        '2026-11-12 22:17:21.673 audio: playing to "Speakers"\n'
+        r'2026-11-20 10:31:02.120 run: model C:\x\dfn3.onnx' '\n'
+        '2026-11-20 10:31:02.300 audio: no output device';
+    final since = DateTime(2026, 11, 20, 10, 31, 1);
+    final d = WindowsEngine.startFailure(log, since);
+    expect(d, contains('no output device'));
+    expect(d, isNot(contains('2026-11-12')));
+    expect(WindowsEngine.startFailure(log.split('\n').take(2).join('\n'), since), contains('did not answer'));
+  });
 }

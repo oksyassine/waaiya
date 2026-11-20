@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
+import 'motion.dart';
 import 'theme.dart';
 
 /// Scrolling page column, at most 640 wide (phones use the full width; desktop windows stay readable).
@@ -69,7 +70,11 @@ class SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     return Card(
-      child: Padding(
+      child: AnimatedSize(
+        duration: Motion.of(context, Motion.medium),
+        curve: Motion.curve,
+        alignment: Alignment.topCenter,
+        child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,6 +83,7 @@ class SectionCard extends StatelessWidget {
             if (body != null) ...[const SizedBox(height: 6), Text(body!, style: text.bodyMedium)],
             ...children,
           ],
+        ),
         ),
       ),
     );
@@ -152,7 +158,8 @@ class StatusText extends StatelessWidget {
       text,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color ?? (isError ? WaaiyaColors.of(context).error : null)),
     );
-    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? t : TestId(id!, child: t));
+    final f = SwitchFade(child: KeyedSubtree(key: ValueKey('$text$isError'), child: t));
+    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? f : TestId(id!, child: f));
   }
 }
 

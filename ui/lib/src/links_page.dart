@@ -5,6 +5,7 @@ import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
 import 'memory_backend.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// The text for a link error code ([linkErrorCodes]; Android's link_* strings).
@@ -171,10 +172,13 @@ class _LinksPanelState extends State<LinksPanel> {
                   icon: const Icon(Icons.content_paste_rounded),
                   label: Text(l.linkPaste),
                 ),
-                FilledButton(
-                  key: const Key('link_open'),
-                  onPressed: _resolving ? null : _open,
-                  child: Text(l.linkOpen),
+                Pressable(
+                  enabled: !_resolving,
+                  child: FilledButton(
+                    key: const Key('link_open'),
+                    onPressed: _resolving ? null : _open,
+                    child: Text(l.linkOpen),
+                  ),
                 ),
               ],
             ),
@@ -194,8 +198,9 @@ class _LinksPanelState extends State<LinksPanel> {
               ),
           ],
         ),
-        if (m != null) _result(context, l, s, m),
-        if (canSave && s.linkSave.phase != LinkSavePhase.idle) _saveCard(context, l, s.linkSave, text),
+        if (m != null) FadeSlideIn(key: ValueKey(m.url), child: _result(context, l, s, m)),
+        if (canSave && s.linkSave.phase != LinkSavePhase.idle)
+          FadeSlideIn(key: ValueKey('save:${s.linkSave.title}'), child: _saveCard(context, l, s.linkSave, text)),
       ],
     );
   }
@@ -217,18 +222,25 @@ class _LinksPanelState extends State<LinksPanel> {
           spacing: 8,
           runSpacing: 8,
           children: [
-            FilledButton.icon(
-              key: const Key('link_watch'),
-              onPressed: _watching ? null : () => _watch(m),
-              icon: const Icon(Icons.open_in_browser_rounded),
-              label: Text(m.hasVideo ? l.linkWatch : l.linkListen),
+            // while the filter starts, the button says so (it can take a few seconds)
+            Pressable(
+              enabled: !_watching,
+              child: FilledButton.icon(
+                key: const Key('link_watch'),
+                onPressed: _watching ? null : () => _watch(m),
+                icon: _watching ? const SizedBox.shrink() : const Icon(Icons.open_in_browser_rounded),
+                label: _watching ? BusyLabel(l.stateStarting) : Text(m.hasVideo ? l.linkWatch : l.linkListen),
+              ),
             ),
             if (s.capabilities.linkSave)
-              FilledButton.tonalIcon(
-                key: const Key('link_save'),
-                onPressed: busy ? null : () => _save(m),
-                icon: const Icon(Icons.download_rounded),
-                label: Text(l.linkSave),
+              Pressable(
+                enabled: !busy,
+                child: FilledButton.tonalIcon(
+                  key: const Key('link_save'),
+                  onPressed: busy ? null : () => _save(m),
+                  icon: const Icon(Icons.download_rounded),
+                  label: Text(l.linkSave),
+                ),
               ),
           ],
         ),
@@ -262,7 +274,7 @@ class _LinksPanelState extends State<LinksPanel> {
           ),
         if (st.busy) ...[
           const SizedBox(height: 12),
-          LinearProgressIndicator(value: st.progress < 0 ? null : st.progress),
+          SmoothProgress(value: st.progress < 0 ? null : st.progress),
           const SizedBox(height: 8),
           Align(
             alignment: AlignmentDirectional.centerEnd,

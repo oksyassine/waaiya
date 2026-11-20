@@ -64,8 +64,29 @@ class WaaiyaColors extends ThemeExtension<WaaiyaColors> {
   @override
   WaaiyaColors copyWith() => this;
 
+  /// Light <-> dark blends smoothly (the theme animates when the system switches).
   @override
-  WaaiyaColors lerp(WaaiyaColors? other, double t) => t < 0.5 || other == null ? this : other;
+  WaaiyaColors lerp(WaaiyaColors? other, double t) {
+    if (other == null) return this;
+    Color m(Color a, Color b) => Color.lerp(a, b, t)!;
+    return WaaiyaColors(
+      bg: m(bg, other.bg),
+      surface: m(surface, other.surface),
+      surfaceVariant: m(surfaceVariant, other.surfaceVariant),
+      outline: m(outline, other.outline),
+      textPrimary: m(textPrimary, other.textPrimary),
+      textSecondary: m(textSecondary, other.textSecondary),
+      primary: m(primary, other.primary),
+      onPrimary: m(onPrimary, other.onPrimary),
+      primaryContainer: m(primaryContainer, other.primaryContainer),
+      onPrimaryContainer: m(onPrimaryContainer, other.onPrimaryContainer),
+      offRing: m(offRing, other.offRing),
+      warningContainer: m(warningContainer, other.warningContainer),
+      onWarningContainer: m(onWarningContainer, other.onWarningContainer),
+      error: m(error, other.error),
+      codeBg: m(codeBg, other.codeBg),
+    );
+  }
 }
 
 ThemeData waaiyaTheme(Brightness brightness) {
@@ -125,6 +146,39 @@ ThemeData waaiyaTheme(Brightness brightness) {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(minimumSize: const Size(48, 48), shape: shape),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size(64, 48),
+        shape: shape,
+        side: BorderSide(color: c.outline),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      ),
+    ),
+    // messages float above the bottom bar, rounded like the cards
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+      backgroundColor: c.textPrimary,
+      contentTextStyle: TextStyle(color: c.bg, fontSize: 14),
+      actionTextColor: c.primary,
+    ),
+    // screens that open (licences, guides) fade forward, the same on every system
+    pageTransitionsTheme: const PageTransitionsTheme(builders: {
+      TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+      TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+      TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+      TargetPlatform.macOS: FadeForwardsPageTransitionsBuilder(),
+    }),
+    progressIndicatorTheme: ProgressIndicatorThemeData(linearTrackColor: c.surfaceVariant, linearMinHeight: 6),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: c.surface,
+      indicatorColor: c.primaryContainer,
+      labelTextStyle: WidgetStateProperty.resolveWith((s) => TextStyle(
+            fontSize: 12,
+            fontWeight: s.contains(WidgetState.selected) ? FontWeight.w600 : FontWeight.w500,
+            color: s.contains(WidgetState.selected) ? c.textPrimary : c.textSecondary,
+          )),
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.selected) ? c.onPrimary : null),

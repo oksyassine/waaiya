@@ -95,6 +95,7 @@ class WindowsEngine implements FilterHost {
   /// Starts the filter, detached, and waits until it plays (or says why not).
   @override
   Future<BackendMessage?> start({Duration timeout = const Duration(seconds: 8)}) async {
+    final since = DateTime.now().subtract(const Duration(seconds: 1));
     try {
       await Process.start(exe.path, ['run'], mode: ProcessStartMode.detached, environment: env, includeParentEnvironment: false);
     } on ProcessException catch (e) {
@@ -108,7 +109,19 @@ class WindowsEngine implements FilterHost {
       if (st.sinkUp) return null;
     } while (DateTime.now().isBefore(end));
     if (st.active == 'activating') return null; // running, retrying its audio: the state says so
-    return BackendMessage('start_failed', filterLogTail(maxBytes: 600));
+    return BackendMessage('start_failed', startFailure(filterLogTail(maxBytes: 4000), since));
+  }
+
+  /// Why a start failed, for the details under the message: the filter's log lines written since [since] (older
+  /// ones belong to another run and only mislead), or, when it wrote none, what that means.
+  static String startFailure(String log, DateTime since) {
+    final recent = log.split('\n').where((line) {
+      final t = line.length >= 23 ? DateTime.tryParse(line.substring(0, 23)) : null;
+      return t != null && !t.isBefore(since);
+    }).toList();
+    if (recent.isNotEmpty) return (recent.length > 8 ? recent.sublist(recent.length - 8) : recent).join('\n');
+    return 'waaiya-filter.exe did not answer. Another Waaiya filter may be running and not responding (for example '
+        'one from an older version). Restarting the computer ends it.';
   }
 
   /// The filter gives every app its level back (apps not running get theirs when they next play).
