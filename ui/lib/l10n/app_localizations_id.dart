@@ -1036,4 +1036,33 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'Nonaktif: mono, yang lebih ringan bagi komputer. Aktif: memisahkan sisi kiri dan kanan. Jika komputer terlalu lambat untuk stereo, otomatis beralih ke mono.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Tempel tautan YouTube, TikTok, atau Instagram untuk menontonnya dengan filter aktif, atau untuk menyimpannya tanpa musik.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Tempel tautan YouTube, TikTok, atau Instagram untuk menontonnya di browser Anda dengan filter aktif.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Terbuka di browser Anda. Waaiya menyalakan filter lebih dulu, jadi musiknya juga dihapus di sana.';
+
+  @override
+  String get linkFilterFailed =>
+      'Filter tidak berjalan, jadi tautan tidak dibuka. Nyalakan di halaman Filter lalu coba lagi.';
+
+  @override
+  String get linkSavedVideoDesktop => 'Di folder Video Anda: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'Di folder Musik Anda: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Tampilkan di folder';
+
+  @override
+  String get linkSingingNote =>
+      'Nyanyian perempuan juga dibisukan, sesuai pengaturan Anda.';
 }

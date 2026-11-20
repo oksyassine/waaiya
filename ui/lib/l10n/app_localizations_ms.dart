@@ -1036,4 +1036,33 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'Mati: mono, yang kurang membebankan komputer. Hidup: memisahkan bahagian kiri dan kanan. Jika komputer terlalu perlahan untuk stereo, ia bertukar kepada mono dengan sendirinya.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya dengan penapis aktif, atau untuk menyimpannya tanpa muzik.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya dalam pelayar anda dengan penapis aktif.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Dibuka dalam pelayar anda. Waaiya memulakan penapis dahulu, jadi muzik juga dibuang di sana.';
+
+  @override
+  String get linkFilterFailed =>
+      'Penapis tidak bermula, jadi pautan tidak dibuka. Mulakannya di halaman Penapis dan cuba lagi.';
+
+  @override
+  String get linkSavedVideoDesktop => 'Dalam folder Video anda: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'Dalam folder Muzik anda: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Tunjuk dalam folder';
+
+  @override
+  String get linkSingingNote =>
+      'Nyanyian wanita juga disenyapkan, seperti dalam tetapan anda.';
 }

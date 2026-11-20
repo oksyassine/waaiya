@@ -1036,4 +1036,33 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'Kapalı: mono, bilgisayarı daha az yorar. Açık: sol ve sağ tarafları ayrı tutar. Bilgisayar stereo için fazla yavaşsa kendiliğinden monoya geçer.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Filtre açıkken izlemek ya da müziksiz kaydetmek için bir YouTube, TikTok veya Instagram bağlantısı yapıştırın.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Tarayıcınızda filtre açıkken izlemek için bir YouTube, TikTok veya Instagram bağlantısı yapıştırın.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Tarayıcınızda açılır. Waaiya önce filtreyi başlatır, böylece müzik orada da kaldırılır.';
+
+  @override
+  String get linkFilterFailed =>
+      'Filtre başlamadı, bu yüzden bağlantı açılmadı. Filtre sayfasından başlatıp tekrar deneyin.';
+
+  @override
+  String get linkSavedVideoDesktop => 'Videolar klasörünüzde: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'Müzik klasörünüzde: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Klasörde göster';
+
+  @override
+  String get linkSingingNote =>
+      'Ayarlarınızdaki gibi kadınların şarkı sesi de susturulur.';
 }

@@ -1033,4 +1033,33 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'بند: مونو، جو کمپیوٹر پر کم بوجھ ڈالتا ہے۔ آن: بائیں اور دائیں آواز کو الگ رکھتا ہے۔ اگر کمپیوٹر اسٹیریو کے لیے بہت سست ہو تو یہ خود ہی مونو پر آ جاتا ہے۔';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'یوٹیوب، ٹک ٹاک یا انسٹاگرام کا لنک پیسٹ کریں تاکہ اسے فلٹر چلتے ہوئے دیکھیں، یا بغیر موسیقی محفوظ کریں۔';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'یوٹیوب، ٹک ٹاک یا انسٹاگرام کا لنک پیسٹ کریں تاکہ اسے اپنے براؤزر میں فلٹر چلتے ہوئے دیکھیں۔';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'آپ کے براؤزر میں کھلتا ہے۔ Waaiya پہلے فلٹر شروع کرتا ہے، اس لیے وہاں بھی موسیقی ہٹ جاتی ہے۔';
+
+  @override
+  String get linkFilterFailed =>
+      'فلٹر شروع نہیں ہوا، اس لیے لنک نہیں کھولا گیا۔ فلٹر کے صفحے سے اسے شروع کریں اور دوبارہ کوشش کریں۔';
+
+  @override
+  String get linkSavedVideoDesktop => 'آپ کے ویڈیوز فولڈر میں: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'آپ کے میوزک فولڈر میں: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'فولڈر میں دکھائیں';
+
+  @override
+  String get linkSingingNote =>
+      'آپ کی ترتیبات کے مطابق خواتین کا گانا بھی خاموش کیا جاتا ہے۔';
 }

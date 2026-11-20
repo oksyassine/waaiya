@@ -408,6 +408,8 @@ class Capabilities {
     this.womenSinging = false,
     this.autostart = false,
     this.blurStandalone = false,
+    this.linkPage = false,
+    this.linkSave = false,
   });
 
   factory Capabilities.fromMap(Map<Object?, Object?> m) => Capabilities(
@@ -419,6 +421,8 @@ class Capabilities {
         womenSinging: _bool(m['womenSinging'], false),
         autostart: _bool(m['autostart'], false),
         blurStandalone: _bool(m['blurStandalone'], false),
+        linkPage: _bool(m['linkPage'], false),
+        linkSave: _bool(m['linkSave'], false),
       );
 
   static const android = Capabilities(
@@ -438,6 +442,14 @@ class Capabilities {
   /// not share the screen capture with the sound filter). Android: false, the blur runs while filtering.
   final bool blurStandalone;
 
+  /// The Links page is drawn here ([WaaiyaBackend.resolveLink], [WaaiyaBackend.watchLink], ...: desktop) instead
+  /// of a native screen ([WaaiyaBackend.openLinkScreen]: Android).
+  final bool linkPage;
+
+  /// "Save without music" on the Links page ([WaaiyaBackend.saveLink]). Desktop: the tools are in the bundle (not in
+  /// the Microsoft Store package, whose rules forbid saving from sites that do not allow it).
+  final bool linkSave;
+
   Map<String, bool> toMap() => {
         'shizukuSetup': shizukuSetup,
         'adbSetup': adbSetup,
@@ -447,8 +459,113 @@ class Capabilities {
         'womenSinging': womenSinging,
         'autostart': autostart,
         'blurStandalone': blurStandalone,
+        'linkPage': linkPage,
+        'linkSave': linkSave,
       };
 }
+
+/// A link opened on the Links page ([WaaiyaBackend.resolveLink]).
+class LinkMeta {
+  const LinkMeta({
+    required this.url,
+    this.title = '',
+    this.site = '',
+    this.durationSec,
+    this.isLive = false,
+    this.hasVideo = true,
+    this.audioOnly = false,
+  });
+
+  factory LinkMeta.fromMap(Map<Object?, Object?> m) => LinkMeta(
+        url: _str(m['url']) ?? '',
+        title: _str(m['title']) ?? '',
+        site: _str(m['site']) ?? '',
+        durationSec: m['durationSec'] is num ? (m['durationSec'] as num).round() : null,
+        isLive: _bool(m['isLive'], false),
+        hasVideo: _bool(m['hasVideo'], true),
+        audioOnly: _bool(m['audioOnly'], false),
+      );
+
+  final String url;
+  final String title;
+
+  /// The site's name ("Youtube", "TikTok") or, without the save tools, the link's host.
+  final String site;
+
+  /// Null: unknown.
+  final int? durationSec;
+  final bool isLive;
+
+  /// Saving gives a video (false: sound only).
+  final bool hasVideo;
+
+  /// The page has video, but only its sound can be used (Android's video_unavailable).
+  final bool audioOnly;
+
+  Map<String, Object?> toMap() => {
+        'url': url,
+        'title': title,
+        'site': site,
+        'durationSec': durationSec,
+        'isLive': isLive,
+        'hasVideo': hasVideo,
+        'audioOnly': audioOnly,
+      };
+}
+
+/// "Save without music": where it is ([AppState.linkSave]). Phases as Android's LinkExportService.Phase.
+enum LinkSavePhase { idle, downloading, filtering, done, failed }
+
+class LinkSaveInfo {
+  const LinkSaveInfo({
+    this.phase = LinkSavePhase.idle,
+    this.title = '',
+    this.progress = -1,
+    this.isVideo = true,
+    this.error,
+    this.path,
+  });
+
+  factory LinkSaveInfo.fromMap(Map<Object?, Object?> m) => LinkSaveInfo(
+        phase: _enum(LinkSavePhase.values, m['phase']) ?? LinkSavePhase.idle,
+        title: _str(m['title']) ?? '',
+        progress: m['progress'] is num ? (m['progress'] as num).toDouble() : -1,
+        isVideo: _bool(m['isVideo'], true),
+        error: BackendMessage.fromMap(m['error']),
+        path: _str(m['path']),
+      );
+
+  final LinkSavePhase phase;
+  final String title;
+
+  /// 0..1 within the phase; negative: unknown.
+  final double progress;
+  final bool isVideo;
+
+  /// Failed: `cancelled`, `failed` (detail = the tool's last lines), or a resolve code ([linkErrorCodes]).
+  final BackendMessage? error;
+
+  /// Done: the saved file.
+  final String? path;
+
+  bool get busy => phase == LinkSavePhase.downloading || phase == LinkSavePhase.filtering;
+
+  Map<String, Object?> toMap() => {
+        'phase': _enumName(phase),
+        'title': title,
+        'progress': progress,
+        'isVideo': isVideo,
+        'error': error?.toMap(),
+        'path': path,
+      };
+}
+
+/// [BackendException] codes of the link calls: the UI turns each into a sentence (Android's LinkError codes, plus
+/// `live` (cannot be saved), `busy` (another save runs) and `filter_failed` (Watch: the filter did not start)).
+const linkErrorCodes = {
+  'invalid_url', 'login', 'limited', 'unsupported_site', 'playlist', 'no_format', 'live', 'busy', 'filter_failed',
+  'failed',
+};
 
 /// One full snapshot: the getState result and every event.
 /// setup.wireless (docs/UI_CONTRACT.md): the on-phone setup's progress. [title] and [body] are Android string
@@ -588,6 +705,7 @@ class AppState {
     this.detectorModel = false,
     this.capabilities = const Capabilities(),
     this.navigate,
+    this.linkSave = const LinkSaveInfo(),
   });
 
   /// Tolerant: a missing or unknown key takes its default (keys are added, never renamed).
@@ -602,6 +720,7 @@ class AppState {
         detectorModel: _bool(_map(m['models'])['detector'], false),
         capabilities: Capabilities.fromMap(_map(m['capabilities'])),
         navigate: PageRequest.fromMap(m['navigate']),
+        linkSave: LinkSaveInfo.fromMap(_map(m['linkSave'])),
       );
 
   final String platform;
@@ -621,12 +740,16 @@ class AppState {
   /// A page the platform asks to show once (a Quick Settings tile's "Open Waaiya"); null most of the time.
   final PageRequest? navigate;
 
+  /// "Save without music" on the Links page (capability `linkSave`).
+  final LinkSaveInfo linkSave;
+
   AppState copyWith({
     String? language,
     WaaiyaSettings? settings,
     FilterInfo? filter,
     SetupInfo? setup,
     BlurInfo? blur,
+    LinkSaveInfo? linkSave,
   }) =>
       AppState(
         platform: platform,
@@ -638,6 +761,7 @@ class AppState {
         blur: blur ?? this.blur,
         detectorModel: detectorModel,
         capabilities: capabilities,
+        linkSave: linkSave ?? this.linkSave,
       );
 
   Map<String, Object?> toMap() => {
@@ -650,6 +774,7 @@ class AppState {
         'blur': blur.toMap(),
         'models': {'detector': detectorModel},
         'capabilities': capabilities.toMap(),
+        'linkSave': linkSave.toMap(),
       };
 }
 
@@ -726,6 +851,27 @@ abstract interface class WaaiyaBackend {
 
   /// The native link screen (watch or save a link without music).
   Future<void> openLinkScreen();
+
+  /// Capability `linkPage`: what the link is (title, site, duration). Throws [BackendException] with one of
+  /// [linkErrorCodes].
+  Future<LinkMeta> resolveLink(String url);
+
+  /// Capability `linkPage`: starts the filter if it is not running, waits until it filters, then opens [url] in the
+  /// browser. Never opens it unfiltered: throws `filter_failed` (or `invalid_url`) instead.
+  Future<void> watchLink(String url);
+
+  /// Capability `linkSave`: saves [url] without music in the background; progress in [AppState.linkSave]. Throws
+  /// `busy` while another save runs, `live` for a live stream, or a resolve code.
+  Future<void> saveLink(String url);
+
+  /// Stops a running save; nothing is kept.
+  Future<void> cancelLinkSave();
+
+  /// Plays the saved file with the computer's player.
+  Future<void> openSavedLink();
+
+  /// Shows the saved file in its folder.
+  Future<void> showSavedLink();
 
   Future<Licences> getLicences();
 

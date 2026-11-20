@@ -23,5 +23,13 @@
   "blur_status_models_missing_desktop": "Model pengaburan tiada dalam pemasangan ini, jadi ia tidak dapat menutup apa-apa; bar merah kekal di bahagian atas skrin. Pasang semula Waaiya.",
   "diag_note_desktop": "Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.",
   "setting_hold_silence_body_desktop": "Disyorkan. Jika penapisan berhenti dengan sendirinya (kerana ralat, bukan oleh anda), apl lain kekal senyap sehingga anda memulakan semula atau menekan Berhenti, daripada memainkan muzik tanpa tapisan.",
-  "setting_stereo_body_desktop": "Mati: mono, yang kurang membebankan komputer. Hidup: memisahkan bahagian kiri dan kanan. Jika komputer terlalu perlahan untuk stereo, ia bertukar kepada mono dengan sendirinya."
+  "setting_stereo_body_desktop": "Mati: mono, yang kurang membebankan komputer. Hidup: memisahkan bahagian kiri dan kanan. Jika komputer terlalu perlahan untuk stereo, ia bertukar kepada mono dengan sendirinya.",
+  "link_entry_body_desktop": "Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya dengan penapis aktif, atau untuk menyimpannya tanpa muzik.",
+  "link_entry_body_watch": "Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya dalam pelayar anda dengan penapis aktif.",
+  "link_watch_note_desktop": "Dibuka dalam pelayar anda. Waaiya memulakan penapis dahulu, jadi muzik juga dibuang di sana.",
+  "link_filter_failed": "Penapis tidak bermula, jadi pautan tidak dibuka. Mulakannya di halaman Penapis dan cuba lagi.",
+  "link_saved_video_desktop": "Dalam folder Video anda: Waaiya",
+  "link_saved_audio_desktop": "Dalam folder Muzik anda: Waaiya",
+  "link_show_in_folder": "Tunjuk dalam folder",
+  "link_singing_note": "Nyanyian wanita juga disenyapkan, seperti dalam tetapan anda."
 }

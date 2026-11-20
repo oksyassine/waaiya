@@ -288,5 +288,13 @@
   "blurStatusModelsMissingDesktop": "Bulanıklaştırma modelleri bu kurulumda eksik, bu yüzden hiçbir şeyi örtemiyor; ekranın üstünde kırmızı bir çubuk kalır. Waaiya'yı yeniden kurun.",
   "diagNoteDesktop": "Waaiya'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.",
   "settingHoldSilenceBodyDesktop": "Önerilir. Filtreleme kendiliğinden durursa (sizin yüzünüzden değil, bir hata nedeniyle), diğer uygulamalar müziği filtresiz çalmak yerine siz yeniden başlatana veya Durdur'a basana kadar sessiz kalır.",
-  "settingStereoBodyDesktop": "Kapalı: mono, bilgisayarı daha az yorar. Açık: sol ve sağ tarafları ayrı tutar. Bilgisayar stereo için fazla yavaşsa kendiliğinden monoya geçer."
+  "settingStereoBodyDesktop": "Kapalı: mono, bilgisayarı daha az yorar. Açık: sol ve sağ tarafları ayrı tutar. Bilgisayar stereo için fazla yavaşsa kendiliğinden monoya geçer.",
+  "linkEntryBodyDesktop": "Filtre açıkken izlemek ya da müziksiz kaydetmek için bir YouTube, TikTok veya Instagram bağlantısı yapıştırın.",
+  "linkEntryBodyWatch": "Tarayıcınızda filtre açıkken izlemek için bir YouTube, TikTok veya Instagram bağlantısı yapıştırın.",
+  "linkWatchNoteDesktop": "Tarayıcınızda açılır. Waaiya önce filtreyi başlatır, böylece müzik orada da kaldırılır.",
+  "linkFilterFailed": "Filtre başlamadı, bu yüzden bağlantı açılmadı. Filtre sayfasından başlatıp tekrar deneyin.",
+  "linkSavedVideoDesktop": "Videolar klasörünüzde: Waaiya",
+  "linkSavedAudioDesktop": "Müzik klasörünüzde: Waaiya",
+  "linkShowInFolder": "Klasörde göster",
+  "linkSingingNote": "Ayarlarınızdaki gibi kadınların şarkı sesi de susturulur."
 }

@@ -32,6 +32,12 @@ $stage = Join-Path $tmp "package"
 $res = Join-Path $tmp "resources"
 New-Item -ItemType Directory -Force $stage, $res | Out-Null
 Copy-Item -Recurse -Force (Join-Path $App "*") $stage
+# Links in the Store package: watch only. The Store's rules forbid saving from sites whose terms do not allow it
+# (YouTube's), so the save tools and their licence texts stay out (the app then hides "Save without music").
+Remove-Item -Recurse -Force -ErrorAction SilentlyContinue (Join-Path $stage "engine\links"), (Join-Path $stage "engine\im-process.exe")
+foreach ($f in "yt-dlp-LICENSE.txt", "yt-dlp-THIRD_PARTY_LICENSES.txt", "QuickJS-ng-LICENSE.txt", "ffmpeg-LGPL-2.1.txt", "ffmpeg-SOURCE.txt") {
+    Remove-Item -Force -ErrorAction SilentlyContinue (Join-Path $stage "licences\$f")
+}
 Copy-Item -Recurse -Force (Join-Path $msix "Assets") $stage
 $manifest = (Get-Content -Raw (Join-Path $msix "AppxManifest.xml")).Replace("@VERSION@", $Version)
 [IO.File]::WriteAllText((Join-Path $stage "AppxManifest.xml"), $manifest, [Text.UTF8Encoding]::new($false))

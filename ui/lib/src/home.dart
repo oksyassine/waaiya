@@ -6,6 +6,7 @@ import 'app.dart';
 import 'backend.dart';
 import 'blur_card.dart';
 import 'licences.dart';
+import 'links_page.dart';
 import 'setup_card.dart';
 import 'theme.dart';
 import 'widgets.dart';
@@ -143,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const CoverHelperCard(),
           ],
         ),
+      'links' when caps.linkPage => PageColumn(children: [PageTitle(l.navLinks), const LinksPanel()]),
       'links' => PageColumn(
           children: [
             PageTitle(l.navLinks),

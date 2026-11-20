@@ -23,5 +23,13 @@
   "blur_status_models_missing_desktop": "Model buram tidak ada di instalasi ini, jadi buram tidak bisa menutupi apa pun; bilah merah tetap di bagian atas layar. Instal ulang Waaiya.",
   "diag_note_desktop": "Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.",
   "setting_hold_silence_body_desktop": "Disarankan. Jika pemfilteran berhenti sendiri (karena galat, bukan oleh Anda), aplikasi lain tetap senyap sampai Anda memulai lagi atau menekan Berhenti, alih-alih memutar musik tanpa filter.",
-  "setting_stereo_body_desktop": "Nonaktif: mono, yang lebih ringan bagi komputer. Aktif: memisahkan sisi kiri dan kanan. Jika komputer terlalu lambat untuk stereo, otomatis beralih ke mono."
+  "setting_stereo_body_desktop": "Nonaktif: mono, yang lebih ringan bagi komputer. Aktif: memisahkan sisi kiri dan kanan. Jika komputer terlalu lambat untuk stereo, otomatis beralih ke mono.",
+  "link_entry_body_desktop": "Tempel tautan YouTube, TikTok, atau Instagram untuk menontonnya dengan filter aktif, atau untuk menyimpannya tanpa musik.",
+  "link_entry_body_watch": "Tempel tautan YouTube, TikTok, atau Instagram untuk menontonnya di browser Anda dengan filter aktif.",
+  "link_watch_note_desktop": "Terbuka di browser Anda. Waaiya menyalakan filter lebih dulu, jadi musiknya juga dihapus di sana.",
+  "link_filter_failed": "Filter tidak berjalan, jadi tautan tidak dibuka. Nyalakan di halaman Filter lalu coba lagi.",
+  "link_saved_video_desktop": "Di folder Video Anda: Waaiya",
+  "link_saved_audio_desktop": "Di folder Musik Anda: Waaiya",
+  "link_show_in_folder": "Tampilkan di folder",
+  "link_singing_note": "Nyanyian perempuan juga dibisukan, sesuai pengaturan Anda."
 }

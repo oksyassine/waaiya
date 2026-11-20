@@ -1034,4 +1034,32 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'خاموش: مونو، که بار کمتری روی رایانه می‌گذارد. روشن: صدای چپ و راست را جدا نگه می‌دارد. اگر رایانه برای استریو بیش از حد کند باشد، خودش به مونو برمی‌گردد.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'پیوند یوتیوب، تیک‌تاک یا اینستاگرام را بچسبانید تا با پالایش روشن تماشا کنید، یا بدون موسیقی ذخیره کنید.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'پیوند یوتیوب، تیک‌تاک یا اینستاگرام را بچسبانید تا در مرورگرتان با پالایش روشن تماشا کنید.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'در مرورگر شما باز می‌شود. Waaiya ابتدا پالایش را روشن می‌کند، پس موسیقی آنجا هم حذف می‌شود.';
+
+  @override
+  String get linkFilterFailed =>
+      'پالایشگر شروع به کار نکرد، پس پیوند باز نشد. آن را از صفحهٔ پالایش روشن کنید و دوباره امتحان کنید.';
+
+  @override
+  String get linkSavedVideoDesktop => 'در پوشهٔ ویدیوهای شما: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'در پوشهٔ موسیقی شما: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'نمایش در پوشه';
+
+  @override
+  String get linkSingingNote => 'طبق تنظیمات شما، آواز زنان هم بی‌صدا می‌شود.';
 }

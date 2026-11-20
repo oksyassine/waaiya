@@ -1034,4 +1034,33 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'বন্ধ: মনো, যা কম্পিউটারের উপর কম চাপ দেয়। চালু: বাম ও ডান দিক আলাদা রাখে। কম্পিউটার স্টেরিওর জন্য খুব ধীর হলে নিজে থেকেই মনোতে চলে যায়।';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'ফিল্টার চালু রেখে দেখতে, বা মিউজিক ছাড়া সেভ করতে একটি YouTube, TikTok বা Instagram লিংক পেস্ট করুন।';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'আপনার ব্রাউজারে ফিল্টার চালু রেখে দেখতে একটি YouTube, TikTok বা Instagram লিংক পেস্ট করুন।';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'আপনার ব্রাউজারে খোলে। Waaiya আগে ফিল্টার চালু করে, তাই সেখানেও মিউজিক সরানো হয়।';
+
+  @override
+  String get linkFilterFailed =>
+      'ফিল্টার চালু হয়নি, তাই লিংকটি খোলা হয়নি। ফিল্টার পেজ থেকে চালু করে আবার চেষ্টা করুন।';
+
+  @override
+  String get linkSavedVideoDesktop => 'আপনার Videos ফোল্ডারে: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'আপনার Music ফোল্ডারে: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'ফোল্ডারে দেখান';
+
+  @override
+  String get linkSingingNote =>
+      'আপনার সেটিংস অনুযায়ী নারীদের গানও নীরব করা হয়।';
 }

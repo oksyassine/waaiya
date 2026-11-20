@@ -8,6 +8,9 @@
 #   scripts/fetch_deps.sh ort-win   ONNX Runtime 1.19.2 for Windows x64 -> third_party/onnxruntime-win/ (Windows builds)
 #   scripts/fetch_deps.sh mingw     llvm-mingw (Linux x64 host) -> third_party/llvm-mingw/: cross-compiles the Windows
 #                                   programs (windows/Makefile); not part of "all"
+#   scripts/fetch_deps.sh links-win yt-dlp.exe and QuickJS-ng (qjs.exe) with their licence texts -> third_party/links-win/:
+#                                   the Windows app's "save a link without music" (ffmpeg: scripts/build_ffmpeg_win.sh);
+#                                   not part of "all", never in the Microsoft Store package
 #   scripts/fetch_deps.sh           ort, models, vision, detector
 # Models are release assets (docs/MODELS.md), not git files. Set WAAIYA_REPO=owner/name to fetch from a fork.
 # A model file already in place is kept if it matches the release's SHA256SUMS; otherwise it is downloaded again.
@@ -26,6 +29,14 @@ ORT_VERSION=1.19.2
 ORT_NUPKG_SHA256=fa133c8fe6238445a0dd3e8447baa5c7d16f418caa8e576c7e253ba77b27b61b
 MINGW_VERSION=20261104
 MINGW_SHA256=919380403de87dca3c581c2053230cd298af5e891286628ba0613b7fed370926
+# Links on Windows (docs/HANDOFF_WINDOWS.md). yt-dlp.exe's checksum is the one of the release's SHA2-256SUMS.
+YTDLP_VERSION=2026.10.26
+YTDLP_SHA256=f5389d3698ecde4ef06f4e6b1ce0294fe9ac1396228c8990b8d3416d6d177a7d
+YTDLP_LICENSE_SHA256=7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c
+YTDLP_THIRD_SHA256=472aefe951c7db35e1657c1d13fd337140511ed6f2b329205105ad441c5a02b7
+QJS_VERSION=v0.18.0
+QJS_SHA256=ff03398d74ea6e6bd3a8e58058f7003225abcac229d7d57775b7aaae812a49c7
+QJS_LICENSE_SHA256=96f73f9d2a16c21a36b418f06073be26e7d6d5e7c1bc99756b21a4f2c74ef171
 
 # One scratch directory for the whole run (a `trap ... RETURN` per function is global in bash and nested calls
 # would remove each other's directories).
@@ -145,6 +156,28 @@ mingw() {
     echo "llvm-mingw $MINGW_VERSION -> third_party/llvm-mingw"
 }
 
+# checked FILE URL SHA256: downloads URL into FILE only if its checksum matches.
+checked() {
+    fetch "$2" "$1.part"
+    echo "$3  $1.part" | sha256sum -c --quiet || { echo "$2: checksum mismatch" >&2; rm -f "$1.part"; exit 1; }
+    mv "$1.part" "$1"
+}
+
+links_win() {
+    local d=third_party/links-win
+    if [ "$(cat "$d/VERSION" 2>/dev/null)" = "$YTDLP_VERSION $QJS_VERSION" ]; then
+        echo "yt-dlp $YTDLP_VERSION and QuickJS-ng $QJS_VERSION already in $d"; return
+    fi
+    rm -rf "$d" && mkdir -p "$d"
+    checked "$d/yt-dlp.exe" "https://github.com/yt-dlp/yt-dlp/releases/download/$YTDLP_VERSION/yt-dlp.exe" "$YTDLP_SHA256"
+    checked "$d/yt-dlp-LICENSE.txt" "https://raw.githubusercontent.com/yt-dlp/yt-dlp/$YTDLP_VERSION/LICENSE" "$YTDLP_LICENSE_SHA256"
+    checked "$d/yt-dlp-THIRD_PARTY_LICENSES.txt"         "https://raw.githubusercontent.com/yt-dlp/yt-dlp/$YTDLP_VERSION/THIRD_PARTY_LICENSES.txt" "$YTDLP_THIRD_SHA256"
+    checked "$d/qjs.exe" "https://github.com/quickjs-ng/quickjs/releases/download/$QJS_VERSION/qjs-windows-x86_64.exe" "$QJS_SHA256"
+    checked "$d/QuickJS-ng-LICENSE.txt" "https://raw.githubusercontent.com/quickjs-ng/quickjs/$QJS_VERSION/LICENSE" "$QJS_LICENSE_SHA256"
+    echo "$YTDLP_VERSION $QJS_VERSION" > "$d/VERSION"
+    echo "yt-dlp $YTDLP_VERSION and QuickJS-ng $QJS_VERSION -> $d"
+}
+
 models() { release_files "$MODELS_TAG" models/dfn3 dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin; }
 
 vision() { release_files "$VISION_TAG" models/vision "${VISION_FILES[@]}"; }
@@ -187,9 +220,10 @@ case "${1:-all}" in
     ort) ort ;;
     ort-win) ort_win ;;
     mingw) mingw ;;
+    links-win) links_win ;;
     models) models ;;
     vision) vision ;;
     detector) detector ;;
     all) ort; models; vision; detector ;;
-    *) echo "usage: $0 [ort|ort-win|mingw|models|vision|detector|all]" >&2; exit 2 ;;
+    *) echo "usage: $0 [ort|ort-win|mingw|links-win|models|vision|detector|all]" >&2; exit 2 ;;
 esac

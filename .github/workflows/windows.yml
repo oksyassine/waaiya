@@ -29,6 +29,10 @@ jobs:
         with:
           path: third_party/llvm-mingw
           key: llvm-mingw-${{ hashFiles('scripts/fetch_deps.sh') }}
+      - uses: actions/cache@v4
+        with:
+          path: third_party/ffmpeg-win
+          key: ffmpeg-win-${{ hashFiles('scripts/build_ffmpeg_win.sh') }}
       - name: Fetch llvm-mingw, ONNX Runtime for Windows and the models (checksummed)
         run: |
           scripts/fetch_deps.sh mingw
@@ -38,8 +42,12 @@ jobs:
           scripts/fetch_deps.sh detector
           # the women's-singing model is in the models-v1 release since 0.2.12: the Windows app must have it
           [ -f models/detector/detector_v1.onnx ] || { echo "::error::women's-singing model not fetched"; exit 1; }
+          # Links ("save without music"): yt-dlp and QuickJS-ng, pinned and checksummed
+          scripts/fetch_deps.sh links-win
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: A small LGPL ffmpeg for Links (cached; pinned source tarball)
+        run: scripts/build_ffmpeg_win.sh
       - name: Build
         run: make -j"$(nproc)" -f windows/Makefile CROSS="$PWD/third_party/llvm-mingw/bin/x86_64-w64-mingw32-" ORT=third_party/onnxruntime-win
       - name: Models next to the programs
@@ -48,6 +56,9 @@ jobs:
           cp models/dfn3/dfn3_stream_int8.* build-win/models/dfn3/
           cp models/vision/*.onnx build-win/models/vision/
           mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
+          mkdir -p build-win/links
+          cp third_party/links-win/yt-dlp.exe third_party/links-win/qjs.exe third_party/links-win/*.txt build-win/links/
+          cp third_party/ffmpeg-win/ffmpeg.exe third_party/ffmpeg-win/*.txt build-win/links/
       - uses: actions/upload-artifact@v4
         with:
           name: waaiya-windows-x64-programs
@@ -131,6 +142,14 @@ jobs:
       - name: Filter, blur, models and licence texts into the app
         shell: bash
         run: bash desktop/tool/bundle_windows.sh desktop/build/windows/x64/runner/Release build-win
+        env:
+          REQUIRE_LINKS: "1"
+      - name: Links, saved without music with the real tools (a clip served from the runner; no YouTube)
+        working-directory: desktop
+        shell: bash
+        run: |
+          export WAAIYA_LINK_ENGINE="$(cygpath -w "$PWD/build/windows/x64/runner/Release/engine")"
+          flutter test test/links_pipeline_test.dart
       - name: The app starts and finds its filter and blur (a few seconds, then closed)
         shell: pwsh
         run: |
@@ -172,6 +191,13 @@ jobs:
           Expand-Archive dist/waaiya-desktop-windows-x64.zip -DestinationPath app
           desktop/tool/make_msix.ps1 -App app/waaiya -Out waaiya-store.msix
           desktop/tool/make_msix.ps1 -App app/waaiya -Out waaiya-next.msix -Version 9.0.0.0
+          # Links in the Store package: watch only (no save tools); the zip has them
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $z = [IO.Compression.ZipFile]::OpenRead("$PWD/waaiya-store.msix")
+          $bad = $z.Entries | Where-Object { $_.FullName -match '^engine/(links/|im-process\.exe)' }
+          $z.Dispose()
+          if ($bad) { throw "the Store package has the save tools: $($bad.FullName -join ', ')" }
+          if (-not (Test-Path app/waaiya/engine/links/yt-dlp.exe)) { throw "the zip has no save tools" }
       - name: Test certificate with the Store publisher's name, trusted by this runner; test copies signed
         shell: pwsh
         run: |

@@ -23,5 +23,13 @@
   "blur_status_models_missing_desktop": "The blur's models are missing from this installation, so it cannot cover anything; a red bar stays at the top of the screen. Reinstall Waaiya.",
   "diag_note_desktop": "What Waaiya sees on this computer. Copy it and give it to whoever helps you. The app itself sends nothing.",
   "setting_hold_silence_body_desktop": "Recommended. If filtering stops by itself (an error, not you), other apps stay silent until you start again or press Stop, instead of playing music unfiltered.",
-  "setting_stereo_body_desktop": "Off: mono, which uses less of the computer. On: keeps the left and right sides apart. If the computer is too slow for stereo, it switches to mono by itself."
+  "setting_stereo_body_desktop": "Off: mono, which uses less of the computer. On: keeps the left and right sides apart. If the computer is too slow for stereo, it switches to mono by itself.",
+  "link_entry_body_desktop": "Paste a YouTube, TikTok or Instagram link to watch it with the filter on, or to save it without music.",
+  "link_entry_body_watch": "Paste a YouTube, TikTok or Instagram link to watch it in your browser with the filter on.",
+  "link_watch_note_desktop": "Opens in your browser. Waaiya starts the filter first, so the music is removed there too.",
+  "link_filter_failed": "The filter did not start, so the link was not opened. Start it on the Filter page and try again.",
+  "link_saved_video_desktop": "In your Videos folder: Waaiya",
+  "link_saved_audio_desktop": "In your Music folder: Waaiya",
+  "link_show_in_folder": "Show in folder",
+  "link_singing_note": "Women's singing is muted too, as in your settings."
 }

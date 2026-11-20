@@ -9,6 +9,9 @@
 #   engine\waaiya-filter.exe  engine\waaiya-blur.exe  engine\onnxruntime.dll
 #   engine\models\dfn3\dfn3_stream_int8.{onnx,state_init.bin}  engine\models\vision\*.onnx
 #   engine\models\detector\detector_v1.onnx (if present)
+#   engine\im-process.exe, engine\links\{yt-dlp,qjs,ffmpeg}.exe: "save a link without music" (desktop/lib/links.dart),
+#                    when build-win has them (links/ from scripts/fetch_deps.sh links-win and scripts/build_ffmpeg_win.sh);
+#                    make_msix.ps1 leaves them out of the Microsoft Store package (watch only there)
 #   engine\VERSION   app version + hash of the engine files (diagnostics)
 #   licences\...     shown by the app
 # Runs in Git Bash on the Windows runner, or anywhere with bash and sha256sum.
@@ -32,6 +35,18 @@ for f in "${VISION[@]}"; do cp "$BIN/models/vision/$f" "$E/models/vision/"; done
 if [ -f "$BIN/models/detector/detector_v1.onnx" ]; then
     mkdir -p "$E/models/detector" && cp "$BIN/models/detector/detector_v1.onnx" "$E/models/detector/"
 fi
+LINKS=(yt-dlp.exe qjs.exe ffmpeg.exe)
+links=1
+for f in im-process.exe "${LINKS[@]/#/links/}"; do [ -f "$BIN/$f" ] || links=0; done
+if [ "$links" = 1 ]; then
+    mkdir -p "$E/links"
+    cp "$BIN/im-process.exe" "$E/"
+    for f in "${LINKS[@]}"; do cp "$BIN/links/$f" "$E/links/"; done
+elif [ -n "${REQUIRE_LINKS:-}" ]; then
+    echo "missing the link tools in $BIN (im-process.exe, links/yt-dlp.exe, links/qjs.exe, links/ffmpeg.exe)" >&2; exit 1
+else
+    echo "no link tools in $BIN: Links can only watch in this build"
+fi
 
 version="$(sed -n 's/^version: *//p' "$REPO/desktop/pubspec.yaml" | tr -d '\r')"
 hash="$(cd "$E" && find . -type f ! -name VERSION -print0 | sort -z | xargs -0 sha256sum | sha256sum | cut -c1-12)"
@@ -51,4 +66,10 @@ done
 cp "$REPO/models/vision/licences/YOLOX-LICENSE.txt" "$REPO/models/vision/licences/Marqo-nsfw-image-detection-384-NOTICE.txt" "$L/"
 cp "$REPO/android/app/licences/Apache-2.0-LICENSE.txt" "$L/"  # the Apache text of YOLOX and Marqo
 [ -f "$E/models/detector/detector_v1.onnx" ] && cp "$REPO/models/detector/efficientat/LICENSE" "$L/EfficientAT-LICENSE.txt"
+if [ -d "$E/links" ]; then
+    for f in yt-dlp-LICENSE.txt yt-dlp-THIRD_PARTY_LICENSES.txt QuickJS-ng-LICENSE.txt ffmpeg-LGPL-2.1.txt ffmpeg-SOURCE.txt; do
+        [ -f "$BIN/links/$f" ] || { echo "missing $BIN/links/$f (licence text of a link tool)" >&2; exit 1; }
+        cp "$BIN/links/$f" "$L/"
+    done
+fi
 echo "engine $(cat "$E/VERSION") -> $E"

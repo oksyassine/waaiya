@@ -23,5 +23,13 @@
   "blur_status_models_missing_desktop": "Les modèles du flou manquent dans cette installation : il ne peut donc rien couvrir, et une barre rouge reste en haut de l'écran. Réinstallez Waaiya.",
   "diag_note_desktop": "Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L'application elle-même n'envoie rien.",
   "setting_hold_silence_body_desktop": "Recommandé. Si le filtrage s'arrête de lui-même (une erreur, pas vous), les autres applis restent muettes jusqu'à ce que vous le relanciez ou appuyiez sur Arrêter, au lieu de jouer la musique sans filtre.",
-  "setting_stereo_body_desktop": "Désactivé : mono, qui sollicite moins l'ordinateur. Activé : garde la gauche et la droite séparées. Si l'ordinateur est trop lent pour la stéréo, il repasse en mono de lui-même."
+  "setting_stereo_body_desktop": "Désactivé : mono, qui sollicite moins l'ordinateur. Activé : garde la gauche et la droite séparées. Si l'ordinateur est trop lent pour la stéréo, il repasse en mono de lui-même.",
+  "link_entry_body_desktop": "Collez un lien YouTube, TikTok ou Instagram pour le regarder avec le filtre actif, ou pour l'enregistrer sans musique.",
+  "link_entry_body_watch": "Collez un lien YouTube, TikTok ou Instagram pour le regarder dans votre navigateur avec le filtre actif.",
+  "link_watch_note_desktop": "S'ouvre dans votre navigateur. Waaiya lance d'abord le filtre : la musique y est donc retirée aussi.",
+  "link_filter_failed": "Le filtre n'a pas démarré, le lien n'a donc pas été ouvert. Lancez-le depuis la page Filtre et réessayez.",
+  "link_saved_video_desktop": "Dans votre dossier Vidéos : Waaiya",
+  "link_saved_audio_desktop": "Dans votre dossier Musique : Waaiya",
+  "link_show_in_folder": "Afficher dans le dossier",
+  "link_singing_note": "Le chant des femmes est aussi coupé, comme dans vos réglages."
 }

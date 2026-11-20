@@ -1031,4 +1031,33 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'Off: mono, which uses less of the computer. On: keeps the left and right sides apart. If the computer is too slow for stereo, it switches to mono by itself.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Paste a YouTube, TikTok or Instagram link to watch it with the filter on, or to save it without music.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Paste a YouTube, TikTok or Instagram link to watch it in your browser with the filter on.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'Opens in your browser. Waaiya starts the filter first, so the music is removed there too.';
+
+  @override
+  String get linkFilterFailed =>
+      'The filter did not start, so the link was not opened. Start it on the Filter page and try again.';
+
+  @override
+  String get linkSavedVideoDesktop => 'In your Videos folder: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'In your Music folder: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Show in folder';
+
+  @override
+  String get linkSingingNote =>
+      'Women\'s singing is muted too, as in your settings.';
 }

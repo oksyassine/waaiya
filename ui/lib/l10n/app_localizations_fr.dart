@@ -1044,4 +1044,33 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'Désactivé : mono, qui sollicite moins l\'ordinateur. Activé : garde la gauche et la droite séparées. Si l\'ordinateur est trop lent pour la stéréo, il repasse en mono de lui-même.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'Collez un lien YouTube, TikTok ou Instagram pour le regarder avec le filtre actif, ou pour l\'enregistrer sans musique.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'Collez un lien YouTube, TikTok ou Instagram pour le regarder dans votre navigateur avec le filtre actif.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'S\'ouvre dans votre navigateur. Waaiya lance d\'abord le filtre : la musique y est donc retirée aussi.';
+
+  @override
+  String get linkFilterFailed =>
+      'Le filtre n\'a pas démarré, le lien n\'a donc pas été ouvert. Lancez-le depuis la page Filtre et réessayez.';
+
+  @override
+  String get linkSavedVideoDesktop => 'Dans votre dossier Vidéos : Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'Dans votre dossier Musique : Waaiya';
+
+  @override
+  String get linkShowInFolder => 'Afficher dans le dossier';
+
+  @override
+  String get linkSingingNote =>
+      'Le chant des femmes est aussi coupé, comme dans vos réglages.';
 }

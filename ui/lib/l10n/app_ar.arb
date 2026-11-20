@@ -1243,5 +1243,37 @@
   "settingStereoBodyDesktop": "مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.",
   "@settingStereoBodyDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkEntryBodyDesktop": "الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.",
+  "@linkEntryBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkEntryBodyWatch": "الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.",
+  "@linkEntryBodyWatch": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkWatchNoteDesktop": "يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.",
+  "@linkWatchNoteDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkFilterFailed": "لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.",
+  "@linkFilterFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSavedVideoDesktop": "في مجلد الفيديو: Waaiya",
+  "@linkSavedVideoDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSavedAudioDesktop": "في مجلد الموسيقى: Waaiya",
+  "@linkSavedAudioDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkShowInFolder": "إظهار في المجلد",
+  "@linkShowInFolder": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSingingNote": "يُكتم غناء النساء أيضاً، كما في إعداداتك.",
+  "@linkSingingNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }

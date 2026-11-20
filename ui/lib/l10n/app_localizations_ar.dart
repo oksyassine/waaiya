@@ -1021,4 +1021,32 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get settingStereoBodyDesktop =>
       'مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.';
+
+  @override
+  String get linkFilterFailed =>
+      'لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.';
+
+  @override
+  String get linkSavedVideoDesktop => 'في مجلد الفيديو: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'في مجلد الموسيقى: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'إظهار في المجلد';
+
+  @override
+  String get linkSingingNote => 'يُكتم غناء النساء أيضاً، كما في إعداداتك.';
 }

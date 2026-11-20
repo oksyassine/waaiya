@@ -94,3 +94,5 @@ models/vision/*.log
 
 # --- local tool state (any folder): never committed
 .claude/
+third_party/links-win/
+third_party/ffmpeg-win/
