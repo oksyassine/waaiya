@@ -342,6 +342,65 @@ struct Audio {
 std::vector<std::wstring> g_leave_alone; // --leave-alone NAME.exe (repeatable)
 bool g_test_hang = false;                 // tests: the main loop stops once the audio runs (the watchdog must act)
 
+// ---- Windows closing the filter. Before it updates or removes the Store package, Windows asks every window of the
+// package's processes to close (WM_QUERYENDSESSION, then WM_ENDSESSION, with ENDSESSION_CLOSEAPP), then ends them;
+// a process without a window is ended at once (seen on a PC: uninstalling while filtering left every app at -80 dB
+// for good, nothing being left to give the levels back). So the filter has a hidden window: on that message the main
+// loop gives the levels back before Windows ends the process. After an update, Windows starts the filter again
+// with the same arguments (RegisterApplicationRestart, measured: about when the new version is in place), and it
+// lowers the apps again. Signing out or shutting down (no ENDSESSION_CLOSEAPP) changes nothing: the levels stay
+// stored, given back or filtered again at the next login.
+HANDLE g_closing = CreateEventW(nullptr, TRUE, FALSE, nullptr); // set by the window: give the levels back now
+HANDLE g_closed = CreateEventW(nullptr, TRUE, FALSE, nullptr);  // set by the main loop: done
+std::atomic<bool> g_lowering{false};                            // the main loop holds levels lowered
+
+LRESULT CALLBACK closing_proc(HWND h, UINT m, WPARAM w, LPARAM l) {
+    switch (m) {
+    case WM_QUERYENDSESSION:
+        return TRUE;
+    case WM_ENDSESSION:
+        if (w && (l & ENDSESSION_CLOSEAPP) && g_lowering.load()) {
+            SetEvent(g_closing);
+            WaitForSingleObject(g_closed, 5000); // Windows ends the process once this returns
+        }
+        return 0;
+    case WM_CLOSE: // Windows sends it after WM_ENDSESSION: nothing more to do, and the window stays
+        return 0;
+    }
+    return DefWindowProcW(h, m, w, l);
+}
+
+DWORD WINAPI closing_window(LPVOID) {
+    WNDCLASSW wc = {};
+    wc.lpfnWndProc = closing_proc;
+    wc.hInstance = GetModuleHandleW(nullptr);
+    wc.lpszClassName = L"WaaiyaFilter";
+    RegisterClassW(&wc);
+    // top-level and never shown: a message-only window (HWND_MESSAGE) is not asked
+    if (!CreateWindowExW(WS_EX_TOOLWINDOW, wc.lpszClassName, L"Waaiya filter", WS_POPUP, 0, 0, 0, 0, nullptr, nullptr,
+                         wc.hInstance, nullptr))
+        return 1;
+    MSG msg;
+    while (GetMessageW(&msg, nullptr, 0, 0) > 0) DispatchMessageW(&msg);
+    return 0;
+}
+
+// After a package update, Windows starts this program again with the arguments it has now (never after a crash, a
+// hang or a restart of the computer: the app and the startup task handle those).
+void restart_after_update(bool on) {
+    if (!on) {
+        UnregisterApplicationRestart();
+        return;
+    }
+    const wchar_t *c = GetCommandLineW();
+    bool quoted = *c == L'"';
+    for (c += quoted; *c && (quoted ? *c != L'"' : *c != L' '); c++) {}
+    if (*c == L'"') c++;
+    while (*c == L' ') c++;
+    if (wcslen(c) < RESTART_MAX_CMD_LINE)
+        RegisterApplicationRestart(c, RESTART_NO_CRASH | RESTART_NO_HANG | RESTART_NO_REBOOT);
+}
+
 // ---- watchdog: the main loop ticks at least every 0.5 s. Stuck for 10 s, the process ends itself: Windows keeps
 // the apps lowered (silent, fail-closed) and the app or a new start takes over (a stuck filter would otherwise hold
 // the single-instance lock and make every Start fail).
@@ -495,6 +554,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     if (w == WAIT_ABANDONED) logf("run: the previous filter ended without stopping; taking over");
     g_tick.store(unix_ms());
     CloseHandle(CreateThread(nullptr, 0, watchdog, nullptr, 0, nullptr));
+    CloseHandle(CreateThread(nullptr, 0, closing_window, nullptr, 0, nullptr));
 
     Sessions ses(ATT, p.store, GetCurrentProcessId());
     ses.log = logf;
@@ -553,6 +613,9 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     };
     apply_settings(set);
     im_engine_set_enabled(eng, bypass ? 0 : 1);
+    g_lowering.store(true);
+    restart_after_update(true);
+    bool closing = false; // Windows closes the filter (package update or removal)
     const int hop = im_engine_hop(eng);
 
     // settings.json changes (the app writes a temporary file and renames it)
@@ -611,10 +674,12 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
             restored = true;
         }
 
-        HANDLE hs[5];
+        HANDLE hs[6];
         int nh = 0;
         hs[nh++] = stop;
         hs[nh++] = ses.wake;
+        int i_close = nh;
+        hs[nh++] = g_closing;
         int i_set = setwatch != INVALID_HANDLE_VALUE ? nh : -1;
         if (i_set >= 0) hs[nh++] = setwatch;
         int i_cap = au.running ? nh : -1;
@@ -624,6 +689,11 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
 
         if (w == WAIT_OBJECT_0) { // stop: levels back, then restore-only for the apps not running now
             logf("stop: giving the levels back");
+            break;
+        }
+        if (w == WAIT_OBJECT_0 + (DWORD)i_close) {
+            logf("Windows is closing the filter (the app is being updated or removed): giving the levels back");
+            closing = true;
             break;
         }
         if (w == WAIT_OBJECT_0 + 1) {
@@ -773,6 +843,17 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     if (mm) AvRevertMmThreadCharacteristics(mm);
     if (setwatch != INVALID_HANDLE_VALUE) FindCloseChangeNotification(setwatch);
     ses.restore_all();
+    g_lowering.store(false);
+    if (closing) {
+        // state "stopped": the app shows the filter off (not "stopped because of an error") until it runs again
+        st.state = "stopped";
+        st.pending = ses.pending();
+        write_state(p.dir, st);
+        logf("closing: levels given back, %d stored for apps not running", ses.pending());
+        SetEvent(g_closed); // Windows ends the process now; after an update, it starts the filter again
+    } else {
+        restart_after_update(false); // stopped by the user: not started again after an update
+    }
     im_engine_destroy(eng);
     logf("stopped: %d level(s) to give back when their apps play again", ses.pending());
     exit_code = restore_loop(ses, p, quit);

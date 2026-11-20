@@ -109,6 +109,31 @@ def suspend(pid):
     k.CloseHandle(h)
 
 
+def filter_window(pid, timeout=5):
+    """The filter's hidden top-level window (class WaaiyaFilter), or None."""
+    u = ctypes.windll.user32
+    found = []
+    proto = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+
+    def each(h, _):
+        p = ctypes.c_ulong()
+        u.GetWindowThreadProcessId(ctypes.c_void_p(h), ctypes.byref(p))
+        name = ctypes.create_unicode_buffer(64)
+        u.GetClassNameW(ctypes.c_void_p(h), name, 64)
+        if p.value == pid and name.value == "WaaiyaFilter":
+            found.append(h)
+        return True
+
+    cb = proto(each)
+    end = time.time() + timeout
+    while time.time() < end:
+        u.EnumWindows(cb, 0)
+        if found:
+            return ctypes.c_void_p(found[0])
+        time.sleep(0.2)
+    return None
+
+
 def volume(pid, wait=5):
     r = wtest("volume", "--pid", pid, "--wait", wait)
     return float(r.stdout.strip()) if r.returncode == 0 else None
@@ -326,6 +351,28 @@ def main():
     check(s.get("pid") == g.pid and s.get("state") == "filtering", f"a new filter starts ({s.get('state')})")
     stop_filter(g, glog)
     c.kill()
+
+    print("=== 12. Windows closes the filter (as before a Store update or uninstall: WM_ENDSESSION, ENDSESSION_CLOSEAPP, "
+          "then the process is ended)", flush=True)
+    e, epid = tone("tone-e")
+    f, flog = start_filter()
+    ve = volume(epid)
+    check(ve is not None and abs(ve - 1e-4) < 1e-6, f"lowered ({ve})")
+    h = filter_window(f.pid)
+    check(h is not None, "the filter has a (hidden) top-level window for Windows to ask")
+    if h:
+        u = ctypes.windll.user32
+        res = ctypes.c_size_t(0)
+        u.SendMessageTimeoutW(h, 0x0011, 0, 1, 0, 5000, ctypes.byref(res))  # WM_QUERYENDSESSION, ENDSESSION_CLOSEAPP
+        check(res.value == 1, f"it agrees to close ({res.value})")
+        u.SendMessageTimeoutW(h, 0x0016, 1, 1, 0, 8000, ctypes.byref(res))  # WM_ENDSESSION: returns once done
+    f.kill()  # what Windows does once WM_ENDSESSION is answered
+    f.wait()
+    ve = volume(epid)
+    check(ve is not None and abs(ve - 1) < 1e-4, f"the level was given back before the process ended ({ve})")
+    s = state()
+    check(s.get("state") in ("stopped", "restoring"), f"the state says stopped, not filtering ({s.get('state')})")
+    e.kill()
 
     print()
     if failures:

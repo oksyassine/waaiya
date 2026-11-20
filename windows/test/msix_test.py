@@ -9,9 +9,10 @@ What it checks (a failed check exits 1 at the end; the rest prints what happened
   2. the filter inside the package lowers another app and Stop gives its level back
   3. where its state is (a packaged program's AppData writes may go to the package's own folder)
   4. the startup task's command: does nothing when "Start at login" is off and nothing is stored; filters when on
-  5. a Store update while filtering: the filter is ended; at the next login (the startup task) the apps get their
-     sound back
-  6. uninstalling while filtering (reported: Windows ends the filter; the apps' levels stay lowered)
+  5. a Store update while filtering: Windows asks the filter to close (its hidden window), it gives the levels back,
+     and Windows starts it again once the new version is in place (RegisterApplicationRestart): no app is left
+     lowered without a filter
+  6. uninstalling while filtering: the filter gives the levels back before Windows ends it
 """
 import os
 import subprocess
@@ -142,21 +143,31 @@ def main():
     at.check(ok, f"packaged start without arguments acts as the startup task ({v})")
     os.remove(os.path.join(d or DIRS[0], "autostart"))
 
-    # 5. a Store update while filtering, then the next login
+    # 5. a Store update while filtering (started as the app starts it: Windows starts it again with the same command)
+    in_package("stop")
+    wait_volume(pid, above=0.99)
+    time.sleep(2)
+    kill_filters()
+    in_package("run")
+    ok, v = wait_volume(pid, below=0.001)
+    at.check(ok, f"filtering before the update ({v})")
+    time.sleep(2)
     rc, out = ps(f"Add-AppxPackage -Path '{MSIX2}' -ForceApplicationShutdown")
     at.check(rc == 0, "the higher version installs over it while filtering" + ("" if rc == 0 else f": {out}"))
-    time.sleep(3)
-    alive = running("waaiya-filter.exe")
+    restarted = False
+    for _ in range(60):  # Windows starts the filter again once the new version is registered
+        if running("waaiya-filter.exe"):
+            restarted = True
+            break
+        time.sleep(1)
     v = at.volume(pid, wait=1)
-    print(f"  5. after the update: filter running {alive}, the other app's level {v}", flush=True)
-    stored = d and os.path.exists(os.path.join(d, "levels.txt")) and os.path.getsize(os.path.join(d, "levels.txt")) > 0
-    print(f"     stored levels kept through the update: {bool(stored)}", flush=True)
-    if alive:
+    print(f"  5. after the update: filter started again by Windows {restarted}, the other app's level {v}", flush=True)
+    if restarted:
+        ok, v = wait_volume(pid, below=0.001)
+        at.check(ok, f"after an update while filtering, Windows starts the filter again and it filters ({v})")
         in_package("stop")
-    else:
-        in_package("autostart")  # what the startup task does at the next login
     ok, v = wait_volume(pid, above=0.99)
-    at.check(ok, f"after an update while filtering, the next login (or Stop) gives the level back ({v})")
+    at.check(ok, f"after an update while filtering, no app is left lowered without a filter ({v})")
     time.sleep(2)
     kill_filters()
 
@@ -165,10 +176,9 @@ def main():
     ok, v = wait_volume(pid, below=0.001)
     rc, out = ps(f"Remove-AppxPackage -Package (Get-AppxPackage -Name {NAME}).PackageFullName")
     at.check(rc == 0, "the package uninstalls while filtering" + ("" if rc == 0 else f": {out}"))
-    time.sleep(3)
-    v = at.volume(pid, wait=1)
-    print(f"  6. after uninstalling while filtering: filter running {running('waaiya-filter.exe')}, the other app's "
-          f"level {v} (lowered = it stays quiet until raised in the Volume Mixer)", flush=True)
+    ok, v = wait_volume(pid, above=0.99, seconds=10)
+    at.check(ok, f"uninstalling while filtering gives the other app its level back ({v})")
+    print(f"  6. after uninstalling while filtering: filter running {running('waaiya-filter.exe')}", flush=True)
     print(f"     package data left: {os.path.exists(os.path.join(LOCAL, 'Packages', PFN))}", flush=True)
     kill_filters()
     at.wtest("volume", "--pid", pid, "--set", "1")
