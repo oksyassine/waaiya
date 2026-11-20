@@ -275,22 +275,22 @@
     });
   });
 
-  // ---------- download: the platform in the sentence decides the button ----------
-  var sel = $("#platform"), go = $(".dl-go"), rows = $$(".dl-rows li");
-  if (sel && go) {
+  // ---------- download: the visitor's platform first, the others listed below ----------
+  var dlh = $("#dl-h"), go = $(".dl-go"), list = $(".dl-rows");
+  if (dlh && go && list) {
     var ua = navigator.userAgent;
-    sel.value = /Android/i.test(ua) ? "android" : /Windows/i.test(ua) ? "windows" : /Linux|X11/i.test(ua) ? "linux" : "android";
-    var set = function () {
-      var v = sel.value;
-      rows.forEach(function (r) { r.classList.toggle("on", r.getAttribute("data-plat") === v); });
-      if (v === "windows") {
-        go.removeAttribute("href"); go.setAttribute("aria-disabled", "true"); go.classList.add("soon"); go.textContent = T.dl_soon;
-      } else {
-        go.href = v === "android" ? T.apk : T.releases; go.removeAttribute("aria-disabled"); go.classList.remove("soon"); go.textContent = T.dl_btn;
-      }
-    };
-    sel.addEventListener("change", set);
-    set();
+    var plat = /Android/i.test(ua) ? "android" : /Windows/i.test(ua) ? "windows" : /Linux|X11|CrOS/i.test(ua) ? "linux" : "android";
+    dlh.textContent = T.dl_for[plat];
+    $$(".dl-rows > li").forEach(function (r) {
+      var mine = r.getAttribute("data-plat") === plat;
+      r.classList.toggle("on", mine);
+      if (mine) list.insertBefore(r, list.firstChild);
+    });
+    if (plat === "windows") {
+      go.removeAttribute("href"); go.setAttribute("aria-disabled", "true"); go.classList.add("soon"); go.textContent = T.dl_soon;
+    } else {
+      go.href = plat === "android" ? T.apk : T.linux; go.textContent = T.dl_btn;
+    }
   }
 
   // ---------- the film plays muted while in view; its controls give the sound (voice only) ----------

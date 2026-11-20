@@ -9,12 +9,12 @@ cd "$(dirname "$0")"
 if [ "${1:-}" = "--preview" ]; then
   python3 build.py --preview
   cp htaccess public/.htaccess
-  rsync -a --delete public/ o2:waaiya.mssid.org/preview/
+  rsync -a --delete --exclude /downloads/ public/ o2:waaiya.mssid.org/preview/
   echo "deployed: https://waaiya.mssid.org/preview/"
 else
   python3 build.py
   cp htaccess public/.htaccess
   # keep the preview folder when the live site is replaced
-  rsync -a --delete --exclude /preview/ public/ o2:waaiya.mssid.org/
+  rsync -a --delete --exclude /preview/ --exclude /downloads/ public/ o2:waaiya.mssid.org/
   echo "deployed: https://waaiya.mssid.org/"
 fi
