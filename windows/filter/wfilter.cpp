@@ -23,7 +23,10 @@
 // lasts and the sessions are looked at again ("leaks" in the state).
 //
 // Settings: the app's settings.json (%APPDATA%\Waaiya), read again when it changes: audio_stereo, hold_silence,
-// mute_women_singing. State: %LOCALAPPDATA%\Waaiya\filter\state.json, rewritten twice a second.
+// mute_women_singing, keep_singing (the voice_v1 model, swapped in while running with no gap) and filter_off_apps
+// (apps heard unfiltered: not lowered and not captured; then one capture per app instead of one of everything, see
+// capture_plan). State: %LOCALAPPDATA%\Waaiya\filter\state.json, rewritten twice a second, with the apps that have a
+// sound session ("apps") for the app's "Fix mistakes" list.
 #include "../common/wasapi.h"
 #include "sessions.h"
 

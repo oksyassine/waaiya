@@ -240,3 +240,31 @@ letter matches and CreateProcessW) are explained in STORE_LISTING.md.
   saying so. The owner's email and personal details never go to outside services.
 - CI runs only on pull requests and main pushes; it is free (public repo). One Gradle build at a time.
 - Report results faithfully; say what was not tested. Plain words for the owner (not a developer of this code).
+
+## 0.2.13 features on Windows (2026-11-20, owner's PC)
+
+The `features` branch (#14) is merged into `windows-store`. What Windows has of it:
+- **Waiting period and PIN**: the shared code (protection_core.dart); the Windows clock is `WindowsTickClock`
+  (GetTickCount64: the time since Windows started, untouched by clock changes, sleep included; a restart shows as a
+  lower count, so only the time since that start counts). A restart or a clock change can make the wait longer,
+  never shorter. Not guarded, as on Linux: `waaiya-filter.exe stop` from a command line, Task Manager, uninstalling.
+- **Wrong-detection notes**: shared, kept next to the settings.
+- **Keep singing (test)**: `voice_v1` is bundled (`engine\models\voice\v3`); the filter reads `keep_singing` and
+  loads the other model on a helper thread while the running one keeps filtering, then swaps between two hops
+  (audio_test 14: on, off, on while filtering; the sound never stops; the instrument tone stays removed, -77 dB).
+- **Filter off for chosen apps** (owner's decision: built before the Store): Windows' process loopback leaves out
+  one process tree only, so with apps chosen the filter makes one capture per lowered app (include mode, its process
+  tree) and mixes them; the chosen apps are not lowered and not captured, so they play as they are. Explorer, or any
+  program that started Waaiya or a chosen app, is not captured (its tree would bring them in): its own sounds stay
+  silent (fail-closed). A full-level sound in any capture (an app not lowered yet, a chosen app started inside a
+  captured tree) mutes the output and makes the plan again. With no app chosen, the single capture of every app is
+  used, as before. audio_test 13 on this PC: the chosen app is heard once at exactly its level (0.0 dB), the other
+  is filtered (-46 dB), taking it off the list lowers it at once and putting it back gives its level back. The app's
+  list shows the names Windows shows ("Google Chrome"), from the filter's state ("apps").
+- Not on Windows (as on Linux): blur off for chosen apps, covering an area by hand, worship helpers (phone only),
+  battery and heat in the report.
+- The screen-blur click test (the fix carried in #14) passed 3 runs out of 3 here.
+- Texts: the 216 new texts written for es, nl, de, it, ru, uz, sw, ha, so (machine translations, all pass
+  `ui/tool/check_translation.py`); a Somali label in the tone list wraps now on a small phone.
+- Local build without CI: llvm-mingw for Windows hosts in `third_party/llvm-mingw-win` (ignored by git) and
+  `scripts/fetch_deps.sh ort-win`; the flags are windows/Makefile's.
