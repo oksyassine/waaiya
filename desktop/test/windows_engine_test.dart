@@ -101,4 +101,8 @@ void main() {
     expect(d, isNot(contains('2026-11-12')));
     expect(WindowsEngine.startFailure(log.split('\n').take(2).join('\n'), since), contains('did not answer'));
   });
+
+  test('a test run is not a packaged app', () {
+    expect(WindowsEngine.isPackagedProcess(), isFalse);
+  });
 }

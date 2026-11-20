@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:waaiya_ui/waaiya_ui.dart';
@@ -20,7 +21,7 @@ import 'filter_host.dart';
 class WindowsEngine implements FilterHost {
   WindowsEngine(this.dir, {Map<String, String>? environment, bool? packaged})
       : env = environment ?? Platform.environment,
-        packaged = packaged ?? isPackagedPath(dir.path);
+        packaged = packaged ?? (isPackagedPath(dir.path) || isPackagedProcess());
 
   /// `<bundle>\engine`.
   final Directory dir;
@@ -30,6 +31,27 @@ class WindowsEngine implements FilterHost {
   final bool packaged;
 
   static bool isPackagedPath(String path) => path.toLowerCase().contains(r'\windowsapps\');
+
+  /// This app runs with a package identity (the Store's install, or the same package installed unpacked in
+  /// Developer Mode, outside WindowsApps): Windows' own answer, as waaiya-filter.exe asks it.
+  static bool isPackagedProcess() {
+    if (!Platform.isWindows) return false;
+    try {
+      final ole = DynamicLibrary.open('ole32.dll');
+      final alloc = ole.lookupFunction<Pointer<Void> Function(IntPtr), Pointer<Void> Function(int)>('CoTaskMemAlloc');
+      final free = ole.lookupFunction<Void Function(Pointer<Void>), void Function(Pointer<Void>)>('CoTaskMemFree');
+      final name = DynamicLibrary.open('kernel32.dll').lookupFunction<Int32 Function(Pointer<Uint32>, Pointer<Uint16>),
+          int Function(Pointer<Uint32>, Pointer<Uint16>)>('GetCurrentPackageFullName');
+      final len = alloc(4).cast<Uint32>();
+      if (len == nullptr) return false;
+      len.value = 0;
+      final r = name(len, nullptr);
+      free(len.cast());
+      return r != 15700; // APPMODEL_ERROR_NO_PACKAGE
+    } on Object {
+      return false;
+    }
+  }
 
   static const runValue = 'WaaiyaFilter';
   static const _runKey = r'HKCU\Software\Microsoft\Windows\CurrentVersion\Run';
