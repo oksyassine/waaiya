@@ -30,6 +30,9 @@ MODELS = os.path.join(BIN, "models", "vision")
 TMP = tempfile.mkdtemp(prefix="waaiya-blur-")
 user32 = ctypes.windll.user32
 user32.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4))  # per monitor v2: physical pixels, as the helper
+user32.WindowFromPoint.argtypes = [wt.POINT]
+user32.WindowFromPoint.restype = wt.HWND
+user32.GetClassNameW.argtypes = [wt.HWND, wt.LPWSTR, ctypes.c_int]
 failures = []
 
 
@@ -113,8 +116,17 @@ def screen():
     return (0, 0, user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
 
 
+def window_class(h):
+    cls = ctypes.create_unicode_buffer(64)
+    user32.GetClassNameW(h, cls, 64)
+    return cls.value
+
+
 def click_through():
-    """A window of this test under the cover: does a click in its middle reach it?"""
+    """A window of this test under the cover: does a click in its middle reach it?
+
+    The runner can be slow to show the tk window, and a click can land while it is still being drawn: wait until
+    Windows shows it, then try up to three clicks (each one is a real click through the cover)."""
     flag = os.path.join(TMP, "clicked")
     script = os.path.join(TMP, "target.py")
     with open(script, "w") as f:
@@ -123,24 +135,40 @@ def click_through():
             "r = tk.Tk(); r.geometry('400x300+200+200'); r.configure(bg='#3366cc')\n"
             "def hit(e):\n"
             "    open(sys.argv[1], 'w').write('1'); r.destroy()\n"
-            "r.bind('<Button-1>', hit); r.after(20000, r.destroy); r.mainloop()\n")
+            "r.bind('<Button-1>', hit); r.after(30000, r.destroy); r.mainloop()\n")
     t = subprocess.Popen([sys.executable, script, flag])
-    time.sleep(2.0)
-    # the window's middle, in physical pixels (tk is not DPI aware: ask Windows where it is)
-    h = user32.FindWindowW("TkTopLevel", None)
-    r = wt.RECT()
-    user32.GetWindowRect(h, ctypes.byref(r))
-    x, y = (r.left + r.right) // 2, (r.top + r.bottom) // 2
-    user32.SetCursorPos(x, y)
-    time.sleep(0.2)
-    user32.mouse_event(0x0002, 0, 0, 0, 0)  # left down
-    user32.mouse_event(0x0004, 0, 0, 0, 0)  # left up
-    for _ in range(30):
-        if os.path.exists(flag):
+    h = 0
+    for _ in range(150):  # up to 15 s
+        h = user32.FindWindowW("TkTopLevel", None)
+        if h and user32.IsWindowVisible(h):
             break
         time.sleep(0.1)
-    t.kill()
-    return os.path.exists(flag)
+    if not h:
+        print("  the test window did not appear", flush=True)
+        t.kill()
+        return False
+    time.sleep(1.0)  # let tk draw it and bind the click
+    user32.SetForegroundWindow(h)  # not topmost: it stays under the cover
+    try:
+        for attempt in range(3):
+            # the window's middle, in physical pixels (tk is not DPI aware: ask Windows where it is)
+            r = wt.RECT()
+            user32.GetWindowRect(h, ctypes.byref(r))
+            x, y = (r.left + r.right) // 2, (r.top + r.bottom) // 2
+            user32.SetCursorPos(x, y)
+            time.sleep(0.3)
+            under = user32.WindowFromPoint(wt.POINT(x, y))
+            print(f"  click {attempt + 1} at ({x}, {y}); window there: {window_class(under)!r}", flush=True)
+            user32.mouse_event(0x0002, 0, 0, 0, 0)  # left down
+            time.sleep(0.05)
+            user32.mouse_event(0x0004, 0, 0, 0, 0)  # left up
+            for _ in range(30):
+                if os.path.exists(flag):
+                    return True
+                time.sleep(0.1)
+        return False
+    finally:
+        t.kill()
 
 
 def main():
