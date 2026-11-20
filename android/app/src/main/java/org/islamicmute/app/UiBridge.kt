@@ -382,7 +382,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         "features" to Features.ALL.associate { it.name to it.snapshot(featureHost) },
         "capabilities" to mapOf(
             "shizukuSetup" to true, "adbSetup" to true, "captureConsent" to true,
-            "screenBlur" to true, "links" to true, "womenSinging" to true,
+            "screenBlur" to true, "links" to BuildConfig.LINKS, "womenSinging" to true,
         ),
     )
 

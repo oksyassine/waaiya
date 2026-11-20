@@ -27,6 +27,11 @@ val signingProps = Properties().apply {
 // Screen blur: declare the accessibility service only on request (Play Protect blocks sideloaded apps that have one).
 val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
 
+// Store builds (docs/DISTRIBUTION.md). -PimPlay: no yt-dlp self-update (Google Play forbids apps that download
+// code to run). -PimNoLinks: no "Open a link" at all (its share target is disabled and the Links page is hidden).
+val playBuild = providers.gradleProperty("imPlay").isPresent
+val noLinks = providers.gradleProperty("imNoLinks").isPresent
+
 android {
     namespace = "org.islamicmute.app"
     compileSdk = 35
@@ -40,6 +45,9 @@ android {
         versionName = "0.2.12"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
+        buildConfigField("boolean", "SELF_UPDATE", (!playBuild).toString())
+        buildConfigField("boolean", "LINKS", (!noLinks).toString())
+        manifestPlaceholders["linksEnabled"] = (!noLinks).toString()
         if (blurA11y) versionNameSuffix = "-a11y"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,

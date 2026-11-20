@@ -105,8 +105,9 @@ The diagnostics report is how those answers will come back.
    network connection, reproducible-build notes. Done in 0.2.12: `linux/test_no_network.sh` (CI) runs the file,
    stream and live filters and the detector with every internet socket refused and logged, and
    `NoNetworkTest.kt` keeps network APIs out of Android's filter, muter and blur code (only the link screen and the
-   setup may use them); the Linux blur helper runs its X11 end-to-end test the same way. Still to do: the privacy
-   page, reproducible-build notes. Competitors' store labels contradict their claims
+   setup may use them); the Linux blur helper runs its X11 end-to-end test the same way. The privacy page
+   (`docs/PRIVACY.md`, English and Arabic) and the build-it-yourself notes (`docs/REPRODUCIBLE_BUILDS.md`) are written;
+   still open: hosting the page at a short URL, and checking that two machines build identical APKs. Competitors' store labels contradict their claims
    (finding 2.6); this is cheap and sets Waaiya apart.
 8. **Worship helpers that reuse what Waaiya already holds** (needs 9, 16): silent at prayer times and an optional
    "mute media at the adhan", computed on the phone from a city the user picks, each action announced in a
@@ -116,9 +117,10 @@ The diagnostics report is how those answers will come back.
 10. **More languages** (need 11): French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay are in since 0.2.12
     as machine translations, with Android's own Settings wording and pictures of the setup in each. Each still
     needs a native reviewer; "Arabic that needs fixing" is itself a complaint (finding 3.15).
-11. **Distribution**: decide on Google's developer verification (live in Indonesia, Brazil, Singapore, Thailand
-    since 2026-09-30, global in 2027 [D5]; it needs an identity check); a Play build without the link
-    downloader's self-update; F-Droid.
+11. **Distribution** (`docs/DISTRIBUTION.md`): decide on Google's developer verification (live in Indonesia, Brazil,
+    Singapore, Thailand since 2026-09-30, global in 2027 [D5]; it needs an identity check). Ready: a Play build
+    option without the link downloader's self-update (`-PimPlay`) and one without links (`-PimNoLinks`), fastlane
+    texts for IzzyOnDroid (en, ar, fr). F-Droid's main repository needs builds from source of ONNX Runtime.
 12. **Other platforms**: Windows engine and blur; Linux blur on real Wayland sessions; Android TV (need 8,
     [G6]); iPhone in-app player and Safari extension (need 12).
 

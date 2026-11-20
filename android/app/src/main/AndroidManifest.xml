@@ -90,6 +90,7 @@
 
         <!-- Paste or share a link (YouTube, TikTok, ...): watch, save or share it without music. -->
         <activity android:name=".LinkActivity" android:exported="true" android:launchMode="singleTop"
+            android:enabled="${linksEnabled}"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
