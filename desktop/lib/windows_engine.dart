@@ -9,18 +9,27 @@ import 'filter_host.dart';
 /// The Windows sound filter shipped in the desktop bundle (`<bundle>\engine\waaiya-filter.exe`, windows/filter).
 ///
 /// It runs from the bundle, detached from the app, so it keeps filtering when the app is closed; "Start at login"
-/// is a value under the user's Run key. It reads the app's own settings file (%APPDATA%\Waaiya\settings.json) and
+/// is a value under the user's Run key, or, in the Microsoft Store package (desktop/msix, [packaged]), the file
+/// `autostart` that the package's startup task (`waaiya-filter autostart`, at every login) looks for: a packaged
+/// app's registry writes stay inside the package, where Windows does not read Run values. It reads the app's own settings file (%APPDATA%\Waaiya\settings.json) and
 /// applies changes while it runs, so the setting calls here have nothing to do: the app has saved the file first.
 /// Its state is %LOCALAPPDATA%\Waaiya\filter\state.json, read directly ([status]).
 ///
 /// How it filters: every other app is turned down to -80 dB, their mix is read by process loopback, brought back up,
 /// filtered and played. When it dies, Windows keeps the apps turned down (silent) until Start or Stop.
 class WindowsEngine implements FilterHost {
-  WindowsEngine(this.dir, {Map<String, String>? environment}) : env = environment ?? Platform.environment;
+  WindowsEngine(this.dir, {Map<String, String>? environment, bool? packaged})
+      : env = environment ?? Platform.environment,
+        packaged = packaged ?? isPackagedPath(dir.path);
 
   /// `<bundle>\engine`.
   final Directory dir;
   final Map<String, String> env;
+
+  /// Installed from the Microsoft Store (an MSIX package): the app runs from `C:\Program Files\WindowsApps`.
+  final bool packaged;
+
+  static bool isPackagedPath(String path) => path.toLowerCase().contains(r'\windowsapps\');
 
   static const runValue = 'WaaiyaFilter';
   static const _runKey = r'HKCU\Software\Microsoft\Windows\CurrentVersion\Run';
@@ -111,6 +120,20 @@ class WindowsEngine implements FilterHost {
 
   @override
   Future<BackendMessage?> setAutostart(bool on) async {
+    if (packaged) {
+      final f = File('$stateDir\\autostart');
+      try {
+        if (on) {
+          await f.parent.create(recursive: true);
+          await f.writeAsString('1\n');
+        } else if (await f.exists()) {
+          await f.delete();
+        }
+        return null;
+      } on IOException catch (e) {
+        return BackendMessage('start_failed', '$e');
+      }
+    }
     final r = await _run('reg', [
       if (on) 'add' else 'delete',
       _runKey,
@@ -124,7 +147,9 @@ class WindowsEngine implements FilterHost {
     return BackendMessage('start_failed', _detail(r));
   }
 
-  Future<bool> _autostart() async => (await _run('reg', ['query', _runKey, '/v', runValue])).exitCode == 0;
+  Future<bool> _autostart() async => packaged
+      ? File('$stateDir\\autostart').exists()
+      : (await _run('reg', ['query', _runKey, '/v', runValue])).exitCode == 0;
 
   /// Read from state.json directly (the filter rewrites it at least every 2 s; older than 5 s, it is not running or
   /// stuck), not from `waaiya-filter status`: no process per poll, and no reliance on a GUI program's console output.

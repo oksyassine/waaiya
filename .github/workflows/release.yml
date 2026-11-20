@@ -193,13 +193,18 @@ jobs:
             Write-Host "$f : $($s.Status) $($s.SignerCertificate.Subject)"
             if ($s.Status -ne "Valid") { throw "$f is not validly signed ($($s.Status))" }
           }
+      # the Microsoft Store package (unsigned: the Store signs it), uploaded in Partner Center by the owner;
+      # tested installed and running by windows.yml's msix job
+      - name: Microsoft Store package
+        shell: pwsh
+        run: desktop/tool/make_msix.ps1 -App desktop/build/windows/x64/runner/Release -Out "waaiya-store-x64-$env:GITHUB_REF_NAME.msix"
       - name: Package
         shell: pwsh
         run: |
           Rename-Item desktop/build/windows/x64/runner/Release waaiya
           Compress-Archive -Path desktop/build/windows/x64/runner/waaiya -DestinationPath "waaiya-desktop-windows-x64-$env:GITHUB_REF_NAME.zip"
       - uses: actions/upload-artifact@v4
-        with: { name: windows-desktop, path: "waaiya-desktop-windows-x64-*.zip" }
+        with: { name: windows-desktop, path: "waaiya-*-x64-*.*" }
 
   # Linux desktop app: built on 22.04 (GLib 2.72) like flutter.yml, so it starts on older systems
   linux-desktop:

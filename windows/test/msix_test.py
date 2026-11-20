@@ -1,0 +1,168 @@
+"""The Microsoft Store package (MSIX, desktop/tool/make_msix.ps1), installed and run on a GitHub Windows runner with
+the Scream virtual output (windows/test/audio_device.ps1). The packages must be signed with a test certificate
+whose subject is the Store publisher, trusted by the runner (the CI step does both).
+
+    python windows/test/msix_test.py <build-win (waaiya-wtest.exe)> <waaiya.msix> <the same, higher version>
+
+What it checks (a failed check exits 1 at the end; the rest prints what happened, for docs/PLATFORMS.md):
+  1. it installs, with the package family name of the Store's identity, and the app starts from it
+  2. the filter inside the package lowers another app and Stop gives its level back
+  3. where its state is (a packaged program's AppData writes may go to the package's own folder)
+  4. the startup task's command: does nothing when "Start at login" is off and nothing is stored; filters when on
+  5. a Store update while filtering: the filter is ended; at the next login (the startup task) the apps get their
+     sound back
+  6. uninstalling while filtering (reported: Windows ends the filter; the apps' levels stay lowered)
+"""
+import os
+import subprocess
+import sys
+import time
+
+import audio_test as at  # noqa: E402  (BIN = argv[1])
+
+MSIX, MSIX2 = os.path.abspath(sys.argv[2]), os.path.abspath(sys.argv[3])
+NAME = "Oks.Waaiya"
+PFN = "Oks.Waaiya_wa2h0h9gfqbyp"
+LOCAL = os.environ["LOCALAPPDATA"]
+DIRS = [os.path.join(LOCAL, "Packages", PFN, "LocalCache", "Local", "Waaiya", "filter"),
+        os.path.join(LOCAL, "Waaiya", "filter")]
+
+
+def ps(cmd, check=True):
+    r = subprocess.run(["powershell", "-NoProfile", "-NonInteractive", "-Command",
+                        "$ErrorActionPreference='Stop'; " + cmd], capture_output=True, text=True, timeout=300)
+    out = (r.stdout + r.stderr).strip()
+    if r.returncode and check:
+        print(f"powershell: {cmd}\n  exit {r.returncode}: {out}", flush=True)
+    return r.returncode, out
+
+
+def install_dir():
+    return ps(f"(Get-AppxPackage -Name {NAME}).InstallLocation")[1]
+
+
+def in_package(*args):
+    """Runs the packaged filter inside the package (as the app and the startup task run it)."""
+    exe = os.path.join(install_dir(), "engine", "waaiya-filter.exe")
+    a = " ".join(args)
+    return ps(f"Invoke-CommandInDesktopPackage -PackageFamilyName {PFN} -AppId Waaiya -Command '{exe}' -Args '{a}'")
+
+
+def running(image):
+    r = subprocess.run(["tasklist", "/fi", f"imagename eq {image}", "/fo", "csv", "/nh"], capture_output=True, text=True)
+    return image.lower() in r.stdout.lower()
+
+
+def wait_volume(pid, below=None, above=None, seconds=20):
+    v = None
+    for _ in range(seconds * 2):
+        v = at.volume(pid, wait=1)
+        if v is not None and ((below is not None and v < below) or (above is not None and v > above)):
+            return True, v
+        time.sleep(0.5)
+    return False, v
+
+
+def state_dir():
+    """The folder the packaged filter writes its state to (the freshest state.json)."""
+    best = None
+    for d in DIRS:
+        f = os.path.join(d, "state.json")
+        if os.path.exists(f) and (best is None or os.path.getmtime(f) > os.path.getmtime(os.path.join(best, "state.json"))):
+            best = d
+    return best
+
+
+def kill_filters():
+    subprocess.run(["taskkill", "/f", "/im", "waaiya-filter.exe"], capture_output=True)
+
+
+def main():
+    # 1. install, identity, the app starts
+    rc, out = ps(f"Add-AppxPackage -Path '{MSIX}'")
+    at.check(rc == 0, "the package installs" + ("" if rc == 0 else f": {out}"))
+    pfn = ps(f"(Get-AppxPackage -Name {NAME}).PackageFamilyName")[1]
+    at.check(pfn == PFN, f"package family name {pfn!r} is the Store's {PFN!r}")
+    print("  installed in " + install_dir(), flush=True)
+    print("  manifest startup task: " + ps(f"(Get-AppxPackageManifest -Package (Get-AppxPackage -Name {NAME})).Package."
+                                           "Applications.Application.Extensions.Extension.StartupTask | Out-String")[1])
+    subprocess.run(["explorer.exe", f"shell:AppsFolder\\{PFN}!Waaiya"])
+    ok = False
+    for _ in range(30):
+        if running("waaiya_desktop.exe"):
+            ok = True
+            break
+        time.sleep(0.5)
+    time.sleep(5)
+    at.check(ok and running("waaiya_desktop.exe"), "the app starts from the package and keeps running")
+    subprocess.run(["taskkill", "/f", "/im", "waaiya_desktop.exe"], capture_output=True)
+
+    # 2. the packaged filter lowers another app; Stop gives its level back
+    tone, pid = at.tone("musicapp")
+    in_package("run")
+    ok, v = wait_volume(pid, below=0.001)
+    at.check(ok, f"the filter inside the package lowers another app (its level {v})")
+    d = state_dir()
+    print(f"  3. state written to {d}", flush=True)
+    at.check(d is not None, "the packaged filter writes its state")
+    in_package("stop")
+    ok, v = wait_volume(pid, above=0.99)
+    at.check(ok, f"Stop inside the package gives the level back ({v})")
+    time.sleep(2)
+    kill_filters()  # the restorer that stays for apps not running
+
+    # 4. the startup task's command
+    if d:
+        for f in ("autostart", "levels.txt"):
+            try:
+                os.remove(os.path.join(d, f))
+            except OSError:
+                pass
+    in_package("autostart")
+    time.sleep(4)
+    at.check(not running("waaiya-filter.exe"), "startup task, 'Start at login' off, nothing stored: nothing runs")
+    with open(os.path.join(d or DIRS[0], "autostart"), "w") as f:
+        f.write("1\n")
+    in_package("autostart")
+    ok, v = wait_volume(pid, below=0.001)
+    at.check(ok, f"startup task, 'Start at login' on: filtering ({v})")
+    os.remove(os.path.join(d or DIRS[0], "autostart"))
+
+    # 5. a Store update while filtering, then the next login
+    rc, out = ps(f"Add-AppxPackage -Path '{MSIX2}' -ForceApplicationShutdown")
+    at.check(rc == 0, "the higher version installs over it while filtering" + ("" if rc == 0 else f": {out}"))
+    time.sleep(3)
+    alive = running("waaiya-filter.exe")
+    v = at.volume(pid, wait=1)
+    print(f"  5. after the update: filter running {alive}, the other app's level {v}", flush=True)
+    stored = d and os.path.exists(os.path.join(d, "levels.txt")) and os.path.getsize(os.path.join(d, "levels.txt")) > 0
+    print(f"     stored levels kept through the update: {bool(stored)}", flush=True)
+    if alive:
+        in_package("stop")
+    else:
+        in_package("autostart")  # what the startup task does at the next login
+    ok, v = wait_volume(pid, above=0.99)
+    at.check(ok, f"after an update while filtering, the next login (or Stop) gives the level back ({v})")
+    time.sleep(2)
+    kill_filters()
+
+    # 6. uninstall while filtering
+    in_package("run")
+    ok, v = wait_volume(pid, below=0.001)
+    rc, out = ps(f"Remove-AppxPackage -Package (Get-AppxPackage -Name {NAME}).PackageFullName")
+    at.check(rc == 0, "the package uninstalls while filtering" + ("" if rc == 0 else f": {out}"))
+    time.sleep(3)
+    v = at.volume(pid, wait=1)
+    print(f"  6. after uninstalling while filtering: filter running {running('waaiya-filter.exe')}, the other app's "
+          f"level {v} (lowered = it stays quiet until raised in the Volume Mixer)", flush=True)
+    print(f"     package data left: {os.path.exists(os.path.join(LOCAL, 'Packages', PFN))}", flush=True)
+    kill_filters()
+    at.wtest("volume", "--pid", pid, "--set", "1")
+    tone.kill()
+
+    print("\n" + ("ALL PASSED" if not at.failures else f"{len(at.failures)} FAILED: " + "; ".join(at.failures)))
+    sys.exit(1 if at.failures else 0)
+
+
+if __name__ == "__main__":
+    main()

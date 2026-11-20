@@ -67,6 +67,23 @@ void main() {
     tmp.deleteSync(recursive: true);
   });
 
+  test('Store package: "Start at login" is the file the startup task looks for, not a Run value', () async {
+    expect(WindowsEngine.isPackagedPath(r'C:\Program Files\WindowsApps\Oks.Waaiya_1.2.13.0_x64__wa2h0h9gfqbyp\engine'),
+        isTrue);
+    expect(WindowsEngine.isPackagedPath(r'C:\Users\a\Downloads\waaiya\engine'), isFalse);
+    final tmp = Directory.systemTemp.createTempSync('waaiya-win-');
+    final e = WindowsEngine(tmp, environment: {'LOCALAPPDATA': tmp.path}, packaged: true);
+    final marker = File('${e.stateDir}\\autostart');
+    expect(await e.setAutostart(true), isNull);
+    expect(marker.existsSync(), isTrue);
+    expect((await e.status()).autostart, isTrue);
+    expect(await e.setAutostart(false), isNull);
+    expect(marker.existsSync(), isFalse);
+    expect((await e.status()).autostart, isFalse);
+    expect(await e.setAutostart(false), isNull); // already off
+    tmp.deleteSync(recursive: true);
+  });
+
   test('Windows build from the OS version string', () {
     expect(WindowsEngine.windowsBuild('"Windows 10 Pro" 10.0 (Build 19045)'), 19045);
     expect(WindowsEngine.windowsBuild('"Windows 10 Pro" 10.0 (Build 18363)'), 18363);

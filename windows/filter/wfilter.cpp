@@ -7,6 +7,9 @@
 //                             done here
 //   waaiya-filter restore     only give back stored levels, as apps show up; exits once none is left
 //   waaiya-filter status      prints the state file (state.json) and whether a filter process holds it
+//   waaiya-filter autostart   at login, from the Microsoft Store package's startup task (desktop/msix): filters
+//                             when the app's "Start at login" is on (the file <dir>\autostart), else only gives
+//                             back levels still stored (the computer was turned off while filtering), else exits
 //
 // How it works (reports/desktop_windows_macos_scope.md, route C2): every other app's audio session is turned down
 // to 1e-4 (-80 dB) of the user's level (sessions.cpp), so the original is practically silent; one process-loopback
@@ -792,6 +795,16 @@ int cmd_stop(const Paths &p) {
     return 0;
 }
 
+// The Store package's startup task runs at every login (the package cannot add a Run value): the app's "Start at
+// login" is the file <dir>\autostart there.
+int cmd_autostart(const Paths &p) {
+    if (exists(p.dir + L"\\autostart")) return cmd_run(p, false, false);
+    WIN32_FILE_ATTRIBUTE_DATA a;
+    if (GetFileAttributesExW(p.store.c_str(), GetFileExInfoStandard, &a) && (a.nFileSizeLow | a.nFileSizeHigh))
+        return cmd_run(p, false, true);
+    return 0;
+}
+
 int cmd_status(const Paths &p) {
     HANDLE mtx = OpenMutexW(SYNCHRONIZE, FALSE, MUTEX_NAME);
     bool alive = mtx != nullptr;
@@ -809,7 +822,7 @@ int cmd_status(const Paths &p) {
 
 void usage() {
     fprintf(stderr, "usage: waaiya-filter run [--bypass] [--model F] [--detector F] [--settings F] [--dir D] "
-                    "[--log-stderr]\n       waaiya-filter stop | restore | status [--dir D]\n");
+                    "[--log-stderr]\n       waaiya-filter stop | restore | status | autostart [--dir D]\n");
 }
 
 } // namespace
@@ -851,6 +864,7 @@ int wmain(int argc, wchar_t **argv) {
     else if (cmd == L"restore") r = cmd_run(p, false, true);
     else if (cmd == L"stop") r = cmd_stop(p);
     else if (cmd == L"status") r = cmd_status(p);
+    else if (cmd == L"autostart") r = cmd_autostart(p);
     else {
         usage();
         r = 2;
