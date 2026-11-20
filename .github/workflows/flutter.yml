@@ -73,7 +73,9 @@ jobs:
           make check-blur-abi BLUR_ABI_CFLAGS="$(pkg-config --cflags libpipewire-0.3 wayland-client)"
       - name: Screen blur on a real X server (Xvfb, the helper as bundled)
         run: |
-          python3 linux/blur/test_x11.py
+          make build/no-network.so
+          # the first run with every internet socket refused (privacy check, linux/no_network.c)
+          WAAIYA_NO_NETWORK_SHIM=build/no-network.so python3 linux/blur/test_x11.py
           python3 linux/blur/test_x11.py --compositor "xcompmgr -n"   # with a compositing manager
       - name: Screen blur overlay on Wayland (sway headless, wlr-layer-shell)
         run: python3 linux/blur/test_layer_shell.py

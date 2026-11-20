@@ -102,7 +102,11 @@ The diagnostics report is how those answers will come back.
 6. **Keep singing as an option** (need 1, lectures with a nasheed under them [S6]): finish `voice_v1`; a setting,
    since what counts as acceptable differs.
 7. **Proof of the privacy claim** (need 5): a plain privacy page, a test that the filter and blur paths open no
-   network connection, reproducible-build notes. Competitors' store labels contradict their claims
+   network connection, reproducible-build notes. Done in 0.2.12: `linux/test_no_network.sh` (CI) runs the file,
+   stream and live filters and the detector with every internet socket refused and logged, and
+   `NoNetworkTest.kt` keeps network APIs out of Android's filter, muter and blur code (only the link screen and the
+   setup may use them); the Linux blur helper runs its X11 end-to-end test the same way. Still to do: the privacy
+   page, reproducible-build notes. Competitors' store labels contradict their claims
    (finding 2.6); this is cheap and sets Waaiya apart.
 8. **Worship helpers that reuse what Waaiya already holds** (needs 9, 16): silent at prayer times and an optional
    "mute media at the adhan", computed on the phone from a city the user picks, each action announced in a
@@ -123,8 +127,9 @@ The diagnostics report is how those answers will come back.
 Android:
 - When the capture ends by itself the blur stops too, so the screen is uncovered while the sound stays silent
   (see "Done in 0.2.10"). Keeping a cover would need its own decision: nothing can be analysed then.
-- `im_engine_set_enabled(e, 0)` (the Linux LADSPA plugin's A/B switch) passes the original through even on an
-  engine whose model failed to load. Android never calls it.
+- Fixed (0.2.12): `im_engine_set_enabled(e, 0)` (the Linux LADSPA plugin's A/B switch) passed the original
+  through on an engine whose model failed to load; a failed engine now ignores it and stays silent
+  (`engine/test/test_failclosed.c`).
 
 Linux and desktop (branch `flutter-ui`): the 2026-11-12 audit's items are fixed there, not released yet:
 - Fixed: a nudity cover over a still image came back no more after 3 s (the last frame is now analysed again
@@ -141,13 +146,15 @@ Linux and desktop (branch `flutter-ui`): the 2026-11-12 audit's items are fixed 
   the build.
 - Not verified on real hardware yet: multi-monitor Wayland (portal) and a resolution change under GNOME are
   covered by code review and unit tests only; CI runs Xvfb and sway headless with one output.
-- Open: a filter that keeps crashing between two status polls still reads as filtering; mono by default
-  (0.2.10) not yet heard on a real sound server. Done in 0.2.10: the stereo and keep-silent switches, "Stop:
+- Fixed (0.2.12): a filter that kept crashing between two status polls read as filtering. `waaiya status` now
+  says `restarts: N in the last minute`, and the app shows "The filter stopped with an error" from 3 restarts
+  (`linux/test_daemon_fake.py`, `desktop/test/linux_engine_test.dart`). Open: mono by default (0.2.10) not yet
+  heard on a real sound server. Done in 0.2.10: the stereo and keep-silent switches, "Stop:
   hear apps unfiltered" while apps are held silent, the desktop notice in Arabic or English.
 
-CI: no release asset holds the women's-singing detector, so release APKs built by CI have no women's-singing
-filter (the build warns) and `test-detector` is skipped there with a notice. The owner decides whether to publish
-`detector_v1.onnx` as a release asset. No test yet covers the blur loop on a device or the link export.
+CI: the women's-singing detector is in the `models-v1` release since 0.2.12 (owner's decision, 2026-11-20); every
+CI build (Linux, Android, Windows, releases) fetches it and fails without it, and `test-detector` runs on Linux and
+Windows. No test yet covers the blur loop on a device or the link export.
 
 ## Not building
 
@@ -165,5 +172,4 @@ filter (the build warns) and `test-detector` is skipped there with a notice. The
 
 - Developer verification: register (identity check) or rely on the advanced install flow.
 - Whether the waiting period (item 4) may delay switching the filter off, or only weakening the blur.
-- Whether to publish the women's-singing detector (`detector_v1.onnx`) as a release asset, so CI-built APKs
-  include it.
+- Decided 2026-11-20: the women's-singing detector is published (`models-v1`), so every build has it.
