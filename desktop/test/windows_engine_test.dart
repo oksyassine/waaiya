@@ -105,4 +105,25 @@ void main() {
   test('a test run is not a packaged app', () {
     expect(WindowsEngine.isPackagedProcess(), isFalse);
   });
+
+  test("the apps with sound come from the filter's state: file name and the name Windows shows", () {
+    const st = '{"pid":1,"state":"filtering","apps":[{"exe":"chrome.exe","name":"Google Chrome"},'
+        '{"exe":"tone.exe"},{"name":"no file"},{"exe":""}]}';
+    final a = WindowsEngine.appsFrom(st);
+    expect(a.map((x) => x.exe), ['chrome.exe', 'tone.exe']);
+    expect(a.first.name, 'Google Chrome');
+    expect(a[1].name, 'tone.exe'); // no description: the file name
+    expect(WindowsEngine.appsFrom('{"apps":"x"}'), isEmpty);
+    expect(WindowsEngine.appsFrom('half {'), isEmpty);
+  });
+
+  test('the waiting period counts on the time since Windows started, which a clock change does not move', () {
+    final c = WindowsTickClock();
+    if (!Platform.isWindows) return;
+    final a = c.elapsedMs();
+    expect(a, greaterThan(0));
+    sleep(const Duration(milliseconds: 50));
+    expect(c.elapsedMs() - a, inInclusiveRange(40, 2000));
+    expect(c.bootId(), 'windows'); // a restart shows as a lower count, never as more time
+  });
 }

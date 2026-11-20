@@ -179,7 +179,118 @@ def stop_filter(p, log):
         print("  --- filter log\n" + "".join("  " + l for l in f.readlines()[-80:]), flush=True)
 
 
+def tone_db(x, freq):
+    """Level of one frequency in a recording (dB of the amplitude of a sine at that frequency, both channels)."""
+    x = np.asarray(x, dtype=np.float64)
+    if x.size < RATE:
+        return -200.0
+    m = x[: (x.size // 2) * 2].reshape(-1, 2).mean(axis=1)
+    m = m[-RATE * 2:] if m.size > RATE * 2 else m
+    w = np.hanning(m.size)
+    spec = np.abs(np.fft.rfft(m * w)) * 2 / w.sum()
+    k = int(round(freq * m.size / RATE))
+    return 20 * math.log10(max(spec[max(k - 2, 0):k + 3].max(), 1e-12))
+
+
+def write_settings(**over):
+    s = {"audio_stereo": True, "hold_silence": True, "mute_women_singing": False}
+    s.update(over)
+    with open(SETTINGS, "w") as f:
+        json.dump(s, f)
+
+
+def test_off_apps():
+    print("=== 13. apps left unfiltered (filter_off_apps): not lowered, not captured, heard as they are; the others "
+          "filtered; the list changes live", flush=True)
+    a, apid = tone("tone-a", freq=220, level=0.1)
+    b, bpid = tone("tone-b", freq=1010, level=0.1)  # not an overtone of 220 Hz
+    ref = capture("both, no filter")
+    ref_a, ref_b = tone_db(ref, 220), tone_db(ref, 1010)
+    print(f"  reference: 220 Hz {ref_a:.1f} dB, 1010 Hz {ref_b:.1f} dB", flush=True)
+    write_settings(filter_off_apps="tone-b.exe, Some-Other.exe")
+    f, flog = start_filter()
+    va, vb = volume(apid), volume(bpid)
+    check(va is not None and abs(va - 1e-4) < 1e-6, f"the filtered app is lowered ({va})")
+    check(vb is not None and abs(vb - 1) < 1e-4, f"the app left unfiltered keeps its level ({vb})")
+    s = state()
+    check(s.get("captures", -1) >= 1, f"one capture per app ({s.get('captures')})")
+    check(any(x.get("exe") == "tone-b.exe" for x in s.get("apps", [])), f"the app list names it ({s.get('apps')})")
+    x = capture("filtering, tone-b left unfiltered", seconds=4)
+    fa, fb = tone_db(x, 220), tone_db(x, 1010)
+    print(f"  filtering: 220 Hz {fa:.1f} dB, 1010 Hz {fb:.1f} dB", flush=True)
+    check(abs(fb - ref_b) < 2.0, f"the app left unfiltered is heard once, at its level ({fb - ref_b:+.1f} dB)")
+    check(fa < ref_a - 10, f"the other app is still filtered ({fa - ref_a:+.1f} dB)")
+    check(state().get("leaks", 1) == 0, f"no leak ({state().get('leaks')})")
+    write_settings()  # taken off the list while filtering: lowered and filtered again
+    ok = False
+    for _ in range(20):
+        vb = volume(bpid, wait=1)
+        if vb is not None and abs(vb - 1e-4) < 1e-6:
+            ok = True
+            break
+        time.sleep(0.25)
+    check(ok, f"taken off the list: lowered again at once ({vb})")
+    time.sleep(1.5)
+    x = capture("filtering, both", seconds=3)
+    check(tone_db(x, 1010) < ref_b - 10, f"and filtered ({tone_db(x, 1010) - ref_b:+.1f} dB)")
+    write_settings(filter_off_apps="tone-b.exe")  # back on the list: its level back
+    ok = False
+    for _ in range(20):
+        vb = volume(bpid, wait=1)
+        if vb is not None and abs(vb - 1) < 1e-4:
+            ok = True
+            break
+        time.sleep(0.25)
+    check(ok, f"put on the list while filtering: its level back ({vb})")
+    stop_filter(f, flog)
+    va = volume(apid)
+    check(va is not None and abs(va - 1) < 1e-4, f"stop gives the filtered app its level back ({va})")
+    write_settings()
+    a.kill()
+    b.kill()
+
+
+def test_keep_singing():
+    print("=== 14. keep singing (voice_v1) switched while filtering: the other model loads beside the running one, "
+          "the sound never stops, nothing unfiltered", flush=True)
+    if not os.path.exists(os.path.join(BIN, "models", "voice", "v3", "voice_v1_fp16.onnx")):
+        check(False, "the keep-singing model is next to the filter (models/voice/v3)")
+        return
+    a, apid = tone("tone-k", freq=220, level=0.1)
+    ref = tone_db(capture("tone alone"), 220)
+    write_settings()
+    f, flog = start_filter()
+    check(state().get("keep_singing") is False, f"default model at the start ({state().get('keep_singing')})")
+    for on in (True, False, True):
+        write_settings(keep_singing=on)
+        frames = state().get("cap_frames", 0)
+        ok = False
+        for _ in range(60):
+            s = state()
+            if s.get("keep_singing") is on:
+                ok = True
+                break
+            time.sleep(0.25)
+        check(ok and s.get("engine") == "ok", f"keep singing {'on' if on else 'off'}: that model runs ({s.get('keep_singing')}, "
+              f"engine {s.get('engine')})")
+        check(s.get("state") == "filtering" and s.get("cap_frames", 0) > frames, "the sound kept flowing during the switch")
+        check(flowing(), "and flows after it")
+        x = capture(f"keep singing {on}", seconds=3)
+        check(tone_db(x, 220) < ref - 10, f"the instrument tone stays removed ({tone_db(x, 220) - ref:+.1f} dB)")
+    check(state().get("leaks", 1) == 0, f"no leak ({state().get('leaks')})")
+    stop_filter(f, flog)
+    write_settings()
+    a.kill()
+
+
 def main():
+    only = os.environ.get("AUDIO_TEST_ONLY")  # one test on a PC: AUDIO_TEST_ONLY=13 or 14
+    if only in ("13", "14"):
+        os.makedirs(STATE_DIR, exist_ok=True)
+        write_settings()
+        test_off_apps() if only == "13" else test_keep_singing()
+        print("\n" + ("all checks passed" if not failures else f"{len(failures)} check(s) failed:\n  " + "\n  ".join(failures)))
+        sys.exit(1 if failures else 0)
     os.makedirs(STATE_DIR, exist_ok=True)
     with open(SETTINGS, "w") as f:
         json.dump({"audio_stereo": True, "hold_silence": True, "mute_women_singing": False}, f)
@@ -373,6 +484,9 @@ def main():
     s = state()
     check(s.get("state") in ("stopped", "restoring"), f"the state says stopped, not filtering ({s.get('state')})")
     e.kill()
+
+    test_off_apps()
+    test_keep_singing()
 
     print()
     if failures:

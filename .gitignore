@@ -45,6 +45,8 @@ data/
 *.flac
 *.mp3
 *.ogg
+# ...except Waaiya's own plain tones (scripts/make_tones.py, CC0, a few KB each)
+!android/app/src/main/res/raw/worship_*.ogg
 *.raw
 
 # --- Evaluation: keep the Markdown reports, not raw per-item output ---
@@ -96,3 +98,4 @@ models/vision/*.log
 .claude/
 third_party/links-win/
 third_party/ffmpeg-win/
+third_party/llvm-mingw-win/

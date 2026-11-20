@@ -42,6 +42,7 @@ jobs:
           scripts/fetch_deps.sh detector
           # the women's-singing model is in the models-v1 release since 0.2.12: the Windows app must have it
           [ -f models/detector/detector_v1.onnx ] || { echo "::error::women's-singing model not fetched"; exit 1; }
+          [ -f models/voice/v3/voice_v1_fp16.onnx ] || { echo "::error::keep-singing model not fetched"; exit 1; }
           # Links ("save without music"): yt-dlp and QuickJS-ng, pinned and checksummed
           scripts/fetch_deps.sh links-win
         env:
@@ -56,6 +57,7 @@ jobs:
           cp models/dfn3/dfn3_stream_int8.* build-win/models/dfn3/
           cp models/vision/*.onnx build-win/models/vision/
           mkdir -p build-win/models/detector && cp models/detector/detector_v1.onnx build-win/models/detector/
+          mkdir -p build-win/models/voice/v3 && cp models/voice/v3/voice_v1_fp16.onnx models/voice/v3/voice_v1_fp16.state_init.bin build-win/models/voice/v3/
           mkdir -p build-win/links
           cp third_party/links-win/yt-dlp.exe third_party/links-win/qjs.exe third_party/links-win/*.txt build-win/links/
           cp third_party/ffmpeg-win/ffmpeg.exe third_party/ffmpeg-win/*.txt build-win/links/

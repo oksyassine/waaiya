@@ -9,6 +9,7 @@
 #   engine\waaiya-filter.exe  engine\waaiya-blur.exe  engine\onnxruntime.dll
 #   engine\models\dfn3\dfn3_stream_int8.{onnx,state_init.bin}  engine\models\vision\*.onnx
 #   engine\models\detector\detector_v1.onnx (if present)
+#   engine\models\voice\v3\voice_v1_fp16.{onnx,state_init.bin} (keep singing, if present)
 #   engine\im-process.exe, engine\links\{yt-dlp,qjs,ffmpeg}.exe: "save a link without music" (desktop/lib/links.dart),
 #                    when build-win has them (links/ from scripts/fetch_deps.sh links-win and scripts/build_ffmpeg_win.sh);
 #                    make_msix.ps1 leaves them out of the Microsoft Store package (watch only there)
@@ -34,6 +35,10 @@ cp "$BIN"/models/dfn3/dfn3_stream_int8.onnx "$BIN"/models/dfn3/dfn3_stream_int8.
 for f in "${VISION[@]}"; do cp "$BIN/models/vision/$f" "$E/models/vision/"; done
 if [ -f "$BIN/models/detector/detector_v1.onnx" ]; then
     mkdir -p "$E/models/detector" && cp "$BIN/models/detector/detector_v1.onnx" "$E/models/detector/"
+fi
+# "keep singing" (voice_v1, a test): the filter switches to it while running (setting keep_singing)
+if [ -f "$BIN/models/voice/v3/voice_v1_fp16.onnx" ] && [ -f "$BIN/models/voice/v3/voice_v1_fp16.state_init.bin" ]; then
+    mkdir -p "$E/models/voice/v3" && cp "$BIN"/models/voice/v3/voice_v1_fp16.{onnx,state_init.bin} "$E/models/voice/v3/"
 fi
 LINKS=(yt-dlp.exe qjs.exe ffmpeg.exe)
 links=1

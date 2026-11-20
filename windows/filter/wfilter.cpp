@@ -162,7 +162,68 @@ struct Settings {
     bool stereo = false;        // audio_stereo (default mono)
     bool hold_silence = true;   // hold_silence
     bool women_singing = false; // mute_women_singing
+    bool keep_singing = false;  // keep_singing: the voice_v1 model (a test)
+    std::vector<std::wstring> off_apps; // filter_off_apps: "chrome.exe,spotify.exe", heard unfiltered (lower case)
+
+    bool same(const Settings &o) const {
+        return stereo == o.stereo && hold_silence == o.hold_silence && women_singing == o.women_singing &&
+               keep_singing == o.keep_singing && off_apps == o.off_apps;
+    }
 };
+
+// A JSON string value ("" when missing or not a string); \" \\ \/ \uXXXX (BMP) understood.
+std::string json_str_value(const std::string &s, const char *key) {
+    std::string k = std::string("\"") + key + "\"";
+    size_t p = s.find(k);
+    if (p == std::string::npos) return "";
+    p = s.find(':', p + k.size());
+    if (p == std::string::npos) return "";
+    p++;
+    while (p < s.size() && (s[p] == ' ' || s[p] == '\t' || s[p] == '\r' || s[p] == '\n')) p++;
+    if (p >= s.size() || s[p] != '"') return "";
+    std::string v;
+    for (p++; p < s.size() && s[p] != '"'; p++) {
+        if (s[p] != '\\' || p + 1 >= s.size()) {
+            v += s[p];
+            continue;
+        }
+        char c = s[++p];
+        if (c == 'u' && p + 4 < s.size()) {
+            unsigned cp = (unsigned)strtoul(s.substr(p + 1, 4).c_str(), nullptr, 16);
+            p += 4;
+            if (cp < 0x80) v += (char)cp;
+            else if (cp < 0x800) { v += (char)(0xC0 | (cp >> 6)); v += (char)(0x80 | (cp & 0x3F)); }
+            else { v += (char)(0xE0 | (cp >> 12)); v += (char)(0x80 | ((cp >> 6) & 0x3F)); v += (char)(0x80 | (cp & 0x3F)); }
+        } else {
+            v += c == 'n' ? '\n' : (c == 't' ? '\t' : c);
+        }
+    }
+    return v;
+}
+
+// "Chrome.exe, spotify.exe" -> {"chrome.exe", "spotify.exe"}; only file names ending in .exe count
+std::vector<std::wstring> exe_list(const std::string &csv) {
+    std::vector<std::wstring> out;
+    std::wstring w = im_wide(csv.c_str()), cur;
+    auto add = [&] {
+        size_t a = cur.find_first_not_of(L" \t"), b = cur.find_last_not_of(L" \t");
+        if (a != std::wstring::npos) {
+            std::wstring n = cur.substr(a, b - a + 1);
+            for (auto &ch : n) ch = (wchar_t)towlower(ch);
+            if (n.size() > 4 && n.compare(n.size() - 4, 4, L".exe") == 0 && n.find(L'\\') == std::wstring::npos &&
+                std::find(out.begin(), out.end(), n) == out.end())
+                out.push_back(n);
+        }
+        cur.clear();
+    };
+    for (wchar_t ch : w) {
+        if (ch == L',' || ch == L'\n') add();
+        else cur += ch;
+    }
+    add();
+    std::sort(out.begin(), out.end());
+    return out;
+}
 
 bool json_bool(const std::string &s, const char *key, bool def) {
     std::string k = std::string("\"") + key + "\"";
@@ -189,6 +250,8 @@ Settings read_settings(const std::wstring &path) {
     st.stereo = json_bool(s, "audio_stereo", st.stereo);
     st.hold_silence = json_bool(s, "hold_silence", st.hold_silence);
     st.women_singing = json_bool(s, "mute_women_singing", st.women_singing);
+    st.keep_singing = json_bool(s, "keep_singing", st.keep_singing);
+    st.off_apps = exe_list(json_str_value(s, "filter_off_apps"));
     return st;
 }
 
@@ -205,6 +268,10 @@ struct State {
     float cap_peak = 0, out_peak = 0;                  // over the last state period (raw capture, before the gain)
     double delay_ms = 0, cpu = 0;
     bool mono = true, women_singing = false, bypass = false;
+    bool keep_singing = false; // the running engine is the keep-singing model
+    int captures = -1;         // -1: one capture of every app; else one per app (apps left unfiltered), how many
+    int silent = 0;            // apps that cannot be captured apart from one left unfiltered: kept silent
+    std::string apps = "[]";   // the apps with a sound session now: [{"exe":"chrome.exe","name":"Google Chrome"}]
 };
 
 std::string json_str(const std::string &s) {
@@ -235,10 +302,15 @@ void write_state(const std::wstring &dir, const State &s) {
              json_str(s.error).c_str(), json_str(s.device).c_str(), s.lowered, s.pending, s.leaks, s.underruns,
              s.dropped, s.delay_ms, s.cpu, s.cap_frames, s.out_frames, s.cap_peak, s.out_peak, s.mono ? "true" : "false", s.women_singing ? "true" : "false",
              s.bypass ? "true" : "false");
+    std::string out = buf;
+    char more[160];
+    snprintf(more, sizeof more, ",\"keep_singing\":%s,\"captures\":%d,\"silent\":%d,\"apps\":",
+             s.keep_singing ? "true" : "false", s.captures, s.silent);
+    out.insert(out.size() - 2, std::string(more) + s.apps); // before the closing "}\n"
     std::wstring p = dir + L"\\state.json", tmp = p + L".tmp";
     FILE *f = _wfopen(tmp.c_str(), L"wb");
     if (!f) return;
-    fputs(buf, f);
+    fputs(out.c_str(), f);
     fclose(f);
     MoveFileExW(tmp.c_str(), p.c_str(), MOVEFILE_REPLACE_EXISTING);
 }
@@ -258,17 +330,55 @@ struct Audio {
     Com<IAudioCaptureClient> cap;
     Com<IAudioClient> out_client;
     Com<IAudioRenderClient> out;
-    HANDLE cap_event = CreateEventW(nullptr, FALSE, FALSE, nullptr);
+    HANDLE cap_event = CreateEventW(nullptr, FALSE, FALSE, nullptr); // shared by every capture
     UINT32 out_frames = 0;
     std::wstring out_id;
     std::string out_name;
     bool running = false;
 
+    // Apps left unfiltered (filter_off_apps): Windows' process loopback leaves out one process tree only (ours), so
+    // then each other app gets a capture of its own (include mode, its process tree) and the captures are mixed.
+    struct App {
+        DWORD pid = 0;
+        Com<IAudioClient> client;
+        Com<IAudioCaptureClient> cap;
+        std::vector<float> fifo; // gained samples not mixed yet
+        double last = -1e9;      // when it last delivered (ms)
+    };
+    bool multi = false;
+    std::vector<App> apps;
+
     ~Audio() { CloseHandle(cap_event); }
+
+    // A capture of [pid]'s process tree: "" or what failed.
+    std::string open_app(DWORD pid) {
+        App a;
+        a.pid = pid;
+        HRESULT hr;
+        WAVEFORMATEX fmt = im_float_format(RATE, CH);
+        const DWORD conv = AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM | AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY;
+        if (FAILED(hr = im_activate_process_loopback(pid, false, a.client.put()))) return "activate: " + im_hr(hr);
+        if (FAILED(hr = a.client->Initialize(AUDCLNT_SHAREMODE_SHARED,
+                                             AUDCLNT_STREAMFLAGS_LOOPBACK | AUDCLNT_STREAMFLAGS_EVENTCALLBACK | conv,
+                                             200000, 0, &fmt, nullptr)))
+            return "format: " + im_hr(hr);
+        if (FAILED(hr = a.client->SetEventHandle(cap_event))) return "event: " + im_hr(hr);
+        if (FAILED(hr = a.client->GetService(__uuidof(IAudioCaptureClient), reinterpret_cast<void **>(a.cap.put()))))
+            return "service: " + im_hr(hr);
+        if (FAILED(hr = a.client->Start())) return "start: " + im_hr(hr);
+        apps.push_back(std::move(a));
+        return "";
+    }
+
+    void close_app(size_t k) {
+        if (apps[k].client) apps[k].client->Stop();
+        apps.erase(apps.begin() + (long)k);
+    }
 
     void close() {
         if (cap_client) cap_client->Stop();
         if (out_client) out_client->Stop();
+        while (!apps.empty()) close_app(apps.size() - 1);
         cap.reset();
         cap_client.reset();
         out.reset();
@@ -287,9 +397,10 @@ struct Audio {
         return s;
     }
 
-    // "" on success, else what failed
-    std::string open() {
+    // "" on success, else what failed. [per_app]: no capture here, one per app (sync_captures)
+    std::string open(bool per_app) {
         close();
+        multi = per_app;
         HRESULT hr;
         if (!devices &&
             FAILED(hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), nullptr, CLSCTX_ALL,
@@ -315,6 +426,11 @@ struct Audio {
         if (FAILED(hr = out_client->GetService(__uuidof(IAudioRenderClient), reinterpret_cast<void **>(out.put()))))
             return "output: " + im_hr(hr);
 
+        if (per_app) {
+            if (FAILED(hr = out_client->Start())) return "output start: " + im_hr(hr);
+            running = true;
+            return "";
+        }
         // capture: every process except this one (our output is not captured again)
         if (FAILED(hr = im_activate_process_loopback(GetCurrentProcessId(), true, cap_client.put())))
             return "capture (Windows 10 2004 or newer needed): " + im_hr(hr);
@@ -496,6 +612,7 @@ struct Paths {
     std::wstring settings; // %APPDATA%\Waaiya\settings.json
     std::wstring store;    // <dir>\levels.txt
     std::wstring model, detector;
+    std::wstring singing; // keep singing (voice_v1): its path even when not bundled (then the engine fails: silence)
 };
 
 Paths default_paths() {
@@ -507,7 +624,143 @@ Paths default_paths() {
     p.store = p.dir + L"\\levels.txt";
     p.model = bundled(L"models\\dfn3\\dfn3_stream_int8.onnx");
     p.detector = bundled(L"models\\detector\\detector_v1.onnx");
+    p.singing = bundled(L"models\\voice\\v3\\voice_v1_fp16.onnx");
+    if (p.singing.empty()) p.singing = exe_dir() + L"\\models\\voice\\v3\\voice_v1_fp16.onnx";
     return p;
+}
+
+// ---- apps left unfiltered: which processes get a capture of their own
+//
+// Windows' process loopback captures a process with all the processes it started (its tree). Waaiya's own output
+// must never be captured (it would be filtered again, in a loop) and an app left unfiltered must not be captured
+// either (it plays at full level: it would come out a second time, x 1e4). So a lowered app is captured only if its
+// tree holds neither: Explorer, which started most programs, Waaiya included, is not captured, and its own sounds
+// stay silent (fail-closed). An app inside a captured tree is heard through that tree's capture.
+struct CapturePlan {
+    std::vector<DWORD> capture; // one capture each
+    std::vector<DWORD> silent;  // lowered, but their tree holds Waaiya or an app left unfiltered
+};
+
+CapturePlan capture_plan(const std::vector<DWORD> &lowered, const Sessions &ses,
+                         const std::vector<std::wstring> &leave_alone) {
+    struct Proc {
+        DWORD parent;
+        std::wstring exe;
+    };
+    std::vector<std::pair<DWORD, Proc>> procs;
+    HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (snap != INVALID_HANDLE_VALUE) {
+        PROCESSENTRY32W e = {};
+        e.dwSize = sizeof e;
+        for (BOOL ok = Process32FirstW(snap, &e); ok; ok = Process32NextW(snap, &e)) {
+            std::wstring exe = e.szExeFile;
+            for (auto &ch : exe) ch = (wchar_t)towlower(ch);
+            procs.push_back({e.th32ProcessID, {e.th32ParentProcessID, exe}});
+        }
+        CloseHandle(snap);
+    }
+    auto parent_of = [&](DWORD pid) -> DWORD {
+        for (auto &p : procs)
+            if (p.first == pid) return p.second.parent == pid ? 0 : p.second.parent;
+        return 0;
+    };
+    auto ancestors = [&](DWORD pid) {
+        std::vector<DWORD> a;
+        for (DWORD q = parent_of(pid); q && a.size() < 64 && std::find(a.begin(), a.end(), q) == a.end();
+             q = parent_of(q))
+            a.push_back(q);
+        return a;
+    };
+    // every process whose tree holds Waaiya or an app left unfiltered
+    std::vector<DWORD> blocked;
+    auto block = [&](DWORD pid) {
+        blocked.push_back(pid);
+        for (DWORD a : ancestors(pid)) blocked.push_back(a);
+    };
+    block(GetCurrentProcessId());
+    for (auto &p : procs)
+        if (ses.is_off(p.second.exe) ||
+            std::find(leave_alone.begin(), leave_alone.end(), p.second.exe) != leave_alone.end())
+            block(p.first);
+    // parents first, so that a child inside a captured tree is not captured twice
+    std::vector<std::pair<size_t, DWORD>> order;
+    for (DWORD pid : lowered) order.push_back({ancestors(pid).size(), pid});
+    std::sort(order.begin(), order.end());
+    CapturePlan plan;
+    for (auto &o : order) {
+        DWORD pid = o.second;
+        bool inside = false;
+        for (DWORD a : ancestors(pid)) inside = inside || std::find(plan.capture.begin(), plan.capture.end(), a) != plan.capture.end();
+        if (inside) continue;
+        if (std::find(blocked.begin(), blocked.end(), pid) != blocked.end()) plan.silent.push_back(pid);
+        else plan.capture.push_back(pid);
+    }
+    return plan;
+}
+
+// The app's name as Windows shows it (the program's description: "Google Chrome"), else its file name; cached.
+std::string app_name(DWORD pid, const std::wstring &exe) {
+    static std::vector<std::pair<std::wstring, std::string>> cache;
+    for (auto &c : cache)
+        if (c.first == exe) return c.second;
+    std::string name;
+    HANDLE h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+    if (h) {
+        wchar_t path[MAX_PATH * 2];
+        DWORD n = MAX_PATH * 2;
+        if (QueryFullProcessImageNameW(h, 0, path, &n)) {
+            DWORD dummy = 0, size = GetFileVersionInfoSizeW(path, &dummy);
+            std::vector<BYTE> info(size);
+            struct Lang {
+                WORD lang, cp;
+            } *langs = nullptr;
+            UINT len = 0;
+            if (size && GetFileVersionInfoW(path, 0, size, info.data()) &&
+                VerQueryValueW(info.data(), L"\\VarFileInfo\\Translation", reinterpret_cast<void **>(&langs), &len) &&
+                len >= sizeof(Lang)) {
+                wchar_t q[64];
+                swprintf(q, 64, L"\\StringFileInfo\\%04x%04x\\FileDescription", langs[0].lang, langs[0].cp);
+                wchar_t *desc = nullptr;
+                UINT dl = 0;
+                if (VerQueryValueW(info.data(), q, reinterpret_cast<void **>(&desc), &dl) && desc && dl > 1)
+                    name = im_utf8(desc);
+            }
+        }
+        CloseHandle(h);
+    }
+    while (!name.empty() && name.back() == ' ') name.pop_back();
+    if (name.empty()) name = im_utf8(exe.substr(0, exe.size() > 4 ? exe.size() - 4 : exe.size()).c_str());
+    cache.push_back({exe, name});
+    return name;
+}
+
+// ---- the engine: created here or on a helper thread (keep singing switched while filtering: the other model loads
+// while this one keeps filtering, then they swap between two hops)
+im_engine *create_engine(const std::string &model, const std::string &detector, char *err, size_t n) {
+    im_config cfg = {};
+    cfg.model_path = model.c_str();
+    cfg.channels = CH;
+    cfg.sample_rate = RATE;
+    cfg.threads = 1;
+    cfg.mono_mix = 0; // always built for stereo, so "mono" (the default) can switch both ways live
+    cfg.detector_path = detector.empty() ? nullptr : detector.c_str();
+    im_engine *e = nullptr;
+    im_engine_create(&cfg, &e, err, n);
+    return e;
+}
+
+struct EngineLoad {
+    std::string model, detector;
+    bool singing = false;
+    im_engine *eng = nullptr;
+    char err[512] = "";
+    HANDLE thread = nullptr;
+};
+
+DWORD WINAPI load_engine(LPVOID arg) {
+    auto *l = static_cast<EngineLoad *>(arg);
+    l->eng = create_engine(l->model, l->detector, l->err, sizeof l->err);
+    return 0;
 }
 
 // Restore-only: gives stored levels back as their apps show up, until none is left (or a new run asks to quit).
@@ -578,45 +831,49 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     logf("run: model %s, detector %s%s", im_utf8(p.model.c_str()).c_str(),
          p.detector.empty() ? "none" : im_utf8(p.detector.c_str()).c_str(), bypass ? ", bypass (tests)" : "");
     Settings set = read_settings(p.settings);
+    ses.set_off(set.off_apps);
 
-    // the engine: always built for stereo, so "mono" (the default) can switch both ways live
-    std::string model8 = im_utf8(p.model.c_str()), det8 = im_utf8(p.detector.c_str());
-    im_config cfg = {};
-    cfg.model_path = model8.c_str();
-    cfg.channels = CH;
-    cfg.sample_rate = RATE;
-    cfg.threads = 1;
-    cfg.mono_mix = 0;
-    cfg.detector_path = det8.empty() ? nullptr : det8.c_str();
+    // the engine: the default model, or keep singing's (a test). A model that does not load is silent (fail-closed).
+    std::string model8 = im_utf8(p.model.c_str()), sing8 = im_utf8(p.singing.c_str()), det8 = im_utf8(p.detector.c_str());
+    bool singing = set.keep_singing;
     char err[512] = "";
-    im_engine *eng = nullptr;
-    im_engine_create(&cfg, &eng, err, sizeof err);
+    im_engine *eng = create_engine(singing ? sing8 : model8, det8, err, sizeof err);
     State st;
     st.bypass = bypass;
     if (!eng) {
         logf("engine: out of memory");
         return 1;
     }
-    if (im_engine_failed(eng)) st.engine = std::string("model not loaded, ") + err; // silence (fail-closed)
-    else if (set.women_singing && im_engine_detector_error(eng)[0])
-        st.engine = std::string("detector not loaded, ") + im_engine_detector_error(eng);
-    else st.engine = "ok";
-    logf("engine: %s", st.engine.c_str());
+    std::string load_err = err; // why the model did not load
     auto apply_settings = [&](const Settings &s) {
         st.mono = im_engine_set_mono(eng, s.stereo ? 0 : 1) == 1;
         st.women_singing = s.women_singing;
+        st.keep_singing = singing;
         im_engine_set_policy(eng, s.women_singing ? (IM_POLICY_MUTE_FEMALE_SINGING | IM_POLICY_FAIL_CLOSED) : 0);
-        if (im_engine_failed(eng)) return;
+        if (im_engine_failed(eng)) {
+            st.engine = std::string("model not loaded, ") + load_err;
+            return;
+        }
         st.engine = s.women_singing && im_engine_detector_error(eng)[0]
                         ? std::string("detector not loaded, ") + im_engine_detector_error(eng)
                         : "ok";
     };
     apply_settings(set);
+    logf("engine: %s%s", st.engine.c_str(), singing ? " (keep singing)" : "");
     im_engine_set_enabled(eng, bypass ? 0 : 1);
+    EngineLoad *loading = nullptr; // the other model, loading on a helper thread
+    auto finish_loading = [&] {    // waits for it and frees it (stop, close)
+        if (!loading) return;
+        WaitForSingleObject(loading->thread, INFINITE);
+        CloseHandle(loading->thread);
+        if (loading->eng) im_engine_destroy(loading->eng);
+        delete loading;
+        loading = nullptr;
+    };
     g_lowering.store(true);
     restart_after_update(true);
     bool closing = false; // Windows closes the filter (package update or removal)
-    const int hop = im_engine_hop(eng);
+    int hop = im_engine_hop(eng); // read again when the engine is swapped
 
     // settings.json changes (the app writes a temporary file and renames it)
     std::wstring sdir = p.settings.substr(0, p.settings.find_last_of(L'\\'));
@@ -632,8 +889,48 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     in.reserve(RATE * CH);
     out.reserve(RATE * CH);
     double audio_since = 0, fail_since = 0, retry_at = 0, leak_until = 0, state_at = 0, cpu0 = cpu_ms(), wall0 = now_ms();
+    double plan_at = 0, apps_at = 0; // per-app captures looked at again; the app list rewritten
     bool restored = false; // hold_silence off and failing: levels given back
     int exit_code = 0;
+    std::vector<DWORD> silent_logged;                   // per-app: silent apps already in the log
+    std::vector<std::pair<DWORD, double>> failed_caps;  // per-app: captures that did not open, retried after a while
+
+    // per-app captures: the lowered apps' trees, each captured once (capture_plan); a capture that cannot open
+    // leaves that app silent (it is lowered) and is tried again 10 s later
+    auto sync_captures = [&](double t) {
+        plan_at = t + 2000;
+        CapturePlan plan = capture_plan(ses.pids(), ses, g_leave_alone);
+        for (size_t k = 0; k < au.apps.size();) {
+            if (std::find(plan.capture.begin(), plan.capture.end(), au.apps[k].pid) == plan.capture.end()) {
+                logf("capture: app pid %lu no longer captured", (unsigned long)au.apps[k].pid);
+                au.close_app(k);
+            } else {
+                k++;
+            }
+        }
+        for (DWORD pid : plan.capture) {
+            bool have = false;
+            for (auto &a : au.apps) have = have || a.pid == pid;
+            auto f = std::find_if(failed_caps.begin(), failed_caps.end(), [&](auto &x) { return x.first == pid; });
+            if (have || (f != failed_caps.end() && t < f->second)) continue;
+            std::string e = au.open_app(pid);
+            if (e.empty()) {
+                logf("capture: app pid %lu captured", (unsigned long)pid);
+                if (f != failed_caps.end()) failed_caps.erase(f);
+            } else {
+                logf("capture: app pid %lu: %s (kept silent)", (unsigned long)pid, e.c_str());
+                if (f != failed_caps.end()) f->second = t + 10000;
+                else failed_caps.push_back({pid, t + 10000});
+            }
+        }
+        for (DWORD pid : plan.silent)
+            if (std::find(silent_logged.begin(), silent_logged.end(), pid) == silent_logged.end()) {
+                logf("capture: pid %lu kept silent: it started Waaiya or an app heard unfiltered", (unsigned long)pid);
+                silent_logged.push_back(pid);
+            }
+        st.captures = (int)au.apps.size();
+        st.silent = (int)plan.silent.size();
+    };
 
     for (;;) {
         g_tick.store(unix_ms());
@@ -644,9 +941,13 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
         double t = now_ms();
         // (re)open the audio when it is not running (start, a lost device, the audio service restarted)
         if (!au.running && t >= retry_at) {
-            std::string e = au.open();
+            std::string e = au.open(!set.off_apps.empty());
             if (e.empty()) {
-                logf("audio: playing to \"%s\" (output buffer %u frames)", au.out_name.c_str(), au.out_frames);
+                logf("audio: playing to \"%s\" (output buffer %u frames)%s", au.out_name.c_str(), au.out_frames,
+                     au.multi ? ", one capture per app (apps left unfiltered)" : "");
+                st.captures = -1;
+                st.silent = 0;
+                if (au.multi) sync_captures(t);
                 audio_since = t;
                 st.cap_frames = st.out_frames = 0;
                 st.error.clear();
@@ -703,20 +1004,139 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
                 logf("audio: default output changed");
                 au.close();
                 retry_at = 0;
+            } else if (au.running && au.multi) {
+                sync_captures(t); // a new app (lowered already): captured
             }
         }
         if (i_set >= 0 && w == WAIT_OBJECT_0 + (DWORD)i_set) {
             FindNextChangeNotification(setwatch);
             Settings ns = read_settings(p.settings);
-            if (ns.stereo != set.stereo || ns.women_singing != set.women_singing || ns.hold_silence != set.hold_silence) {
-                logf("settings: stereo %d, women_singing %d, hold_silence %d", ns.stereo, ns.women_singing,
-                     ns.hold_silence);
+            if (!ns.same(set)) {
+                logf("settings: stereo %d, women_singing %d, hold_silence %d, keep_singing %d, %zu app(s) unfiltered",
+                     ns.stereo, ns.women_singing, ns.hold_silence, ns.keep_singing, ns.off_apps.size());
+                bool off_changed = ns.off_apps != set.off_apps;
                 set = ns;
                 apply_settings(set);
+                if (off_changed) {
+                    ses.set_off(set.off_apps); // their levels back, or lowered again
+                    silent_logged.clear();
+                    failed_caps.clear();
+                    if (au.running && au.multi != !set.off_apps.empty()) {
+                        logf("capture: %s", set.off_apps.empty() ? "back to one capture of every app"
+                                                                 : "one capture per app from now");
+                        au.close();
+                        retry_at = 0;
+                    } else if (au.running && au.multi) {
+                        sync_captures(t);
+                    }
+                }
             }
         }
+        // keep singing switched: the other model loads on a helper thread while this one keeps filtering
+        if (set.keep_singing != singing && !loading) {
+            loading = new EngineLoad;
+            loading->model = set.keep_singing ? sing8 : model8;
+            loading->detector = det8;
+            loading->singing = set.keep_singing;
+            loading->thread = CreateThread(nullptr, 0, load_engine, loading, 0, nullptr);
+            logf("engine: keep singing %s, loading the model", set.keep_singing ? "on" : "off");
+            if (!loading->thread) {
+                delete loading;
+                loading = nullptr;
+            }
+        }
+        if (loading && WaitForSingleObject(loading->thread, 0) == WAIT_OBJECT_0) {
+            CloseHandle(loading->thread);
+            if (loading->eng) { // between two hops: the new engine takes over
+                im_engine *old = eng;
+                eng = loading->eng;
+                singing = loading->singing;
+                load_err = loading->err;
+                apply_settings(set);
+                im_engine_set_enabled(eng, bypass ? 0 : 1);
+                im_engine_destroy(old);
+                if (im_engine_hop(eng) != hop) { // another hop size: start the queue again (a moment of silence)
+                    hop = im_engine_hop(eng);
+                    in.clear();
+                }
+                logf("engine: %s%s", st.engine.c_str(), singing ? " (keep singing)" : " (default model)");
+            } else {
+                logf("engine: out of memory loading the other model; the running one goes on");
+            }
+            delete loading;
+            loading = nullptr;
+        }
 
-        if (au.running) {
+        if (au.running && au.multi) {
+            // ---- one capture per app -> gain -> mixed -> engine
+            if (t >= plan_at) sync_captures(t);
+            for (size_t k = 0; k < au.apps.size();) {
+                Audio::App &a = au.apps[k];
+                UINT32 n = 0;
+                HRESULT chr = S_OK;
+                float peak = 0;
+                while (SUCCEEDED(chr = a.cap->GetNextPacketSize(&n)) && n > 0) {
+                    BYTE *data = nullptr;
+                    UINT32 frames = 0;
+                    DWORD flags = 0;
+                    if (FAILED(chr = a.cap->GetBuffer(&data, &frames, &flags, nullptr, nullptr))) break;
+                    const float *src = reinterpret_cast<const float *>(data);
+                    bool silent = (flags & AUDCLNT_BUFFERFLAGS_SILENT) != 0 || !src;
+                    size_t base = a.fifo.size();
+                    a.fifo.resize(base + (size_t)frames * CH);
+                    for (size_t j = 0; j < (size_t)frames * CH; j++) {
+                        float x = silent ? 0.0f : src[j];
+                        float m = std::fabs(x);
+                        if (m > peak) peak = m;
+                        a.fifo[base + j] = x * (1.0f / ATT);
+                    }
+                    a.cap->ReleaseBuffer(frames);
+                    a.last = t;
+                }
+                if (peak > st.cap_peak) st.cap_peak = peak;
+                if (peak > LEAK_RAW) {
+                    // louder than a lowered app: in this tree, an app not lowered (yet), or one left unfiltered that
+                    // started inside it. Never played amplified; the plan is made again.
+                    if (t >= leak_until) {
+                        st.leaks++;
+                        logf("leak: app pid %lu capture peak %.5f; sessions and captures looked at again",
+                             (unsigned long)a.pid, peak);
+                    }
+                    leak_until = t + LEAK_HOLD_MS;
+                    plan_at = 0;
+                    SetEvent(ses.wake);
+                }
+                if (FAILED(chr)) { // the app ended (or its capture broke): looked at again by the next plan
+                    logf("capture: app pid %lu: %s", (unsigned long)a.pid, im_hr(chr).c_str());
+                    au.close_app(k);
+                    plan_at = 0;
+                    continue;
+                }
+                k++;
+            }
+            // mixed as far as every capture that delivers lately has samples (they share the audio engine's clock);
+            // a capture silent for 80 ms (its app plays nothing) holds nobody back
+            size_t mix = SIZE_MAX;
+            for (auto &a : au.apps)
+                if (!a.fifo.empty() || t - a.last < 80) mix = std::min(mix, a.fifo.size() / CH);
+            if (mix != SIZE_MAX && mix > 0) {
+                size_t base = in.size();
+                in.resize(base + mix * CH, 0.0f);
+                for (auto &a : au.apps) {
+                    size_t take = std::min(mix * CH, a.fifo.size());
+                    for (size_t j = 0; j < take; j++) in[base + j] += a.fifo[j];
+                    a.fifo.erase(a.fifo.begin(), a.fifo.begin() + (long)take);
+                }
+                st.cap_frames += mix;
+            }
+            for (auto &a : au.apps) // a capture ahead of the others by over 100 ms: its oldest samples go
+                if (a.fifo.size() / CH > (size_t)RATE / 10) {
+                    size_t drop = a.fifo.size() - (size_t)RATE / 50 * CH;
+                    a.fifo.erase(a.fifo.begin(), a.fifo.begin() + (long)drop);
+                    st.dropped += drop / CH;
+                }
+        }
+        if (au.running && !au.multi) {
             // ---- capture -> gain -> engine
             UINT32 n = 0;
             HRESULT chr = S_OK;
@@ -756,6 +1176,8 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
                 retry_at = t + 500;
                 continue;
             }
+        }
+        if (au.running) {
             size_t nh2 = in.size() / ((size_t)hop * CH);
             if (nh2 > 0) {
                 size_t len = nh2 * (size_t)hop * CH;
@@ -820,6 +1242,14 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
             st.delay_ms = (im_engine_aligned_latency(eng) + (double)pad + (double)out.size() / CH) * 1000.0 / RATE;
         }
 
+        if (t >= apps_at) { // the apps with sound now, for the app's "Fix mistakes" list
+            apps_at = t + 2000;
+            std::string j = "[";
+            for (auto &a : ses.apps())
+                j += (j.size() > 1 ? "," : "") + std::string("{\"exe\":") + json_str(im_utf8(a.first.c_str())) +
+                     ",\"name\":" + json_str(app_name(a.second, a.first)) + "}";
+            st.apps = j + "]";
+        }
         if (t >= state_at) {
             state_at = t + 500;
             st.lowered = ses.lowered();
@@ -860,6 +1290,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     } else {
         restart_after_update(false); // stopped by the user: not started again after an update
     }
+    finish_loading(); // a model still loading (keep singing switched just before the stop)
     im_engine_destroy(eng);
     logf("stopped: %d level(s) to give back when their apps play again", ses.pending());
     exit_code = restore_loop(ses, p, quit);

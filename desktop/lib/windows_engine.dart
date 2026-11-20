@@ -4,6 +4,8 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:waaiya_ui/waaiya_ui.dart';
+// ignore: implementation_imports
+import 'package:waaiya_ui/src/protection_core.dart' show ProtectionClock, ProcessClock;
 
 import 'filter_host.dart';
 
@@ -77,6 +79,38 @@ class WindowsEngine implements FilterHost {
 
   @override
   bool get hasDetector => File('${dir.path}\\models\\detector\\detector_v1.onnx').existsSync();
+
+  /// The "keep singing" model (voice_v1) is in the bundle; the filter switches to it while running when the setting
+  /// `keep_singing` changes (it reads the settings file).
+  bool get hasSingingModel =>
+      File('${dir.path}\\models\\voice\\v3\\voice_v1_fp16.onnx').existsSync() &&
+      File('${dir.path}\\models\\voice\\v3\\voice_v1_fp16.state_init.bin').existsSync();
+
+  /// The apps with a sound session now, as the filter last wrote them (state.json "apps"): file name ("chrome.exe",
+  /// what the setting `filter_off_apps` holds) and the name Windows shows ("Google Chrome").
+  List<({String exe, String name})> playingApps() => appsFrom(_readState());
+
+  static List<({String exe, String name})> appsFrom(String json) {
+    try {
+      final apps = (jsonDecode(json) as Map)['apps'];
+      if (apps is! List) return const [];
+      return [
+        for (final a in apps)
+          if (a is Map && a['exe'] is String && (a['exe'] as String).isNotEmpty)
+            (exe: a['exe'] as String, name: a['name'] is String ? a['name'] as String : a['exe'] as String),
+      ];
+    } on Object {
+      return const [];
+    }
+  }
+
+  String _readState() {
+    try {
+      return File('$stateDir\\state.json').readAsStringSync();
+    } on IOException {
+      return '';
+    }
+  }
 
   @override
   bool? get stereoSet => null;
@@ -280,4 +314,34 @@ class WindowsEngine implements FilterHost {
       return null;
     }
   }
+}
+
+/// The clock of the waiting period on Windows (protection_core.dart): the time since Windows started
+/// (GetTickCount64: sleep and hibernation included, not changed by the clock settings), so the wait keeps counting
+/// while Waaiya is closed and a clock change does not shorten it. The boot id is always the same: after a restart
+/// the count is lower than the one saved, which ProtectionCore reads as a new boot (only the time since that start
+/// counts); in the rare case the new count is already above the saved one, it counts less than the real time,
+/// never more. A restart or a clock change can make the wait longer, never shorter.
+class WindowsTickClock implements ProtectionClock {
+  WindowsTickClock() : _ticks = _lookup();
+
+  final int Function()? _ticks;
+  final _fallback = ProcessClock();
+
+  static int Function()? _lookup() {
+    try {
+      return DynamicLibrary.open('kernel32.dll').lookupFunction<Uint64 Function(), int Function()>('GetTickCount64');
+    } on Object {
+      return null;
+    }
+  }
+
+  @override
+  int wallMs() => DateTime.now().millisecondsSinceEpoch;
+
+  @override
+  int elapsedMs() => _ticks?.call() ?? _fallback.elapsedMs();
+
+  @override
+  String bootId() => _ticks != null ? 'windows' : _fallback.bootId();
 }
