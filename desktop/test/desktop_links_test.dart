@@ -6,6 +6,8 @@ import 'package:waaiya_desktop/filter_host.dart';
 import 'package:waaiya_desktop/links.dart';
 import 'package:waaiya_ui/waaiya_ui.dart';
 
+import 'links_test.dart' show FakeTools, youtube;
+
 /// A filter that starts (or not) on command.
 class FakeFilter implements FilterHost {
   FakeFilter({this.starts = true});
@@ -68,7 +70,7 @@ void main() {
   setUp(() => dir = Directory.systemTemp.createTempSync('waaiya_links_backend'));
   tearDown(() => dir.deleteSync(recursive: true));
 
-  Future<(DesktopBackend, List<String>)> open(FakeFilter f, {LinkTools? tools}) async {
+  Future<(DesktopBackend, List<String>)> open(FakeFilter f, {LinkTools? tools, ProcessStarter? processes}) async {
     final opened = <String>[];
     final b = await DesktopBackend.open(
       file: File('${dir.path}/s.json'),
@@ -81,6 +83,7 @@ void main() {
       findLinkTools: false,
       linkWorkDir: '${dir.path}/work',
       linkFolders: ('${dir.path}/Videos', '${dir.path}/Music'),
+      linkProcesses: processes,
       openUrl: (u) async {
         opened.add(u);
         return true;
@@ -139,5 +142,31 @@ void main() {
         throwsA(isA<BackendException>().having((e) => e.code, 'code', 'invalid_url')));
     expect(f.startCalls, 0);
     expect(opened, isEmpty);
+  });
+
+  test('Save right after Open does not ask the site again (YouTube takes 15-20 s)', () async {
+    final fake = FakeTools(youtube);
+    const t = LinkTools(ytDlp: 'yt-dlp', qjs: 'q', ffmpeg: 'ffmpeg', imProcess: 'im-process', model: 'm');
+    final (b, _) = await open(FakeFilter(), tools: t, processes: fake.start);
+    b.links = LinkSaver(t,
+        workDir: '${dir.path}/work',
+        videosDir: '${dir.path}/Videos',
+        musicDir: '${dir.path}/Music',
+        start: fake.start,
+        kill: (p) async => p.kill(),
+        windows: false,
+        onStatus: (st) => b.emit(b.state.copyWith(linkSave: st)));
+    int resolves() => fake.calls.where((c) => c.contains('-J')).length;
+    final m = await b.resolveLink('https://youtu.be/x');
+    expect(m.title, 'A talk');
+    await b.saveLink('https://youtu.be/x');
+    while (b.state.linkSave.busy) {
+      await Future<void>.delayed(const Duration(milliseconds: 10));
+    }
+    expect(b.state.linkSave.phase, LinkSavePhase.done, reason: '${b.state.linkSave.error}');
+    expect(resolves(), 1);
+    // another Open asks again
+    await b.resolveLink('https://youtu.be/x');
+    expect(resolves(), 2);
   });
 }

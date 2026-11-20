@@ -400,6 +400,24 @@ class DesktopBackend extends MemoryBackend {
 
   // --- Links ---
 
+  /// The last link Open resolved: Save reuses it (resolving YouTube takes 15-20 s), while its download addresses are
+  /// fresh (they expire after some hours).
+  ResolvedLink? _resolved;
+  DateTime _resolvedAt = DateTime.fromMillisecondsSinceEpoch(0);
+
+  Future<ResolvedLink> _resolve(LinkSaver l, String url) async {
+    final r = _resolved;
+    if (r != null && r.meta.url == url && DateTime.now().difference(_resolvedAt) < const Duration(minutes: 30)) return r;
+    try {
+      final fresh = await l.resolve(url);
+      _resolved = fresh;
+      _resolvedAt = DateTime.now();
+      return fresh;
+    } on LinkError catch (e) {
+      throw BackendException(e.code, e.detail);
+    }
+  }
+
   /// With the save tools: yt-dlp says what the link is. Without (the Store package): the link's host, no network.
   @override
   Future<LinkMeta> resolveLink(String url) async {
@@ -407,11 +425,8 @@ class DesktopBackend extends MemoryBackend {
     if (u == null) throw const BackendException('invalid_url');
     final l = links;
     if (l == null) return LinkMeta(url: u.toString(), site: u.host);
-    try {
-      return (await l.resolve(u.toString())).meta;
-    } on LinkError catch (e) {
-      throw BackendException(e.code, e.detail);
-    }
+    _resolved = null; // Open always asks the site again
+    return (await _resolve(l, u.toString())).meta;
   }
 
   /// The filter first, then the browser: never opens the link unfiltered.
@@ -449,12 +464,7 @@ class DesktopBackend extends MemoryBackend {
     if (singing && engine?.hasDetector != true) {
       throw const BackendException('failed', "the women's singing detector is not in this installation");
     }
-    ResolvedLink r;
-    try {
-      r = await l.resolve(u.toString());
-    } on LinkError catch (e) {
-      throw BackendException(e.code, e.detail);
-    }
+    final r = await _resolve(l, u.toString());
     if (r.meta.isLive) throw const BackendException('live');
     if (r.choice == null) throw const BackendException('no_format');
     if (l.busy) throw const BackendException('busy');
