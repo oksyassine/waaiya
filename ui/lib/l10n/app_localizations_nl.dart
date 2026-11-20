@@ -1694,6 +1694,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Wat dit niet kan tegenhouden: het commando waaiya in een terminal, Waaiya verwijderen of de map met instellingen ervan wissen. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.';
 
   @override
+  String get protectLimitsWindows =>
+      'Wat dit niet kan tegenhouden: het commando waaiya-filter.exe in een terminal, Waaiya verwijderen of de map met instellingen ervan wissen. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.';
+
+  @override
   String get protectWhatStop => 'Filteren stoppen';
 
   @override

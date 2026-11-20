@@ -1685,6 +1685,10 @@ class AppLocalizationsFa extends AppLocalizations {
       'آنچه این نمی‌تواند جلویش را بگیرد: فرمان waaiya در ترمینال، حذف واعية یا پاک کردن پوشهٔ تنظیماتش. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
 
   @override
+  String get protectLimitsWindows =>
+      'آنچه این نمی‌تواند جلویش را بگیرد: فرمان waaiya-filter.exe در ترمینال، حذف واعية یا پاک کردن پوشهٔ تنظیماتش. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
+
+  @override
   String get protectWhatStop => 'توقف فیلتر';
 
   @override

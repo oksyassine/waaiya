@@ -9,6 +9,9 @@ What the Store version has, and does not have (owner's decisions, 2026-11-20):
 - Links: watch only (the link opens in the browser with the filter on). The Store's rules forbid saving from sites
   whose terms do not allow it (YouTube's), so the Store package has no save tools (yt-dlp, ffmpeg); the zip from
   GitHub has "Save without music". The Store version opens links in the browser and never contacts a site itself.
+- From release 0.2.13 (also in this package): apps heard unfiltered, keep singing (test), the waiting period and
+  parent PIN, and wrong-detection notes (kept on the PC). Not on Windows: blur off for chosen apps, covering an area
+  by hand, the worship helpers and the battery and heat settings (Android only).
 
 Before submitting: run the Windows App Certification Kit on the package (Microsoft asks for it; it needs an
 administrator): `appcert.exe test -appxpackagepath <waaiya-store.msix> -reportoutputpath <report.xml>`, or the
@@ -122,7 +125,16 @@ The fastest way (Microsoft's "Import and export Store listings"):
 > download anything (no download tools are in this package).
 >
 > The optional "Mute women's singing" (Filter page, for men) uses a second on-device model in the package
-> (engine\models\detector\detector_v1.onnx).
+> (engine\models\detector\detector_v1.onnx). The optional "Keep singing (test)" switches the filter to a third
+> on-device model in the package (engine\models\voice\v3\voice_v1_fp16.onnx) that removes instruments but keeps
+> singing voices.
+>
+> "Apps heard unfiltered" (Filter page, off by default): the user picks apps that keep their original sound; the
+> filter then leaves their volume alone and captures each other app separately (process loopback, include mode).
+>
+> "Protection for weak moments" (Settings, off by default): the user can set a waiting period and a 4-to-8-digit PIN.
+> When one is set, stopping the filter or turning off a cover waits that long, or asks for the PIN, before it takes
+> effect. With the defaults, Stop works at once.
 >
 > To test: open Waaiya, choose a gender on first launch, play any video with music in a browser, press the power
 > button on the Filter page: the music is removed and speech remains. Press it again to stop.

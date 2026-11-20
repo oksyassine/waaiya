@@ -197,6 +197,7 @@
   "protect_held_back": "This change is held back by the protection settings.",
   "protect_limits": "What this cannot stop: force stop, uninstalling, clearing Waaiya's data and Android's own settings. Blocking those needs device-admin or accessibility powers that Waaiya does not use. This protects against a weak moment, not against a determined person.",
   "protect_limits_desktop": "What this cannot stop: the waaiya command in a terminal, removing Waaiya or deleting its settings folder. This protects against a weak moment, not against a determined person.",
+  "protect_limits_windows": "What this cannot stop: the waaiya-filter.exe command in a terminal, removing Waaiya or deleting its settings folder. This protects against a weak moment, not against a determined person.",
   "protect_what_stop": "Stop the filter",
   "protect_what_off": "Turn off: {name}",
   "protect_what_on": "Turn on: {name}",

@@ -14,6 +14,10 @@ Kuran tilavetini. Her uygulamayla (tarayıcılar, video oynatıcılar, oyunlar) 
 - Hata olursa sessizlik: filtre kendiliğinden durursa diğer uygulamalar müzik çalmak yerine sessiz kalır.
 - İsteğe bağlı ekran bulanıklaştırma: kadınları veya uygunsuz görüntüleri tüm pencerelerin üzerinde örter; tıklamalar
   alttaki pencerelere ulaşmaya devam eder.
+- Filtresiz duyulan uygulamalar: özgün sesiyle duyulacak uygulamaları seçin; ne süzülür ne susturulur.
+- Şarkı seslerini koru (deneme): çalgılar kaldırılır ama şarkı söyleyen sesler kalır; bunu kabul edenler için.
+- Zayıf anlar için koruma: korumayı azaltan her şeyden önce bir bekleme süresi ve isteğe bağlı ebeveyn PIN'i.
+- Bir hatayı not edin: geçen müziği ya da yanlışlıkla silinen sesi işaretleyin; notlar bilgisayarınızda kalır.
 - İsterseniz oturum açılınca başlat.
 - Her şey bilgisayarınızda çalışır. Hiçbir yere bir şey gönderilmez: hesap yok, analiz yok, reklam yok.
 - Ücretsiz ve açık kaynak (AGPL-3.0)
@@ -30,6 +34,10 @@ Waaiya kendiliğinden monoya geçer.
 Microsoft Store'daki ilk sürüm.
 - Yeni Bağlantılar sayfası: bir YouTube, TikTok veya Instagram bağlantısını filtre açıkken izleyin.
 - Kadınların şarkı sesini sustur (ilk sürüm), artık Windows'ta da.
+- Filtresiz duyulan uygulamalar
+- Şarkı seslerini koru (deneme)
+- Zayıf anlar için koruma
+- Bir hatayı not edin
 - 18 dil (yeni: İspanyolca, Felemenkçe, Almanca, İtalyanca, Rusça, Özbekçe, Svahili, Hausaca, Somalice).
 - Daha akıcı tasarım: düğmeler anında yanıt verir, yumuşak animasyonlar (Windows daha az hareket istediğinde hiç yok).
 - Düzeltmeler: yanıt vermeyi bırakmış eski bir Waaiya filtresi artık yenisini engellemiyor; hata ayrıntıları daha kolay
@@ -43,6 +51,10 @@ Microsoft Store'daki ilk sürüm.
 - Canlı, bilgisayarınızda: hiçbir yere bir şey gönderilmez
 - Hata olursa sessizlik, asla filtresiz müzik değil
 - İsteğe bağlı: tüm pencerelerin üzerinde ekran bulanıklaştırma
+- Filtresiz duyulan uygulamalar
+- Şarkı seslerini koru (deneme)
+- Zayıf anlar için koruma
+- Bir hatayı not edin
 - Oturum açılınca başlat
 - 18 dil
 - Ücretsiz ve açık kaynak

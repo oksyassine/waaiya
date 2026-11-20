@@ -14,6 +14,10 @@ Koranrezitation. Es funktioniert mit jeder App (Browser, Videoplayer, Spiele), l
 - Im Fehlerfall Stille: Wenn der Filter von selbst stoppt, bleiben andere Apps stumm, statt Musik abzuspielen.
 - Optionale Bildschirm-Unschärfe: verdeckt Frauen oder freizügige Bilder über jedem Fenster; Klicks erreichen trotzdem
   die Fenster darunter.
+- Apps, die ungefiltert zu hören sind: wählen Sie Apps, die ihren Originalton behalten; sie werden weder gefiltert noch stummgeschaltet.
+- Gesang behalten (Test): entfernt die Instrumente, behält aber Gesangsstimmen, für alle, die das akzeptieren.
+- Schutz für schwache Momente: eine Wartezeit vor allem, was den Schutz senkt, und eine optionale Eltern-PIN.
+- Einen Fehler notieren: markieren Sie Musik, die durchkam, oder eine versehentlich entfernte Stimme; Notizen bleiben auf Ihrem Computer.
 - Bei der Anmeldung starten, wenn Sie möchten.
 - Alles läuft auf Ihrem Computer. Nichts wird irgendwohin gesendet: kein Konto, keine Analyse, keine Werbung.
 - Kostenlos und Open Source (AGPL-3.0)
@@ -30,6 +34,10 @@ wechselt Waaiya von selbst zu Mono.
 Erste Version im Microsoft Store.
 - Neue Seite Links: einen YouTube-, TikTok- oder Instagram-Link mit eingeschaltetem Filter ansehen.
 - Frauengesang stummschalten (frühe Version), jetzt auch unter Windows.
+- Apps, die ungefiltert zu hören sind
+- Gesang behalten (Test)
+- Schutz für schwache Momente
+- Einen Fehler notieren
 - 18 Sprachen (neu: Spanisch, Niederländisch, Deutsch, Italienisch, Russisch, Usbekisch, Swahili, Hausa, Somali).
 - Flüssigeres Design: Knöpfe reagieren sofort, sanfte Animationen (keine, wenn Windows weniger Bewegung verlangt).
 - Korrekturen: Ein älterer Waaiya-Filter, der nicht mehr reagierte, blockiert den neuen nicht mehr; Fehlerdetails sind
@@ -43,6 +51,10 @@ Erste Version im Microsoft Store.
 - Live, auf Ihrem Computer: Nichts wird gesendet
 - Im Fehlerfall Stille, nie ungefilterte Musik
 - Optionale Bildschirm-Unschärfe über jedem Fenster
+- Apps, die ungefiltert zu hören sind
+- Gesang behalten (Test)
+- Schutz für schwache Momente
+- Einen Fehler notieren
 - Bei der Anmeldung starten
 - 18 Sprachen
 - Kostenlos und Open Source

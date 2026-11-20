@@ -197,6 +197,7 @@
   "protect_held_back": "Bu oʻzgarishni himoya sozlamalari ushlab turibdi.",
   "protect_limits": "Bu nimani toʻxtata olmaydi: majburiy toʻxtatish, oʻchirib tashlash, Waaiya maʼlumotlarini tozalash va Androidning oʻz sozlamalari. Ularni bloklash uchun qurilma administratori yoki maxsus imkoniyatlar huquqlari kerak, Waaiya esa ulardan foydalanmaydi. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.",
   "protect_limits_desktop": "Bu nimani toʻxtata olmaydi: terminaldagi waaiya buyrugʻi, Waaiyani oʻchirib tashlash yoki uning sozlamalar jildini oʻchirish. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.",
+  "protect_limits_windows": "Bu nimani toʻxtata olmaydi: terminaldagi waaiya-filter.exe buyrugʻi, Waaiyani oʻchirib tashlash yoki uning sozlamalar jildini oʻchirish. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.",
   "protect_what_stop": "Filtrni toʻxtatish",
   "protect_what_off": "Oʻchirish: {name}",
   "protect_what_on": "Yoqish: {name}",

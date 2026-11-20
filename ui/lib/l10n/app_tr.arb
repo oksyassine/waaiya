@@ -471,6 +471,7 @@
   "protectHeldBack": "Bu değişiklik koruma ayarları tarafından bekletiliyor.",
   "protectLimits": "Bunun engelleyemedikleri: zorla durdurma, kaldırma, Waaiya'nın verilerini silme ve Android'in kendi ayarları. Bunları engellemek, Waaiya'nın kullanmadığı cihaz yöneticisi veya erişilebilirlik yetkileri gerektirir. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.",
   "protectLimitsDesktop": "Bunun engelleyemedikleri: terminaldeki waaiya komutu, Waaiya'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.",
+  "protectLimitsWindows": "Bunun engelleyemedikleri: terminaldeki waaiya-filter.exe komutu, Waaiya'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.",
   "protectWhatStop": "Filtreyi durdur",
   "protectWhatOff": "Kapat: {name}",
   "protectWhatOn": "Aç: {name}",

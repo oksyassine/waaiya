@@ -197,6 +197,7 @@
   "protect_held_back": "Isbeddelkan waxaa hakiyay dejinta ilaalinta.",
   "protect_limits": "Waxa aysan tani joojin karin: ku-qasab joojinta (force stop), ka saarista barnaamijka, tirtirista xogta Waaiya iyo dejinta Android lafteeda. Xannibaaddooda waxay u baahan tahay awoodaha maamulaha qalabka (device admin) ama helitaanka (accessibility), oo Waaiya aysan isticmaalin. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go'aansaday.",
   "protect_limits_desktop": "Waxa aysan tani joojin karin: amarka waaiya ee terminal-ka, ka saarista Waaiya ama tirtirista galka dejinteeda. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go'aansaday.",
+  "protect_limits_windows": "Waxa aysan tani joojin karin: amarka waaiya-filter.exe ee terminal-ka, ka saarista Waaiya ama tirtirista galka dejinteeda. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go'aansaday.",
   "protect_what_stop": "Jooji shaandhaynta",
   "protect_what_off": "Dami: {name}",
   "protect_what_on": "Daar: {name}",

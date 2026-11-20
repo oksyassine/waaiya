@@ -471,6 +471,7 @@
   "protectHeldBack": "Saitunan kariya sun riƙe wannan canjin.",
   "protectLimits": "Abin da wannan ba zai iya hanawa ba: tilasta tsayawa (force stop), cire manhajar, share bayanan Waaiya da saitunan Android na kansa. Hana waɗannan yana buƙatar ikon mai sarrafa na'ura (device admin) ko na samun dama (accessibility) waɗanda Waaiya ba ya amfani da su. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.",
   "protectLimitsDesktop": "Abin da wannan ba zai iya hanawa ba: umarnin waaiya a terminal, cire Waaiya ko share babban fayil ɗin saitunansa. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.",
+  "protectLimitsWindows": "Abin da wannan ba zai iya hanawa ba: umarnin waaiya-filter.exe a terminal, cire Waaiya ko share babban fayil ɗin saitunansa. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.",
   "protectWhatStop": "Dakatar da tacewa",
   "protectWhatOff": "Kashe: {name}",
   "protectWhatOn": "Kunna: {name}",

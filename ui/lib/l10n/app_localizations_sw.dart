@@ -1703,6 +1703,10 @@ class AppLocalizationsSw extends AppLocalizations {
       'Kile ambacho hiki hakiwezi kuzuia: amri ya waaiya kwenye terminal, kuondoa Waaiya au kufuta folda yake ya mipangilio. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
 
   @override
+  String get protectLimitsWindows =>
+      'Kile ambacho hiki hakiwezi kuzuia: amri ya waaiya-filter.exe kwenye terminal, kuondoa Waaiya au kufuta folda yake ya mipangilio. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
+
+  @override
   String get protectWhatStop => 'Kusimamisha kichujio';
 
   @override

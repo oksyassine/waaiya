@@ -1689,6 +1689,10 @@ class AppLocalizationsMs extends AppLocalizations {
       'Apa yang tidak dapat dihalang: arahan waaiya dalam terminal, membuang Waaiya atau memadam folder tetapannya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
 
   @override
+  String get protectLimitsWindows =>
+      'Apa yang tidak dapat dihalang: arahan waaiya-filter.exe dalam terminal, membuang Waaiya atau memadam folder tetapannya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
+
+  @override
   String get protectWhatStop => 'Hentikan penapis';
 
   @override

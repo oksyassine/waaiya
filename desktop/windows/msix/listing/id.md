@@ -15,6 +15,10 @@ komputer Anda.
 - Gagal dalam keadaan senyap: jika filter berhenti sendiri, aplikasi lain tetap senyap alih-alih memutar musik.
 - Buram layar opsional: menutupi perempuan, atau gambar yang membuka aurat, di atas semua jendela; klik tetap sampai ke
   jendela di bawahnya.
+- Aplikasi yang didengar tanpa filter: pilih aplikasi yang tetap terdengar dengan suara aslinya; tidak disaring dan tidak dibisukan.
+- Pertahankan nyanyian (uji coba): alat musik dihapus tetapi suara nyanyian tetap ada, bagi yang menerimanya.
+- Perlindungan untuk saat lemah: masa tunggu sebelum apa pun yang menurunkan perlindungan, dan PIN orang tua opsional.
+- Catat kesalahan: tandai musik yang lolos atau suara yang terhapus karena keliru; catatan tetap di komputer Anda.
 - Mulai saat login, jika Anda mau.
 - Semuanya berjalan di komputer Anda. Tidak ada yang dikirim ke mana pun: tanpa akun, tanpa analitik, tanpa iklan.
 - Gratis dan sumber terbuka (AGPL-3.0)
@@ -32,6 +36,10 @@ lambat, Waaiya beralih ke mono dengan sendirinya.
 Versi pertama di Microsoft Store.
 - Halaman Tautan baru: tonton tautan YouTube, TikTok, atau Instagram dengan filter aktif.
 - Bisukan nyanyian perempuan (versi awal), kini juga di Windows.
+- Aplikasi yang didengar tanpa filter
+- Pertahankan nyanyian (uji coba)
+- Perlindungan untuk saat lemah
+- Catat kesalahan
 - 18 bahasa (baru: Spanyol, Belanda, Jerman, Italia, Rusia, Uzbek, Swahili, Hausa, Somali).
 - Desain lebih halus: tombol langsung merespons, animasi lembut (tanpa animasi jika Windows meminta lebih sedikit
   gerakan).
@@ -46,6 +54,10 @@ Versi pertama di Microsoft Store.
 - Langsung di komputer Anda: tidak ada yang dikirim ke mana pun
 - Gagal dalam keadaan senyap, tidak pernah musik tanpa filter
 - Opsional: buram layar di atas semua jendela
+- Aplikasi yang didengar tanpa filter
+- Pertahankan nyanyian (uji coba)
+- Perlindungan untuk saat lemah
+- Catat kesalahan
 - Mulai saat login
 - 18 bahasa
 - Gratis dan sumber terbuka

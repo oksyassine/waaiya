@@ -471,6 +471,7 @@
   "protectHeldBack": "Perubahan ini ditahan oleh pengaturan perlindungan.",
   "protectLimits": "Yang tidak bisa dicegah: paksa berhenti, mencopot pemasangan, menghapus data Waaiya, dan pengaturan Android sendiri. Memblokirnya butuh hak admin perangkat atau aksesibilitas yang tidak dipakai Waaiya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.",
   "protectLimitsDesktop": "Yang tidak bisa dicegah: perintah waaiya di terminal, menghapus Waaiya, atau menghapus folder pengaturannya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.",
+  "protectLimitsWindows": "Yang tidak bisa dicegah: perintah waaiya-filter.exe di terminal, menghapus Waaiya, atau menghapus folder pengaturannya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.",
   "protectWhatStop": "Hentikan filter",
   "protectWhatOff": "Matikan: {name}",
   "protectWhatOn": "Nyalakan: {name}",

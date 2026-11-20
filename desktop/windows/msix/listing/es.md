@@ -16,6 +16,10 @@ directo, en su ordenador.
   música.
 - Desenfoque de pantalla opcional: cubre a las mujeres, o las imágenes indecentes, sobre todas las ventanas; los clics
   siguen llegando a las ventanas de debajo.
+- Aplicaciones que se oyen sin filtrar: elija aplicaciones que conservan su sonido original; no se filtran ni se silencian.
+- Conservar el canto (prueba): quita los instrumentos pero conserva las voces que cantan, para quien lo acepte.
+- Protección para los momentos de debilidad: un tiempo de espera antes de todo lo que baja la protección, y un PIN parental opcional.
+- Anotar un error: marque la música que pasó o una voz quitada por error; las notas se quedan en su ordenador.
 - Iniciar al iniciar sesión, si lo desea.
 - Todo funciona en su ordenador. No se envía nada a ninguna parte: sin cuenta, sin estadísticas, sin anuncios.
 - Gratuita y de código abierto (AGPL-3.0)
@@ -32,6 +36,10 @@ por sí sola.
 Primera versión en Microsoft Store.
 - Nueva página Enlaces: vea un enlace de YouTube, TikTok o Instagram con el filtro activado.
 - Silenciar el canto de mujeres (primera versión), ahora también en Windows.
+- Aplicaciones que se oyen sin filtrar
+- Conservar el canto (prueba)
+- Protección para los momentos de debilidad
+- Anotar un error
 - 18 idiomas (nuevos: español, neerlandés, alemán, italiano, ruso, uzbeko, suajili, hausa, somalí).
 - Diseño más fluido: los botones responden al instante, animaciones suaves (ninguna cuando Windows pide menos
   movimiento).
@@ -46,6 +54,10 @@ Primera versión en Microsoft Store.
 - En directo, en su ordenador: no se envía nada a ninguna parte
 - Si falla, silencio, nunca música sin filtrar
 - Opcional: desenfoque de pantalla sobre todas las ventanas
+- Aplicaciones que se oyen sin filtrar
+- Conservar el canto (prueba)
+- Protección para los momentos de debilidad
+- Anotar un error
 - Iniciar al iniciar sesión
 - 18 idiomas
 - Gratuita y de código abierto

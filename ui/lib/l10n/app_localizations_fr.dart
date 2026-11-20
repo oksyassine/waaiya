@@ -1700,6 +1700,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce que cela ne peut pas empêcher : la commande waaiya dans un terminal, la suppression de Waaiya ou de son dossier de réglages. Cela protège d\'un moment de faiblesse, pas d\'une personne déterminée.';
 
   @override
+  String get protectLimitsWindows =>
+      'Ce que cela ne peut pas empêcher : la commande waaiya-filter.exe dans un terminal, la suppression de Waaiya ou de son dossier de réglages. Cela protège d\'un moment de faiblesse, pas d\'une personne déterminée.';
+
+  @override
   String get protectWhatStop => 'Arrêter le filtre';
 
   @override

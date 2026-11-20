@@ -15,6 +15,10 @@ kwa moja, kwenye kompyuta yako.
 - Hitilafu ikitokea, kimya: uchujaji ukisimama wenyewe, programu nyingine hubaki kimya badala ya kucheza muziki.
 - Kufifisha skrini (si lazima): hufunika wanawake, au picha zisizo za staha, juu ya kila dirisha; mibofyo bado hufika
   kwenye madirisha yaliyo chini.
+- Programu zinazosikika bila kuchujwa: chagua programu zinazosikika kwa sauti yake asili; hazichujwi wala hazinyamazishwi.
+- Bakiza uimbaji (majaribio): ala za muziki huondolewa lakini sauti za kuimba hubaki, kwa wanaokubali hilo.
+- Ulinzi kwa nyakati za udhaifu: muda wa kusubiri kabla ya chochote kinachopunguza ulinzi, na PIN ya mzazi ya hiari.
+- Andika kosa: weka alama kwenye muziki uliopita au sauti iliyoondolewa kimakosa; maelezo hubaki kwenye kompyuta yako.
 - Anza unapoingia, ukitaka.
 - Kila kitu hufanya kazi kwenye kompyuta yako. Hakuna kinachotumwa popote: hakuna akaunti, hakuna takwimu, hakuna
   matangazo.
@@ -32,6 +36,10 @@ polepole, Waaiya hujibadilisha yenyewe kuwa mono.
 Toleo la kwanza kwenye Microsoft Store.
 - Ukurasa mpya wa Viungo: tazama kiungo cha YouTube, TikTok au Instagram kichujio kikiwa kimewashwa.
 - Nyamazisha uimbaji wa wanawake (toleo la mwanzo), sasa kwenye Windows pia.
+- Programu zinazosikika bila kuchujwa
+- Bakiza uimbaji (majaribio)
+- Ulinzi kwa nyakati za udhaifu
+- Andika kosa
 - Lugha 18 (mpya: Kihispania, Kiholanzi, Kijerumani, Kiitaliano, Kirusi, Kiuzbeki, Kiswahili, Kihausa, Kisomali).
 - Muundo laini zaidi: vitufe hujibu mara moja, mihuisho tulivu (hakuna mihuisho Windows ikiomba mwendo mdogo).
 - Marekebisho: kichujio cha zamani cha Waaiya kilichoacha kujibu hakizuii tena kipya; maelezo ya hitilafu ni rahisi
@@ -45,6 +53,10 @@ Toleo la kwanza kwenye Microsoft Store.
 - Moja kwa moja, kwenye kompyuta yako: hakuna kinachotumwa
 - Hitilafu ikitokea kimya, kamwe si muziki usiochujwa
 - Kufifisha skrini juu ya kila dirisha (si lazima)
+- Programu zinazosikika bila kuchujwa
+- Bakiza uimbaji (majaribio)
+- Ulinzi kwa nyakati za udhaifu
+- Andika kosa
 - Anza unapoingia
 - Lugha 18
 - Bure na chanzo huria

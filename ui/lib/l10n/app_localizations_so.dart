@@ -1703,6 +1703,10 @@ class AppLocalizationsSo extends AppLocalizations {
       'Waxa aysan tani joojin karin: amarka waaiya ee terminal-ka, ka saarista Waaiya ama tirtirista galka dejinteeda. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go\'aansaday.';
 
   @override
+  String get protectLimitsWindows =>
+      'Waxa aysan tani joojin karin: amarka waaiya-filter.exe ee terminal-ka, ka saarista Waaiya ama tirtirista galka dejinteeda. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go\'aansaday.';
+
+  @override
   String get protectWhatStop => 'Jooji shaandhaynta';
 
   @override

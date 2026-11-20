@@ -487,7 +487,11 @@ class _ProtectionCardState extends State<ProtectionCard> {
             ),
           ],
           const SizedBox(height: 12),
-          Text(android ? l.protectLimits : l.protectLimitsDesktop, style: text.bodySmall),
+          Text(
+              android
+                  ? l.protectLimits
+                  : (s.platform == 'windows' ? l.protectLimitsWindows : l.protectLimitsDesktop),
+              style: text.bodySmall),
         ],
       ),
     );

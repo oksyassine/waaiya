@@ -1688,6 +1688,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Чего это не может предотвратить: команду waaiya в терминале, удаление Waaiya или его папки настроек. Это защита от минуты слабости, а не от решительно настроенного человека.';
 
   @override
+  String get protectLimitsWindows =>
+      'Чего это не может предотвратить: команду waaiya-filter.exe в терминале, удаление Waaiya или его папки настроек. Это защита от минуты слабости, а не от решительно настроенного человека.';
+
+  @override
   String get protectWhatStop => 'Остановить фильтр';
 
   @override

@@ -15,6 +15,10 @@ e recitazione del Corano. Funziona con ogni app (browser, lettori video, giochi)
   riprodurre musica.
 - Sfocatura dello schermo facoltativa: copre le donne, o le immagini indecenti, sopra ogni finestra; i clic arrivano
   comunque alle finestre sottostanti.
+- App ascoltate senza filtro: scegli app che mantengono il loro suono originale; non vengono né filtrate né silenziate.
+- Mantieni il canto (prova): rimuove gli strumenti ma mantiene le voci che cantano, per chi lo accetta.
+- Protezione per i momenti di debolezza: un periodo di attesa prima di tutto ciò che abbassa la protezione, e un PIN parentale facoltativo.
+- Annota un errore: segna la musica sfuggita o una voce rimossa per errore; le note restano sul tuo computer.
 - Avvia all'accesso, se vuoi.
 - Tutto funziona sul tuo computer. Non viene inviato nulla: nessun account, nessuna statistica, nessuna pubblicità.
 - Gratuito e open source (AGPL-3.0)
@@ -31,6 +35,10 @@ mono da solo.
 Prima versione nel Microsoft Store.
 - Nuova pagina Link: guarda un link di YouTube, TikTok o Instagram con il filtro attivo.
 - Silenzia il canto femminile (prima versione), ora anche su Windows.
+- App ascoltate senza filtro
+- Mantieni il canto (prova)
+- Protezione per i momenti di debolezza
+- Annota un errore
 - 18 lingue (nuove: spagnolo, olandese, tedesco, italiano, russo, uzbeko, swahili, hausa, somalo).
 - Design più fluido: i pulsanti rispondono subito, animazioni delicate (nessuna se Windows chiede meno movimento).
 - Correzioni: un vecchio filtro di Waaiya che non rispondeva più non blocca più quello nuovo; i dettagli degli errori
@@ -44,6 +52,10 @@ Prima versione nel Microsoft Store.
 - In tempo reale, sul tuo computer: non viene inviato nulla
 - In caso di errore silenzio, mai musica senza filtro
 - Sfocatura dello schermo facoltativa sopra ogni finestra
+- App ascoltate senza filtro
+- Mantieni il canto (prova)
+- Protezione per i momenti di debolezza
+- Annota un errore
 - Avvia all'accesso
 - 18 lingue
 - Gratuito e open source

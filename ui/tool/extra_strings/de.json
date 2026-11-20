@@ -197,6 +197,7 @@
   "protect_held_back": "Diese Änderung wird von den Schutzeinstellungen zurückgehalten.",
   "protect_limits": "Was dies nicht verhindern kann: Beenden erzwingen, Deinstallieren, Löschen der Daten von Waaiya und die Einstellungen von Android selbst. Um das zu sperren, braucht es Geräteadministrator- oder Bedienungshilfen-Rechte, die Waaiya nicht nutzt. Das schützt vor einem schwachen Moment, nicht vor einem entschlossenen Menschen.",
   "protect_limits_desktop": "Was dies nicht verhindern kann: den Befehl waaiya in einem Terminal, das Entfernen von Waaiya oder das Löschen seines Einstellungsordners. Das schützt vor einem schwachen Moment, nicht vor einem entschlossenen Menschen.",
+  "protect_limits_windows": "Was dies nicht verhindern kann: den Befehl waaiya-filter.exe in einem Terminal, das Entfernen von Waaiya oder das Löschen seines Einstellungsordners. Das schützt vor einem schwachen Moment, nicht vor einem entschlossenen Menschen.",
   "protect_what_stop": "Den Filter stoppen",
   "protect_what_off": "Ausschalten: {name}",
   "protect_what_on": "Einschalten: {name}",

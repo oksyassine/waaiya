@@ -1685,6 +1685,10 @@ class AppLocalizationsBn extends AppLocalizations {
       'যা এটি আটকাতে পারে না: টার্মিনালে waaiya কমান্ড, Waaiya সরিয়ে ফেলা বা এর সেটিংস ফোল্ডার মুছে ফেলা। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
 
   @override
+  String get protectLimitsWindows =>
+      'যা এটি আটকাতে পারে না: টার্মিনালে waaiya-filter.exe কমান্ড, Waaiya সরিয়ে ফেলা বা এর সেটিংস ফোল্ডার মুছে ফেলা। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
+
+  @override
   String get protectWhatStop => 'ফিল্টার বন্ধ করা';
 
   @override

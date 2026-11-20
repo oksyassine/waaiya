@@ -1688,6 +1688,10 @@ class AppLocalizationsId extends AppLocalizations {
       'Yang tidak bisa dicegah: perintah waaiya di terminal, menghapus Waaiya, atau menghapus folder pengaturannya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
 
   @override
+  String get protectLimitsWindows =>
+      'Yang tidak bisa dicegah: perintah waaiya-filter.exe di terminal, menghapus Waaiya, atau menghapus folder pengaturannya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
+
+  @override
   String get protectWhatStop => 'Hentikan filter';
 
   @override

@@ -1687,6 +1687,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bunun engelleyemedikleri: terminaldeki waaiya komutu, Waaiya\'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
 
   @override
+  String get protectLimitsWindows =>
+      'Bunun engelleyemedikleri: terminaldeki waaiya-filter.exe komutu, Waaiya\'yı kaldırmak veya ayar klasörünü silmek. Bu, kararlı bir kişiye karşı değil, zayıf bir ana karşı korur.';
+
+  @override
   String get protectWhatStop => 'Filtreyi durdur';
 
   @override

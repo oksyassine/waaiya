@@ -1972,6 +1972,10 @@
   "@protectLimitsDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
+  "protectLimitsWindows": "ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimitsWindows": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "protectWhatStop": "إيقاف التصفية",
   "@protectWhatStop": {
     "description": "Flutter only. Not reviewed yet except in English."

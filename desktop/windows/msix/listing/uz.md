@@ -15,6 +15,10 @@ kompyuteringizda.
 - Xatoda sukunat: filtrlash oʻzidan oʻzi toʻxtasa, boshqa ilovalar musiqa chalish oʻrniga ovozsiz qoladi.
 - Ixtiyoriy ekranni xiralashtirish: barcha oynalar ustidan ayollarni yoki odobsiz tasvirlarni yopadi; sichqoncha
   bosishlari baribir ostidagi oynalarga yetib boradi.
+- Filtrsiz eshitiladigan ilovalar: asl ovozi bilan eshitiladigan ilovalarni tanlang; ular na filtrlanadi, na o‘chiriladi.
+- Qoʻshiqni saqlash (sinov): cholg‘ular olib tashlanadi, lekin qo‘shiq ovozlari qoladi; buni qabul qilganlar uchun.
+- Zaif damlar uchun himoya: himoyani pasaytiradigan har qanday o‘zgarishdan oldin kutish vaqti va ixtiyoriy ota-ona PIN kodi.
+- Xatoni qayd etish: o‘tib ketgan musiqa yoki xato bilan olib tashlangan ovozni belgilang; qaydlar kompyuteringizda qoladi.
 - Xohlasangiz, tizimga kirganda ishga tushirish.
 - Hammasi kompyuteringizda ishlaydi. Hech narsa hech qayerga yuborilmaydi: hisob yoʻq, tahlil yoʻq, reklama yoʻq.
 - Bepul va ochiq kodli (AGPL-3.0)
@@ -31,6 +35,10 @@ Waaiya oʻzi monoga oʻtadi.
 Microsoft Store doʻkonidagi birinchi versiya.
 - Yangi Havolalar sahifasi: YouTube, TikTok yoki Instagram havolasini filtr yoqilgan holda koʻring.
 - Ayollar qoʻshigʻini oʻchirish (dastlabki versiya), endi Windows uchun ham.
+- Filtrsiz eshitiladigan ilovalar
+- Qoʻshiqni saqlash (sinov)
+- Zaif damlar uchun himoya
+- Xatoni qayd etish
 - 18 til (yangi: ispan, niderland, nemis, italyan, rus, oʻzbek, suahili, hausa, somali).
 - Silliqroq dizayn: tugmalar darhol javob beradi, yumshoq animatsiyalar (Windows kamroq harakat soʻrasa, animatsiya
   yoʻq).
@@ -44,6 +52,10 @@ Microsoft Store doʻkonidagi birinchi versiya.
 - Jonli, kompyuteringizda: hech narsa yuborilmaydi
 - Xatoda sukunat, hech qachon filtrsiz musiqa emas
 - Barcha oynalar ustidan ixtiyoriy ekranni xiralashtirish
+- Filtrsiz eshitiladigan ilovalar
+- Qoʻshiqni saqlash (sinov)
+- Zaif damlar uchun himoya
+- Xatoni qayd etish
 - Tizimga kirganda ishga tushirish
 - 18 til
 - Bepul va ochiq kodli

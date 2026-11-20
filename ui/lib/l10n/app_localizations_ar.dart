@@ -1670,6 +1670,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
 
   @override
+  String get protectLimitsWindows =>
+      'ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+
+  @override
   String get protectWhatStop => 'إيقاف التصفية';
 
   @override

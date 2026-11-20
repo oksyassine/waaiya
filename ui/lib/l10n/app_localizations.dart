@@ -2959,6 +2959,12 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimitsWindows;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
   /// **'إيقاف التصفية'**
   String get protectWhatStop;
 

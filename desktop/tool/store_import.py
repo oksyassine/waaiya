@@ -29,15 +29,30 @@ LANGS = {"en": "en-us", "ar": "ar", "fr": "fr", "ur": "ur", "id": "id", "tr": "t
 SHOTS = ["1-filter.png", "2-links.png", "3-screen.png", "4-settings.png"]  # same order as the captions
 
 
+def unwrap(text):
+    """The .md files are wrapped at 120 columns for reading; the Store keeps every line break, so a wrapped sentence
+    would break in the middle there. Joins each paragraph and each bullet ("- ", continued by indented lines) into
+    one line."""
+    out = []
+    for line in text.splitlines():
+        joins = out and out[-1] and line.strip() and (
+            line.startswith("  ") or (not line.startswith("- ") and not out[-1].startswith("- ")))
+        if joins:
+            out[-1] += " " + line.strip()
+        else:
+            out.append(line.rstrip())
+    return "\n".join(out)
+
+
 def listing(lang):
     s = open(os.path.join(ROOT, "listing", lang + ".md"), encoding="utf-8").read()
     sec = {m.group(1).split(" (")[0].strip(): m.group(2).strip()
            for m in re.finditer(r"^## (.+?)\n(.*?)(?=^## |\Z)", s, re.S | re.M)}
-    desc = sec["Description"]
+    desc = unwrap(sec["Description"])
     return {
         "Description": desc,
-        "ShortDescription": desc.split("\n\n")[0].replace("\n", " "),
-        "ReleaseNotes": sec.get("What's new in this version", ""),
+        "ShortDescription": desc.split("\n\n")[0],
+        "ReleaseNotes": unwrap(sec.get("What's new in this version", "")),
         "features": [l[2:].strip() for l in sec["Product features"].splitlines() if l.startswith("- ")],
         "terms": [t.strip() for t in re.split(r"[,،、]", sec["Keywords"]) if t.strip()],
         "captions": [l.split(". ", 1)[1].strip() for l in sec["Screenshot captions"].splitlines()

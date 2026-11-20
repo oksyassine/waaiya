@@ -1684,6 +1684,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'جو یہ نہیں روک سکتا: ٹرمینل میں waaiya کمانڈ، واعية کو ہٹانا یا اس کی ترتیبات کا فولڈر حذف کرنا۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
 
   @override
+  String get protectLimitsWindows =>
+      'جو یہ نہیں روک سکتا: ٹرمینل میں waaiya-filter.exe کمانڈ، واعية کو ہٹانا یا اس کی ترتیبات کا فولڈر حذف کرنا۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
+
+  @override
   String get protectWhatStop => 'فلٹر روکنا';
 
   @override

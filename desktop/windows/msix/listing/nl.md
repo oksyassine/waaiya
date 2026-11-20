@@ -14,6 +14,10 @@ Koranrecitatie. Het werkt met elke app (browsers, videospelers, games), live, op
 - Bij een fout stilte: als het filteren vanzelf stopt, blijven andere apps stil in plaats van muziek af te spelen.
 - Optionele schermvervaging: bedekt vrouwen, of onzedige beelden, over elk venster; klikken bereiken nog steeds de
   vensters eronder.
+- Apps die je ongefilterd hoort: kies apps die hun oorspronkelijke geluid houden; ze worden niet gefilterd en niet gedempt.
+- Zang behouden (test): instrumenten worden verwijderd maar zangstemmen blijven, voor wie dat aanvaardt.
+- Bescherming voor zwakke momenten: een wachttijd vóór alles wat de bescherming verlaagt, en een optionele ouder-pincode.
+- Een fout noteren: markeer muziek die doorkwam of een stem die per vergissing verdween; notities blijven op je computer.
 - Starten bij inloggen, als je wilt.
 - Alles draait op je computer. Er wordt niets verstuurd: geen account, geen analyse, geen advertenties.
 - Gratis en open source (AGPL-3.0)
@@ -30,6 +34,10 @@ Waaiya vanzelf over naar mono.
 Eerste versie in de Microsoft Store.
 - Nieuwe pagina Links: bekijk een link van YouTube, TikTok of Instagram met het filter aan.
 - Zang van vrouwen dempen (vroege versie), nu ook op Windows.
+- Apps die je ongefilterd hoort
+- Zang behouden (test)
+- Bescherming voor zwakke momenten
+- Een fout noteren
 - 18 talen (nieuw: Spaans, Nederlands, Duits, Italiaans, Russisch, Oezbeeks, Swahili, Hausa, Somalisch).
 - Vloeiender ontwerp: knoppen reageren meteen, rustige animaties (geen als Windows om minder beweging vraagt).
 - Oplossingen: een ouder Waaiya-filter dat niet meer reageerde, blokkeert het nieuwe niet langer; foutdetails zijn
@@ -43,6 +51,10 @@ Eerste versie in de Microsoft Store.
 - Live, op je computer: er wordt niets verstuurd
 - Bij een fout stilte, nooit ongefilterde muziek
 - Optionele schermvervaging over elk venster
+- Apps die je ongefilterd hoort
+- Zang behouden (test)
+- Bescherming voor zwakke momenten
+- Een fout noteren
 - Starten bij inloggen
 - 18 talen
 - Gratis en open source

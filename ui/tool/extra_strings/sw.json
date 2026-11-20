@@ -197,6 +197,7 @@
   "protect_held_back": "Badiliko hili limezuiliwa na mipangilio ya ulinzi.",
   "protect_limits": "Kile ambacho hiki hakiwezi kuzuia: kulazimisha kusimama, kuondoa programu, kufuta data ya Waaiya na mipangilio ya Android yenyewe. Kuzuia hayo kunahitaji mamlaka ya msimamizi wa kifaa au ya ufikivu ambayo Waaiya haitumii. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.",
   "protect_limits_desktop": "Kile ambacho hiki hakiwezi kuzuia: amri ya waaiya kwenye terminal, kuondoa Waaiya au kufuta folda yake ya mipangilio. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.",
+  "protect_limits_windows": "Kile ambacho hiki hakiwezi kuzuia: amri ya waaiya-filter.exe kwenye terminal, kuondoa Waaiya au kufuta folda yake ya mipangilio. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.",
   "protect_what_stop": "Kusimamisha kichujio",
   "protect_what_off": "Kuzima: {name}",
   "protect_what_on": "Kuwasha: {name}",

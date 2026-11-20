@@ -1698,6 +1698,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lo que esto no puede impedir: el comando waaiya en una terminal, quitar Waaiya o borrar su carpeta de ajustes. Esto protege de un momento de debilidad, no de una persona decidida.';
 
   @override
+  String get protectLimitsWindows =>
+      'Lo que esto no puede impedir: el comando waaiya-filter.exe en una terminal, quitar Waaiya o borrar su carpeta de ajustes. Esto protege de un momento de debilidad, no de una persona decidida.';
+
+  @override
   String get protectWhatStop => 'Detener el filtrado';
 
   @override

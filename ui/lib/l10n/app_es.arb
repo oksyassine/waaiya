@@ -471,6 +471,7 @@
   "protectHeldBack": "Los ajustes de protección retienen este cambio.",
   "protectLimits": "Lo que esto no puede impedir: forzar la detención, desinstalar, borrar los datos de Waaiya y los propios ajustes de Android. Bloquear eso requiere permisos de administrador del dispositivo o de accesibilidad que Waaiya no usa. Esto protege de un momento de debilidad, no de una persona decidida.",
   "protectLimitsDesktop": "Lo que esto no puede impedir: el comando waaiya en una terminal, quitar Waaiya o borrar su carpeta de ajustes. Esto protege de un momento de debilidad, no de una persona decidida.",
+  "protectLimitsWindows": "Lo que esto no puede impedir: el comando waaiya-filter.exe en una terminal, quitar Waaiya o borrar su carpeta de ajustes. Esto protege de un momento de debilidad, no de una persona decidida.",
   "protectWhatStop": "Detener el filtrado",
   "protectWhatOff": "Desactivar: {name}",
   "protectWhatOn": "Activar: {name}",

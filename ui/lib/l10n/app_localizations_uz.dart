@@ -1693,6 +1693,10 @@ class AppLocalizationsUz extends AppLocalizations {
       'Bu nimani toʻxtata olmaydi: terminaldagi waaiya buyrugʻi, Waaiyani oʻchirib tashlash yoki uning sozlamalar jildini oʻchirish. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
 
   @override
+  String get protectLimitsWindows =>
+      'Bu nimani toʻxtata olmaydi: terminaldagi waaiya-filter.exe buyrugʻi, Waaiyani oʻchirib tashlash yoki uning sozlamalar jildini oʻchirish. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
+
+  @override
   String get protectWhatStop => 'Filtrni toʻxtatish';
 
   @override

@@ -197,6 +197,7 @@
   "protect_held_back": "Deze wijziging wordt tegengehouden door de beschermingsinstellingen.",
   "protect_limits": "Wat dit niet kan tegenhouden: geforceerd stoppen, verwijderen, de gegevens van Waaiya wissen en de eigen instellingen van Android. Om dat te blokkeren zijn beheerders- of toegankelijkheidsrechten nodig die Waaiya niet gebruikt. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.",
   "protect_limits_desktop": "Wat dit niet kan tegenhouden: het commando waaiya in een terminal, Waaiya verwijderen of de map met instellingen ervan wissen. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.",
+  "protect_limits_windows": "Wat dit niet kan tegenhouden: het commando waaiya-filter.exe in een terminal, Waaiya verwijderen of de map met instellingen ervan wissen. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.",
   "protect_what_stop": "Filteren stoppen",
   "protect_what_off": "Uitzetten: {name}",
   "protect_what_on": "Aanzetten: {name}",

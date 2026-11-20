@@ -1693,6 +1693,10 @@ class AppLocalizationsHa extends AppLocalizations {
       'Abin da wannan ba zai iya hanawa ba: umarnin waaiya a terminal, cire Waaiya ko share babban fayil ɗin saitunansa. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.';
 
   @override
+  String get protectLimitsWindows =>
+      'Abin da wannan ba zai iya hanawa ba: umarnin waaiya-filter.exe a terminal, cire Waaiya ko share babban fayil ɗin saitunansa. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.';
+
+  @override
   String get protectWhatStop => 'Dakatar da tacewa';
 
   @override
