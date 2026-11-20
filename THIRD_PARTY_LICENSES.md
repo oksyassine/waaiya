@@ -1,6 +1,6 @@
 # Third-party components, models and data
 
-Waaiya (formerly Islamic Mute) itself is licensed under AGPL-3.0-or-later (`LICENSE`, `NOTICE`). This file lists everything it builds on,
+Waaiya itself is licensed under AGPL-3.0-or-later (`LICENSE`, `NOTICE`). This file lists everything it builds on,
 where the licence was read, and what each licence requires. Audit date: 2026-11-09.
 
 Status: **OK** = permissive, attribution only. **Flag** = needs a decision or restricts redistribution.
@@ -34,6 +34,9 @@ Status: **OK** = permissive, attribution only. **Flag** = needs a decision or re
 | yt-dlp (pip, in the APK) | 2026.10.26 | Android link feature: reads page links | Unlicense (public domain) | wheel `dist-info/licenses/LICENSE` | OK. No extras installed (`yt-dlp[default]` would add other licences) |
 | yt-dlp-ejs (pip, in the APK) | 0.8.0 | YouTube JavaScript challenge scripts | Unlicense; bundles astring (MIT) and meriyah (ISC) in `yt/solver/*.min.js` | wheel `dist-info/licenses/LICENSE`, upstream README | OK. The bundled MIT/ISC notices stay inside the minified files as shipped |
 | QuickJS-NG (`qjs`, built from source by `android/tools/build_qjs.sh`) | 0.18.0 (sha256 28bcd89a…f9f1dd) | runs the yt-dlp-ejs scripts on the phone | MIT | source tarball `LICENSE` | OK |
+| yt-dlp.exe (Windows, the release's PyInstaller build; `scripts/fetch_deps.sh links-win`) | 2026.10.26 (sha256 f5389d36…6d177a7d, as the release's SHA2-256SUMS) | Windows app (zip only, not the Store package): "save a link without music" | Unlicense; the program bundles Python and libraries under their own licences | `licences\yt-dlp-LICENSE.txt`, `licences\yt-dlp-THIRD_PARTY_LICENSES.txt` (from the 2026.10.26 tag) | OK. Never updated by itself in the Store package (it has no yt-dlp) |
+| QuickJS-NG `qjs-windows-x86_64.exe` (release binary) | v0.18.0 (sha256 ff03398d…812a49c7) | Windows app (zip only): YouTube's JavaScript challenge for yt-dlp | MIT | `licences\QuickJS-ng-LICENSE.txt` (from the v0.18.0 tag) | OK |
+| FFmpeg `ffmpeg.exe` (built by `scripts/build_ffmpeg_win.sh`: decoders, AAC encoder, MP4/M4A muxers only; no network, no GPL parts) | 9.0.2 (source sha256 8c385028…a96e002e) | Windows app (zip only): decodes the downloaded sound, encodes the filtered AAC, copies the video | LGPL-2.1-or-later | `licences\ffmpeg-LGPL-2.1.txt`, `licences\ffmpeg-SOURCE.txt` (where the unmodified source and the build options are) | OK. The build fails if FFmpeg's configure would make it GPL |
 | Conscrypt (`org.conscrypt:conscrypt-openjdk-uber`) | 2.5.2 | unit tests only (`AdbInteropTest`: TLS exporter on the JVM). Not in the APK | Apache-2.0 | Maven POM (google/conscrypt) | OK |
 | HiddenApiBypass (`org.lsposed.hiddenapibypass`) | 4.3 | Android screen blur: sets the hidden "skip screenshot" flag on the covers window; Wireless debugging setup on Android 11: reads the TLS exporter of the platform socket | Apache-2.0 | Maven POM (LSPosed/AndroidHiddenApiBypass) | OK |
 | glibc / Linux UAPI headers (optional local sysroot) | Ubuntu 22.04 `libc6-dev`, `linux-libc-dev` | build only, when headers are missing | LGPL-2.1+ / GPL-2.0 with syscall exception | `third_party/sysroot/usr/share/doc/*/copyright` | OK: build-time only, not committed, not shipped |
@@ -50,8 +53,8 @@ Status: **OK** = permissive, attribution only. **Flag** = needs a decision or re
 | `models/dfn3/dfn3_stream{,_fp16,_int8}.onnx` (16 / 4.4 / 2.4 MB) | Streaming re-export of the official DeepFilterNet3 checkpoint (downloaded by `df.enhance` from `github.com/Rikorose/DeepFilterNet/raw/main/models/DeepFilterNet3.zip`) | MIT OR Apache-2.0 (the repository licence; the zip carries no separate licence). Our export records `im.licence = MIT OR Apache-2.0` in the ONNX metadata | Upstream's training data (not re-checked here) | OK |
 | EfficientAT `mn04_as_mAP_432.pt` (detector backbone, 4 MB) | GitHub release `fschmid56/EfficientAT` v0.0.1 | MIT (repository licence; the release asset carries no separate licence) | AudioSet (labels CC BY 4.0; audio is YouTube content, not redistributed by anyone) | OK |
 | `mn10_as_mAP_471.pt` (only `zeroshot.py`, an experiment) | same | MIT | AudioSet | OK, not shipped |
-| `voice_v1.onnx` (future, Kaggle) | DeepFilterNet3 fine-tuned by `models/voice/train.py` | ours (AGPL-3.0-or-later) on top of MIT/Apache base, **subject to section 4** | LibriSpeech, Arabic Speech Corpus, VocalSet, Slakh2100, **Diverse Quran Reciters** (`USE_QURAN = True` in `kaggle/make_notebook.py`) | **Flag** (Quran data) |
-| `detector_v1.onnx` (future, Kaggle) | EfficientAT mn04 fine-tuned by `models/detector/train_detector.py` | ours (AGPL-3.0-or-later) on top of MIT base, **subject to section 4** | LibriSpeech, FLEURS ar_eg, VocalSet, Slakh2100, **Diverse Quran Reciters** (incl. the female reciter "Ayu Rumiyati") | **Flag** (Quran data) |
+| `voice_v1_fp16.onnx` (models-v1, "keep singing") | DeepFilterNet3 fine-tuned by `models/voice/train.py` | ours (AGPL-3.0-or-later) on top of MIT/Apache base, **subject to section 4** | LibriSpeech, Arabic Speech Corpus, VocalSet, Slakh2100, **Diverse Quran Reciters** (`USE_QURAN = True` in `kaggle/make_notebook.py`) | **Flag** (Quran data) |
+| `detector_v1.onnx` (models-v1) | EfficientAT mn04 fine-tuned by `models/detector/train_detector.py` | ours (AGPL-3.0-or-later) on top of MIT base, **subject to section 4** | LibriSpeech, FLEURS ar_eg, VocalSet, Slakh2100, **Diverse Quran Reciters** (incl. the female reciter "Ayu Rumiyati") | **Flag** (Quran data) |
 | `models/vision/person_yolox_nano.onnx` (3.6 MB; screen blur, people; Android and the Linux desktop bundle) | YOLOX-Nano official ONNX (`github.com/Megvii-BaseDetection/YOLOX` release 0.1.1rc0, sha256 c7891611…a0b7d), wrapped by `models/vision/export_vision.py` (pre/post-processing added, weights unchanged) | Apache-2.0 (repository licence) | COCO 2017 (annotations CC BY 4.0; images Flickr, per-image licences) | OK |
 | `models/vision/nsfw_marqo{,_int8}.onnx` (22 / 6.7 MB; screen blur, immodest images; int8 in Android and the Linux desktop bundle) | `Marqo/nsfw-image-detection-384` (Hugging Face, safetensors), exported by `export_vision.py`; int8 = dynamic quantisation of MatMul/Gemm | Apache-2.0 (model card `license: apache-2.0`) | Marqo's own 220k-image set (not public; not re-checked) | OK (upstream statement) |
 | `models/vision/gender_v2.onnx` (screen blur, woman/man per person; bundled on Android and the Linux desktop) | ours: timm `mobilenetv3_large_100` (ImageNet-21k pretrained, timm Apache-2.0) fine-tuned by `models/vision/train_gender_v2.py` | ours (AGPL-3.0-or-later) | Open Images V7 boxes Woman/Man/Girl/Boy, train split (section 4) | OK. ImageNet pre-training: the usual caveat (ImageNet images are research-licensed; the weights are widely redistributed) |
@@ -98,6 +101,13 @@ always a derivative. Practical policy for this project:
       possibly lower recitation retention, or replace it with self-recorded / commissioned recitation;
    c. publish anyway, disclosing the data source and the risk (not recommended).
    The code is unaffected either way: none of this data is in the repository.
+
+   **Owner's decision, 2026-11-20: c.** `detector_v1.onnx` and `voice_v1_fp16.onnx` (the "keep singing" model, a
+   test option) are published in the `models-v1` release with this disclosure. Checked the same day: the dataset's
+   Kaggle metadata (`kaggle datasets metadata abdo3id/diverse-quran-reciters`) still says licence "unknown" and
+   names no source for the recordings ("3,396 verses recited by men and 210 by women"). The owner chose not to contact the
+   uploader (2026-11-20). If a reciter or publisher objects, retrain with `USE_QURAN = False`
+   (option b) and replace the files.
 
 ## 6. How models are distributed
 

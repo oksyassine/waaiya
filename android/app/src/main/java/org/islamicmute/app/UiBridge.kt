@@ -29,6 +29,11 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private var sink: EventChannel.EventSink? = null
     private var disposed = false
 
+    private val featureHost = object : FeatureHost {
+        override val activity get() = this@UiBridge.activity
+        override fun refresh() = this@UiBridge.refresh()
+    }
+
     private var shizukuBusy = false
     private var shizukuMessage: Pair<String, String>? = null
     private var blurBusy = false
@@ -72,6 +77,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         override fun run() {
             main.removeCallbacks(this)
             if (disposed || (activity.hasDumpPermission() && activity.hasProjectMediaAppOp())) return
+            // helper mode: nothing more to wait for while the helper runs (Android asks before each capture there)
+            if (HelperDumps.helperMode(activity) && HelperDumps.helperReady) return
             refresh()
             main.postDelayed(this, 2000)
         }
@@ -113,6 +120,10 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         if (!WirelessSetup.developerOptionsOn(activity)) return "dev_off"
         if (!activity.getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled())
             wirelessHint = "wsetup_notif_off"
+        // Android 15+ makes notifications unusable while a screen share runs, and filtering is one: the code could
+        // not be typed in Waaiya's notification
+        else if (Build.VERSION.SDK_INT >= 35 && FilterService.running && !ScreenShareProtection.protectionOff(activity))
+            wirelessHint = "wsetup_filter_on"
         WirelessSetup.start(activity)
         WirelessSetup.openWirelessDebugging(activity)
         refresh()
@@ -136,15 +147,36 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "isError" to (st?.phase == org.islamicmute.app.adb.SetupFlow.Phase.FAILED ||
                 st?.note == org.islamicmute.app.adb.SetupFlow.Note.WRONG_CODE),
             "hint" to wirelessHint,
+            // the guided steps (setup page): what Waaiya can see of each step. Hints only: the Wi-Fi guess can be
+            // wrong and some phones do not let apps read the Wireless debugging switch (null).
+            "devOptions" to WirelessSetup.developerOptionsOn(activity),
+            "wifi" to WirelessSetup.onWifi(),
+            "wirelessDebugging" to WirelessSetup.wirelessDebuggingOn(activity),
+            "paired" to (WirelessSetup.pairedBefore(activity) &&
+                WirelessSetup.keyDir(activity).list()?.isNotEmpty() == true),
+            // where "Build number" is on this make of phone (SetupHelp), null: the general sentence
+            "aboutHint" to SetupHelp.aboutHint,
         )
     }
 
-    fun onResume() { refresh(); setupTick.run() }
-    fun onPause() { main.removeCallbacks(setupTick) }
+    /** Helper mode: once a new process had time to hear from a running helper, start one if none answered. */
+    private val helperCheck = Runnable {
+        if (!disposed) { WirelessSetup.restartHelperIfNeeded(activity); refresh() }
+    }
+
+    fun onResume() {
+        main.removeCallbacks(helperCheck)
+        if (HelperDumps.helperMode(activity) && !HelperDumps.helperReady) {
+            if (HelperDumps.settling) main.postDelayed(helperCheck, HelperDumps.SETTLE_MS) else helperCheck.run()
+        }
+        refresh(); setupTick.run()
+    }
+    fun onPause() { main.removeCallbacks(setupTick); main.removeCallbacks(helperCheck) }
 
     fun dispose() {
         disposed = true
         main.removeCallbacks(setupTick)
+        main.removeCallbacks(helperCheck)
         ShizukuSetup.removeListener(shizukuGrantEnded)
         WirelessSetup.removeListener(changed)
         CoverHelper.removeListener(changed)
@@ -175,6 +207,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "setSetting" -> { setSetting(call.argument<String>("key"), call.argument<Any>("value")); result.success(null) }
                 "startFilter" -> startFilter(result)
                 "stopFilter" -> {
+                    Protection.checkStop(activity)  // throws "protected" when the waiting period or PIN holds it
                     activity.startService(Intent(activity, FilterService::class.java).setAction(FilterService.ACTION_STOP))
                     result.success(null)
                 }
@@ -186,6 +219,17 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wirelessEnterCode" -> result.success(WirelessSetup.enterCode(activity, call.argument<String>("code") ?: ""))
                 "wirelessCancel" -> { WirelessSetup.cancel(activity); result.success(null) }
                 "openAboutPhone" -> { WirelessSetup.openWirelessDebugging(activity); result.success(null) }
+                "guidePicture" -> {
+                    // the illustrated guide's picture in the app's language (res/drawable-<language>-nodpi); through
+                    // Lang.wrap because below Android 13 this activity keeps the language it started with
+                    val id = SetupGuideActivity.PICTURES[call.argument<String>("name")]
+                        ?: throw BadArgs("guide picture ${call.argument<Any>("name")}")
+                    result.success(Lang.wrap(activity).resources.openRawResource(id).use { it.readBytes() })
+                }
+                "openWifiSettings" -> {
+                    runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_WIFI_SETTINGS)) }
+                    result.success(null)
+                }
                 "openSetupGuide" -> { activity.startActivity(Intent(activity, SetupGuideActivity::class.java)); result.success(null) }
                 "pageShown" -> { pageRequest = null; result.success(null) }
                 "shareText" -> {
@@ -210,7 +254,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     result.success(null)
                 }
                 "setLanguage" -> {
-                    val tag = call.argument<String>("tag")?.takeIf { it == Lang.AR || it == Lang.EN }
+                    val tag = call.argument<String>("tag")?.takeIf { it in Lang.ALL }
                         ?: throw BadArgs("language ${call.argument<Any>("tag")}")
                     Lang.store(activity, tag)
                     result.success(null)
@@ -226,8 +270,15 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     if (LicencesActivity.DOCS.none { it.second == file }) throw BadArgs("licence file $file")
                     result.success(licenceAsset(file!!))
                 }
-                else -> result.notImplemented()
+                else -> {
+                    val (feature, method) = Features.byMethod(call.method) ?: run { result.notImplemented(); return }
+                    @Suppress("UNCHECKED_CAST")
+                    val args = (call.arguments as? Map<String, Any?>) ?: emptyMap()
+                    result.success(feature.call(featureHost, method, args))
+                }
             }
+        } catch (e: FeatureException) {
+            result.error(e.code, e.message, null)
         } catch (e: BadArgs) {
             result.error("bad_args", e.message, null)
         } catch (e: Exception) {
@@ -252,6 +303,20 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "blur_strictness" to settings.blurStrictness,
             "audio_stereo" to settings.audioStereo,
             "hold_silence" to settings.holdSilence,
+            "filter_off_apps" to settings.filterOffApps.sorted().joinToString(","),
+            "blur_off_apps" to settings.blurOffApps.sorted().joinToString(","),
+            "keep_singing" to settings.keepSinging,
+            "prayer_silent" to settings.prayerSilent,
+            "prayer_silent_minutes" to settings.prayerSilentMinutes,
+            "prayer_adhan_mute" to settings.prayerAdhanMute,
+            "prayer_adhan_minutes" to settings.prayerAdhanMinutes,
+            "prayer_place" to settings.prayerPlace,
+            "prayer_method" to settings.prayerMethod,
+            "prayer_asr" to settings.prayerAsr,
+            "prayer_sms_reply" to settings.prayerSmsReply,
+            "prayer_sms_delay_seconds" to settings.prayerSmsDelaySeconds,
+            "prayer_sms_text" to settings.prayerSmsText,
+            "protect_delay_minutes" to settings.protectDelayMinutes,
         ),
         "filter" to mapOf(
             "state" to FilterService.state.name,
@@ -261,7 +326,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             // what the user actually hears while filtering (MainActivity.refresh): a problem first
             "problem" to if (FilterService.state != FilterService.State.FILTERING) null else when {
                 FilterService.health?.tooSlow == true -> "too_slow"
-                FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION -> "not_muted"
+                FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION ->
+                    if (activity.helperMissing()) "helper_missing" else "not_muted"
                 FilterService.muterStatus == SessionMuter.Status.FAILING -> "mute_failing"
                 else -> null
             },
@@ -271,13 +337,25 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "captureCancelled" to captureCancelled,
         ),
         "setup" to mapOf(
-            "originalsMuted" to activity.hasDumpPermission(),
+            // DUMP granted, or this phone refused it and Waaiya's helper reads the sessions (HelperDumps)
+            "originalsMuted" to activity.setupDone(),
+            "helperMode" to HelperDumps.helperMode(activity),
+            // helper mode but the helper is not running (after a restart): the Setup and Filter pages say how
+            "helperMissing" to activity.helperMissing(),
+            // an automatic restart of the helper is trying (short and silent); a run the user started shows its steps
+            "helperRestarting" to (WirelessSetup.running && WirelessSetup.quietRun),
+            "helperTip" to when (SetupHelp.brand) {
+                SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
+            },
             "consentSkipped" to activity.hasProjectMediaAppOp(),
             // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
             "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
-            // Xiaomi / OPPO family: the Developer options switch to change before the setup (SetupHelp)
-            "deviceNote" to when (SetupHelp.brand) {
-                SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
+            // Xiaomi: its notification style can hide the field for the pairing code (SetupHelp)
+            // or Huawei: Wireless debugging may be missing there, the computer is then the way
+            "deviceNote" to when {
+                SetupHelp.brand == SetupHelp.Brand.XIAOMI -> "xiaomi"
+                SetupHelp.aboutHint == "huawei" && Build.MANUFACTURER.contains("huawei", ignoreCase = true) -> "huawei"
+                else -> null
             },
             "shizuku" to ShizukuSetup.state(activity).name,
             "wireless" to wirelessInfo(),
@@ -304,15 +382,19 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "message" to blurMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
         ),
         "models" to mapOf("detector" to ModelStore.hasDetector(activity)),
+        "features" to Features.ALL.associate { it.name to it.snapshot(featureHost) },
         "capabilities" to mapOf(
             "shizukuSetup" to true, "adbSetup" to true, "captureConsent" to true,
-            "screenBlur" to true, "links" to true, "womenSinging" to true,
+            "screenBlur" to true, "links" to BuildConfig.LINKS, "womenSinging" to true,
         ),
     )
 
     private fun setSetting(key: String?, value: Any?) {
         if (key == null) throw BadArgs("key")
         fun bool() = value as? Boolean ?: throw BadArgs("$key takes a bool")
+        fun int(lo: Int, hi: Int) = (value as? Int)?.takeIf { it in lo..hi } ?: throw BadArgs("$key takes $lo to $hi")
+        fun apps() = Settings.csv(value as? String ?: throw BadArgs("$key takes comma-separated package names"))
+        Protection.checkSetting(activity, key, value)  // throws "protected" when the waiting period or PIN holds it
         when (key) {
             "gender" -> settings.gender = (value as? String)?.takeIf { it in listOf("", "man", "woman") }
                 ?: throw BadArgs("gender is \"\", \"man\" or \"woman\"")
@@ -326,6 +408,21 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             // read by the running filter (stereo) and when Android ends filtering (hold): apply at once
             "audio_stereo" -> settings.audioStereo = bool()
             "hold_silence" -> settings.holdSilence = bool()
+            "filter_off_apps" -> settings.filterOffApps = apps()
+            "blur_off_apps" -> settings.blurOffApps = apps()
+            "keep_singing" -> settings.keepSinging = bool()
+            "prayer_silent" -> settings.prayerSilent = bool()
+            "prayer_silent_minutes" -> settings.prayerSilentMinutes = int(5, 90)
+            "prayer_adhan_mute" -> settings.prayerAdhanMute = bool()
+            "prayer_adhan_minutes" -> settings.prayerAdhanMinutes = int(1, 30)
+            "prayer_place" -> settings.prayerPlace = value as? String ?: throw BadArgs("$key takes a string")
+            "prayer_method" -> settings.prayerMethod = int(0, 15)
+            "prayer_asr" -> settings.prayerAsr = int(0, 1)
+            "prayer_sms_reply" -> settings.prayerSmsReply = bool()
+            "prayer_sms_delay_seconds" -> settings.prayerSmsDelaySeconds = int(3, 60)
+            "prayer_sms_text" -> settings.prayerSmsText = (value as? String)?.takeIf { it.length <= 300 }
+                ?: throw BadArgs("$key takes a string of at most 300 characters")
+            "protect_delay_minutes" -> settings.protectDelayMinutes = int(0, 1440)
             else -> throw BadArgs("unknown setting $key")
         }
         // No restart: the running filter and blur re-read Settings every 0.5 s.
@@ -338,6 +435,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private fun startFilter(result: MethodChannel.Result) {
         if (FilterService.running) { result.success("already_running"); return }
         if (pendingStart != null) { result.error("busy", "a start is waiting for a dialog", null); return }
+        WirelessSetup.restartHelperIfNeeded(activity)  // helper mode after a restart (the muter waits for it)
         pendingStart = result
         micDenied = false
         captureCancelled = false

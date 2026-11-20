@@ -99,12 +99,14 @@ class Emu:
 
     def page(self, name):
         """Flutter screens: shows a page through the bottom bar (the native screen has one long page)."""
-        for _ in range(3):  # a tap right after a fling can be taken by the scrolling: check and tap again
+        # a tap right after a fling can be taken by the scrolling, and on a loaded host the page takes a while to
+        # change (the filter keeps a core busy): check and tap again
+        for attempt in range(6):
             hit = self.find(rid="nav_" + name)
             if not hit:
                 return
             self.sh(f"input tap {hit[2][0]} {hit[2][1]}")
-            time.sleep(1)
+            time.sleep(1 if attempt < 2 else 3)
             self.sh("uiautomator dump /sdcard/emu_check.xml")
             xml = self.sh("cat /sdcard/emu_check.xml")
             if re.search(r'resource-id="nav_%s"[^>]*selected="true"' % name, xml):
@@ -144,7 +146,8 @@ class Emu:
 
 def strings(lang):
     """name -> text of the app's strings in one language."""
-    path = os.path.join(RES, "values-ar" if lang == "ar" else "values", "strings.xml")
+    folder = "values" if lang == "en" else "values-" + ("in" if lang == "id" else lang)
+    path = os.path.join(RES, folder, "strings.xml")
     out = {}
     for s in ET.parse(path).getroot().iter("string"):
         out[s.get("name")] = (s.text or "").replace("\\n", "\n").replace("\\'", "'").replace('\\"', '"')
@@ -195,7 +198,14 @@ def main():
     ap.add_argument("--blur-fail", action="store_true",
                     help="debug APK: make the blur's capture fail and check the screen says so")
     a = ap.parse_args()
-    e, c, ar = Emu(a.serial), Checks(), strings("ar")
+    e, c = Emu(a.serial), Checks()
+    # First launch (0.2.12): the phone's language when Waaiya has it, else Arabic. The checks find the screens'
+    # words in that language (the name `ar` stays: it was Arabic only).
+    phone = (e.sh("getprop persist.sys.locale").strip() or e.sh("getprop ro.product.locale").strip()).split("-")[0]
+    lang = {"in": "id"}.get(phone, phone)
+    lang = lang if lang in ("ar", "en", "fr", "ur", "id", "tr", "bn", "fa", "ms", "es", "nl", "de", "it", "ru", "uz", "sw", "ha",
+                              "so") else "ar"
+    ar = strings(lang)
     shot = (lambda name: e.screenshot(os.path.join(a.shots, name + ".png"))) if a.shots else (lambda name: None)
     if a.shots:
         os.makedirs(a.shots, exist_ok=True)
@@ -220,7 +230,8 @@ def main():
     if a.cover_helper:
         # the same shell line as CoverHelper.startCommand (WirelessSetupService runs it over Wireless debugging)
         dump = e.sh(f"dumpsys package {PKG}")
-        uid, vc = re.search(r"appId=(\d+)", dump).group(1), re.search(r"versionCode=(\d+)", dump).group(1)
+        # "appId=" from Android 12, "userId=" before
+        uid, vc = re.search(r"(?:appId|userId)=(\d+)", dump).group(1), re.search(r"versionCode=(\d+)", dump).group(1)
         e.sh("for p in $(pidof waaiya_covers); do kill $p; done; "
              f"P=$(pm path {PKG} | head -n 1 | cut -d: -f2); CLASSPATH=$P setsid app_process /system/bin "
              f"--nice-name=waaiya_covers org.islamicmute.app.CoverHelper {uid} {vc} </dev/null >/dev/null 2>&1 & "
@@ -231,14 +242,22 @@ def main():
 
     # --- first launch: Arabic, the man/woman question
     if e.wait(rid="choose_man", seconds=45):  # a debug Flutter build takes ~20 s to start on an emulator
-        c.check(e.find(text=re.escape(ar["onboard_title"])) is not None, "first launch is in Arabic")
+        c.check(e.find(text=re.escape(ar["onboard_title"])) is not None, f"first launch is in the phone's language ({lang})")
         e.tap(rid="choose_man")
         # Flutter: the first frame can be on screen before it takes taps; tap again if nothing moved
         if not e.wait(rid="power", seconds=5) and e.find(rid="choose_man"):
             e.tap(rid="choose_man")
     c.check(e.wait(rid="power", seconds=10) is not None, "main screen shows the power button")
+    # Without DUMP, a running helper reads the sound sessions for the app, and the app then counts the setup as done
+    # ("helper mode", HelperDumps: phones that refuse the grants). The helper answers a new process within ~4 s.
+    silenced = a.setup == "done" or a.cover_helper
+    if a.cover_helper and a.setup == "none":
+        for _ in range(12):
+            if e.find(text=re.escape(ar["setup_banner_title"])) is None:
+                break
+            time.sleep(1)
     banner = e.find(text=re.escape(ar["setup_banner_title"]))
-    c.check((banner is not None) == (a.setup == "none"), "setup banner shown only when the setup is missing")
+    c.check((banner is not None) == (not silenced), "setup banner shown only when the setup is missing")
     shot("1_idle")
     if a.stereo:
         e.page("filter")
@@ -251,16 +270,19 @@ def main():
     # --- start
     e.page("filter")
     e.tap(rid="power")
-    if a.setup == "none":
+    if not silenced:
         c.check(e.wait(text=re.escape(ar["start_no_setup_title"]), seconds=5) is not None,
                 "start without setup: a dialog says the music will still be heard")
         shot("2_start_dialog")
         e.tap(text=re.escape(ar["start_no_setup_anyway"]))
-        # Android's own question (in the phone's language)
-        e.tap(text=r"^(Start|Start now|ابدأ|بدء|البدء الآن)$", seconds=15)
+        # Android's own question, in the phone's language: its positive button
+        e.tap(rid="android:id/button1", seconds=15)
     else:
         c.check(e.wait(text=re.escape(ar["start_no_setup_title"]), seconds=3) is None, "setup done: no warning dialog")
-        if e.find(text=r"^(Start|Start now)$"):
+        if a.setup != "done":
+            # helper mode: the phone refused PROJECT_MEDIA too, so Android asks before each capture
+            e.tap(rid="android:id/button1", seconds=15)
+        elif e.find(text=r"^(Start|Start now)$"):
             c.check(False, "setup done: Android should not ask to share the screen")
             e.tap(text=r"^(Start|Start now)$")
     on = e.wait(text=re.escape(ar["state_on_title"]), seconds=60)
@@ -268,13 +290,16 @@ def main():
     time.sleep(2)
     e.page("filter")
     detail = (e.find(rid="state_detail") or ("", "", None))[1]
-    if a.setup == "none":
+    if not silenced:
         c.check(detail == ar["state_on_not_muted"], "state line warns the original sound is not silenced", detail)
         for _ in range(10):  # posted a moment after the screen changes
-            if ar["notif_not_muted"] in e.sh("dumpsys notification --noredact"):
+            notes = e.sh("dumpsys notification --noredact")
+            if ar["notif_not_muted"] in notes or (a.expect_slow and ar["notif_too_slow"] in notes):
                 break
             time.sleep(1)
-        c.check(ar["notif_not_muted"] in e.sh("dumpsys notification --noredact"), "notification warns too")
+        # on a host too slow for this build, the "too slow" warning takes the notification's one line first
+        notes = e.sh("dumpsys notification --noredact")
+        c.check(ar["notif_not_muted"] in notes or (a.expect_slow and ar["notif_too_slow"] in notes), "notification warns too")
     shot("3_filtering")
 
     # --- play something in another app
@@ -286,7 +311,7 @@ def main():
          "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
     time.sleep(a.seconds)
     log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
-    if a.setup == "done":
+    if silenced:
         # the other app's player must carry the silencing effect while it plays
         m = re.search(r"muter: original of session (\d+) \(uid (\d+), USAGE_MEDIA\) silenced", log)
         c.check(m is not None, "the muter silenced the other app's player", log[-300:])
@@ -306,7 +331,7 @@ def main():
         print(f"      numbers: hop avg {avg} ms, max {mx} ms, late {late}%, dropouts {under}, waiting {buffered} ms, "
               f"mono {mono}, too slow {slow}, capture {cap} dB, muter {muter}")
         c.check(int(cap) > -60, "the other app's sound reaches the filter", f"capture {cap} dB")
-        c.check(muter == ("OK" if a.setup == "done" else "NO_PERMISSION"), "muter state matches the setup", muter)
+        c.check(muter == ("OK" if silenced else "NO_PERMISSION"), "muter state matches the setup", muter)
         if a.expect_slow or not a.stereo:
             c.check(mono == "true", "slow build or the default: mono" if not a.stereo else "slow build: switched to mono")
         if not a.expect_slow:
@@ -319,7 +344,7 @@ def main():
     time.sleep(2)
     e.page("filter")
     detail = (e.find(rid="state_detail") or ("", "", None))[1]
-    if a.setup == "done":
+    if silenced:
         ok_line = ar["state_on_detail"].split("%1$d")[0]
         slow_line = ar["state_too_slow"]
         c.check(detail.startswith(ok_line) or detail == slow_line, "state line: delay, or the too-slow message",
@@ -435,7 +460,10 @@ def main():
     c.check("State: FILTERING" in report and "Speed since start" in report, "report has the live numbers")
     if a.blur and a.cover_helper:
         c.check("shell layer (Waaiya helper)" in report, "report: covers drawn by Waaiya's helper", report[-800:])
-    if a.setup == "done":
+    if silenced and a.setup != "done":
+        c.check("via Waaiya's helper" in report and "Waaiya's helper reads the sessions (helper running: yes)" in report,
+                "report: the session list comes through Waaiya's helper", report[-800:])
+    if silenced:
         c.check("Muter: OK, list from audio_policy" in report, "report: the muter reads the session list", report[-600:])
         if int(e.sh("getprop ro.build.version.sdk").strip() or 0) >= 31:
             c.check("list from audio_policy+audio" in report, "Android 12+: both session lists are read", report[-600:])
@@ -452,7 +480,7 @@ def main():
     e.sh("input keyevent KEYCODE_BACK")
 
     # --- Android ends the capture (debug hook): the other apps stay silent, the service stays in the foreground
-    if a.end_capture and a.setup == "done":
+    if a.end_capture and silenced:
         e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
              "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
         time.sleep(5)

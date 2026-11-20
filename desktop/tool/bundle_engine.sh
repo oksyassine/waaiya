@@ -37,6 +37,11 @@ for f in "${VISION[@]}"; do cp -L "$REPO/models/vision/$f" "$E/models/vision/"; 
 if [ -f "$REPO/models/detector/detector_v1.onnx" ]; then
     mkdir -p "$E/models/detector" && cp "$REPO/models/detector/detector_v1.onnx" "$E/models/detector/"
 fi
+# "keep singing" model (models-v1; scripts/fetch_deps.sh models): islamic-mute install
+# copies it from models/voice/v3/ as singing.onnx
+if [ -f "$REPO/models/voice/v3/voice_v1_fp16.onnx" ] && [ -f "$REPO/models/voice/v3/voice_v1_fp16.state_init.bin" ]; then
+    mkdir -p "$E/models/voice/v3" && cp "$REPO"/models/voice/v3/voice_v1_fp16.{onnx,state_init.bin} "$E/models/voice/v3/"
+fi
 
 version="$(sed -n 's/^version: *//p' "$REPO/desktop/pubspec.yaml")"
 hash="$(cd "$E" && find . -type f ! -name VERSION ! -name im-blur ! -path './models/vision/*' -print0 | sort -z |

@@ -43,11 +43,27 @@ object SetupHelp {
             .joinToString(", ")
     }
 
+    /**
+     * Where the "Build number" line is on this make of phone (the setup's first step): a key for the Flutter page
+     * (`wiz_dev_body_<key>`), or null for the general sentence.
+     */
+    val aboutHint: String? by lazy {
+        val maker = (Build.MANUFACTURER + " " + Build.BRAND).lowercase(Locale.ROOT)
+        when {
+            brand == Brand.XIAOMI -> "xiaomi"
+            brand == Brand.COLOROS -> "coloros"
+            "samsung" in maker || "asus" in maker -> "samsung"  // both: About phone › Software information
+            "vivo" in maker || "iqoo" in maker -> "vivo"
+            listOf("tecno", "infinix", "itel").any { it in maker } -> "transsion"
+            "huawei" in maker || "honor" in maker -> "huawei"
+            else -> null
+        }
+    }
+
     /** The note shown above the setup on these phones, or null. */
     fun noteRes(): Int? = when (brand) {
         Brand.XIAOMI -> R.string.setup_note_xiaomi
-        Brand.COLOROS -> R.string.setup_note_coloros
-        Brand.OTHER -> null
+        Brand.COLOROS, Brand.OTHER -> null
     }
 
     /** The system refused the grant itself (not Waaiya, not Shizuku): the shell user lacks the right to grant. */

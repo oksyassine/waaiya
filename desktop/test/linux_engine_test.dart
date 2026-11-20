@@ -25,6 +25,7 @@ case "$1" in
           elif [ -f "$FAKE/down" ]; then echo "filter:   down (virtual output kept: apps are silent)"
           else echo "filter:   stopped"; fi
           if [ -f "$FAKE/engine" ]; then echo "engine:   $(cat "$FAKE/engine")"; else echo "engine:   ok"; fi
+          if [ -f "$FAKE/restarts" ]; then echo "restarts: $(cat "$FAKE/restarts") in the last minute"; fi
           if [ -f "$FAKE/enabled" ]; then echo "autostart: on"; else echo "autostart: off"; fi ;;
   women-singing) echo "$2" > "$FAKE/women" ;;
   stereo) echo "$2" > "$FAKE/stereo"; mkdir -p "$XDG_CONFIG_HOME/islamic-mute"; echo "$2" > "$XDG_CONFIG_HOME/islamic-mute/stereo" ;;
@@ -293,6 +294,22 @@ void main() {
     expect(b2.state.filter.problem, FilterProblem.detectorFailed);
   });
 
+  test('a filter that keeps crashing reads "running" at each poll, but its restarts are reported', () async {
+    await w.engine.installIfNeeded();
+    w.flag('running');
+    File(w.p('fake/restarts')).writeAsStringSync('2');
+    final b = await w.backend();
+    expect(b.state.filter.state, FilterState.filtering);
+    expect(b.state.filter.error, isNull, reason: 'two restarts in a minute: not yet a crash loop');
+    File(w.p('fake/restarts')).writeAsStringSync('4');
+    await b.refresh();
+    expect(b.state.filter.error?.code, 'service_failed');
+    expect(b.state.filter.error?.detail, contains('restarted 4 times in the last minute'));
+    File(w.p('fake/restarts')).writeAsStringSync('0');
+    await b.refresh();
+    expect(b.state.filter.error, isNull, reason: 'calm again: the message goes');
+  });
+
   test('a filter that stops by itself: apps held silent (hold_silence), else "stopped by the system"', () async {
     final b = await w.backend();
     await b.startFilter();
@@ -335,6 +352,7 @@ void main() {
 
   test('the daemon\'s notice is written in the app\'s language', () async {
     final b = await w.backend();
+    await b.setLanguage('ar');
     await b.startFilter();
     final ar = File(w.p('config/islamic-mute/notice')).readAsLinesSync();
     expect(ar.first, isNot('Waaiya stopped'));

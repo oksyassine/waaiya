@@ -105,6 +105,78 @@ void main() {
     expect(find.text(ar.wsetupRouteTitle), findsOneWidget);
   });
 
+  testWidgets('helper mode (grants refused, Xiaomi/OPPO): setup counts as done; after a restart one button',
+      (tester) async {
+    final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    const running = SetupInfo(
+        originalsMuted: true, consentSkipped: false, helperMode: true, helperTip: 'coloros',
+        wireless: WirelessInfo(supported: true));
+    await tester.pumpWidget(WaaiyaApp(
+        key: UniqueKey(),
+        backend: MemoryBackend(
+            initial: const AppState(
+                settings: WaaiyaSettings(gender: 'man'), capabilities: Capabilities.android, setup: running))));
+    await tester.pumpAndSettle();
+    // no "one step left" although Android will ask before each capture (PROJECT_MEDIA refused too)
+    expect(find.text(ar.setupBannerTitle), findsNothing);
+    expect(find.text(ar.helperMissingTitle), findsNothing);
+    await goTo(tester, 'setup');
+    expect(find.text(ar.setupDoneTitle), findsOneWidget);
+    expect(find.text(ar.helperModeNote), findsOneWidget);
+    expect(find.text(ar.helperTipColoros), findsOneWidget);
+
+    // the phone restarted: the helper is gone; Filter page and Setup page offer to start it, no code needed
+    final b = _Recording(AppState(
+        settings: const WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(
+            originalsMuted: true, consentSkipped: false, helperMode: true, helperMissing: true,
+            wireless: const WirelessInfo(supported: true))));
+    await tester.pumpWidget(WaaiyaApp(key: UniqueKey(), backend: b));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.helperMissingTitle), findsOneWidget);
+    expect(find.text(ar.setupBannerTitle), findsNothing);
+    await tester.ensureVisible(find.text(ar.helperStart));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.helperStart));
+    await tester.pumpAndSettle();
+    expect(b.calls, contains('wirelessStart'));
+    await goTo(tester, 'setup');
+    expect(find.text(ar.helperMissingTitle), findsOneWidget);
+    // an automatic restart is trying: still the short card, the button stays usable, a line says "starting"
+    b.emit(b.state.copyWith(
+        setup: const SetupInfo(
+            originalsMuted: true, consentSkipped: false, helperMode: true, helperMissing: true, helperRestarting: true,
+            wireless: WirelessInfo(supported: true, running: true, phase: 'WAITING'))));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.helperStarting), findsOneWidget);
+    expect(find.text(ar.wizWdTitle), findsNothing);
+    // a run the user started (pairing lost: a code is needed): the steps, the status and Cancel are on screen
+    b.emit(b.state.copyWith(
+        setup: const SetupInfo(
+            originalsMuted: true, consentSkipped: false, helperMode: true, helperMissing: true,
+            wireless: WirelessInfo(supported: true, running: true, phase: 'WAITING', title: 'wsetup_notif_title'))));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.wizWdTitle), findsOneWidget);
+    expect(find.text(ar.wsetupCancel), findsOneWidget);
+    b.emit(b.state.copyWith(
+        setup: const SetupInfo(
+            originalsMuted: true, consentSkipped: false, helperMode: true, helperMissing: true,
+            wireless: WirelessInfo(supported: true))));
+    await tester.pumpAndSettle();
+
+    // Start while the helper is stopped (and not coming back by itself): warned first, the music would be heard
+    await goTo(tester, 'filter');
+    await tester.ensureVisible(find.byKey(const Key('power')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('power')));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.helperStartAnywayBody), findsOneWidget);
+    await tester.tap(find.byKey(const Key('start_anyway')));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.helperStartAnywayBody), findsNothing);
+  });
+
   testWidgets('a page asked for by Android (a tile\'s "Open Waaiya") is shown once, then confirmed', (tester) async {
     final ar = await AppLocalizations.delegate.load(const Locale('ar'));
     final b = _Recording(const AppState(
@@ -130,6 +202,101 @@ void main() {
     expect(find.byKey(const Key('power')), findsOneWidget);
   });
 
+  testWidgets('guided setup: steps tick themselves, one button for the current step, never a dead end',
+      (tester) async {
+    final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    AppState at(WirelessInfo w) => AppState(
+        settings: const WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(originalsMuted: false, shizuku: ShizukuState.notInstalled, wireless: w));
+    // a new Samsung: Developer options off, no Wi-Fi
+    final b = _Recording(at(const WirelessInfo(supported: true, devOptions: false, wifi: false, aboutHint: 'samsung')));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    await goTo(tester, 'setup');
+    expect(wirelessSteps(b.state.setup).$1, [false, false, false, false]);
+    expect(wirelessSteps(b.state.setup).$2, 0);
+    expect(find.text('${ar.wizDevBodySamsung} ${ar.wizDevSearch}'), findsOneWidget); // where "Build number" is on this make
+    expect(find.text(ar.wizDevAction), findsOneWidget);
+    expect(find.text(ar.wizWifiAction), findsNothing); // one button at a time
+    expect(find.text(ar.wizWdAction), findsNothing);
+    expect(find.text(ar.wizSkip), findsOneWidget); // the ticks are hints: Wireless debugging stays reachable
+    expect(find.text(ar.step1Title), findsNothing); // Shizuku and the computer are folded away
+    await tester.ensureVisible(find.text(ar.setupOtherWays));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.setupOtherWays));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.step1Title), findsOneWidget);
+
+    // Developer options on: the Wi-Fi step is current
+    b.emit(at(const WirelessInfo(supported: true, devOptions: true, wifi: false)));
+    await tester.pumpAndSettle();
+    expect(wirelessSteps(b.state.setup).$2, 1);
+    expect(find.text(ar.wizDevAction), findsNothing);
+    expect(find.text(ar.wizWifiAction), findsOneWidget);
+
+    // Wi-Fi on, switch state unreadable on this phone (null): step 3 with its button
+    b.emit(at(const WirelessInfo(supported: true)));
+    await tester.pumpAndSettle();
+    expect(wirelessSteps(b.state.setup).$2, 2);
+    expect(find.text(ar.wizWdAction), findsOneWidget);
+    expect(find.text(ar.wizSkip), findsNothing);
+
+    // Wireless debugging seen on: the code step; paired before: no code needed
+    b.emit(at(const WirelessInfo(supported: true, wirelessDebugging: true)));
+    await tester.pumpAndSettle();
+    expect(wirelessSteps(b.state.setup).$2, 3);
+    expect(find.text(ar.wizPairBody), findsOneWidget);
+    b.emit(at(const WirelessInfo(supported: true, wirelessDebugging: true, paired: true)));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.wizPairBodyPaired), findsOneWidget);
+
+    // step 4 without a run: its button starts one (nothing "finishes by itself" before that)
+    expect(find.text(ar.wizPairAction), findsOneWidget);
+
+    // a finished run: every step ticked, and still a button to run the setup again (no dead end)
+    b.emit(at(const WirelessInfo(supported: true, wirelessDebugging: true, paired: true, phase: 'DONE')));
+    await tester.pumpAndSettle();
+    expect(wirelessSteps(b.state.setup).$2, 4);
+    expect(find.text(ar.wizAgain), findsOneWidget);
+
+    // a failed run while the first step looks undone: its reason is on screen, with the button to try again
+    b.emit(at(const WirelessInfo(
+        supported: true, devOptions: false, phase: 'FAILED', title: 'wsetup_failed_title', body: 'wsetup_timeout', isError: true)));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.wsetupTimeout), findsOneWidget);
+    expect(find.text(ar.wizWdAction), findsOneWidget);
+
+    // the pairing screen was found although the switch cannot be read: step 3 is proven done
+    expect(
+        wirelessSteps(at(const WirelessInfo(supported: true, running: true, phase: 'WAITING', title: 'wsetup_found_title'))
+                .setup)
+            .$2,
+        3);
+  });
+
+  testWidgets('setup with Shizuku already running: its one-tap grant comes first', (tester) async {
+    final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    await tester.pumpWidget(WaaiyaApp(
+        key: UniqueKey(),
+        backend: MemoryBackend(
+            initial: const AppState(
+                settings: WaaiyaSettings(gender: 'man'),
+                capabilities: Capabilities.android,
+                setup: SetupInfo(
+                    originalsMuted: false, shizuku: ShizukuState.ready, wireless: WirelessInfo(supported: true))))));
+    await tester.pumpAndSettle();
+    await goTo(tester, 'setup');
+    expect(find.text(ar.step3Action), findsOneWidget);
+    expect(find.text(ar.setupShizukuReadyTitle), findsOneWidget);
+    expect(find.text(ar.wsetupRouteTitle), findsNothing); // one way on screen: the steps are under "Other ways"
+    await tester.ensureVisible(find.text(ar.setupOtherWaysPlain));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.setupOtherWaysPlain));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.wsetupRouteTitle), findsOneWidget);
+  });
+
   testWidgets('on-phone setup: status in words, code and cancel buttons while it runs', (tester) async {
     final ar = await AppLocalizations.delegate.load(const Locale('ar'));
     final b = _Recording(const AppState(
@@ -141,9 +308,9 @@ void main() {
     await tester.pumpAndSettle();
     await goTo(tester, 'setup');
     expect(find.text(ar.wsetupEnterHere), findsNothing);
-    await tester.ensureVisible(find.text(ar.wsetupStart));
+    await tester.ensureVisible(find.text(ar.wizWdAction));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(ar.wsetupStart));
+    await tester.tap(find.text(ar.wizWdAction));
     await tester.pumpAndSettle();
     expect(b.calls, ['wirelessStart']);
     b.emit(b.state.copyWith(

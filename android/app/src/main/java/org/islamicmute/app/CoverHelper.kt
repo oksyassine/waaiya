@@ -98,8 +98,8 @@ object CoverHelper {
 
     // --- helper side (shell uid, app_process) -------------------------------------------------------------------------
 
+    /** Android 11+ (Wireless debugging): the covers need 12+, the audio dumps ([HelperDumps]) work on 11 too. */
     @JvmStatic
-    @androidx.annotation.RequiresApi(31)  // started by the setup on Android 12+ only (WirelessSetup.helperWanted)
     fun main(args: Array<String>) {
         val appUid = args.getOrNull(0)?.toIntOrNull() ?: exitProcess(2)
         val appVersion = args.getOrNull(1)?.toIntOrNull() ?: 0
@@ -135,9 +135,9 @@ object CoverHelper {
         } ?: -1
     }.getOrDefault(-1)
 
-    /** Hands the binder to the app's [CoverHelperProvider]: IActivityManager/IContentProvider by reflection (API 31+,
-     *  the same signatures Shizuku uses; hidden-API checks do not apply to app_process). */
-    @androidx.annotation.RequiresApi(31)
+    /** Hands the binder to the app's [CoverHelperProvider]: IActivityManager/IContentProvider by reflection (the
+     *  same signatures Shizuku uses; hidden-API checks do not apply to app_process). Android 12+ calls the provider
+     *  with an AttributionSource, Android 11 with (callingPkg, featureId). */
     private fun deliver(pkg: String, service: IBinder, version: Int): Boolean = runCatching {
         val authority = pkg + AUTHORITY_SUFFIX
         val am = Class.forName("android.app.ActivityManager").getMethod("getService").invoke(null)!!
@@ -148,9 +148,15 @@ object CoverHelper {
         try {
             val provider = holder.javaClass.getField("provider").get(holder)!!
             val extras = Bundle().apply { putBinder(KEY_BINDER, service); putInt(KEY_VERSION, version) }
-            val source = AttributionSource.Builder(Process.myUid()).setPackageName("com.android.shell").build()
-            provider.javaClass.getMethod("call", AttributionSource::class.java, String::class.java, String::class.java,
-                String::class.java, Bundle::class.java).invoke(provider, source, authority, METHOD, null, extras)
+            if (Build.VERSION.SDK_INT >= 31) {
+                val source = AttributionSource.Builder(Process.myUid()).setPackageName("com.android.shell").build()
+                provider.javaClass.getMethod("call", AttributionSource::class.java, String::class.java, String::class.java,
+                    String::class.java, Bundle::class.java).invoke(provider, source, authority, METHOD, null, extras)
+            } else {
+                provider.javaClass.getMethod("call", String::class.java, String::class.java, String::class.java,
+                    String::class.java, String::class.java, Bundle::class.java)
+                    .invoke(provider, "com.android.shell", null, authority, METHOD, null, extras)
+            }
         } finally {
             runCatching {
                 am.javaClass.getMethod("removeContentProviderExternalAsUser", String::class.java, IBinder::class.java,
@@ -175,6 +181,12 @@ class CoverHelperProvider : ContentProvider() {
         if (method != CoverHelper.METHOD || extras == null) return null
         val b = extras.getBinder(CoverHelper.KEY_BINDER) ?: return null
         CoverHelper.received(b, extras.getInt(CoverHelper.KEY_VERSION))
+        context?.applicationContext?.let { app ->
+            app.helperArrived()
+            // a write the helper could not do while it was stopped (ScreenShareProtection keeps a mark)
+            if (ScreenShareProtection.shownInCapture == null)
+                kotlin.concurrent.thread(name = "im-ssp-restore") { ScreenShareProtection.restore(app) }
+        }
         return Bundle()
     }
 

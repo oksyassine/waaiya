@@ -194,10 +194,12 @@ def main():
         # the sound server restores a stream to the real output: moved again; our own output stream never
         add_input("11", "Chromium")
         add_input("12", "Islamic Mute")
+        add_input("13", "Waaiya filter")  # the filter's client name since 0.2.12
         wait(lambda: sink_of("11") == "islamic_mute", 5, "a restored stream to be moved back onto the virtual output")
         time.sleep(1.5)
         check(sink_of("11") == "islamic_mute", "a stream restored to the real output is moved onto the virtual one")
-        check(sink_of("12") == "speakers", "the filter's own output stream is never moved")
+        check(sink_of("12") == "speakers" and sink_of("13") == "speakers",
+              "the filter's own output stream is never moved (old and new client name)")
 
         st = waaiya("status").stdout
         check("filter:   running" in st and "engine:   ok" in st and "sound:    mono" in st, "status: running, engine ok, mono")
@@ -216,6 +218,42 @@ def main():
         check(len(moves_to_speakers()) == before and sink_of("10") == "islamic_mute",
               "reload: no stream was moved to the real output (no unfiltered sound)")
         check(pa_state()["default"] == "islamic_mute", "reload: the virtual output stays the default")
+
+        # keep singing on + reload: the filter restarts on the voice_v1 model, nothing plays unfiltered meanwhile
+        before = len(moves_to_speakers())
+        n = len(open(os.path.join(fake, "filter.args")).read().splitlines())
+        waaiya("keep-singing", "on")
+        check(waaiya("reload").returncode == 0, "keep-singing: reload signals the daemon")
+        wait(lambda: len(open(os.path.join(fake, "filter.args")).read().splitlines()) > n, 5, "the filter restart")
+        args = open(os.path.join(fake, "filter.args")).read().splitlines()
+        check("singing.onnx" in args[-1], "keep-singing: the filter runs the voice_v1 model")
+        check("singing:  kept" in waaiya("status").stdout, "status: singing kept")
+        check(len(moves_to_speakers()) == before, "keep-singing: no stream moved to the real output")
+        waaiya("keep-singing", "off")
+        n = len(open(os.path.join(fake, "filter.args")).read().splitlines())
+        waaiya("reload")
+        wait(lambda: len(open(os.path.join(fake, "filter.args")).read().splitlines()) > n, 5, "the filter restart")
+        check("singing.onnx" not in open(os.path.join(fake, "filter.args")).read().splitlines()[-1],
+              "keep-singing off: back to the default model")
+
+        # the filter crashes twice: restarted each time, and 'status' counts the restarts (the app's crash-loop check)
+        check("restarts: 0 in the last minute" in waaiya("status").stdout, "status: no restarts yet")
+        def live_filter():
+            try:
+                pid = int(open(os.path.join(state, "filter.pid")).read())
+                os.killpg(pid, 0)
+                return pid
+            except (OSError, ValueError):
+                return None  # the reload above may still be replacing the filter
+
+        for _ in range(2):
+            wait(lambda: live_filter() is not None, 10, "a running filter")
+            pid = live_filter()
+            os.killpg(pid, signal.SIGKILL)
+            wait(lambda: os.path.exists(os.path.join(state, "filter.pid"))
+                 and open(os.path.join(state, "filter.pid")).read().strip() not in ("", str(pid)), 10, "a new filter")
+        check("restarts: 2 in the last minute" in waaiya("status").stdout, "status: two restarts counted")
+        check(d.poll() is None and sink_of("10") == "islamic_mute", "after the crashes the stream is still filtered")
 
         # the model did not load (the filter runs silent): status says so
         with open(os.path.join(state, "filter.status"), "w") as f:

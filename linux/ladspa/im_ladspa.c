@@ -138,11 +138,11 @@ static const LADSPA_PortRangeHint ph_mono[4] = {
     {0, 0, 0}, {0, 0, 0}, {LADSPA_HINT_TOGGLED | LADSPA_HINT_DEFAULT_1, 0, 1}, {0, 0, 0}};
 
 static const LADSPA_Descriptor desc[2] = {
-    {7531001, "islamic_mute_stereo", LADSPA_PROPERTY_REALTIME, "Islamic Mute voice filter (stereo)",
-     "islamic-mute project", "GPL-3.0-or-later", 6, pd_stereo, pn_stereo, ph_stereo, (void *)2L, instantiate,
+    {7531001, "islamic_mute_stereo", LADSPA_PROPERTY_REALTIME, "Waaiya voice filter (stereo)",
+     "Waaiya", "GPL-3.0-or-later", 6, pd_stereo, pn_stereo, ph_stereo, (void *)2L, instantiate,
      connect_port, activate, run, NULL, NULL, NULL, cleanup},
-    {7531002, "islamic_mute_mono", LADSPA_PROPERTY_REALTIME, "Islamic Mute voice filter (mono)",
-     "islamic-mute project", "GPL-3.0-or-later", 4, pd_mono, pn_mono, ph_mono, (void *)1L, instantiate,
+    {7531002, "islamic_mute_mono", LADSPA_PROPERTY_REALTIME, "Waaiya voice filter (mono)",
+     "Waaiya", "GPL-3.0-or-later", 4, pd_mono, pn_mono, ph_mono, (void *)1L, instantiate,
      connect_port, activate, run, NULL, NULL, NULL, cleanup},
 };
 

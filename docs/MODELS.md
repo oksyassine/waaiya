@@ -6,7 +6,7 @@ Model weights are **not in git**. `.gitignore` excludes `*.onnx`, `*.state_init.
 |---|---|---|
 | `models/dfn3/dfn3_stream.onnx` + `.state_init.bin` | 16 MB | `python models/dfn3/export_stream.py --out models/dfn3/dfn3_stream.onnx` (downloads the official DeepFilterNet3 checkpoint) |
 | `models/dfn3/dfn3_stream_{fp16,int8}.onnx` | 4.4 / 2.4 MB | `python models/shrink.py models/dfn3/dfn3_stream.onnx --fp16 --int8` | **Default** for the APK and `waaiya install` is the int8 file (listening check passed).
-| `voice_v1.onnx` + `.state_init.bin` | ~16 MB (2-5 MB shrunk) | Kaggle notebook `kaggle/voice-train` (see `models/voice/README.md`) |
+| `voice_v1_fp16.onnx` + `.state_init.bin` ("keep singing", models-v1) | 4.4 MB (fp16 of the 16 MB voice_v1) | Kaggle notebook `kaggle/voice-train` (see `models/voice/README.md`) |
 | `models/detector/detector_v1.onnx` | ~4 MB | Kaggle notebook `kaggle/detector-train` |
 | `models/detector/weights/mn04_as_mAP_432.pt` | 4 MB | EfficientAT release v0.0.1 (fetched by the detector notebook) |
 | `models/vision/person_yolox_nano.onnx` | 3.6 MB | screen blur, people: `python models/vision/export_vision.py yolox --src yolox_nano.onnx --out ...` (official YOLOX ONNX, release 0.1.1rc0) |
@@ -30,4 +30,4 @@ Why not the alternatives:
   and contributors need an extra tool. It brings nothing that release assets do not.
 
 Before publishing a trained model, check the data-licence section of `THIRD_PARTY_LICENSES.md`
-(the Quran recitation training data is not yet cleared).
+(the Quran recitation training data is not cleared; the owner chose to publish with a disclosure, 2026-11-20).

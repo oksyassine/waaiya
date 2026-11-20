@@ -95,8 +95,11 @@ object WirelessSetup {
     /** Developer options, scrolled to "Wireless debugging"; About phone when Developer options are still off. */
     fun openWirelessDebugging(ctx: Context): Boolean {
         if (!developerOptionsOn(ctx)) {
-            runCatching { ctx.startActivity(Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+            // some phones have no page for this action (seen on a Huawei): the top of Settings then, where
+            // "About phone" is and where the search finds "Build number"
+            val about = Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (runCatching { ctx.startActivity(about) }.isFailure)
+                runCatching { ctx.startActivity(Intent(android.provider.Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
             return false
         }
         val dev = Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
@@ -105,14 +108,41 @@ object WirelessSetup {
         return runCatching { ctx.startActivity(dev) }.isSuccess
     }
 
-    /** Start the cover helper during the setup: Android 12+ and a screen-blur option on. */
+    /** Start the helper during the setup: Android 12+ and a screen-blur option on (covers), or helper mode. */
     fun helperWanted(ctx: Context): Boolean {
         val s = Settings(ctx)
-        return Build.VERSION.SDK_INT >= 31 && (s.blurWomen || s.blurNudity)
+        return (Build.VERSION.SDK_INT >= 31 && (s.blurWomen || s.blurNudity)) || HelperDumps.helperMode(ctx)
     }
 
     fun start(ctx: Context) {
         ctx.startForegroundService(Intent(ctx, WirelessSetupService::class.java).setAction(WirelessSetupService.ACTION_START))
+    }
+
+    /**
+     * Helper mode ([HelperDumps]) and the helper is not running (the phone restarted): start it again over Wireless
+     * debugging with the saved pairing, without a code and without any screen. Not when Wireless debugging is seen
+     * off; otherwise the app shows how ([helperMissing]). Called when filtering starts and when Waaiya comes to the
+     * front, from an activity (a foreground service may only be started from the foreground). True when a run started.
+     * The run is short and silent ([WirelessSetupService.EXTRA_QUIET]): when it fails, the app's banner and its button
+     * are what the user sees.
+     */
+    private var lastAutoRestart = 0L
+
+    /** The run in progress is an automatic helper restart: the pages show it as "starting the helper", no steps. */
+    @Volatile var quietRun = false
+        internal set
+
+    fun restartHelperIfNeeded(ctx: Context): Boolean {
+        if (!supported || running || !ctx.helperMissing() || !pairedBefore(ctx)) return false
+        if (wirelessDebuggingOn(ctx) == false) return false
+        // at most one automatic try every 3 minutes: the banner has the button for another try
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (lastAutoRestart != 0L && now - lastAutoRestart < 3 * 60_000L) return false
+        lastAutoRestart = now
+        return runCatching {
+            ctx.startForegroundService(Intent(ctx, WirelessSetupService::class.java)
+                .setAction(WirelessSetupService.ACTION_START).putExtra(WirelessSetupService.EXTRA_QUIET, true))
+        }.onFailure { log("cannot restart the helper", it) }.isSuccess
     }
 
     /** A code typed in the app (fallback when the notification cannot be used). False when it has no 6 digits. */
@@ -154,7 +184,20 @@ object WirelessSetup {
         throw javax.net.ssl.SSLException("TLS exporter not available", viaConscrypt.exceptionOrNull())
     }
 
-    /** The shell line run as the shell user. Each result is echoed so that the log says which step failed. */
+    /**
+     * The shell line run as the shell user. Each result is echoed so that the log says which step failed.
+     * Debug builds: `adb shell run-as <pkg> touch files/simulate_refused` makes it answer like a Xiaomi or OPPO phone
+     * that refuses the grants (to test the helper route on an emulator).
+     */
+    internal fun grantCommand(ctx: Context): String {
+        if (BuildConfig.DEBUG && File(ctx.filesDir, "simulate_refused").exists()) return SIMULATED_REFUSAL
+        return grantCommand(ctx.packageName)
+    }
+
+    private const val SIMULATED_REFUSAL = "echo \"Exception occurred while executing 'grant': java.lang.SecurityException: " +
+        "grantRuntimePermission: Neither user 2000 nor current process has android.permission.GRANT_RUNTIME_PERMISSIONS.\"; " +
+        "echo dump=255; echo project_media=255; echo secure_settings=255"
+
     internal fun grantCommand(pkg: String) =
         "cmd package grant $pkg android.permission.DUMP 2>&1; echo \"dump=\$?\"; " +
             "cmd appops set $pkg PROJECT_MEDIA allow 2>&1; echo \"project_media=\$?\"; " +
@@ -186,12 +229,21 @@ class WirelessSetupService : Service() {
     private var key: AdbKey? = null
     /** What the notification shows now: re-posting the same one would close a reply field the user is typing in. */
     private var shown: List<Any?>? = null
+    /** Started by [WirelessSetup.restartHelperIfNeeded]: short, and no result notification when it worked. */
+    private var quiet = false
 
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
-            ACTION_START -> begin()
+            ACTION_START -> {
+                val q = intent.getBooleanExtra(EXTRA_QUIET, false)
+                if (flow == null) quiet = q
+                // the user tapped the button while an automatic restart was trying: it becomes a normal run
+                else if (!q && quiet) { quiet = false; main.removeCallbacks(timeout); main.postDelayed(timeout, TIMEOUT_MS) }
+                WirelessSetup.quietRun = quiet
+                begin()
+            }
             ACTION_CODE -> {
                 val raw = RemoteInput.getResultsFromIntent(intent)?.getCharSequence(KEY_REMOTE_CODE)?.toString()
                     ?: intent.getStringExtra(EXTRA_CODE)
@@ -220,7 +272,7 @@ class WirelessSetupService : Service() {
         worker.execute { runCatching { key = AdbKey.loadOrCreate(WirelessSetup.keyDir(this)) }
             .onFailure { WirelessSetup.log("key", it) } }
         startDiscovery()
-        main.postDelayed(timeout, TIMEOUT_MS)
+        main.postDelayed(timeout, if (quiet) QUIET_TIMEOUT_MS else TIMEOUT_MS)
         main.postDelayed(refresher, REFRESH_MS)
     }
 
@@ -346,30 +398,75 @@ class WirelessSetupService : Service() {
     }
 
     private fun connect(port: Int) {
-        // with the screen blur on (Android 12+), the same connection also starts Waaiya's cover helper: touches then
-        // pass through the covers without Shizuku (CoverHelper)
-        val command = WirelessSetup.grantCommand(packageName) +
-            if (WirelessSetup.helperWanted(this)) "; " + CoverHelper.startCommand(this) else ""
-        val result = runCatching { AdbShell(ensureKey()).run(LOCALHOST, port, command) }
+        val result = runCatching {
+            val shell = AdbShell(ensureKey())
+            val grants = shell.run(LOCALHOST, port, WirelessSetup.grantCommand(this), timeoutMs = 30_000)
+            // Waaiya's helper (a shell-uid process, CoverHelper) on the same connection: for the screen-blur covers
+            // (Android 12+), and on phones that refused the grants (Xiaomi, OPPO family without their hidden
+            // Developer options switch), where it reads the sound sessions for the app (HelperDumps)
+            val refused = !hasDumpPermission()
+            // a second connection: its failure is "the helper did not start", not a failed setup when DUMP is granted
+            val helper = if (refused || WirelessSetup.helperWanted(this))
+                "\n" + runCatching { shell.run(LOCALHOST, port, CoverHelper.startCommand(this)) }
+                    .getOrElse { "helper=missing ($it)" } else ""
+            Triple(grants + helper, refused, helper.contains("helper=started"))
+        }
         main.post {
             val f = flow ?: return@post
-            result.onSuccess { out ->
+            result.onSuccess { (out, refused, helperStarted) ->
                 WirelessSetup.log("grants:\n$out")
                 SetupLog.record(this, "Wireless debugging", android.os.SystemClock.elapsedRealtime() - startedAt, out)
-                val ok = hasDumpPermission() && hasProjectMediaAppOp()
-                detail = if (ok) null else out.trim()
-                f.grantsDone(ok)
-                finish(if (ok) null else out.trim())
+                if (!refused) {
+                    // DUMP is what silences the originals. PROJECT_MEDIA only skips Android's question at each
+                    // start, and some phones ignore that command without an error (vivo): not a failed setup.
+                    HelperDumps.setHelperMode(this, false)
+                    if (!hasProjectMediaAppOp()) WirelessSetup.log("PROJECT_MEDIA not allowed: Android asks at each start")
+                    detail = null
+                    f.grantsDone(true)
+                    finish(null)
+                } else if (helperStarted) {
+                    // the helper hands its binder over within a few seconds (CoverHelper.main): wait for it
+                    awaitHelper(out)
+                } else {
+                    detail = out.trim()
+                    f.grantsDone(false)
+                    finish(out.trim())
+                }
             }.onFailure {
                 WirelessSetup.log("connect failed", it)
                 SetupLog.record(this, "Wireless debugging", android.os.SystemClock.elapsedRealtime() - startedAt,
                     "connect failed: $it")
                 if (it is AdbShell.NotPairedException) { WirelessSetup.setPaired(this, false); detail = null; f.connectRefused() }
                 else { detail = describe(it); f.connectFailed() }
-                update()
+                // an automatic restart does not wait for a code or for Wireless debugging to come back
+                if (quiet) finish(null) else update()
             }
         }
     }
+
+    /** The grants were refused and the helper started: done once it answers, failed after [HELPER_WAIT_MS]. */
+    private fun awaitHelper(out: String) {
+        val until = android.os.SystemClock.elapsedRealtime() + HELPER_WAIT_MS
+        val check = object : Runnable {
+            override fun run() {
+                val f = flow ?: return
+                if (HelperDumps.helperReady) {
+                    HelperDumps.setHelperMode(this@WirelessSetupService, true)
+                    WirelessSetup.log("grants refused: Waaiya's helper reads the sound sessions instead")
+                    detail = null
+                    f.grantsDone(true, viaHelper = true)
+                    finish(null)
+                } else if (android.os.SystemClock.elapsedRealtime() > until) {
+                    detail = out.trim() + "\nhelper=no answer"
+                    f.grantsDone(false)
+                    finish(detail)
+                } else main.postDelayed(this, 500)
+            }
+        }
+        helperCheck = check
+        main.post(check)
+    }
+    private var helperCheck: Runnable? = null
 
     private fun describe(t: Throwable): String = when (t) {
         is java.net.SocketTimeoutException -> getString(R.string.wsetup_err_timeout)
@@ -387,7 +484,7 @@ class WirelessSetupService : Service() {
     private fun update() {
         publish()
         val f = flow ?: return
-        val now = listOf(texts(), f.phase, f.note)
+        val now = listOf(texts(), f.phase, f.note, quiet)
         if (now == shown) return
         shown = now
         runCatching { getSystemService(NotificationManager::class.java).notify(NOTIFICATION_ID, notification()) }
@@ -401,6 +498,15 @@ class WirelessSetupService : Service() {
 
     private fun notification(): Notification {
         val nm = getSystemService(NotificationManager::class.java)
+        // The helper's automatic restart: one quiet line, no code to type, nothing that pops up over the app.
+        if (quiet) {
+            nm.createNotificationChannel(NotificationChannel(CHANNEL_QUIET, getString(R.string.helper_channel),
+                NotificationManager.IMPORTANCE_LOW))
+            return Notification.Builder(this, CHANNEL_QUIET)
+                .setSmallIcon(R.drawable.ic_notification).setColor(getColor(R.color.primary))
+                .setContentTitle(getString(R.string.helper_starting)).setOngoing(true)
+                .setCategory(Notification.CATEGORY_STATUS).build()
+        }
         // High importance: the code is typed while Settings is in front, so the notification has to pop up there.
         nm.createNotificationChannel(NotificationChannel(CHANNEL, getString(R.string.wsetup_channel), NotificationManager.IMPORTANCE_HIGH)
             .apply { setSound(null, null); enableVibration(false) })
@@ -430,8 +536,16 @@ class WirelessSetupService : Service() {
         val f = flow
         main.removeCallbacks(timeout)
         main.removeCallbacks(refresher)
+        helperCheck?.let { main.removeCallbacks(it) }
+        helperCheck = null
         stopDiscovery()
-        if (f != null && !cancelled) {
+        WirelessSetup.quietRun = false
+        if (f != null && !cancelled && quiet) {
+            // the helper is back: nothing to tell. It is not: the app's banner says so and has the button.
+            if (f.phase != SetupFlow.Phase.DONE) WirelessSetup.log("automatic helper restart gave up (${f.phase}, ${f.note})")
+            WirelessSetup.publish(null)
+            stopForeground(STOP_FOREGROUND_REMOVE)
+        } else if (f != null && !cancelled) {
             detail = failureDetail ?: detail
             publish()
             val (title, body) = texts()
@@ -464,6 +578,7 @@ class WirelessSetupService : Service() {
         main.removeCallbacks(timeout)
         main.removeCallbacks(refresher)
         stopDiscovery()
+        WirelessSetup.quietRun = false
         if (WirelessSetup.running) WirelessSetup.publish(null)  // killed while running: the card offers Start again
         worker.shutdownNow()
         super.onDestroy()
@@ -474,13 +589,19 @@ class WirelessSetupService : Service() {
         const val ACTION_CODE = "org.islamicmute.app.wsetup.CODE"
         const val ACTION_CANCEL = "org.islamicmute.app.wsetup.CANCEL"
         const val EXTRA_CODE = "code"
+        const val EXTRA_QUIET = "quiet"
         private const val KEY_REMOTE_CODE = "pairing_code"
         private const val CHANNEL = "setup"
+        private const val CHANNEL_QUIET = "helper"
         private const val NOTIFICATION_ID = 21
         private const val RESULT_NOTIFICATION_ID = 22
         private const val LOCALHOST = "127.0.0.1"
         private const val TIMEOUT_MS = 10 * 60_000L
         private const val REFRESH_MS = 5_000L
+        /** The helper waits for the app's process to be seen twice, 2 s apart, before it hands its binder over. */
+        private const val HELPER_WAIT_MS = 12_000L
+        /** An automatic restart: adbd's port is announced within seconds when Wireless debugging is on. */
+        private const val QUIET_TIMEOUT_MS = 25_000L
     }
 }
 
@@ -497,7 +618,8 @@ object WirelessSetupTexts {
     /** The main sentence (without the detail line). The Flutter screens get its resource name (UiBridge). */
     @androidx.annotation.StringRes
     fun bodyRes(ctx: Context, phase: SetupFlow.Phase, note: SetupFlow.Note, detail: String?): Int = when (phase) {
-        SetupFlow.Phase.DONE -> R.string.wsetup_done_body  // a running filter picks the permission up by itself
+        // a running filter picks the permission (or the helper) up by itself
+        SetupFlow.Phase.DONE -> if (note == SetupFlow.Note.VIA_HELPER) R.string.wsetup_done_helper_body else R.string.wsetup_done_body
         SetupFlow.Phase.PAIRING -> R.string.wsetup_pairing
         SetupFlow.Phase.CONNECTING -> R.string.wsetup_connecting
         else -> when (note) {
@@ -521,6 +643,7 @@ object WirelessSetupTexts {
                 else -> R.string.wsetup_grant_failed
             }
             SetupFlow.Note.TIMEOUT -> R.string.wsetup_timeout
+            SetupFlow.Note.VIA_HELPER -> R.string.wsetup_done_helper_body
         }
     }
 

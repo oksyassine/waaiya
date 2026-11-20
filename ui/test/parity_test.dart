@@ -85,7 +85,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(b.state.filter.running, isFalse);
     expect(find.text(ar.startNoSetupTitle), findsNothing);
-    expect(find.text(ar.setupTitle), findsOneWidget); // "Do the setup" opened the Setup page
+    expect(find.text(ar.wsetupRouteTitle), findsOneWidget); // "Do the setup" opened the Setup page
     await goTo(tester, 'filter');
     await tester.ensureVisible(find.byKey(const Key('power')));
     await tester.pumpAndSettle();
@@ -233,7 +233,7 @@ void main() {
     for (final lang in ['ar', 'en']) {
       final l = await AppLocalizations.delegate.load(Locale(lang));
       final texts = tester.widgetList<Text>(find.byType(Text)).map((t) => t.data ?? '').toSet();
-      expect(texts.intersection({l.wsetupRouteTitle, l.wsetupRouteBody, l.wsetupSteps}), isEmpty);
+      expect(texts.intersection({l.wsetupRouteTitle, l.wsetupRouteBody, l.wizWdTitle}), isEmpty);
     }
   });
 }

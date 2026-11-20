@@ -9,6 +9,7 @@ class EngineStatus {
     this.filter = '',
     this.engine = '',
     this.raw = '',
+    this.restarts = 0,
   });
 
   /// The daemon, its filter process and the virtual output "Waaiya" are all there (`filter:   running`).
@@ -23,6 +24,13 @@ class EngineStatus {
 
   /// The whole `waaiya status` output (diagnostics report).
   final String raw;
+
+  /// `restarts: N in the last minute`: unexpected filter stops the daemon restarted from (0 from an older script).
+  /// A filter that keeps crashing can read `running` at every poll; this is how the app still sees it.
+  final int restarts;
+
+  /// The filter keeps crashing: three or more restarts within a minute.
+  bool get crashLoop => restarts >= 3;
 
   /// The filter runs but its voice model did not load: the output is silent (fail-closed).
   bool get modelFailed => engine.startsWith('model not loaded');

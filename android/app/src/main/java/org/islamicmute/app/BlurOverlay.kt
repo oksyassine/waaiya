@@ -178,6 +178,8 @@ class BlurOverlay(private val context: Context) {
             return
         }
         if (host == Host.APP_OVERLAY) upgrade()
+        // FixMistakes: a reading that went stale (or a decision that changed between frames) is drawn now
+        if (FixMistakes.blurPaused() != drawnPaused && host != Host.SHIZUKU) refresh()
         val l = layer ?: return
         if (host != Host.SHIZUKU) return               // still connecting
         if (!l.alive || l.failed) {
@@ -229,6 +231,37 @@ class BlurOverlay(private val context: Context) {
      */
     fun show(rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int, testSquare: Boolean) {
         lastRects = rects; lastCount = count; lastThumb = thumb; lastFail = failMode; lastTest = testSquare
+        withFixes(rects, count, failMode) { r, n, f -> draw(r, n, thumb, f, testSquare) }
+    }
+
+    /** Redraws the last covers (FixMistakes: a chosen app came on screen or left it, hand covers changed). */
+    fun refresh() = show(lastRects, lastCount, lastThumb, lastFail, lastTest)
+
+    /** What [FixMistakes] decided at the last draw: covers left off for a chosen app on screen. */
+    private var drawnPaused = false
+
+    /**
+     * Fix mistakes on the spot ([FixMistakes]): hand covers are added first (so that a layer limit drops detections,
+     * not what the user covered himself), and while a chosen app is the only one on screen the detections and the
+     * failure display are left out. [FixMistakes.blurPaused] is false whenever it is not sure (fail-closed).
+     */
+    private inline fun withFixes(rects: FloatArray, count: Int, failMode: Int, then: (FloatArray, Int, Int) -> Unit) {
+        val paused = FixMistakes.blurPaused()
+        drawnPaused = paused
+        val hand = FixMistakes.handCovers()
+        if (!paused && hand.isEmpty()) return then(rects, count, failMode)
+        val nh = hand.size / 4
+        val keep = if (paused) 0 else count
+        val out = FloatArray((nh + keep) * 5)
+        for (i in 0 until nh) {
+            System.arraycopy(hand, i * 4, out, i * 5, 4)
+            out[i * 5 + 4] = KIND_HAND.toFloat()
+        }
+        System.arraycopy(rects, 0, out, nh * 5, keep * 5)
+        then(out, nh + keep, if (paused) 0 else failMode)
+    }
+
+    private fun draw(rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int, testSquare: Boolean) {
         val scr = screen()
         if (host == Host.SHIZUKU) { layer?.let { showOnLayer(it, rects, count, thumb, failMode, testSquare, scr) }; return }
         if (wins.isEmpty()) return
@@ -290,7 +323,10 @@ class BlurOverlay(private val context: Context) {
         if (failMode == 1) put(0f, 0f, w, h, ShizukuCovers.KIND_FAIL_COVER, fallback)
         else for (i in 0 until count) {
             val x0 = rects[i * 5]; val y0 = rects[i * 5 + 1]; val x1 = rects[i * 5 + 2]; val y1 = rects[i * 5 + 3]
-            put(x0 * w, y0 * h, x1 * w, y1 * h, rects[i * 5 + 4].toInt(), meanColor(thumb, x0, y0, x1, y1) ?: fallback)
+            val kind = rects[i * 5 + 4].toInt()
+            // a hand cover is plain and opaque: the surface colour, not a tint of what it hides
+            put(x0 * w, y0 * h, x1 * w, y1 * h, kind,
+                if (kind == KIND_HAND) fallback else meanColor(thumb, x0, y0, x1, y1) ?: fallback)
         }
         if (failMode == 2) {
             val d = context.resources.displayMetrics.density
@@ -427,14 +463,15 @@ class BlurOverlay(private val context: Context) {
                 r.set(rects[i * 5] * w, rects[i * 5 + 1] * h, rects[i * 5 + 2] * w, rects[i * 5 + 3] * h)
                 // outside this window (another window of the pool draws it): skip the cell averaging
                 if (r.right < ox || r.bottom < oy || r.left > ox + width || r.top > oy + height) continue
+                val handCover = rects[i * 5 + 4].toInt() == KIND_HAND
                 val full = rects[i * 5 + 4].toInt() == Vision.KIND_FULL
-                val part = (rects[i * 5 + 4].toInt() and Vision.KIND_PART) != 0
+                val part = !handCover && (rects[i * 5 + 4].toInt() and Vision.KIND_PART) != 0
                 c.save()
                 if (!full && !part) {
                     path.reset(); path.addRoundRect(r, radius, radius, android.graphics.Path.Direction.CW); c.clipPath(path)
                 } else c.clipRect(r) // strips: square, so the stack reads as one shape
-                if (full) {
-                    c.drawRect(r, solid) // nudity: opaque, nothing of the picture shows
+                if (full || handCover) {
+                    c.drawRect(r, solid) // nudity, or covered by hand (FixMistakes): opaque, nothing of the picture shows
                 } else {
                     val nx = Math.round(r.width() / cell).coerceIn(1, MAX_CELLS)
                     val ny = Math.round(r.height() / cell).coerceIn(1, MAX_CELLS)
@@ -481,6 +518,9 @@ class BlurOverlay(private val context: Context) {
         const val MAX_CELLS = 8
         /** App-overlay host: a whole-screen cover stops here (fraction of the height), leaving the bottom touchable. */
         const val FULL_COVER_BOTTOM = 0.88f
+        /** A cover the user drew by hand ([FixMistakes], "Cover an area"): opaque, plain colour. Not a Vision kind,
+         *  below the shell layer's own kinds (90+) and without the [Vision.KIND_PART] bit. */
+        const val KIND_HAND = 72
         /** App-overlay host: windows in the pool (groups beyond this are joined, see [CoverWindows]). */
         const val MAX_WINDOWS = 8
         /** An idle pool window: 1x1 just off the screen's corner (it takes touches), drawing nothing. */

@@ -40,7 +40,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 |---|---|---|
 | `platform` | String | `android`, `linux`, `windows`, `macos` |
 | `version` | String | App version name (`0.2.9`; desktop: from the bundle's `engine/VERSION`, else `desktop/lib/version.dart`, checked against `desktop/pubspec.yaml` by a test) |
-| `language` | String | `ar` or `en`. Arabic is the default whatever the system language. |
+| `language` | String | One of `ar`, `en`, `fr`, `ur`, `id`, `tr`, `bn`, `fa`, `ms` (`appLanguages` in backend.dart, Android `Lang.ALL`). First launch: the phone's or computer's language when Waaiya has it, else Arabic; someone who used Waaiya before 0.2.12 keeps Arabic. Besides Arabic and English the texts are machine translations, not reviewed yet |
 | `navigate` | Map? | `{page, id}`: a page the platform asks to show once (`filter`, `screen`, `links`, `setup`, `settings`), e.g. a Quick Settings tile's "Open Waaiya" (`UiActivity.EXTRA_PAGE`). Flutter shows it when `id` is new and calls `pageShown`. Null most of the time |
 | `settings` | Map | The settings below, with their current values |
 | `filter.state` | String | `STOPPED`, `STARTING`, `FILTERING`, `MODEL_FAILED`, `NO_CAPTURE_PERMISSION`, `STOPPED_BY_SYSTEM`, `CAPTURE_FAILED`, `SILENCED` (`FilterService.State`). `SILENCED`: filtering stopped by itself and `hold_silence` keeps the other apps muted (not running: the power button starts again; a "Stop: hear apps unfiltered" button calls `stopFilter`); Linux: the daemon is gone and its virtual output stayed. Desktop: `STOPPED_BY_SYSTEM` = the filter stopped by itself (the service died or failed; the screen says "Waaiya stopped"), `MODEL_FAILED` = running but its voice model did not load (silent, fail-closed) |
@@ -53,11 +53,15 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `filter.simulated` | bool | Desktop preview: start/stop are not connected to an engine yet (the screen says so) |
 | `filter.error` | Map? | `{code, detail}`: why the filter could not start or stopped (desktop engine host). Codes: `no_pactl`, `no_sound_server`, `no_systemd`, `no_output`, `install_failed`, `start_failed`, `service_failed` (detail = log lines). Kept until the next start; cleared once filtering |
 | `filter.autostart` | bool | The filter starts at login (capability `autostart`) |
-| `setup.originalsMuted` | bool | The originals can be silenced (Android: `DUMP` granted) |
+| `setup.originalsMuted` | bool | The originals can be silenced (Android: `DUMP` granted, or helper mode: see `setup.helperMode`) |
+| `setup.helperMode` | bool | Android: the phone refused the grants (Xiaomi, OPPO family), so Waaiya's shell helper (`CoverHelper`) reads the sound sessions for the app (`HelperDumps`). Android then asks before each capture (`consentSkipped` stays false and is not a missing setup) |
+| `setup.helperMissing` | bool | Helper mode and the helper is not running (phone restarted, Waaiya updated, Developer options turned off): the original plays too. False during the first 6 s of a new process (a running helper has not answered yet). Flutter shows `HelperMissingBanner` (Filter and Setup pages) and warns before Start |
+| `setup.helperRestarting` | bool | An automatic, silent restart of the helper is trying (at most ~25 s). A run the user started is not this: it shows the steps |
+| `setup.helperTip` | String? | `xiaomi` or `coloros`: the optional Developer options switch that would make the permissions permanent (shown on the done card in helper mode) |
 | `setup.consentSkipped` | bool | No screen-capture question at start (Android: app-op `PROJECT_MEDIA` = allow) |
 | `setup.notificationTextNeedsSetup` | bool | Android 15+: the "Notification text" Quick Settings tile is on but `WRITE_SECURE_SETTINGS` is missing; the setup card shows again (the same setup grants it). Default false |
-| `setup.deviceNote` | String? | `xiaomi` or `coloros`: the phone needs a Developer options switch changed before the setup ("USB debugging (Security settings)" on, "Permission monitoring" off); null otherwise |
-| `setup.wireless` | Map | The setup on the phone itself (Wireless debugging, `WirelessSetup`): `supported` (Android 11+), `running`, `phase` (`WAITING`, `PAIRING`, `CONNECTING`, `DONE`, `FAILED`; null before the first run), `title` and `body` (Android string names, `wsetup_*` / `setup_refused_*`, turned into words by Flutter's `wirelessText`), `detail` (raw output, only when no sentence explains it), `isError`, `hint` (`wsetup_notif_off`, `wsetup_dev_off`). Empty off Android |
+| `setup.deviceNote` | String? | A note under the steps: `xiaomi` (its notification style can hide the field for the pairing code), `huawei` (Wireless debugging may be missing: use a computer); null otherwise. No phone needs a switch changed before the setup any more (helper mode) |
+| `setup.wireless` | Map | The setup on the phone itself (Wireless debugging, `WirelessSetup`): `supported` (Android 11+), `running`, `phase` (`WAITING`, `PAIRING`, `CONNECTING`, `DONE`, `FAILED`; null before the first run), `title` and `body` (Android string names, `wsetup_*` / `setup_refused_*`, turned into words by Flutter's `wirelessText`), `detail` (raw output, only when no sentence explains it), `isError`, `hint` (`wsetup_notif_off`, `wsetup_dev_off`, `wsetup_filter_on`: filtering runs on Android 15+, where notifications cannot be used during a screen share). For the guided steps (`wirelessSteps`), what Waaiya can see of the phone, as hints for the ticks and never as gates: `devOptions`, `wifi` (guessed from the network interfaces), `wirelessDebugging` (bool, or null when the phone does not let apps read the switch), `paired` (paired before: no code needed), `aboutHint` (where "Build number" is on this make: `samsung`, `xiaomi`, `coloros`, `vivo`, `huawei`, `transsion`, or null). Empty off Android |
 | `setup.shizuku` | String? | `NOT_INSTALLED`, `NOT_RUNNING`, `TOO_OLD`, `NEEDS_PERMISSION`, `DENIED_PERMANENTLY`, `READY` (`ShizukuSetup.State`); null off Android |
 | `setup.busy` | bool | A Shizuku grant is running |
 | `setup.message` | Map? | `{code, detail}`: `failed` (detail = command log), `refused`, `done_restart`, `error` (detail = text), `slow` (Shizuku still starting after 20 s; not an error), `timeout` (no answer after 2 min; a later answer still updates the state), `refused_xiaomi` / `refused_coloros` (detail = log) |
@@ -77,6 +81,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `blur.error` | Map? | Desktop: `{code, detail}` from the blur helper. `no_capture`, `no_overlay`, `models_missing`, `failing` (detail = the helper's reason, English, shown under the translated status), `share_dialog` (Wayland: the screen-sharing dialog waits for the user; no detail), `exited` (the helper stopped by itself; detail = exit code and its last lines). Null otherwise |
 | `models.detector` | bool | The women's-singing detector is bundled |
 | `capabilities` | Map<String,bool> | What this platform offers, below |
+| `linkSave` | Map | Desktop "Save without music" (capability `linkSave`): `phase` (`IDLE`, `DOWNLOADING`, `FILTERING`, `DONE`, `FAILED`), `title`, `progress` (0..1 within the phase, negative: unknown), `isVideo`, `error` (`{code, detail}`: `cancelled`, `failed` with the tools' last lines, or a link code), `path` (done: the saved file). Android: always idle (its save runs in the native screen) |
 
 Capabilities (the UI hides what is false):
 
@@ -87,7 +92,9 @@ Capabilities (the UI hides what is false):
 | `captureConsent` (Android asks to share the screen at start) | true | false |
 | `screenBlur` (blur card, and "who is left uncovered" inside it, the only place it is shown) | true | Linux: true when the bundle has `engine/build/im-blur` and the three models. Windows: false (later: capture + overlay), so the strictness row is not shown anywhere |
 | `blurStandalone` (the blur runs while a blur option is on, filtering on or off; the card's texts say so) | false (the blur runs while filtering: it shares the screen capture) | Linux with the blur |
-| `links` (open/share a link screen) | true | false (later: `yt-dlp` + `cli/im-process`) |
+| `links` (the Links page) | true | Windows with the filter; Linux once its bundle has the link tools |
+| `linkPage` (the page is drawn in Flutter: `resolveLink`, `watchLink`, ... instead of `openLinkScreen`) | false | true |
+| `linkSave` ("Save without music" on that page) | false (the native screen saves) | Windows zip build: true when `engine\links\{yt-dlp,qjs,ffmpeg}.exe` and `engine\im-process.exe` are there. Microsoft Store package: false (watch only; `make_msix.ps1` leaves the tools out) |
 | `womenSinging` | true | only when the engine bundles the detector (without it the engine mutes all voice while the option is on) |
 | `autostart` (start at login) | false | Linux with the bundled engine |
 
@@ -124,15 +131,21 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS` when Developer options are on, else `ACTION_DEVICE_INFO_SETTINGS` (About phone, to turn them on). From the guide. | `unsupported` |
 | `openOverlaySettings` | none | null | Android's "Display over other apps" page | `unsupported` |
 | `setLanguage` | `{tag: "ar"\|"en"}` | null | Saved natively for the native screens, services and notifications (`Lang`); no activity restart, Flutter switches in place | JSON file |
-| `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` (later) |
+| `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` |
+| `resolveLink` | `{url}` | `{url, title, site, durationSec, isLive, hasVideo, audioOnly}` | `unsupported` | `yt-dlp -J` (`desktop/lib/links.dart`); without the save tools only the link's host. Errors: `invalid_url`, `login`, `limited`, `unsupported_site`, `playlist`, `no_format`, `failed` |
+| `watchLink` | `{url}` | null | `unsupported` | Starts the filter if needed, waits until it filters, then opens the link in the default browser; `filter_failed` instead of ever opening it unfiltered |
+| `saveLink` | `{url}` | null | `unsupported` | Resolves, then saves in the background (state in `linkSave`): yt-dlp downloads, `ffmpeg` -> `im-process --raw` (women's singing when on, fail-closed) -> `ffmpeg`, then `Videos\Waaiya` / `Music\Waaiya`. `busy`, `live`, link codes |
+| `cancelLinkSave`, `openSavedLink`, `showSavedLink` | none | null | `unsupported` | Stops the save (nothing kept); plays the saved file; shows it in Explorer |
 | `getLicences` | none | `{notice, docs: [{label, file}]}` | Assets copied at build time (`copyLicences`) | Files next to the app, else a link to the repository |
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
 | `diagnosticsReport` | none | String | `Diagnostics.report`: what the app sees on this phone (plain text, English) | Linux: version, session, settings, filter and blur state, `waaiya status`, the service journal and the end of `filter.log` |
 | `wirelessStart` | none | `started`, `dev_off`, `asking` | The on-phone setup: asks POST_NOTIFICATIONS first (the code is typed in a notification; `asking` = Android's question is open, the run goes on after it), `dev_off` = Developer options are off (Flutter offers `openAboutPhone`), else starts `WirelessSetupService` and opens Wireless debugging. With a blur option on (12+), the run also starts the cover helper. Progress in `setup.wireless` | `unsupported` |
+| `openWifiSettings` | none | null | Android's Wi-Fi settings (step 2 of the guided setup) | `unsupported` |
 | `wirelessEnterCode` | `{code}` | bool | A pairing code typed in Waaiya (split screen); false when it is not 6 digits | `unsupported` |
 | `wirelessCancel` | none | null | Stops a running on-phone setup | no-op |
 | `openAboutPhone` | none | null | Wireless debugging in Developer options, or About phone when they are off | `unsupported` |
 | `openSetupGuide` | none | null | The native step-by-step guide with pictures (`SetupGuideActivity`) | `unsupported` |
+| `guidePicture` | `{name}` | bytes | One picture of that guide (`guide_1_about` ... `guide_9_done`, `guidePictureNames`) in the app's language, WebP. The setup steps show the current step's pictures under its button | null |
 | `pageShown` | none | null | The `navigate` page was shown: the request is cleared | no-op |
 | `shareText` | `{text}` | null | Android's share sheet (the diagnostics report's Share button) | `unsupported` |
 
@@ -191,8 +204,9 @@ Flutter's own `Clipboard`; it needs no backend method.
   screens for 4 s only). The Wayland
   screen-sharing permission is kept in `$XDG_CONFIG_HOME/waaiya/screencast-restore-token`. `blur.touchPassThrough`
   and `blur.overlayAllowed` are always true there (no permission to ask; clicks pass through the covers).
-- No Shizuku / adb setup, no capture consent, no link screen, and no screen blur on Windows yet: their capabilities
-  are false and their methods throw `unsupported`. A desktop setup checklist (for example the virtual audio device on Windows)
+- No Shizuku / adb setup and no capture consent: their capabilities are false and their methods throw
+  `unsupported`. Links is a Flutter page (`linkPage`), not a native screen. Watch opens the browser with the system
+  filter on (it covers every app) instead of Android's in-app player. A desktop setup checklist (for example the virtual audio device on Windows)
   will add its own `setup.*` keys and capability when it exists.
 - Manual audio checks (no sound server on the build machine): `desktop/TESTING.md`.
 
@@ -222,3 +236,18 @@ Texts: Android's `res/values*/strings.xml` stay the source of every text. Flutte
 Add keys, never rename them; a backend that does not know a key leaves it out and the UI uses the default. Change
 this file, `ui/lib/src/backend.dart`, `ui/lib/src/channel_backend.dart`,
 `android/app/src/main/java/org/islamicmute/app/UiBridge.kt` and `desktop/lib/desktop_backend.dart` together.
+
+## 0.2.13 features (docs/FEATURES_CONTRACT.md)
+
+- Settings added: `filter_off_apps`, `blur_off_apps` (comma-separated), `keep_singing`, `prayer_silent`,
+  `prayer_silent_minutes` (5..90), `prayer_adhan_mute`, `prayer_adhan_minutes` (1..30), `prayer_place`,
+  `prayer_method` (0..15), `prayer_asr` (0..1), `prayer_sms_reply`, `prayer_sms_delay_seconds` (3..60),
+  `prayer_sms_text`, `protect_delay_minutes` (0..1440). `SettingKeys.ranges` holds every
+  integer range.
+- Snapshot key `features`: `{fix, worship, protect, singing}`, one map per feature, filled only by that feature.
+- Method `<feature>.<name>` (`WaaiyaBackend.invoke`), routed on Android by `UiBridge` to the feature's Kotlin object.
+- New error code `protected`: the waiting period or the PIN holds a change back (`setSetting`, `stopFilter`). Its
+  message is JSON: `{need: pin|wait|pin_wait|waiting, what, value, delayMinutes, dueAt?}`; Flutter answers with
+  `protect.request {what, value?, pin?}` (`what` = a setting key or `stop`), `protect.confirm`, `protect.cancel`,
+  `protect.setPin {pin, oldPin?}`, `protect.clearPin`, `protect.promptShown`. `features.protect`: `pinSet`,
+  `delayMinutes`, `pending {what, value, dueAt, confirmUntil, ready}?`, `lockedUntil?`, `prompt?`.

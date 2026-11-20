@@ -1,0 +1,1 @@
+Guided setup on the phone, and a helper mode for Xiaomi and OPPO phones that refuse the grants. Nine languages, with pictures of each setup step. A broken filter can no longer let music through. Proof in every build that the filter and blur send nothing.

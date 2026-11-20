@@ -6,7 +6,23 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
+import 'app_localizations_bn.dart';
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fa.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_ha.dart';
+import 'app_localizations_id.dart';
+import 'app_localizations_it.dart';
+import 'app_localizations_ms.dart';
+import 'app_localizations_nl.dart';
+import 'app_localizations_ru.dart';
+import 'app_localizations_so.dart';
+import 'app_localizations_sw.dart';
+import 'app_localizations_tr.dart';
+import 'app_localizations_ur.dart';
+import 'app_localizations_uz.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,7 +111,23 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
+    Locale('bn'),
+    Locale('de'),
     Locale('en'),
+    Locale('es'),
+    Locale('fa'),
+    Locale('fr'),
+    Locale('ha'),
+    Locale('id'),
+    Locale('it'),
+    Locale('ms'),
+    Locale('nl'),
+    Locale('ru'),
+    Locale('so'),
+    Locale('sw'),
+    Locale('tr'),
+    Locale('ur'),
+    Locale('uz'),
   ];
 
   /// Android string app_name
@@ -143,7 +175,7 @@ abstract class AppLocalizations {
   /// Android string onboard_why
   ///
   /// In ar, this message translates to:
-  /// **'هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.'**
+  /// **'هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.'**
   String get onboardWhy;
 
   /// Android string state_on_title
@@ -167,7 +199,7 @@ abstract class AppLocalizations {
   /// Android string state_on_detail
   ///
   /// In ar, this message translates to:
-  /// **'تُزال الآلات من كل التطبيقات. التأخير نحو {delayMs} ميلي ثانية.'**
+  /// **'تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو {delayMs} ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).'**
   String stateOnDetail(int delayMs);
 
   /// Android string state_off_detail
@@ -247,18 +279,6 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.'**
   String get setupBannerBody;
-
-  /// Android string setup_title
-  ///
-  /// In ar, this message translates to:
-  /// **'إعداد لمرة واحدة'**
-  String get setupTitle;
-
-  /// Android string setup_body
-  ///
-  /// In ar, this message translates to:
-  /// **'يسمح لواعية بكتم الصوت الأصلي. تفعله مرة واحدة، ويبقى حتى تلغي تثبيت التطبيق.'**
-  String get setupBody;
 
   /// Android string step1_title
   ///
@@ -377,20 +397,14 @@ abstract class AppLocalizations {
   /// Android string setup_refused_coloros
   ///
   /// In ar, this message translates to:
-  /// **'رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏، ثم حاول مرة أخرى.'**
+  /// **'رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، فعّل في ‏«خيارات المطور»‏ ‏«تعطيل مراقبة الأذونات»‏ (اسمه في أحدث الإصدارات ‏«تعطيل تحسين النظام»‏، وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية: Disable permission monitoring أو Disable system optimization). ثم حاول مرة أخرى.'**
   String get setupRefusedColoros;
 
   /// Android string setup_note_xiaomi
   ///
   /// In ar, this message translates to:
-  /// **'شاومي وريدمي وبوكو: قبل الإعداد، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏. يطلب ذلك تسجيل الدخول إلى حساب شاومي (وفي بعض الهواتف وجود شريحة SIM). إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات.'**
+  /// **'شاومي وريدمي وبوكو: إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات، أو اكتب الرمز في واعية مع تقسيم الشاشة.'**
   String get setupNoteXiaomi;
-
-  /// Android string setup_note_coloros
-  ///
-  /// In ar, this message translates to:
-  /// **'أوبو وون بلس وريلمي: قبل الإعداد، أوقف ‏«مراقبة الأذونات»‏ في ‏«خيارات المطور»‏.'**
-  String get setupNoteColoros;
 
   /// Android string step_done_cd
   ///
@@ -485,7 +499,7 @@ abstract class AppLocalizations {
   /// Android string setting_singing_body
   ///
   /// In ar, this message translates to:
-  /// **'يُبقي كلام النساء وتلاوتهن.'**
+  /// **'مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.'**
   String get settingSingingBody;
 
   /// Android string setting_singing_no_model
@@ -785,7 +799,7 @@ abstract class AppLocalizations {
   /// Android string blur_women_body
   ///
   /// In ar, this message translates to:
-  /// **'الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.'**
+  /// **'يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.'**
   String get blurWomenBody;
 
   /// Android string blur_nudity_title
@@ -797,7 +811,7 @@ abstract class AppLocalizations {
   /// Android string blur_nudity_body
   ///
   /// In ar, this message translates to:
-  /// **'العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.'**
+  /// **'العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.'**
   String get blurNudityBody;
 
   /// Android string blur_fail_title
@@ -827,13 +841,13 @@ abstract class AppLocalizations {
   /// Android string blur_status_needs_setup
   ///
   /// In ar, this message translates to:
-  /// **'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsSetup;
 
   /// Android string blur_status_needs_overlay
   ///
   /// In ar, this message translates to:
-  /// **'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsOverlay;
 
   /// Android string blur_fail_unavailable
@@ -914,7 +928,7 @@ abstract class AppLocalizations {
   /// **'لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.'**
   String get blurStatusNoOverlay;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
@@ -971,26 +985,176 @@ abstract class AppLocalizations {
   /// Android string wsetup_route_title
   ///
   /// In ar, this message translates to:
-  /// **'الإعداد على هذا الهاتف (دون تطبيق إضافي)'**
+  /// **'الإعداد على هذا الهاتف'**
   String get wsetupRouteTitle;
 
   /// Android string wsetup_route_body
   ///
   /// In ar, this message translates to:
-  /// **'باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ الموجود في أندرويد نفسه. تحتاج إلى شبكة Wi‑Fi (لا يلزم الإنترنت). الإقران يكون مرة واحدة فقط.'**
+  /// **'أربع خطوات قصيرة، مرة واحدة فقط. دون تطبيق إضافي ودون حاسوب. تضع واعية علامة على كل خطوة عند إتمامها.'**
   String get wsetupRouteBody;
 
-  /// Android string wsetup_steps
+  /// Android string wiz_dev_title
   ///
   /// In ar, this message translates to:
-  /// **'1. اضغط ‏«ابدأ»‏. تفتح واعية ‏«خيارات المطور»‏ وتُظهر إشعارًا.\n\n2. إذا كانت ‏«خيارات المطور»‏ غير مفعّلة، تُفتح صفحة ‏«حول الهاتف»‏ بدلًا منها: اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.\n\n3. انزل في الصفحة إلى ‏«تصحيح الأخطاء اللاسلكي»‏ (ضمن قسم ‏«تصحيح الأخطاء»‏)، وفعّله وأكّد بالضغط على ‏«سماح»‏.\n\n4. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. يظهر رمز من 6 أرقام.\n\n5. اترك تلك الشاشة مفتوحة. اسحب الإشعارات إلى الأسفل، واضغط ‏«أدخل الرمز»‏ في إشعار واعية واكتب الرمز.\n\n6. تُكمل واعية الباقي وحدها وتقول ‏«اكتمل الإعداد»‏. بعدها يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.'**
-  String get wsetupSteps;
+  /// **'فعّل ‏«خيارات المطور»‏'**
+  String get wizDevTitle;
 
-  /// Android string wsetup_start
+  /// Android string wiz_dev_body
   ///
   /// In ar, this message translates to:
-  /// **'ابدأ'**
-  String get wsetupStart;
+  /// **'في صفحة ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا. إن لم تجده، فابحث عن ‏«رقم الإصدار»‏ في الإعدادات.'**
+  String get wizDevBody;
+
+  /// Android string wiz_dev_body_samsung
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏ › ‏«معلومات البرنامج»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodySamsung;
+
+  /// Android string wiz_dev_body_xiaomi
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏، اضغط على ‏«إصدار النظام»‏ 7 مرات (في الهواتف الأقدم ‏«إصدار MIUI»‏، وفي بعضها داخل ‏«المعلومات والمواصفات التفصيلية»‏)، ثم ارجع إلى هنا.'**
+  String get wizDevBodyXiaomi;
+
+  /// Android string wiz_dev_body_coloros
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الجهاز»‏ (أو ‏«حول الهاتف»‏) › ‏«الإصدار»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodyColoros;
+
+  /// Android string wiz_dev_body_vivo
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏، اضغط على ‏«إصدار البرنامج»‏ 7 مرات (في بعض الهواتف: ‏«معلومات البرنامج»‏ › ‏«رقم الإصدار»‏)، ثم ارجع إلى هنا.'**
+  String get wizDevBodyVivo;
+
+  /// Android string wiz_dev_body_huawei
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodyHuawei;
+
+  /// Android string wiz_dev_body_transsion
+  ///
+  /// In ar, this message translates to:
+  /// **'في ‏«هاتفي»‏ (أو ‏«حول الهاتف»‏)، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
+  String get wizDevBodyTranssion;
+
+  /// Android string setup_note_huawei
+  ///
+  /// In ar, this message translates to:
+  /// **'هواوي: كثير من هواتف هواوي ليس فيها ‏«تصحيح الأخطاء اللاسلكي»‏. إن لم تجده في ‏«خيارات المطور»‏، فاستعمل حاسوبًا (‏«طرق أخرى»‏ في الأسفل).'**
+  String get setupNoteHuawei;
+
+  /// Android string wsetup_filter_on
+  ///
+  /// In ar, this message translates to:
+  /// **'التصفية تعمل: في هذا الإصدار من أندرويد لا يمكن كتابة الرمز في الإشعار أثناء عملها. أوقف التصفية أولًا، أو استعمل تقسيم الشاشة و‏«اكتب الرمز هنا»‏.'**
+  String get wsetupFilterOn;
+
+  /// Android string wiz_dev_search
+  ///
+  /// In ar, this message translates to:
+  /// **'قد تختلف الأسماء بحسب لغة الهاتف: إن لم تجده، فاستعمل البحث في أعلى الإعدادات.'**
+  String get wizDevSearch;
+
+  /// Android string wiz_dev_action
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح ‏«حول الهاتف»‏'**
+  String get wizDevAction;
+
+  /// Android string wiz_wifi_title
+  ///
+  /// In ar, this message translates to:
+  /// **'اتصل بشبكة Wi-Fi'**
+  String get wizWifiTitle;
+
+  /// Android string wiz_wifi_body
+  ///
+  /// In ar, this message translates to:
+  /// **'أي شبكة Wi-Fi تكفي؛ لا يلزم الإنترنت.'**
+  String get wizWifiBody;
+
+  /// Android string wiz_wifi_action
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح إعدادات Wi-Fi'**
+  String get wizWifiAction;
+
+  /// Android string wiz_wd_title
+  ///
+  /// In ar, this message translates to:
+  /// **'فعّل ‏«تصحيح الأخطاء اللاسلكي»‏'**
+  String get wizWdTitle;
+
+  /// Android string wiz_wd_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تفتح واعية ‏«خيارات المطور»‏ عند ‏«تصحيح الأخطاء اللاسلكي»‏. فعّله واضغط ‏«سماح»‏.'**
+  String get wizWdBody;
+
+  /// Android string wiz_wd_action
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح خيارات المطور'**
+  String get wizWdAction;
+
+  /// Android string wiz_pair_title
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب رمز الإقران'**
+  String get wizPairTitle;
+
+  /// Android string wiz_pair_body
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. اكتب الأرقام الستة في إشعار واعية، وتكمل واعية الباقي.'**
+  String get wizPairBody;
+
+  /// Android string wiz_pair_body_paired
+  ///
+  /// In ar, this message translates to:
+  /// **'سبق إقران واعية بهذا الهاتف: لا حاجة لأي رمز. اضغط الزر وتكمل واعية وحدها.'**
+  String get wizPairBodyPaired;
+
+  /// Android string wiz_pair_action
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get wizPairAction;
+
+  /// Android string wiz_again
+  ///
+  /// In ar, this message translates to:
+  /// **'أعد تنفيذ الإعداد'**
+  String get wizAgain;
+
+  /// Android string setup_shizuku_ready_title
+  ///
+  /// In ar, this message translates to:
+  /// **'عبر Shizuku، وهو يعمل الآن'**
+  String get setupShizukuReadyTitle;
+
+  /// Android string setup_other_ways_plain
+  ///
+  /// In ar, this message translates to:
+  /// **'طرق أخرى لإتمام الإعداد'**
+  String get setupOtherWaysPlain;
+
+  /// Android string wiz_skip
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقل مباشرة إلى ‏«تصحيح الأخطاء اللاسلكي»‏'**
+  String get wizSkip;
+
+  /// Android string setup_other_ways
+  ///
+  /// In ar, this message translates to:
+  /// **'طرق أخرى: Shizuku أو حاسوب'**
+  String get setupOtherWays;
 
   /// Android string wsetup_enter_here
   ///
@@ -1057,6 +1221,78 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تستطيع واعية الآن كتم الصوت الأصلي. يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.'**
   String get wsetupDoneBody;
+
+  /// Android string wsetup_done_helper_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تم. هذا الهاتف لا يسمح للتطبيقات بالاحتفاظ بهذه الأذونات، لذلك يتولى مساعد واعية كتم الصوت الأصلي. يتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية. عند فتح واعية بعد ذلك، تشغّله من جديد تلقائيًا إن كان ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا؛ وإلا فتعرض زرًّا لذلك.'**
+  String get wsetupDoneHelperBody;
+
+  /// Android string helper_missing_title
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية متوقف'**
+  String get helperMissingTitle;
+
+  /// Android string helper_missing_body
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الهاتف لا يحتفظ بأذونات واعية، لذلك تستعمل واعية مساعدها. يتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية. اتصل بشبكة Wi-Fi، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏ في ‏«خيارات المطور»‏، ثم اضغط ‏«تشغيل مساعد واعية»‏.'**
+  String get helperMissingBody;
+
+  /// Android string helper_channel
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية'**
+  String get helperChannel;
+
+  /// Android string helper_starting
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ تشغيل المساعد…'**
+  String get helperStarting;
+
+  /// Android string helper_mode_note
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الهاتف لا يسمح للتطبيقات بالاحتفاظ بهذه الأذونات: مساعد واعية يقوم بالعمل. يتوقف عند إعادة تشغيل الهاتف وعند تحديث واعية. عند فتح واعية بعد ذلك، تشغّله من جديد تلقائيًا إن كان ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا؛ وإلا فتعرض زرًّا لذلك.'**
+  String get helperModeNote;
+
+  /// Android string helper_tip_xiaomi
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري، للاحتفاظ بالأذونات نهائيًا (دون مساعد بعد إعادة التشغيل): فعّل في ‏«خيارات المطور»‏ ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم أعد الإعداد.'**
+  String get helperTipXiaomi;
+
+  /// Android string helper_tip_coloros
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري، للاحتفاظ بالأذونات نهائيًا (دون مساعد بعد إعادة التشغيل): فعّل في ‏«خيارات المطور»‏ ‏«تعطيل مراقبة الأذونات»‏ (في أحدث الإصدارات ‏«تعطيل تحسين النظام»‏؛ وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية: Disable permission monitoring أو Disable system optimization)، ثم أعد الإعداد.'**
+  String get helperTipColoros;
+
+  /// Android string state_on_helper_missing
+  ///
+  /// In ar, this message translates to:
+  /// **'الصوت الأصلي لم يُكتم، ولذلك تسمع الموسيقى مع الصوت المُصفّى: مساعد واعية متوقف. اتصل بشبكة Wi-Fi، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط ‏«تشغيل مساعد واعية»‏.'**
+  String get stateOnHelperMissing;
+
+  /// Android string setup_refused_try_wireless
+  ///
+  /// In ar, this message translates to:
+  /// **'أو استعمل ‏«الإعداد على هذا الهاتف»‏ في هذه الصفحة: يعمل مساعد واعية حينها دون ذلك الخيار.'**
+  String get setupRefusedTryWireless;
+
+  /// Android string helper_start_anyway_title
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية متوقف'**
+  String get helperStartAnywayTitle;
+
+  /// Android string helper_start_anyway_body
+  ///
+  /// In ar, this message translates to:
+  /// **'من دونه ستسمع الموسيقى مع الصوت المُصفّى. شغّل المساعد أولًا (يجب أن يكون ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا)، أو ابدأ التصفية على أي حال.'**
+  String get helperStartAnywayBody;
 
   /// Android string wsetup_failed_title
   ///
@@ -1145,7 +1381,7 @@ abstract class AppLocalizations {
   /// Android string wsetup_timeout
   ///
   /// In ar, this message translates to:
-  /// **'توقّف الإعداد بعد 10 دقائق دون أن يكتمل. اضغط ‏«ابدأ»‏ للمحاولة مرة أخرى.'**
+  /// **'توقّف الإعداد بعد 10 دقائق دون أن يكتمل. يمكنك المحاولة مرة أخرى.'**
   String get wsetupTimeout;
 
   /// Android string wsetup_code_unreadable
@@ -1187,7 +1423,7 @@ abstract class AppLocalizations {
   /// Android string wsetup_dev_off
   ///
   /// In ar, this message translates to:
-  /// **'‏«خيارات المطور»‏ غير مفعّلة. في ‏«حول الهاتف»‏ اضغط على ‏«رقم الإصدار»‏ 7 مرات (في بعض الهواتف تجده داخل ‏«معلومات البرنامج»‏)، ثم ارجع إلى هنا واضغط ‏«ابدأ»‏ مرة أخرى.'**
+  /// **'‏«خيارات المطور»‏ غير مفعّلة. في صفحة ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.'**
   String get wsetupDevOff;
 
   /// Android string wsetup_open_about
@@ -1484,137 +1720,1313 @@ abstract class AppLocalizations {
   /// **'عام'**
   String get settingsGeneralTitle;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Android string worship_prayer_fajr
+  ///
+  /// In ar, this message translates to:
+  /// **'الفجر'**
+  String get worshipPrayerFajr;
+
+  /// Android string worship_prayer_sunrise
+  ///
+  /// In ar, this message translates to:
+  /// **'الشروق'**
+  String get worshipPrayerSunrise;
+
+  /// Android string worship_prayer_dhuhr
+  ///
+  /// In ar, this message translates to:
+  /// **'الظهر'**
+  String get worshipPrayerDhuhr;
+
+  /// Android string worship_prayer_asr
+  ///
+  /// In ar, this message translates to:
+  /// **'العصر'**
+  String get worshipPrayerAsr;
+
+  /// Android string worship_prayer_maghrib
+  ///
+  /// In ar, this message translates to:
+  /// **'المغرب'**
+  String get worshipPrayerMaghrib;
+
+  /// Android string worship_prayer_isha
+  ///
+  /// In ar, this message translates to:
+  /// **'العشاء'**
+  String get worshipPrayerIsha;
+
+  /// Android string worship_end_silent
+  ///
+  /// In ar, this message translates to:
+  /// **'إنهاء الصمت الآن'**
+  String get worshipEndSilent;
+
+  /// Android string worship_unmute
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء الكتم الآن'**
+  String get worshipUnmute;
+
+  /// Android string worship_sms_default
+  ///
+  /// In ar, this message translates to:
+  /// **'إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.'**
+  String get worshipSmsDefault;
+
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.'**
   String get desktopPreview;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تعذّر ذلك: {details}'**
   String actionFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تُزال الآلات من كل التطبيقات.'**
   String get stateOnDetailNoDelay;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.'**
   String get engineErrorNoPactl;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'خادم الصوت لا يعمل (PulseAudio أو PipeWire).'**
   String get engineErrorNoSoundServer;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.'**
   String get engineErrorNoSystemd;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم يُعثر على مكبّرات صوت أو سماعات.'**
   String get engineErrorNoOutput;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تعذّر تثبيت التصفية. التفاصيل:\n{details}'**
   String engineErrorInstallFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم تبدأ التصفية. التفاصيل:\n{details}'**
   String engineErrorStartFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'توقّفت التصفية بسبب خطأ. التفاصيل:\n{details}'**
   String engineErrorServiceFailed(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'التشغيل عند تسجيل الدخول'**
   String get autostartTitle;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'تصفية الصوت فور تسجيل الدخول.'**
   String get autostartBody;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.'**
   String get blurBodyDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.'**
   String get blurFailBodyDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.'**
   String get blurStatusOnVisibleDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n{details}'**
   String blurStatusNoOverlayDesktop(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.'**
   String get blurStatusShareDialog;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}'**
   String blurStatusExited(String details);
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.'**
   String get engineDetectorFailed;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.'**
   String get blurStatusUncovered;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.'**
   String get blurStatusModelsMissingDesktop;
 
-  /// Flutter only. Arabic not reviewed yet.
+  /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
   /// **'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.'**
   String get diagNoteDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.'**
+  String get settingHoldSilenceBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.'**
+  String get settingStereoBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.'**
+  String get linkEntryBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.'**
+  String get linkEntryBodyWatch;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.'**
+  String get linkWatchNoteDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.'**
+  String get linkFilterFailed;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'في مجلد الفيديو: Waaiya'**
+  String get linkSavedVideoDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'في مجلد الموسيقى: Waaiya'**
+  String get linkSavedAudioDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار في المجلد'**
+  String get linkShowInFolder;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُكتم غناء النساء أيضاً، كما في إعداداتك.'**
+  String get linkSingingNote;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إبقاء أصوات الغناء (تجريبي)'**
+  String get singingKeepTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.'**
+  String get singingKeepBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.'**
+  String get singingKeepNoModel;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تطبيقات تُسمع بلا تصفية'**
+  String get fixFilterAppsTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'التطبيقات التي تختارها هنا تُسمع كما هي: بلا تصفية وبلا إسكات. مثلًا: تطبيق مكالمات الفيديو، حتى لا يتأخّر الصوت في المكالمات.'**
+  String get fixFilterAppsBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة تطبيق'**
+  String get fixAddApp;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة {app}'**
+  String fixRemoveApp(Object app);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُختر أي تطبيق.'**
+  String get fixNoApps;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر تطبيقًا'**
+  String get fixPickTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُعثر على تطبيق آخر.'**
+  String get fixPickEmpty;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'التطبيقات التي تُشغّل صوتًا الآن، والتي اختيرت من قبل.'**
+  String get fixPickPlayingDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get fixCancel;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تطبيقات بلا تمويه'**
+  String get fixBlurAppsTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تغطية ما دام أحد هذه التطبيقات يملأ الشاشة، مثل تطبيق الخرائط أو تطبيق البنك. وتعود التغطية فور مغادرته، أو كلما لم تتيقّن واعية من التطبيق الظاهر.'**
+  String get fixBlurAppsBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يحتاج الإعداد لمرة واحدة: من دونه لا تعرف واعية أي تطبيق على الشاشة، فيبقى التمويه في كل مكان.'**
+  String get fixBlurAppsNeedsSetup;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مساعد واعية لا يعمل، فلا يمكن معرفة التطبيق الظاهر على الشاشة. يبقى التمويه في كل مكان حتى يُشغَّل المساعد من جديد من صفحة الإعداد.'**
+  String get fixBlurAppsHelperMode;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغطية جزء باليد'**
+  String get fixHandTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أثناء عمل التمويه يمكنك تغطية جزء من الشاشة بنفسك، مثل صورة فاتت التمويه: اضغط «تغطية جزء» واسحب إصبعك فوقها. تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.'**
+  String get fixHandBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'متاح أثناء عمل التمويه: التصفية تعمل وأحد خيارات التمويه مفعّل.'**
+  String get fixHandNotRunning;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغطية جزء'**
+  String get fixCoverArea;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إزالة التغطية اليدوية ({count})'**
+  String fixRemoveCovers(Object count);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل خطأ'**
+  String get fixNoteTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حين تخطئ واعية، اضغط على ما حدث، مثل «مرّت موسيقى». تحفظ الملاحظة الوقت والتطبيق والإعدادات، لتساعد على معرفة السبب. وتبقى على هذا الجهاز ولا تُرسَل أبدًا.'**
+  String get fixNoteBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مرّت موسيقى'**
+  String get fixMissedSound;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حُذف صوت خطأً'**
+  String get fixWrongSound;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُغطَّ شيء'**
+  String get fixMissedScreen;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'غُطّي خطأً'**
+  String get fixWrongScreen;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'سُجّلت الملاحظة (عدد الملاحظات على هذا الجهاز: {count}).'**
+  String fixNoted(Object count);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاحظات على هذا الجهاز: {count}'**
+  String fixNotesCount(Object count);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'عرض الملاحظات'**
+  String get fixNotesShow;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الملاحظات'**
+  String get fixNotesDelete;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.'**
+  String get fixNotesDeleteAsk;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ملاحظات الأخطاء'**
+  String get fixNotesTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقات الصلاة'**
+  String get worshipTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.'**
+  String get worshipBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكان: {place}'**
+  String worshipPlace(Object place);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المكان: لم يُختر بعد'**
+  String get worshipPlaceNone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيار'**
+  String get worshipChoose;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث عن مدينة'**
+  String get worshipPlaceSearch;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.'**
+  String get worshipPlaceNoMatch;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إدخال الإحداثيات'**
+  String get worshipPlaceCustom;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'خط العرض (شمال +، جنوب −)'**
+  String get worshipLat;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'خط الطول (شرق +، غرب −)'**
+  String get worshipLon;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المنطقة الزمنية، مثل Africa/Cairo'**
+  String get worshipZone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تحقّق من الأرقام ومن المنطقة الزمنية.'**
+  String get worshipCustomInvalid;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا يمكن استخدام هذا المكان. اختره من جديد.'**
+  String get worshipPlaceInvalid;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الحساب: {method}'**
+  String worshipMethod(Object method);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'طريقة الحساب'**
+  String get worshipMethodTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.'**
+  String get worshipMethodNote;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'العصر: {rule}'**
+  String worshipAsr(Object rule);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'وقت العصر'**
+  String get worshipAsrTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجمهور (الشافعي والمالكي والحنبلي)'**
+  String get worshipAsrStandard;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الحنفي'**
+  String get worshipAsrHanafi;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رابطة العالم الإسلامي'**
+  String get worshipMethodMwl;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الجمعية الإسلامية لأمريكا الشمالية (ISNA)'**
+  String get worshipMethodIsna;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الهيئة المصرية العامة للمساحة'**
+  String get worshipMethodEgypt;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أم القرى، مكة المكرمة'**
+  String get worshipMethodUmmAlQura;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'جامعة العلوم الإسلامية، كراتشي'**
+  String get worshipMethodKarachi;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'معهد الجيوفيزياء، جامعة طهران'**
+  String get worshipMethodTehran;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'منطقة الخليج'**
+  String get worshipMethodGulf;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الكويت'**
+  String get worshipMethodKuwait;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'قطر'**
+  String get worshipMethodQatar;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'سنغافورة (المجلس الإسلامي MUIS)'**
+  String get worshipMethodSingapore;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تركيا (رئاسة الشؤون الدينية)'**
+  String get worshipMethodTurkey;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'فرنسا (اتحاد المنظمات الإسلامية، 12°)'**
+  String get worshipMethodFrance;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المغرب (وزارة الأوقاف)'**
+  String get worshipMethodMorocco;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إندونيسيا (وزارة الشؤون الدينية)'**
+  String get worshipMethodIndonesia;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ماليزيا (JAKIM)'**
+  String get worshipMethodMalaysia;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'دبي'**
+  String get worshipMethodDubai;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اليوم'**
+  String get worshipToday;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.'**
+  String get worshipNoTimes;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'صامت في أوقات الصلاة'**
+  String get worshipSilentTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند كل وقت صلاة يصبح الهاتف صامتًا («عدم الإزعاج») للدقائق المحدّدة أدناه، ثم يعود كما كان. مثلًا: من الظهر الساعة 12:00 حتى 12:20.'**
+  String get worshipSilentBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة الصمت: {minutes} دقيقة'**
+  String worshipSilentMinutes(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'كتم الوسائط عند الأذان'**
+  String get worshipMuteTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.'**
+  String get worshipMuteBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة الكتم: {minutes} دقيقة'**
+  String worshipMuteMinutes(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'المدة'**
+  String get worshipMinutesTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} دقيقة'**
+  String worshipMinutesOption(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر المكان أولاً.'**
+  String get worshipNeedPlace;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'التالي: {prayer} الساعة {time}'**
+  String worshipNext(Object prayer, Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'صامت حتى {time}.'**
+  String worshipSilentNow(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الوسائط مكتومة حتى {time}.'**
+  String worshipMutedNow(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.'**
+  String get worshipDndNeeded;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'السماح'**
+  String get worshipAllow;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.'**
+  String get worshipExactNeeded;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.'**
+  String get worshipNotificationsNeeded;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'نغمة رنين وصوت إشعارات بسيطان'**
+  String get worshipTonesTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:'**
+  String get worshipTonesBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'نغمة رنين بسيطة {number}'**
+  String worshipToneRing(Object number);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'صوت إشعار بسيط {number}'**
+  String worshipToneNotification(Object number);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل'**
+  String get worshipTonePlay;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدام'**
+  String get worshipToneSet;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مستخدَمة'**
+  String get worshipToneInUse;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تم.'**
+  String get worshipToneDone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.'**
+  String get worshipTonePermission;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».'**
+  String get worshipToneFailed;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'فتح إعدادات الصوت'**
+  String get worshipOpenSound;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرد على المكالمات برسالة أثناء الصلاة'**
+  String get worshipSmsTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبداً إلى الأرقام المخفية أو القصيرة.'**
+  String get worshipSmsBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'بعد: {seconds} ثانية من الرنين'**
+  String worshipSmsDelay(Object seconds);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ثوانٍ من الرنين قبل الرسالة'**
+  String get worshipSmsDelayTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{seconds} ثانية'**
+  String worshipSmsSecondsOption(Object seconds);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرسالة: {text}'**
+  String worshipSmsText(Object text);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رسالتك'**
+  String get worshipSmsTextTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدام الرسالة الافتراضية'**
+  String get worshipSmsTextDefault;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'كل رد رسالة عادية من شريحتك بسعر باقتك. ولا يُرسل شيء أثناء التجوال.'**
+  String get worshipSmsCost;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أنت في التجوال الآن: لن تُرسل رسائل.'**
+  String get worshipSmsRoaming;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الردود المرسلة (محفوظة على هذا الهاتف فقط)'**
+  String get worshipSmsLogTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'متابعة'**
+  String get worshipContinue;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لجعل الهاتف صامتاً في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.'**
+  String get worshipWhyDnd;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'للعمل في الوقت تماماً، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.'**
+  String get worshipWhyExact;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح بالإشعارات لترى كل تغيير وتستطيع التراجع عنه.'**
+  String get worshipWhyNotifications;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لتغيير نغمة الرنين أو صوت الإشعارات، اسمح لواعية بتعديل إعدادات النظام في الصفحة التالية.'**
+  String get worshipWhyWrite;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لمعرفة أن مكالمة ترنّ ومعرفة رقمها، تحتاج واعية إذنَي «الهاتف» و«سجلّ المكالمات». لا يخرج شيء من الهاتف إلا ردّك.'**
+  String get worshipWhyPhone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لإرسال ردّك، تحتاج واعية إذن إرسال الرسائل. ولا ترسل إلا هذا الرد، مرة واحدة على الأكثر لكل رقم في كل صلاة.'**
+  String get worshipWhySms;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفاً.'**
+  String get worshipMissingDnd;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفاً.'**
+  String get worshipMissingPhone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفاً.'**
+  String get worshipMissingSms;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حاول مرة أخرى'**
+  String get worshipTryAgain;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حماية في لحظات الضعف'**
+  String get protectTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.'**
+  String get protectBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الانتظار قبل الإيقاف: {value}'**
+  String protectDelay(Object value);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الانتظار قبل الإيقاف'**
+  String get protectDelayTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.'**
+  String get protectDelayBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلا انتظار'**
+  String get protectDelayOff;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'دقيقة واحدة'**
+  String get protectDelay1m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٥ دقائق'**
+  String get protectDelay5m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'١٥ دقيقة'**
+  String get protectDelay15m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٣٠ دقيقة'**
+  String get protectDelay30m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ساعة واحدة'**
+  String get protectDelay1h;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٤ ساعات'**
+  String get protectDelay4h;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٢٤ ساعة'**
+  String get protectDelay24h;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} دقيقة'**
+  String protectDelayOther(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز: غير موضوع'**
+  String get protectPinNone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز: موضوع'**
+  String get protectPinIsSet;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ضع رمزًا'**
+  String get protectPinSet;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف'**
+  String get protectPinRemove;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.'**
+  String get protectPinBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.'**
+  String get protectPinForgot;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل الرمز'**
+  String get protectPinTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر رمزًا'**
+  String get protectPinNewTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'غيِّر الرمز'**
+  String get protectPinChangeTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز الحالي'**
+  String get protectPinCurrent;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز الجديد (من ٤ إلى ٨ أرقام)'**
+  String get protectPinNew;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز الجديد مرة أخرى'**
+  String get protectPinAgain;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استعمل من ٤ إلى ٨ أرقام.'**
+  String get protectPinBad;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمزان الجديدان غير متطابقين.'**
+  String get protectPinDiffer;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز خاطئ. بقيت {count} محاولات قبل التوقّف قليلًا.'**
+  String protectPinWrong(Object count);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'محاولات خاطئة كثيرة. حاول مرة أخرى عند {time}.'**
+  String protectLocked(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسنًا'**
+  String get protectOk;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get protectCancel;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ألغِ التغيير'**
+  String get protectCancelChange;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكِّد'**
+  String get protectConfirm;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{what}: ينتظر حتى {time}، ثم أكِّده في «الإعدادات».'**
+  String protectPending(Object time, Object what);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{what}: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل {time}، وإلا فلن يتغيّر شيء.'**
+  String protectReady(Object time, Object what);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا التغيير ينتظر'**
+  String get protectWaitTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{what} لن يحدث الآن. عند {time}، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.'**
+  String protectWaitBody(Object time, Object what);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ الانتظار'**
+  String get protectWaitStart;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ينتظر بالفعل حتى {time}.'**
+  String protectAlreadyWaiting(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ينتظر حتى {time}، ثم أكِّده في «الإعدادات».'**
+  String protectStarted(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'غدًا عند {time}'**
+  String protectTomorrow(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.'**
+  String get protectHeldBack;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimits;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimitsDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimitsWindows;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف التصفية'**
+  String get protectWhatStop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إطفاء: {name}'**
+  String protectWhatOff(Object name);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل: {name}'**
+  String protectWhatOn(Object name);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة تطبيق إلى: {name}'**
+  String protectWhatApps(Object name);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'جعل التغطية أقل صرامة'**
+  String get protectWhatStrictness;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير من يستعمل واعية'**
+  String get protectWhatGender;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير الانتظار قبل الإيقاف إلى: {value}'**
+  String protectWhatDelay(Object value);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير الرمز'**
+  String get protectWhatPinChange;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الرمز'**
+  String get protectWhatPinClear;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير إعداد'**
+  String get protectWhatSetting;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.'**
+  String get onboardBodyDesktop;
 }
 
 class _AppLocalizationsDelegate
@@ -1627,8 +3039,26 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['ar', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'bn',
+    'de',
+    'en',
+    'es',
+    'fa',
+    'fr',
+    'ha',
+    'id',
+    'it',
+    'ms',
+    'nl',
+    'ru',
+    'so',
+    'sw',
+    'tr',
+    'ur',
+    'uz',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -1639,8 +3069,40 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return AppLocalizationsAr();
+    case 'bn':
+      return AppLocalizationsBn();
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fa':
+      return AppLocalizationsFa();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'ha':
+      return AppLocalizationsHa();
+    case 'id':
+      return AppLocalizationsId();
+    case 'it':
+      return AppLocalizationsIt();
+    case 'ms':
+      return AppLocalizationsMs();
+    case 'nl':
+      return AppLocalizationsNl();
+    case 'ru':
+      return AppLocalizationsRu();
+    case 'so':
+      return AppLocalizationsSo();
+    case 'sw':
+      return AppLocalizationsSw();
+    case 'tr':
+      return AppLocalizationsTr();
+    case 'ur':
+      return AppLocalizationsUr();
+    case 'uz':
+      return AppLocalizationsUz();
   }
 
   throw FlutterError(

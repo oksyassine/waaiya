@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- App languages (Android 13+ per-app language settings). Arabic first. -->
+<!-- App languages (Android 13+ per-app language settings); keep in step with Lang.ALL. -->
 <locale-config xmlns:android="http://schemas.android.com/apk/res/android">
     <locale android:name="ar" />
     <locale android:name="en" />
+    <locale android:name="fr" />
+    <locale android:name="ur" />
+    <locale android:name="id" />
+    <locale android:name="tr" />
+    <locale android:name="bn" />
+    <locale android:name="fa" />
+    <locale android:name="ms" />
+    <locale android:name="es" />
+    <locale android:name="nl" />
+    <locale android:name="de" />
+    <locale android:name="it" />
+    <locale android:name="ru" />
+    <locale android:name="uz" />
+    <locale android:name="sw" />
+    <locale android:name="ha" />
+    <locale android:name="so" />
 </locale-config>

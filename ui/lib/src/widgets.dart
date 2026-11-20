@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show OverflowBoxFit;
 
 import '../l10n/app_localizations.dart';
+import 'app.dart';
+import 'backend.dart';
+import 'motion.dart';
 import 'theme.dart';
 
 /// Scrolling page column, at most 640 wide (phones use the full width; desktop windows stay readable).
@@ -67,7 +71,11 @@ class SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     return Card(
-      child: Padding(
+      child: AnimatedSize(
+        duration: Motion.of(context, Motion.medium),
+        curve: Motion.curve,
+        alignment: Alignment.topCenter,
+        child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,6 +84,7 @@ class SectionCard extends StatelessWidget {
             if (body != null) ...[const SizedBox(height: 6), Text(body!, style: text.bodyMedium)],
             ...children,
           ],
+        ),
         ),
       ),
     );
@@ -106,8 +115,12 @@ class SettingSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = WaaiyaColors.of(context);
+    // the press highlight gets room around the text (rounded, 12 px each side); the row is widened by as much into
+    // the card's padding, so the text stays in line with the rest of the card
+    const inset = 12.0;
     final tile = SwitchListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(horizontal: inset),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
       value: value,
       onChanged: onChanged,
       title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
@@ -115,8 +128,18 @@ class SettingSwitch extends StatelessWidget {
           ? null
           : Text(body!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: bodyIsError ? c.error : null)),
     );
+    final wide = LayoutBuilder(
+      builder: (context, box) => box.hasBoundedWidth
+          ? OverflowBox(
+              minWidth: box.maxWidth + 2 * inset,
+              maxWidth: box.maxWidth + 2 * inset,
+              fit: OverflowBoxFit.deferToChild,
+              child: tile,
+            )
+          : tile,
+    );
     // one node: the id on the same node as the switch's checked state
-    return id == null ? tile : MergeSemantics(child: Semantics(identifier: id, child: tile));
+    return id == null ? wide : MergeSemantics(child: Semantics(identifier: id, child: wide));
   }
 }
 
@@ -150,7 +173,8 @@ class StatusText extends StatelessWidget {
       text,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color ?? (isError ? WaaiyaColors.of(context).error : null)),
     );
-    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? t : TestId(id!, child: t));
+    final f = SwitchFade(child: KeyedSubtree(key: ValueKey('$text$isError'), child: t));
+    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? f : TestId(id!, child: f));
   }
 }
 
@@ -165,12 +189,26 @@ class ValueRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Row(
-          children: [
-            Expanded(child: Text(label, style: Theme.of(context).textTheme.bodyLarge)),
-            TextButton(onPressed: onPressed, child: Text(action)),
-          ],
+        child: LabelAndActions(
+          label: Text(label, style: Theme.of(context).textTheme.bodyLarge),
+          actions: [TextButton(onPressed: onPressed, child: Text(action))],
         ),
+      );
+}
+
+/// A label with its buttons at the end of the same line; when they do not fit (a long language, large text, a
+/// small phone) the buttons go under the label instead of off the screen.
+class LabelAndActions extends StatelessWidget {
+  const LabelAndActions({super.key, required this.label, required this.actions});
+
+  final Widget label;
+  final List<Widget> actions;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [label, Wrap(children: actions)],
       );
 }
 
@@ -196,4 +234,83 @@ Future<int?> chooseOne(BuildContext context, {required String title, required Li
       ],
     ),
   );
+}
+
+/// The language list ([appLanguages], each in its own name); the choice goes through the backend.
+Future<void> chooseLanguage(BuildContext context) async {
+  final l = AppLocalizations.of(context);
+  final current = WaaiyaScope.of(context).state.language;
+  final tags = appLanguages.keys.toList();
+  final i = await chooseOne(context,
+      title: l.languageTitle, options: appLanguages.values.toList(), selected: tags.indexOf(current));
+  if (i != null && tags[i] != current && context.mounted) await runAction(context, (b) => b.setLanguage(tags[i]));
+}
+
+/// One numbered step of a setup: a circle with the number (a tick when done), the title, one sentence, and, for the
+/// current step only, its buttons.
+class StepRow extends StatelessWidget {
+  const StepRow({
+    super.key,
+    required this.index,
+    required this.done,
+    required this.title,
+    required this.body,
+    required this.current,
+    this.children = const [],
+  });
+
+  final int index;
+  final bool done;
+  final String title;
+  final String body;
+  final bool current;
+
+  /// Shown under the sentence while this is the current step (buttons, live status).
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final c = WaaiyaColors.of(context);
+    final text = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExcludeSemantics(
+            child: Container(
+              width: 32,
+              height: 32,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: done ? c.primary : null,
+                border: done ? null : Border.all(color: current ? c.primary : c.offRing, width: 2),
+              ),
+              child: done
+                  ? Icon(Icons.check_rounded, size: 20, color: c.onPrimary)
+                  : Text('${index + 1}', style: text.bodyLarge),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Semantics(
+                  label: '${done ? l.stepDoneCd : l.stepTodoCd(index + 1)}. $title',
+                  excludeSemantics: true,
+                  child: Text(title, style: text.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
+                ),
+                // a finished step keeps only its title: less to read
+                if (!done) ...[const SizedBox(height: 2), Text(body, style: text.bodyMedium)],
+                if (current) ...[const SizedBox(height: 8), ...children],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

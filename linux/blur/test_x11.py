@@ -322,6 +322,12 @@ def main():
         if not d:
             sys.exit(f"Xvfb did not start: {xvfb.stderr.read().decode()[-500:]}")
         env = {**os.environ, "DISPLAY": a.display}
+        # privacy check: with WAAIYA_NO_NETWORK_SHIM=build/no-network.so the helper runs with every internet socket
+        # refused and logged (linux/no_network.c); the log must stay empty
+        shim = os.environ.get("WAAIYA_NO_NETWORK_SHIM")
+        net_log = os.path.join(os.environ.get("TMPDIR", "/tmp"), f"im-blur-net-{os.getpid()}.log")
+        if shim:
+            env = {**env, "LD_PRELOAD": os.path.abspath(shim), "WAAIYA_NET_LOG": net_log}
         env.pop("WAYLAND_DISPLAY", None)
         comp = None
         if a.compositor:
@@ -493,6 +499,9 @@ def main():
         if comp:
             check(comp.poll() is None, "the compositing manager is still running")
             comp.terminate()
+        if shim:
+            opened = open(net_log).read() if os.path.exists(net_log) else ""
+            check(opened == "", "the blur helper opened no internet connection" + (f": {opened}" if opened else ""))
         print("all X11 checks passed")
         return 0
     finally:

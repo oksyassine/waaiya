@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
+import android.os.ParcelFileDescriptor
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
@@ -261,6 +262,40 @@ class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
     }
 
     override fun stop() { checkCaller(); clear() }
+
+    override fun dumpAudio(service: String, sink: ParcelFileDescriptor): Boolean {
+        try {
+            checkCaller()
+            if (service !in HelperDumps.SERVICES) return false
+            // as SessionMuter.dump() does with its own DUMP permission: the service writes into the app's pipe in
+            // the background (one-way), so a full pipe never blocks this call; the app reads until the end
+            val b = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java)
+                .invoke(null, service) as? IBinder ?: return false
+            b.dumpAsync(sink.fileDescriptor, arrayOf())
+            return true
+        } finally {
+            runCatching { sink.close() }  // the service holds its own copy
+        }
+    }
+
+    override fun dumpVisibleApps(sink: ParcelFileDescriptor): Boolean {
+        try {
+            checkCaller()
+            val b = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java)
+                .invoke(null, "window") as? IBinder ?: return false
+            b.dumpAsync(sink.fileDescriptor, arrayOf("visible-apps"))
+            return true
+        } finally {
+            runCatching { sink.close() }
+        }
+    }
+
+    override fun putScreenShareProtection(value: Int): Boolean {
+        checkCaller()
+        if (value != 0 && value != 1) return false
+        return runCatching { HelperDumps.putGlobal(ScreenShareProtection.KEY, value.toString()) }
+            .onFailure { Log.w("IslamicMute", "helper: cannot write ${ScreenShareProtection.KEY}", it) }.getOrDefault(false)
+    }
 
     private fun hideAll(): Unit = synchronized(lock) {
         val t = SurfaceControl.Transaction()

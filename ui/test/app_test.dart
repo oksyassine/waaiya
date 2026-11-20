@@ -16,17 +16,25 @@ void main() {
     expect(find.text('Welcome'), findsNothing);
     expect(directionOf(tester, find.text('أهلًا بك')), TextDirection.rtl);
 
-    // The language button names the other language and goes through the backend.
+    // The language button names the language in use and lists all of them, each in its own name.
+    expect(find.text('العربية'), findsOneWidget);
     await tester.tap(find.byKey(const Key('onboard_language')));
+    await tester.pumpAndSettle();
+    for (final name in appLanguages.values) {
+      expect(find.text(name), findsWidgets);
+    }
+    await tester.tap(find.text('English'));
     await tester.pumpAndSettle();
     expect(backend.state.language, 'en');
     expect(find.text('Welcome'), findsOneWidget);
     expect(find.text('أهلًا بك'), findsNothing);
     expect(directionOf(tester, find.text('Welcome')), TextDirection.ltr);
-    expect(find.text('العربية'), findsOneWidget);
+    expect(find.text('English'), findsOneWidget);
 
     // And back.
     await tester.tap(find.byKey(const Key('onboard_language')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('العربية'));
     await tester.pumpAndSettle();
     expect(backend.state.language, 'ar');
     expect(directionOf(tester, find.text('أهلًا بك')), TextDirection.rtl);
@@ -96,7 +104,7 @@ void main() {
     expect(find.text('بقيت خطوة واحدة'), findsOneWidget); // on the Filter page too
     await goTo(tester, 'setup');
     expect(find.text('بقيت خطوة واحدة'), findsOneWidget);
-    expect(find.text('إعداد لمرة واحدة'), findsOneWidget);
+    expect(find.text('طرق أخرى: Shizuku أو حاسوب'), findsOneWidget); // open here: this phone has no on-phone route
     expect(find.text('كيف أشغّل Shizuku؟'), findsOneWidget); // step 2 is current: the guide
     expect(find.text('تحميل Shizuku'), findsNothing); // step 1 done
     await tester.ensureVisible(find.text('كيف أشغّل Shizuku؟'));

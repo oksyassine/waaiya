@@ -1,5 +1,6 @@
 #include "sessions.h"
 
+#include <algorithm>
 #include <atomic>
 #include <cmath>
 #include <cstring>
@@ -418,7 +419,91 @@ bool Sessions::left_alone(const std::wstring &id) const {
     for (auto &ch : low) ch = (wchar_t)towlower(ch);
     for (const auto &name : leave_alone)
         if (low.find(L"\\" + name + L"%b") != std::wstring::npos) return true;
+    std::wstring exe = exe_of(id);
+    return !exe.empty() && is_off(exe);
+}
+
+std::wstring Sessions::exe_of(const std::wstring &id) {
+    size_t b = id.find(L"%b");
+    if (b == std::wstring::npos) return L"";
+    size_t s = id.rfind(L'\\', b);
+    if (s == std::wstring::npos || s + 1 >= b) return L"";
+    std::wstring exe = id.substr(s + 1, b - s - 1);
+    for (auto &ch : exe) ch = (wchar_t)towlower(ch);
+    return exe;
+}
+
+bool Sessions::is_off(const std::wstring &exe) const {
+    std::lock_guard<std::mutex> l(off_mu_);
+    for (const auto &n : off_)
+        if (n == exe) return true;
     return false;
+}
+
+void Sessions::set_off(const std::vector<std::wstring> &names) {
+    std::lock_guard<std::recursive_mutex> l(mu_);
+    {
+        std::lock_guard<std::mutex> o(off_mu_);
+        off_ = names;
+    }
+    // sessions now off: their level back, no longer watched; sessions no longer off: lowered by the scan
+    for (size_t k = 0; k < tracked_.size();) {
+        Tracked &t = tracked_[k];
+        if (left_alone(t.id)) {
+            if (!(t.events && t.events->dead.load()) && mode_.load() == ATTENUATE) {
+                float cur = 1.0f;
+                t.vol->GetMasterVolume(&cur);
+                give_back(t.vol.p, t.id, t.pid, AudioSessionStateActive, cur);
+            }
+            drop(t);
+            tracked_.erase(tracked_.begin() + (long)k);
+        } else {
+            k++;
+        }
+    }
+    scan();
+}
+
+std::vector<DWORD> Sessions::pids() const {
+    std::lock_guard<std::recursive_mutex> l(mu_);
+    std::vector<DWORD> v;
+    if (mode_.load() != ATTENUATE) return v;
+    for (auto &t : tracked_)
+        if (t.pid && !(t.events && t.events->dead.load()) && std::find(v.begin(), v.end(), t.pid) == v.end())
+            v.push_back(t.pid);
+    return v;
+}
+
+std::vector<std::pair<std::wstring, DWORD>> Sessions::apps() const {
+    std::lock_guard<std::recursive_mutex> l(mu_);
+    std::vector<std::pair<std::wstring, DWORD>> v;
+    for (auto &o : outputs_) {
+        Com<IAudioSessionEnumerator> e;
+        if (FAILED(o.mgr->GetSessionEnumerator(e.put()))) continue;
+        int count = 0;
+        e->GetCount(&count);
+        for (int k = 0; k < count; k++) {
+            Com<IAudioSessionControl> c;
+            Com<IAudioSessionControl2> c2;
+            if (FAILED(e->GetSession(k, c.put())) ||
+                FAILED(c->QueryInterface(__uuidof(IAudioSessionControl2), reinterpret_cast<void **>(c2.put()))))
+                continue;
+            AudioSessionState st = AudioSessionStateInactive;
+            if (SUCCEEDED(c2->GetState(&st)) && st == AudioSessionStateExpired) continue;
+            DWORD pid = 0;
+            c2->GetProcessId(&pid);
+            if (pid == self_ || pid == 0) continue;
+            LPWSTR idw = nullptr;
+            if (FAILED(c2->GetSessionIdentifier(&idw)) || !idw) continue;
+            std::wstring exe = exe_of(idw);
+            CoTaskMemFree(idw);
+            if (exe.empty()) continue;
+            bool seen = false;
+            for (auto &a : v) seen = seen || a.first == exe;
+            if (!seen) v.emplace_back(exe, pid);
+        }
+    }
+    return v;
 }
 
 int Sessions::lowered() const {

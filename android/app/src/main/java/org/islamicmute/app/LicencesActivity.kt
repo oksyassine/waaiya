@@ -94,6 +94,7 @@ class LicencesActivity : Activity() {
         titleView.text = label
         doc = WebView(this).apply {
             settings.javaScriptEnabled = false
+            settings.blockNetworkLoads = true  // the licence texts are local files; nothing to fetch
             settings.defaultTextEncodingName = "utf-8"
             loadUrl("file:///android_asset/$DIR/$file")
         }

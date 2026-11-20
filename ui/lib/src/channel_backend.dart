@@ -27,6 +27,9 @@ class ChannelBackend implements WaaiyaBackend {
   }
 
   @override
+  Future<Object?> invoke(String method, [Map<String, Object?> args = const {}]) => _call<Object?>(method, args);
+
+  @override
   Future<AppState> getState() async => AppState.fromMap(await _call<Map<Object?, Object?>>('getState') ?? const {});
 
   @override
@@ -62,6 +65,25 @@ class ChannelBackend implements WaaiyaBackend {
   @override
   Future<void> openLinkScreen() => _call<void>('openLinkScreen');
 
+  // The Links page is Android's native screen ([openLinkScreen]); capability `linkPage` is false there.
+  @override
+  Future<LinkMeta> resolveLink(String url) async => throw const BackendException('unsupported', 'resolveLink');
+
+  @override
+  Future<void> watchLink(String url) async => throw const BackendException('unsupported', 'watchLink');
+
+  @override
+  Future<void> saveLink(String url) async => throw const BackendException('unsupported', 'saveLink');
+
+  @override
+  Future<void> cancelLinkSave() async => throw const BackendException('unsupported', 'cancelLinkSave');
+
+  @override
+  Future<void> openSavedLink() async => throw const BackendException('unsupported', 'openSavedLink');
+
+  @override
+  Future<void> showSavedLink() async => throw const BackendException('unsupported', 'showSavedLink');
+
   @override
   Future<Licences> getLicences() async {
     final m = await _call<Map<Object?, Object?>>('getLicences') ?? const {};
@@ -89,6 +111,12 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<void> openAboutPhone() => _call<void>('openAboutPhone');
+
+  @override
+  Future<void> openWifiSettings() => _call<void>('openWifiSettings');
+
+  @override
+  Future<Uint8List?> guidePicture(String name) => _call<Uint8List?>('guidePicture', {'name': name});
 
   @override
   Future<void> openSetupGuide() => _call<void>('openSetupGuide');

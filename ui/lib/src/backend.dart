@@ -1,6 +1,8 @@
 /// The contract between the shared screens and a native backend (docs/UI_CONTRACT.md).
 library;
 
+import 'dart:typed_data';
+
 /// Settings keys, exactly as in Android's Settings.kt (SharedPreferences file "settings").
 abstract final class SettingKeys {
   static const gender = 'gender';
@@ -22,6 +24,51 @@ abstract final class SettingKeys {
   /// desktop notice.
   static const holdSilence = 'hold_silence';
 
+  // 0.2.13 features (docs/FEATURES_CONTRACT.md). Changes that weaken protection may be refused with
+  // BackendException('protected') by the waiting period or the PIN (Protection.checkSetting on Android).
+
+  /// Apps the live filter leaves alone: comma-separated package names (Android) or application names (desktop).
+  static const filterOffApps = 'filter_off_apps';
+
+  /// Apps the screen blur leaves alone while in the foreground: comma-separated package names.
+  static const blurOffApps = 'blur_off_apps';
+
+  /// Keep singing voices (voice_v1 model, a test): off by default.
+  static const keepSinging = 'keep_singing';
+
+  /// Phone silent for [prayerSilentMinutes] from each prayer time; media muted [prayerAdhanMinutes] at the adhan.
+  static const prayerSilent = 'prayer_silent';
+  static const prayerSilentMinutes = 'prayer_silent_minutes';
+  static const prayerAdhanMute = 'prayer_adhan_mute';
+  static const prayerAdhanMinutes = 'prayer_adhan_minutes';
+
+  /// A bundled city id, or "custom:LAT,LON,TZID"; "" = not chosen.
+  static const prayerPlace = 'prayer_place';
+
+  /// Calculation method index and Asr rule (0 standard, 1 Hanafi): the user's choice, never decided by the app.
+  static const prayerMethod = 'prayer_method';
+  static const prayerAsr = 'prayer_asr';
+
+  /// Reply by SMS to a call left ringing [prayerSmsDelaySeconds] inside a prayer window; [prayerSmsText] "" = the
+  /// default text in the app's language. Android builds with SMS only (not Play builds).
+  static const prayerSmsReply = 'prayer_sms_reply';
+  static const prayerSmsDelaySeconds = 'prayer_sms_delay_seconds';
+  static const prayerSmsText = 'prayer_sms_text';
+
+  /// Waiting period in minutes before switching off or weakening takes effect; 0 = none.
+  static const protectDelayMinutes = 'protect_delay_minutes';
+
+  /// Integer settings and their allowed range (inclusive).
+  static const Map<String, (int, int)> ranges = {
+    blurStrictness: (0, 2),
+    prayerSilentMinutes: (5, 90),
+    prayerAdhanMinutes: (1, 30),
+    prayerMethod: (0, 15),
+    prayerAsr: (0, 1),
+    prayerSmsDelaySeconds: (3, 60),
+    protectDelayMinutes: (0, 1440),
+  };
+
   /// Key -> default value. The value's type is the key's type.
   static const Map<String, Object> defaults = {
     gender: '',
@@ -33,6 +80,20 @@ abstract final class SettingKeys {
     blurStrictness: 0,
     audioStereo: false,
     holdSilence: true,
+    filterOffApps: '',
+    blurOffApps: '',
+    keepSinging: false,
+    prayerSilent: false,
+    prayerSilentMinutes: 20,
+    prayerAdhanMute: false,
+    prayerAdhanMinutes: 5,
+    prayerPlace: '',
+    prayerMethod: 0,
+    prayerAsr: 0,
+    prayerSmsReply: false,
+    prayerSmsDelaySeconds: 5,
+    prayerSmsText: '',
+    protectDelayMinutes: 0,
   };
 
   /// Returns an error text when [key]/[value] is not a valid setting, else null.
@@ -40,10 +101,14 @@ abstract final class SettingKeys {
     final def = defaults[key];
     if (def == null) return 'unknown setting "$key"';
     if (def is bool && value is! bool) return '"$key" takes a bool';
-    if (def is int && (value is! int || value < 0 || value > 2)) return '"$key" takes 0, 1 or 2';
+    if (def is int) {
+      final (lo, hi) = ranges[key] ?? (0, 2);
+      if (value is! int || value < lo || value > hi) return '"$key" takes $lo to $hi';
+    }
     if (def is String) {
       if (value is! String) return '"$key" takes a string';
       if (key == gender && !const {'', 'man', 'woman'}.contains(value)) return 'gender is "", "man" or "woman"';
+      if (key == prayerSmsText && value.length > 300) return '"$key" takes at most 300 characters';
     }
     return null;
   }
@@ -61,6 +126,20 @@ class WaaiyaSettings {
     this.blurStrictness = 0,
     this.audioStereo = false,
     this.holdSilence = true,
+    this.filterOffApps = const [],
+    this.blurOffApps = const [],
+    this.keepSinging = false,
+    this.prayerSilent = false,
+    this.prayerSilentMinutes = 20,
+    this.prayerAdhanMute = false,
+    this.prayerAdhanMinutes = 5,
+    this.prayerPlace = '',
+    this.prayerMethod = 0,
+    this.prayerAsr = 0,
+    this.prayerSmsReply = false,
+    this.prayerSmsDelaySeconds = 5,
+    this.prayerSmsText = '',
+    this.protectDelayMinutes = 0,
   });
 
   factory WaaiyaSettings.fromMap(Map<Object?, Object?> m) => WaaiyaSettings(
@@ -73,6 +152,20 @@ class WaaiyaSettings {
         blurStrictness: _int(m[SettingKeys.blurStrictness]).clamp(0, 2),
         audioStereo: _bool(m[SettingKeys.audioStereo], false),
         holdSilence: _bool(m[SettingKeys.holdSilence], true),
+        filterOffApps: _csv(m[SettingKeys.filterOffApps]),
+        blurOffApps: _csv(m[SettingKeys.blurOffApps]),
+        keepSinging: _bool(m[SettingKeys.keepSinging], false),
+        prayerSilent: _bool(m[SettingKeys.prayerSilent], false),
+        prayerSilentMinutes: _intOr(m[SettingKeys.prayerSilentMinutes], 20).clamp(5, 90),
+        prayerAdhanMute: _bool(m[SettingKeys.prayerAdhanMute], false),
+        prayerAdhanMinutes: _intOr(m[SettingKeys.prayerAdhanMinutes], 5).clamp(1, 30),
+        prayerPlace: _str(m[SettingKeys.prayerPlace]) ?? '',
+        prayerMethod: _int(m[SettingKeys.prayerMethod]).clamp(0, 15),
+        prayerAsr: _int(m[SettingKeys.prayerAsr]).clamp(0, 1),
+        prayerSmsReply: _bool(m[SettingKeys.prayerSmsReply], false),
+        prayerSmsDelaySeconds: _intOr(m[SettingKeys.prayerSmsDelaySeconds], 5).clamp(3, 60),
+        prayerSmsText: _str(m[SettingKeys.prayerSmsText]) ?? '',
+        protectDelayMinutes: _int(m[SettingKeys.protectDelayMinutes]).clamp(0, 1440),
       );
 
   /// "man", "woman" or "" (not answered yet: the onboarding is shown).
@@ -88,6 +181,22 @@ class WaaiyaSettings {
   final bool audioStereo;
   final bool holdSilence;
 
+  /// Sorted, no empty entries ([SettingKeys.filterOffApps]; stored comma-separated).
+  final List<String> filterOffApps;
+  final List<String> blurOffApps;
+  final bool keepSinging;
+  final bool prayerSilent;
+  final int prayerSilentMinutes;
+  final bool prayerAdhanMute;
+  final int prayerAdhanMinutes;
+  final String prayerPlace;
+  final int prayerMethod;
+  final int prayerAsr;
+  final bool prayerSmsReply;
+  final int prayerSmsDelaySeconds;
+  final String prayerSmsText;
+  final int protectDelayMinutes;
+
   bool get isMan => gender == 'man';
   bool get blurOn => blurWomen || blurNudity;
 
@@ -101,6 +210,20 @@ class WaaiyaSettings {
         SettingKeys.blurStrictness: blurStrictness,
         SettingKeys.audioStereo: audioStereo,
         SettingKeys.holdSilence: holdSilence,
+        SettingKeys.filterOffApps: filterOffApps.join(','),
+        SettingKeys.blurOffApps: blurOffApps.join(','),
+        SettingKeys.keepSinging: keepSinging,
+        SettingKeys.prayerSilent: prayerSilent,
+        SettingKeys.prayerSilentMinutes: prayerSilentMinutes,
+        SettingKeys.prayerAdhanMute: prayerAdhanMute,
+        SettingKeys.prayerAdhanMinutes: prayerAdhanMinutes,
+        SettingKeys.prayerPlace: prayerPlace,
+        SettingKeys.prayerMethod: prayerMethod,
+        SettingKeys.prayerAsr: prayerAsr,
+        SettingKeys.prayerSmsReply: prayerSmsReply,
+        SettingKeys.prayerSmsDelaySeconds: prayerSmsDelaySeconds,
+        SettingKeys.prayerSmsText: prayerSmsText,
+        SettingKeys.protectDelayMinutes: protectDelayMinutes,
       };
 }
 
@@ -128,6 +251,9 @@ abstract final class FilterProblem {
 
   /// Silencing the playing app's original sound fails (SessionMuter FAILING).
   static const muteFailing = 'mute_failing';
+
+  /// Helper mode (the phone refused the grants) and Waaiya's helper is not running: the original plays too.
+  static const helperMissing = 'helper_missing';
 
   /// Desktop: the women's-singing detector did not load; voices are muted while that option is on (fail-closed).
   static const detectorFailed = 'detector_failed';
@@ -230,6 +356,10 @@ class SetupInfo {
     this.consentSkipped = true,
     this.notificationTextNeedsSetup = false,
     this.deviceNote,
+    this.helperMode = false,
+    this.helperMissing = false,
+    this.helperRestarting = false,
+    this.helperTip,
     this.wireless = const WirelessInfo(),
     this.shizuku,
     this.busy = false,
@@ -242,6 +372,10 @@ class SetupInfo {
         consentSkipped: _bool(m['consentSkipped'], true),
         notificationTextNeedsSetup: _bool(m['notificationTextNeedsSetup'], false),
         deviceNote: _str(m['deviceNote']),
+        helperMode: _bool(m['helperMode'], false),
+        helperMissing: _bool(m['helperMissing'], false),
+        helperRestarting: _bool(m['helperRestarting'], false),
+        helperTip: _str(m['helperTip']),
         wireless: WirelessInfo.fromMap(_map(m['wireless'])),
         shizuku: _enum(ShizukuState.values, m['shizuku']),
         busy: _bool(m['busy'], false),
@@ -249,8 +383,21 @@ class SetupInfo {
         adbCommands: _str(m['adbCommands']),
       );
 
-  /// The original sound can be silenced (Android: DUMP granted).
+  /// The original sound can be silenced (Android: DUMP granted, or helper mode).
   final bool originalsMuted;
+
+  /// Android: this phone refused the grants (Xiaomi, OPPO family), so Waaiya's helper reads the sound sessions.
+  /// The helper stops when the phone restarts; Android asks before each capture (no PROJECT_MEDIA).
+  final bool helperMode;
+
+  /// Helper mode and the helper is not running now: the original sound plays next to the filtered one.
+  final bool helperMissing;
+
+  /// Helper mode and the setup service is starting the helper again (automatically or from the button).
+  final bool helperRestarting;
+
+  /// `xiaomi` or `coloros`: the optional Developer options switch that would make the permissions permanent.
+  final String? helperTip;
 
   /// No screen-capture question at start (Android: app-op PROJECT_MEDIA allowed).
   final bool consentSkipped;
@@ -277,6 +424,10 @@ class SetupInfo {
         'consentSkipped': consentSkipped,
         'notificationTextNeedsSetup': notificationTextNeedsSetup,
         'deviceNote': deviceNote,
+        'helperMode': helperMode,
+        'helperMissing': helperMissing,
+        'helperRestarting': helperRestarting,
+        'helperTip': helperTip,
         'wireless': wireless.toMap(),
         'shizuku': shizuku == null ? null : _enumName(shizuku!),
         'busy': busy,
@@ -378,6 +529,8 @@ class Capabilities {
     this.womenSinging = false,
     this.autostart = false,
     this.blurStandalone = false,
+    this.linkPage = false,
+    this.linkSave = false,
   });
 
   factory Capabilities.fromMap(Map<Object?, Object?> m) => Capabilities(
@@ -389,6 +542,8 @@ class Capabilities {
         womenSinging: _bool(m['womenSinging'], false),
         autostart: _bool(m['autostart'], false),
         blurStandalone: _bool(m['blurStandalone'], false),
+        linkPage: _bool(m['linkPage'], false),
+        linkSave: _bool(m['linkSave'], false),
       );
 
   static const android = Capabilities(
@@ -408,6 +563,14 @@ class Capabilities {
   /// not share the screen capture with the sound filter). Android: false, the blur runs while filtering.
   final bool blurStandalone;
 
+  /// The Links page is drawn here ([WaaiyaBackend.resolveLink], [WaaiyaBackend.watchLink], ...: desktop) instead
+  /// of a native screen ([WaaiyaBackend.openLinkScreen]: Android).
+  final bool linkPage;
+
+  /// "Save without music" on the Links page ([WaaiyaBackend.saveLink]). Desktop: the tools are in the bundle (not in
+  /// the Microsoft Store package, whose rules forbid saving from sites that do not allow it).
+  final bool linkSave;
+
   Map<String, bool> toMap() => {
         'shizukuSetup': shizukuSetup,
         'adbSetup': adbSetup,
@@ -417,8 +580,113 @@ class Capabilities {
         'womenSinging': womenSinging,
         'autostart': autostart,
         'blurStandalone': blurStandalone,
+        'linkPage': linkPage,
+        'linkSave': linkSave,
       };
 }
+
+/// A link opened on the Links page ([WaaiyaBackend.resolveLink]).
+class LinkMeta {
+  const LinkMeta({
+    required this.url,
+    this.title = '',
+    this.site = '',
+    this.durationSec,
+    this.isLive = false,
+    this.hasVideo = true,
+    this.audioOnly = false,
+  });
+
+  factory LinkMeta.fromMap(Map<Object?, Object?> m) => LinkMeta(
+        url: _str(m['url']) ?? '',
+        title: _str(m['title']) ?? '',
+        site: _str(m['site']) ?? '',
+        durationSec: m['durationSec'] is num ? (m['durationSec'] as num).round() : null,
+        isLive: _bool(m['isLive'], false),
+        hasVideo: _bool(m['hasVideo'], true),
+        audioOnly: _bool(m['audioOnly'], false),
+      );
+
+  final String url;
+  final String title;
+
+  /// The site's name ("Youtube", "TikTok") or, without the save tools, the link's host.
+  final String site;
+
+  /// Null: unknown.
+  final int? durationSec;
+  final bool isLive;
+
+  /// Saving gives a video (false: sound only).
+  final bool hasVideo;
+
+  /// The page has video, but only its sound can be used (Android's video_unavailable).
+  final bool audioOnly;
+
+  Map<String, Object?> toMap() => {
+        'url': url,
+        'title': title,
+        'site': site,
+        'durationSec': durationSec,
+        'isLive': isLive,
+        'hasVideo': hasVideo,
+        'audioOnly': audioOnly,
+      };
+}
+
+/// "Save without music": where it is ([AppState.linkSave]). Phases as Android's LinkExportService.Phase.
+enum LinkSavePhase { idle, downloading, filtering, done, failed }
+
+class LinkSaveInfo {
+  const LinkSaveInfo({
+    this.phase = LinkSavePhase.idle,
+    this.title = '',
+    this.progress = -1,
+    this.isVideo = true,
+    this.error,
+    this.path,
+  });
+
+  factory LinkSaveInfo.fromMap(Map<Object?, Object?> m) => LinkSaveInfo(
+        phase: _enum(LinkSavePhase.values, m['phase']) ?? LinkSavePhase.idle,
+        title: _str(m['title']) ?? '',
+        progress: m['progress'] is num ? (m['progress'] as num).toDouble() : -1,
+        isVideo: _bool(m['isVideo'], true),
+        error: BackendMessage.fromMap(m['error']),
+        path: _str(m['path']),
+      );
+
+  final LinkSavePhase phase;
+  final String title;
+
+  /// 0..1 within the phase; negative: unknown.
+  final double progress;
+  final bool isVideo;
+
+  /// Failed: `cancelled`, `failed` (detail = the tool's last lines), or a resolve code ([linkErrorCodes]).
+  final BackendMessage? error;
+
+  /// Done: the saved file.
+  final String? path;
+
+  bool get busy => phase == LinkSavePhase.downloading || phase == LinkSavePhase.filtering;
+
+  Map<String, Object?> toMap() => {
+        'phase': _enumName(phase),
+        'title': title,
+        'progress': progress,
+        'isVideo': isVideo,
+        'error': error?.toMap(),
+        'path': path,
+      };
+}
+
+/// [BackendException] codes of the link calls: the UI turns each into a sentence (Android's LinkError codes, plus
+/// `live` (cannot be saved), `busy` (another save runs) and `filter_failed` (Watch: the filter did not start)).
+const linkErrorCodes = {
+  'invalid_url', 'login', 'limited', 'unsupported_site', 'playlist', 'no_format', 'live', 'busy', 'filter_failed',
+  'failed',
+};
 
 /// One full snapshot: the getState result and every event.
 /// setup.wireless (docs/UI_CONTRACT.md): the on-phone setup's progress. [title] and [body] are Android string
@@ -433,6 +701,11 @@ class WirelessInfo {
     this.detail,
     this.isError = false,
     this.hint,
+    this.devOptions = true,
+    this.wifi = true,
+    this.wirelessDebugging,
+    this.paired = false,
+    this.aboutHint,
   });
 
   factory WirelessInfo.fromMap(Map<Object?, Object?> m) => WirelessInfo(
@@ -444,6 +717,11 @@ class WirelessInfo {
         detail: _str(m['detail']),
         isError: _bool(m['isError'], false),
         hint: _str(m['hint']),
+        devOptions: _bool(m['devOptions'], true),
+        wifi: _bool(m['wifi'], true),
+        wirelessDebugging: m['wirelessDebugging'] is bool ? m['wirelessDebugging'] as bool : null,
+        paired: _bool(m['paired'], false),
+        aboutHint: _str(m['aboutHint']),
       );
 
   /// Android 11+ (pairing with a code).
@@ -464,6 +742,18 @@ class WirelessInfo {
   /// Extra advice as a string name: `wsetup_notif_off`, `wsetup_dev_off`.
   final String? hint;
 
+  /// The guided steps. What Waaiya can see of each one: hints for the ticks, never a gate (the Wi-Fi guess can be
+  /// wrong, and [wirelessDebugging] is null on phones that do not let apps read that switch).
+  final bool devOptions;
+  final bool wifi;
+  final bool? wirelessDebugging;
+
+  /// Waaiya paired with this phone before: no code is needed, turning Wireless debugging on is enough.
+  final bool paired;
+
+  /// Where "Build number" is on this make of phone: `samsung`, `xiaomi`, `coloros`, `vivo`, `huawei`, or null.
+  final String? aboutHint;
+
   Map<String, Object?> toMap() => {
         'supported': supported,
         'running': running,
@@ -473,6 +763,11 @@ class WirelessInfo {
         'detail': detail,
         'isError': isError,
         'hint': hint,
+        'devOptions': devOptions,
+        'wifi': wifi,
+        'wirelessDebugging': wirelessDebugging,
+        'paired': paired,
+        'aboutHint': aboutHint,
       };
 }
 
@@ -490,6 +785,44 @@ class PageRequest {
   }
 }
 
+/// The pictures of the illustrated setup guide (Android res/drawable-*-nodpi/guide_*.webp, one set per language).
+const guidePictureNames = {
+  'guide_1_about', 'guide_2_dev', 'guide_3_allow', 'guide_4_pair', 'guide_5_start', 'guide_6_code',
+  'guide_7_notif', 'guide_8_reply', 'guide_9_done',
+};
+
+/// The app's languages: tag -> the language's own name (shown as is in every language). Arabic and English are
+/// written by the project; the others are machine translations not reviewed yet (docs/STATUS.md). Keep in step with
+/// Android's Lang.ALL and res/xml/locales_config.xml.
+const appLanguages = <String, String>{
+  'ar': 'العربية',
+  'en': 'English',
+  'fr': 'Français',
+  'ur': 'اردو',
+  'id': 'Bahasa Indonesia',
+  'tr': 'Türkçe',
+  'bn': 'বাংলা',
+  'fa': 'فارسی',
+  'ms': 'Bahasa Melayu',
+  'es': 'Español',
+  'nl': 'Nederlands',
+  'de': 'Deutsch',
+  'it': 'Italiano',
+  'ru': 'Русский',
+  'uz': 'Oʻzbekcha',
+  'sw': 'Kiswahili',
+  'ha': 'Hausa',
+  'so': 'Soomaali',
+};
+
+/// [appLanguages]' tag for a system locale name such as "fr_FR.UTF-8", "id-ID" or "in", or null.
+String? appLanguageOf(String? localeName) {
+  if (localeName == null) return null;
+  var tag = localeName.split(RegExp(r'[_.@-]')).first.toLowerCase();
+  if (tag == 'in') tag = 'id';
+  return appLanguages.containsKey(tag) ? tag : null;
+}
+
 class AppState {
   const AppState({
     this.platform = 'android',
@@ -502,13 +835,15 @@ class AppState {
     this.detectorModel = false,
     this.capabilities = const Capabilities(),
     this.navigate,
+    this.linkSave = const LinkSaveInfo(),
+    this.features = const {},
   });
 
   /// Tolerant: a missing or unknown key takes its default (keys are added, never renamed).
   factory AppState.fromMap(Map<Object?, Object?> m) => AppState(
         platform: _str(m['platform']) ?? 'android',
         version: _str(m['version']) ?? '',
-        language: _str(m['language']) == 'en' ? 'en' : 'ar',
+        language: appLanguages.containsKey(_str(m['language'])) ? _str(m['language'])! : 'ar',
         settings: WaaiyaSettings.fromMap(_map(m['settings'])),
         filter: FilterInfo.fromMap(_map(m['filter'])),
         setup: SetupInfo.fromMap(_map(m['setup'])),
@@ -516,12 +851,14 @@ class AppState {
         detectorModel: _bool(_map(m['models'])['detector'], false),
         capabilities: Capabilities.fromMap(_map(m['capabilities'])),
         navigate: PageRequest.fromMap(m['navigate']),
+        linkSave: LinkSaveInfo.fromMap(_map(m['linkSave'])),
+        features: {for (final e in _map(m['features']).entries) if (e.key is String) e.key as String: _map(e.value)},
       );
 
   final String platform;
   final String version;
 
-  /// "ar" (default) or "en".
+  /// One of [appLanguages]' tags ("ar" by default).
   final String language;
   final WaaiyaSettings settings;
   final FilterInfo filter;
@@ -535,12 +872,23 @@ class AppState {
   /// A page the platform asks to show once (a Quick Settings tile's "Open Waaiya"); null most of the time.
   final PageRequest? navigate;
 
+  /// "Save without music" on the Links page (capability `linkSave`).
+  final LinkSaveInfo linkSave;
+  /// One map per 0.2.13 feature, read by that feature's own file (docs/FEATURES_CONTRACT.md): `fix`
+  /// (fix_mistakes.dart), `worship` (worship.dart), `protect` (protection.dart), `singing` (singing_option.dart).
+  /// A missing section is an empty map.
+  final Map<String, Map<Object?, Object?>> features;
+
+  Map<Object?, Object?> feature(String name) => features[name] ?? const {};
+
   AppState copyWith({
     String? language,
     WaaiyaSettings? settings,
     FilterInfo? filter,
     SetupInfo? setup,
     BlurInfo? blur,
+    LinkSaveInfo? linkSave,
+    Map<String, Map<Object?, Object?>>? features,
   }) =>
       AppState(
         platform: platform,
@@ -552,6 +900,8 @@ class AppState {
         blur: blur ?? this.blur,
         detectorModel: detectorModel,
         capabilities: capabilities,
+        linkSave: linkSave ?? this.linkSave,
+        features: features ?? this.features,
       );
 
   Map<String, Object?> toMap() => {
@@ -564,6 +914,8 @@ class AppState {
         'blur': blur.toMap(),
         'models': {'detector': detectorModel},
         'capabilities': capabilities.toMap(),
+        'linkSave': linkSave.toMap(),
+        'features': features,
       };
 }
 
@@ -641,6 +993,27 @@ abstract interface class WaaiyaBackend {
   /// The native link screen (watch or save a link without music).
   Future<void> openLinkScreen();
 
+  /// Capability `linkPage`: what the link is (title, site, duration). Throws [BackendException] with one of
+  /// [linkErrorCodes].
+  Future<LinkMeta> resolveLink(String url);
+
+  /// Capability `linkPage`: starts the filter if it is not running, waits until it filters, then opens [url] in the
+  /// browser. Never opens it unfiltered: throws `filter_failed` (or `invalid_url`) instead.
+  Future<void> watchLink(String url);
+
+  /// Capability `linkSave`: saves [url] without music in the background; progress in [AppState.linkSave]. Throws
+  /// `busy` while another save runs, `live` for a live stream, or a resolve code.
+  Future<void> saveLink(String url);
+
+  /// Stops a running save; nothing is kept.
+  Future<void> cancelLinkSave();
+
+  /// Plays the saved file with the computer's player.
+  Future<void> openSavedLink();
+
+  /// Shows the saved file in its folder.
+  Future<void> showSavedLink();
+
   Future<Licences> getLicences();
 
   Future<String> getLicenceText(String file);
@@ -661,14 +1034,27 @@ abstract interface class WaaiyaBackend {
   /// About phone (to turn on Developer options), or Developer options when they are on.
   Future<void> openAboutPhone();
 
+  /// Android's Wi-Fi settings (Wireless debugging needs Wi-Fi).
+  Future<void> openWifiSettings();
+
   /// The setup step by step with pictures (Android).
   Future<void> openSetupGuide();
+
+  /// One picture of the illustrated setup guide ([guidePictureNames]), in the app's language: the encoded image
+  /// (WebP), or null where there are no pictures (desktop).
+  Future<Uint8List?> guidePicture(String name);
 
   /// The page asked for in [AppState.navigate] was shown.
   Future<void> pageShown();
 
   /// Android's share sheet with [text] (the diagnostics report).
   Future<void> shareText(String text);
+
+  /// A 0.2.13 feature method, named `<feature>.<name>` (docs/FEATURES_CONTRACT.md), e.g. `worship.times`. Android:
+  /// the same MethodChannel method name, routed by UiBridge to the feature's Kotlin object. Throws
+  /// [BackendException] `unsupported` where the platform lacks it, `protected` when the waiting period or the PIN
+  /// holds the change back.
+  Future<Object?> invoke(String method, [Map<String, Object?> args = const {}]);
 }
 
 // --- tolerant readers ---
@@ -677,6 +1063,12 @@ Map<Object?, Object?> _map(Object? v) => v is Map ? v : const {};
 String? _str(Object? v) => v is String ? v : null;
 bool _bool(Object? v, bool def) => v is bool ? v : def;
 int _int(Object? v) => v is int ? v : (v is num ? v.toInt() : 0);
+int _intOr(Object? v, int def) => v is num ? v.toInt() : def;
+List<String> _csv(Object? v) => v is String
+    ? (v.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toSet().toList()..sort())
+    : v is List
+        ? (v.whereType<String>().toSet().toList()..sort())
+        : const [];
 
 /// "MODEL_FAILED" <-> FilterState.modelFailed.
 String _enumName(Enum e) => e.name.replaceAllMapped(RegExp('[A-Z]'), (m) => '_${m[0]}').toUpperCase();

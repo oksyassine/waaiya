@@ -114,15 +114,38 @@ Known limits:
   capture starts (its `SensitiveNotificationProtectionLog` buffer logs `protection enabled:false` then), so a change
   made while filtering applies at the next start and the tile says so. Phones set up before 0.2.11 lack the grant:
   the tile asks Shizuku when it runs, otherwise the setup card shows again (`setup.notificationTextNeedsSetup`).
-- On Xiaomi (MIUI/HyperOS) every grant above needs "USB debugging (Security settings)" in Developer options, for
-  all three routes.
+- On Xiaomi and the OPPO family this grant can be refused: the tile then works through Waaiya's helper where the
+  phone lets the shell write the setting (helper mode, below).
 
 ## Phones that block the setup, slow Shizuku, diagnostics
 
-- `SetupHelp` recognises Xiaomi/Redmi/POCO (MIUI/HyperOS: "USB debugging (Security settings)" on, Xiaomi account,
-  notification style "Android" for the reply field) and OPPO/OnePlus/realme (ColorOS: "Permission monitoring" off),
-  as in Shizuku's FAQ. The setup card shows that phone's note first, and a grant refused by the system
-  (`SecurityException`, `GRANT_RUNTIME_PERMISSIONS`, ...) is explained with it instead of the raw log.
+- Xiaomi/Redmi/POCO (MIUI/HyperOS) and OPPO/OnePlus/realme (ColorOS, OxygenOS) refuse `pm grant` / `appops set` from
+  the shell user unless a Developer options switch is changed: "USB debugging (Security settings)" on Xiaomi (needs
+  a Xiaomi account), "Disable permission monitoring" on the OPPO family (on ColorOS 16 "Disable system optimization",
+  reported to show only with the phone in English). People do not find these, so since 0.2.12 nothing depends on
+  them: **helper mode** (`HelperDumps`). When the grant is refused, the on-phone setup starts Waaiya's shell helper
+  (`CoverHelper`, the process that draws the blur covers; from Android 11 for this) and the helper hands the two
+  audio dumps (`media.audio_policy`, `audio`) to the app, which silences the sessions itself as before. The helper
+  also writes the notification-text switch (the OPPO family is reported to refuse that write too: the tile then says
+  so). Costs: Android asks before each capture (no PROJECT_MEDIA), and the helper stops when the phone restarts, when
+  Waaiya is updated and when USB debugging is turned off. Waaiya starts it again by itself (a short silent run with
+  the saved pairing) when the app is opened or filtering starts and Wireless debugging is on; otherwise a banner on
+  the Filter and Setup pages has one button for it, and Start warns first. The switch is mentioned only as the
+  optional way to make the permissions permanent. **Not proven on a real phone yet**: Shizuku's server is known to
+  start on these phones without the switch, but that the restricted shell may still read the audio dumps is inferred.
+- vivo/iQOO (OriginOS) ignores `appops set PROJECT_MEDIA` without an error: the setup counts as done with DUMP alone
+  and Android asks before each capture. Huawei says Wireless debugging is not available on its phones: the page
+  points to the computer route there.
+- The setup page is a checklist of four steps that tick themselves (Developer options, Wi-Fi, Wireless debugging,
+  pairing code; `wirelessSteps`), with one button for the current step and the place of "Build number" for the
+  make of phone (`SetupHelp.aboutHint`). The ticks are hints, never gates. Shizuku and the computer are folded under
+  "Other ways", except when Shizuku is already running (then its one-tap grant is on top).
+- On Android 15+ notifications cannot be used during a screen share, and filtering is one: the page says to stop
+  filtering before typing the pairing code (`wsetup_filter_on`).
+- A grant refused by the system through Shizuku (`SecurityException`, `GRANT_RUNTIME_PERMISSIONS`, ...) is explained
+  with that phone's switch, and points to the on-phone setup, which does not need it.
+- Debug builds: `adb shell run-as org.islamicmute.app touch files/simulate_refused` makes the grants answer like a
+  refusing phone, to test helper mode on an emulator.
 - Shizuku's helper process can take long to start (seen on a Xiaomi). The screen says "still working" after 20 s and
   gives up only after 2 min; an answer after that is still applied (`ShizukuSetup.addListener`).
 - Nothing needs a restart once the setup is done: the screen re-checks every 2 s while it is incomplete, and a
@@ -133,10 +156,17 @@ Known limits:
 ## Illustrated guide
 
 "Steps with pictures" in the setup card opens `SetupGuideActivity`: the Wireless-debugging route in 9 steps, each
-with a screenshot, like Shizuku's guide (which it links for the Shizuku route). The pictures were taken on the
-API 35 emulator (`res/drawable-nodpi` English, `res/drawable-ar-nodpi` Arabic, 540 px WebP, about 190 KB in all).
-To retake them: set the per-app locale of Settings and SystemUI (`cmd locale set-app-locales com.android.settings
---locales ar`), go through the setup, crop and outline with Pillow. Both screens open it (Flutter: `openSetupGuide`).
+with a screenshot, like Shizuku's guide (which it links for the Shizuku route). Since 0.2.12 the setup steps also
+show their own pictures under the current step's button (Flutter `GuidePictures`, through `guidePicture`): About
+phone with "Build number" marked; Developer options at "Wireless debugging" and Android's "Allow" question; the
+pairing row, Waaiya's notification and the code field.
+
+The pictures are real screens of the API 35 emulator in each of the app's languages (`res/drawable-nodpi` English,
+`res/drawable-<language>-nodpi`, `drawable-in-nodpi` Indonesian; 540 px WebP), the place to tap framed in green.
+`android/tools/guide_shots.py --lang <tag>` retakes one language: it switches the emulator's system language,
+forgets paired computers and trusted networks, runs the real setup and saves the nine pictures. Look at every
+picture before committing them. The Settings labels the steps quote come from the same emulator (the
+"Build number", "Wireless debugging" ... wording of each language), so the words match the pictures.
 
 ## Waaiya's own cover helper (touches through the blur covers, no Shizuku)
 

@@ -36,7 +36,8 @@ class FilterTileService : TileService() {
 
     override fun onClick() {
         if (FilterService.running) {
-            startService(Intent(this, FilterService::class.java).setAction(FilterService.ACTION_STOP))
+            // the waiting period and the PIN (Protection): when they hold it back, Waaiya opens where it asks
+            Protection.stopOrAsk(this)?.let { openActivity(this, it) }
             return
         }
         // From SILENCED too: starting again resumes filtering (the muter keeps the originals silent meanwhile).
@@ -87,16 +88,41 @@ class TileStartActivity : Activity() {
         if (savedInstanceState != null) return  // recreated while Android's question is open: its answer still comes
         // the "Stop filtering" app shortcut (res/xml/shortcuts.xml); SILENCED too: the other apps sound again
         if (intent?.action == ACTION_STOP_FILTER) {
+            // also the filter notification's Stop. Through the waiting period and the PIN (Protection): when they
+            // hold it back, Waaiya opens at its Settings page, where it asks
             if (FilterService.running || FilterService.state == FilterService.State.SILENCED)
-                startService(Intent(this, FilterService::class.java).setAction(FilterService.ACTION_STOP))
+                Protection.stopOrAsk(this)?.let { runCatching { startActivity(it) } }
             finish()
             return
         }
         if (FilterService.running) { finish(); return }
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
-            !hasDumpPermission()) {
+            !setupDone()) {
             // the setup is missing: the Setup page explains; the microphone question belongs to the Filter page
-            UiActivity.open(this, if (hasDumpPermission()) "filter" else "setup")?.let { runCatching { startActivity(it) } }
+            UiActivity.open(this, if (setupDone()) "filter" else "setup")?.let { runCatching { startActivity(it) } }
+            finish()
+            return
+        }
+        // Helper mode in a process that just started (the tile, a shortcut): a running helper answers within a few
+        // seconds; wait for it rather than guess (HelperDumps.settling).
+        if (HelperDumps.helperMode(this) && !HelperDumps.helperReady && HelperDumps.settling) {
+            val go = object : Runnable {
+                var done = false
+                override fun run() { if (!done && !isFinishing && !isDestroyed) { done = true; CoverHelper.removeListener(arrived); askOrExplain() } }
+                val arrived: () -> Unit = { if (HelperDumps.helperReady) run() }
+            }
+            CoverHelper.addListener(go.arrived)
+            window.decorView.postDelayed(go, HelperDumps.SETTLE_MS)
+            return
+        }
+        askOrExplain()
+    }
+
+    private fun askOrExplain() {
+        // helper mode after a restart: the helper comes back while the capture starts (the muter waits for it). When
+        // it cannot (Wireless debugging off), filtering would play the music too: the Filter page says how instead
+        if (helperMissing() && !WirelessSetup.restartHelperIfNeeded(this) && !WirelessSetup.running) {
+            UiActivity.open(this, "filter")?.let { runCatching { startActivity(it) } }
             finish()
             return
         }
