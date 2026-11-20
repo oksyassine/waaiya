@@ -9,8 +9,7 @@
 Waaiya removes musical instruments from everything your device plays and keeps the voice: speech, Quran
 recitation, lectures. It runs on the device, in real time, and fails closed: if the filter itself cannot run, you
 hear silence, never the unfiltered sound. (On Android, when the system ends the capture, filtering stops and a
-notification says the sound is no longer filtered.) (The project was called "Islamic Mute" before; some internal names, such as
-the Android package `org.islamicmute.app` and the Linux service, keep the old name so existing installs update.)
+notification says the sound is no longer filtered.)
 
 | Platform | Status | How it works |
 |---|---|---|
