@@ -337,9 +337,6 @@
     <string name="shortcut_stop_short">Henti</string>
     <string name="shortcut_stop_long">Hentikan penapisan</string>
     <string name="notif_channel_silenced">Apl dikekalkan senyap</string>
-    <string name="notif_fix_notif_channel">Betulkan kesilapan</string>
-    <string name="notif_fix_notif_title">Betulkan kesilapan</string>
-    <string name="notif_fix_notif_text">Tutup kawasan dengan tangan, atau catat apa yang terlepas atau tersembunyi secara silap. Catatan kekal pada telefon ini.</string>
     <string name="notif_fix_cover_area">Tutup kawasan</string>
     <string name="notif_fix_remove_covers">Buang penutup tangan</string>
     <string name="notif_fix_note_missed">Ada yang terlepas</string>

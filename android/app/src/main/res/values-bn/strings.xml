@@ -337,9 +337,6 @@
     <string name="shortcut_stop_short">বন্ধ করুন</string>
     <string name="shortcut_stop_long">ফিল্টারিং বন্ধ করুন</string>
     <string name="notif_channel_silenced">নীরব রাখা অ্যাপ</string>
-    <string name="notif_fix_notif_channel">একটি ভুল ঠিক করুন</string>
-    <string name="notif_fix_notif_title">একটি ভুল ঠিক করুন</string>
-    <string name="notif_fix_notif_text">হাতে একটি অংশ ঢাকুন, অথবা যা বাদ পড়েছে বা ভুল করে লুকানো হয়েছে তা লিখে রাখুন। নোট এই ফোনেই থাকে।</string>
     <string name="notif_fix_cover_area">একটি অংশ ঢাকুন</string>
     <string name="notif_fix_remove_covers">হাতের আবরণ সরান</string>
     <string name="notif_fix_note_missed">কিছু বাদ পড়েছে</string>

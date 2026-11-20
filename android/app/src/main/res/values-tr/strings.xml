@@ -337,9 +337,6 @@
     <string name="shortcut_stop_short">Durdur</string>
     <string name="shortcut_stop_long">Filtrelemeyi durdur</string>
     <string name="notif_channel_silenced">Sessiz tutulan uygulamalar</string>
-    <string name="notif_fix_notif_channel">Bir hatayı düzelt</string>
-    <string name="notif_fix_notif_title">Bir hatayı düzelt</string>
-    <string name="notif_fix_notif_text">Bir alanı elle örtün ya da kaçırılanı veya yanlışlıkla gizleneni not edin. Notlar bu telefonda kalır.</string>
     <string name="notif_fix_cover_area">Bir alanı ört</string>
     <string name="notif_fix_remove_covers">Elle konan örtüleri kaldır</string>
     <string name="notif_fix_note_missed">Bir şey kaçtı</string>

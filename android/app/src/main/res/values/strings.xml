@@ -338,9 +338,6 @@
     <string name="shortcut_stop_short">Stop</string>
     <string name="shortcut_stop_long">Stop filtering</string>
     <string name="notif_channel_silenced">Apps kept silent</string>
-    <string name="notif_fix_notif_channel">Fix a mistake</string>
-    <string name="notif_fix_notif_title">Fix a mistake</string>
-    <string name="notif_fix_notif_text">Cover an area by hand, or note what was missed or hidden by mistake. Notes stay on this phone.</string>
     <string name="notif_fix_cover_area">Cover an area</string>
     <string name="notif_fix_remove_covers">Remove hand covers</string>
     <string name="notif_fix_note_missed">Missed something</string>

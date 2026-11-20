@@ -337,9 +337,6 @@
     <string name="shortcut_stop_short">روکیں</string>
     <string name="shortcut_stop_long">فلٹرنگ روکیں</string>
     <string name="notif_channel_silenced">خاموش رکھی گئی ایپس</string>
-    <string name="notif_fix_notif_channel">غلطی درست کریں</string>
-    <string name="notif_fix_notif_title">غلطی درست کریں</string>
-    <string name="notif_fix_notif_text">ہاتھ سے کوئی حصہ ڈھانپیں، یا جو چھوٹ گیا یا غلطی سے چھپایا گیا اسے نوٹ کریں۔ نوٹس اسی فون پر رہتے ہیں۔</string>
     <string name="notif_fix_cover_area">کوئی حصہ ڈھانپیں</string>
     <string name="notif_fix_remove_covers">ہاتھ کے پردے ہٹائیں</string>
     <string name="notif_fix_note_missed">کچھ چھوٹ گیا</string>

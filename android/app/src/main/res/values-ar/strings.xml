@@ -336,9 +336,6 @@
     <string name="shortcut_stop_short">إيقاف</string>
     <string name="shortcut_stop_long">إيقاف التصفية</string>
     <string name="notif_channel_silenced">إبقاء التطبيقات صامتة</string>
-    <string name="notif_fix_notif_channel">إصلاح خطأ</string>
-    <string name="notif_fix_notif_title">إصلاح خطأ</string>
-    <string name="notif_fix_notif_text">غطِّ جزءًا من الشاشة بيدك، أو سجّل ما فات أو ما حُجب خطأً. تبقى الملاحظات على هذا الهاتف.</string>
     <string name="notif_fix_cover_area">تغطية جزء</string>
     <string name="notif_fix_remove_covers">إزالة التغطية اليدوية</string>
     <string name="notif_fix_note_missed">فاته شيء</string>

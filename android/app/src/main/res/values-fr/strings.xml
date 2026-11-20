@@ -337,9 +337,6 @@
     <string name="shortcut_stop_short">Arrêter</string>
     <string name="shortcut_stop_long">Arrêter le filtrage</string>
     <string name="notif_channel_silenced">Applis gardées muettes</string>
-    <string name="notif_fix_notif_channel">Corriger une erreur</string>
-    <string name="notif_fix_notif_title">Corriger une erreur</string>
-    <string name="notif_fix_notif_text">Couvrez une zone à la main, ou notez ce qui a été manqué ou caché par erreur. Les notes restent sur ce téléphone.</string>
     <string name="notif_fix_cover_area">Couvrir une zone</string>
     <string name="notif_fix_remove_covers">Retirer les caches manuels</string>
     <string name="notif_fix_note_missed">Quelque chose est passé</string>
