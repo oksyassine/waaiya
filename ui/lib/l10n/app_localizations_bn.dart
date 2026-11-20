@@ -938,6 +938,308 @@ class AppLocalizationsBn extends AppLocalizations {
   String get settingsGeneralTitle => 'সাধারণ';
 
   @override
+  String get worshipTitle => 'নামাজের সময়';
+
+  @override
+  String get worshipBody =>
+      'ঐচ্ছিক। আপনার বেছে নেওয়া জায়গা থেকে এই ফোনেই হিসাব করা হয়। কিছুই পাঠানো হয় না।';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'জায়গা: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'জায়গা: বেছে নেওয়া হয়নি';
+
+  @override
+  String get worshipChoose => 'বেছে নিন';
+
+  @override
+  String get worshipPlaceSearch => 'শহর খুঁজুন';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'কোনো শহর পাওয়া যায়নি। এর বদলে স্থানাঙ্ক লিখতে পারেন।';
+
+  @override
+  String get worshipPlaceCustom => 'স্থানাঙ্ক লিখুন';
+
+  @override
+  String get worshipLat => 'অক্ষাংশ (উত্তর +, দক্ষিণ −)';
+
+  @override
+  String get worshipLon => 'দ্রাঘিমাংশ (পূর্ব +, পশ্চিম −)';
+
+  @override
+  String get worshipZone => 'টাইম জোন, যেমন Asia/Dhaka';
+
+  @override
+  String get worshipCustomInvalid => 'সংখ্যা আর টাইম জোন দেখে নিন।';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'এই জায়গা ব্যবহার করা যাচ্ছে না। আবার বেছে নিন।';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'হিসাবের পদ্ধতি: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'হিসাবের পদ্ধতি';
+
+  @override
+  String get worshipMethodNote =>
+      'শহরের দেশ অনুযায়ী বেছে নেওয়া হয়েছে। আপনার মসজিদ যেটা মানে সেটা বেছে নিন।';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'আসর: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'আসরের সময়';
+
+  @override
+  String get worshipAsrStandard => 'সাধারণ (শাফেয়ি, মালিকি, হাম্বলি)';
+
+  @override
+  String get worshipAsrHanafi => 'হানাফি';
+
+  @override
+  String get worshipMethodMwl => 'মুসলিম ওয়ার্ল্ড লীগ';
+
+  @override
+  String get worshipMethodIsna => 'ইসলামিক সোসাইটি অফ নর্থ আমেরিকা (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'মিশরীয় জেনারেল অথরিটি অফ সার্ভে';
+
+  @override
+  String get worshipMethodUmmAlQura => 'উম্মুল কুরা, মক্কা';
+
+  @override
+  String get worshipMethodKarachi => 'ইসলামি বিজ্ঞান বিশ্ববিদ্যালয়, করাচি';
+
+  @override
+  String get worshipMethodTehran =>
+      'ভূপদার্থবিদ্যা ইনস্টিটিউট, তেহরান বিশ্ববিদ্যালয়';
+
+  @override
+  String get worshipMethodGulf => 'উপসাগরীয় অঞ্চল';
+
+  @override
+  String get worshipMethodKuwait => 'কুয়েত';
+
+  @override
+  String get worshipMethodQatar => 'কাতার';
+
+  @override
+  String get worshipMethodSingapore => 'সিঙ্গাপুর (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'তুরস্ক (দিয়ানেত)';
+
+  @override
+  String get worshipMethodFrance => 'ফ্রান্স (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'মরক্কো (হাবুস মন্ত্রণালয়)';
+
+  @override
+  String get worshipMethodIndonesia => 'ইন্দোনেশিয়া (কেমেনাগ)';
+
+  @override
+  String get worshipMethodMalaysia => 'মালয়েশিয়া (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'দুবাই';
+
+  @override
+  String get worshipPrayerFajr => 'ফজর';
+
+  @override
+  String get worshipPrayerSunrise => 'সূর্যোদয়';
+
+  @override
+  String get worshipPrayerDhuhr => 'যোহর';
+
+  @override
+  String get worshipPrayerAsr => 'আসর';
+
+  @override
+  String get worshipPrayerMaghrib => 'মাগরিব';
+
+  @override
+  String get worshipPrayerIsha => 'এশা';
+
+  @override
+  String get worshipToday => 'আজ';
+
+  @override
+  String get worshipNoTimes =>
+      'আজ এখানে নামাজের সময় নেই: সূর্য ওঠে না বা অস্ত যায় না।';
+
+  @override
+  String get worshipSilentTitle => 'নামাজের সময় নীরব';
+
+  @override
+  String get worshipSilentBody =>
+      'প্রতিটি নামাজের সময় থেকে নিচের মিনিট পর্যন্ত বিরক্ত করবেন না চালু, তারপর আগের মতো।';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'নীরব থাকবে: $minutes মিনিট';
+  }
+
+  @override
+  String get worshipMuteTitle => 'আজানের সময় মিডিয়া বন্ধ';
+
+  @override
+  String get worshipMuteBody =>
+      'প্রতিটি নামাজের সময় মিডিয়ার শব্দ (ভিডিও, অডিও, গেম) নিচের মিনিট পর্যন্ত বন্ধ থাকে। নোটিফিকেশন থেকে সঙ্গে সঙ্গে চালু করা যায়।';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'বন্ধ থাকবে: $minutes মিনিট';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'সময়কাল';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes মিনিট';
+  }
+
+  @override
+  String get worshipNeedPlace => 'আগে জায়গা বেছে নিন।';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'পরের: $prayer, $time-এ';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return '$time পর্যন্ত নীরব।';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'মিডিয়া $time পর্যন্ত বন্ধ।';
+  }
+
+  @override
+  String get worshipEndSilent => 'এখনই নীরবতা শেষ করুন';
+
+  @override
+  String get worshipUnmute => 'এখনই শব্দ চালু করুন';
+
+  @override
+  String get worshipDndNeeded =>
+      'Waaiya-কে বিরক্ত করবেন না বদলানোর অনুমতি দিন, নইলে ফোন নীরব হতে পারবে না।';
+
+  @override
+  String get worshipAllow => 'অনুমতি দিন';
+
+  @override
+  String get worshipExactNeeded =>
+      'Waaiya-র জন্য অ্যালার্ম ও রিমাইন্ডার অনুমতি নেই, তাই প্রতিটি পরিবর্তন ১০ মিনিট পর্যন্ত, ফোন ঘুমালে আরও দেরিতে হতে পারে।';
+
+  @override
+  String get worshipNotifNeeded =>
+      'নোটিফিকেশন বন্ধ: ফোন কখন নীরব হলো বা ফিরে এলো, দেখতে পাবেন না।';
+
+  @override
+  String get worshipTonesTitle => 'সাধারণ রিংটোন ও নোটিফিকেশন শব্দ';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya রিংটোন বা নোটিফিকেশনের শব্দ ফিল্টার করতে পারে না, শুধু বদলাতে পারে। সংগীত ছাড়া একটি সাধারণ শব্দ বেছে নিন:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'সাধারণ রিংটোন $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'সাধারণ নোটিফিকেশন শব্দ $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'বাজান';
+
+  @override
+  String get worshipToneSet => 'ব্যবহার করুন';
+
+  @override
+  String get worshipToneInUse => 'ব্যবহৃত হচ্ছে';
+
+  @override
+  String get worshipToneDone => 'হয়ে গেছে।';
+
+  @override
+  String get worshipTonePermission =>
+      'Waaiya-কে সিস্টেম সেটিংস বদলানোর অনুমতি দিন, ফিরে এসে আবার চাপুন।';
+
+  @override
+  String get worshipToneFailed =>
+      'এই ফোন Waaiya-কে বদলাতে দেয়নি। সাউন্ড সেটিংসে “Waaiya plain” নামের একটি শব্দ বেছে নিন।';
+
+  @override
+  String get worshipOpenSound => 'সাউন্ড সেটিংস খুলুন';
+
+  @override
+  String get worshipNotifChannel => 'নামাজের সময়';
+
+  @override
+  String worshipNotifSilentTitle(Object prayer) {
+    return '$prayer: ফোন নীরব';
+  }
+
+  @override
+  String worshipNotifSilentText(Object time) {
+    return '$time পর্যন্ত বিরক্ত করবেন না চালু।';
+  }
+
+  @override
+  String get worshipNotifSilentEndTitle => 'নীরবতার সময় শেষ';
+
+  @override
+  String get worshipNotifSilentEndText => 'বিরক্ত করবেন না আবার বন্ধ।';
+
+  @override
+  String get worshipNotifSilentLeft =>
+      'আপনি নিজেই বিরক্ত করবেন না বদলেছেন, তাই Waaiya সেটা যেমন ছিল রেখে দিয়েছে।';
+
+  @override
+  String get worshipNotifNoAccess =>
+      'Waaiya বিরক্ত করবেন না চালু করতে পারেনি। Waaiya-র সেটিংস পাতায় অনুমতি দিন।';
+
+  @override
+  String worshipNotifMuteTitle(Object prayer) {
+    return '$prayer: মিডিয়া বন্ধ';
+  }
+
+  @override
+  String worshipNotifMuteText(Object time) {
+    return '$time পর্যন্ত মিডিয়ার শব্দ বন্ধ।';
+  }
+
+  @override
+  String get worshipNotifMuteEndTitle => 'মিডিয়ার শব্দ ফিরে এসেছে';
+
+  @override
+  String get worshipNotifMuteEndText => 'মিডিয়ার ভলিউম আগের মতো।';
+
+  @override
+  String get worshipNotifMuteLeft =>
+      'আপনি নিজেই মিডিয়ার ভলিউম বদলেছেন, তাই Waaiya সেটা যেমন ছিল রেখে দিয়েছে।';
+
+  @override
   String get desktopPreview =>
       'প্রিভিউ: এই কম্পিউটারে ফিল্টার ইঞ্জিন এখনো সংযুক্ত নয়। বোতামটি শুধু দেখায় অ্যাপটি কীভাবে কাজ করবে।';
 

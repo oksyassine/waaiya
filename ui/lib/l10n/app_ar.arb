@@ -1118,6 +1118,346 @@
   "@settingsGeneralTitle": {
     "description": "Android string settings_general_title"
   },
+  "worshipTitle": "أوقات الصلاة",
+  "@worshipTitle": {
+    "description": "Android string worship_title"
+  },
+  "worshipBody": "اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.",
+  "@worshipBody": {
+    "description": "Android string worship_body"
+  },
+  "worshipPlace": "المكان: {place}",
+  "@worshipPlace": {
+    "description": "Android string worship_place"
+  },
+  "worshipPlaceNone": "المكان: لم يُختر بعد",
+  "@worshipPlaceNone": {
+    "description": "Android string worship_place_none"
+  },
+  "worshipChoose": "اختيار",
+  "@worshipChoose": {
+    "description": "Android string worship_choose"
+  },
+  "worshipPlaceSearch": "ابحث عن مدينة",
+  "@worshipPlaceSearch": {
+    "description": "Android string worship_place_search"
+  },
+  "worshipPlaceNoMatch": "لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.",
+  "@worshipPlaceNoMatch": {
+    "description": "Android string worship_place_no_match"
+  },
+  "worshipPlaceCustom": "إدخال الإحداثيات",
+  "@worshipPlaceCustom": {
+    "description": "Android string worship_place_custom"
+  },
+  "worshipLat": "خط العرض (شمال +، جنوب −)",
+  "@worshipLat": {
+    "description": "Android string worship_lat"
+  },
+  "worshipLon": "خط الطول (شرق +، غرب −)",
+  "@worshipLon": {
+    "description": "Android string worship_lon"
+  },
+  "worshipZone": "المنطقة الزمنية، مثل Africa/Cairo",
+  "@worshipZone": {
+    "description": "Android string worship_zone"
+  },
+  "worshipCustomInvalid": "تحقّق من الأرقام ومن المنطقة الزمنية.",
+  "@worshipCustomInvalid": {
+    "description": "Android string worship_custom_invalid"
+  },
+  "worshipPlaceInvalid": "لا يمكن استخدام هذا المكان. اختره من جديد.",
+  "@worshipPlaceInvalid": {
+    "description": "Android string worship_place_invalid"
+  },
+  "worshipMethod": "طريقة الحساب: {method}",
+  "@worshipMethod": {
+    "description": "Android string worship_method"
+  },
+  "worshipMethodTitle": "طريقة الحساب",
+  "@worshipMethodTitle": {
+    "description": "Android string worship_method_title"
+  },
+  "worshipMethodNote": "اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.",
+  "@worshipMethodNote": {
+    "description": "Android string worship_method_note"
+  },
+  "worshipAsr": "العصر: {rule}",
+  "@worshipAsr": {
+    "description": "Android string worship_asr"
+  },
+  "worshipAsrTitle": "وقت العصر",
+  "@worshipAsrTitle": {
+    "description": "Android string worship_asr_title"
+  },
+  "worshipAsrStandard": "الجمهور (الشافعي والمالكي والحنبلي)",
+  "@worshipAsrStandard": {
+    "description": "Android string worship_asr_standard"
+  },
+  "worshipAsrHanafi": "الحنفي",
+  "@worshipAsrHanafi": {
+    "description": "Android string worship_asr_hanafi"
+  },
+  "worshipMethodMwl": "رابطة العالم الإسلامي",
+  "@worshipMethodMwl": {
+    "description": "Android string worship_method_mwl"
+  },
+  "worshipMethodIsna": "الجمعية الإسلامية لأمريكا الشمالية (ISNA)",
+  "@worshipMethodIsna": {
+    "description": "Android string worship_method_isna"
+  },
+  "worshipMethodEgypt": "الهيئة المصرية العامة للمساحة",
+  "@worshipMethodEgypt": {
+    "description": "Android string worship_method_egypt"
+  },
+  "worshipMethodUmmAlQura": "أم القرى، مكة المكرمة",
+  "@worshipMethodUmmAlQura": {
+    "description": "Android string worship_method_umm_al_qura"
+  },
+  "worshipMethodKarachi": "جامعة العلوم الإسلامية، كراتشي",
+  "@worshipMethodKarachi": {
+    "description": "Android string worship_method_karachi"
+  },
+  "worshipMethodTehran": "معهد الجيوفيزياء، جامعة طهران",
+  "@worshipMethodTehran": {
+    "description": "Android string worship_method_tehran"
+  },
+  "worshipMethodGulf": "منطقة الخليج",
+  "@worshipMethodGulf": {
+    "description": "Android string worship_method_gulf"
+  },
+  "worshipMethodKuwait": "الكويت",
+  "@worshipMethodKuwait": {
+    "description": "Android string worship_method_kuwait"
+  },
+  "worshipMethodQatar": "قطر",
+  "@worshipMethodQatar": {
+    "description": "Android string worship_method_qatar"
+  },
+  "worshipMethodSingapore": "سنغافورة (المجلس الإسلامي MUIS)",
+  "@worshipMethodSingapore": {
+    "description": "Android string worship_method_singapore"
+  },
+  "worshipMethodTurkey": "تركيا (رئاسة الشؤون الدينية)",
+  "@worshipMethodTurkey": {
+    "description": "Android string worship_method_turkey"
+  },
+  "worshipMethodFrance": "فرنسا (اتحاد المنظمات الإسلامية، 12°)",
+  "@worshipMethodFrance": {
+    "description": "Android string worship_method_france"
+  },
+  "worshipMethodMorocco": "المغرب (وزارة الأوقاف)",
+  "@worshipMethodMorocco": {
+    "description": "Android string worship_method_morocco"
+  },
+  "worshipMethodIndonesia": "إندونيسيا (وزارة الشؤون الدينية)",
+  "@worshipMethodIndonesia": {
+    "description": "Android string worship_method_indonesia"
+  },
+  "worshipMethodMalaysia": "ماليزيا (JAKIM)",
+  "@worshipMethodMalaysia": {
+    "description": "Android string worship_method_malaysia"
+  },
+  "worshipMethodDubai": "دبي",
+  "@worshipMethodDubai": {
+    "description": "Android string worship_method_dubai"
+  },
+  "worshipPrayerFajr": "الفجر",
+  "@worshipPrayerFajr": {
+    "description": "Android string worship_prayer_fajr"
+  },
+  "worshipPrayerSunrise": "الشروق",
+  "@worshipPrayerSunrise": {
+    "description": "Android string worship_prayer_sunrise"
+  },
+  "worshipPrayerDhuhr": "الظهر",
+  "@worshipPrayerDhuhr": {
+    "description": "Android string worship_prayer_dhuhr"
+  },
+  "worshipPrayerAsr": "العصر",
+  "@worshipPrayerAsr": {
+    "description": "Android string worship_prayer_asr"
+  },
+  "worshipPrayerMaghrib": "المغرب",
+  "@worshipPrayerMaghrib": {
+    "description": "Android string worship_prayer_maghrib"
+  },
+  "worshipPrayerIsha": "العشاء",
+  "@worshipPrayerIsha": {
+    "description": "Android string worship_prayer_isha"
+  },
+  "worshipToday": "اليوم",
+  "@worshipToday": {
+    "description": "Android string worship_today"
+  },
+  "worshipNoTimes": "لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.",
+  "@worshipNoTimes": {
+    "description": "Android string worship_no_times"
+  },
+  "worshipSilentTitle": "صامت في أوقات الصلاة",
+  "@worshipSilentTitle": {
+    "description": "Android string worship_silent_title"
+  },
+  "worshipSilentBody": "من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.",
+  "@worshipSilentBody": {
+    "description": "Android string worship_silent_body"
+  },
+  "worshipSilentMinutes": "مدة الصمت: {minutes} دقيقة",
+  "@worshipSilentMinutes": {
+    "description": "Android string worship_silent_minutes"
+  },
+  "worshipMuteTitle": "كتم الوسائط عند الأذان",
+  "@worshipMuteTitle": {
+    "description": "Android string worship_mute_title"
+  },
+  "worshipMuteBody": "عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.",
+  "@worshipMuteBody": {
+    "description": "Android string worship_mute_body"
+  },
+  "worshipMuteMinutes": "مدة الكتم: {minutes} دقيقة",
+  "@worshipMuteMinutes": {
+    "description": "Android string worship_mute_minutes"
+  },
+  "worshipMinutesTitle": "المدة",
+  "@worshipMinutesTitle": {
+    "description": "Android string worship_minutes_title"
+  },
+  "worshipMinutesOption": "{minutes} دقيقة",
+  "@worshipMinutesOption": {
+    "description": "Android string worship_minutes_option"
+  },
+  "worshipNeedPlace": "اختر المكان أولاً.",
+  "@worshipNeedPlace": {
+    "description": "Android string worship_need_place"
+  },
+  "worshipNext": "التالي: {prayer} الساعة {time}",
+  "@worshipNext": {
+    "description": "Android string worship_next"
+  },
+  "worshipSilentNow": "صامت حتى {time}.",
+  "@worshipSilentNow": {
+    "description": "Android string worship_silent_now"
+  },
+  "worshipMutedNow": "الوسائط مكتومة حتى {time}.",
+  "@worshipMutedNow": {
+    "description": "Android string worship_muted_now"
+  },
+  "worshipEndSilent": "إنهاء الصمت الآن",
+  "@worshipEndSilent": {
+    "description": "Android string worship_end_silent"
+  },
+  "worshipUnmute": "إلغاء الكتم الآن",
+  "@worshipUnmute": {
+    "description": "Android string worship_unmute"
+  },
+  "worshipDndNeeded": "اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.",
+  "@worshipDndNeeded": {
+    "description": "Android string worship_dnd_needed"
+  },
+  "worshipAllow": "السماح",
+  "@worshipAllow": {
+    "description": "Android string worship_allow"
+  },
+  "worshipExactNeeded": "«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.",
+  "@worshipExactNeeded": {
+    "description": "Android string worship_exact_needed"
+  },
+  "worshipNotifNeeded": "الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.",
+  "@worshipNotifNeeded": {
+    "description": "Android string worship_notif_needed"
+  },
+  "worshipTonesTitle": "نغمة رنين وصوت إشعارات بسيطان",
+  "@worshipTonesTitle": {
+    "description": "Android string worship_tones_title"
+  },
+  "worshipTonesBody": "لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:",
+  "@worshipTonesBody": {
+    "description": "Android string worship_tones_body"
+  },
+  "worshipToneRing": "نغمة رنين بسيطة {number}",
+  "@worshipToneRing": {
+    "description": "Android string worship_tone_ring"
+  },
+  "worshipToneNotification": "صوت إشعار بسيط {number}",
+  "@worshipToneNotification": {
+    "description": "Android string worship_tone_notification"
+  },
+  "worshipTonePlay": "تشغيل",
+  "@worshipTonePlay": {
+    "description": "Android string worship_tone_play"
+  },
+  "worshipToneSet": "استخدام",
+  "@worshipToneSet": {
+    "description": "Android string worship_tone_set"
+  },
+  "worshipToneInUse": "مستخدَمة",
+  "@worshipToneInUse": {
+    "description": "Android string worship_tone_in_use"
+  },
+  "worshipToneDone": "تم.",
+  "@worshipToneDone": {
+    "description": "Android string worship_tone_done"
+  },
+  "worshipTonePermission": "اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.",
+  "@worshipTonePermission": {
+    "description": "Android string worship_tone_permission"
+  },
+  "worshipToneFailed": "لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».",
+  "@worshipToneFailed": {
+    "description": "Android string worship_tone_failed"
+  },
+  "worshipOpenSound": "فتح إعدادات الصوت",
+  "@worshipOpenSound": {
+    "description": "Android string worship_open_sound"
+  },
+  "worshipNotifChannel": "أوقات الصلاة",
+  "@worshipNotifChannel": {
+    "description": "Android string worship_notif_channel"
+  },
+  "worshipNotifSilentTitle": "{prayer}: الهاتف صامت",
+  "@worshipNotifSilentTitle": {
+    "description": "Android string worship_notif_silent_title"
+  },
+  "worshipNotifSilentText": "«عدم الإزعاج» مفعَّل حتى {time}.",
+  "@worshipNotifSilentText": {
+    "description": "Android string worship_notif_silent_text"
+  },
+  "worshipNotifSilentEndTitle": "انتهى وقت الصمت",
+  "@worshipNotifSilentEndTitle": {
+    "description": "Android string worship_notif_silent_end_title"
+  },
+  "worshipNotifSilentEndText": "أُوقف «عدم الإزعاج» من جديد.",
+  "@worshipNotifSilentEndText": {
+    "description": "Android string worship_notif_silent_end_text"
+  },
+  "worshipNotifSilentLeft": "غيّرتَ «عدم الإزعاج» بنفسك، فتركته واعية كما هو.",
+  "@worshipNotifSilentLeft": {
+    "description": "Android string worship_notif_silent_left"
+  },
+  "worshipNotifNoAccess": "لم تستطع واعية تفعيل «عدم الإزعاج». اسمح بذلك من صفحة الإعدادات في واعية.",
+  "@worshipNotifNoAccess": {
+    "description": "Android string worship_notif_no_access"
+  },
+  "worshipNotifMuteTitle": "{prayer}: الوسائط مكتومة",
+  "@worshipNotifMuteTitle": {
+    "description": "Android string worship_notif_mute_title"
+  },
+  "worshipNotifMuteText": "صوت الوسائط مكتوم حتى {time}.",
+  "@worshipNotifMuteText": {
+    "description": "Android string worship_notif_mute_text"
+  },
+  "worshipNotifMuteEndTitle": "عاد صوت الوسائط",
+  "@worshipNotifMuteEndTitle": {
+    "description": "Android string worship_notif_mute_end_title"
+  },
+  "worshipNotifMuteEndText": "مستوى صوت الوسائط كما كان.",
+  "@worshipNotifMuteEndText": {
+    "description": "Android string worship_notif_mute_end_text"
+  },
+  "worshipNotifMuteLeft": "غيّرتَ صوت الوسائط بنفسك، فتركته واعية كما هو.",
+  "@worshipNotifMuteLeft": {
+    "description": "Android string worship_notif_mute_left"
+  },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {
     "description": "Flutter only. Not reviewed yet except in English."

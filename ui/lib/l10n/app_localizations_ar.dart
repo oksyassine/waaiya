@@ -925,6 +925,307 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsGeneralTitle => 'عام';
 
   @override
+  String get worshipTitle => 'أوقات الصلاة';
+
+  @override
+  String get worshipBody =>
+      'اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'المكان: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'المكان: لم يُختر بعد';
+
+  @override
+  String get worshipChoose => 'اختيار';
+
+  @override
+  String get worshipPlaceSearch => 'ابحث عن مدينة';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.';
+
+  @override
+  String get worshipPlaceCustom => 'إدخال الإحداثيات';
+
+  @override
+  String get worshipLat => 'خط العرض (شمال +، جنوب −)';
+
+  @override
+  String get worshipLon => 'خط الطول (شرق +، غرب −)';
+
+  @override
+  String get worshipZone => 'المنطقة الزمنية، مثل Africa/Cairo';
+
+  @override
+  String get worshipCustomInvalid => 'تحقّق من الأرقام ومن المنطقة الزمنية.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'لا يمكن استخدام هذا المكان. اختره من جديد.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'طريقة الحساب: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'طريقة الحساب';
+
+  @override
+  String get worshipMethodNote =>
+      'اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'العصر: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'وقت العصر';
+
+  @override
+  String get worshipAsrStandard => 'الجمهور (الشافعي والمالكي والحنبلي)';
+
+  @override
+  String get worshipAsrHanafi => 'الحنفي';
+
+  @override
+  String get worshipMethodMwl => 'رابطة العالم الإسلامي';
+
+  @override
+  String get worshipMethodIsna => 'الجمعية الإسلامية لأمريكا الشمالية (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'الهيئة المصرية العامة للمساحة';
+
+  @override
+  String get worshipMethodUmmAlQura => 'أم القرى، مكة المكرمة';
+
+  @override
+  String get worshipMethodKarachi => 'جامعة العلوم الإسلامية، كراتشي';
+
+  @override
+  String get worshipMethodTehran => 'معهد الجيوفيزياء، جامعة طهران';
+
+  @override
+  String get worshipMethodGulf => 'منطقة الخليج';
+
+  @override
+  String get worshipMethodKuwait => 'الكويت';
+
+  @override
+  String get worshipMethodQatar => 'قطر';
+
+  @override
+  String get worshipMethodSingapore => 'سنغافورة (المجلس الإسلامي MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'تركيا (رئاسة الشؤون الدينية)';
+
+  @override
+  String get worshipMethodFrance => 'فرنسا (اتحاد المنظمات الإسلامية، 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'المغرب (وزارة الأوقاف)';
+
+  @override
+  String get worshipMethodIndonesia => 'إندونيسيا (وزارة الشؤون الدينية)';
+
+  @override
+  String get worshipMethodMalaysia => 'ماليزيا (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'دبي';
+
+  @override
+  String get worshipPrayerFajr => 'الفجر';
+
+  @override
+  String get worshipPrayerSunrise => 'الشروق';
+
+  @override
+  String get worshipPrayerDhuhr => 'الظهر';
+
+  @override
+  String get worshipPrayerAsr => 'العصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'المغرب';
+
+  @override
+  String get worshipPrayerIsha => 'العشاء';
+
+  @override
+  String get worshipToday => 'اليوم';
+
+  @override
+  String get worshipNoTimes =>
+      'لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.';
+
+  @override
+  String get worshipSilentTitle => 'صامت في أوقات الصلاة';
+
+  @override
+  String get worshipSilentBody =>
+      'من وقت كل صلاة، يُفعَّل «عدم الإزعاج» للمدة أدناه، ثم يعود الهاتف كما كان.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'مدة الصمت: $minutes دقيقة';
+  }
+
+  @override
+  String get worshipMuteTitle => 'كتم الوسائط عند الأذان';
+
+  @override
+  String get worshipMuteBody =>
+      'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'مدة الكتم: $minutes دقيقة';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'المدة';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get worshipNeedPlace => 'اختر المكان أولاً.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'التالي: $prayer الساعة $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'صامت حتى $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'الوسائط مكتومة حتى $time.';
+  }
+
+  @override
+  String get worshipEndSilent => 'إنهاء الصمت الآن';
+
+  @override
+  String get worshipUnmute => 'إلغاء الكتم الآن';
+
+  @override
+  String get worshipDndNeeded =>
+      'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.';
+
+  @override
+  String get worshipAllow => 'السماح';
+
+  @override
+  String get worshipExactNeeded =>
+      '«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.';
+
+  @override
+  String get worshipNotifNeeded =>
+      'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.';
+
+  @override
+  String get worshipTonesTitle => 'نغمة رنين وصوت إشعارات بسيطان';
+
+  @override
+  String get worshipTonesBody =>
+      'لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'نغمة رنين بسيطة $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'صوت إشعار بسيط $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'تشغيل';
+
+  @override
+  String get worshipToneSet => 'استخدام';
+
+  @override
+  String get worshipToneInUse => 'مستخدَمة';
+
+  @override
+  String get worshipToneDone => 'تم.';
+
+  @override
+  String get worshipTonePermission =>
+      'اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.';
+
+  @override
+  String get worshipToneFailed =>
+      'لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».';
+
+  @override
+  String get worshipOpenSound => 'فتح إعدادات الصوت';
+
+  @override
+  String get worshipNotifChannel => 'أوقات الصلاة';
+
+  @override
+  String worshipNotifSilentTitle(Object prayer) {
+    return '$prayer: الهاتف صامت';
+  }
+
+  @override
+  String worshipNotifSilentText(Object time) {
+    return '«عدم الإزعاج» مفعَّل حتى $time.';
+  }
+
+  @override
+  String get worshipNotifSilentEndTitle => 'انتهى وقت الصمت';
+
+  @override
+  String get worshipNotifSilentEndText => 'أُوقف «عدم الإزعاج» من جديد.';
+
+  @override
+  String get worshipNotifSilentLeft =>
+      'غيّرتَ «عدم الإزعاج» بنفسك، فتركته واعية كما هو.';
+
+  @override
+  String get worshipNotifNoAccess =>
+      'لم تستطع واعية تفعيل «عدم الإزعاج». اسمح بذلك من صفحة الإعدادات في واعية.';
+
+  @override
+  String worshipNotifMuteTitle(Object prayer) {
+    return '$prayer: الوسائط مكتومة';
+  }
+
+  @override
+  String worshipNotifMuteText(Object time) {
+    return 'صوت الوسائط مكتوم حتى $time.';
+  }
+
+  @override
+  String get worshipNotifMuteEndTitle => 'عاد صوت الوسائط';
+
+  @override
+  String get worshipNotifMuteEndText => 'مستوى صوت الوسائط كما كان.';
+
+  @override
+  String get worshipNotifMuteLeft =>
+      'غيّرتَ صوت الوسائط بنفسك، فتركته واعية كما هو.';
+
+  @override
   String get desktopPreview =>
       'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
 

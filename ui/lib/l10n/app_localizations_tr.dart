@@ -939,6 +939,306 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsGeneralTitle => 'Genel';
 
   @override
+  String get worshipTitle => 'Namaz vakitleri';
+
+  @override
+  String get worshipBody =>
+      'İsteğe bağlı. Seçtiğiniz yere göre bu telefonda hesaplanır. Hiçbir şey gönderilmez.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Yer: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Yer: seçilmedi';
+
+  @override
+  String get worshipChoose => 'Seç';
+
+  @override
+  String get worshipPlaceSearch => 'Şehir ara';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Şehir bulunamadı. Bunun yerine koordinat girebilirsiniz.';
+
+  @override
+  String get worshipPlaceCustom => 'Koordinat gir';
+
+  @override
+  String get worshipLat => 'Enlem (kuzey +, güney −)';
+
+  @override
+  String get worshipLon => 'Boylam (doğu +, batı −)';
+
+  @override
+  String get worshipZone => 'Saat dilimi, örneğin Europe/Istanbul';
+
+  @override
+  String get worshipCustomInvalid => 'Sayıları ve saat dilimini kontrol edin.';
+
+  @override
+  String get worshipPlaceInvalid => 'Bu yer kullanılamıyor. Yeniden seçin.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Hesaplama: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Hesaplama yöntemi';
+
+  @override
+  String get worshipMethodNote =>
+      'Şehrin ülkesine göre seçildi. Camiinizin uyduğu yöntemi seçin.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'İkindi: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'İkindi vakti';
+
+  @override
+  String get worshipAsrStandard => 'Standart (Şâfiî, Mâlikî, Hanbelî)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanefî';
+
+  @override
+  String get worshipMethodMwl => 'Dünya İslam Birliği';
+
+  @override
+  String get worshipMethodIsna => 'Kuzey Amerika İslam Cemiyeti (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Mısır Genel Harita Kurumu';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Ümmü\'l-Kurâ, Mekke';
+
+  @override
+  String get worshipMethodKarachi => 'İslami İlimler Üniversitesi, Karaçi';
+
+  @override
+  String get worshipMethodTehran => 'Jeofizik Enstitüsü, Tahran Üniversitesi';
+
+  @override
+  String get worshipMethodGulf => 'Körfez bölgesi';
+
+  @override
+  String get worshipMethodKuwait => 'Kuveyt';
+
+  @override
+  String get worshipMethodQatar => 'Katar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapur (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Türkiye (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Fransa (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Fas (Vakıflar Bakanlığı)';
+
+  @override
+  String get worshipMethodIndonesia => 'Endonezya (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malezya (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubai';
+
+  @override
+  String get worshipPrayerFajr => 'İmsak';
+
+  @override
+  String get worshipPrayerSunrise => 'Güneş';
+
+  @override
+  String get worshipPrayerDhuhr => 'Öğle';
+
+  @override
+  String get worshipPrayerAsr => 'İkindi';
+
+  @override
+  String get worshipPrayerMaghrib => 'Akşam';
+
+  @override
+  String get worshipPrayerIsha => 'Yatsı';
+
+  @override
+  String get worshipToday => 'Bugün';
+
+  @override
+  String get worshipNoTimes =>
+      'Bugün burada namaz vakti yok: güneş doğmuyor ya da batmıyor.';
+
+  @override
+  String get worshipSilentTitle => 'Namaz vakitlerinde sessiz';
+
+  @override
+  String get worshipSilentBody =>
+      'Her namaz vaktinden itibaren aşağıdaki süre boyunca Rahatsız Etmeyin açılır, sonra eski haline döner.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Sessiz süre: $minutes dk';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Ezanda medyayı sessize al';
+
+  @override
+  String get worshipMuteBody =>
+      'Her namaz vaktinde medya sesi (video, ses, oyun) aşağıdaki süre boyunca kapatılır. Bildirimden hemen açabilirsiniz.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Sessiz süre: $minutes dk';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Süre';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes dk';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Önce bir yer seçin.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Sıradaki: $prayer, saat $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return '$time saatine kadar sessiz.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Medya $time saatine kadar sessiz.';
+  }
+
+  @override
+  String get worshipEndSilent => 'Sessizliği şimdi bitir';
+
+  @override
+  String get worshipUnmute => 'Sesi şimdi aç';
+
+  @override
+  String get worshipDndNeeded =>
+      'Waaiya\'nın Rahatsız Etmeyin\'i değiştirmesine izin verin, yoksa telefon sessize alınamaz.';
+
+  @override
+  String get worshipAllow => 'İzin ver';
+
+  @override
+  String get worshipExactNeeded =>
+      'Waaiya için Alarmlar ve hatırlatıcılar izni yok; her değişiklik 10 dakikaya kadar, telefon uykudayken daha da geç gelebilir.';
+
+  @override
+  String get worshipNotifNeeded =>
+      'Bildirimler kapalı: telefonun ne zaman sessize alındığını ya da geri döndüğünü görmeyeceksiniz.';
+
+  @override
+  String get worshipTonesTitle => 'Sade zil sesi ve bildirim sesi';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya zil sesini ve bildirim seslerini süzemez, yalnızca değiştirebilir. Müziksiz sade bir ses seçin:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Sade zil sesi $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Sade bildirim sesi $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Dinle';
+
+  @override
+  String get worshipToneSet => 'Kullan';
+
+  @override
+  String get worshipToneInUse => 'Kullanılıyor';
+
+  @override
+  String get worshipToneDone => 'Tamam.';
+
+  @override
+  String get worshipTonePermission =>
+      'Waaiya\'nın sistem ayarlarını değiştirmesine izin verin, geri dönün ve yeniden dokunun.';
+
+  @override
+  String get worshipToneFailed =>
+      'Bu telefon Waaiya\'nın değiştirmesine izin vermedi. Ses ayarlarında “Waaiya plain” adlı bir ses seçin.';
+
+  @override
+  String get worshipOpenSound => 'Ses ayarlarını aç';
+
+  @override
+  String get worshipNotifChannel => 'Namaz vakitleri';
+
+  @override
+  String worshipNotifSilentTitle(Object prayer) {
+    return '$prayer: telefon sessizde';
+  }
+
+  @override
+  String worshipNotifSilentText(Object time) {
+    return 'Rahatsız Etmeyin $time saatine kadar açık.';
+  }
+
+  @override
+  String get worshipNotifSilentEndTitle => 'Sessizlik bitti';
+
+  @override
+  String get worshipNotifSilentEndText => 'Rahatsız Etmeyin yeniden kapalı.';
+
+  @override
+  String get worshipNotifSilentLeft =>
+      'Rahatsız Etmeyin\'i kendiniz değiştirdiniz, Waaiya onu olduğu gibi bıraktı.';
+
+  @override
+  String get worshipNotifNoAccess =>
+      'Waaiya Rahatsız Etmeyin\'i açamadı. Waaiya\'nın Ayarlar sayfasından izin verin.';
+
+  @override
+  String worshipNotifMuteTitle(Object prayer) {
+    return '$prayer: medya sessizde';
+  }
+
+  @override
+  String worshipNotifMuteText(Object time) {
+    return 'Medya sesi $time saatine kadar kapalı.';
+  }
+
+  @override
+  String get worshipNotifMuteEndTitle => 'Medya sesi geri geldi';
+
+  @override
+  String get worshipNotifMuteEndText => 'Medya ses düzeyi eskisi gibi.';
+
+  @override
+  String get worshipNotifMuteLeft =>
+      'Medya sesini kendiniz değiştirdiniz, Waaiya onu olduğu gibi bıraktı.';
+
+  @override
   String get desktopPreview =>
       'Önizleme: filtre motoru bu bilgisayara henüz bağlı değil. Düğme yalnızca uygulamanın nasıl çalışacağını gösterir.';
 

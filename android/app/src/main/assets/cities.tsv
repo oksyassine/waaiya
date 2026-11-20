@@ -1,0 +1,368 @@
+# Waaiya city list. Source: Natural Earth 1:10m Cultural Vectors, Populated Places (ne_10m_populated_places.geojson, v5.1.2, natural-earth-vector commit 789c990, file sha256 9b8e3de09048ef00dfc70357dbb9fa324493f214b5e0ae4daf1aa79a8d10116b), https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_populated_places.geojson ; licence: public domain (Natural Earth); fetched 2026-11-20. Rows selected and lightly edited by hand (Arabic names of Arab-world and holy cities, some English names, country codes for -99 places, time zones assigned per city and checked against IANA tzdata 2019c). Columns as named on the next line; alt = other English spellings to search by (added by hand).
+# The 'Jerusalem' row has country code PS and its Persian and Urdu names were changed to قدس and بیت المقدس by hand.
+id	cc	lat	lon	tz	en	ar	fr	tr	id_name	fa	ur	bn	alt
+andorra_la_vella	AD	42.5000	1.5165	Europe/Andorra	Andorra la Vella	أندورا لا فيلا	Andorre-la-Vieille	Andorra la Vella	Andorra la Vella	آندورا لاولا	انڈورا لا ویلا	আন্দরা লা ভেলিয়া	
+abu_dhabi	AE	24.4667	54.3666	Asia/Dubai	Abu Dhabi	أبو ظبي	Abou Dabi	Abu Dabi	Abu Dhabi	ابوظبی	ابوظہبی	আবুধাবি	
+dubai	AE	25.2319	55.2780	Asia/Dubai	Dubai	دبي	Dubaï	Dubai	Dubai	شهر دبی	دبئی	দুবাই	
+sharjah	AE	25.3714	55.4065	Asia/Dubai	Sharjah	الشارقة	Charjah	Şarika	Sharjah	شارجه	شارجہ	শারজাহ	
+herat	AF	34.3300	62.1700	Asia/Kabul	Herat	هراة	Hérat	Herat	Herat	هرات	ہرات	হেরাত	
+kabul	AF	34.5186	69.1813	Asia/Kabul	Kabul	كابل	Kaboul	Kâbil	Kabul	کابل	کابل	কাবুল	
+kandahar	AF	31.6100	65.6949	Asia/Kabul	Kandahar	قندهار	Kandahâr	Kandehar	Kandahar	قندهار	قندھار	কান্দাহার	
+mazar_i_sharif	AF	36.7000	67.1000	Asia/Kabul	Mazar-i-Sharif	مزار شريف	Mazâr-e Charîf	Mezar-ı Şerif	Mazari Sharif	مزار شریف	مزار شریف	মাজার-ই-শরিফ	
+saint_johns	AG	17.1180	-61.8500	America/Antigua	Saint John's	سانت جونز	Saint John's	St. John's	St. John's	سینت جانز	سینٹ جونز	সেন্টজোন্স	
+tirana	AL	41.3275	19.8189	Europe/Tirane	Tirana	تيرانا	Tirana	Tiran	Tirana	تیرانا	تیرانا	তিরানা	
+yerevan	AM	40.1831	44.5116	Asia/Yerevan	Yerevan	يريفان	Erevan	Erivan	Yerevan	ایروان	یریوان	ইয়েরেভান	
+luanda	AO	-8.8363	13.2325	Africa/Luanda	Luanda	لواندا	Luanda	Luanda	Luanda	لوآندا	لواندا	লুয়ান্ডা	
+buenos_aires	AR	-34.6006	-58.3995	America/Argentina/Buenos_Aires	Buenos Aires	بوينس آيرس	Buenos Aires	Buenos Aires	Buenos Aires	بوئنوس آیرس	بیونس آئرس	বুয়েনোস আইরেস	
+vienna	AT	48.2020	16.3647	Europe/Vienna	Vienna	فيينا	Vienne	Viyana	Wina	وین	ویانا	ভিয়েনা	
+canberra	AU	-35.2830	149.1290	Australia/Sydney	Canberra	كانبرا	Canberra	Canberra	Canberra	کانبرا	کینبرا	ক্যানবেরা	
+melbourne	AU	-37.8181	144.9731	Australia/Melbourne	Melbourne	ملبورن	Melbourne	Melbourne	Melbourne	ملبورن	ملبورن	মেলবোর্ন	
+sydney	AU	-33.9181	151.1832	Australia/Sydney	Sydney	سيدني	Sydney	Sidney	Sydney	سیدنی	سڈنی	সিডনি	
+baku	AZ	40.3972	49.8603	Asia/Baku	Baku	باكو	Bakou	Bakü	Baku	باکو	باکو	বাকু	
+sarajevo	BA	43.8500	18.3830	Europe/Sarajevo	Sarajevo	سراييفو	Sarajevo	Saraybosna	Sarajevo	سارایوو	سرائیوو	সারায়েভো	
+bridgetown	BB	13.1020	-59.6165	America/Barbados	Bridgetown	بريدج تاون	Bridgetown	Bridgetown	Bridgetown	بریجتاون	برج ٹاؤن	ব্রিজটাউন	
+chattogram	BD	22.3319	91.7980	Asia/Dhaka	Chattogram	شيتاغونغ	Chittagong	Chittagong	Chittagong	چیتاگونگ	چٹاگانگ	চট্টগ্রাম	
+dhaka	BD	23.7250	90.4066	Asia/Dhaka	Dhaka	دكا	Dacca	Dakka	Dhaka	داکا	ڈھاکہ	ঢাকা	
+khulna	BD	22.8419	89.5581	Asia/Dhaka	Khulna	خولنا	Khulnâ	Khulna	Khulna	خولنا	کھلنا	খুলনা	
+sylhet	BD	24.9036	91.8736	Asia/Dhaka	Sylhet	سلهت	Sylhet	Sylhet	Sylhet	سلهت	سلہٹ	সিলেট	
+antwerp	BE	51.2223	4.4131	Europe/Brussels	Antwerp	أنتويرب	Anvers	Anvers	Antwerpen	آنتورپ	انتورب	আন্টভের্প	
+brussels	BE	50.8353	4.3314	Europe/Brussels	Brussels	بروكسل	Bruxelles	Brüksel	Brussel	شهر بروکسل	برسلز شہر	ব্রাসেলস	
+ouagadougou	BF	12.3723	-1.5267	Africa/Ouagadougou	Ouagadougou	واغادوغو	Ouagadougou	Ouagadougou	Ouagadougou	اوآگادوگو	اواگادوگو	ওয়াগাদুগু	
+sofia	BG	42.6853	23.3147	Europe/Sofia	Sofia	صوفيا	Sofia	Sofya	Sofia	صوفیه	صوفیہ	সফিয়া	
+manama	BH	26.2361	50.5831	Asia/Bahrain	Manama	المنامة	Manama	Manama	Al-Manamah	منامه	منامہ	মানামা	
+bujumbura	BI	-3.3761	29.3600	Africa/Bujumbura	Bujumbura	بوجومبورا	Bujumbura	Bujumbura	Bujumbura	بوجومبورا	بوجومبرا	বুুজুম্বুরা	
+cotonou	BJ	6.4020	2.5180	Africa/Porto-Novo	Cotonou	كوتونو	Cotonou	Cotonou	Cotonou	کوتونو	کوتونوؤ	কোটোনো	
+porto_novo	BJ	6.4833	2.6166	Africa/Porto-Novo	Porto-Novo	بورتو نوفو	Porto-Novo	Porto-Novo	Porto-Novo	پورتو نووو	پورٹو نووو	পোর্তো নভো	
+hamilton	BM	32.2942	-64.7839	Atlantic/Bermuda	Hamilton	هاميلتون	Hamilton	Hamilton	Hamilton	همیلتون	ہیملٹن	হ্যামিল্টন	
+bandar_seri_begawan	BN	4.8833	114.9333	Asia/Brunei	Bandar Seri Begawan	بندر سري بكاوان	Bandar Seri Begawan	Bandar Seri Begavan	Bandar Seri Begawan	بندر سری بگاوان	بندر سری بگاوان	বন্দর সেরি বেগাওয়ান	
+la_paz	BO	-16.4960	-68.1519	America/La_Paz	La Paz	لاباز	La Paz	La Paz	La Paz	لاپاز	لا پاز	লা পাজ	
+sucre	BO	-19.0410	-65.2595	America/La_Paz	Sucre	سوكري	Sucre	Sucre	Sucre	سوکره	سکرے	সুক্রে	
+brasilia	BR	-15.7814	-47.9180	America/Sao_Paulo	Brasilia	برازيليا	Brasilia	Brasília	Brasília	برازیلیا	براسیلیا	ব্রাসিলিয়া	
+nassau	BS	25.0834	-77.3500	America/Nassau	Nassau	ناساو	Nassau	Nassau	Nassau	ناسائو	نساؤ	নাসাউ	
+thimphu	BT	27.4730	89.6390	Asia/Thimphu	Thimphu	تيمفو	Thimphou	Thimphu	Thimphu	تیمفو	تھمپو	থিম্ফু	
+gaborone	BW	-24.6463	25.9119	Africa/Gaborone	Gaborone	غابورون	Gaborone	Gaborone	Gaborone	گابورون	گبرون	গ্যাবোরোন	
+minsk	BY	53.9019	27.5647	Europe/Minsk	Minsk	مينسك	Minsk	Minsk	Minsk	مینسک	منسک	মিন্স্ক	
+belmopan	BZ	17.2520	-88.7671	America/Belize	Belmopan	بلموبان	Belmopan	Belmopán	Belmopan	بلموپان	بلموپان	বেলমোপান	
+calgary	CA	51.0849	-114.0819	America/Edmonton	Calgary	كالغاري	Calgary	Calgary	Calgary	کالگری	کیلگری	ক্যালগারি	
+edmonton	CA	53.5520	-113.5019	America/Edmonton	Edmonton	إدمونتون	Edmonton	Edmonton	Edmonton	ادمونتون	ایڈمنٹن	এডমন্টন	
+montreal	CA	45.5019	-73.5852	America/Toronto	Montreal	مونتريال	Montréal	Montreal	Montreal	مونترآل	مانٹریال	মন্ট্রিয়ল	
+ottawa	CA	45.4186	-75.7020	America/Toronto	Ottawa	أوتاوا	Ottawa	Ottawa	Ottawa	اتاوا	اوٹاوا	অটোয়া	
+toronto	CA	43.7019	-79.4220	America/Toronto	Toronto	تورونتو	Toronto	Toronto	Toronto	تورنتو	ٹورانٹو	টরন্টো	
+vancouver	CA	49.2754	-123.1236	America/Vancouver	Vancouver	فانكوفر	Vancouver	Vancouver	Vancouver	ونکوور	وینکوور	ভ্যানকুভার	
+kinshasa	CD	-4.3278	15.3130	Africa/Kinshasa	Kinshasa	كينشاسا	Kinshasa	Kinşasa	Kinshasa	کینشاسا	کنشاسا	কিনশাসা	
+bangui	CF	4.3666	18.5583	Africa/Bangui	Bangui	بانغي	Bangui	Bangui	Bangui	بانگوئی	بانگوئی	বাঙ্গুই	
+brazzaville	CG	-4.2572	15.2827	Africa/Brazzaville	Brazzaville	برازافيل	Brazzaville	Brazzaville	Brazzaville	برازاویل	برازاویلے	ব্রাজাভিল	
+bern	CH	46.9167	7.4670	Europe/Zurich	Bern	برن	Berne	Bern	Bern	برن	برن	বের্ন	
+geneva	CH	46.2100	6.1400	Europe/Zurich	Geneva	جنيف	Genève	Cenevre	Jenewa	ژنو	جنیوا	জেনেভা	
+zurich	CH	47.3819	8.5481	Europe/Zurich	Zurich	زيورخ	Zurich	Zürih	Zürich	زوریخ	زیورخ	জুরিখ	
+abidjan	CI	5.3219	-4.0420	Africa/Abidjan	Abidjan	أبيدجان	Abidjan	Abidjan	Abidjan	آبیجان	آبدجان	আবিজান	
+yamoussoukro	CI	6.8184	-5.2755	Africa/Abidjan	Yamoussoukro	ياموسوكرو	Yamoussoukro	Yamoussoukro	Yamoussoukro	یاموسوکرو	یاموسسوکرو	ইয়ামুসুক্রো	
+santiago	CL	-33.4481	-70.6690	America/Santiago	Santiago	سانتياغو	Santiago	Santiago	Santiago de Chile	سانتیاگو	سینٹیاگو	সান্তিয়াগো	
+yaounde	CM	3.8686	11.5147	Africa/Douala	Yaounde	ياوندي	Yaoundé	Yaoundé	Yaoundé	یائونده	یاؤندے	ইয়াউন্দে	
+beijing	CN	39.9308	116.3863	Asia/Shanghai	Beijing	بكين	Pékin	Pekin	Beijing	پکن	بیجنگ	বেইজিং	
+kashgar	CN	39.4763	75.9699	Asia/Shanghai	Kashgar	كاشغر	Kachgar	Kaşgar	Kashgar	کاشغر	کاشغر	কাশগর	
+urumqi	CN	43.8070	87.5731	Asia/Shanghai	Urumqi	أورومتشي	Ürümqi	Urumçi	Ürümqi	اورومچی	ارومچی	উরুমচি	
+xian	CN	34.2770	108.8931	Asia/Shanghai	Xi'an	شيان	Xi'an	Xi'an	Xi'an	شیآن	شیان	শিআন	
+yinchuan	CN	38.4699	106.2711	Asia/Shanghai	Yinchuan	ينشوان	Yinchuan	Yinchuan	Yinchuan	یینچوان	ینچوان	ইনছুয়ান	
+bogota	CO	4.5984	-74.0853	America/Bogota	Bogota	بوغوتا	Bogota	Bogotá	Bogotá	بوگوتا	بوگوتا	বোগোতা	
+san_jose	CR	9.9370	-84.0860	America/Costa_Rica	San Jose	سان خوسيه	San José	San José	San José	سان خوزه	سان ہوزے	স্যান হোসে	
+havana	CU	23.1339	-82.3661	America/Havana	Havana	هافانا	La Havane	Havana	Havana	هاوانا	ہوانا	হাভানা	
+praia	CV	14.9167	-23.5167	Atlantic/Cape_Verde	Praia	برايا	Praia	Praia	Praia	پرایا	پرائیا	প্রাইয়া	
+nicosia	CY	35.1667	33.3666	Asia/Nicosia	Nicosia	نيقوسيا	Nicosie	Lefkoşa	Nikosia	نیکوزیا	نیکوسیا	নিকোসিয়া	
+prague	CZ	50.0853	14.4640	Europe/Prague	Prague	براغ	Prague	Prag	Praha	پراگ	پراگ	প্রাগ	
+berlin	DE	52.5238	13.3996	Europe/Berlin	Berlin	برلين	Berlin	Berlin	Berlin	برلین	برلن	বার্লিন	
+cologne	DE	50.9320	6.9481	Europe/Berlin	Cologne	كولونيا	Cologne	Köln	Köln	کلن	کلن	কোলন	
+frankfurt	DE	50.1000	8.6750	Europe/Berlin	Frankfurt	فرانكفورت	Francfort	Frankfurt	Frankfurt	فرانکفورت آم ماین	فرینکفرٹ	ফ্রাঙ্কফুর্ট	
+hamburg	DE	53.5520	9.9981	Europe/Berlin	Hamburg	هامبورغ	Hambourg	Hamburg	Hamburg	هامبورگ	ہامبرگ	হামবুর্গ	
+munich	DE	48.1319	11.5730	Europe/Berlin	Munich	ميونخ	Munich	Münih	München	مونیخ	میونخ	মিউনিখ	
+djibouti	DJ	11.5950	43.1480	Africa/Djibouti	Djibouti	جيبوتي	Djibouti	Cibuti	Djibouti	جیبوتی	جبوتی	জিবুতি	
+copenhagen	DK	55.6805	12.5615	Europe/Copenhagen	Copenhagen	كوبنهاغن	Copenhague	Kopenhag	Kopenhagen	کپنهاگ	کوپن ہیگن	কোপেনহেগেন	
+roseau	DM	15.3010	-61.3870	America/Dominica	Roseau	روسو	Roseau	Roseau	Roseau	روسو	روسو	রোসেউ	
+santo_domingo	DO	18.4720	-69.9020	America/Santo_Domingo	Santo Domingo	سانتو دومينغو	Saint-Domingue	Santo Domingo	Santo Domingo	سانتو دومینگو	سانتو دومنگو	সান্তো দোমিঙ্গো	
+algiers	DZ	36.7650	3.0486	Africa/Algiers	Algiers	الجزائر	Alger	Cezayir	Aljir	الجزیره	الجزائر شہر	আলজিয়ার্স	
+constantine	DZ	36.3600	6.5999	Africa/Algiers	Constantine	قسنطينة	Constantine	Konstantin	Constantine		قسنطینہ	কন্সটান্টিন	
+oran	DZ	35.7119	-0.6219	Africa/Algiers	Oran	وهران	Oran	Oran	Oran	وهران	وہران	ওরান	
+setif	DZ	36.1800	5.4000	Africa/Algiers	Setif	سطيف	Sétif	Setif	Sathif	سطیف	سطیف	সেতিফ	
+quito	EC	-0.2130	-78.5020	America/Guayaquil	Quito	كيتو	Quito	Quito	Quito	کیتو	کیٹو	কিতো	
+tallinn	EE	59.4339	24.7280	Europe/Tallinn	Tallinn	تالين	Tallinn	Tallinn	Tallinn	تالین	ٹالن	তালিন	
+alexandria	EG	31.2020	29.9480	Africa/Cairo	Alexandria	الإسكندرية	Alexandrie	İskenderiye	Iskandariyah	اسکندریه	اسکندریہ	আলেকজান্দ্রিয়া	
+aswan	EG	24.0875	32.8989	Africa/Cairo	Aswan	أسوان	Assouan	Asvan	Aswan	اسوان	اسوان	আসওয়ান	
+cairo	EG	30.0519	31.2480	Africa/Cairo	Cairo	القاهرة	Le Caire	Kahire	Kairo	قاهره	قاہرہ	কায়রো	
+luxor	EG	25.7000	32.6500	Africa/Cairo	Luxor	الأقصر	Louxor	Luksor	Luxor	اقصر	الاقصر	লোক্সো	
+mansoura	EG	31.0504	31.3800	Africa/Cairo	Mansoura	المنصورة	Mansourah	Mansure	Mansoura	منصوره	منصورہ	মনসুরা	
+port_said	EG	31.2600	32.2900	Africa/Cairo	Port Said	بورسعيد	Port-Saïd	Port Said	Bursaid	پورتسعید	پورٹ سعید	সাইদ বন্দর	
+asmara	ER	15.3333	38.9333	Africa/Asmara	Asmara	أسمرة	Asmara	Asmara	Asmara	اسمره	اسمارا	আসমারা	
+barcelona	ES	41.3852	2.1814	Europe/Madrid	Barcelona	برشلونة	Barcelone	Barselona	Barcelona	بارسلون	برشلونہ	বার্সেলোনা	
+madrid	ES	40.4020	-3.6853	Europe/Madrid	Madrid	مدريد	Madrid	Madrid	Madrid	مادرید	میدرد	মাদ্রিদ	
+addis_ababa	ET	9.0353	38.6981	Africa/Addis_Ababa	Addis Ababa	أديس أبابا	Addis-Abeba	Addis Ababa	Addis Ababa	آدیس آبابا	ادیس ابابا	আদ্দিস আবাবা	
+harar	ET	9.3200	42.1500	Africa/Addis_Ababa	Harar	حرار	Harar Jugol	Harar	Harar	هرر	ہرار	হারা	
+helsinki	FI	60.1775	24.9322	Europe/Helsinki	Helsinki	هلسنكي	Helsinki	Helsinki	Helsinki	هلسینکی	ہلسنکی	হেলসিঙ্কি	
+suva	FJ	-18.1330	178.4417	Pacific/Fiji	Suva	سوفا	Suva	Suva	Suva	سووا	سووا	সুভা	
+palikir	FM	6.9166	158.1500	Pacific/Pohnpei	Palikir	باليكير	Palikir	Palikir	Palikir	پالیکیر	پالیکیر	পালিকির	
+lyon	FR	45.7720	4.8281	Europe/Paris	Lyon	ليون	Lyon	Lyon	Lyon	لیون	لیون	লিওঁ	
+marseille	FR	43.2919	5.3731	Europe/Paris	Marseille	مارسيليا	Marseille	Marsilya	Marseille	مارسی	مارسیلز	মার্সেই	
+paris	FR	48.8686	2.3314	Europe/Paris	Paris	باريس	Paris	Paris	Paris	پاریس	پیرس	প্যারিস	
+libreville	GA	0.3854	9.4580	Africa/Libreville	Libreville	ليبرفيل	Libreville	Libreville	Libreville	لیبرویل	لبریویل	লিব্রভিল	
+birmingham	GB	52.4769	-1.9219	Europe/London	Birmingham	برمينغهام	Birmingham	Birmingham	Birmingham	بیرمنگام	برمنگھم	বার্মিংহাম	
+bradford	GB	53.8000	-1.7500	Europe/London	Bradford	برادفورد	Bradford	Bradford	Bradford	بردفورد	بریڈفورڈ	ব্রাডফোর্ড	
+london	GB	51.5019	-0.1187	Europe/London	London	لندن	Londres	Londra	London	لندن	لندن	লন্ডন	
+manchester	GB	53.5024	-2.2499	Europe/London	Manchester	مانشستر	Manchester	Manchester	Manchester	منچستر	مانچسٹر	ম্যানচেস্টার	
+st_georges	GD	12.0526	-61.7416	America/Grenada	St. George's	سانت جورجز	Saint-Georges	Saint George's	St. George's	سینتجورجس	سینٹ جارجز	সেন্ট জর্জেস	
+tbilisi	GE	41.7270	44.7888	Asia/Tbilisi	Tbilisi	تبليسي	Tbilissi	Tiflis	Tbilisi	تفلیس	تبلیسی	তিবিলিসি	
+accra	GH	5.5520	-0.2187	Africa/Accra	Accra	أكرا	Accra	Akra	Accra	آکرا	اکرا	আক্রা	
+banjul	GM	13.4539	-16.5917	Africa/Banjul	Banjul	بانجول	Banjul	Banjul	Banjul	بانجول	بانجول	বাঞ্জুল	
+conakry	GN	9.5335	-13.6822	Africa/Conakry	Conakry	كوناكري	Conakry	Konakri	Conakry	کوناکری	کوناکری	কোনাক্রি	
+malabo	GQ	3.7500	8.7833	Africa/Malabo	Malabo	مالابو	Malabo	Malabo	Malabo	مالابو	ملابو	মালাবু	
+athens	GR	37.9853	23.7314	Europe/Athens	Athens	أثينا	Athènes	Atina	Athena	آتن	ایتھنز	অ্যাথেন্স	
+guatemala_city	GT	14.6231	-90.5289	America/Guatemala	Guatemala City	غواتيمالا العاصمة	Guatemala-Ville	Guatemala	Kota Guatemala	گواتمالاسیتی	گوئٹے مالا شہر	গুয়াতেমালা নগরী	
+bissau	GW	11.8650	-15.5984	Africa/Bissau	Bissau	بيساو	Bissau	Bissau	Bissau	بیسائو	بساؤ	বিসাউ	
+georgetown_gy	GY	6.8020	-58.1670	America/Guyana	Georgetown	جورج تاون	Georgetown	Georgetown	Georgetown	جورج تاون	جارج ٹاؤن	জর্জটাউন	
+hong_kong	HK	22.3069	114.1831	Asia/Hong_Kong	Hong Kong	هونغ كونغ	Hong Kong	Hong Kong	Hong Kong	هنگ کنگ	ہانگ کانگ	হংকং	
+tegucigalpa	HN	14.1040	-87.2195	America/Tegucigalpa	Tegucigalpa	تيغوسيغالبا	Tegucigalpa	Tegucigalpa	Tegucigalpa	تگوسیگالپا	ٹیگوسیگلپا	তেগুসিগালপা	
+zagreb	HR	45.8000	16.0000	Europe/Zagreb	Zagreb	زغرب	Zagreb	Zagreb	Zagreb	زاگرب	زگریب	জাগরেব	
+port_au_prince	HT	18.5430	-72.3380	America/Port-au-Prince	Port-au-Prince	بورت أو برانس	Port-au-Prince	Port-au-Prince	Port-au-Prince	پورتو پرنس	پورٹ او پرنس	পর্তোপ্রাঁস	
+budapest	HU	47.5020	19.0814	Europe/Budapest	Budapest	بودابست	Budapest	Budapeşte	Budapest	بوداپست	بوداپست	বুদাপেস্ট	
+banda_aceh	ID	5.5500	95.3200	Asia/Jakarta	Banda Aceh	باندا آتشيه	Banda Aceh	Banda Aceh	Banda Aceh	باندا آسه	باندا آچے	বান্ডা আচেহ	
+bandung	ID	-6.9481	107.5681	Asia/Jakarta	Bandung	باندونغ	Bandung	Bandung	Bandung	باندونگ	بندونگ	বানদুং	
+jakarta	ID	-6.1725	106.8275	Asia/Jakarta	Jakarta	جاكرتا	Jakarta	Cakarta	Jakarta	جاکارتا	جکارتا	জাকার্তা	
+makassar	ID	-5.1380	119.4301	Asia/Makassar	Makassar	ماكاسار	Makassar	Makassar	Makassar	ماکاسار	مکاسر	মাকাসার	
+medan	ID	3.5819	98.6481	Asia/Jakarta	Medan	ميدان	Medan	Medan	Medan	مدان	مدان	মেডান	
+palembang	ID	-2.9781	104.7481	Asia/Jakarta	Palembang	فلمبان	Palembang	Palembang	Palembang	پالمبانگ	پالمبانگ		
+semarang	ID	-6.9647	110.4181	Asia/Jakarta	Semarang	سمارانغ	Semarang	Semarang	Semarang	سمارانگ	سیمارانگ	সেমারাং	
+surabaya	ID	-7.2473	112.7489	Asia/Jakarta	Surabaya	سورابايا	Surabaya	Surabaya	Surabaya	سورابایا	سورابایا	সুরাবায়া	
+yogyakarta	ID	-7.7800	110.3750	Asia/Jakarta	Yogyakarta	يوغياكارتا	Yogyakarta	Yogyakarta	Kota Yogyakarta	یوگیاکارتا	یوگیکرتا	ইউগিয়াকার্তা	
+dublin	IE	53.3350	-6.2509	Europe/Dublin	Dublin	دبلن	Dublin	Dublin	Dublin	دوبلین	ڈبلن	ডাবলিন	
+tel_aviv	IL	32.0819	34.7681	Asia/Jerusalem	Tel Aviv	تل أبيب	Tel Aviv	Tel Aviv	Tel Aviv	تلآویو	تل ابیب	তেল আবিব	
+ahmedabad	IN	23.0320	72.5781	Asia/Kolkata	Ahmedabad	أحمد آباد	Ahmedabad	Ahmedabad	Ahmedabad	احمدآباد	احمد آباد	আহমেদাবাদ	
+bengaluru	IN	12.9719	77.5581	Asia/Kolkata	Bengaluru	بنغالور	Bangalore	Bangalore	Bengaluru	بنگلور	بنگلور	বেঙ্গালুরু	
+chennai	IN	13.0919	80.2781	Asia/Kolkata	Chennai	تشيناي	Chennai	Chennai	Chennai	چنای	چنائے	চেন্নাই	
+hyderabad_in	IN	17.4019	78.4780	Asia/Kolkata	Hyderabad	حيدر آباد	Hyderabad	Haydarabad	Hyderabad	حیدرآباد	حیدرآباد	হায়দ্রাবাদ	
+kolkata	IN	22.4969	88.3227	Asia/Kolkata	Kolkata	كلكتا	Calcutta	Kalküta	Kolkata	کلکته	کولکاتا	কলকাতা	
+lucknow	IN	26.8570	80.9131	Asia/Kolkata	Lucknow	لكناو	Lucknow	Lucknow	Lucknow	لکھنو	لکھنؤ	লখনউ	
+mumbai	IN	19.0189	72.8550	Asia/Kolkata	Mumbai	مومباي	Bombay	Mumbai	Mumbai	بمبئی	ممبئی	মুম্বই	
+new_delhi	IN	28.6000	77.2000	Asia/Kolkata	New Delhi	نيودلهي	New Delhi	Yeni Delhi	New Delhi	دهلی نو	نئی دہلی	নতুন দিল্লি	Delhi
+srinagar	IN	34.1019	74.8131	Asia/Kolkata	Srinagar	سريناغار	Srinagar	Srinagar	Srinagar	سرینگر	سری نگر	শ্রীনগর	
+baghdad	IQ	33.3406	44.3919	Asia/Baghdad	Baghdad	بغداد	Bagdad	Bağdat	Bagdad	بغداد	بغداد	বাগদাদ	
+basra	IQ	30.5155	47.8116	Asia/Baghdad	Basra	البصرة	Bassorah	Basra	Basra	بصره	بصرہ	বসরা	
+erbil	IQ	36.1810	44.0067	Asia/Baghdad	Erbil	أربيل	Erbil	Erbil	Arbil	اربیل	اربیل	আর্বিল	
+karbala	IQ	32.6149	44.0245	Asia/Baghdad	Karbala	كربلاء	Kerbala	Kerbela	Karbala	کربلا	کربلا	কারবালা	
+mosul	IQ	36.3469	43.1431	Asia/Baghdad	Mosul	الموصل	Mossoul	Musul	Mosul	موصل	موصل	মসুল	
+najaf	IQ	32.0003	44.3354	Asia/Baghdad	Najaf	النجف	Nadjaf	Necef	Najaf	نجف	نجف	নাজাফ	
+ahwaz	IR	31.2819	48.7181	Asia/Tehran	Ahwaz	الأهواز	Ahvaz	Ahvaz	Ahvaz	اهواز	اہواز	আহবাজ	
+isfahan	IR	32.7020	51.6981	Asia/Tehran	Isfahan	أصفهان	Ispahan	İsfahan	Kota Isfahan	اصفهان	اصفہان	এসফাহন	
+mashhad	IR	36.2720	59.5681	Asia/Tehran	Mashhad	مشهد	Mechhed	Meşhed	Masyhad	مشهد	مشہد	মাশহাদ	
+qom	IR	34.6520	50.9481	Asia/Tehran	Qom	قم	Qom	Kum	Qom	قم	قم	কোওম	
+shiraz	IR	29.6319	52.5681	Asia/Tehran	Shiraz	شيراز	Chiraz	Şiraz	Shiraz	شیراز	شیراز	শিরাজ	
+tabriz	IR	38.0882	46.2993	Asia/Tehran	Tabriz	تبريز	Tabriz	Tebriz	Tabriz	تبریز	تبریز	তাবরিজ	
+tehran	IR	35.6739	51.4224	Asia/Tehran	Tehran	طهران	Téhéran	Tahran	Teheran	تهران	تہران	তেহরান	
+zahedan	IR	29.5000	60.8300	Asia/Tehran	Zahedan	زاهدان	Zahedan	Zahidan	Zahedan	زاهدان	زاہدان	জহেদন	
+reykjavik	IS	64.1500	-21.9500	Atlantic/Reykjavik	Reykjavik	ريكيافيك	Reykjavik	Reykjavík	Reykjavík	ریکیاویک	ریکیاوک	রেইকিয়াভিক	
+milan	IT	45.4719	9.2031	Europe/Rome	Milan	ميلانو	Milan	Milano	Milan	میلان	میلان	মিলান	
+rome	IT	41.8979	12.4813	Europe/Rome	Rome	روما	Rome	Roma	Roma	رم	روم	রোম	
+kingston	JM	17.9771	-76.7674	America/Jamaica	Kingston	كينغستون	Kingston	Kingston	Kingston	کینگستون	کنگسٹن	কিংস্টন	
+amman	JO	31.9520	35.9314	Asia/Amman	Amman	عمان	Amman	Amman	Amman	امان	عمان	আম্মান	
+irbid	JO	32.5500	35.8500	Asia/Amman	Irbid	إربد	Irbid	İrbid	Irbid	اربد	اربد	আইবিড	
+zarqa	JO	32.0700	36.1000	Asia/Amman	Zarqa	الزرقاء	Zarka	Zerka	Zarqa	زرقاء	زرقاء	জারকা	
+tokyo	JP	35.6870	139.7495	Asia/Tokyo	Tokyo	طوكيو	Tokyo	Tokyo	Tokyo	توکیو	توکیو	টোকিও	
+mombasa	KE	-4.0381	39.6880	Africa/Nairobi	Mombasa	مومباسا	Mombasa	Mombasa	Mombasa	مومباسا	ممباسا	মোম্বাসা	
+nairobi	KE	-1.2814	36.8147	Africa/Nairobi	Nairobi	نيروبي	Nairobi	Nairobi	Nairobi	نایروبی	نیروبی	নাইরোবি	
+bishkek	KG	42.8750	74.5833	Asia/Bishkek	Bishkek	بيشكك	Bichkek	Bişkek	Bishkek	بیشکک	بشکیک	বিশকেক	
+osh	KG	40.5404	72.7900	Asia/Bishkek	Osh	أوش	Och	Oş	Osh	اوش	اوش	ওশ	
+phnom_penh	KH	11.5520	104.9147	Asia/Phnom_Penh	Phnom Penh	بنوم بنه	Phnom Penh	Phnom Penh	Phnom Penh	پنومپن	پنوم پن	নমপেন	
+south_tarawa	KI	1.3382	173.0176	Pacific/Tarawa	South Tarawa	جنوب تاراوا	Tarawa-Sud	Güney Tarava	Tarawa Selatan	تاراوای جنوبی	ٹاراوا	দক্ষিণ তারাওয়া	
+moroni	KM	-11.7042	43.2402	Indian/Comoro	Moroni	موروني	Moroni	Moroni	Moroni	مورونی	مورونی	মোরোনি	
+basseterre	KN	17.3020	-62.7170	America/St_Kitts	Basseterre	باستير	Basseterre	Basseterre	Basseterre	باسهتر	باسیتیر		
+pyongyang	KP	39.0214	125.7527	Asia/Pyongyang	Pyongyang	بيونغيانغ	Pyongyang	Pyongyang	Pyongyang	پیونگیانگ	پیانگ یانگ	পিয়ং ইয়াং	
+seoul	KR	37.5683	126.9978	Asia/Seoul	Seoul	سول	Séoul	Seul	Seoul	سئول	سؤل	সিউল	
+kuwait_city	KW	29.3717	47.9764	Asia/Kuwait	Kuwait City	مدينة الكويت	Koweït	Kuveyt	Kuwait City	کویتشهر	کویت شہر	কুয়েত সিটি	
+almaty	KZ	43.3269	76.9131	Asia/Almaty	Almaty	ألماتي	Almaty	Almatı	Almaty	آلماآتی	الماتی	আলমাটি	
+astana	KZ	51.1811	71.4278	Asia/Almaty	Astana	أستانا	Astana	Astana	Astana	آستانه	آستانہ	আস্তানা	
+shymkent	KZ	42.3200	69.5950	Asia/Almaty	Shymkent	شيمكنت	Chimkent	Çimkent	Shymkent	چیمکند	شیمکنت	শ্যামকেন্ট	
+vientiane	LA	17.9667	102.6000	Asia/Vientiane	Vientiane	فيينتيان	Vientiane	Vientiane	Vientiane	وینتیان	وینتیان	ভিয়েনতিয়েন	
+beirut	LB	33.8739	35.5078	Asia/Beirut	Beirut	بيروت	Beyrouth	Beyrut	Beirut	بیروت	بیروت	বৈরুত	
+tripoli_lb	LB	34.4220	35.8680	Asia/Beirut	Tripoli	طرابلس	Tripoli	Trablusşam	Tripoli	طرابلس	طرابلس الشام	ত্রিপলি	
+castries	LC	14.0020	-61.0000	America/St_Lucia	Castries	كاستريس	Castries	Castries	Castries	کاستریس	کاستریس	কাস্তেরিস	
+vaduz	LI	47.1337	9.5167	Europe/Vaduz	Vaduz	فادوتس	Vaduz	Vaduz	Vaduz	فادوتس	واڈوز	ফাডুৎস	
+colombo	LK	6.9320	79.8578	Asia/Colombo	Colombo	كولمبو	Colombo	Kolombo	Kolombo	کلمبو	کولمبو	কলম্বো	
+monrovia	LR	6.3146	-10.7997	Africa/Monrovia	Monrovia	مونروفيا	Monrovia	Monrovia	Monrovia	مونروویا	مونروویا	মনরোভিয়া	
+maseru	LS	-29.3167	27.4833	Africa/Maseru	Maseru	ماسيرو	Maseru	Maseru	Maseru	ماسرو	ماسیرو	মাসেরু	
+vilnius	LT	54.6834	25.3166	Europe/Vilnius	Vilnius	فيلنيوس	Vilnius	Vilnius	Vilnius	ویلنیوس	ولنیس	ভিলনিয়াস	
+luxembourg	LU	49.6117	6.1300	Europe/Luxembourg	Luxembourg	لوكسمبورغ	Luxembourg	Lüksemburg	Luksemburg	لوکزامبورگ	لکسمبرگ	লুক্সেমবুর্গ শহর	
+riga	LV	56.9500	24.1000	Europe/Riga	Riga	ريغا	Riga	Riga	Riga	ریگا	ریگا	রিগা	
+benghazi	LY	32.1187	20.0648	Africa/Tripoli	Benghazi	بنغازي	Benghazi	Bingazi	Benghazi	بنغازی	بنغازی	বেনগাজি	
+misrata	LY	32.3800	15.1000	Africa/Tripoli	Misrata	مصراتة	Misrata	Misurata	Misratah	مصراته	مصراتہ	মিসরাতা	
+tripoli_ly	LY	32.8925	13.1800	Africa/Tripoli	Tripoli	طرابلس	Tripoli	Trablus	Tripoli	طرابلس	طرابلس	ত্রিপোলি	
+casablanca	MA	33.6019	-7.6183	Africa/Casablanca	Casablanca	الدار البيضاء	Casablanca	Kazablanka	Casablanca	کازابلانکا	دار البیضاء	কাসাব্লাঙ্কা	
+fez	MA	34.0565	-5.0023	Africa/Casablanca	Fez	فاس	Fès	Fes	Fez	فاس	فاس	ফেজ	
+laayoune	MA	27.1500	-13.2000	Africa/El_Aaiun	Laayoune	العيون	Laâyoune	Layun	El Aaiún	العیون	العیون	লাইউন	
+marrakesh	MA	31.6319	-8.0019	Africa/Casablanca	Marrakesh	مراكش	Marrakech	Marakeş	Marrakesh	مراکش	مراکش	মারাক্কেশ	
+oujda	MA	34.6900	-1.9100	Africa/Casablanca	Oujda	وجدة	Oujda	Ucda	Oujda	وجده	وجدہ	ওজদা	
+rabat	MA	34.0253	-6.8364	Africa/Casablanca	Rabat	الرباط	Rabat	Rabat	Rabat	رباط	رباط	রাবাত	
+tangier	MA	35.7473	-5.8327	Africa/Casablanca	Tangier	طنجة	Tanger	Tanca	Tangier	طنجه	طنجہ	তানজাহ	
+monaco	MC	43.7396	7.4069	Europe/Monaco	Monaco	موناكو	Monaco	Monako	Monako	موناکو	موناکو	মোনাকো	
+chisinau	MD	47.0050	28.8577	Europe/Chisinau	Chisinau	كيشيناو	Chișinău	Kişinev	Kishinev	کیشیناو	کیشیناو	কিশিনাউ	
+podgorica	ME	42.4660	19.2663	Europe/Podgorica	Podgorica	بودغوريتسا	Podgorica	Podgorica	Podgorica	پودگوریتسا	پوڈگوریکا	পোডগোরিকা	
+antananarivo	MG	-18.9147	47.5147	Indian/Antananarivo	Antananarivo	أنتاناناريفو	Antananarivo	Antananarivo	Antananarivo	آنتاناناریوو	اینٹانانیریو	আন্তানানারিভো	
+majuro	MH	7.1030	171.3800	Pacific/Majuro	Majuro	ماجورو	Majuro	Majuro	Majuro	ماجورو	ماجورو	মাজুরো	
+skopje	MK	42.0000	21.4335	Europe/Skopje	Skopje	إسكوبية	Skopje	Üsküp	Skopje	اسکوپیه	اسکوپیہ	স্কপিয়ে	
+bamako	ML	12.6520	-8.0020	Africa/Bamako	Bamako	باماكو	Bamako	Bamako	Bamako	باماکو	بماکو	বামাকো	
+naypyidaw	MM	19.7685	96.1167	Asia/Yangon	Naypyidaw	نايبيداو	Naypyidaw	Naypyidaw	Naypyidaw	نایپیداو	نیپیداو	নেপিডো	
+yangon	MM	16.7853	96.1647	Asia/Yangon	Yangon	يانغون	Rangoun	Yangon	Yangon	یانگون	یانگون	ইয়াঙ্গুন	
+ulaanbaatar	MN	47.9186	106.9147	Asia/Ulaanbaatar	Ulaanbaatar	أولان باتور	Oulan-Bator	Ulan Batur	Ulan Bator	اولانباتور	اولان باتور	উলানবাটর	
+nouakchott	MR	18.0864	-15.9753	Africa/Nouakchott	Nouakchott	نواكشوط	Nouakchott	Nuakşot	Nouakchott	نوآکشوت	نواکشوط	নুওয়াকশুত	
+valletta	MT	35.8997	14.5147	Europe/Malta	Valletta	فاليتا	La Valette	Valletta	Valletta	والتا	والیٹا	ভাল্লেত্তা	
+port_louis	MU	-20.1666	57.5000	Indian/Mauritius	Port Louis	بورت لويس	Port-Louis	Port Louis	Port Louis	پورتلوئیس	پورٹ لوئس	পোর্ট লুইস	
+male	MV	4.1667	73.4999	Indian/Maldives	Male	ماليه	Malé	Malé	Malé	ماله	مالے	মালে	
+lilongwe	MW	-13.9833	33.7833	Africa/Blantyre	Lilongwe	ليلونغوي	Lilongwe	Lilongwe	Lilongwe	لیلونگوه	لیلونگوے	লিলোঙ্গুই	
+mexico_city	MX	19.4444	-99.1329	America/Mexico_City	Mexico City	مدينة مكسيكو	Mexico	Meksiko	Kota Meksiko	مکزیکو سیتی	میکسیکو شہر	মেক্সিকো সিটি	
+george_town_my	MY	5.4136	100.3294	Asia/Kuala_Lumpur	George Town	جورج تاون	George Town	George Town	Georgetown	جرج تاون پنانگ	جارج ٹاؤن	জর্জ টাউন	
+johor_bahru	MY	1.4820	103.7281	Asia/Kuala_Lumpur	Johor Bahru	جوهر بهرو	Johor Bahru	Johor Bahru	Johor Bahru	جوهور بهرو	جوھر بھرو	জোহর বাহরু	
+kota_bharu	MY	6.1200	102.2300	Asia/Kuala_Lumpur	Kota Bharu	كوتا بهارو	Kota Bharu	Kota Bharu	Kota Bharu	کوتا بهارو	کوتا بھرو	কোটা ভারু	
+kota_kinabalu	MY	5.9800	116.1100	Asia/Kuching	Kota Kinabalu	كوتا كينابالو	Kota Kinabalu	Kota Kinabalu	Kota Kinabalu	کوتا کینابالو	کوتا کینابالو	কোটা কিনাবালু	
+kuala_lumpur	MY	3.1686	101.6980	Asia/Kuala_Lumpur	Kuala Lumpur	كوالالمبور	Kuala Lumpur	Kuala Lumpur	Kuala Lumpur	کوالالامپور	کوالا لمپور	কুয়ালালামপুর	
+kuching	MY	1.5300	110.3300	Asia/Kuching	Kuching	كوتشينغ	Kuching	Kuching	Kuching	کوچینگ	کوچینگ	কুচিং	
+putrajaya	MY	2.9140	101.7019	Asia/Kuala_Lumpur	Putrajaya	بوتراجاي	Putrajaya	Putrajaya	Putrajaya	پوتراجایا	پتراجایا	পুত্রজায়া	
+maputo	MZ	-25.9533	32.5872	Africa/Maputo	Maputo	مابوتو	Maputo	Maputo	Maputo	ماپوتو	ماپوتو	মাপুতো	
+windhoek	NA	-22.5700	17.0835	Africa/Windhoek	Windhoek	ويندهوك	Windhoek	Windhoek	Windhoek	ویندهوک	ونڈہوک	উইন্ডহোক	
+niamey	NE	13.5187	2.1147	Africa/Niamey	Niamey	نيامي	Niamey	Niamey	Niamey	نیامی	نیامی	নিয়ামে	
+abuja	NG	9.0853	7.5314	Africa/Lagos	Abuja	أبوجا	Abuja	Abuja	Abuja	آبوجا	ابوجا	আবুজা	
+ibadan	NG	7.3820	3.9280	Africa/Lagos	Ibadan	إبادان	Ibadan	İbadan	Ibadan	ابادان	ابادان	ইবাদান	
+kaduna	NG	10.5220	7.4381	Africa/Lagos	Kaduna	كادونا	Kaduna	Kaduna	Kaduna	کادونا	کادونا	কাদুনা	
+kano	NG	12.0019	8.5181	Africa/Lagos	Kano	كانو	Kano	Kano	Kano	کانو	کانو	কানো	
+lagos	NG	6.4452	3.3896	Africa/Lagos	Lagos	لاغوس	Lagos	Lagos	Lagos	لاگوس	لاگوس	লেগোস	
+maiduguri	NG	11.8519	13.1581	Africa/Lagos	Maiduguri	ميدغري	Maiduguri	Maiduguri	Maiduguri	مایدوگوری	مایدوگوری	মাইদুগুরি	
+sokoto	NG	13.0600	5.2400	Africa/Lagos	Sokoto	سوكوتو	Sokoto	Sokoto	Sokoto	سوکوتو	سوکوتو	সোকোতো	
+managua	NI	12.1550	-86.2704	America/Managua	Managua	ماناغوا	Managua	Managua	Managua	ماناگوآ	ماناگوا	মানাগুয়া	
+amsterdam	NL	52.3519	4.9147	Europe/Amsterdam	Amsterdam	أمستردام	Amsterdam	Amsterdam	Amsterdam	آمستردام	ایمسٹرڈیم	আমস্টারডাম	
+rotterdam	NL	51.9219	4.4780	Europe/Amsterdam	Rotterdam	روتردام	Rotterdam	Rotterdam	Rotterdam	رتردام	راٹرڈیم	রটার্ডাম	
+the_hague	NL	52.0800	4.2700	Europe/Amsterdam	The Hague	لاهاي	La Haye	Lahey	Den Haag	لاهه	ہیگ	হেগ	
+oslo	NO	59.9186	10.7480	Europe/Oslo	Oslo	أوسلو	Oslo	Oslo	Oslo	اسلو	اوسلو	অসলো	
+kathmandu	NP	27.7186	85.3147	Asia/Kathmandu	Kathmandu	كاتماندو	Katmandou	Katmandu	Kathmandu	کاتماندو	کھٹمنڈو	কাঠমান্ডু	
+auckland	NZ	-36.8481	174.7630	Pacific/Auckland	Auckland	أوكلاند	Auckland	Auckland	Auckland	آوکلند	آکلینڈ	অকল্যান্ড	
+wellington	NZ	-41.3000	174.7833	Pacific/Auckland	Wellington	ويلينغتون	Wellington	Wellington	Wellington	ولینگتون	ویلنگٹن	ওয়েলিংটন	
+muscat	OM	23.6133	58.5933	Asia/Muscat	Muscat	مسقط	Mascate	Maskat	Muskat	مسقط	مسقط	মাস্কাট	
+salalah	OM	17.0255	54.0852	Asia/Muscat	Salalah	صلالة	Salalah	Salalah	Salalah	صلاله	صلالہ	সালালাহ	
+panama_city	PA	8.9700	-79.5350	America/Panama	Panama City	مدينة بنما	Panama	Panama	Kota Panama	پاناماسیتی	پاناما شہر	পানামা সিটি	
+lima	PE	-12.0461	-77.0520	America/Lima	Lima	ليما	Lima	Lima	Lima	لیما	لیما	লিমা	
+port_moresby	PG	-9.4647	147.1925	Pacific/Port_Moresby	Port Moresby	بورت مورسبي	Port Moresby	Port Moresby	Port Moresby	پورت مورسبی	پورٹ مورسبی	পোর্ট মোর্সবি	
+cotabato	PH	7.2169	124.2484	Asia/Manila	Cotabato	كوتاباتو	Cotabato	Cotabato	Kota Bato	شهر کوتاباتو	کوتاباتو شہر	কোতাবাতো শহর	
+manila	PH	14.6061	120.9803	Asia/Manila	Manila	مانيلا	Manille	Manila	Manila	مانیل	منیلا	ম্যানিলা	
+zamboanga	PH	6.9219	122.0781	Asia/Manila	Zamboanga	زامبوانغا	Zamboanga	Zamboanga City	Kota Zamboanga	زامبوانگا	زامبوانگا شہر	জাম্বুয়ানগা শহর	
+faisalabad	PK	31.4119	73.1081	Asia/Karachi	Faisalabad	فيصل آباد	Faisalabad	Faysalabad	Faisalabad	فیصلآباد	فیصل آباد	ফয়সালাবাদ	
+hyderabad_pk	PK	25.3819	68.3730	Asia/Karachi	Hyderabad	حيدر آباد	Hyderâbâd	Haydarabad	Hyderabad	حیدرآباد	حیدرآباد	হায়দ্রাবাদ	
+islamabad	PK	33.7019	73.1647	Asia/Karachi	Islamabad	إسلام آباد	Islamabad	İslamabad	Islamabad	اسلامآباد	اسلام آباد	ইসলামাবাদ	
+karachi	PK	24.8719	66.9881	Asia/Karachi	Karachi	كراتشي	Karachi	Karaçi	Karachi	کراچی	کراچی	করাচী	
+lahore	PK	31.5619	74.3481	Asia/Karachi	Lahore	لاهور	Lahore	Lahor	Lahore	لاهور	لاہور	লাহোর	
+multan	PK	30.2019	71.4531	Asia/Karachi	Multan	ملتان	Multan	Multan	Multan	مولتان	ملتان	মুলতান	
+peshawar	PK	34.0070	71.5331	Asia/Karachi	Peshawar	بيشاور	Peshawar	Peşaver	Peshawar	پیشاور	پشاور	পেশাওয়ার	
+quetta	PK	30.2219	67.0230	Asia/Karachi	Quetta	كويته	Quetta	Ketta	Quetta	کویته	کوئٹہ	কোয়েটা	
+rawalpindi	PK	33.6019	73.0381	Asia/Karachi	Rawalpindi	راولبندي	Rawalpindi	Rawalpindi	Rawalpindi	راولپندی	راولپنڈی	রাওয়ালপিন্ডি	
+warsaw	PL	52.2519	20.9981	Europe/Warsaw	Warsaw	وارسو	Varsovie	Varşova	Warsawa	ورشو	وارسا	ওয়ারশ	
+gaza	PS	31.5300	34.4450	Asia/Gaza	Gaza	غزة	Gaza	Gazze	Gaza	غزه	غزہ	গাজা	
+hebron	PS	31.5406	35.0956	Asia/Hebron	Hebron	الخليل	Hébron	El Halil	Hebron	الخلیل	الخلیل	হেবরন	
+jerusalem	PS	31.7784	35.2066	Asia/Jerusalem	Jerusalem	القدس	Jérusalem	Kudüs	Yerusalem	قدس	بیت المقدس	জেরুসালেম	Al-Quds
+nablus	PS	32.2215	35.2544	Asia/Hebron	Nablus	نابلس	Naplouse	Nablus	Nablus	نابلوس	نابلس	নাবলুস	
+ramallah	PS	31.9029	35.2062	Asia/Hebron	Ramallah	رام الله	Ramallah	Ramallah	Ramallah	رامالله	رام اللہ	রামাল্লাহ	
+lisbon	PT	38.7247	-9.1468	Europe/Lisbon	Lisbon	لشبونة	Lisbonne	Lizbon	Lisboa	لیسبون	لزبن	লিসবন	
+melekeok	PW	7.4874	134.6265	Pacific/Palau	Melekeok	ميلكيوك	Melekeok	Melekeok	Melekeok	ملکئوک	میلیکوک	মেলেকেওক	
+asuncion	PY	-25.2945	-57.6435	America/Asuncion	Asuncion	أسونسيون	Asuncion	Asunción	Asunción	آسونسیون	اسونسیون	আসুনসিওন	
+doha	QA	25.2866	51.5330	Asia/Qatar	Doha	الدوحة	Doha	Doha	Doha	دوحه	دوحہ	দোহা	
+bucharest	RO	44.4353	26.0980	Europe/Bucharest	Bucharest	بوخارست	Bucarest	Bükreș	Bukares	بخارست	بخارسٹ	বুখারেস্ট	
+belgrade	RS	44.8206	20.4660	Europe/Belgrade	Belgrade	بلغراد	Belgrade	Belgrad	Beograd	بلگراد	بلغراد	বেলগ্রেড	
+grozny	RU	43.3187	45.6987	Europe/Moscow	Grozny	غروزني	Grozny	Grozni	Grozny	گروزنی	گروزنی	গ্রোজনি	
+kazan	RU	55.7519	49.1244	Europe/Moscow	Kazan	قازان	Kazan	Kazan	Kazan	قازان	قازان	কাজান	
+makhachkala	RU	42.9800	47.5000	Europe/Moscow	Makhachkala	محج قلعة	Makhatchkala	Mahaçkale	Makhachkala	مخاچقلعه	ماخاچکالا	ম্যাকাচালা	
+moscow	RU	55.7541	37.6136	Europe/Moscow	Moscow	موسكو	Moscou	Moskova	Moskwa	مسکو	ماسکو	মস্কো	
+ufa	RU	54.7919	56.0381	Asia/Yekaterinburg	Ufa	أوفا	Oufa	Ufa	Ufa	اوفا	اوفا	উফা	
+kigali	RW	-1.9516	30.0586	Africa/Kigali	Kigali	كيغالي	Kigali	Kigali	Kigali	کیگالی	کیگالی	কিগালি	
+abha	SA	18.2301	42.5001	Asia/Riyadh	Abha	أبها	Abha	Abha	Abha	ابها	ابھا	আবহা	
+buraidah	SA	26.3664	43.9628	Asia/Riyadh	Buraidah	بريدة	Buraydah	Bureyde	Buraidah	بریده	بریدہ	বুরাইদা	
+dammam	SA	26.4301	50.0977	Asia/Riyadh	Dammam	الدمام	Dammam	Ad Dammam	Dammam	دمام	دمام	দামাম	
+hofuf	SA	25.3487	49.5856	Asia/Riyadh	Hofuf	الهفوف	Al-Hufuf	Hufuf	Hofuf	هفوف	ہفوف	হফুফ	
+jeddah	SA	21.5188	39.2173	Asia/Riyadh	Jeddah	جدة	Djeddah	Cidde	Jeddah	جده	جدہ	জেদ্দা	
+madinah	SA	24.5019	39.5781	Asia/Riyadh	Medina	المدينة المنورة	Médine	Medine	Madinah	مدینه	مدینہ منورہ	মদিনা	Madinah
+makkah	SA	21.4320	39.8181	Asia/Riyadh	Makkah	مكة المكرمة	La Mecque	Mekke	Makkah	مکه	مکہ	মক্কা	Mecca
+riyadh	SA	24.6428	46.7708	Asia/Riyadh	Riyadh	الرياض	Riyad	Riyad	Riyadh	ریاض	ریاض	রিয়াদ	
+tabuk	SA	28.3838	36.5550	Asia/Riyadh	Tabuk	تبوك	Tabuk	Tebük	Tabuk	تبوک	تبوک	তাবুক	
+taif	SA	21.2622	40.3823	Asia/Riyadh	Taif	الطائف	Taëf	Taif	Ta'if	طائف	طائف	তাইফ	
+honiara	SB	-9.4380	159.9498	Pacific/Guadalcanal	Honiara	هونيارا	Honiara	Honiara	Honiara	هونیارا	ہونیارا	হোনিয়ারা	
+victoria	SC	-4.6166	55.4500	Indian/Mahe	Victoria	فيكتوريا	Victoria	Victoria	Victoria	پورتویکتوریا	وکٹوریا	ভিক্তোরিয়া	
+khartoum	SD	15.5900	32.5322	Africa/Khartoum	Khartoum	الخرطوم	Khartoum	Hartum	Khartoum	خارطوم	خرطوم	খার্তুম	
+port_sudan	SD	19.6158	37.2164	Africa/Khartoum	Port Sudan	بورتسودان	Port-Soudan	Port Sudan	Port Sudan	بور سودان	پورٹ سوڈان	পোর্ট সুদান	
+malmo	SE	55.5833	13.0333	Europe/Stockholm	Malmo	مالمو	Malmö	Malmö	Malmö	مالمو	مالمو	মালমো	
+stockholm	SE	59.3527	18.0954	Europe/Stockholm	Stockholm	ستوكهولم	Stockholm	Stockholm	Stockholm	استکهلم	اسٹاک ہوم	স্টকহোম	
+singapore	SG	1.2950	103.8539	Asia/Singapore	Singapore	سنغافورة	Singapour	Singapur	Singapura	سنگاپور	سنگاپور	সিঙ্গাপুর	
+ljubljana	SI	46.0553	14.5150	Europe/Ljubljana	Ljubljana	ليوبليانا	Ljubljana	Ljubljana	Ljubljana	لیوبلیانا	لیوبلیانا	লিউব্লিয়ানা	
+bratislava	SK	48.1500	17.1170	Europe/Bratislava	Bratislava	براتيسلافا	Bratislava	Bratislava	Bratislava	براتیسلاوا	براٹیسلاوا	ব্রাতিস্লাভা	
+freetown	SL	8.4720	-13.2362	Africa/Freetown	Freetown	فريتاون	Freetown	Freetown	Freetown	فریتاون	فری ٹاؤن	ফ্রিটাউন	
+san_marino	SM	43.9361	12.4418	Europe/San_Marino	San Marino	مدينة سان مارينو	Saint-Marin	San Marino	San Marino	سن مارینو	سان مارینو شہر	সান মারিনো	
+dakar	SN	14.7178	-17.4751	Africa/Dakar	Dakar	داكار	Dakar	Dakar	Dakar	داکار	ڈاکار	ডাকার	
+hargeisa	SO	9.5600	44.0653	Africa/Mogadishu	Hargeisa	هرجيسا	Hargeisa	Hargeisa	Hargeisa	هرجیسا	هرجيسا	হারগেইসা	
+mogadishu	SO	2.0686	45.3647	Africa/Mogadishu	Mogadishu	مقديشو	Mogadiscio	Mogadişu	Mogadishu	موگادیشو	موغادیشو	মোগাদিশু	
+paramaribo	SR	5.8350	-55.1670	America/Paramaribo	Paramaribo	باراماريبو	Paramaribo	Paramaribo	Paramaribo	پاراماریبو	پاراماریبو	প্যারামারিবো	
+juba	SS	4.8300	31.5800	Africa/Juba	Juba	جوبا	Djouba	Cuba	Juba	جوبا	جوبا	জুবা	
+sao_tome	ST	0.3334	6.7333	Africa/Sao_Tome	Sao Tome	ساو تومي	São Tomé	São Tomé	São Tomé	سائوتومه	ساؤ ٹومے	সাও তমে	
+san_salvador	SV	13.7119	-89.2050	America/El_Salvador	San Salvador	سان سلفادور	San Salvador	San Salvador	San Salvador	سان سالوادور	سان سلواڈور	সান সালভাদর	
+aleppo	SY	36.2319	37.1681	Asia/Damascus	Aleppo	حلب	Alep	Halep	Aleppo	حلب	حلب	আলেপ্পো	
+damascus	SY	33.5020	36.2981	Asia/Damascus	Damascus	دمشق	Damas	Şam	Damaskus	دمشق	دمشق	দামেস্ক	
+homs	SY	34.7319	36.7181	Asia/Damascus	Homs	حمص	Homs	Humus	Homs	حمص	حمص	হিমস	
+mbabane	SZ	-26.3167	31.1333	Africa/Mbabane	Mbabane	مبابان	Mbabane	Mbabane	Mbabane	مبابانه	مبابنے	অম্বাবানে	
+ndjamena	TD	12.1150	15.0472	Africa/Ndjamena	N'Djamena	انجمينا	N'Djaména	N'Djamena	N'Djamena	انجامنا	اینجامینا	এনজামেনা	
+lome	TG	6.1339	1.2208	Africa/Lome	Lome	لومي	Lomé	Lomé	Lomé	لومه	لومے	লোমে	
+bangkok	TH	13.7519	100.5147	Asia/Bangkok	Bangkok	بانكوك	Bangkok	Bangkok	Bangkok	بانکوک	بنکاک	ব্যাংকক	
+pattani	TH	6.8640	101.2500	Asia/Bangkok	Pattani	فطاني	Pattani	Pattani	Pattani	پاتانی	پاتانی	পাট্টানি	
+dushanbe	TJ	38.5600	68.7739	Asia/Dushanbe	Dushanbe	دوشنبه	Douchanbé	Duşanbe	Dushanbe	دوشنبه	دوشنبہ	দুশান্বে	
+khujand	TJ	40.2900	69.6199	Asia/Dushanbe	Khujand	خجندة	Khodjent	Kocand	Khujand	خجند	خجند	খুজান্দ	
+dili	TL	-8.5594	125.5795	Asia/Dili	Dili	ديلي	Dili	Dili	Dili	دیلی	دیلی	দিলি	
+ashgabat	TM	37.9500	58.3833	Asia/Ashgabat	Ashgabat	عشق آباد	Achgabat	Aşkabat	Ashgabat	عشقآباد	اشک آباد	আশখাবাদ	
+sfax	TN	34.7500	10.7200	Africa/Tunis	Sfax	صفاقس	Sfax	Safakes	Sfax	صفاقس	صفاقس	সফেক্স	
+sousse	TN	35.8300	10.6250	Africa/Tunis	Sousse	سوسة	Sousse	Susa	Sousse	سوسه	سوسہ	সোসে	
+tunis	TN	36.8028	10.1797	Africa/Tunis	Tunis	تونس	Tunis	Tunus	Tunis	تونس	تونس شہر	তিউনিস	
+nukualofa	TO	-21.1385	-175.2206	Pacific/Tongatapu	Nuku'alofa	نوكو ألوفا	Nukuʻalofa	Nuku'alofa	Nukuʻalofa	نوکوآلوفا	نوکوالوفا	নুকুয়ালোফা	
+adana	TR	36.9969	35.3181	Europe/Istanbul	Adana	أضنة	Adana	Adana	Adana	آدانا	آدانا	আদানা	
+ankara	TR	39.9292	32.8624	Europe/Istanbul	Ankara	أنقرة	Ankara	Ankara	Ankara	آنکارا	انقرہ	আঙ্কারা	
+bursa	TR	40.2019	29.0681	Europe/Istanbul	Bursa	بورصة	Bursa	Bursa	Bursa	بورسا	بورصہ	বুরসা	
+diyarbakir	TR	37.9204	40.2300	Europe/Istanbul	Diyarbakir	ديار بكر	Diyarbakır	Diyarbakır	Diyarbakır	دیاربکر	دیار بکر	দিয়ারবিকির	
+gaziantep	TR	37.0769	37.3830	Europe/Istanbul	Gaziantep	عينتاب	Gaziantep	Gaziantep	Gaziantep	غازی عینتاب	غازی عینتاب	গাজিয়ানতেপ	
+istanbul	TR	41.1069	29.0081	Europe/Istanbul	Istanbul	إسطنبول	Istanbul	İstanbul	Istanbul	استانبول	استنبول	ইস্তাম্বুল	
+izmir	TR	38.4381	27.1498	Europe/Istanbul	Izmir	إزمير	Izmir	İzmir	İzmir	ازمیر	ازمیر	ইজমির	
+konya	TR	37.8770	32.4731	Europe/Istanbul	Konya	قونية	Konya	Konya	Konya	قونیه	قونیہ	কনিয়া	
+port_of_spain	TT	10.6520	-61.5170	America/Port_of_Spain	Port of Spain	بورت أوف سبين	Port-d'Espagne	Port of Spain	Port of Spain	پرت آو اسپاین	پورٹ آف اسپین	পোর্ট অব স্পেন	
+funafuti	TV	-8.5167	179.2166	Pacific/Funafuti	Funafuti	فونافوتي	Funafuti	Funafuti	Funafuti	فونافوتی	فونافوتی	ফুনাফুতি	
+taipei	TW	25.0358	121.5683	Asia/Taipei	Taipei	تايبيه	Taipei	Taipei	Kota Taipei	تایپه	تائی پے	তাইপে	
+dar_es_salaam	TZ	-6.7981	39.2664	Africa/Dar_es_Salaam	Dar es Salaam	دار السلام	Dar es Salam	Darüsselam	Dar es Salaam	دارالسلام	دارالسلام	দারুস সালাম	
+dodoma	TZ	-6.1833	35.7500	Africa/Dar_es_Salaam	Dodoma	دودوما	Dodoma	Dodoma	Dodoma	دودوما	ڈوڈوما	দোদোমা	
+zanzibar	TZ	-6.1600	39.2000	Africa/Dar_es_Salaam	Zanzibar	زنجبار	Zanzibar	Zanzibar City	Zanzibar City	زنگبار	زنجبار شہر	জানজিবার শহর	
+kyiv	UA	50.4353	30.5147	Europe/Kiev	Kyiv	كييف	Kiev	Kiev	Kiev	کییف	کیف	কিয়েভ	
+kampala	UG	0.3186	32.5814	Africa/Kampala	Kampala	كامبالا	Kampala	Kampala	Kampala	کامپالا	کمپالا	কাম্পালা	
+atlanta	US	33.8320	-84.4019	America/New_York	Atlanta	أتلانتا	Atlanta	Atlanta	Atlanta	آتلانتا	اٹلانٹا	আটলান্টা	
+chicago	US	41.8319	-87.7520	America/Chicago	Chicago	شيكاغو	Chicago	Şikago	Chicago	شیکاگو	شکاگو	শিকাগো	
+dallas	US	32.8220	-96.8420	America/Chicago	Dallas	دالاس	Dallas	Dallas	Dallas	دالاس	ڈیلاس	ডালাস	
+detroit	US	42.3319	-83.0820	America/Detroit	Detroit	ديترويت	Détroit	Detroit	Detroit	دیترویت	ڈیٹرائٹ	ডেট্রয়েট	
+houston	US	29.8219	-95.3419	America/Chicago	Houston	هيوستن	Houston	Houston	Houston	هیوستون	ہوسٹن	হিউস্টন	
+los_angeles	US	33.9919	-118.1819	America/Los_Angeles	Los Angeles	لوس أنجلوس	Los Angeles	Los Angeles	Los Angeles	لس آنجلس	لاس اینجلس	লস অ্যাঞ্জেলেস	
+minneapolis	US	44.9819	-93.2537	America/Chicago	Minneapolis	مينيابوليس	Minneapolis	Minneapolis	Minneapolis	مینیاپولیس	منیاپولس	মিনিয়াপোলিস	
+new_york	US	40.7519	-73.9820	America/New_York	New York	نيويورك	New York	New York	New York City	نیویورک	نیویارک شہر	নিউ ইয়র্ক শহর	
+philadelphia	US	40.0019	-75.1719	America/New_York	Philadelphia	فيلادلفيا	Philadelphie	Philadelphia	Philadelphia	فیلادلفیا	فلاڈلفیا	ফিলাডেলফিয়া	
+washington	US	38.9015	-77.0114	America/New_York	Washington	واشنطن	Washington	Washington	Washington	واشینگتن	واشنگٹن ڈی سی	ওয়াশিংটন	
+montevideo	UY	-34.8561	-56.1730	America/Montevideo	Montevideo	مونتفيدو	Montevideo	Montevideo	Montevideo	مونتهویدئو	مونٹیویڈیو	মোন্তেবিদেও	
+bukhara	UZ	39.7800	64.4300	Asia/Samarkand	Bukhara	بخارى	Boukhara	Buhara	Bukhara	بخارا	بخارا	বোখারা	
+samarkand	UZ	39.6700	66.9450	Asia/Samarkand	Samarkand	سمرقند	Samarcande	Semerkant	Samarkand	سمرقند	سمرقند	সমরকন্দ	
+tashkent	UZ	41.3136	69.2930	Asia/Tashkent	Tashkent	طشقند	Tachkent	Taşkent	Tashkent	تاشکند	تاشقند	তাশখন্দ	
+vatican_city	VA	41.9033	12.4534	Europe/Vatican	Vatican City	الفاتيكان	Cité du Vatican	Vatikan	Vatikan	واتیکان	ویٹیکن سٹی	ভ্যাটিকান সিটি	
+kingstown	VC	13.1483	-61.2121	America/St_Vincent	Kingstown	كينغستاون	Kingstown	Kingstown	Kingstown	کینگزتاون	کنگز ٹاؤن	কিংসটাউন	
+caracas	VE	10.5029	-66.9190	America/Caracas	Caracas	كاراكاس	Caracas	Caracas	Caracas	کاراکاس	کراکس	কারাকাস	
+hanoi	VN	21.0353	105.8481	Asia/Ho_Chi_Minh	Hanoi	هانوي	Hanoï	Hanoi	Hanoi	هانوی	ہنوئی	হ্যানয়	
+port_vila	VU	-17.7334	168.3166	Pacific/Efate	Port Vila	بورت فيلا	Port-Vila	Port Vila	Port Vila	پورت ویلا	پورٹ ولا	পোর্ট ভিলা	
+apia	WS	-13.8415	-171.7386	Pacific/Apia	Apia	أبيا	Apia	Apia	Apia	آپیا	آپیا	আপিয়া	
+pristina	XK	42.6667	21.1660	Europe/Belgrade	Pristina	بريشتينا	Pristina	Priştine	Pristina	پریشتینا	پریسٹینہ	প্রিস্টিনা	
+aden	YE	12.7797	45.0095	Asia/Aden	Aden	عدن	Aden	Aden	Aden	عدن	عدن	অ্যাডেন	
+sanaa	YE	15.3567	44.2046	Asia/Aden	Sanaa	صنعاء	Sanaa	San'a	Sana'a	صنعا	صنعاء	সানা	
+taiz	YE	13.6064	44.0375	Asia/Aden	Taiz	تعز	Ta'izz	Taiz	Ta'izz	تعز	تعز	তাইজ	
+bloemfontein	ZA	-29.1200	26.2299	Africa/Johannesburg	Bloemfontein	بلومفونتين	Bloemfontein	Bloemfontein	Bloemfontein	بلومفونتن	بلومفونٹین	ব্লুমফন্টেইন	
+cape_town	ZA	-33.9181	18.4330	Africa/Johannesburg	Cape Town	كيب تاون	Le Cap	Kap Şehri	Cape Town	کیپتاون	کیپ ٹاؤن	কেপ টাউন	
+durban	ZA	-29.8631	30.9781	Africa/Johannesburg	Durban	ديربان	Durban	Durban	Durban	دوربان	ڈربن	ডারবান	
+johannesburg	ZA	-26.1681	28.0281	Africa/Johannesburg	Johannesburg	جوهانسبرغ	Johannesbourg	Johannesburg	Johannesburg	ژوهانسبورگ	جوہانسبرگ	জোহানেসবার্গ	
+pretoria	ZA	-25.7050	28.2275	Africa/Johannesburg	Pretoria	بريتوريا	Pretoria	Pretoria	Pretoria	پرتوریا	پریٹوریا	প্রিটোরিয়া	
+lusaka	ZM	-15.4147	28.2814	Africa/Lusaka	Lusaka	لوساكا	Lusaka	Lusaka	Lusaka	لوساکا	لوساکا	লুসাকা	
+harare	ZW	-17.8158	31.0428	Africa/Harare	Harare	هراري	Harare	Harare	Harare	هراره	ہرارے	হারারে	

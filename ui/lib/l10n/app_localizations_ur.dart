@@ -937,6 +937,307 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsGeneralTitle => 'عام';
 
   @override
+  String get worshipTitle => 'نماز کے اوقات';
+
+  @override
+  String get worshipBody =>
+      'اختیاری۔ آپ کے منتخب کردہ مقام سے اسی فون پر حساب کیے جاتے ہیں۔ کچھ نہیں بھیجا جاتا۔';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'مقام: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'مقام: منتخب نہیں';
+
+  @override
+  String get worshipChoose => 'منتخب کریں';
+
+  @override
+  String get worshipPlaceSearch => 'شہر تلاش کریں';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'کوئی شہر نہیں ملا۔ آپ اس کی جگہ نقاط درج کر سکتے ہیں۔';
+
+  @override
+  String get worshipPlaceCustom => 'نقاط درج کریں';
+
+  @override
+  String get worshipLat => 'عرض بلد (شمال +، جنوب −)';
+
+  @override
+  String get worshipLon => 'طول بلد (مشرق +، مغرب −)';
+
+  @override
+  String get worshipZone => 'ٹائم زون، مثلاً Asia/Karachi';
+
+  @override
+  String get worshipCustomInvalid => 'نمبر اور ٹائم زون چیک کریں۔';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'یہ مقام استعمال نہیں ہو سکتا۔ دوبارہ منتخب کریں۔';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'حساب کا طریقہ: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'حساب کا طریقہ';
+
+  @override
+  String get worshipMethodNote =>
+      'شہر کے ملک کے مطابق چنا گیا ہے۔ وہ طریقہ چنیں جس پر آپ کی مسجد چلتی ہے۔';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'عصر: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'عصر کا وقت';
+
+  @override
+  String get worshipAsrStandard => 'جمہور (شافعی، مالکی، حنبلی)';
+
+  @override
+  String get worshipAsrHanafi => 'حنفی';
+
+  @override
+  String get worshipMethodMwl => 'رابطہ عالم اسلامی';
+
+  @override
+  String get worshipMethodIsna => 'اسلامک سوسائٹی آف نارتھ امریکا (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'مصری جنرل اتھارٹی آف سروے';
+
+  @override
+  String get worshipMethodUmmAlQura => 'ام القریٰ، مکہ مکرمہ';
+
+  @override
+  String get worshipMethodKarachi => 'جامعہ علوم اسلامیہ، کراچی';
+
+  @override
+  String get worshipMethodTehran => 'انسٹی ٹیوٹ آف جیو فزکس، تہران یونیورسٹی';
+
+  @override
+  String get worshipMethodGulf => 'خلیجی خطہ';
+
+  @override
+  String get worshipMethodKuwait => 'کویت';
+
+  @override
+  String get worshipMethodQatar => 'قطر';
+
+  @override
+  String get worshipMethodSingapore => 'سنگاپور (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'ترکی (دیانت)';
+
+  @override
+  String get worshipMethodFrance => 'فرانس (UOIF، 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'مراکش (وزارت اوقاف)';
+
+  @override
+  String get worshipMethodIndonesia => 'انڈونیشیا (وزارت مذہبی امور)';
+
+  @override
+  String get worshipMethodMalaysia => 'ملائیشیا (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'دبئی';
+
+  @override
+  String get worshipPrayerFajr => 'فجر';
+
+  @override
+  String get worshipPrayerSunrise => 'طلوع آفتاب';
+
+  @override
+  String get worshipPrayerDhuhr => 'ظہر';
+
+  @override
+  String get worshipPrayerAsr => 'عصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'مغرب';
+
+  @override
+  String get worshipPrayerIsha => 'عشاء';
+
+  @override
+  String get worshipToday => 'آج';
+
+  @override
+  String get worshipNoTimes =>
+      'آج یہاں نماز کے اوقات نہیں: سورج طلوع یا غروب نہیں ہوتا۔';
+
+  @override
+  String get worshipSilentTitle => 'نماز کے اوقات میں خاموش';
+
+  @override
+  String get worshipSilentBody =>
+      'ہر نماز کے وقت سے نیچے دیے گئے منٹوں تک «ڈسٹرب نہ کریں»، پھر فون پہلے جیسا۔';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'خاموشی کی مدت: $minutes منٹ';
+  }
+
+  @override
+  String get worshipMuteTitle => 'اذان پر میڈیا خاموش';
+
+  @override
+  String get worshipMuteBody =>
+      'ہر نماز کے وقت میڈیا کی آواز (ویڈیو، آڈیو، گیمز) نیچے دیے گئے منٹوں تک بند۔ اطلاع سے فوراً کھول سکتے ہیں۔';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'خاموشی کی مدت: $minutes منٹ';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'دورانیہ';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes منٹ';
+  }
+
+  @override
+  String get worshipNeedPlace => 'پہلے مقام منتخب کریں۔';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'اگلی: $prayer، $time بجے';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return '$time تک خاموش۔';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'میڈیا $time تک خاموش۔';
+  }
+
+  @override
+  String get worshipEndSilent => 'ابھی خاموشی ختم کریں';
+
+  @override
+  String get worshipUnmute => 'ابھی آواز کھولیں';
+
+  @override
+  String get worshipDndNeeded =>
+      'واعية کو «ڈسٹرب نہ کریں» بدلنے کی اجازت دیں، ورنہ فون خاموش نہیں ہو سکتا۔';
+
+  @override
+  String get worshipAllow => 'اجازت دیں';
+
+  @override
+  String get worshipExactNeeded =>
+      'واعية کے لیے «الارم اور یاد دہانیاں» کی اجازت نہیں، اس لیے ہر تبدیلی 10 منٹ تک، یا فون سوتے وقت اس سے زیادہ، دیر سے ہو سکتی ہے۔';
+
+  @override
+  String get worshipNotifNeeded =>
+      'اطلاعات بند ہیں: آپ نہیں دیکھ پائیں گے کہ فون کب خاموش ہوا یا واپس آیا۔';
+
+  @override
+  String get worshipTonesTitle => 'سادہ رنگ ٹون اور اطلاع کی آواز';
+
+  @override
+  String get worshipTonesBody =>
+      'واعية رنگ ٹون اور اطلاع کی آوازوں کو فلٹر نہیں کر سکتا، صرف بدل سکتا ہے۔ بغیر موسیقی کی سادہ آواز چنیں:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'سادہ رنگ ٹون $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'سادہ اطلاع کی آواز $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'چلائیں';
+
+  @override
+  String get worshipToneSet => 'استعمال کریں';
+
+  @override
+  String get worshipToneInUse => 'زیر استعمال';
+
+  @override
+  String get worshipToneDone => 'ہو گیا۔';
+
+  @override
+  String get worshipTonePermission =>
+      'واعية کو سسٹم سیٹنگز بدلنے کی اجازت دیں، واپس آئیں اور دوبارہ دبائیں۔';
+
+  @override
+  String get worshipToneFailed =>
+      'اس فون نے واعية کو بدلنے نہیں دیا۔ آواز کی سیٹنگز میں «Waaiya plain» نام کی ٹون چنیں۔';
+
+  @override
+  String get worshipOpenSound => 'آواز کی سیٹنگز کھولیں';
+
+  @override
+  String get worshipNotifChannel => 'نماز کے اوقات';
+
+  @override
+  String worshipNotifSilentTitle(Object prayer) {
+    return '$prayer: فون خاموش';
+  }
+
+  @override
+  String worshipNotifSilentText(Object time) {
+    return '«ڈسٹرب نہ کریں» $time تک آن ہے۔';
+  }
+
+  @override
+  String get worshipNotifSilentEndTitle => 'خاموشی کا وقت ختم';
+
+  @override
+  String get worshipNotifSilentEndText => '«ڈسٹرب نہ کریں» پھر سے بند ہے۔';
+
+  @override
+  String get worshipNotifSilentLeft =>
+      'آپ نے خود «ڈسٹرب نہ کریں» بدلا، اس لیے واعية نے اسے ویسے ہی چھوڑ دیا۔';
+
+  @override
+  String get worshipNotifNoAccess =>
+      'واعية «ڈسٹرب نہ کریں» آن نہیں کر سکا۔ واعية کے سیٹنگز صفحے پر اجازت دیں۔';
+
+  @override
+  String worshipNotifMuteTitle(Object prayer) {
+    return '$prayer: میڈیا خاموش';
+  }
+
+  @override
+  String worshipNotifMuteText(Object time) {
+    return 'میڈیا کی آواز $time تک بند ہے۔';
+  }
+
+  @override
+  String get worshipNotifMuteEndTitle => 'میڈیا کی آواز واپس آ گئی';
+
+  @override
+  String get worshipNotifMuteEndText => 'میڈیا کا والیوم پہلے جیسا ہے۔';
+
+  @override
+  String get worshipNotifMuteLeft =>
+      'آپ نے خود میڈیا کا والیوم بدلا، اس لیے واعية نے اسے ویسے ہی چھوڑ دیا۔';
+
+  @override
   String get desktopPreview =>
       'پیش نظارہ: اس کمپیوٹر پر فلٹر انجن ابھی منسلک نہیں ہے۔ بٹن صرف یہ دکھاتا ہے کہ ایپ کیسے کام کرے گی۔';
 
