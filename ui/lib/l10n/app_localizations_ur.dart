@@ -1037,7 +1037,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get fixAddApp => 'ایپ شامل کریں';
 
   @override
-  String fixRemoveApp(String app) {
+  String fixRemoveApp(Object app) {
     return '$app ہٹائیں';
   }
 
@@ -1087,7 +1087,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get fixCoverArea => 'کوئی حصہ ڈھانپیں';
 
   @override
-  String fixRemoveCovers(int count) {
+  String fixRemoveCovers(Object count) {
     return 'ہاتھ کے پردے ہٹائیں ($count)';
   }
 
@@ -1111,12 +1111,12 @@ class AppLocalizationsUr extends AppLocalizations {
   String get fixWrongScreen => 'غلطی سے ڈھکا گیا';
 
   @override
-  String fixNoted(int count) {
+  String fixNoted(Object count) {
     return 'نوٹ ہو گیا (اس آلے پر $count نوٹس)۔';
   }
 
   @override
-  String fixNotesCount(int count) {
+  String fixNotesCount(Object count) {
     return 'اس آلے پر نوٹس: $count';
   }
 

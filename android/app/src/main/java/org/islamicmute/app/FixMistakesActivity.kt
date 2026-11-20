@@ -42,7 +42,7 @@ class FixMistakesActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (ScreenBlur.state == null) {
-            Toast.makeText(this, R.string.fix_picker_no_blur, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.notif_fix_picker_no_blur, Toast.LENGTH_LONG).show()
             finish()
             return
         }
@@ -55,7 +55,7 @@ class FixMistakesActivity : Activity() {
         picker = PickerView(this) { has -> cover.isEnabled = has }
         root.addView(picker, FrameLayout.LayoutParams(-1, -1))
         val hint = TextView(this).apply {
-            text = getString(R.string.fix_picker_hint)
+            text = getString(R.string.notif_fix_picker_hint)
             setTextColor(Color.WHITE)
             textSize = 16f
             gravity = Gravity.CENTER
@@ -76,9 +76,9 @@ class FixMistakesActivity : Activity() {
             setOnClickListener { onClick() }
             bar.addView(this, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = (4 * d).toInt(); marginEnd = (4 * d).toInt() })
         }
-        button(R.string.fix_picker_cancel) { finish() }
-        if (FixMistakes.handCoverCount > 0) button(R.string.fix_remove_covers) { FixMistakes.clearHandCovers(this); finish() }
-        cover = button(R.string.fix_picker_cover) { coverIt() }
+        button(R.string.notif_fix_picker_cancel) { finish() }
+        if (FixMistakes.handCoverCount > 0) button(R.string.notif_fix_remove_covers) { FixMistakes.clearHandCovers(this); finish() }
+        cover = button(R.string.notif_fix_picker_cover) { coverIt() }
         cover.isEnabled = false
         root.addView(bar, FrameLayout.LayoutParams(-1, -2, Gravity.BOTTOM).apply { bottomMargin = (56 * d).toInt() })
         setContentView(root)
@@ -89,7 +89,7 @@ class FixMistakesActivity : Activity() {
         val scr = screen()
         val ok = FixMistakes.addHandCover(this, r.left / scr.width(), r.top / scr.height(),
             r.right / scr.width(), r.bottom / scr.height())
-        if (!ok) Toast.makeText(this, R.string.fix_picker_no_blur, Toast.LENGTH_LONG).show()
+        if (!ok) Toast.makeText(this, R.string.notif_fix_picker_no_blur, Toast.LENGTH_LONG).show()
         finish()
     }
 

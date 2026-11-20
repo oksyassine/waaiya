@@ -1040,7 +1040,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fixAddApp => 'Uygulama ekle';
 
   @override
-  String fixRemoveApp(String app) {
+  String fixRemoveApp(Object app) {
     return '$app kaldır';
   }
 
@@ -1090,7 +1090,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fixCoverArea => 'Bir alanı ört';
 
   @override
-  String fixRemoveCovers(int count) {
+  String fixRemoveCovers(Object count) {
     return 'Elle konan örtüleri kaldır ($count)';
   }
 
@@ -1114,12 +1114,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fixWrongScreen => 'Yanlışlıkla örtüldü';
 
   @override
-  String fixNoted(int count) {
+  String fixNoted(Object count) {
     return 'Not edildi (bu cihazda $count not).';
   }
 
   @override
-  String fixNotesCount(int count) {
+  String fixNotesCount(Object count) {
     return 'Bu cihazdaki notlar: $count';
   }
 

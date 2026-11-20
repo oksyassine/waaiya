@@ -1238,142 +1238,122 @@
   },
   "fixFilterAppsTitle": "تطبيقات تُسمع بلا تصفية",
   "@fixFilterAppsTitle": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixFilterAppsBody": "تُشغَّل هذه التطبيقات بصوتها الأصلي: لا تصفّيها واعية ولا تُسكتها.",
   "@fixFilterAppsBody": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixAddApp": "إضافة تطبيق",
   "@fixAddApp": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixRemoveApp": "إزالة {app}",
   "@fixRemoveApp": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.",
-    "placeholders": {
-      "app": {
-        "type": "String"
-      }
-    }
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNoApps": "لم يُختر أي تطبيق.",
   "@fixNoApps": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixPickTitle": "اختر تطبيقًا",
   "@fixPickTitle": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixPickEmpty": "لم يُعثر على تطبيق آخر.",
   "@fixPickEmpty": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixPickPlayingDesktop": "التطبيقات التي تُشغّل صوتًا الآن، والتي اختيرت من قبل.",
   "@fixPickPlayingDesktop": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixCancel": "إلغاء",
   "@fixCancel": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixBlurAppsTitle": "تطبيقات بلا تمويه",
   "@fixBlurAppsTitle": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixBlurAppsBody": "لا تغطية ما دام أحد هذه التطبيقات وحده على الشاشة. تعود التغطية فور مغادرته، أو متى لم تتيقّن واعية من التطبيق الظاهر.",
   "@fixBlurAppsBody": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixBlurAppsNeedsSetup": "يحتاج الإعداد لمرة واحدة: من دونه لا تعرف واعية أي تطبيق على الشاشة، فيبقى التمويه في كل مكان.",
   "@fixBlurAppsNeedsSetup": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixBlurAppsHelperMode": "غير متاح على هذا الهاتف بعد: إعداده يمرّ عبر مساعد واعية، وهو لا يعرف أي تطبيق على الشاشة. يبقى التمويه في كل مكان.",
   "@fixBlurAppsHelperMode": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixHandTitle": "تغطية جزء باليد",
   "@fixHandTitle": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixHandBody": "أثناء عمل التمويه، اسحب إصبعك على أي جزء من الشاشة لتغطيته. يبقى مغطًّى حتى تزيله أو يتوقف التمويه.",
   "@fixHandBody": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixHandNotRunning": "متاح أثناء عمل التمويه: التصفية تعمل وأحد خيارات التمويه مفعّل.",
   "@fixHandNotRunning": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixCoverArea": "تغطية جزء",
   "@fixCoverArea": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixRemoveCovers": "إزالة التغطية اليدوية ({count})",
   "@fixRemoveCovers": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNoteTitle": "تسجيل خطأ",
   "@fixNoteTitle": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNoteBody": "سجّله لحظة حدوثه. تحفظ الملاحظة الوقت والتطبيق والإعدادات، وتبقى على هذا الجهاز ولا تُرسَل أبدًا.",
   "@fixNoteBody": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixMissedSound": "مرّت موسيقى",
   "@fixMissedSound": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixWrongSound": "حُذف صوت خطأً",
   "@fixWrongSound": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixMissedScreen": "لم يُغطَّ شيء",
   "@fixMissedScreen": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixWrongScreen": "غُطّي خطأً",
   "@fixWrongScreen": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNoted": "سُجّلت الملاحظة (عدد الملاحظات على هذا الجهاز: {count}).",
   "@fixNoted": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNotesCount": "الملاحظات على هذا الجهاز: {count}",
   "@fixNotesCount": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic.",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNotesShow": "عرض الملاحظات",
   "@fixNotesShow": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNotesDelete": "حذف الملاحظات",
   "@fixNotesDelete": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNotesDeleteAsk": "حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.",
   "@fixNotesDeleteAsk": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   },
   "fixNotesTitle": "ملاحظات أخطاء الكشف",
   "@fixNotesTitle": {
-    "description": "Flutter only (lane A, fix). Not reviewed yet except in English and Arabic."
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }

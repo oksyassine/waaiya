@@ -1038,7 +1038,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get fixAddApp => 'افزودن برنامه';
 
   @override
-  String fixRemoveApp(String app) {
+  String fixRemoveApp(Object app) {
     return 'حذف $app';
   }
 
@@ -1088,7 +1088,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get fixCoverArea => 'پوشاندن یک بخش';
 
   @override
-  String fixRemoveCovers(int count) {
+  String fixRemoveCovers(Object count) {
     return 'برداشتن پوشش‌های دستی ($count)';
   }
 
@@ -1112,12 +1112,12 @@ class AppLocalizationsFa extends AppLocalizations {
   String get fixWrongScreen => 'به‌اشتباه پوشانده شد';
 
   @override
-  String fixNoted(int count) {
+  String fixNoted(Object count) {
     return 'ثبت شد ($count یادداشت روی این دستگاه).';
   }
 
   @override
-  String fixNotesCount(int count) {
+  String fixNotesCount(Object count) {
     return 'یادداشت‌های روی این دستگاه: $count';
   }
 

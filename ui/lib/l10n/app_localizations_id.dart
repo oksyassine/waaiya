@@ -1040,7 +1040,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get fixAddApp => 'Tambah aplikasi';
 
   @override
-  String fixRemoveApp(String app) {
+  String fixRemoveApp(Object app) {
     return 'Hapus $app';
   }
 
@@ -1090,7 +1090,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get fixCoverArea => 'Tutup area';
 
   @override
-  String fixRemoveCovers(int count) {
+  String fixRemoveCovers(Object count) {
     return 'Hapus penutup manual ($count)';
   }
 
@@ -1114,12 +1114,12 @@ class AppLocalizationsId extends AppLocalizations {
   String get fixWrongScreen => 'Tertutup karena salah';
 
   @override
-  String fixNoted(int count) {
+  String fixNoted(Object count) {
     return 'Dicatat ($count catatan di perangkat ini).';
   }
 
   @override
-  String fixNotesCount(int count) {
+  String fixNotesCount(Object count) {
     return 'Catatan di perangkat ini: $count';
   }
 

@@ -1038,7 +1038,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get fixAddApp => 'একটি অ্যাপ যোগ করুন';
 
   @override
-  String fixRemoveApp(String app) {
+  String fixRemoveApp(Object app) {
     return '$app সরান';
   }
 
@@ -1088,7 +1088,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get fixCoverArea => 'একটি অংশ ঢাকুন';
 
   @override
-  String fixRemoveCovers(int count) {
+  String fixRemoveCovers(Object count) {
     return 'হাতের আবরণ সরান ($count)';
   }
 
@@ -1112,12 +1112,12 @@ class AppLocalizationsBn extends AppLocalizations {
   String get fixWrongScreen => 'ভুল করে ঢাকা হয়েছে';
 
   @override
-  String fixNoted(int count) {
+  String fixNoted(Object count) {
     return 'লেখা হয়েছে (এই ডিভাইসে $countটি নোট)।';
   }
 
   @override
-  String fixNotesCount(int count) {
+  String fixNotesCount(Object count) {
     return 'এই ডিভাইসে নোট: $count';
   }
 

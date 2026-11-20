@@ -369,7 +369,10 @@ class FilterService : Service() {
                     // retried until the list changes again.
                     val ex = FixMistakes.filterOffUids(this, settings)
                     if (ex != excluded && ex != excludeFailed) {
-                        runCatching { openRecord(ex).also { it.startRecording() } }
+                        runCatching {
+                            val r = openRecord(ex)
+                            try { r.startRecording(); r } catch (t: Throwable) { r.release(); throw t }
+                        }
                             .onSuccess { r ->
                                 runCatching { record.stop() }; record.release()
                                 record = r; excluded = ex; excludeFailed = null

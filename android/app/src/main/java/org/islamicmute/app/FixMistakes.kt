@@ -342,7 +342,7 @@ object FixMistakes : Feature {
                             Thread {
                                 runCatching { addNote(ctx, what, "notification") }
                                     .onSuccess { n -> main.post {
-                                        Toast.makeText(Lang.wrap(ctx), Lang.wrap(ctx).getString(R.string.fix_noted, n),
+                                        Toast.makeText(Lang.wrap(ctx), Lang.wrap(ctx).getString(R.string.notif_fix_noted, n),
                                             Toast.LENGTH_SHORT).show()
                                         refreshUi()
                                     } }
@@ -388,28 +388,28 @@ object FixMistakes : Feature {
         val ctx = Lang.wrap(context)
         runCatching {
             val nm = ctx.getSystemService(NotificationManager::class.java)
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, ctx.getString(R.string.fix_notif_channel),
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, ctx.getString(R.string.notif_fix_notif_channel),
                 NotificationManager.IMPORTANCE_LOW).apply { setShowBadge(false) })
             val open = PendingIntent.getActivity(ctx, 70, UiActivity.open(ctx, "screen") ?: UiActivity.main(ctx),
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
             val b = Notification.Builder(ctx, CHANNEL)
-                .setContentTitle(ctx.getString(R.string.fix_notif_title))
-                .setContentText(ctx.getString(R.string.fix_notif_text))
-                .setStyle(Notification.BigTextStyle().bigText(ctx.getString(R.string.fix_notif_text)))
+                .setContentTitle(ctx.getString(R.string.notif_fix_notif_title))
+                .setContentText(ctx.getString(R.string.notif_fix_notif_text))
+                .setStyle(Notification.BigTextStyle().bigText(ctx.getString(R.string.notif_fix_notif_text)))
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(ctx.getColor(R.color.primary))
                 .setContentIntent(open)
                 .setOnlyAlertOnce(true)
                 .setOngoing(true)
             if (ScreenBlur.state != null) {
-                if (handCoverCount == 0) b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.fix_cover_area),
+                if (handCoverCount == 0) b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_cover_area),
                     PendingIntent.getActivity(ctx, 71, FixMistakesActivity.intent(ctx),
                         PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)).build())
-                else b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.fix_remove_covers),
+                else b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_remove_covers),
                     broadcast(ctx, "remove", 72)).build())
             }
-            b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.fix_note_missed), broadcast(ctx, "missed", 73)).build())
-            b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.fix_note_wrong), broadcast(ctx, "wrong", 74)).build())
+            b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_note_missed), broadcast(ctx, "missed", 73)).build())
+            b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_note_wrong), broadcast(ctx, "wrong", 74)).build())
             nm.notify(NOTIFICATION_ID, b.build())
         }.onFailure { Log.w(TAG, "fix: notification: $it") }
     }

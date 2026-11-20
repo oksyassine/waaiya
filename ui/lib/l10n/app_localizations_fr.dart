@@ -1048,7 +1048,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fixAddApp => 'Ajouter une application';
 
   @override
-  String fixRemoveApp(String app) {
+  String fixRemoveApp(Object app) {
     return 'Retirer $app';
   }
 
@@ -1098,7 +1098,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fixCoverArea => 'Couvrir une zone';
 
   @override
-  String fixRemoveCovers(int count) {
+  String fixRemoveCovers(Object count) {
     return 'Retirer les caches manuels ($count)';
   }
 
@@ -1122,12 +1122,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fixWrongScreen => 'Couvert par erreur';
 
   @override
-  String fixNoted(int count) {
+  String fixNoted(Object count) {
     return 'Noté ($count notes sur cet appareil).';
   }
 
   @override
-  String fixNotesCount(int count) {
+  String fixNotesCount(Object count) {
     return 'Notes sur cet appareil : $count';
   }
 
