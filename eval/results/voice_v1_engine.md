@@ -77,8 +77,8 @@ as the other models); full list in `models/SHA256SUMS`. Before publishing, check
 
 ## Live switch on Android (emulator smoke check, im_ui35, debug x86_64 build)
 
-Turning "Keep singing" on while filtering loads voice_v1_fp16 on a helper thread in 0.84 s while the default model
-keeps filtering, then swaps at a hop boundary (`filter: model reloaded: voice_v1_fp16, keep singing true, failed
-false`); off swaps back the same way. The audio loop never stopped. The emulator's dropout counter, which already
-rises by 20-45 per 10 s on this emulator without any reload, rose by 91 in the 10 s window of the first reload
-(model loading competes for the emulator's CPU); a real phone, with spare cores, still has to be checked.
+Turning "Keep singing" on while filtering loaded voice_v1_fp16 on a helper thread in 0.84 s while the default model
+kept filtering, then swapped at a hop boundary (`filter: model reloaded: voice_v1_fp16, keep singing true, failed
+false`); off swapped back the same way, and the audio loop kept running (its 10 s stats lines continued). Not verified:
+that no silence gap beyond the swap is heard. The test sound was not playing at the moment of the swap (hop times 0.0
+ms, silent hops), and this emulator counts dropouts all the time (20-90 per 10 s), so its counter cannot show it.

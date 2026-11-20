@@ -90,6 +90,9 @@ class LinuxEngine implements FilterHost {
   /// [reload]). Fail-closed in the script: on without the model, the output is silent.
   Future<BackendMessage?> setKeepSinging(bool on) => _set('keep-singing', on);
 
+  /// What `waaiya keep-singing` last set (`$CFG/keep_singing`); null: never set.
+  bool? get keepSingingSet => _onOff('keep_singing');
+
   /// Can the filter run here at all? Null when it can, else the reason.
   @override
   Future<BackendMessage?> preflight() async {

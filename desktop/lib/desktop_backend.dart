@@ -209,9 +209,13 @@ class DesktopBackend extends MemoryBackend {
         'singing': _singingFeature(engine, state.settings.keepSinging, state.filter.state == FilterState.filtering),
       }));
 
-  /// `waaiya keep-singing on|off`; Linux only (no other host has the model).
-  static Future<BackendMessage?> _setKeepSinging(FilterHost e, bool on) async =>
-      e is LinuxEngine && e.hasSingingModel ? e.setKeepSinging(on) : null;
+  /// `waaiya keep-singing on|off`; Linux only (no other host has the model). "on" only with the model bundled; "off"
+  /// whenever the engine still has it on (also left on by an earlier bundle without the model: it would stay silent).
+  static Future<BackendMessage?> _setKeepSinging(FilterHost e, bool on) async {
+    if (e is! LinuxEngine) return null;
+    if (on ? e.hasSingingModel : e.keepSingingSet == true) return e.setKeepSinging(on);
+    return null;
+  }
 
   // --- Linux engine host ---
 
