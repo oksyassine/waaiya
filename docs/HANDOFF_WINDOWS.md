@@ -166,10 +166,16 @@ End-to-end with the Store package (unpacked, Developer Mode):
 - women's singing: the detector loads and the switch reaches the filter, speech is kept; but **it mutes only ~8% of
   a woman's song** (Adele), matching `models/detector/detector_eval.json` (9.5% caught on OpenSinger). Model v1 is
   weak on real songs: the listing calls it an early version.
-- Store update while filtering: works, but other apps stay at 0.01% until Waaiya is opened (and the app then says
-  "stopped because of an error", the wrong word after an update).
-- **Uninstall while filtering: other apps stay at 0.01% for good** (nothing left to give the volume back). Fix to do:
-  the filter handles WM_QUERYENDSESSION/WM_ENDSESSION (hidden window) and gives the levels back.
+- Store update and uninstall while filtering: first found broken (apps left at 0.01% until Waaiya was opened, and
+  for good after an uninstall), then **fixed and tested here**. Before it updates or removes the package, Windows
+  sends WM_QUERYENDSESSION/WM_ENDSESSION with ENDSESSION_CLOSEAPP to the package's windows (measured with a probe),
+  so `waaiya-filter.exe` now has a hidden window: on that message it gives every app its level back. After an update
+  Windows starts the filter again (RegisterApplicationRestart; here about 1 s later, from the new version) and it
+  filters again. Uninstall: a test tone went from 0.0001 back to 1.0. The app no longer says "error" after an update
+  (the last state says stopped). Left: during an update the apps play unfiltered for the few seconds Windows takes;
+  an app closed while lowered that was never played again before an uninstall stays lowered (its stored level goes
+  with the package). GitHub runners do not deliver the close message (no signed-in desktop): `msix_test.py` says so
+  instead of failing; `audio_test.py` 12 sends the message itself and checks the levels come back.
 - Not done (needs the owner): screen blur by eye (covers are hidden from screenshots by design), Start at login with
   a real sign-out/sign-in, the zip build's start at login.
 

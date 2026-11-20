@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show OverflowBoxFit;
 
 import '../l10n/app_localizations.dart';
 import 'app.dart';
@@ -114,8 +115,12 @@ class SettingSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = WaaiyaColors.of(context);
+    // the press highlight gets room around the text (rounded, 12 px each side); the row is widened by as much into
+    // the card's padding, so the text stays in line with the rest of the card
+    const inset = 12.0;
     final tile = SwitchListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(horizontal: inset),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
       value: value,
       onChanged: onChanged,
       title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
@@ -123,8 +128,18 @@ class SettingSwitch extends StatelessWidget {
           ? null
           : Text(body!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: bodyIsError ? c.error : null)),
     );
+    final wide = LayoutBuilder(
+      builder: (context, box) => box.hasBoundedWidth
+          ? OverflowBox(
+              minWidth: box.maxWidth + 2 * inset,
+              maxWidth: box.maxWidth + 2 * inset,
+              fit: OverflowBoxFit.deferToChild,
+              child: tile,
+            )
+          : tile,
+    );
     // one node: the id on the same node as the switch's checked state
-    return id == null ? tile : MergeSemantics(child: Semantics(identifier: id, child: tile));
+    return id == null ? wide : MergeSemantics(child: Semantics(identifier: id, child: wide));
   }
 }
 
