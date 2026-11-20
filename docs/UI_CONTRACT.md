@@ -236,3 +236,18 @@ Texts: Android's `res/values*/strings.xml` stay the source of every text. Flutte
 Add keys, never rename them; a backend that does not know a key leaves it out and the UI uses the default. Change
 this file, `ui/lib/src/backend.dart`, `ui/lib/src/channel_backend.dart`,
 `android/app/src/main/java/org/islamicmute/app/UiBridge.kt` and `desktop/lib/desktop_backend.dart` together.
+
+## 0.2.13 features (docs/FEATURES_CONTRACT.md)
+
+- Settings added: `filter_off_apps`, `blur_off_apps` (comma-separated), `keep_singing`, `prayer_silent`,
+  `prayer_silent_minutes` (5..90), `prayer_adhan_mute`, `prayer_adhan_minutes` (1..30), `prayer_place`,
+  `prayer_method` (0..15), `prayer_asr` (0..1), `prayer_sms_reply`, `prayer_sms_delay_seconds` (3..60),
+  `prayer_sms_text`, `protect_delay_minutes` (0..1440). `SettingKeys.ranges` holds every
+  integer range.
+- Snapshot key `features`: `{fix, worship, protect, singing}`, one map per feature, filled only by that feature.
+- Method `<feature>.<name>` (`WaaiyaBackend.invoke`), routed on Android by `UiBridge` to the feature's Kotlin object.
+- New error code `protected`: the waiting period or the PIN holds a change back (`setSetting`, `stopFilter`). Its
+  message is JSON: `{need: pin|wait|pin_wait|waiting, what, value, delayMinutes, dueAt?}`; Flutter answers with
+  `protect.request {what, value?, pin?}` (`what` = a setting key or `stop`), `protect.confirm`, `protect.cancel`,
+  `protect.setPin {pin, oldPin?}`, `protect.clearPin`, `protect.promptShown`. `features.protect`: `pinSet`,
+  `delayMinutes`, `pending {what, value, dueAt, confirmUntil, ready}?`, `lockedUntil?`, `prompt?`.

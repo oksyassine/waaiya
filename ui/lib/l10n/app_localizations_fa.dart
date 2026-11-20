@@ -938,6 +938,34 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsGeneralTitle => 'عمومی';
 
   @override
+  String get worshipPrayerFajr => 'صبح';
+
+  @override
+  String get worshipPrayerSunrise => 'طلوع آفتاب';
+
+  @override
+  String get worshipPrayerDhuhr => 'ظهر';
+
+  @override
+  String get worshipPrayerAsr => 'عصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'مغرب';
+
+  @override
+  String get worshipPrayerIsha => 'عشا';
+
+  @override
+  String get worshipEndSilent => 'پایان بی‌صدایی';
+
+  @override
+  String get worshipUnmute => 'الان صدا را برگردان';
+
+  @override
+  String get worshipSmsDefault =>
+      'وقت نماز است، الان نمی‌توانم جواب بدهم. بعداً با شما تماس می‌گیرم.';
+
+  @override
   String get desktopPreview =>
       'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
 
@@ -1062,4 +1090,635 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get linkSingingNote => 'طبق تنظیمات شما، آواز زنان هم بی‌صدا می‌شود.';
+
+  @override
+  String get singingKeepTitle => 'نگه داشتن صدای آواز (آزمایشی)';
+
+  @override
+  String get singingKeepBody =>
+      'سازها حذف می‌شوند ولی صدای آواز می‌ماند، پس سخنرانی‌ای که زیرش نشید پخش می‌شود صدای نشید را هم نگه می‌دارد؛ پذیرفتنی بودن آن به انتخاب شماست.';
+
+  @override
+  String get singingKeepNoModel =>
+      'این نسخه مدل آواز را ندارد، پس تا وقتی این گزینه روشن است صدا خاموش می‌ماند. آن را خاموش کنید.';
+
+  @override
+  String get fixFilterAppsTitle => 'برنامه‌هایی که بدون فیلتر شنیده می‌شوند';
+
+  @override
+  String get fixFilterAppsBody =>
+      'این برنامه‌ها صدای اصلی خود را پخش می‌کنند: واعیه نه آن‌ها را فیلتر می‌کند و نه بی‌صدا.';
+
+  @override
+  String get fixAddApp => 'افزودن برنامه';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'حذف $app';
+  }
+
+  @override
+  String get fixNoApps => 'هیچ برنامه‌ای انتخاب نشده.';
+
+  @override
+  String get fixPickTitle => 'یک برنامه انتخاب کنید';
+
+  @override
+  String get fixPickEmpty => 'برنامهٔ دیگری پیدا نشد.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'برنامه‌هایی که اکنون صدا پخش می‌کنند، و آن‌هایی که از قبل انتخاب شده‌اند.';
+
+  @override
+  String get fixCancel => 'لغو';
+
+  @override
+  String get fixBlurAppsTitle => 'برنامه‌های بدون محوسازی';
+
+  @override
+  String get fixBlurAppsBody =>
+      'تا وقتی یکی از این برنامه‌ها به‌تنهایی روی صفحه است، پوششی نیست. به‌محض ترک آن، یا هر وقت واعیه مطمئن نباشد کدام برنامه نمایش داده می‌شود، پوشش‌ها برمی‌گردند.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'به راه‌اندازی یک‌باره نیاز دارد: بدون آن واعیه نمی‌داند کدام برنامه روی صفحه است، پس محوسازی همه‌جا می‌ماند.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'دستیار واعیه اجرا نمی‌شود، پس برنامهٔ روی صفحه خوانده نمی‌شود. تا وقتی دستیار از صفحهٔ راه‌اندازی دوباره اجرا نشود، تار کردن همه‌جا روشن می‌ماند.';
+
+  @override
+  String get fixHandTitle => 'پوشاندن یک بخش با دست';
+
+  @override
+  String get fixHandBody =>
+      'هنگام کار محوسازی، انگشت خود را روی هر بخشی از صفحه بکشید تا پوشانده شود. تا وقتی آن را بردارید یا محوسازی متوقف شود پوشیده می‌ماند.';
+
+  @override
+  String get fixHandNotRunning =>
+      'هنگام کار محوسازی در دسترس است: فیلتر روشن و یکی از گزینه‌های محوسازی روشن.';
+
+  @override
+  String get fixCoverArea => 'پوشاندن یک بخش';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'برداشتن پوشش‌های دستی ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'ثبت یک اشتباه';
+
+  @override
+  String get fixNoteBody =>
+      'همان لحظه علامت بزنید. یادداشت زمان، برنامه و تنظیمات را نگه می‌دارد. روی همین دستگاه می‌ماند و هرگز فرستاده نمی‌شود.';
+
+  @override
+  String get fixMissedSound => 'موسیقی رد شد';
+
+  @override
+  String get fixWrongSound => 'صدا به‌اشتباه حذف شد';
+
+  @override
+  String get fixMissedScreen => 'چیزی پوشانده نشد';
+
+  @override
+  String get fixWrongScreen => 'به‌اشتباه پوشانده شد';
+
+  @override
+  String fixNoted(Object count) {
+    return 'ثبت شد ($count یادداشت روی این دستگاه).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'یادداشت‌های روی این دستگاه: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'نمایش یادداشت‌ها';
+
+  @override
+  String get fixNotesDelete => 'حذف یادداشت‌ها';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'همهٔ یادداشت‌ها حذف شوند؟ این کار برگشت‌پذیر نیست.';
+
+  @override
+  String get fixNotesTitle => 'یادداشت‌های تشخیص اشتباه';
+
+  @override
+  String get worshipTitle => 'اوقات نماز';
+
+  @override
+  String get worshipBody =>
+      'اختیاری. روی همین گوشی از روی مکانی که انتخاب می‌کنید حساب می‌شود. چیزی فرستاده نمی‌شود.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'مکان: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'مکان: انتخاب نشده';
+
+  @override
+  String get worshipChoose => 'انتخاب';
+
+  @override
+  String get worshipPlaceSearch => 'جستجوی شهر';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'شهری پیدا نشد. می‌توانید به جای آن مختصات را وارد کنید.';
+
+  @override
+  String get worshipPlaceCustom => 'وارد کردن مختصات';
+
+  @override
+  String get worshipLat => 'عرض جغرافیایی (شمال +، جنوب −)';
+
+  @override
+  String get worshipLon => 'طول جغرافیایی (شرق +، غرب −)';
+
+  @override
+  String get worshipZone => 'منطقه زمانی، مثلاً Asia/Tehran';
+
+  @override
+  String get worshipCustomInvalid => 'عددها و منطقه زمانی را بررسی کنید.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'این مکان قابل استفاده نیست. دوباره انتخابش کنید.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'روش محاسبه: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'روش محاسبه';
+
+  @override
+  String get worshipMethodNote =>
+      'بر اساس کشور شهر انتخاب شد. روشی را که مسجدتان پیروی می‌کند انتخاب کنید.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'عصر: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'وقت عصر';
+
+  @override
+  String get worshipAsrStandard => 'رایج (شافعی، مالکی، حنبلی)';
+
+  @override
+  String get worshipAsrHanafi => 'حنفی';
+
+  @override
+  String get worshipMethodMwl => 'رابطه جهان اسلام';
+
+  @override
+  String get worshipMethodIsna => 'انجمن اسلامی آمریکای شمالی (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'سازمان عمومی نقشه‌برداری مصر';
+
+  @override
+  String get worshipMethodUmmAlQura => 'ام‌القری، مکه';
+
+  @override
+  String get worshipMethodKarachi => 'دانشگاه علوم اسلامی کراچی';
+
+  @override
+  String get worshipMethodTehran => 'مؤسسه ژئوفیزیک دانشگاه تهران';
+
+  @override
+  String get worshipMethodGulf => 'منطقه خلیج';
+
+  @override
+  String get worshipMethodKuwait => 'کویت';
+
+  @override
+  String get worshipMethodQatar => 'قطر';
+
+  @override
+  String get worshipMethodSingapore => 'سنگاپور (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'ترکیه (دیانت)';
+
+  @override
+  String get worshipMethodFrance => 'فرانسه (UOIF، ۱۲°)';
+
+  @override
+  String get worshipMethodMorocco => 'مراکش (وزارت اوقاف)';
+
+  @override
+  String get worshipMethodIndonesia => 'اندونزی (وزارت امور دینی)';
+
+  @override
+  String get worshipMethodMalaysia => 'مالزی (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'دبی';
+
+  @override
+  String get worshipToday => 'امروز';
+
+  @override
+  String get worshipNoTimes =>
+      'امروز اینجا وقت نماز نیست: خورشید طلوع یا غروب نمی‌کند.';
+
+  @override
+  String get worshipSilentTitle => 'بی‌صدا در وقت نماز';
+
+  @override
+  String get worshipSilentBody =>
+      'از وقت هر نماز، «مزاحم نشوید» به مدت زیر روشن می‌شود و بعد به حالت قبل برمی‌گردد.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'مدت بی‌صدا: $minutes دقیقه';
+  }
+
+  @override
+  String get worshipMuteTitle => 'بی‌صدا کردن رسانه هنگام اذان';
+
+  @override
+  String get worshipMuteBody =>
+      'در وقت هر نماز، صدای رسانه (ویدیو، صوت، بازی) به مدت زیر قطع می‌شود. از اعلان می‌توانید فوراً صدا را برگردانید.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'مدت قطع صدا: $minutes دقیقه';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'مدت';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes دقیقه';
+  }
+
+  @override
+  String get worshipNeedPlace => 'اول مکان را انتخاب کنید.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'بعدی: $prayer ساعت $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'بی‌صدا تا $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'رسانه تا $time بی‌صداست.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'به واعية اجازه دهید «مزاحم نشوید» را تغییر دهد، وگرنه گوشی بی‌صدا نمی‌شود.';
+
+  @override
+  String get worshipAllow => 'اجازه دادن';
+
+  @override
+  String get worshipExactNeeded =>
+      '«هشدارها و یادآوری‌ها» برای واعية مجاز نیست، پس هر تغییر ممکن است تا ۱۰ دقیقه، یا وقتی گوشی در خواب است بیشتر، دیر انجام شود.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'اعلان‌ها خاموش است: نمی‌بینید گوشی کی بی‌صدا می‌شود یا برمی‌گردد.';
+
+  @override
+  String get worshipTonesTitle => 'زنگ و صدای اعلان ساده';
+
+  @override
+  String get worshipTonesBody =>
+      'واعية نمی‌تواند زنگ و صدای اعلان‌ها را فیلتر کند، فقط می‌تواند آن‌ها را عوض کند. یک صدای ساده بدون موسیقی انتخاب کنید:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'زنگ ساده $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'صدای اعلان ساده $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'پخش';
+
+  @override
+  String get worshipToneSet => 'استفاده';
+
+  @override
+  String get worshipToneInUse => 'در حال استفاده';
+
+  @override
+  String get worshipToneDone => 'انجام شد.';
+
+  @override
+  String get worshipTonePermission =>
+      'به واعية اجازه تغییر تنظیمات سیستم را بدهید، برگردید و دوباره بزنید.';
+
+  @override
+  String get worshipToneFailed =>
+      'این گوشی اجازه تغییر به واعية نداد. در تنظیمات صدا، صدایی به نام «Waaiya plain» را انتخاب کنید.';
+
+  @override
+  String get worshipOpenSound => 'باز کردن تنظیمات صدا';
+
+  @override
+  String get worshipSmsTitle => 'پاسخ پیامکی به تماس‌ها هنگام نماز';
+
+  @override
+  String get worshipSmsBody =>
+      'در دقیقه‌های بی‌صدای بعد از وقت هر نماز، به تماسی که بی‌پاسخ زنگ می‌خورد یک پیامک فرستاده می‌شود. برای هر شماره در هر نماز یک بار؛ هرگز به شماره‌های پنهان یا کوتاه.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'پس از: $seconds ثانیه زنگ';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'ثانیه‌های زنگ پیش از پیامک';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds ثانیه';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'پیام: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'پیام شما';
+
+  @override
+  String get worshipSmsTextDefault => 'پیام پیش‌فرض';
+
+  @override
+  String get worshipSmsCost =>
+      'هر پاسخ یک پیامک معمولی از سیم‌کارت شماست، با هزینه طرح شما. هنگام رومینگ چیزی فرستاده نمی‌شود.';
+
+  @override
+  String get worshipSmsRoaming =>
+      'اکنون در رومینگ هستید: پیامکی فرستاده نمی‌شود.';
+
+  @override
+  String get worshipSmsLogTitle => 'پاسخ‌های فرستاده‌شده (فقط روی همین گوشی)';
+
+  @override
+  String get worshipContinue => 'ادامه';
+
+  @override
+  String get worshipWhyDnd =>
+      'برای بی‌صدا کردن گوشی در وقت نماز، در صفحه بعد به واعية دسترسی «مزاحم نشوید» بدهید.';
+
+  @override
+  String get worshipWhyExact =>
+      'برای انجام کار درست سر وقت، در صفحه بعد به واعية اجازه تنظیم هشدارها و یادآوری‌ها بدهید. بدون آن ممکن است تغییرات تا ۱۰ دقیقه دیر شوند.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'اعلان‌ها را مجاز کنید تا هر تغییر را ببینید و بتوانید آن را برگردانید.';
+
+  @override
+  String get worshipWhyWrite =>
+      'برای عوض کردن زنگ یا صدای اعلان، در صفحه بعد به واعية اجازه تغییر تنظیمات سیستم بدهید.';
+
+  @override
+  String get worshipWhyPhone =>
+      'برای اینکه بداند تماسی زنگ می‌خورد و شماره‌اش چیست، واعية به اجازه‌های «تلفن» و «گزارش تماس» نیاز دارد. جز پاسخ شما چیزی از گوشی بیرون نمی‌رود.';
+
+  @override
+  String get worshipWhySms =>
+      'برای فرستادن پاسخ شما، واعية به اجازه ارسال پیامک نیاز دارد. فقط همین پاسخ را می‌فرستد، حداکثر یک بار برای هر شماره در هر نماز.';
+
+  @override
+  String get worshipMissingDnd =>
+      'دسترسی «مزاحم نشوید» داده نشد، پس بی‌صدایی خاموش می‌ماند.';
+
+  @override
+  String get worshipMissingPhone =>
+      'اجازه‌های «تلفن» و «گزارش تماس» داده نشد، پس پاسخ پیامکی خاموش می‌ماند.';
+
+  @override
+  String get worshipMissingSms =>
+      'اجازه ارسال پیامک داده نشد، پس پاسخ پیامکی خاموش می‌ماند.';
+
+  @override
+  String get worshipTryAgain => 'دوباره امتحان کنید';
+
+  @override
+  String get protectTitle => 'محافظت برای لحظه‌های ضعف';
+
+  @override
+  String get protectBody =>
+      'همین حالا که آرامید تصمیم بگیرید: هر تغییری که محافظت را کم کند پیش از اعمال شدن صبر می‌کند. والدین می‌توانند رمز هم بگذارند.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'مدت انتظار: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'مدت انتظار';
+
+  @override
+  String get protectDelayBody =>
+      'توقف فیلتر، خاموش کردن پوشش یا هر چیزی که محافظت را کم کند این مدت صبر می‌کند. سپس آن را ظرف ۱۵ دقیقه تأیید می‌کنید، وگرنه چیزی تغییر نمی‌کند. روشن کردن همیشه فوراً اعمال می‌شود.';
+
+  @override
+  String get protectDelayOff => 'بدون انتظار';
+
+  @override
+  String get protectDelay1m => '۱ دقیقه';
+
+  @override
+  String get protectDelay5m => '۵ دقیقه';
+
+  @override
+  String get protectDelay15m => '۱۵ دقیقه';
+
+  @override
+  String get protectDelay30m => '۳۰ دقیقه';
+
+  @override
+  String get protectDelay1h => '۱ ساعت';
+
+  @override
+  String get protectDelay4h => '۴ ساعت';
+
+  @override
+  String get protectDelay24h => '۲۴ ساعت';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes دقیقه';
+  }
+
+  @override
+  String get protectPinNone => 'رمز: گذاشته نشده';
+
+  @override
+  String get protectPinIsSet => 'رمز: گذاشته شده';
+
+  @override
+  String get protectPinSet => 'گذاشتن رمز';
+
+  @override
+  String get protectPinRemove => 'حذف';
+
+  @override
+  String get protectPinBody =>
+      'با رمز، هر تغییری که محافظت را کم کند اول رمز را می‌خواهد. تغییر مدت انتظار یا خود رمز هم آن را می‌خواهد.';
+
+  @override
+  String get protectPinForgot =>
+      'اگر رمز فراموش شود، راه بازنشانی نیست: فقط پاک کردن داده‌های واعية یا نصب دوباره، که همهٔ تنظیماتش را هم پاک می‌کند.';
+
+  @override
+  String get protectPinTitle => 'رمز را وارد کنید';
+
+  @override
+  String get protectPinNewTitle => 'یک رمز انتخاب کنید';
+
+  @override
+  String get protectPinChangeTitle => 'تغییر رمز';
+
+  @override
+  String get protectPinCurrent => 'رمز فعلی';
+
+  @override
+  String get protectPinNew => 'رمز جدید (۴ تا ۸ رقم)';
+
+  @override
+  String get protectPinAgain => 'رمز جدید دوباره';
+
+  @override
+  String get protectPinBad => 'از ۴ تا ۸ رقم استفاده کنید.';
+
+  @override
+  String get protectPinDiffer => 'دو رمز جدید یکی نیستند.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'رمز اشتباه. $count تلاش تا یک مکث باقی مانده.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'تلاش‌های اشتباه زیاد. ساعت $time دوباره امتحان کنید.';
+  }
+
+  @override
+  String get protectOk => 'باشه';
+
+  @override
+  String get protectCancel => 'لغو';
+
+  @override
+  String get protectCancelChange => 'لغو تغییر';
+
+  @override
+  String get protectConfirm => 'تأیید';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: ساعت $time اعمال می‌شود.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: انتظار تمام شد. هنوز می‌خواهید؟ پیش از $time تأیید کنید، وگرنه چیزی تغییر نمی‌کند.';
+  }
+
+  @override
+  String get protectWaitTitle => 'این تغییر منتظر است';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what ساعت $time اعمال می‌شود، اگر آن موقع هنوز بخواهید. سپس ظرف ۱۵ دقیقه همین‌جا تأییدش می‌کنید.';
+  }
+
+  @override
+  String get protectWaitStart => 'شروع انتظار';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'از قبل در انتظار است: ساعت $time اعمال می‌شود.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'ساعت $time اعمال می‌شود. آن موقع تأییدش کنید.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'فردا ساعت $time';
+  }
+
+  @override
+  String get protectHeldBack => 'تنظیمات محافظت این تغییر را نگه داشته است.';
+
+  @override
+  String get protectLimits =>
+      'آنچه این نمی‌تواند جلویش را بگیرد: توقف اجباری، حذف برنامه، پاک کردن داده‌های واعية و تنظیمات خود اندروید. جلوگیری از این‌ها اختیارات مدیر دستگاه یا دسترس‌پذیری می‌خواهد که واعية از آن‌ها استفاده نمی‌کند. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'آنچه این نمی‌تواند جلویش را بگیرد: فرمان waaiya در ترمینال، حذف واعية یا پاک کردن پوشهٔ تنظیماتش. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
+
+  @override
+  String get protectWhatStop => 'توقف فیلتر';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'خاموش کردن: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'روشن کردن: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'افزودن برنامه به: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'کم‌سخت‌گیرتر کردن تار کردن';
+
+  @override
+  String get protectWhatGender => 'تغییر کسی که از گوشی استفاده می‌کند';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'تغییر مدت انتظار به: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'تغییر رمز';
+
+  @override
+  String get protectWhatPinClear => 'حذف رمز';
+
+  @override
+  String get protectWhatSetting => 'تغییر یک تنظیم';
 }

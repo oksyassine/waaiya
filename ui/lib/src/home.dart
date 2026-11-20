@@ -7,13 +7,17 @@ import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
 import 'blur_card.dart';
+import 'fix_mistakes.dart';
 import 'licences.dart';
 import 'links_page.dart';
 import 'motion.dart';
+import 'protection.dart';
 import 'setup_card.dart';
+import 'singing_option.dart';
 import 'theme.dart';
 import 'widgets.dart';
 import 'wireless_setup.dart';
+import 'worship.dart';
 
 /// The pages of the main screen, in bottom-bar order. Pages without the capability are left out (desktop: Filter,
 /// Screen when it has a blur, Settings).
@@ -138,12 +142,14 @@ class _HomeScreenState extends State<HomeScreen> {
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
             if (s.setup.originalsMuted && s.setup.helperMissing) const HelperMissingBanner(),
             const FilterOptionsCard(),
+            const FilterAppsCard(),
           ],
         ),
       'screen' => PageColumn(
           children: [
             PageTitle(l.navScreen),
             BlurCard(onChanged: set),
+            const BlurAppsCard(),
             const CoverHelperCard(),
           ],
         ),
@@ -170,6 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             PageTitle(l.navSettings),
             const GeneralSettingsCard(),
+            const WorshipCard(),
+            const ProtectionCard(),
             const SizedBox(height: 16),
             TestId(
               'diagnostics',
@@ -240,6 +248,7 @@ class FilterOptionsCard extends StatelessWidget {
             value: st.muteWomenSinging,
             onChanged: (v) => set(SettingKeys.muteWomenSinging, v),
           ),
+        const SingingOptionSwitch(),
       ],
     );
   }

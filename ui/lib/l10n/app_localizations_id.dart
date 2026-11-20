@@ -939,6 +939,34 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
+  String get worshipPrayerFajr => 'Subuh';
+
+  @override
+  String get worshipPrayerSunrise => 'Terbit';
+
+  @override
+  String get worshipPrayerDhuhr => 'Zuhur';
+
+  @override
+  String get worshipPrayerAsr => 'Asar';
+
+  @override
+  String get worshipPrayerMaghrib => 'Magrib';
+
+  @override
+  String get worshipPrayerIsha => 'Isya';
+
+  @override
+  String get worshipEndSilent => 'Akhiri senyap sekarang';
+
+  @override
+  String get worshipUnmute => 'Bunyikan sekarang';
+
+  @override
+  String get worshipSmsDefault =>
+      'Sedang waktu salat, saya tidak bisa menjawab sekarang. Nanti saya telepon balik.';
+
+  @override
   String get desktopPreview =>
       'Pratinjau: mesin filter belum terhubung di komputer ini. Tombol hanya menunjukkan cara kerja aplikasi.';
 
@@ -1064,4 +1092,636 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get linkSingingNote =>
       'Nyanyian perempuan juga dibisukan, sesuai pengaturan Anda.';
+
+  @override
+  String get singingKeepTitle => 'Pertahankan nyanyian (uji coba)';
+
+  @override
+  String get singingKeepBody =>
+      'Alat musik dihapus tetapi suara nyanyian tetap ada, sehingga ceramah dengan nasyid di latarnya juga tetap menyimpan suara nasyid; apakah itu dapat diterima adalah pilihan Anda.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Versi ini tidak memiliki model nyanyian, jadi suara tetap senyap selama opsi ini aktif. Matikan opsi ini.';
+
+  @override
+  String get fixFilterAppsTitle => 'Aplikasi yang didengar tanpa filter';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Aplikasi ini memutar suara aslinya: Waaiya tidak menyaring dan tidak membisukannya.';
+
+  @override
+  String get fixAddApp => 'Tambah aplikasi';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'Hapus $app';
+  }
+
+  @override
+  String get fixNoApps => 'Belum ada aplikasi yang dipilih.';
+
+  @override
+  String get fixPickTitle => 'Pilih aplikasi';
+
+  @override
+  String get fixPickEmpty => 'Tidak ada aplikasi lain.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Aplikasi yang sedang memutar suara, dan yang sudah dipilih.';
+
+  @override
+  String get fixCancel => 'Batal';
+
+  @override
+  String get fixBlurAppsTitle => 'Aplikasi tanpa buram';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Tidak ada penutup selama salah satu aplikasi ini sendirian di layar. Penutup kembali begitu Anda meninggalkannya, atau kapan pun Waaiya tidak yakin aplikasi mana yang tampil.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Perlu penyiapan sekali: tanpanya Waaiya tidak tahu aplikasi mana yang ada di layar, jadi buram tetap aktif di mana-mana.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Pembantu Waaiya tidak berjalan, jadi aplikasi di layar tidak dapat dibaca. Blur tetap aktif di mana-mana sampai pembantu dijalankan lagi dari halaman Penyiapan.';
+
+  @override
+  String get fixHandTitle => 'Tutup area dengan tangan';
+
+  @override
+  String get fixHandBody =>
+      'Saat buram berjalan, seret jari di bagian layar mana pun untuk menutupinya. Bagian itu tetap tertutup sampai Anda menghapusnya atau buram berhenti.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Tersedia saat buram berjalan: penyaringan aktif dan satu opsi buram aktif.';
+
+  @override
+  String get fixCoverArea => 'Tutup area';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Hapus penutup manual ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Catat kesalahan';
+
+  @override
+  String get fixNoteBody =>
+      'Tandai saat terjadi. Catatan menyimpan waktu, aplikasi, dan pengaturan. Catatan tetap di perangkat ini dan tidak pernah dikirim.';
+
+  @override
+  String get fixMissedSound => 'Musik lolos';
+
+  @override
+  String get fixWrongSound => 'Suara terhapus karena salah';
+
+  @override
+  String get fixMissedScreen => 'Ada yang tidak tertutup';
+
+  @override
+  String get fixWrongScreen => 'Tertutup karena salah';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Dicatat ($count catatan di perangkat ini).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Catatan di perangkat ini: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Tampilkan catatan';
+
+  @override
+  String get fixNotesDelete => 'Hapus catatan';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Hapus semua catatan? Ini tidak dapat dibatalkan.';
+
+  @override
+  String get fixNotesTitle => 'Catatan kesalahan deteksi';
+
+  @override
+  String get worshipTitle => 'Waktu salat';
+
+  @override
+  String get worshipBody =>
+      'Opsional. Dihitung di ponsel ini dari tempat yang Anda pilih. Tidak ada yang dikirim.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Tempat: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Tempat: belum dipilih';
+
+  @override
+  String get worshipChoose => 'Pilih';
+
+  @override
+  String get worshipPlaceSearch => 'Cari kota';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Kota tidak ditemukan. Anda bisa memasukkan koordinat sebagai gantinya.';
+
+  @override
+  String get worshipPlaceCustom => 'Masukkan koordinat';
+
+  @override
+  String get worshipLat => 'Lintang (utara +, selatan −)';
+
+  @override
+  String get worshipLon => 'Bujur (timur +, barat −)';
+
+  @override
+  String get worshipZone => 'Zona waktu, misalnya Asia/Jakarta';
+
+  @override
+  String get worshipCustomInvalid => 'Periksa angka dan zona waktunya.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Tempat ini tidak bisa dipakai. Pilih lagi.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Perhitungan: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Metode perhitungan';
+
+  @override
+  String get worshipMethodNote =>
+      'Dipilih sesuai negara kota itu. Pilih yang diikuti masjid Anda.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Asar: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Waktu Asar';
+
+  @override
+  String get worshipAsrStandard => 'Standar (Syafi\'i, Maliki, Hanbali)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanafi';
+
+  @override
+  String get worshipMethodMwl => 'Liga Muslim Dunia';
+
+  @override
+  String get worshipMethodIsna => 'Islamic Society of North America (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Otoritas Survei Umum Mesir';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Umm al-Qura, Makkah';
+
+  @override
+  String get worshipMethodKarachi => 'Universitas Ilmu Islam, Karachi';
+
+  @override
+  String get worshipMethodTehran => 'Institut Geofisika, Universitas Teheran';
+
+  @override
+  String get worshipMethodGulf => 'Kawasan Teluk';
+
+  @override
+  String get worshipMethodKuwait => 'Kuwait';
+
+  @override
+  String get worshipMethodQatar => 'Qatar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapura (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Turki (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Prancis (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Maroko (Kementerian Habous)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indonesia (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malaysia (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubai';
+
+  @override
+  String get worshipToday => 'Hari ini';
+
+  @override
+  String get worshipNoTimes =>
+      'Tidak ada waktu salat di sini hari ini: matahari tidak terbit atau tidak terbenam.';
+
+  @override
+  String get worshipSilentTitle => 'Senyap saat waktu salat';
+
+  @override
+  String get worshipSilentBody =>
+      'Sejak setiap waktu salat, Jangan Ganggu selama menit di bawah, lalu kembali seperti semula.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Senyap selama: $minutes menit';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Bisukan media saat azan';
+
+  @override
+  String get worshipMuteBody =>
+      'Pada setiap waktu salat, suara media (video, audio, game) dibisukan selama menit di bawah. Notifikasinya bisa langsung membunyikannya lagi.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Dibisukan selama: $minutes menit';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Durasi';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes menit';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Pilih tempat dulu.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Berikutnya: $prayer pukul $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'Senyap sampai $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Media dibisukan sampai $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'Izinkan Waaiya mengubah Jangan Ganggu, jika tidak ponsel tidak bisa senyap.';
+
+  @override
+  String get worshipAllow => 'Izinkan';
+
+  @override
+  String get worshipExactNeeded =>
+      'Alarm & pengingat tidak diizinkan untuk Waaiya, jadi setiap perubahan bisa terlambat hingga 10 menit, atau lebih saat ponsel tidur.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Notifikasi mati: Anda tidak akan melihat kapan ponsel senyap atau kembali.';
+
+  @override
+  String get worshipTonesTitle => 'Nada dering dan suara notifikasi polos';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya tidak bisa menyaring nada dering atau suara notifikasi, hanya menggantinya. Pilih nada polos tanpa musik:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Nada dering polos $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Suara notifikasi polos $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Putar';
+
+  @override
+  String get worshipToneSet => 'Pakai';
+
+  @override
+  String get worshipToneInUse => 'Dipakai';
+
+  @override
+  String get worshipToneDone => 'Selesai.';
+
+  @override
+  String get worshipTonePermission =>
+      'Izinkan Waaiya mengubah setelan sistem, kembali, lalu ketuk lagi.';
+
+  @override
+  String get worshipToneFailed =>
+      'Ponsel ini tidak mengizinkan Waaiya mengubahnya. Di setelan Suara, pilih nada bernama “Waaiya plain”.';
+
+  @override
+  String get worshipOpenSound => 'Buka setelan Suara';
+
+  @override
+  String get worshipSmsTitle => 'Balas panggilan dengan SMS saat salat';
+
+  @override
+  String get worshipSmsBody =>
+      'Selama menit senyap setelah setiap waktu salat, panggilan yang dibiarkan berdering mendapat satu SMS. Sekali per nomor per salat; tidak pernah ke nomor tersembunyi atau nomor pendek.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Setelah: $seconds detik berdering';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'Detik berdering sebelum SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds detik';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Pesan: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Pesan Anda';
+
+  @override
+  String get worshipSmsTextDefault => 'Pakai bawaan';
+
+  @override
+  String get worshipSmsCost =>
+      'Setiap balasan adalah SMS biasa dari SIM Anda, dengan tarif paket Anda. Tidak ada yang dikirim saat roaming.';
+
+  @override
+  String get worshipSmsRoaming => 'Sedang roaming: tidak ada SMS yang dikirim.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Balasan terkirim (hanya disimpan di ponsel ini)';
+
+  @override
+  String get worshipContinue => 'Lanjut';
+
+  @override
+  String get worshipWhyDnd =>
+      'Agar ponsel senyap saat waktu salat, izinkan akses Jangan Ganggu untuk Waaiya di halaman berikutnya.';
+
+  @override
+  String get worshipWhyExact =>
+      'Agar tepat waktu, izinkan Waaiya menyetel alarm & pengingat di halaman berikutnya. Tanpanya, perubahan bisa terlambat hingga 10 menit.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Izinkan notifikasi agar Anda melihat setiap perubahan dan bisa membatalkannya.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Untuk mengganti nada dering atau suara notifikasi, izinkan Waaiya mengubah setelan sistem di halaman berikutnya.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Untuk mengetahui ada panggilan yang berdering dan nomornya, Waaiya memerlukan izin Telepon dan Log panggilan. Tidak ada yang keluar dari ponsel selain balasan Anda.';
+
+  @override
+  String get worshipWhySms =>
+      'Untuk mengirim balasan Anda, Waaiya memerlukan izin mengirim SMS. Hanya balasan itu yang dikirim, paling banyak sekali per nomor per salat.';
+
+  @override
+  String get worshipMissingDnd =>
+      'Akses Jangan Ganggu tidak diizinkan, jadi senyap tetap mati.';
+
+  @override
+  String get worshipMissingPhone =>
+      'Izin Telepon dan Log panggilan tidak diberikan, jadi balasan SMS tetap mati.';
+
+  @override
+  String get worshipMissingSms =>
+      'Izin mengirim SMS tidak diberikan, jadi balasan SMS tetap mati.';
+
+  @override
+  String get worshipTryAgain => 'Coba lagi';
+
+  @override
+  String get protectTitle => 'Perlindungan untuk saat lemah';
+
+  @override
+  String get protectBody =>
+      'Putuskan sekarang, saat tenang: perubahan yang menurunkan perlindungan menunggu sebelum berlaku. Orang tua juga dapat memasang PIN.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Masa tunggu: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Masa tunggu';
+
+  @override
+  String get protectDelayBody =>
+      'Menghentikan filter, mematikan penutup, atau apa pun yang menurunkan perlindungan menunggu selama ini. Lalu Anda mengonfirmasinya dalam 15 menit, atau tidak ada yang berubah. Menyalakan sesuatu selalu langsung berlaku.';
+
+  @override
+  String get protectDelayOff => 'Tidak ada';
+
+  @override
+  String get protectDelay1m => '1 menit';
+
+  @override
+  String get protectDelay5m => '5 menit';
+
+  @override
+  String get protectDelay15m => '15 menit';
+
+  @override
+  String get protectDelay30m => '30 menit';
+
+  @override
+  String get protectDelay1h => '1 jam';
+
+  @override
+  String get protectDelay4h => '4 jam';
+
+  @override
+  String get protectDelay24h => '24 jam';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes menit';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: belum dipasang';
+
+  @override
+  String get protectPinIsSet => 'PIN: dipasang';
+
+  @override
+  String get protectPinSet => 'Pasang PIN';
+
+  @override
+  String get protectPinRemove => 'Hapus';
+
+  @override
+  String get protectPinBody =>
+      'Dengan PIN, setiap perubahan yang menurunkan perlindungan memintanya dulu. Mengubah masa tunggu atau PIN juga memintanya.';
+
+  @override
+  String get protectPinForgot =>
+      'Jika PIN terlupa, tidak ada cara mengatur ulang: hanya menghapus data Waaiya atau memasangnya ulang, yang juga menghapus semua pengaturannya.';
+
+  @override
+  String get protectPinTitle => 'Masukkan PIN';
+
+  @override
+  String get protectPinNewTitle => 'Pilih PIN';
+
+  @override
+  String get protectPinChangeTitle => 'Ubah PIN';
+
+  @override
+  String get protectPinCurrent => 'PIN saat ini';
+
+  @override
+  String get protectPinNew => 'PIN baru (4 sampai 8 angka)';
+
+  @override
+  String get protectPinAgain => 'PIN baru sekali lagi';
+
+  @override
+  String get protectPinBad => 'Gunakan 4 sampai 8 angka.';
+
+  @override
+  String get protectPinDiffer => 'Kedua PIN baru tidak sama.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'PIN salah. Tersisa $count percobaan sebelum jeda.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Terlalu banyak percobaan salah. Coba lagi pukul $time.';
+  }
+
+  @override
+  String get protectOk => 'OK';
+
+  @override
+  String get protectCancel => 'Batal';
+
+  @override
+  String get protectCancelChange => 'Batalkan perubahan';
+
+  @override
+  String get protectConfirm => 'Konfirmasi';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: berlaku pukul $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: masa tunggu selesai. Masih ingin? Konfirmasi sebelum $time, atau tidak ada yang berubah.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Perubahan ini menunggu';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what berlaku pukul $time, jika saat itu Anda masih menginginkannya. Anda mengonfirmasinya di sini dalam 15 menit setelahnya.';
+  }
+
+  @override
+  String get protectWaitStart => 'Mulai menunggu';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Sudah menunggu: berlaku pukul $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'Berlaku pukul $time. Konfirmasi saat itu.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'besok pukul $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Perubahan ini ditahan oleh pengaturan perlindungan.';
+
+  @override
+  String get protectLimits =>
+      'Yang tidak bisa dicegah: paksa berhenti, mencopot pemasangan, menghapus data Waaiya, dan pengaturan Android sendiri. Memblokirnya butuh hak admin perangkat atau aksesibilitas yang tidak dipakai Waaiya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Yang tidak bisa dicegah: perintah waaiya di terminal, menghapus Waaiya, atau menghapus folder pengaturannya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
+
+  @override
+  String get protectWhatStop => 'Hentikan filter';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Matikan: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Nyalakan: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Tambahkan aplikasi ke: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Buat blur kurang ketat';
+
+  @override
+  String get protectWhatGender => 'Ubah siapa yang memakai ponsel';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Ubah masa tunggu menjadi: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Ubah PIN';
+
+  @override
+  String get protectWhatPinClear => 'Hapus PIN';
+
+  @override
+  String get protectWhatSetting => 'Ubah pengaturan';
 }

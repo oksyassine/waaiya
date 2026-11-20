@@ -940,6 +940,34 @@ class AppLocalizationsUz extends AppLocalizations {
   String get settingsGeneralTitle => 'Umumiy';
 
   @override
+  String get worshipPrayerFajr => 'Bomdod';
+
+  @override
+  String get worshipPrayerSunrise => 'Quyosh chiqishi';
+
+  @override
+  String get worshipPrayerDhuhr => 'Peshin';
+
+  @override
+  String get worshipPrayerAsr => 'Asr';
+
+  @override
+  String get worshipPrayerMaghrib => 'Shom';
+
+  @override
+  String get worshipPrayerIsha => 'Xufton';
+
+  @override
+  String get worshipEndSilent => 'Jimlikni hozir tugatish';
+
+  @override
+  String get worshipUnmute => 'Ovozni hozir yoqish';
+
+  @override
+  String get worshipSmsDefault =>
+      'Hozir namoz vaqti, javob bera olmayman. Keyinroq oʻzim qoʻngʻiroq qilaman.';
+
+  @override
   String get desktopPreview =>
       'Namoyish rejimi: filtr mexanizmi bu kompyuterda hali ulanmagan. Tugma faqat ilova qanday ishlashini koʻrsatadi.';
 
@@ -1066,4 +1094,639 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get linkSingingNote =>
       'Sozlamalaringizdagidek, ayollar qoʻshigʻi ham oʻchiriladi.';
+
+  @override
+  String get singingKeepTitle => 'Qoʻshiqni saqlash (sinov)';
+
+  @override
+  String get singingKeepBody =>
+      'Musiqa asboblari olib tashlanadi, lekin qoʻshiq aytayotgan ovozlar saqlanadi, shuning uchun orqa fonida nashid boʻlgan maʼruzada nashid ovozi ham qoladi; bu maqbulmi yoki yoʻqmi, oʻzingiz hal qilasiz.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Bu versiyada qoʻshiq modeli yoʻq, shuning uchun bu yoqilganda ovoz chiqmaydi. Uni oʻchiring.';
+
+  @override
+  String get fixFilterAppsTitle => 'Filtrsiz eshitiladigan ilovalar';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Bu ilovalar oʻz asl ovozini chaladi: Waaiya ularni filtrlamaydi ham, ovozsiz ham qilmaydi.';
+
+  @override
+  String get fixAddApp => 'Ilova qoʻshish';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return '$app ilovasini olib tashlash';
+  }
+
+  @override
+  String get fixNoApps => 'Hech qanday ilova tanlanmagan.';
+
+  @override
+  String get fixPickTitle => 'Ilovani tanlang';
+
+  @override
+  String get fixPickEmpty => 'Boshqa ilova topilmadi.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Hozir ovoz chiqarayotgan ilovalar va allaqachon tanlanganlari.';
+
+  @override
+  String get fixCancel => 'Bekor qilish';
+
+  @override
+  String get fixBlurAppsTitle => 'Yopilmaydigan ilovalar';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Ekranda faqat shu ilovalardan biri turganda qoplamalar boʻlmaydi. Undan chiqishingiz bilan yoki Waaiya qaysi ilova koʻrsatilayotganiga ishonch hosil qila olmaganda, qoplamalar qaytadi.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Bir martalik sozlash kerak: usiz Waaiya ekranda qaysi ilova ochiqligini bila olmaydi, shuning uchun xiralashtirish hamma joyda yoqilgan qoladi.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Waaiya yordamchisi ishlamayapti, shuning uchun ekrandagi ilovani aniqlab boʻlmaydi. Yordamchi Sozlash sahifasidan qayta ishga tushirilmaguncha xiralashtirish hamma joyda yoqilgan qoladi.';
+
+  @override
+  String get fixHandTitle => 'Joyni qoʻlda yopish';
+
+  @override
+  String get fixHandBody =>
+      'Xiralashtirish ishlayotganda ekranning istalgan qismini yopish uchun uning ustidan suring. Siz uni olib tashlamaguningizcha yoki xiralashtirish toʻxtamaguncha u yopiq qoladi.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Xiralashtirish ishlayotganda mavjud: filtrlash yoqilgan va xiralashtirish variantlaridan biri yoqilgan boʻlishi kerak.';
+
+  @override
+  String get fixCoverArea => 'Joyni yopish';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Qoʻlda qoʻyilgan qoplamalarni olib tashlash ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Xatoni qayd etish';
+
+  @override
+  String get fixNoteBody =>
+      'Xato yuz berganda uni belgilang. Qaydda vaqt, ilova va sozlamalar saqlanadi. U shu qurilmada qoladi va hech qachon yuborilmaydi.';
+
+  @override
+  String get fixMissedSound => 'Musiqa oʻtib ketdi';
+
+  @override
+  String get fixWrongSound => 'Ovoz xato bilan olib tashlandi';
+
+  @override
+  String get fixMissedScreen => 'Nimadir yopilmadi';
+
+  @override
+  String get fixWrongScreen => 'Xato bilan yopildi';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Qayd etildi (bu qurilmada $count ta qayd).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Bu qurilmadagi qaydlar: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Qaydlarni koʻrsatish';
+
+  @override
+  String get fixNotesDelete => 'Qaydlarni oʻchirish';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Barcha qaydlar oʻchirilsinmi? Buni ortga qaytarib boʻlmaydi.';
+
+  @override
+  String get fixNotesTitle => 'Notoʻgʻri aniqlash qaydlari';
+
+  @override
+  String get worshipTitle => 'Namoz vaqtlari';
+
+  @override
+  String get worshipBody =>
+      'Ixtiyoriy. Siz tanlagan joy boʻyicha shu telefonda hisoblanadi. Hech narsa yuborilmaydi.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Joy: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Joy: tanlanmagan';
+
+  @override
+  String get worshipChoose => 'Tanlash';
+
+  @override
+  String get worshipPlaceSearch => 'Shaharni qidirish';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Shahar topilmadi. Buning oʻrniga koordinatalarni kiritishingiz mumkin.';
+
+  @override
+  String get worshipPlaceCustom => 'Koordinatalarni kiritish';
+
+  @override
+  String get worshipLat => 'Kenglik (shimol +, janub −)';
+
+  @override
+  String get worshipLon => 'Uzunlik (sharq +, gʻarb −)';
+
+  @override
+  String get worshipZone => 'Vaqt mintaqasi, masalan Asia/Tashkent';
+
+  @override
+  String get worshipCustomInvalid => 'Raqamlar va vaqt mintaqasini tekshiring.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Bu joydan foydalanib boʻlmaydi. Uni qaytadan tanlang.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Hisoblash: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Hisoblash usuli';
+
+  @override
+  String get worshipMethodNote =>
+      'Shahar joylashgan davlatga qarab tanlangan. Masjidingiz amal qiladigan usulni tanlang.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Asr: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Asr vaqti';
+
+  @override
+  String get worshipAsrStandard => 'Standart (shofeʼiy, molikiy, hanbaliy)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanafiy';
+
+  @override
+  String get worshipMethodMwl => 'Islom olami ligasi';
+
+  @override
+  String get worshipMethodIsna => 'Shimoliy Amerika Islom jamiyati (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Misr umumiy geodeziya boshqarmasi';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Ummul-Quro, Makka';
+
+  @override
+  String get worshipMethodKarachi => 'Islom fanlari universiteti, Karachi';
+
+  @override
+  String get worshipMethodTehran => 'Tehron universiteti Geofizika instituti';
+
+  @override
+  String get worshipMethodGulf => 'Koʻrfaz mintaqasi';
+
+  @override
+  String get worshipMethodKuwait => 'Quvayt';
+
+  @override
+  String get worshipMethodQatar => 'Qatar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapur (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Turkiya (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Fransiya (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Marokash (Vaqflar vazirligi)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indoneziya (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malayziya (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubay';
+
+  @override
+  String get worshipToday => 'Bugun';
+
+  @override
+  String get worshipNoTimes =>
+      'Bugun bu yerda namoz vaqtlari yoʻq: quyosh chiqmaydi yoki botmaydi.';
+
+  @override
+  String get worshipSilentTitle => 'Namoz vaqtlarida ovozsiz';
+
+  @override
+  String get worshipSilentBody =>
+      'Har bir namoz vaqtidan boshlab quyidagi daqiqalar davomida “Bezovta qilinmasin” rejimi yoqiladi, soʻng hammasi avvalgi holiga qaytadi.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Ovozsiz: $minutes daqiqa';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Azon vaqtida media ovozini oʻchirish';
+
+  @override
+  String get worshipMuteBody =>
+      'Har bir namoz vaqtida media ovozi (video, musiqa, oʻyinlar) quyidagi daqiqalar davomida oʻchiriladi. Bildirishnoma orqali uni darhol yoqish mumkin.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Oʻchirilgan: $minutes daqiqa';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Davomiylik';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes daqiqa';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Avval joyni tanlang.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Keyingisi: $prayer, $time da';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return '$time gacha ovozsiz.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Media ovozi $time gacha oʻchirilgan.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'Waaiyaga “Bezovta qilinmasin” rejimini oʻzgartirishga ruxsat bering, aks holda telefon ovozsiz rejimga oʻta olmaydi.';
+
+  @override
+  String get worshipAllow => 'Ruxsat berish';
+
+  @override
+  String get worshipExactNeeded =>
+      'Waaiya uchun “Signallar va eslatmalar” ruxsat etilmagan, shuning uchun har bir oʻzgarish 10 daqiqagacha, telefon uyqu rejimida boʻlsa esa undan ham koʻproq kechikishi mumkin.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Bildirishnomalar oʻchirilgan: telefon qachon ovozsiz rejimga oʻtganini va ovoz qachon qaytganini koʻrmaysiz.';
+
+  @override
+  String get worshipTonesTitle =>
+      'Oddiy qoʻngʻiroq ohangi va bildirishnoma ovozi';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya qoʻngʻiroq ohangi yoki bildirishnoma ovozlarini filtrlay olmaydi, faqat almashtira oladi. Musiqasiz oddiy ohangni tanlang:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Oddiy qoʻngʻiroq ohangi $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Oddiy bildirishnoma ovozi $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Eshitish';
+
+  @override
+  String get worshipToneSet => 'Oʻrnatish';
+
+  @override
+  String get worshipToneInUse => 'Ishlatilmoqda';
+
+  @override
+  String get worshipToneDone => 'Bajarildi.';
+
+  @override
+  String get worshipTonePermission =>
+      'Waaiyaga tizim sozlamalarini oʻzgartirishga ruxsat bering, qaytib keling va yana bosing.';
+
+  @override
+  String get worshipToneFailed =>
+      'Bu telefon Waaiyaga uni oʻzgartirishga ruxsat bermadi. Ovoz sozlamalarida “Waaiya plain” nomli ohangni tanlang.';
+
+  @override
+  String get worshipOpenSound => 'Ovoz sozlamalarini ochish';
+
+  @override
+  String get worshipSmsTitle =>
+      'Namoz paytida qoʻngʻiroqlarga SMS bilan javob berish';
+
+  @override
+  String get worshipSmsBody =>
+      'Har bir namoz vaqtidan keyingi ovozsiz daqiqalarda javobsiz jiringlab qolgan qoʻngʻiroqqa bitta SMS yuboriladi. Har bir raqamga har namozda bir marta; yashirin raqamlarga va qisqa raqamlarga hech qachon yuborilmaydi.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return '$seconds soniya jiringlagandan keyin';
+  }
+
+  @override
+  String get worshipSmsDelayTitle =>
+      'SMS yuborilishidan oldin necha soniya jiringlasin';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds soniya';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Xabar: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Xabaringiz';
+
+  @override
+  String get worshipSmsTextDefault => 'Standart xabarni ishlatish';
+
+  @override
+  String get worshipSmsCost =>
+      'Har bir javob SIM-kartangizdan tarifingiz narxida yuboriladigan oddiy SMS. Rouming paytida hech narsa yuborilmaydi.';
+
+  @override
+  String get worshipSmsRoaming => 'Hozir rouming: SMS yuborilmaydi.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Yuborilgan javoblar (faqat shu telefonda saqlanadi)';
+
+  @override
+  String get worshipContinue => 'Davom etish';
+
+  @override
+  String get worshipWhyDnd =>
+      'Namoz vaqtlarida telefonni ovozsiz qilish uchun keyingi sahifada Waaiyaga “Bezovta qilinmasin” rejimiga kirishga ruxsat bering.';
+
+  @override
+  String get worshipWhyExact =>
+      'Aynan oʻz vaqtida ishlashi uchun keyingi sahifada Waaiyaga signallar va eslatmalarni oʻrnatishga ruxsat bering. Busiz oʻzgarishlar 10 daqiqagacha kechikishi mumkin.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Har bir oʻzgarishni koʻrish va uni bekor qila olish uchun bildirishnomalarga ruxsat bering.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Qoʻngʻiroq ohangi yoki bildirishnoma ovozini oʻzgartirish uchun keyingi sahifada Waaiyaga tizim sozlamalarini oʻzgartirishga ruxsat bering.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Qoʻngʻiroq jiringlayotganini va uning raqamini bilish uchun Waaiyaga “Telefon” va “Chaqiruvlar jurnali” ruxsatlari kerak. Javobingizdan boshqa hech narsa telefondan chiqmaydi.';
+
+  @override
+  String get worshipWhySms =>
+      'Javobingizni yuborish uchun Waaiyaga SMS yuborish ruxsati kerak. U faqat shu javobni, har bir raqamga har namozda koʻpi bilan bir marta yuboradi.';
+
+  @override
+  String get worshipMissingDnd =>
+      '“Bezovta qilinmasin” rejimiga kirishga ruxsat berilmadi, shuning uchun ovozsiz rejim oʻchiq qoladi.';
+
+  @override
+  String get worshipMissingPhone =>
+      '“Telefon” va “Chaqiruvlar jurnali” ruxsatlari berilmadi, shuning uchun SMS bilan javob berish oʻchiq qoladi.';
+
+  @override
+  String get worshipMissingSms =>
+      'SMS yuborishga ruxsat berilmadi, shuning uchun SMS bilan javob berish oʻchiq qoladi.';
+
+  @override
+  String get worshipTryAgain => 'Qayta urinish';
+
+  @override
+  String get protectTitle => 'Zaif damlar uchun himoya';
+
+  @override
+  String get protectBody =>
+      'Hozir, xotirjam paytingizda qaror qiling: himoyani pasaytiradigan oʻzgarish kuchga kirishidan oldin kutadi. Ota-ona PIN-kod ham oʻrnatishi mumkin.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Kutish muddati: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Kutish muddati';
+
+  @override
+  String get protectDelayBody =>
+      'Filtrni toʻxtatish, qoplamani oʻchirish yoki himoyani pasaytiradigan boshqa har qanday narsa shuncha vaqt kutadi. Soʻng uni 15 daqiqa ichida tasdiqlaysiz, aks holda hech narsa oʻzgarmaydi. Biror narsani yoqish har doim darhol ishlaydi.';
+
+  @override
+  String get protectDelayOff => 'Yoʻq';
+
+  @override
+  String get protectDelay1m => '1 daqiqa';
+
+  @override
+  String get protectDelay5m => '5 daqiqa';
+
+  @override
+  String get protectDelay15m => '15 daqiqa';
+
+  @override
+  String get protectDelay30m => '30 daqiqa';
+
+  @override
+  String get protectDelay1h => '1 soat';
+
+  @override
+  String get protectDelay4h => '4 soat';
+
+  @override
+  String get protectDelay24h => '24 soat';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes daqiqa';
+  }
+
+  @override
+  String get protectPinNone => 'PIN-kod: oʻrnatilmagan';
+
+  @override
+  String get protectPinIsSet => 'PIN-kod: oʻrnatilgan';
+
+  @override
+  String get protectPinSet => 'PIN-kod oʻrnatish';
+
+  @override
+  String get protectPinRemove => 'Olib tashlash';
+
+  @override
+  String get protectPinBody =>
+      'PIN-kod oʻrnatilgan boʻlsa, himoyani pasaytiradigan har bir oʻzgarish avval uni soʻraydi. Kutish muddatini yoki PIN-kodni oʻzgartirish ham uni soʻraydi.';
+
+  @override
+  String get protectPinForgot =>
+      'Agar PIN-kod unutilsa, uni tiklab boʻlmaydi: faqat Waaiya maʼlumotlarini tozalash yoki uni qayta oʻrnatish mumkin, bu esa uning barcha sozlamalarini ham oʻchirib yuboradi.';
+
+  @override
+  String get protectPinTitle => 'PIN-kodni kiriting';
+
+  @override
+  String get protectPinNewTitle => 'PIN-kodni tanlang';
+
+  @override
+  String get protectPinChangeTitle => 'PIN-kodni oʻzgartirish';
+
+  @override
+  String get protectPinCurrent => 'Joriy PIN-kod';
+
+  @override
+  String get protectPinNew => 'Yangi PIN-kod (4 dan 8 tagacha raqam)';
+
+  @override
+  String get protectPinAgain => 'Yangi PIN-kod yana bir marta';
+
+  @override
+  String get protectPinBad => '4 dan 8 tagacha raqam kiriting.';
+
+  @override
+  String get protectPinDiffer => 'Ikkala yangi PIN-kod bir xil emas.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'PIN-kod notoʻgʻri. Pauzagacha $count ta urinish qoldi.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Notoʻgʻri urinishlar juda koʻp. $time da qayta urinib koʻring.';
+  }
+
+  @override
+  String get protectOk => 'OK';
+
+  @override
+  String get protectCancel => 'Bekor qilish';
+
+  @override
+  String get protectCancelChange => 'Oʻzgarishni bekor qilish';
+
+  @override
+  String get protectConfirm => 'Tasdiqlash';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: $time da kuchga kiradi.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: kutish tugadi. Hali ham xohlaysizmi? $time gacha tasdiqlang, aks holda hech narsa oʻzgarmaydi.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Bu oʻzgarish kutadi';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what: agar oʻshanda ham xohlasangiz, $time da kuchga kiradi. Shundan keyin 15 daqiqa ichida buni shu yerda tasdiqlaysiz.';
+  }
+
+  @override
+  String get protectWaitStart => 'Kutishni boshlash';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Allaqachon kutilmoqda: $time da kuchga kiradi.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return '$time da kuchga kiradi. Oʻshanda tasdiqlang.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'ertaga $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Bu oʻzgarishni himoya sozlamalari ushlab turibdi.';
+
+  @override
+  String get protectLimits =>
+      'Bu nimani toʻxtata olmaydi: majburiy toʻxtatish, oʻchirib tashlash, Waaiya maʼlumotlarini tozalash va Androidning oʻz sozlamalari. Ularni bloklash uchun qurilma administratori yoki maxsus imkoniyatlar huquqlari kerak, Waaiya esa ulardan foydalanmaydi. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Bu nimani toʻxtata olmaydi: terminaldagi waaiya buyrugʻi, Waaiyani oʻchirib tashlash yoki uning sozlamalar jildini oʻchirish. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
+
+  @override
+  String get protectWhatStop => 'Filtrni toʻxtatish';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Oʻchirish: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Yoqish: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Ilova qoʻshish: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Xiralashtirishni kamroq qatʼiy qilish';
+
+  @override
+  String get protectWhatGender => 'Telefondan kim foydalanishini oʻzgartirish';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Kutish muddatini oʻzgartirish: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'PIN-kodni oʻzgartirish';
+
+  @override
+  String get protectWhatPinClear => 'PIN-kodni olib tashlash';
+
+  @override
+  String get protectWhatSetting => 'Sozlamani oʻzgartirish';
 }

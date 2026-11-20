@@ -944,6 +944,34 @@ class AppLocalizationsSw extends AppLocalizations {
   String get settingsGeneralTitle => 'Jumla';
 
   @override
+  String get worshipPrayerFajr => 'Alfajiri';
+
+  @override
+  String get worshipPrayerSunrise => 'Macheo';
+
+  @override
+  String get worshipPrayerDhuhr => 'Adhuhuri';
+
+  @override
+  String get worshipPrayerAsr => 'Alasiri';
+
+  @override
+  String get worshipPrayerMaghrib => 'Magharibi';
+
+  @override
+  String get worshipPrayerIsha => 'Isha';
+
+  @override
+  String get worshipEndSilent => 'Maliza ukimya sasa';
+
+  @override
+  String get worshipUnmute => 'Rudisha sauti sasa';
+
+  @override
+  String get worshipSmsDefault =>
+      'Ni wakati wa swala, siwezi kujibu sasa. Nitakupigia baadaye.';
+
+  @override
   String get desktopPreview =>
       'Onyesho la majaribio: injini ya kichujio bado haijaunganishwa kwenye kompyuta hii. Kitufe kinaonyesha tu jinsi programu itakavyofanya kazi.';
 
@@ -1073,4 +1101,642 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get linkSingingNote =>
       'Uimbaji wa wanawake pia hunyamazishwa, kama ilivyo kwenye mipangilio yako.';
+
+  @override
+  String get singingKeepTitle => 'Bakiza uimbaji (majaribio)';
+
+  @override
+  String get singingKeepBody =>
+      'Ala za muziki zinaondolewa lakini sauti za uimbaji zinabaki, kwa hiyo mhadhara wenye nashidi chini yake unabakiza sauti ya nashidi pia; kama hilo linakubalika ni uamuzi wako.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Toleo hili halina modeli ya uimbaji, kwa hiyo sauti hubaki kimya chaguo hili likiwa limewashwa. Lizime.';
+
+  @override
+  String get fixFilterAppsTitle => 'Programu zinazosikika bila kuchujwa';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Programu hizi hucheza sauti yao asili: Waaiya haizichuji wala haizinyamazishi.';
+
+  @override
+  String get fixAddApp => 'Ongeza programu';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'Ondoa $app';
+  }
+
+  @override
+  String get fixNoApps => 'Hakuna programu iliyochaguliwa.';
+
+  @override
+  String get fixPickTitle => 'Chagua programu';
+
+  @override
+  String get fixPickEmpty => 'Hakuna programu nyingine iliyopatikana.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Programu zinazocheza sauti sasa, na zile zilizokwisha chaguliwa.';
+
+  @override
+  String get fixCancel => 'Ghairi';
+
+  @override
+  String get fixBlurAppsTitle => 'Programu zisizofunikwa';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Hakuna vifuniko wakati mojawapo ya programu hizi iko peke yake kwenye skrini. Vifuniko hurudi mara tu unapoiacha, au wakati wowote Waaiya haina uhakika ni programu gani inaonyeshwa.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Inahitaji usanidi wa mara moja: bila huo Waaiya haiwezi kujua ni programu gani iko kwenye skrini, kwa hiyo ufifishaji hubaki kila mahali.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Msaidizi wa Waaiya hafanyi kazi, kwa hiyo programu iliyo kwenye skrini haiwezi kusomwa. Ufifishaji hubaki kila mahali hadi msaidizi awashwe tena kutoka ukurasa wa Usanidi.';
+
+  @override
+  String get fixHandTitle => 'Funika eneo kwa mkono';
+
+  @override
+  String get fixHandBody =>
+      'Ufifishaji ukiwa unafanya kazi, buruta juu ya sehemu yoyote ya skrini ili uifunike. Hubaki imefunikwa hadi uiondoe au ufifishaji usimame.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Inapatikana wakati ufifishaji unafanya kazi: uchujaji umewashwa na chaguo la ufifishaji limewashwa.';
+
+  @override
+  String get fixCoverArea => 'Funika eneo';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Ondoa vifuniko vya mkono ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Andika kosa';
+
+  @override
+  String get fixNoteBody =>
+      'Liwekee alama linapotokea. Dokezo huhifadhi saa, programu na mipangilio. Hubaki kwenye kifaa hiki na halitumwi kamwe.';
+
+  @override
+  String get fixMissedSound => 'Muziki ulipita';
+
+  @override
+  String get fixWrongSound => 'Sauti ya mtu iliondolewa kimakosa';
+
+  @override
+  String get fixMissedScreen => 'Kitu hakikufunikwa';
+
+  @override
+  String get fixWrongScreen => 'Kimefunikwa kimakosa';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Imeandikwa (madokezo $count kwenye kifaa hiki).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Madokezo kwenye kifaa hiki: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Onyesha madokezo';
+
+  @override
+  String get fixNotesDelete => 'Futa madokezo';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Futa madokezo yote? Hili haliwezi kutenduliwa.';
+
+  @override
+  String get fixNotesTitle => 'Madokezo ya utambuzi usio sahihi';
+
+  @override
+  String get worshipTitle => 'Nyakati za swala';
+
+  @override
+  String get worshipBody =>
+      'Si lazima. Huhesabiwa kwenye simu hii kutokana na mahali unapochagua. Hakuna kinachotumwa.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Mahali: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Mahali: hapajachaguliwa';
+
+  @override
+  String get worshipChoose => 'Chagua';
+
+  @override
+  String get worshipPlaceSearch => 'Tafuta mji';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Hakuna mji uliopatikana. Unaweza kuweka viwianishi badala yake.';
+
+  @override
+  String get worshipPlaceCustom => 'Weka viwianishi';
+
+  @override
+  String get worshipLat => 'Latitudo (kaskazini +, kusini −)';
+
+  @override
+  String get worshipLon => 'Longitudo (mashariki +, magharibi −)';
+
+  @override
+  String get worshipZone => 'Saa za eneo, kwa mfano Africa/Nairobi';
+
+  @override
+  String get worshipCustomInvalid => 'Kagua namba na saa za eneo.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Mahali hapa hapawezi kutumika. Pachague tena.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Hesabu: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Njia ya kuhesabu';
+
+  @override
+  String get worshipMethodNote =>
+      'Imechaguliwa kutokana na nchi ya mji. Chagua ile inayofuatwa na msikiti wako.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Alasiri: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Wakati wa Alasiri';
+
+  @override
+  String get worshipAsrStandard => 'Kawaida (Shafi\'i, Maliki, Hanbali)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanafi';
+
+  @override
+  String get worshipMethodMwl =>
+      'Muslim World League (Jumuiya ya Kiislamu ya Dunia)';
+
+  @override
+  String get worshipMethodIsna =>
+      'Jumuiya ya Kiislamu ya Amerika Kaskazini (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Mamlaka Kuu ya Upimaji ya Misri';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Umm al-Qura, Makka';
+
+  @override
+  String get worshipMethodKarachi =>
+      'Chuo Kikuu cha Sayansi za Kiislamu, Karachi';
+
+  @override
+  String get worshipMethodTehran =>
+      'Taasisi ya Jiofizikia, Chuo Kikuu cha Tehran';
+
+  @override
+  String get worshipMethodGulf => 'Eneo la Ghuba';
+
+  @override
+  String get worshipMethodKuwait => 'Kuwait';
+
+  @override
+  String get worshipMethodQatar => 'Qatar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapore (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Uturuki (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Ufaransa (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Moroko (Wizara ya Habous)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indonesia (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malaysia (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubai';
+
+  @override
+  String get worshipToday => 'Leo';
+
+  @override
+  String get worshipNoTimes =>
+      'Hakuna nyakati za swala hapa leo: jua halichomozi au halitui.';
+
+  @override
+  String get worshipSilentTitle => 'Kimya wakati wa swala';
+
+  @override
+  String get worshipSilentBody =>
+      'Kuanzia kila wakati wa swala, Usisumbue huwashwa kwa dakika zilizo hapa chini, kisha simu hurudi jinsi ulivyoiweka.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Kimya kwa: dakika $minutes';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Nyamazisha maudhui wakati wa adhana';
+
+  @override
+  String get worshipMuteBody =>
+      'Kila wakati wa swala, sauti ya maudhui (video, muziki, michezo) hunyamazishwa kwa dakika zilizo hapa chini. Arifa inaweza kurudisha sauti mara moja.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Imenyamazishwa kwa: dakika $minutes';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Muda';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return 'dakika $minutes';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Chagua mahali kwanza.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Inayofuata: $prayer saa $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'Kimya hadi $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Maudhui yamenyamazishwa hadi $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'Iruhusu Waaiya kubadilisha Usisumbue, la sivyo simu haiwezi kuwa kimya.';
+
+  @override
+  String get worshipAllow => 'Ruhusu';
+
+  @override
+  String get worshipExactNeeded =>
+      'Kengele na vikumbusho haviruhusiwi kwa Waaiya, kwa hiyo kila badiliko linaweza kuchelewa hadi dakika 10, au zaidi simu ikiwa imelala.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Arifa zimezimwa: hutaona simu inapokuwa kimya au inaporudi.';
+
+  @override
+  String get worshipTonesTitle =>
+      'Mlio wa simu na sauti ya arifa isiyo na muziki';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya haiwezi kuchuja mlio wa simu wala sauti za arifa, inaweza tu kuzibadilisha. Chagua mlio rahisi usio na muziki:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Mlio rahisi wa simu $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Sauti rahisi ya arifa $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Cheza';
+
+  @override
+  String get worshipToneSet => 'Tumia';
+
+  @override
+  String get worshipToneInUse => 'Inatumika';
+
+  @override
+  String get worshipToneDone => 'Imekamilika.';
+
+  @override
+  String get worshipTonePermission =>
+      'Iruhusu Waaiya kurekebisha mipangilio ya mfumo, rudi, kisha uguse tena.';
+
+  @override
+  String get worshipToneFailed =>
+      'Simu hii haikuiruhusu Waaiya kuibadilisha. Kwenye mipangilio ya Sauti, chagua mlio unaoitwa “Waaiya plain”.';
+
+  @override
+  String get worshipOpenSound => 'Fungua mipangilio ya Sauti';
+
+  @override
+  String get worshipSmsTitle => 'Jibu simu kwa SMS wakati wa swala';
+
+  @override
+  String get worshipSmsBody =>
+      'Katika dakika za kimya baada ya kila wakati wa swala, simu inayoachwa ikilia hupata SMS moja. Mara moja kwa kila namba kwa kila swala; kamwe si kwa namba zilizofichwa au namba fupi.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Baada ya: sekunde $seconds za kulia';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'Sekunde za kulia kabla ya SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return 'sekunde $seconds';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Ujumbe: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Ujumbe wako';
+
+  @override
+  String get worshipSmsTextDefault => 'Tumia ujumbe wa kawaida';
+
+  @override
+  String get worshipSmsCost =>
+      'Kila jibu ni SMS ya kawaida kutoka kwa SIM yako, kwa bei ya kifurushi chako. Hakuna kinachotumwa ukiwa kwenye urandaji (roaming).';
+
+  @override
+  String get worshipSmsRoaming =>
+      'Uko kwenye urandaji sasa: hakuna SMS inayotumwa.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Majibu yaliyotumwa (yanahifadhiwa kwenye simu hii tu)';
+
+  @override
+  String get worshipContinue => 'Endelea';
+
+  @override
+  String get worshipWhyDnd =>
+      'Ili simu iwe kimya wakati wa swala, ruhusu ufikiaji wa Usisumbue kwa Waaiya kwenye ukurasa unaofuata.';
+
+  @override
+  String get worshipWhyExact =>
+      'Ili kufanya kazi kwa wakati kamili, iruhusu Waaiya kuweka kengele na vikumbusho kwenye ukurasa unaofuata. Bila hivyo, mabadiliko yanaweza kuchelewa hadi dakika 10.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Ruhusu arifa ili uone kila badiliko na uweze kulitendua.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Ili kubadilisha mlio wa simu au sauti ya arifa, iruhusu Waaiya kurekebisha mipangilio ya mfumo kwenye ukurasa unaofuata.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Ili kujua kwamba simu inalia na namba yake, Waaiya inahitaji ruhusa za Simu na Rekodi za simu. Hakuna kinachotoka kwenye simu isipokuwa jibu lako.';
+
+  @override
+  String get worshipWhySms =>
+      'Ili kutuma jibu lako, Waaiya inahitaji ruhusa ya kutuma SMS. Hutuma jibu hilo tu, isizidi mara moja kwa kila namba kwa kila swala.';
+
+  @override
+  String get worshipMissingDnd =>
+      'Ufikiaji wa Usisumbue haukuruhusiwa, kwa hiyo ukimya unabaki umezimwa.';
+
+  @override
+  String get worshipMissingPhone =>
+      'Ruhusa za Simu na Rekodi za simu hazikuruhusiwa, kwa hiyo jibu la SMS linabaki limezimwa.';
+
+  @override
+  String get worshipMissingSms =>
+      'Ruhusa ya kutuma SMS haikuruhusiwa, kwa hiyo jibu la SMS linabaki limezimwa.';
+
+  @override
+  String get worshipTryAgain => 'Jaribu tena';
+
+  @override
+  String get protectTitle => 'Ulinzi kwa nyakati za udhaifu';
+
+  @override
+  String get protectBody =>
+      'Amua sasa, ukiwa mtulivu: badiliko linalopunguza ulinzi husubiri kabla ya kuanza kutumika. Mzazi pia anaweza kuweka PIN.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Muda wa kusubiri: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Muda wa kusubiri';
+
+  @override
+  String get protectDelayBody =>
+      'Kusimamisha kichujio, kuzima kifuniko au kitu kingine chochote kinachopunguza ulinzi husubiri muda huu. Kisha unakithibitisha ndani ya dakika 15, la sivyo hakuna kinachobadilika. Kuwasha vitu hufanya kazi mara moja kila wakati.';
+
+  @override
+  String get protectDelayOff => 'Hakuna';
+
+  @override
+  String get protectDelay1m => 'Dakika 1';
+
+  @override
+  String get protectDelay5m => 'Dakika 5';
+
+  @override
+  String get protectDelay15m => 'Dakika 15';
+
+  @override
+  String get protectDelay30m => 'Dakika 30';
+
+  @override
+  String get protectDelay1h => 'Saa 1';
+
+  @override
+  String get protectDelay4h => 'Saa 4';
+
+  @override
+  String get protectDelay24h => 'Saa 24';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return 'Dakika $minutes';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: haijawekwa';
+
+  @override
+  String get protectPinIsSet => 'PIN: imewekwa';
+
+  @override
+  String get protectPinSet => 'Weka PIN';
+
+  @override
+  String get protectPinRemove => 'Ondoa';
+
+  @override
+  String get protectPinBody =>
+      'Ukiwa na PIN, kila badiliko linalopunguza ulinzi huiomba kwanza. Kubadilisha muda wa kusubiri au PIN huiomba pia.';
+
+  @override
+  String get protectPinForgot =>
+      'PIN ikisahauliwa, hakuna njia ya kuiweka upya: ni kufuta data ya Waaiya au kuisakinisha upya tu, jambo ambalo pia hufuta mipangilio yake yote.';
+
+  @override
+  String get protectPinTitle => 'Weka PIN';
+
+  @override
+  String get protectPinNewTitle => 'Chagua PIN';
+
+  @override
+  String get protectPinChangeTitle => 'Badilisha PIN';
+
+  @override
+  String get protectPinCurrent => 'PIN ya sasa';
+
+  @override
+  String get protectPinNew => 'PIN mpya (tarakimu 4 hadi 8)';
+
+  @override
+  String get protectPinAgain => 'PIN mpya tena';
+
+  @override
+  String get protectPinBad => 'Tumia tarakimu 4 hadi 8.';
+
+  @override
+  String get protectPinDiffer => 'PIN mbili mpya hazifanani.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'PIN si sahihi. Majaribio $count yamebaki kabla ya kusubiri.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Majaribio mengi mno yasiyo sahihi. Jaribu tena ifikapo $time.';
+  }
+
+  @override
+  String get protectOk => 'Sawa';
+
+  @override
+  String get protectCancel => 'Ghairi';
+
+  @override
+  String get protectCancelChange => 'Ghairi badiliko';
+
+  @override
+  String get protectConfirm => 'Thibitisha';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: itaanza kutumika ifikapo $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: kusubiri kumekwisha. Bado unaitaka? Thibitisha kabla ya $time, la sivyo hakuna kitakachobadilika.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Badiliko hili linasubiri';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what: itaanza kutumika ifikapo $time, ikiwa bado unaitaka wakati huo. Utaithibitisha hapa ndani ya dakika 15 baada ya hapo.';
+  }
+
+  @override
+  String get protectWaitStart => 'Anza kusubiri';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Tayari inasubiri: itaanza kutumika ifikapo $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'Itaanza kutumika ifikapo $time. Ithibitishe wakati huo.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'kesho saa $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Badiliko hili limezuiliwa na mipangilio ya ulinzi.';
+
+  @override
+  String get protectLimits =>
+      'Kile ambacho hiki hakiwezi kuzuia: kulazimisha kusimama, kuondoa programu, kufuta data ya Waaiya na mipangilio ya Android yenyewe. Kuzuia hayo kunahitaji mamlaka ya msimamizi wa kifaa au ya ufikivu ambayo Waaiya haitumii. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Kile ambacho hiki hakiwezi kuzuia: amri ya waaiya kwenye terminal, kuondoa Waaiya au kufuta folda yake ya mipangilio. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
+
+  @override
+  String get protectWhatStop => 'Kusimamisha kichujio';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Kuzima: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Kuwasha: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Kuongeza programu kwenye: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Kupunguza ukali wa ufifishaji';
+
+  @override
+  String get protectWhatGender => 'Kubadilisha anayetumia simu';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Kubadilisha muda wa kusubiri kuwa: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Kubadilisha PIN';
+
+  @override
+  String get protectWhatPinClear => 'Kuondoa PIN';
+
+  @override
+  String get protectWhatSetting => 'Kubadilisha mpangilio';
 }

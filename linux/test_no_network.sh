@@ -46,6 +46,13 @@ if [ -f "$DET" ]; then
 else
     echo "FAIL $DET missing (scripts/fetch_deps.sh detector)"; fails=$((fails + 1))
 fi
+SING=models/voice/v3/voice_v1_fp16.onnx  # "keep singing" (scripts/fetch_deps.sh models)
+if [ -f "$SING" ]; then
+    run build/im-stream -m "$SING" --max-backlog 0 < "$T/in.f32" > "$T/sing.f32" 2>/dev/null || true
+    check "im-stream with the keep-singing model ran" '[ -s "$T/sing.f32" ]'
+else
+    echo "FAIL $SING missing (scripts/fetch_deps.sh models)"; fails=$((fails + 1))
+fi
 check "no internet socket was opened by any of them" '[ ! -s "$LOG" ]'
 [ -s "$LOG" ] && cat "$LOG"
 [ $fails = 0 ] && echo "no-network: all checks passed" || { echo "no-network: $fails failed"; exit 1; }

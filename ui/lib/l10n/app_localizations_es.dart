@@ -942,6 +942,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsGeneralTitle => 'General';
 
   @override
+  String get worshipPrayerFajr => 'Fajr';
+
+  @override
+  String get worshipPrayerSunrise => 'Salida del sol';
+
+  @override
+  String get worshipPrayerDhuhr => 'Dhuhr';
+
+  @override
+  String get worshipPrayerAsr => 'Asr';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maghrib';
+
+  @override
+  String get worshipPrayerIsha => 'Isha';
+
+  @override
+  String get worshipEndSilent => 'Terminar el silencio ya';
+
+  @override
+  String get worshipUnmute => 'Reactivar el sonido ya';
+
+  @override
+  String get worshipSmsDefault =>
+      'Es la hora de la oración y no puedo contestar ahora. Devuelvo la llamada después.';
+
+  @override
   String get desktopPreview =>
       'Vista previa: el motor del filtro aún no está conectado en este ordenador. El botón solo muestra cómo funcionará la aplicación.';
 
@@ -1069,4 +1097,641 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get linkSingingNote =>
       'El canto de mujeres también se silencia, como en sus ajustes.';
+
+  @override
+  String get singingKeepTitle => 'Conservar el canto (prueba)';
+
+  @override
+  String get singingKeepBody =>
+      'Se quitan los instrumentos pero se conservan las voces que cantan, así que una charla con un nasheed de fondo también conserva la voz del nasheed; usted decide si eso es aceptable.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Esta versión no tiene el modelo de canto, así que el sonido queda en silencio mientras esto esté activado. Desactívelo.';
+
+  @override
+  String get fixFilterAppsTitle => 'Aplicaciones que se oyen sin filtrar';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Estas aplicaciones suenan con su sonido original: Waaiya no las filtra ni las silencia.';
+
+  @override
+  String get fixAddApp => 'Añadir una aplicación';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'Quitar $app';
+  }
+
+  @override
+  String get fixNoApps => 'No se ha elegido ninguna aplicación.';
+
+  @override
+  String get fixPickTitle => 'Elegir una aplicación';
+
+  @override
+  String get fixPickEmpty => 'No se encontró ninguna otra aplicación.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Las aplicaciones que suenan ahora y las que ya están elegidas.';
+
+  @override
+  String get fixCancel => 'Cancelar';
+
+  @override
+  String get fixBlurAppsTitle => 'Aplicaciones sin cubrir';
+
+  @override
+  String get fixBlurAppsBody =>
+      'No hay cubiertas mientras una de estas aplicaciones está sola en la pantalla. Las cubiertas vuelven en cuanto sale de ella, o siempre que Waaiya no está seguro de qué aplicación se muestra.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Necesita la configuración inicial: sin ella, Waaiya no puede saber qué aplicación hay en la pantalla, así que el desenfoque sigue activo en todas partes.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'El ayudante de Waaiya no está en marcha, así que no se puede saber qué aplicación hay en la pantalla. El desenfoque sigue activo en todas partes hasta que se vuelva a iniciar el ayudante desde la página Configuración.';
+
+  @override
+  String get fixHandTitle => 'Cubrir una zona a mano';
+
+  @override
+  String get fixHandBody =>
+      'Mientras el desenfoque está en marcha, deslice el dedo sobre cualquier parte de la pantalla para cubrirla. Queda cubierta hasta que la quite o el desenfoque se detenga.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Disponible mientras el desenfoque está en marcha: filtrado activado y una opción de desenfoque activada.';
+
+  @override
+  String get fixCoverArea => 'Cubrir una zona';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Quitar las cubiertas manuales ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Anotar un error';
+
+  @override
+  String get fixNoteBody =>
+      'Márquelo cuando ocurra. Una nota guarda la hora, la aplicación y los ajustes. Se queda en este dispositivo y nunca se envía.';
+
+  @override
+  String get fixMissedSound => 'Se oyó música';
+
+  @override
+  String get fixWrongSound => 'Voz quitada por error';
+
+  @override
+  String get fixMissedScreen => 'Algo no se cubrió';
+
+  @override
+  String get fixWrongScreen => 'Cubierto por error';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Anotado ($count notas en este dispositivo).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Notas en este dispositivo: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Ver las notas';
+
+  @override
+  String get fixNotesDelete => 'Borrar las notas';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      '¿Borrar todas las notas? No se puede deshacer.';
+
+  @override
+  String get fixNotesTitle => 'Notas de detecciones erróneas';
+
+  @override
+  String get worshipTitle => 'Horarios de oración';
+
+  @override
+  String get worshipBody =>
+      'Opcional. Se calculan en este teléfono a partir del lugar que elija. No se envía nada.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Lugar: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Lugar: sin elegir';
+
+  @override
+  String get worshipChoose => 'Elegir';
+
+  @override
+  String get worshipPlaceSearch => 'Buscar una ciudad';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'No se encontró ninguna ciudad. Puede escribir las coordenadas en su lugar.';
+
+  @override
+  String get worshipPlaceCustom => 'Escribir coordenadas';
+
+  @override
+  String get worshipLat => 'Latitud (norte +, sur −)';
+
+  @override
+  String get worshipLon => 'Longitud (este +, oeste −)';
+
+  @override
+  String get worshipZone => 'Zona horaria, por ejemplo Europe/Madrid';
+
+  @override
+  String get worshipCustomInvalid => 'Revise los números y la zona horaria.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Este lugar no se puede usar. Vuelva a elegirlo.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Cálculo: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Método de cálculo';
+
+  @override
+  String get worshipMethodNote =>
+      'Elegido según el país de la ciudad. Escoja el que sigue su mezquita.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Asr: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Hora del Asr';
+
+  @override
+  String get worshipAsrStandard => 'Estándar (shafií, malikí, hanbalí)';
+
+  @override
+  String get worshipAsrHanafi => 'Hanafí';
+
+  @override
+  String get worshipMethodMwl => 'Liga Mundial Musulmana';
+
+  @override
+  String get worshipMethodIsna => 'Islamic Society of North America (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Autoridad General Egipcia de Topografía';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Umm al-Qura, La Meca';
+
+  @override
+  String get worshipMethodKarachi =>
+      'Universidad de Ciencias Islámicas, Karachi';
+
+  @override
+  String get worshipMethodTehran =>
+      'Instituto de Geofísica, Universidad de Teherán';
+
+  @override
+  String get worshipMethodGulf => 'Región del Golfo';
+
+  @override
+  String get worshipMethodKuwait => 'Kuwait';
+
+  @override
+  String get worshipMethodQatar => 'Catar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapur (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Turquía (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Francia (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Marruecos (Ministerio de los Habous)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indonesia (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malasia (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubái';
+
+  @override
+  String get worshipToday => 'Hoy';
+
+  @override
+  String get worshipNoTimes =>
+      'Hoy no hay horarios de oración aquí: el sol no sale o no se pone.';
+
+  @override
+  String get worshipSilentTitle => 'Silencio en las horas de oración';
+
+  @override
+  String get worshipSilentBody =>
+      'Desde cada hora de oración, «No molestar» durante los minutos de abajo; luego todo vuelve a como lo tenía.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'En silencio durante: $minutes min';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Silenciar el multimedia con el adhan';
+
+  @override
+  String get worshipMuteBody =>
+      'En cada hora de oración, el sonido multimedia (vídeos, música, juegos) se silencia durante los minutos de abajo. Desde la notificación puede reactivarlo al momento.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Silenciado durante: $minutes min';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Duración';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Primero elija un lugar.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Siguiente: $prayer a las $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'En silencio hasta las $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Multimedia silenciado hasta las $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'Permita que Waaiya cambie «No molestar»; si no, el teléfono no puede ponerse en silencio.';
+
+  @override
+  String get worshipAllow => 'Permitir';
+
+  @override
+  String get worshipExactNeeded =>
+      'Waaiya no tiene permiso para «Alarmas y recordatorios», así que cada cambio puede llegar hasta 10 minutos tarde, o más mientras el teléfono está en reposo.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Las notificaciones están desactivadas: no verá cuándo el teléfono se pone en silencio ni cuándo vuelve a sonar.';
+
+  @override
+  String get worshipTonesTitle =>
+      'Tono de llamada y sonido de notificación sencillos';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya no puede filtrar el tono de llamada ni los sonidos de notificación, solo cambiarlos. Elija un tono sencillo, sin música:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Tono de llamada sencillo $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Sonido de notificación sencillo $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Escuchar';
+
+  @override
+  String get worshipToneSet => 'Usar';
+
+  @override
+  String get worshipToneInUse => 'En uso';
+
+  @override
+  String get worshipToneDone => 'Listo.';
+
+  @override
+  String get worshipTonePermission =>
+      'Permita que Waaiya modifique los ajustes del sistema, vuelva y toque de nuevo.';
+
+  @override
+  String get worshipToneFailed =>
+      'Este teléfono no dejó que Waaiya lo cambiara. En los ajustes de Sonido, elija un tono llamado «Waaiya plain».';
+
+  @override
+  String get worshipOpenSound => 'Abrir los ajustes de Sonido';
+
+  @override
+  String get worshipSmsTitle =>
+      'Responder a las llamadas por SMS durante la oración';
+
+  @override
+  String get worshipSmsBody =>
+      'En los minutos de silencio tras cada hora de oración, una llamada que sigue sonando recibe un SMS. Una vez por número y por oración; nunca a números ocultos ni a números cortos.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Después de: $seconds s sonando';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'Segundos sonando antes del SMS';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds s';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Mensaje: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Su mensaje';
+
+  @override
+  String get worshipSmsTextDefault => 'Usar el predeterminado';
+
+  @override
+  String get worshipSmsCost =>
+      'Cada respuesta es un SMS normal desde su SIM, al precio de su tarifa. No se envía nada en itinerancia.';
+
+  @override
+  String get worshipSmsRoaming =>
+      'En itinerancia ahora: no se envía ningún SMS.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Respuestas enviadas (guardadas solo en este teléfono)';
+
+  @override
+  String get worshipContinue => 'Continuar';
+
+  @override
+  String get worshipWhyDnd =>
+      'Para poner el teléfono en silencio en las horas de oración, permita el acceso de Waaiya a «No molestar» en la página siguiente.';
+
+  @override
+  String get worshipWhyExact =>
+      'Para actuar a la hora exacta, permita que Waaiya programe alarmas y recordatorios en la página siguiente. Sin esto, los cambios pueden llegar hasta 10 minutos tarde.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Permita las notificaciones para ver cada cambio y poder deshacerlo.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Para cambiar su tono de llamada o su sonido de notificación, permita que Waaiya modifique los ajustes del sistema en la página siguiente.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Para saber que suena una llamada y de qué número es, Waaiya necesita los permisos Teléfono y Registros de llamadas. Nada sale del teléfono salvo su respuesta.';
+
+  @override
+  String get worshipWhySms =>
+      'Para enviar su respuesta, Waaiya necesita permiso para enviar SMS. Solo envía esa respuesta, como mucho una vez por número y por oración.';
+
+  @override
+  String get worshipMissingDnd =>
+      'No se permitió el acceso a «No molestar», así que el silencio sigue desactivado.';
+
+  @override
+  String get worshipMissingPhone =>
+      'No se concedieron los permisos Teléfono y Registros de llamadas, así que la respuesta por SMS sigue desactivada.';
+
+  @override
+  String get worshipMissingSms =>
+      'No se concedió el permiso para enviar SMS, así que la respuesta por SMS sigue desactivada.';
+
+  @override
+  String get worshipTryAgain => 'Volver a intentarlo';
+
+  @override
+  String get protectTitle => 'Protección para los momentos de debilidad';
+
+  @override
+  String get protectBody =>
+      'Decida ahora, con calma: un cambio que baja la protección espera antes de aplicarse. Un padre o una madre también puede poner un PIN.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Periodo de espera: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Periodo de espera';
+
+  @override
+  String get protectDelayBody =>
+      'Detener el filtrado, desactivar una cubierta o cualquier otra cosa que baje la protección espera este tiempo. Luego lo confirma en 15 minutos, o no cambia nada. Activar algo siempre funciona al momento.';
+
+  @override
+  String get protectDelayOff => 'Ninguno';
+
+  @override
+  String get protectDelay1m => '1 minuto';
+
+  @override
+  String get protectDelay5m => '5 minutos';
+
+  @override
+  String get protectDelay15m => '15 minutos';
+
+  @override
+  String get protectDelay30m => '30 minutos';
+
+  @override
+  String get protectDelay1h => '1 hora';
+
+  @override
+  String get protectDelay4h => '4 horas';
+
+  @override
+  String get protectDelay24h => '24 horas';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes minutos';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: sin poner';
+
+  @override
+  String get protectPinIsSet => 'PIN: puesto';
+
+  @override
+  String get protectPinSet => 'Poner un PIN';
+
+  @override
+  String get protectPinRemove => 'Quitar';
+
+  @override
+  String get protectPinBody =>
+      'Con un PIN, cada cambio que baja la protección lo pide primero. Cambiar el periodo de espera o el PIN también lo pide.';
+
+  @override
+  String get protectPinForgot =>
+      'Si se olvida el PIN, no hay forma de restablecerlo: solo borrar los datos de Waaiya o reinstalar Waaiya, lo que también borra todos sus ajustes.';
+
+  @override
+  String get protectPinTitle => 'Escriba el PIN';
+
+  @override
+  String get protectPinNewTitle => 'Elija un PIN';
+
+  @override
+  String get protectPinChangeTitle => 'Cambiar el PIN';
+
+  @override
+  String get protectPinCurrent => 'PIN actual';
+
+  @override
+  String get protectPinNew => 'PIN nuevo (de 4 a 8 cifras)';
+
+  @override
+  String get protectPinAgain => 'Repita el PIN nuevo';
+
+  @override
+  String get protectPinBad => 'Use de 4 a 8 cifras.';
+
+  @override
+  String get protectPinDiffer => 'Los dos PIN nuevos no coinciden.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'PIN incorrecto. Quedan $count intentos antes de una pausa.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Demasiados intentos fallidos. Vuelva a intentarlo a partir de $time.';
+  }
+
+  @override
+  String get protectOk => 'Aceptar';
+
+  @override
+  String get protectCancel => 'Cancelar';
+
+  @override
+  String get protectCancelChange => 'Cancelar el cambio';
+
+  @override
+  String get protectConfirm => 'Confirmar';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: se aplica a partir de $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: la espera ha terminado. ¿Aún lo quiere? Confírmelo antes de $time, o no cambia nada.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Este cambio espera';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what se aplica a partir de $time, si entonces aún lo quiere. Después lo confirma aquí en un plazo de 15 minutos.';
+  }
+
+  @override
+  String get protectWaitStart => 'Empezar la espera';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Ya en espera: se aplica a partir de $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'Se aplica a partir de $time. Confírmelo entonces.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'mañana a las $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Los ajustes de protección retienen este cambio.';
+
+  @override
+  String get protectLimits =>
+      'Lo que esto no puede impedir: forzar la detención, desinstalar, borrar los datos de Waaiya y los propios ajustes de Android. Bloquear eso requiere permisos de administrador del dispositivo o de accesibilidad que Waaiya no usa. Esto protege de un momento de debilidad, no de una persona decidida.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Lo que esto no puede impedir: el comando waaiya en una terminal, quitar Waaiya o borrar su carpeta de ajustes. Esto protege de un momento de debilidad, no de una persona decidida.';
+
+  @override
+  String get protectWhatStop => 'Detener el filtrado';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Desactivar: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Activar: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Añadir una aplicación a: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Hacer el desenfoque menos estricto';
+
+  @override
+  String get protectWhatGender => 'Cambiar quién usa el teléfono';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Cambiar el periodo de espera a: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Cambiar el PIN';
+
+  @override
+  String get protectWhatPinClear => 'Quitar el PIN';
+
+  @override
+  String get protectWhatSetting => 'Cambiar un ajuste';
 }

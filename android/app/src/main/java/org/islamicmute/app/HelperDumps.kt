@@ -74,6 +74,34 @@ object HelperDumps {
     }
     private const val READ_MS = 2_500L
 
+    /** Its own reader, so the window list read every 250 ms never makes the muter's sound dump wait. */
+    private val windowReader = java.util.concurrent.Executors.newSingleThreadExecutor { Thread(it, "im-helper-windows").apply { isDaemon = true } }
+
+    /** `dumpsys window visible-apps` through the helper (FixMistakes, helper mode); throws as [read] does. */
+    fun readVisibleApps(): String {
+        val helper = CoverHelper.service ?: error("helper not running")
+        val pipe = ParcelFileDescriptor.createPipe()
+        val task = windowReader.submit<String> {
+            try {
+                if (!helper.dumpVisibleApps(pipe[1])) error("helper refused the window list")
+            } finally {
+                runCatching { pipe[1].close() }
+            }
+            FileInputStream(pipe[0].fileDescriptor).readBytes().toString(Charsets.UTF_8)
+        }
+        try {
+            return task.get(1_000L, java.util.concurrent.TimeUnit.MILLISECONDS)
+        } catch (e: java.util.concurrent.TimeoutException) {
+            task.cancel(true)
+            throw java.io.IOException("helper did not answer in 1000 ms (window list)")
+        } catch (e: java.util.concurrent.ExecutionException) {
+            throw e.cause ?: e
+        } finally {
+            runCatching { pipe[1].close() }
+            runCatching { pipe[0].close() }
+        }
+    }
+
     /** Helper side: `settings put global` (shell has WRITE_SECURE_SETTINGS); [value] is checked by the caller. */
     internal fun putGlobal(key: String, value: String): Boolean {
         val p = ProcessBuilder("/system/bin/settings", "put", "global", key, value).redirectErrorStream(true).start()

@@ -40,7 +40,7 @@ Result on the owner's PC (2026-11-20, package 1.2.12.0 from commit 703bd88, Wind
 | Field | Value |
 |---|---|
 | Category | Utilities & tools (no subcategory needed). |
-| Privacy policy | "Does this product access, collect or transmit personal information?" **No.** Microsoft may still ask for a URL because of runFullTrust: give https://github.com/oksyassine/waaiya/blob/main/PRIVACY.md (the file `PRIVACY.md`; it is on GitHub's main branch once this branch is merged). |
+| Privacy policy | "Does this product access, collect or transmit personal information?" **No.** Microsoft may still ask for a URL because of runFullTrust: give https://github.com/oksyassine/waaiya/blob/main/docs/PRIVACY.md (English and Arabic; on GitHub's main branch once this branch is merged). |
 | Website | https://github.com/oksyassine/waaiya |
 | Support contact | https://github.com/oksyassine/waaiya/issues (or the owner's support email) |
 | Contact details | Only for a company account: the owner's details (never put in this repository). |
@@ -133,4 +133,4 @@ The fastest way (Microsoft's "Import and export Store listings"):
 
 ## Privacy policy
 
-`PRIVACY.md` at the top of the repository (the URL in Properties).
+`docs/PRIVACY.md` (English and Arabic; the URL in Properties).

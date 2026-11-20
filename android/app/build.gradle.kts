@@ -27,6 +27,11 @@ val signingProps = Properties().apply {
 // Screen blur: declare the accessibility service only on request (Play Protect blocks sideloaded apps that have one).
 val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
 
+// Store builds (docs/DISTRIBUTION.md). -PimPlay: no yt-dlp self-update (Google Play forbids apps that download
+// code to run). -PimNoLinks: no "Open a link" at all (its share target is disabled and the Links page is hidden).
+val playBuild = providers.gradleProperty("imPlay").isPresent
+val noLinks = providers.gradleProperty("imNoLinks").isPresent
+
 android {
     namespace = "org.islamicmute.app"
     compileSdk = 35
@@ -40,6 +45,9 @@ android {
         versionName = "0.2.12"
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
+        buildConfigField("boolean", "SELF_UPDATE", (!playBuild).toString())
+        buildConfigField("boolean", "LINKS", (!noLinks).toString())
+        manifestPlaceholders["linksEnabled"] = (!noLinks).toString()
         if (blurA11y) versionNameSuffix = "-a11y"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
@@ -130,6 +138,7 @@ val modelAssets = layout.buildDirectory.dir("modelAssets")
 val modelVoice = providers.gradleProperty("imModel").getOrElse(rootProject.file("../models/dfn3/dfn3_stream_int8.onnx").path)
 val modelVision = rootProject.file("../models/vision")
 fun modelFile(prop: String, default: File): File = file(providers.gradleProperty(prop).getOrElse(default.path))
+val modelSinging = modelFile("imSingingModel", rootProject.file("../models/voice/v3/voice_v1_fp16.onnx"))
 // asset name in the APK -> source file
 val requiredModels = linkedMapOf(
     "voice.onnx" to file(modelVoice),
@@ -142,6 +151,10 @@ val requiredModels = linkedMapOf(
     "blur_nsfw.onnx" to modelFile("imBlurNsfw", modelVision.resolve("nsfw_marqo_int8.onnx")),
     // Person segmenter (-PimBlurSeg): covers follow each person's outline; without it, whole rectangles.
     "blur_seg.onnx" to modelFile("imBlurSeg", modelVision.resolve("seg.onnx")),
+    // "Keep singing" (setting keep_singing, a test): voice_v1, removes instruments and keeps singing voices
+    // (eval/results/voice_v1_engine.md). -PimSingingModel overrides; models-v1 release (scripts/fetch_deps.sh models).
+    "voice_singing.onnx" to modelSinging,
+    "voice_singing.state_init.bin" to file(modelSinging.path.removeSuffix(".onnx") + ".state_init.bin"),
 )
 // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
 // In the models-v1 release since 0.2.12 (scripts/fetch_deps.sh detector); a local build without it warns (CI fails).
@@ -162,7 +175,8 @@ gradle.taskGraph.whenReady {
     val missing = requiredModels.filterValues { !it.isFile }
     if (missing.isNotEmpty()) {
         val msg = "models missing: " + missing.entries.joinToString { (asset, src) -> "$asset (from $src)" } +
-            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg."
+            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg / " +
+            "-PimSingingModel."
         if (release) throw GradleException("Release build: $msg")
         logger.warn("warning: $msg Debug build continues without them.")
     }
@@ -177,6 +191,9 @@ android.sourceSets["main"].assets.srcDir(modelAssets)
 androidComponents {
     onVariants { v ->
         if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml")
+        // Worship: reply to calls by SMS during prayer (WorshipSms). Not in Play builds (-PimPlay): Google Play
+        // restricts SMS and call-log permissions.
+        if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/smsReply/AndroidManifest.xml")
     }
 }
 

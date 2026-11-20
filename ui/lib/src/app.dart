@@ -9,6 +9,7 @@ import '../l10n/app_localizations.dart';
 import 'backend.dart';
 import 'home.dart';
 import 'onboarding.dart';
+import 'protection.dart';
 import 'theme.dart';
 
 /// Waaiya's screens. Arabic and right-to-left by default; the language comes from the backend, never from the
@@ -95,6 +96,10 @@ Future<T?> runAction<T>(BuildContext context, Future<T> Function(WaaiyaBackend b
   try {
     return await action(scope.backend);
   } on BackendException catch (e) {
+    if (e.code == 'protected' && context.mounted) {
+      await onProtected(context, e);
+      return null;
+    }
     messenger?.showSnackBar(SnackBar(content: Text(l.actionFailed(e.message.isEmpty ? e.code : e.message))));
     return null;
   }

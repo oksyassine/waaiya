@@ -278,6 +278,18 @@ class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
         }
     }
 
+    override fun dumpVisibleApps(sink: ParcelFileDescriptor): Boolean {
+        try {
+            checkCaller()
+            val b = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java)
+                .invoke(null, "window") as? IBinder ?: return false
+            b.dumpAsync(sink.fileDescriptor, arrayOf("visible-apps"))
+            return true
+        } finally {
+            runCatching { sink.close() }
+        }
+    }
+
     override fun putScreenShareProtection(value: Int): Boolean {
         checkCaller()
         if (value != 0 && value != 1) return false

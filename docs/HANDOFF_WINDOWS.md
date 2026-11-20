@@ -183,7 +183,7 @@ Store submission, checked against Microsoft's "Create an app submission for your
 (2026-11-20): `desktop/windows/msix/STORE_LISTING.md` now follows its six sections. Found and fixed: the Store does
 not support Somali (dropped from the package's languages; the app keeps it), descriptions may not contain web
 addresses (removed), "What's new" stays empty on a first submission, the restricted capability runFullTrust needs its
-own justification (written), privacy policy as `PRIVACY.md` (the URL works once on main; the old text wrongly said
+own justification (written), privacy policy as `docs/PRIVACY.md` (the URL works once on main; the old text wrongly said
 uninstalling removes the settings). `desktop/tool/store_import.py` fills Partner Center's exported listings .csv with
 the 17 listings, screenshots and logo for "Import folder". All 17 listings are within every limit. Listing
 screenshots: 1366x768 (the minimum for PCs). Warning for the owner: a first submission as Public audience can never

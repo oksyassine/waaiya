@@ -948,6 +948,34 @@ class AppLocalizationsSo extends AppLocalizations {
   String get settingsGeneralTitle => 'Guud';
 
   @override
+  String get worshipPrayerFajr => 'Subax';
+
+  @override
+  String get worshipPrayerSunrise => 'Qorrax ka soo bax';
+
+  @override
+  String get worshipPrayerDhuhr => 'Duhur';
+
+  @override
+  String get worshipPrayerAsr => 'Casar';
+
+  @override
+  String get worshipPrayerMaghrib => 'Maqrib';
+
+  @override
+  String get worshipPrayerIsha => 'Cishe';
+
+  @override
+  String get worshipEndSilent => 'Hadda jooji aamusnaanta';
+
+  @override
+  String get worshipUnmute => 'Hadda soo celi codka';
+
+  @override
+  String get worshipSmsDefault =>
+      'Waa waqtigii salaadda, hadda ma jawaabi karo. Dib ayaan kuu soo wici doonaa.';
+
+  @override
   String get desktopPreview =>
       'Muuqaal hordhac ah: matoorka shaandhaynta weli lagama xirin kombiyuutarkan. Badhanku wuxuu kaliya muujinayaa sida barnaamijku u shaqayn doono.';
 
@@ -1076,4 +1104,639 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get linkSingingNote =>
       'Heesaha haweenka sidoo kale waa la aamusiiyaa, sida dejintaada.';
+
+  @override
+  String get singingKeepTitle => 'Hay heesaha (tijaabo)';
+
+  @override
+  String get singingKeepBody =>
+      'Qalabka muusigga waa la saarayaa laakiin codadka heesaha waa la hayaa, sidaas darteed muxaadaro uu hoos ku jiro nashiid waxay sidoo kale haysaa codka nashiidka; in taasi ay ansax tahay iyo in kale adiga ayay kuu taal.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Noocan ma laha moodeelka heesaha, sidaas darteed codku wuu aamusnaanayaa inta tani daaran tahay. Dami.';
+
+  @override
+  String get fixFilterAppsTitle =>
+      'Barnaamijyada la maqlo iyagoo aan la shaandheyn';
+
+  @override
+  String get fixFilterAppsBody =>
+      'Barnaamijyadan waxay daaraan codkooda asalka ah: Waaiya ma shaandhayso mana aamusiiso.';
+
+  @override
+  String get fixAddApp => 'Ku dar barnaamij';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'Ka saar $app';
+  }
+
+  @override
+  String get fixNoApps => 'Barnaamij lama dooran.';
+
+  @override
+  String get fixPickTitle => 'Dooro barnaamij';
+
+  @override
+  String get fixPickEmpty => 'Barnaamij kale lama helin.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'Barnaamijyada hadda cod daaraya, iyo kuwa horay loo doortay.';
+
+  @override
+  String get fixCancel => 'Ka noqo';
+
+  @override
+  String get fixBlurAppsTitle => 'Barnaamijyada aan la daboolin';
+
+  @override
+  String get fixBlurAppsBody =>
+      'Dabool ma jiro marka mid ka mid ah barnaamijyadan uu kaligiis shaashadda ku jiro. Daboolladu way soo laabtaan isla marka aad ka baxdo, ama mar kasta oo Waaiya aysan hubin barnaamijka la muujinayo.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'Waxay u baahan tahay habaynta hal mar ah: la\'aanteed Waaiya ma garan karto barnaamijka shaashadda ku jira, sidaas darteed qarintu meel walba way ku sii jirtaa.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'Caawiyaha Waaiya ma shaqaynayo, sidaas darteed barnaamijka shaashadda ku jira lama akhrin karo. Qarintu meel walba way ku sii jirtaa ilaa caawiyaha dib looga bilaabo bogga Habaynta.';
+
+  @override
+  String get fixHandTitle => 'Gacanta ku dabool meel';
+
+  @override
+  String get fixHandBody =>
+      'Inta qarintu shaqaynayso, ku jiid qayb kasta oo shaashadda ah si aad u daboosho. Way daboolnaanaysaa ilaa aad ka saarto ama qarintu joogsato.';
+
+  @override
+  String get fixHandNotRunning =>
+      'Waxaa la heli karaa inta qarintu shaqaynayso: shaandhayntu daaran tahay, ikhtiyaar qarin ahna daaran yahay.';
+
+  @override
+  String get fixCoverArea => 'Dabool meel';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'Ka saar daboollada gacanta ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'Qor khalad';
+
+  @override
+  String get fixNoteBody =>
+      'Calaamadee marka uu dhaco. Qoraalku wuxuu hayaa waqtiga, barnaamijka iyo dejinta. Wuxuu ku jiraa qalabkan, waligiisna lama diro.';
+
+  @override
+  String get fixMissedSound => 'Muusig ayaa soo dhaafay';
+
+  @override
+  String get fixWrongSound => 'Cod si khalad ah ayaa looga saaray';
+
+  @override
+  String get fixMissedScreen => 'Wax lama daboolin';
+
+  @override
+  String get fixWrongScreen => 'Si khalad ah ayaa loo daboolay';
+
+  @override
+  String fixNoted(Object count) {
+    return 'Waa la qoray ($count qoraal oo ku jira qalabkan).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'Qoraallada qalabkan: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'Muuji qoraallada';
+
+  @override
+  String get fixNotesDelete => 'Tirtir qoraallada';
+
+  @override
+  String get fixNotesDeleteAsk =>
+      'Ma la tirtiraa dhammaan qoraallada? Tan dib looma celin karo.';
+
+  @override
+  String get fixNotesTitle => 'Qoraallada garasho khaldan';
+
+  @override
+  String get worshipTitle => 'Waqtiyada salaadda';
+
+  @override
+  String get worshipBody =>
+      'Ikhtiyaari. Waxaa lagu xisaabiyaa taleefankan iyadoo laga eegayo meesha aad doorato. Waxba lama diro.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'Meesha: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'Meesha: lama dooran';
+
+  @override
+  String get worshipChoose => 'Dooro';
+
+  @override
+  String get worshipPlaceSearch => 'Raadi magaalo';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'Magaalo lama helin. Waxaad gelin kartaa isku-duwayaasha (coordinates) beddelkeeda.';
+
+  @override
+  String get worshipPlaceCustom => 'Geli isku-duwayaasha';
+
+  @override
+  String get worshipLat => 'Loolka – latitude (waqooyi +, koonfur −)';
+
+  @override
+  String get worshipLon => 'Dhigga – longitude (bari +, galbeed −)';
+
+  @override
+  String get worshipZone => 'Aagga waqtiga, tusaale ahaan Africa/Mogadishu';
+
+  @override
+  String get worshipCustomInvalid => 'Hubi tirooyinka iyo aagga waqtiga.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'Meeshan lama isticmaali karo. Mar kale dooro.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'Xisaabinta: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'Habka xisaabinta';
+
+  @override
+  String get worshipMethodNote =>
+      'Waxaa loo doortay dalka magaalada. Dooro midka masjidkaagu raaco.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'Casar: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'Waqtiga Casarka';
+
+  @override
+  String get worshipAsrStandard => 'Caadi (Shaafici, Maaliki, Xanbali)';
+
+  @override
+  String get worshipAsrHanafi => 'Xanafi';
+
+  @override
+  String get worshipMethodMwl =>
+      'Ururka Caalamka Islaamka (Muslim World League)';
+
+  @override
+  String get worshipMethodIsna =>
+      'Ururka Islaamka ee Waqooyiga Ameerika (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'Hay\'adda Guud ee Sahanka Masar';
+
+  @override
+  String get worshipMethodUmmAlQura => 'Umm al-Qura, Makka';
+
+  @override
+  String get worshipMethodKarachi => 'Jaamacadda Cilmiga Islaamka, Karachi';
+
+  @override
+  String get worshipMethodTehran => 'Machadka Geophysics, Jaamacadda Tehran';
+
+  @override
+  String get worshipMethodGulf => 'Gobolka Khaliijka';
+
+  @override
+  String get worshipMethodKuwait => 'Kuwayt';
+
+  @override
+  String get worshipMethodQatar => 'Qadar';
+
+  @override
+  String get worshipMethodSingapore => 'Singapore (MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'Turkiga (Diyanet)';
+
+  @override
+  String get worshipMethodFrance => 'Faransiiska (UOIF, 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'Marooko (Wasaaradda Habous)';
+
+  @override
+  String get worshipMethodIndonesia => 'Indoneesiya (Kemenag)';
+
+  @override
+  String get worshipMethodMalaysia => 'Malaysiya (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'Dubay';
+
+  @override
+  String get worshipToday => 'Maanta';
+
+  @override
+  String get worshipNoTimes =>
+      'Halkan maanta ma jiraan waqtiyo salaadeed: qorraxdu ma soo baxdo ama ma dhacdo.';
+
+  @override
+  String get worshipSilentTitle => 'Aamusnaan waqtiyada salaadda';
+
+  @override
+  String get worshipSilentBody =>
+      'Laga bilaabo waqti kasta oo salaad, “Do Not Disturb” waa la daaraa daqiiqadaha hoose, kadibna taleefanku sidii aad u haysay ayuu ku noqdaa.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'Aamusnaan: $minutes daqiiqo';
+  }
+
+  @override
+  String get worshipMuteTitle => 'Aamusii warbaahinta marka la aadaamo';
+
+  @override
+  String get worshipMuteBody =>
+      'Waqti kasta oo salaad, codka warbaahinta (muuqaallada, muusigga, ciyaaraha) waa la aamusiiyaa daqiiqadaha hoose. Ogeysiisku isla markiiba wuu soo celin karaa codka.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'Waa la aamusiiyaa: $minutes daqiiqo';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'Muddada';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes daqiiqo';
+  }
+
+  @override
+  String get worshipNeedPlace => 'Marka hore dooro meel.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'Xigta: $prayer saacadda $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'Aamusan ilaa $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'Warbaahinta waa la aamusiiyay ilaa $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'U oggolow Waaiya inay beddesho “Do Not Disturb”, haddii kale taleefanku ma aamusi karo.';
+
+  @override
+  String get worshipAllow => 'Oggolow';
+
+  @override
+  String get worshipExactNeeded =>
+      'Waaiya looma oggola alaarmiyada iyo xusuusinta, sidaas darteed isbeddel kastaa wuu dib u dhici karaa ilaa 10 daqiiqo, ama ka badan marka taleefanku hurdo.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'Ogeysiisyadu waa damsan yihiin: ma arki doontid marka taleefanku aamuso ama uu soo noqdo.';
+
+  @override
+  String get worshipTonesTitle => 'Cod garaac iyo cod ogeysiis oo fudud';
+
+  @override
+  String get worshipTonesBody =>
+      'Waaiya ma shaandheyn karto codka garaaca ama ogeysiisyada, kaliya way beddeli kartaa. Dooro cod fudud oo aan muusig lahayn:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'Cod garaac fudud $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'Cod ogeysiis fudud $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'Daar';
+
+  @override
+  String get worshipToneSet => 'Isticmaal';
+
+  @override
+  String get worshipToneInUse => 'Waa la isticmaalayaa';
+
+  @override
+  String get worshipToneDone => 'Waa la dhammeeyay.';
+
+  @override
+  String get worshipTonePermission =>
+      'U oggolow Waaiya inay wax ka beddesho dejinta nidaamka, soo noqo, oo mar kale taabo.';
+
+  @override
+  String get worshipToneFailed =>
+      'Taleefankani uma oggolaan Waaiya inay beddesho. Dejinta Codka (Sound), dooro cod la yiraahdo “Waaiya plain”.';
+
+  @override
+  String get worshipOpenSound => 'Fur dejinta Codka';
+
+  @override
+  String get worshipSmsTitle => 'SMS ugu jawaab wicitaannada inta salaadda';
+
+  @override
+  String get worshipSmsBody =>
+      'Daqiiqadaha aamusnaanta ee ka dambeeya waqti kasta oo salaad, wicitaan la daayay isagoo garaacaya wuxuu helaa hal SMS. Hal mar lambar kasta salaad kasta; waligeed looma diro lambarro qarsoon ama lambarro gaagaaban.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'Kadib: $seconds ilbiriqsi oo garaac ah';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'Ilbiriqsiyada garaaca ka hor SMS-ka';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds ilbiriqsi';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'Fariinta: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'Fariintaada';
+
+  @override
+  String get worshipSmsTextDefault => 'Isticmaal tan caadiga ah';
+
+  @override
+  String get worshipSmsCost =>
+      'Jawaab kastaa waa SMS caadi ah oo ka baxda SIM-kaaga, qiimaha qorshahaaga. Waxba lama diro marka aad roaming ku jirto.';
+
+  @override
+  String get worshipSmsRoaming =>
+      'Hadda roaming ayaad ku jirtaa: SMS lama dirayo.';
+
+  @override
+  String get worshipSmsLogTitle =>
+      'Jawaabaha la diray (taleefankan oo keliya ayay ku jiraan)';
+
+  @override
+  String get worshipContinue => 'Sii wad';
+
+  @override
+  String get worshipWhyDnd =>
+      'Si taleefanku u aamuso waqtiyada salaadda, bogga xiga ku oggolow gelitaanka “Do Not Disturb” ee Waaiya.';
+
+  @override
+  String get worshipWhyExact =>
+      'Si ay waqtiga saxda ah wax u qabato, bogga xiga ku oggolow Waaiya inay dejiso alaarmiyo iyo xusuusin. La\'aanteed, isbeddelladu waxay dib u dhici karaan ilaa 10 daqiiqo.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'Oggolow ogeysiisyada si aad u aragto isbeddel kasta oo aad uga noqon karto.';
+
+  @override
+  String get worshipWhyWrite =>
+      'Si aad u beddesho codka garaaca ama ogeysiiska, bogga xiga ku oggolow Waaiya inay wax ka beddesho dejinta nidaamka.';
+
+  @override
+  String get worshipWhyPhone =>
+      'Si ay u ogaato in wicitaan garaacayo iyo lambarkiisa, Waaiya waxay u baahan tahay ogolaanshaha Taleefanka (Phone) iyo Diiwaanka wicitaannada (Call logs). Waxba kama baxaan taleefanka marka laga reebo jawaabtaada.';
+
+  @override
+  String get worshipWhySms =>
+      'Si ay u dirto jawaabtaada, Waaiya waxay u baahan tahay ogolaansho ay SMS ku dirto. Waxay dirtaa oo keliya jawaabtaas, ugu badnaan hal mar lambar kasta salaad kasta.';
+
+  @override
+  String get worshipMissingDnd =>
+      'Gelitaanka “Do Not Disturb” lama oggolaan, sidaas darteed aamusnaantu way damsan tahay.';
+
+  @override
+  String get worshipMissingPhone =>
+      'Ogolaanshaha Taleefanka iyo Diiwaanka wicitaannada lama bixin, sidaas darteed jawaabta SMS-ku way damsan tahay.';
+
+  @override
+  String get worshipMissingSms =>
+      'Ogolaanshaha dirista SMS lama bixin, sidaas darteed jawaabta SMS-ku way damsan tahay.';
+
+  @override
+  String get worshipTryAgain => 'Isku day mar kale';
+
+  @override
+  String get protectTitle => 'Ilaalin waqtiyada daciifnimada';
+
+  @override
+  String get protectBody =>
+      'Hadda go\'aanso, adigoo deggan: isbeddel yareeya ilaalinta wuu sugaa ka hor inta uusan dhaqan gelin. Waalid sidoo kale wuu dejin karaa PIN.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Muddada sugitaanka: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Muddada sugitaanka';
+
+  @override
+  String get protectDelayBody =>
+      'Joojinta shaandhaynta, demista dabool ama wax kasta oo kale oo yareeya ilaalinta waxay sugaan muddadan. Kadib waxaad xaqiijinaysaa 15 daqiiqo gudahood, haddii kale waxba isma beddelaan. Daarista waxyaabaha had iyo jeer isla markiiba way shaqaysaa.';
+
+  @override
+  String get protectDelayOff => 'Midna';
+
+  @override
+  String get protectDelay1m => '1 daqiiqo';
+
+  @override
+  String get protectDelay5m => '5 daqiiqo';
+
+  @override
+  String get protectDelay15m => '15 daqiiqo';
+
+  @override
+  String get protectDelay30m => '30 daqiiqo';
+
+  @override
+  String get protectDelay1h => '1 saac';
+
+  @override
+  String get protectDelay4h => '4 saacadood';
+
+  @override
+  String get protectDelay24h => '24 saacadood';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes daqiiqo';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: lama dejin';
+
+  @override
+  String get protectPinIsSet => 'PIN: waa la dejiyay';
+
+  @override
+  String get protectPinSet => 'Deji PIN';
+
+  @override
+  String get protectPinRemove => 'Ka saar';
+
+  @override
+  String get protectPinBody =>
+      'Marka PIN jiro, isbeddel kasta oo yareeya ilaalinta marka hore wuu weydiiyaa. Beddelka muddada sugitaanka ama PIN-ka sidoo kale wuu weydiiyaa.';
+
+  @override
+  String get protectPinForgot =>
+      'Haddii PIN-ka la illaawo, dib u dejin ma jirto: kaliya tirtirista xogta Waaiya ama dib u rakibisteeda, taas oo sidoo kale tirtirta dhammaan dejinteeda.';
+
+  @override
+  String get protectPinTitle => 'Geli PIN-ka';
+
+  @override
+  String get protectPinNewTitle => 'Dooro PIN';
+
+  @override
+  String get protectPinChangeTitle => 'Beddel PIN-ka';
+
+  @override
+  String get protectPinCurrent => 'PIN-ka hadda';
+
+  @override
+  String get protectPinNew => 'PIN cusub (4 ilaa 8 lambar)';
+
+  @override
+  String get protectPinAgain => 'PIN-ka cusub mar kale';
+
+  @override
+  String get protectPinBad => 'Isticmaal 4 ilaa 8 lambar.';
+
+  @override
+  String get protectPinDiffer => 'Labada PIN ee cusub isku mid ma aha.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'PIN khaldan. $count isku day ayaa kaa harsan ka hor hakad.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Isku dayo khaldan oo aad u badan. Mar kale isku day $time.';
+  }
+
+  @override
+  String get protectOk => 'Hagaag';
+
+  @override
+  String get protectCancel => 'Ka noqo';
+
+  @override
+  String get protectCancelChange => 'Ka noqo isbeddelka';
+
+  @override
+  String get protectConfirm => 'Xaqiiji';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: wuxuu dhaqan gelayaa $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: sugitaankii wuu dhammaaday. Weli ma rabtaa? Xaqiiji ka hor $time, haddii kale waxba isma beddelaan.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Isbeddelkan wuu sugayaa';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what: wuxuu dhaqan gelayaa $time, haddii aad markaas weli rabto. Halkan ayaad ku xaqiijinaysaa 15 daqiiqo gudahood intaas kadib.';
+  }
+
+  @override
+  String get protectWaitStart => 'Bilow sugitaanka';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Horay ayuu u sugayaa: wuxuu dhaqan gelayaa $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'Wuxuu dhaqan gelayaa $time. Markaas xaqiiji.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'berri saacadda $time';
+  }
+
+  @override
+  String get protectHeldBack => 'Isbeddelkan waxaa hakiyay dejinta ilaalinta.';
+
+  @override
+  String get protectLimits =>
+      'Waxa aysan tani joojin karin: ku-qasab joojinta (force stop), ka saarista barnaamijka, tirtirista xogta Waaiya iyo dejinta Android lafteeda. Xannibaaddooda waxay u baahan tahay awoodaha maamulaha qalabka (device admin) ama helitaanka (accessibility), oo Waaiya aysan isticmaalin. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go\'aansaday.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Waxa aysan tani joojin karin: amarka waaiya ee terminal-ka, ka saarista Waaiya ama tirtirista galka dejinteeda. Tani waxay kaa ilaalisaa waqti daciifnimo, ma aha qof go\'aansaday.';
+
+  @override
+  String get protectWhatStop => 'Jooji shaandhaynta';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Dami: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Daar: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Barnaamij ku dar: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Ka dhig qarinta mid ka adkaan yar';
+
+  @override
+  String get protectWhatGender => 'Beddel cidda isticmaasha taleefanka';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'U beddel muddada sugitaanka: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Beddel PIN-ka';
+
+  @override
+  String get protectWhatPinClear => 'Ka saar PIN-ka';
+
+  @override
+  String get protectWhatSetting => 'Beddel dejin';
 }
