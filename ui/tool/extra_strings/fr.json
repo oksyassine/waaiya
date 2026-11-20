@@ -37,7 +37,7 @@
   "fix_blur_apps_title": "Applications sans flou",
   "fix_blur_apps_body": "Aucun cache tant qu'une de ces applications est seule à l'écran. Les caches reviennent dès que vous la quittez, ou dès que Waaiya n'est pas sûre de l'application affichée.",
   "fix_blur_apps_needs_setup": "Nécessite la configuration unique : sans elle, Waaiya ne sait pas quelle application est à l'écran, donc le flou reste partout.",
-  "fix_blur_apps_helper_mode": "Pas encore disponible sur ce téléphone : sa configuration passe par l'assistant de Waaiya, qui ne sait pas quelle application est à l'écran. Le flou reste partout.",
+  "fix_blur_apps_helper_mode": "L'assistant de Waaiya ne tourne pas, donc l'application à l'écran ne peut pas être lue. Le floutage reste partout jusqu'à ce que l'assistant soit relancé depuis la page Configuration.",
   "fix_hand_title": "Couvrir une zone à la main",
   "fix_hand_body": "Pendant que le flou fonctionne, faites glisser le doigt sur une partie de l'écran pour la couvrir. Elle reste couverte jusqu'à ce que vous la retiriez ou que le flou s'arrête.",
   "fix_hand_not_running": "Disponible pendant que le flou fonctionne : filtrage activé et une option de flou activée.",

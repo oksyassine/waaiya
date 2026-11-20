@@ -1120,7 +1120,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fixBlurAppsHelperMode =>
-      'Pas encore disponible sur ce téléphone : sa configuration passe par l\'assistant de Waaiya, qui ne sait pas quelle application est à l\'écran. Le flou reste partout.';
+      'L\'assistant de Waaiya ne tourne pas, donc l\'application à l\'écran ne peut pas être lue. Le floutage reste partout jusqu\'à ce que l\'assistant soit relancé depuis la page Configuration.';
 
   @override
   String get fixHandTitle => 'Couvrir une zone à la main';

@@ -1107,7 +1107,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fixBlurAppsHelperMode =>
-      'Not available on this phone yet: its setup goes through Waaiya\'s helper, which cannot tell which app is on screen. The blur stays on everywhere.';
+      'Waaiya\'s helper is not running, so the app on screen cannot be read. The blur stays on everywhere until the helper is started again from the Setup page.';
 
   @override
   String get fixHandTitle => 'Cover an area by hand';

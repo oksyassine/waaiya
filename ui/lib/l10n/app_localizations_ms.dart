@@ -1112,7 +1112,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get fixBlurAppsHelperMode =>
-      'Belum tersedia pada telefon ini: persediaannya melalui pembantu Waaiya, yang tidak tahu aplikasi mana di skrin. Kabur kekal di mana-mana.';
+      'Pembantu Waaiya tidak berjalan, jadi aplikasi pada skrin tidak dapat dibaca. Kabur kekal di mana-mana sehingga pembantu dimulakan semula dari halaman Persediaan.';
 
   @override
   String get fixHandTitle => 'Tutup kawasan dengan tangan';

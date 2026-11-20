@@ -95,7 +95,7 @@ object FixMistakes : Feature {
 
     /** Where the app on screen cannot be read, the reason (`helper_mode`, `needs_setup`); null when it can. */
     fun blurAppsReason(ctx: Context): String? =
-        FixMistakesForeground.unavailableReason(ctx.hasDumpPermission(), HelperDumps.helperMode(ctx))
+        FixMistakesForeground.unavailableReason(ctx.hasDumpPermission(), HelperDumps.helperMode(ctx), HelperDumps.helperReady)
 
     /** The covers are left off now: a fresh reading shows only an app the user chose. Any thread. */
     fun blurPaused(): Boolean =
@@ -108,14 +108,16 @@ object FixMistakes : Feature {
             val settings = Settings(ctx)
             while (session) {
                 val off = settings.blurOffApps
-                val use = off.isNotEmpty() && settings.blurOn && ScreenBlur.state != null && ctx.hasDumpPermission()
+                val viaHelper = !ctx.hasDumpPermission() && HelperDumps.helperMode(ctx) && HelperDumps.helperReady
+                val use = off.isNotEmpty() && settings.blurOn && ScreenBlur.state != null &&
+                    (ctx.hasDumpPermission() || viaHelper)
                 if (!use) {
                     screen = null; offApps = off
                     changed()
                     sleep(500)
                     continue
                 }
-                val s = runCatching { FixMistakesForeground.parse(dumpWindows()) }
+                val s = runCatching { FixMistakesForeground.parse(if (viaHelper) HelperDumps.readVisibleApps() else dumpWindows()) }
                     .onFailure { Log.w(TAG, "fix: window list not readable: $it") }.getOrNull()
                 screen = s; screenAt = SystemClock.uptimeMillis(); offApps = off
                 changed()

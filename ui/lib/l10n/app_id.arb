@@ -311,7 +311,7 @@
   "fixBlurAppsTitle": "Aplikasi tanpa buram",
   "fixBlurAppsBody": "Tidak ada penutup selama salah satu aplikasi ini sendirian di layar. Penutup kembali begitu Anda meninggalkannya, atau kapan pun Waaiya tidak yakin aplikasi mana yang tampil.",
   "fixBlurAppsNeedsSetup": "Perlu penyiapan sekali: tanpanya Waaiya tidak tahu aplikasi mana yang ada di layar, jadi buram tetap aktif di mana-mana.",
-  "fixBlurAppsHelperMode": "Belum tersedia di ponsel ini: penyiapannya melalui pembantu Waaiya, yang tidak tahu aplikasi mana yang ada di layar. Buram tetap aktif di mana-mana.",
+  "fixBlurAppsHelperMode": "Pembantu Waaiya tidak berjalan, jadi aplikasi di layar tidak dapat dibaca. Blur tetap aktif di mana-mana sampai pembantu dijalankan lagi dari halaman Penyiapan.",
   "fixHandTitle": "Tutup area dengan tangan",
   "fixHandBody": "Saat buram berjalan, seret jari di bagian layar mana pun untuk menutupinya. Bagian itu tetap tertutup sampai Anda menghapusnya atau buram berhenti.",
   "fixHandNotRunning": "Tersedia saat buram berjalan: penyaringan aktif dan satu opsi buram aktif.",

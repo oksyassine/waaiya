@@ -1332,7 +1332,7 @@
   "@fixBlurAppsNeedsSetup": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "fixBlurAppsHelperMode": "غير متاح على هذا الهاتف بعد: إعداده يمرّ عبر مساعد واعية، وهو لا يعرف أي تطبيق على الشاشة. يبقى التمويه في كل مكان.",
+  "fixBlurAppsHelperMode": "مساعد واعية لا يعمل، فلا يمكن معرفة التطبيق الظاهر على الشاشة. يبقى التمويه في كل مكان حتى يُشغَّل المساعد من جديد من صفحة الإعداد.",
   "@fixBlurAppsHelperMode": {
     "description": "Flutter only. Not reviewed yet except in English."
   },

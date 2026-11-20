@@ -91,10 +91,11 @@ object FixMistakesForeground {
     }
 
     /** Where the foreground app can be read in this setup; null when it can. Codes for `features.fix.blurAppsReason`. */
-    fun unavailableReason(dumpGranted: Boolean, helperMode: Boolean): String? = when {
+    fun unavailableReason(dumpGranted: Boolean, helperMode: Boolean, helperRunning: Boolean = false): String? = when {
         dumpGranted -> null
-        // the helper hands out only the two sound dumps (HelperDumps.SERVICES); the window list is not one of them
-        helperMode -> "helper_mode"
+        // helper mode: Waaiya's helper hands out the window list (ICoverService.dumpVisibleApps) while it runs;
+        // when it is not running, the covers stay (the Filter page already says the helper is missing)
+        helperMode -> if (helperRunning) null else "helper_mode"
         else -> "needs_setup"
     }
 }

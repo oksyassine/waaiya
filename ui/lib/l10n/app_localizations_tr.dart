@@ -1112,7 +1112,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fixBlurAppsHelperMode =>
-      'Bu telefonda henüz yok: kurulumu Waaiya\'nın yardımcısıyla yapılıyor ve o, ekranda hangi uygulamanın olduğunu bilemez. Bulanıklık her yerde kalır.';
+      'Waaiya\'nın yardımcısı çalışmıyor, bu yüzden ekrandaki uygulama okunamıyor. Yardımcı Kurulum sayfasından yeniden başlatılana kadar bulanıklaştırma her yerde açık kalır.';
 
   @override
   String get fixHandTitle => 'Bir alanı elle örtün';

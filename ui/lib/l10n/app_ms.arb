@@ -311,7 +311,7 @@
   "fixBlurAppsTitle": "Aplikasi tanpa kabur",
   "fixBlurAppsBody": "Tiada penutup selagi salah satu aplikasi ini bersendirian di skrin. Penutup kembali sebaik sahaja anda meninggalkannya, atau bila-bila masa Waaiya tidak pasti aplikasi mana yang dipaparkan.",
   "fixBlurAppsNeedsSetup": "Perlu persediaan sekali: tanpanya Waaiya tidak tahu aplikasi mana di skrin, jadi kabur kekal di mana-mana.",
-  "fixBlurAppsHelperMode": "Belum tersedia pada telefon ini: persediaannya melalui pembantu Waaiya, yang tidak tahu aplikasi mana di skrin. Kabur kekal di mana-mana.",
+  "fixBlurAppsHelperMode": "Pembantu Waaiya tidak berjalan, jadi aplikasi pada skrin tidak dapat dibaca. Kabur kekal di mana-mana sehingga pembantu dimulakan semula dari halaman Persediaan.",
   "fixHandTitle": "Tutup kawasan dengan tangan",
   "fixHandBody": "Semasa kabur berjalan, seret jari pada mana-mana bahagian skrin untuk menutupnya. Ia kekal tertutup sehingga anda membuangnya atau kabur berhenti.",
   "fixHandNotRunning": "Tersedia semasa kabur berjalan: penapisan hidup dan satu pilihan kabur hidup.",

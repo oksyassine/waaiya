@@ -311,7 +311,7 @@
   "fixBlurAppsTitle": "Bulanıklaştırılmayan uygulamalar",
   "fixBlurAppsBody": "Bu uygulamalardan biri ekranda tek başınayken örtü yok. Ondan çıktığınız anda ya da Waaiya hangi uygulamanın gösterildiğinden emin olmadığında örtüler geri gelir.",
   "fixBlurAppsNeedsSetup": "Tek seferlik kurulum gerekir: o olmadan Waaiya ekranda hangi uygulamanın olduğunu bilemez, bu yüzden bulanıklık her yerde kalır.",
-  "fixBlurAppsHelperMode": "Bu telefonda henüz yok: kurulumu Waaiya'nın yardımcısıyla yapılıyor ve o, ekranda hangi uygulamanın olduğunu bilemez. Bulanıklık her yerde kalır.",
+  "fixBlurAppsHelperMode": "Waaiya'nın yardımcısı çalışmıyor, bu yüzden ekrandaki uygulama okunamıyor. Yardımcı Kurulum sayfasından yeniden başlatılana kadar bulanıklaştırma her yerde açık kalır.",
   "fixHandTitle": "Bir alanı elle örtün",
   "fixHandBody": "Bulanıklık çalışırken, örtmek için ekranın herhangi bir yerinde parmağınızı sürükleyin. Siz kaldırana ya da bulanıklık durana kadar örtülü kalır.",
   "fixHandNotRunning": "Bulanıklık çalışırken kullanılabilir: filtreleme açık ve bir bulanıklık seçeneği açık.",

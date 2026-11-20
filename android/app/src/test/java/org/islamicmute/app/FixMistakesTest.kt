@@ -115,6 +115,8 @@ class FixMistakesTest {
     @Test fun whereTheAppOnScreenCanBeRead() {
         assertNull(FixMistakesForeground.unavailableReason(dumpGranted = true, helperMode = false))
         assertEquals("helper_mode", FixMistakesForeground.unavailableReason(dumpGranted = false, helperMode = true))
+        // helper mode with the helper running: it hands out the window list (ICoverService.dumpVisibleApps)
+        assertNull(FixMistakesForeground.unavailableReason(dumpGranted = false, helperMode = true, helperRunning = true))
         assertEquals("needs_setup", FixMistakesForeground.unavailableReason(dumpGranted = false, helperMode = false))
     }
 

@@ -1112,7 +1112,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get fixBlurAppsHelperMode =>
-      'Belum tersedia di ponsel ini: penyiapannya melalui pembantu Waaiya, yang tidak tahu aplikasi mana yang ada di layar. Buram tetap aktif di mana-mana.';
+      'Pembantu Waaiya tidak berjalan, jadi aplikasi di layar tidak dapat dibaca. Blur tetap aktif di mana-mana sampai pembantu dijalankan lagi dari halaman Penyiapan.';
 
   @override
   String get fixHandTitle => 'Tutup area dengan tangan';

@@ -4,7 +4,7 @@
 /// `features.fix` (each key optional; a missing key hides its part):
 ///   filterApps (bool)        the filter can leave chosen apps alone here (setting filter_off_apps)
 ///   blurApps (bool)          the blur can leave chosen apps alone here (setting blur_off_apps); false = shown
-///                            disabled with blurAppsReason: `needs_setup` (no DUMP), `helper_mode`
+///                            disabled with blurAppsReason: `needs_setup` (no DUMP), `helper_mode` (helper not running)
 ///   handCover (bool)         "Cover an area" exists here (Android); handCovers (int) = hand covers now
 ///   blurRunning (bool)       the blur runs now (hand covers can be drawn)
 ///   notes (int)              wrong-detection notes kept on this device (present = notes exist here)

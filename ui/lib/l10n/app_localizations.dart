@@ -1981,7 +1981,7 @@ abstract class AppLocalizations {
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:
-  /// **'غير متاح على هذا الهاتف بعد: إعداده يمرّ عبر مساعد واعية، وهو لا يعرف أي تطبيق على الشاشة. يبقى التمويه في كل مكان.'**
+  /// **'مساعد واعية لا يعمل، فلا يمكن معرفة التطبيق الظاهر على الشاشة. يبقى التمويه في كل مكان حتى يُشغَّل المساعد من جديد من صفحة الإعداد.'**
   String get fixBlurAppsHelperMode;
 
   /// Flutter only. Not reviewed yet except in English.

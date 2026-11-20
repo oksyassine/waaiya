@@ -37,7 +37,7 @@
   "fix_blur_apps_title": "Apps left uncovered",
   "fix_blur_apps_body": "No covers while one of these apps is alone on the screen. The covers come back as soon as you leave it, or whenever Waaiya is not sure which app is shown.",
   "fix_blur_apps_needs_setup": "Needs the one-time setup: without it Waaiya cannot tell which app is on screen, so the blur stays on everywhere.",
-  "fix_blur_apps_helper_mode": "Not available on this phone yet: its setup goes through Waaiya's helper, which cannot tell which app is on screen. The blur stays on everywhere.",
+  "fix_blur_apps_helper_mode": "Waaiya's helper is not running, so the app on screen cannot be read. The blur stays on everywhere until the helper is started again from the Setup page.",
   "fix_hand_title": "Cover an area by hand",
   "fix_hand_body": "While the blur runs, drag over any part of the screen to cover it. It stays covered until you remove it or the blur stops.",
   "fix_hand_not_running": "Available while the blur runs: filtering on and a blur option on.",

@@ -33,4 +33,8 @@ interface ICoverService {
 
     // The global setting "disable_screen_share_protections_for_apps_and_notifications" (ScreenShareProtection), 0 or 1.
     boolean putScreenShareProtection(int value) = 6;
+
+    // Writes `dumpsys window visible-apps` (which app is on screen, for "blur off for chosen apps") into `sink`.
+    // Only that section of the window manager's dump; no other arguments are accepted.
+    boolean dumpVisibleApps(in ParcelFileDescriptor sink) = 7;
 }
