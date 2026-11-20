@@ -17,7 +17,7 @@ kompyuteringizda.
   bosishlari baribir ostidagi oynalarga yetib boradi.
 - Xohlasangiz, tizimga kirganda ishga tushirish.
 - Hammasi kompyuteringizda ishlaydi. Hech narsa hech qayerga yuborilmaydi: hisob yoʻq, tahlil yoʻq, reklama yoʻq.
-- Bepul va ochiq kodli (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Bepul va ochiq kodli (AGPL-3.0)
 - 18 tilda: arab, ingliz, fransuz, urdu, indonez, turk, bengal, fors, malay, ispan, niderland, nemis, italyan, rus,
   oʻzbek, suahili, hausa va somali.
 

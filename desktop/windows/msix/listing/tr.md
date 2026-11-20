@@ -16,7 +16,7 @@ Kuran tilavetini. Her uygulamayla (tarayıcılar, video oynatıcılar, oyunlar) 
   alttaki pencerelere ulaşmaya devam eder.
 - İsterseniz oturum açılınca başlat.
 - Her şey bilgisayarınızda çalışır. Hiçbir yere bir şey gönderilmez: hesap yok, analiz yok, reklam yok.
-- Ücretsiz ve açık kaynak (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Ücretsiz ve açık kaynak (AGPL-3.0)
 - 18 dilde: Arapça, İngilizce, Fransızca, Urduca, Endonezce, Türkçe, Bengalce, Farsça, Malayca, İspanyolca, Felemenkçe,
   Almanca, İtalyanca, Rusça, Özbekçe, Svahili, Hausaca ve Somalice.
 

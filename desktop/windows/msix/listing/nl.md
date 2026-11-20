@@ -16,7 +16,7 @@ Koranrecitatie. Het werkt met elke app (browsers, videospelers, games), live, op
   vensters eronder.
 - Starten bij inloggen, als je wilt.
 - Alles draait op je computer. Er wordt niets verstuurd: geen account, geen analyse, geen advertenties.
-- Gratis en open source (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Gratis en open source (AGPL-3.0)
 - In 18 talen: Arabisch, Engels, Frans, Urdu, Indonesisch, Turks, Bengaals, Perzisch, Maleis, Spaans, Nederlands,
   Duits, Italiaans, Russisch, Oezbeeks, Swahili, Hausa en Somalisch.
 

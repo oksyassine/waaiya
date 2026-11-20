@@ -179,8 +179,20 @@ End-to-end with the Store package (unpacked, Developer Mode):
 - Not done (needs the owner): screen blur by eye (covers are hidden from screenshots by design), Start at login with
   a real sign-out/sign-in, the zip build's start at login.
 
-Store listing: `desktop/windows/msix/listing/<lang>.md` (18), `screenshots/<lang>/` (72 real captures, 1366x768,
-`desktop/tool/store_shots.py`), certification note and privacy policy updated in `STORE_LISTING.md`.
+Store submission, checked against Microsoft's "Create an app submission for your MSIX app" and its sub-pages
+(2026-11-20): `desktop/windows/msix/STORE_LISTING.md` now follows its six sections. Found and fixed: the Store does
+not support Somali (dropped from the package's languages; the app keeps it), descriptions may not contain web
+addresses (removed), "What's new" stays empty on a first submission, the restricted capability runFullTrust needs its
+own justification (written), privacy policy as `PRIVACY.md` (the URL works once on main; the old text wrongly said
+uninstalling removes the settings). `desktop/tool/store_import.py` fills Partner Center's exported listings .csv with
+the 17 listings, screenshots and logo for "Import folder". All 17 listings are within every limit. Listing
+screenshots: 1366x768 (the minimum for PCs). Warning for the owner: a first submission as Public audience can never
+become Private.
+
+The filter now ends by itself right after Windows' close message (it no longer stays to give back levels of apps not
+running): a probe that Windows had to end during an uninstall was started again by Windows from its deleted folder
+when the package was installed again, with an error window. Tested: uninstall while filtering, then install again
+from another folder: no restart, no window.
 
 ## Still to do for 0.2.12 (in order; items 1, 3 and most of 4 done above)
 

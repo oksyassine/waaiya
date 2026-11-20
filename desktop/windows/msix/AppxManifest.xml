@@ -25,6 +25,7 @@
     <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
   </Dependencies>
 
+  <!-- the Store's supported languages only (Somali is not one: the app still offers it, chosen inside the app) -->
   <Resources>
     <Resource Language="en-us" />
     <Resource Language="ar" />
@@ -43,7 +44,6 @@
     <Resource Language="uz-Latn" />
     <Resource Language="sw" />
     <Resource Language="ha-Latn" />
-    <Resource Language="so" />
   </Resources>
 
   <Applications>

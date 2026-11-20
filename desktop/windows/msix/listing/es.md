@@ -18,7 +18,7 @@ directo, en su ordenador.
   siguen llegando a las ventanas de debajo.
 - Iniciar al iniciar sesión, si lo desea.
 - Todo funciona en su ordenador. No se envía nada a ninguna parte: sin cuenta, sin estadísticas, sin anuncios.
-- Gratuita y de código abierto (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Gratuita y de código abierto (AGPL-3.0)
 - En 18 idiomas: árabe, inglés, francés, urdu, indonesio, turco, bengalí, persa, malayo, español, neerlandés, alemán,
   italiano, ruso, uzbeko, suajili, hausa y somalí.
 

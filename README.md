@@ -39,9 +39,10 @@ installation and no admin rights. While filtering is on it changes, for your use
 - with "Start at login" on, a value `WaaiyaFilter` under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`.
 
 To remove it: open the app, press Stop and turn "Start at login" off (or run `engine\waaiya-filter.exe stop` and
-delete that Run value), then delete the app folder, `%LOCALAPPDATA%\Waaiya` and `%APPDATA%\Waaiya`. An app that
-was closed while filtering gets its level back the next time it plays only while Waaiya's restorer runs; if one
-stays quiet after an uninstall, raise it in the Volume Mixer.
+delete that Run value), then delete the app folder, `%LOCALAPPDATA%\Waaiya` and `%APPDATA%\Waaiya`. The Microsoft
+Store version gives every running app its level back by itself when it is updated or uninstalled while filtering.
+An app that was closed while filtering gets its level back the next time it plays only while Waaiya's restorer runs;
+if one stays quiet after an uninstall, raise it in the Volume Mixer.
 
 ## Layout
 

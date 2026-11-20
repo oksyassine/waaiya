@@ -17,7 +17,7 @@ komputer anda.
   tetingkap di bawahnya.
 - Mula semasa log masuk, jika anda mahu.
 - Semuanya berjalan pada komputer anda. Tiada apa-apa dihantar ke mana-mana: tiada akaun, tiada analitik, tiada iklan.
-- Percuma dan sumber terbuka (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Percuma dan sumber terbuka (AGPL-3.0)
 - Dalam 18 bahasa: Arab, Inggeris, Perancis, Urdu, Indonesia, Turki, Bengali, Parsi, Melayu, Sepanyol, Belanda, Jerman,
   Itali, Rusia, Uzbek, Swahili, Hausa dan Somali.
 

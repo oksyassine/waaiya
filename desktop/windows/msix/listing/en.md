@@ -14,7 +14,7 @@ Quran recitation. It works with every app (browsers, video players, games), live
   underneath.
 - Start at login, if you want.
 - Everything runs on your computer. Nothing is sent anywhere: no account, no analytics, no ads.
-- Free and open source (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Free and open source (AGPL-3.0)
 - In 18 languages: Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay, Spanish, Dutch,
   German, Italian, Russian, Uzbek, Swahili, Hausa and Somali.
 

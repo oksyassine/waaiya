@@ -18,7 +18,7 @@ votre ordinateur.
   les clics atteignent toujours les fenêtres en dessous.
 - Démarrer à l'ouverture de session, si vous le souhaitez.
 - Tout tourne sur votre ordinateur. Rien n'est envoyé nulle part : ni compte, ni statistiques, ni publicité.
-- Gratuite et open source (AGPL-3.0) : https://github.com/oksyassine/waaiya
+- Gratuite et open source (AGPL-3.0)
 - En 18 langues : arabe, anglais, français, ourdou, indonésien, turc, bengali, persan, malais, espagnol, néerlandais,
   allemand, italien, russe, ouzbek, swahili, haoussa et somali.
 

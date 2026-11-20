@@ -17,7 +17,7 @@ e recitazione del Corano. Funziona con ogni app (browser, lettori video, giochi)
   comunque alle finestre sottostanti.
 - Avvia all'accesso, se vuoi.
 - Tutto funziona sul tuo computer. Non viene inviato nulla: nessun account, nessuna statistica, nessuna pubblicità.
-- Gratuito e open source (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Gratuito e open source (AGPL-3.0)
 - In 18 lingue: arabo, inglese, francese, urdu, indonesiano, turco, bengalese, persiano, malese, spagnolo, olandese,
   tedesco, italiano, russo, uzbeko, swahili, hausa e somalo.
 

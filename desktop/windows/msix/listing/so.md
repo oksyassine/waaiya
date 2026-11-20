@@ -18,7 +18,7 @@ ciyaaraha), si toos ah, kombiyuutarkaaga.
 - Bilow marka aad soo gasho, haddii aad rabto.
 - Wax walba kombiyuutarkaaga ayay ka shaqeeyaan. Meelna waxba looma diro: akoon ma jiro, falanqayn ma jirto,
   xayeysiis ma jiro.
-- Bilaash ah oo isha furan (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Bilaash ah oo isha furan (AGPL-3.0)
 - 18 luqadood: Carabi, Ingiriisi, Faransiis, Urduu, Indoneesiyaan, Turki, Bangaali, Faarisi, Malaay, Isbaanish,
   Holandays, Jarmal, Talyaani, Ruush, Usbeki, Sawaaxili, Hawsa iyo Soomaali.
 

@@ -850,7 +850,13 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
         st.pending = ses.pending();
         write_state(p.dir, st);
         logf("closing: levels given back, %d stored for apps not running", ses.pending());
-        SetEvent(g_closed); // Windows ends the process now; after an update, it starts the filter again
+        // Ends here, by itself (not ended by Windows: seen on a PC, a program Windows had to end after a removal was
+        // started again from its deleted folder when the app was installed again, with an error window). The
+        // levels of apps not running stay stored: after an update the filter started again keeps them.
+        im_engine_destroy(eng);
+        ReleaseMutex(mtx);
+        SetEvent(g_closed); // after an update, Windows starts the filter again
+        return 0;
     } else {
         restart_after_update(false); // stopped by the user: not started again after an update
     }

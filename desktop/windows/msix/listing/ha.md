@@ -16,7 +16,7 @@ kwamfutarku.
   tagogin da ke ƙasa.
 - Fara lokacin shiga kwamfuta, idan kuna so.
 - Komai yana aiki a kwamfutarku. Ba a tura komai zuwa ko'ina ba: babu asusu, babu ƙididdiga, babu talla.
-- Kyauta ne kuma buɗaɗɗen tushe (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Kyauta ne kuma buɗaɗɗen tushe (AGPL-3.0)
 - A harsuna 18: Larabci, Turanci, Faransanci, Urdu, Indonesiyanci, Turkanci, Bengali, Farisanci, Malay, Sifaniyanci,
   Holanci, Jamusanci, Italiyanci, Rashanci, Uzbek, Swahili, Hausa da Somaliyanci.
 

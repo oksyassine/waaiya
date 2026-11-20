@@ -16,7 +16,7 @@ Koranrezitation. Es funktioniert mit jeder App (Browser, Videoplayer, Spiele), l
   die Fenster darunter.
 - Bei der Anmeldung starten, wenn Sie möchten.
 - Alles läuft auf Ihrem Computer. Nichts wird irgendwohin gesendet: kein Konto, keine Analyse, keine Werbung.
-- Kostenlos und Open Source (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Kostenlos und Open Source (AGPL-3.0)
 - In 18 Sprachen: Arabisch, Englisch, Französisch, Urdu, Indonesisch, Türkisch, Bengalisch, Persisch, Malaiisch,
   Spanisch, Niederländisch, Deutsch, Italienisch, Russisch, Usbekisch, Swahili, Hausa und Somali.
 

@@ -18,7 +18,7 @@ kwa moja, kwenye kompyuta yako.
 - Anza unapoingia, ukitaka.
 - Kila kitu hufanya kazi kwenye kompyuta yako. Hakuna kinachotumwa popote: hakuna akaunti, hakuna takwimu, hakuna
   matangazo.
-- Bure na chanzo huria (AGPL-3.0): https://github.com/oksyassine/waaiya
+- Bure na chanzo huria (AGPL-3.0)
 - Kwa lugha 18: Kiarabu, Kiingereza, Kifaransa, Kiurdu, Kiindonesia, Kituruki, Kibengali, Kiajemi, Kimalei,
   Kihispania, Kiholanzi, Kijerumani, Kiitaliano, Kirusi, Kiuzbeki, Kiswahili, Kihausa na Kisomali.
 
