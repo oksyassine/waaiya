@@ -373,4 +373,11 @@
     <string name="worship_sms_default">Namaz vakti, şu an cevap veremiyorum. Sizi geri arayacağım.</string>
     <string name="notif_worship_sms_title">SMS ile yanıtlandı</string>
     <string name="notif_worship_sms_text">Namaz vakti yanıtınız {number} numarasına gönderildi.</string>
+    <string name="notif_protect_channel">Bekleme süresi</string>
+    <string name="notif_protect_what_stop">Filtreyi durdurma</string>
+    <string name="notif_protect_what_pin">PIN\'i değiştirme veya kaldırma</string>
+    <string name="notif_protect_what_setting">Korumayı azaltan bir değişiklik</string>
+    <string name="notif_protect_waiting_text">%1$s saatinde geçerli olur, o zaman hâlâ isterseniz. İptal her şeyi olduğu gibi bırakır.</string>
+    <string name="notif_protect_ready_text">Hâlâ istiyor musunuz? %1$s saatinden önce Waaiya\'da onaylayın, yoksa hiçbir şey değişmez.</string>
+    <string name="notif_protect_cancel">İptal</string>
 </resources>

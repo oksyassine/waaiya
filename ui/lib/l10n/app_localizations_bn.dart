@@ -1485,4 +1485,203 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'আবার চেষ্টা করুন';
+
+  @override
+  String get protectTitle => 'দুর্বল মুহূর্তের সুরক্ষা';
+
+  @override
+  String get protectBody =>
+      'এখনই, শান্ত অবস্থায় ঠিক করুন: সুরক্ষা কমানো কোনো পরিবর্তন কার্যকর হওয়ার আগে অপেক্ষা করে। অভিভাবক একটি পিনও রাখতে পারেন।';
+
+  @override
+  String protectDelay(Object value) {
+    return 'অপেক্ষার সময়: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'অপেক্ষার সময়';
+
+  @override
+  String get protectDelayBody =>
+      'ফিল্টার বন্ধ করা, কোনো ঢাকা বন্ধ করা বা সুরক্ষা কমানো যেকোনো কিছু এতক্ষণ অপেক্ষা করে। তারপর ১৫ মিনিটের মধ্যে নিশ্চিত করুন, নইলে কিছুই বদলাবে না। কিছু চালু করা সবসময় সঙ্গে সঙ্গে কাজ করে।';
+
+  @override
+  String get protectDelayOff => 'নেই';
+
+  @override
+  String get protectDelay1m => '১ মিনিট';
+
+  @override
+  String get protectDelay5m => '৫ মিনিট';
+
+  @override
+  String get protectDelay15m => '১৫ মিনিট';
+
+  @override
+  String get protectDelay30m => '৩০ মিনিট';
+
+  @override
+  String get protectDelay1h => '১ ঘণ্টা';
+
+  @override
+  String get protectDelay4h => '৪ ঘণ্টা';
+
+  @override
+  String get protectDelay24h => '২৪ ঘণ্টা';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes মিনিট';
+  }
+
+  @override
+  String get protectPinNone => 'পিন: রাখা হয়নি';
+
+  @override
+  String get protectPinIsSet => 'পিন: রাখা আছে';
+
+  @override
+  String get protectPinSet => 'পিন রাখুন';
+
+  @override
+  String get protectPinRemove => 'মুছুন';
+
+  @override
+  String get protectPinBody =>
+      'পিন থাকলে, সুরক্ষা কমানো প্রতিটি পরিবর্তন আগে পিন চায়। অপেক্ষার সময় বা পিন বদলাতেও পিন লাগে।';
+
+  @override
+  String get protectPinForgot =>
+      'পিন ভুলে গেলে রিসেট নেই: শুধু Waaiya-এর ডেটা মুছে ফেলা বা আবার ইনস্টল করা, যাতে এর সব সেটিংসও মুছে যায়।';
+
+  @override
+  String get protectPinTitle => 'পিন দিন';
+
+  @override
+  String get protectPinNewTitle => 'একটি পিন বেছে নিন';
+
+  @override
+  String get protectPinChangeTitle => 'পিন বদলান';
+
+  @override
+  String get protectPinCurrent => 'বর্তমান পিন';
+
+  @override
+  String get protectPinNew => 'নতুন পিন (৪ থেকে ৮ সংখ্যা)';
+
+  @override
+  String get protectPinAgain => 'নতুন পিন আবার';
+
+  @override
+  String get protectPinBad => '৪ থেকে ৮টি সংখ্যা দিন।';
+
+  @override
+  String get protectPinDiffer => 'দুটি নতুন পিন এক নয়।';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'ভুল পিন। বিরতির আগে আর $count বার চেষ্টা বাকি।';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'অনেকবার ভুল চেষ্টা। $time-এ আবার চেষ্টা করুন।';
+  }
+
+  @override
+  String get protectOk => 'ঠিক আছে';
+
+  @override
+  String get protectCancel => 'বাতিল';
+
+  @override
+  String get protectCancelChange => 'পরিবর্তন বাতিল করুন';
+
+  @override
+  String get protectConfirm => 'নিশ্চিত করুন';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: $time-এ কার্যকর হবে।';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: অপেক্ষা শেষ। এখনও চান? $time-এর আগে নিশ্চিত করুন, নইলে কিছুই বদলাবে না।';
+  }
+
+  @override
+  String get protectWaitTitle => 'এই পরিবর্তন অপেক্ষা করছে';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what $time-এ কার্যকর হবে, যদি তখনও চান। তার পরের ১৫ মিনিটের মধ্যে এখানে নিশ্চিত করবেন।';
+  }
+
+  @override
+  String get protectWaitStart => 'অপেক্ষা শুরু করুন';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'ইতিমধ্যে অপেক্ষায়: $time-এ কার্যকর হবে।';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return '$time-এ কার্যকর হবে। তখন নিশ্চিত করুন।';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'আগামীকাল $time-এ';
+  }
+
+  @override
+  String get protectHeldBack => 'সুরক্ষা সেটিংস এই পরিবর্তন আটকে রেখেছে।';
+
+  @override
+  String get protectLimits =>
+      'যা এটি আটকাতে পারে না: জোর করে বন্ধ করা, আনইনস্টল করা, Waaiya-এর ডেটা মুছে ফেলা এবং Android-এর নিজস্ব সেটিংস। এগুলো আটকাতে ডিভাইস অ্যাডমিন বা অ্যাক্সেসিবিলিটি ক্ষমতা লাগে, যা Waaiya ব্যবহার করে না। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
+
+  @override
+  String get protectLimitsDesktop =>
+      'যা এটি আটকাতে পারে না: টার্মিনালে waaiya কমান্ড, Waaiya সরিয়ে ফেলা বা এর সেটিংস ফোল্ডার মুছে ফেলা। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
+
+  @override
+  String get protectWhatStop => 'ফিল্টার বন্ধ করা';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'বন্ধ করা: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'চালু করা: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'অ্যাপ যোগ করা: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'ব্লার কম কড়া করা';
+
+  @override
+  String get protectWhatGender => 'ফোন কে ব্যবহার করেন তা বদলানো';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'অপেক্ষার সময় বদলানো: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'পিন বদলানো';
+
+  @override
+  String get protectWhatPinClear => 'পিন মুছে ফেলা';
+
+  @override
+  String get protectWhatSetting => 'একটি সেটিং বদলানো';
 }

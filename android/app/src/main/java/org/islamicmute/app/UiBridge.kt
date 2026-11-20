@@ -207,7 +207,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "setSetting" -> { setSetting(call.argument<String>("key"), call.argument<Any>("value")); result.success(null) }
                 "startFilter" -> startFilter(result)
                 "stopFilter" -> {
-                    if (!Protection.mayStopFilter(activity)) throw FeatureException("protected", "stopFilter")
+                    Protection.checkStop(activity)  // throws "protected" when the waiting period or PIN holds it
                     activity.startService(Intent(activity, FilterService::class.java).setAction(FilterService.ACTION_STOP))
                     result.success(null)
                 }

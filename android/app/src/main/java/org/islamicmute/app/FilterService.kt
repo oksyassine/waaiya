@@ -119,7 +119,10 @@ class FilterService : Service() {
                             ?.flatMap { c -> c.split(',').map { it.trim().toFloat() } }?.toFloatArray()
                         // --ez fail true: the next blur start cannot create its capture
                         ACTION_DEBUG_FAIL_BLUR -> ScreenBlur.debugFailCapture = i.getBooleanExtra("fail", true)
-                        ACTION_DEBUG_STOP -> startService(Intent(this@FilterService, FilterService::class.java).setAction(ACTION_STOP))
+                        // through the same guard as the notification's Stop (Protection)
+                        ACTION_DEBUG_STOP -> Protection.stopOrAsk(this@FilterService)?.let {
+                            runCatching { startActivity(it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                        }
                     }
                 }
             }
@@ -510,7 +513,10 @@ class FilterService : Service() {
     private fun notification(): Notification {
         val nm = getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(NotificationChannel(CHANNEL, getString(R.string.notif_channel), NotificationManager.IMPORTANCE_LOW))
-        val stopIntent = PendingIntent.getService(this, 1, Intent(this, FilterService::class.java).setAction(ACTION_STOP),
+        // Stop goes through the waiting period and the PIN (Protection), in an invisible activity: when they hold it
+        // back, Waaiya opens at its Settings page, which a service started from a notification may not do (Android 12+)
+        val stopIntent = PendingIntent.getActivity(this, 1, Intent(this, TileStartActivity::class.java)
+            .setAction(TileStartActivity.ACTION_STOP_FILTER).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_IMMUTABLE)
         val open = PendingIntent.getActivity(this, 0, UiActivity.main(this), PendingIntent.FLAG_IMMUTABLE)
         // Pops up once on screen (its own high-importance channel): sharing was stopped from Android's own control

@@ -1488,4 +1488,204 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get worshipTryAgain => 'Coba lagi';
+
+  @override
+  String get protectTitle => 'Perlindungan untuk saat lemah';
+
+  @override
+  String get protectBody =>
+      'Putuskan sekarang, saat tenang: perubahan yang menurunkan perlindungan menunggu sebelum berlaku. Orang tua juga dapat memasang PIN.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'Masa tunggu: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'Masa tunggu';
+
+  @override
+  String get protectDelayBody =>
+      'Menghentikan filter, mematikan penutup, atau apa pun yang menurunkan perlindungan menunggu selama ini. Lalu Anda mengonfirmasinya dalam 15 menit, atau tidak ada yang berubah. Menyalakan sesuatu selalu langsung berlaku.';
+
+  @override
+  String get protectDelayOff => 'Tidak ada';
+
+  @override
+  String get protectDelay1m => '1 menit';
+
+  @override
+  String get protectDelay5m => '5 menit';
+
+  @override
+  String get protectDelay15m => '15 menit';
+
+  @override
+  String get protectDelay30m => '30 menit';
+
+  @override
+  String get protectDelay1h => '1 jam';
+
+  @override
+  String get protectDelay4h => '4 jam';
+
+  @override
+  String get protectDelay24h => '24 jam';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes menit';
+  }
+
+  @override
+  String get protectPinNone => 'PIN: belum dipasang';
+
+  @override
+  String get protectPinIsSet => 'PIN: dipasang';
+
+  @override
+  String get protectPinSet => 'Pasang PIN';
+
+  @override
+  String get protectPinRemove => 'Hapus';
+
+  @override
+  String get protectPinBody =>
+      'Dengan PIN, setiap perubahan yang menurunkan perlindungan memintanya dulu. Mengubah masa tunggu atau PIN juga memintanya.';
+
+  @override
+  String get protectPinForgot =>
+      'Jika PIN terlupa, tidak ada cara mengatur ulang: hanya menghapus data Waaiya atau memasangnya ulang, yang juga menghapus semua pengaturannya.';
+
+  @override
+  String get protectPinTitle => 'Masukkan PIN';
+
+  @override
+  String get protectPinNewTitle => 'Pilih PIN';
+
+  @override
+  String get protectPinChangeTitle => 'Ubah PIN';
+
+  @override
+  String get protectPinCurrent => 'PIN saat ini';
+
+  @override
+  String get protectPinNew => 'PIN baru (4 sampai 8 angka)';
+
+  @override
+  String get protectPinAgain => 'PIN baru sekali lagi';
+
+  @override
+  String get protectPinBad => 'Gunakan 4 sampai 8 angka.';
+
+  @override
+  String get protectPinDiffer => 'Kedua PIN baru tidak sama.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'PIN salah. Tersisa $count percobaan sebelum jeda.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'Terlalu banyak percobaan salah. Coba lagi pukul $time.';
+  }
+
+  @override
+  String get protectOk => 'OK';
+
+  @override
+  String get protectCancel => 'Batal';
+
+  @override
+  String get protectCancelChange => 'Batalkan perubahan';
+
+  @override
+  String get protectConfirm => 'Konfirmasi';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: berlaku pukul $time.';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: masa tunggu selesai. Masih ingin? Konfirmasi sebelum $time, atau tidak ada yang berubah.';
+  }
+
+  @override
+  String get protectWaitTitle => 'Perubahan ini menunggu';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what berlaku pukul $time, jika saat itu Anda masih menginginkannya. Anda mengonfirmasinya di sini dalam 15 menit setelahnya.';
+  }
+
+  @override
+  String get protectWaitStart => 'Mulai menunggu';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'Sudah menunggu: berlaku pukul $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'Berlaku pukul $time. Konfirmasi saat itu.';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'besok pukul $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'Perubahan ini ditahan oleh pengaturan perlindungan.';
+
+  @override
+  String get protectLimits =>
+      'Yang tidak bisa dicegah: paksa berhenti, mencopot pemasangan, menghapus data Waaiya, dan pengaturan Android sendiri. Memblokirnya butuh hak admin perangkat atau aksesibilitas yang tidak dipakai Waaiya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'Yang tidak bisa dicegah: perintah waaiya di terminal, menghapus Waaiya, atau menghapus folder pengaturannya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
+
+  @override
+  String get protectWhatStop => 'Hentikan filter';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'Matikan: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'Nyalakan: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'Tambahkan aplikasi ke: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'Buat blur kurang ketat';
+
+  @override
+  String get protectWhatGender => 'Ubah siapa yang memakai ponsel';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'Ubah masa tunggu menjadi: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'Ubah PIN';
+
+  @override
+  String get protectWhatPinClear => 'Hapus PIN';
+
+  @override
+  String get protectWhatSetting => 'Ubah pengaturan';
 }

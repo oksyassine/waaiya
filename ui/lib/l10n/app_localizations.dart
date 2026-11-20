@@ -2607,6 +2607,336 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'حاول مرة أخرى'**
   String get worshipTryAgain;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حماية في لحظات الضعف'**
+  String get protectTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.'**
+  String get protectBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة الانتظار: {value}'**
+  String protectDelay(Object value);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مدة الانتظار'**
+  String get protectDelayTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.'**
+  String get protectDelayBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'بلا انتظار'**
+  String get protectDelayOff;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'دقيقة واحدة'**
+  String get protectDelay1m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٥ دقائق'**
+  String get protectDelay5m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'١٥ دقيقة'**
+  String get protectDelay15m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٣٠ دقيقة'**
+  String get protectDelay30m;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ساعة واحدة'**
+  String get protectDelay1h;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٤ ساعات'**
+  String get protectDelay4h;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'٢٤ ساعة'**
+  String get protectDelay24h;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{minutes} دقيقة'**
+  String protectDelayOther(Object minutes);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز: غير موضوع'**
+  String get protectPinNone;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز: موضوع'**
+  String get protectPinIsSet;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ضع رمزًا'**
+  String get protectPinSet;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف'**
+  String get protectPinRemove;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مع الرمز، يُطلب أولًا قبل كل تغيير يُضعف الحماية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.'**
+  String get protectPinBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إن نُسي الرمز فلا سبيل لاسترجاعه: لا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.'**
+  String get protectPinForgot;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أدخل الرمز'**
+  String get protectPinTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختر رمزًا'**
+  String get protectPinNewTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'غيِّر الرمز'**
+  String get protectPinChangeTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز الحالي'**
+  String get protectPinCurrent;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز الجديد (من ٤ إلى ٨ أرقام)'**
+  String get protectPinNew;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمز الجديد مرة أخرى'**
+  String get protectPinAgain;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استعمل من ٤ إلى ٨ أرقام.'**
+  String get protectPinBad;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الرمزان الجديدان غير متطابقين.'**
+  String get protectPinDiffer;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رمز خاطئ. بقيت {count} محاولات قبل التوقّف قليلًا.'**
+  String protectPinWrong(Object count);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'محاولات خاطئة كثيرة. حاول مرة أخرى عند {time}.'**
+  String protectLocked(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حسنًا'**
+  String get protectOk;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إلغاء'**
+  String get protectCancel;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ألغِ التغيير'**
+  String get protectCancelChange;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أكِّد'**
+  String get protectConfirm;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{what}: يسري عند {time}.'**
+  String protectPending(Object time, Object what);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{what}: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل {time}، وإلا فلن يتغيّر شيء.'**
+  String protectReady(Object time, Object what);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا التغيير ينتظر'**
+  String get protectWaitTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'{what} يسري عند {time} إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.'**
+  String protectWaitBody(Object time, Object what);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ الانتظار'**
+  String get protectWaitStart;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ينتظر بالفعل: يسري عند {time}.'**
+  String protectAlreadyWaiting(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يسري عند {time}. أكِّده حينها.'**
+  String protectStarted(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'غدًا عند {time}'**
+  String protectTomorrow(Object time);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات الحماية تؤخّر هذا التغيير.'**
+  String get protectHeldBack;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات مدير الجهاز أو خدمة الوصول، وواعية لا تستعملها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimits;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.'**
+  String get protectLimitsDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف التصفية'**
+  String get protectWhatStop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إطفاء: {name}'**
+  String protectWhatOff(Object name);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل: {name}'**
+  String protectWhatOn(Object name);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إضافة تطبيق إلى: {name}'**
+  String protectWhatApps(Object name);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'جعل التغطية أقل صرامة'**
+  String get protectWhatStrictness;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير من يستعمل الهاتف'**
+  String get protectWhatGender;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير مدة الانتظار إلى: {value}'**
+  String protectWhatDelay(Object value);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير الرمز'**
+  String get protectWhatPinChange;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'حذف الرمز'**
+  String get protectWhatPinClear;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تغيير إعداد'**
+  String get protectWhatSetting;
 }
 
 class _AppLocalizationsDelegate

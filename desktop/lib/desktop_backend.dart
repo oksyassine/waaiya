@@ -7,6 +7,8 @@ import 'package:flutter/widgets.dart' show Locale;
 import 'package:waaiya_ui/waaiya_ui.dart';
 // ignore: implementation_imports
 import 'package:waaiya_ui/src/fix_mistakes_notes.dart';
+// ignore: implementation_imports
+import 'package:waaiya_ui/src/protection_core.dart';
 
 import 'linux_blur.dart';
 import 'linux_engine.dart';
@@ -27,6 +29,10 @@ import 'windows_engine.dart';
 /// Screen blur ([LinuxBlur]: `im-blur` on Linux, `waaiya-blur.exe` on Windows, when the bundle has it): runs while the
 /// app is open and a blur option is on, whether the sound filter runs or not (capability `blurStandalone`); its
 /// state is `blur.state` / `blur.error`.
+///
+/// Protection (waiting period and PIN, `features.protect`): the same rules as Android ([ProtectionGate]); setSetting and
+/// stopFilter pass the guard first. The PIN hash and the pending request are in protect.json in the state folder. The
+/// `waaiya` command line is not guarded: it stays the way out, and the card says so.
 class DesktopBackend extends MemoryBackend {
   DesktopBackend._(this.settingsFile, this.licencesDir, this.engine, this.blur, this.startTimeout, AppState initial,
       Duration? poll)
@@ -84,9 +90,15 @@ class DesktopBackend extends MemoryBackend {
     Duration? poll = const Duration(seconds: 3),
     Duration startTimeout = defaultStartTimeout,
     String? systemLocale,
+    ProtectionClock? protectionClock,
+    int protectionIterations = ProtectionRules.iterations,
   }) async {
     // "Fix mistakes" notes: next to a given settings file (tests), else in the state folder
     final notes = FixNotes(file != null ? File('${file.parent.path}${Platform.pathSeparator}fix_notes.txt') : defaultNotesFile());
+    // the waiting period and the PIN: next to a given settings file (tests), else in the state folder
+    final protectFile = File(file != null
+        ? '${file.parent.path}${Platform.pathSeparator}protect.json'
+        : '${defaultNotesFile().parent.path}${Platform.pathSeparator}protect.json');
     file ??= defaultSettingsFile();
     systemLocale ??= Platform.localeName;
     platform ??= Platform.operatingSystem;
@@ -140,6 +152,7 @@ class DesktopBackend extends MemoryBackend {
     );
     final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll);
     b._initFix(notes);
+    b._initProtect(protectFile, protectionClock ?? (linux ? LinuxBootClock() : ProcessClock()), protectionIterations);
     await b.refresh(); // a filter already running (started at login) shows at once
     await b._applyBlur();
     return b;
@@ -218,6 +231,59 @@ class DesktopBackend extends MemoryBackend {
     };
   }
 
+  // --- Protection: the waiting period and the PIN (lane B) ---
+
+  late final ProtectionGate _protect;
+  Timer? _protectTimer;
+
+  void _initProtect(File file, ProtectionClock clock, int iterations) {
+    var store = <String, Object?>{};
+    try {
+      store = (jsonDecode(file.readAsStringSync()) as Map).cast<String, Object?>();
+    } on Object {
+      // first run, or an unreadable file: no PIN, nothing pending
+    }
+    void save() {
+      try {
+        file.parent.createSync(recursive: true);
+        final tmp = File('${file.path}.tmp')..writeAsStringSync(jsonEncode(store));
+        tmp.renameSync(file.path);
+      } on IOException {
+        // the guard keeps working for this run
+      }
+    }
+
+    _protect = ProtectionGate(
+      ProtectionCore(
+        store: store,
+        clock: clock,
+        delayMinutes: () => state.settings.protectDelayMinutes,
+        current: (key) => state.settings.toMap()[key],
+        save: save,
+        iterations: iterations,
+      ),
+      apply: (what, value) => what == ProtectionCore.stop ? _stop() : _applySetting(what, value!),
+      changed: _emitProtect,
+    );
+    methods.addAll(_protect.methods);
+    _emitProtect();
+  }
+
+  /// `features.protect`; while a change waits, the time left is saved every minute and the card follows it.
+  void _emitProtect() {
+    final section = _protect.section();
+    emit(state.copyWith(features: {...state.features, 'protect': section}));
+    if (section['pending'] != null) {
+      _protectTimer ??= Timer.periodic(const Duration(minutes: 1), (_) {
+        _protect.core.checkpoint();
+        _emitProtect();
+      });
+    } else {
+      _protectTimer?.cancel();
+      _protectTimer = null;
+    }
+  }
+
   void _emitFix(int notes) =>
       emit(state.copyWith(features: {...state.features, 'fix': _fixSection(engine, notes)}));
 
@@ -233,6 +299,7 @@ class DesktopBackend extends MemoryBackend {
   @override
   Future<void> close() async {
     _timer?.cancel();
+    _protectTimer?.cancel();
     await _blurSub?.cancel();
     await blur?.dispose();
     return super.close();
@@ -400,6 +467,11 @@ class DesktopBackend extends MemoryBackend {
 
   @override
   Future<void> stopFilter() async {
+    _protect.checkStop(); // throws 'protected' when the waiting period or the PIN holds it back
+    await _stop();
+  }
+
+  Future<void> _stop() async {
     if (engine == null) return super.stopFilter();
     _error = null;
     _ranSinceAction = false;
@@ -409,7 +481,14 @@ class DesktopBackend extends MemoryBackend {
 
   @override
   Future<void> setSetting(String key, Object value) async {
+    _protect.checkSetting(key, value); // throws 'protected' when the waiting period or the PIN holds it back
+    await _applySetting(key, value);
+  }
+
+  /// A setting change the guard allowed.
+  Future<void> _applySetting(String key, Object value) async {
     await super.setSetting(key, value);
+    if (key == SettingKeys.protectDelayMinutes) _emitProtect();
     if (_blurKeys.contains(key)) await _applyBlur();
     final e = engine;
     // apps heard unfiltered: the daemon reads the file every second, nothing to restart
@@ -551,6 +630,35 @@ class DesktopBackend extends MemoryBackend {
     } on IOException {
       return 'Waaiya is free software under the GNU Affero General Public License v3 or later. Licence texts: '
           'https://github.com/oksyassine/waaiya (NOTICE, LICENSE, THIRD_PARTY_LICENSES.md).';
+    }
+  }
+}
+
+/// Linux: the boot id and the time since boot (CLOCK_BOOTTIME, suspend included) from /proc, so a waiting period keeps
+/// counting while Waaiya is closed but never counts a time the computer was off. Without /proc: this run only.
+class LinuxBootClock implements ProtectionClock {
+  final _fallback = ProcessClock();
+  String? _boot;
+
+  @override
+  int wallMs() => DateTime.now().millisecondsSinceEpoch;
+
+  @override
+  int elapsedMs() {
+    try {
+      final up = double.parse(File('/proc/uptime').readAsStringSync().split(' ').first);
+      return (up * 1000).round();
+    } on Object {
+      return _fallback.elapsedMs();
+    }
+  }
+
+  @override
+  String bootId() {
+    try {
+      return _boot ??= File('/proc/sys/kernel/random/boot_id').readAsStringSync().trim();
+    } on Object {
+      return _fallback.bootId();
     }
   }
 }

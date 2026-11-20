@@ -1751,5 +1751,225 @@
   "worshipTryAgain": "حاول مرة أخرى",
   "@worshipTryAgain": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectTitle": "حماية في لحظات الضعف",
+  "@protectTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectBody": "قرِّر الآن وأنت هادئ: كل تغيير يُضعف الحماية ينتظر قبل أن يسري. ويمكن للوالدين أيضًا وضع رمز.",
+  "@protectBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay": "مدة الانتظار: {value}",
+  "@protectDelay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayTitle": "مدة الانتظار",
+  "@protectDelayTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayBody": "إيقاف التصفية أو إطفاء التغطية أو أي شيء آخر يُضعف الحماية ينتظر هذه المدة، ثم تؤكّده خلال ١٥ دقيقة وإلا فلن يتغيّر شيء. أما التشغيل فيسري فورًا دائمًا.",
+  "@protectDelayBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayOff": "بلا انتظار",
+  "@protectDelayOff": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay1m": "دقيقة واحدة",
+  "@protectDelay1m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay5m": "٥ دقائق",
+  "@protectDelay5m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay15m": "١٥ دقيقة",
+  "@protectDelay15m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay30m": "٣٠ دقيقة",
+  "@protectDelay30m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay1h": "ساعة واحدة",
+  "@protectDelay1h": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay4h": "٤ ساعات",
+  "@protectDelay4h": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay24h": "٢٤ ساعة",
+  "@protectDelay24h": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayOther": "{minutes} دقيقة",
+  "@protectDelayOther": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinNone": "الرمز: غير موضوع",
+  "@protectPinNone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinIsSet": "الرمز: موضوع",
+  "@protectPinIsSet": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinSet": "ضع رمزًا",
+  "@protectPinSet": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinRemove": "احذف",
+  "@protectPinRemove": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinBody": "مع الرمز، يُطلب أولًا قبل كل تغيير يُضعف الحماية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.",
+  "@protectPinBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinForgot": "إن نُسي الرمز فلا سبيل لاسترجاعه: لا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.",
+  "@protectPinForgot": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinTitle": "أدخل الرمز",
+  "@protectPinTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinNewTitle": "اختر رمزًا",
+  "@protectPinNewTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinChangeTitle": "غيِّر الرمز",
+  "@protectPinChangeTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinCurrent": "الرمز الحالي",
+  "@protectPinCurrent": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinNew": "الرمز الجديد (من ٤ إلى ٨ أرقام)",
+  "@protectPinNew": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinAgain": "الرمز الجديد مرة أخرى",
+  "@protectPinAgain": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinBad": "استعمل من ٤ إلى ٨ أرقام.",
+  "@protectPinBad": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinDiffer": "الرمزان الجديدان غير متطابقين.",
+  "@protectPinDiffer": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinWrong": "رمز خاطئ. بقيت {count} محاولات قبل التوقّف قليلًا.",
+  "@protectPinWrong": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLocked": "محاولات خاطئة كثيرة. حاول مرة أخرى عند {time}.",
+  "@protectLocked": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectOk": "حسنًا",
+  "@protectOk": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectCancel": "إلغاء",
+  "@protectCancel": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectCancelChange": "ألغِ التغيير",
+  "@protectCancelChange": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectConfirm": "أكِّد",
+  "@protectConfirm": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPending": "{what}: يسري عند {time}.",
+  "@protectPending": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectReady": "{what}: انتهى الانتظار. أما زلت تريده؟ أكِّده قبل {time}، وإلا فلن يتغيّر شيء.",
+  "@protectReady": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWaitTitle": "هذا التغيير ينتظر",
+  "@protectWaitTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWaitBody": "{what} يسري عند {time} إن بقيتَ تريده حينها، وتؤكّده هنا خلال ١٥ دقيقة بعد ذلك.",
+  "@protectWaitBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWaitStart": "ابدأ الانتظار",
+  "@protectWaitStart": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectAlreadyWaiting": "ينتظر بالفعل: يسري عند {time}.",
+  "@protectAlreadyWaiting": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectStarted": "يسري عند {time}. أكِّده حينها.",
+  "@protectStarted": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectTomorrow": "غدًا عند {time}",
+  "@protectTomorrow": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectHeldBack": "إعدادات الحماية تؤخّر هذا التغيير.",
+  "@protectHeldBack": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLimits": "ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات مدير الجهاز أو خدمة الوصول، وواعية لا تستعملها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimits": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLimitsDesktop": "ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimitsDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatStop": "إيقاف التصفية",
+  "@protectWhatStop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatOff": "إطفاء: {name}",
+  "@protectWhatOff": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatOn": "تشغيل: {name}",
+  "@protectWhatOn": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatApps": "إضافة تطبيق إلى: {name}",
+  "@protectWhatApps": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatStrictness": "جعل التغطية أقل صرامة",
+  "@protectWhatStrictness": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatGender": "تغيير من يستعمل الهاتف",
+  "@protectWhatGender": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatDelay": "تغيير مدة الانتظار إلى: {value}",
+  "@protectWhatDelay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatPinChange": "تغيير الرمز",
+  "@protectWhatPinChange": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatPinClear": "حذف الرمز",
+  "@protectWhatPinClear": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatSetting": "تغيير إعداد",
+  "@protectWhatSetting": {
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }
