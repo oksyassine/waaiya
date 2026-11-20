@@ -21,7 +21,15 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "public"
 SITE = "https://waaiya.mssid.org/"
 REPO = "https://github.com/oksyassine/waaiya"
-APK = "https://mssid.org/downloads/waaiya.apk"
+VERSION = "0.2.12"
+DL = "https://waaiya.mssid.org/downloads/"   # every download lives here (site/upload_downloads.sh); GitHub has the same files
+APK = DL + "waaiya.apk"                      # the universal APK under a stable name
+APK_ARM64 = DL + f"waaiya-v{VERSION}-arm64-v8a-release.apk"
+APK_V7A = DL + f"waaiya-v{VERSION}-armeabi-v7a-release.apk"
+WIN_ZIP = DL + f"waaiya-desktop-windows-x64-v{VERSION}.zip"
+LINUX_DESKTOP = DL + f"waaiya-desktop-linux-x64-v{VERSION}.tar.gz"
+LINUX_CLI = DL + f"waaiya-linux-x64-v{VERSION}.tar.gz"
+SUMS = DL + "SHA256SUMS"
 RELEASES = REPO + "/releases/latest"
 VERSION = "0.2.12"
 GSAP = "js/gsap-3.15.0.min.js"
@@ -119,13 +127,18 @@ T = {
             ("وويندوز ولينكس؟", "ويندوز [[10 (2004)]] أو أحدث: قريبًا في متجر مايكروسوفت، والطلب قيد المراجعة. حتى ذلك الحين ملف [[zip]] على [[GitHub]]، لكنه غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز. لينكس: نسخة سطح المكتب من [[GitHub]]."),
             ("من يقف وراءه؟", "مشروع مفتوح المصدر برخصة [[AGPL]]، شيفرته كاملة على [[GitHub]]. يمكن لأي أحد بناؤه بنفسه ومقارنته بما ننشر."),
         ],
-        dl_a="حمّل واعية لـ", dl_btn="تنزيل", dl_soon="قريبًا في متجر مايكروسوفت",
-        dl_opts=[("android", "أندرويد"), ("windows", "ويندوز"), ("linux", "لينكس")],
+        dl_btn="تنزيل", dl_soon="قريبًا في متجر مايكروسوفت",
+        dl_for={"android": "حمّل واعية لأندرويد", "windows": "حمّل واعية لويندوز", "linux": "حمّل واعية للينكس"},
         dl_rows=[
-            ("android", "أندرويد", "أندرويد: تنزيل [[waaiya.apk]]", APK, "الإصدار [[0.2.12]]، أندرويد [[10]] أو أحدث.", None),
-            ("windows", "ويندوز", "ويندوز: قريبًا في متجر مايكروسوفت", None, "الطلب قيد المراجعة. ويندوز [[10 (2004)]] أو أحدث.", ("أو ملف [[zip]] من [[GitHub]]", RELEASES, "غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")),
-            ("linux", "لينكس", "لينكس: نسخة سطح المكتب من [[GitHub]]", RELEASES, "الشيفرة كاملة على [[GitHub]].", None),
+            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.12]]، يعمل على كل الهواتف، أندرويد [[10]] أو أحدث · [[108 MB]]",
+             [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
+              ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
+            ("windows", "ويندوز: قريبًا في متجر مايكروسوفت", None, "الطلب قيد المراجعة. ويندوز [[10 (2004)]] أو أحدث.",
+             [("ملف [[zip]]: فكّه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
+            ("linux", "لينكس: تطبيق سطح المكتب", LINUX_DESKTOP, "لينكس [[x64]] · [[58 MB]]",
+             [("المحرّك وسطر الأوامر فقط", LINUX_CLI, "[[9 MB]]")]),
         ],
+        dl_sums=("تحقّق من الملفات بـ [[SHA256SUMS]]", "والملفات نفسها والشيفرة كاملة على [[GitHub]]"),
         foot_what="واعية · ﴿وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ﴾ الحاقة: [[12]]",
         foot_links=[("GitHub", REPO), ("الخصوصية", "privacy.html"), ("English", "en/")],
         foot_right="[[2026]] · مجاني ومفتوح المصدر",
@@ -216,13 +229,18 @@ T = {
             ("Windows and Linux?", "Windows 10 (2004) or newer: soon in the Microsoft Store, where it is under review. Until then a zip on GitHub, which is not signed yet, so Windows Smart App Control may block it. Linux: the desktop app from GitHub."),
             ("Who is behind it?", "An open-source project under the AGPL, with all its code on GitHub. Anyone can build it and compare it with what we publish."),
         ],
-        dl_a="Get Waaiya for", dl_btn="Download", dl_soon="Soon in the Microsoft Store",
-        dl_opts=[("android", "Android"), ("windows", "Windows"), ("linux", "Linux")],
+        dl_btn="Download", dl_soon="Soon in the Microsoft Store",
+        dl_for={"android": "Get Waaiya for Android", "windows": "Get Waaiya for Windows", "linux": "Get Waaiya for Linux"},
         dl_rows=[
-            ("android", "Android", "Android: download waaiya.apk", APK, "Version 0.2.12, Android 10 or newer.", None),
-            ("windows", "Windows", "Windows: soon in the Microsoft Store", None, "Under review. Windows 10 (2004) or newer.", ("Or a zip from GitHub", RELEASES, "Not signed yet, so Windows Smart App Control may block it.")),
-            ("linux", "Linux", "Linux: the desktop app from GitHub", RELEASES, "All the code is on GitHub.", None),
+            ("android", "Android: waaiya.apk", APK, "Version 0.2.12, for every phone, Android 10 or newer · 108 MB",
+             [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
+              ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
+            ("windows", "Windows: soon in the Microsoft Store", None, "Under review. Windows 10 (2004) or newer.",
+             [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed yet, so Windows Smart App Control may block it.")]),
+            ("linux", "Linux: the desktop app", LINUX_DESKTOP, "Linux x64 · 58 MB",
+             [("The engine and command line only", LINUX_CLI, "9 MB")]),
         ],
+        dl_sums=("Check the files against SHA256SUMS", "The same files and all the code are on GitHub"),
         foot_what="Waaiya · “that a heeding ear may heed it” (Al-Haqqah 69:12)",
         foot_links=[("GitHub", REPO), ("Privacy", "privacy.html"), ("العربية", "../")],
         foot_right="2026 · Free and open source",
@@ -344,20 +362,22 @@ def page(lang, root):
         f'<h3 class="qq" style="--r:{i + 2}"><button type="button" id="q{i}" aria-expanded="{"true" if i == 0 else "false"}" aria-controls="a{i}">{e(q)}</button></h3>'
         f'<div class="qa" id="a{i}" role="region" aria-labelledby="q{i}" style="--r:{i + 2}"{"" if i == 0 else " data-closed"}><p>{e(ans)}</p></div>'
         for i, (q, ans) in enumerate(t["faq"]))
-    opts_sel = "".join(f'<option value="{k}">{e(n)}</option>' for k, n in t["dl_opts"])
     rows = ""
-    for k, name, main, href, note, alt in t["dl_rows"]:
+    for k, main, href, note, more in t["dl_rows"]:
         main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>' if href else f'<span class="dl-main soon">{e(main)}</span>'
-        alt_html = f'<p class="dl-alt"><a href="{alt[1]}">{e(alt[0])}</a> {e(alt[2])}</p>' if alt else ""
-        rows += f'<li data-plat="{k}"><div>{main_html}<p>{e(note)}</p>{alt_html}</div></li>'
+        more_html = "".join(f'<li><a href="{h}">{e(n)}</a> <span>{e(x)}</span></li>' for n, h, x in more)
+        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p><ul class="dl-more">{more_html}</ul></li>'
+    sums = f'<p class="dl-sums"><a href="{SUMS}">{e(t["dl_sums"][0])}</a> · <a href="{RELEASES}">{e(t["dl_sums"][1])}</a></p>'
     foot_links = "".join(f'<a href="{html.escape(h)}">{e(n)}</a>' for n, h in t["foot_links"])
 
     i18n = {k: plain(t[k]) for k in ("r_off", "r_off_h", "r_on", "r_on_h", "compact_off", "compact_on", "spec_cap_off", "spec_cap_on",
                                      "play", "pause", "cover_clear", "cover_hint", "card_on", "card_off", "card_stop", "card_start", "card_wait",
                                      "card_left", "card_ready", "card_done", "card_hint", "card_kept", "lang_cap", "lang_alt", "dl_btn", "dl_soon")}
+    i18n["dl_for"] = t["dl_for"]
     i18n["names"] = lname
     i18n["apk"] = APK
     i18n["releases"] = RELEASES
+    i18n["linux"] = LINUX_DESKTOP
     i18n_json = json.dumps(i18n, ensure_ascii=False).replace("</", "<\\/")
     sub = "arabic" if rtl else "latin"
     alt_url = SITE + ("" if lang == "en" else "en/")
@@ -506,8 +526,9 @@ def page(lang, root):
 </section>
 {strip}
 <section class="dl" id="download" aria-labelledby="dl-h">
-  <h2 id="dl-h" class="dl-line"><span class="js-only">{e(t['dl_a'])}</span><span class="no-js">{e(t['cta'])}</span> <select id="platform" aria-label="{e(t['dl_a'])}">{opts_sel}</select> <a class="btn dl-go" href="{APK}">{e(t['dl_btn'])}</a></h2>
+  <div class="dl-head"><h2 id="dl-h" class="dl-line">{e(t['cta'])}</h2><a class="btn dl-go" href="{APK}">{e(t['dl_btn'])}</a></div>
   <ul class="dl-rows">{rows}</ul>
+  {sums}
 </section>
 </main>
 <footer class="foot"><span>{e(t['foot_what'])}</span><nav>{foot_links}</nav><span>{e(t['foot_right'])}</span></footer>
