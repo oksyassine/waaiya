@@ -153,4 +153,14 @@ class FixMistakesTest {
             dir.deleteRecursively()
         }
     }
+
+    // --- the actions on the filter's notification (Stop + at most two) ---
+
+    @Test fun notificationActions() {
+        assertEquals(listOf("missed", "wrong"), FixMistakesActions.kinds(blurRunning = false, handCovers = 0))
+        assertEquals("no hand covers without the blur", listOf("missed", "wrong"), FixMistakesActions.kinds(false, 3))
+        assertEquals(listOf("cover", "missed"), FixMistakesActions.kinds(blurRunning = true, handCovers = 0))
+        assertEquals(listOf("remove", "missed"), FixMistakesActions.kinds(blurRunning = true, handCovers = 2))
+        for (b in listOf(false, true)) for (n in 0..2) assertTrue(FixMistakesActions.kinds(b, n).size <= 2)
+    }
 }

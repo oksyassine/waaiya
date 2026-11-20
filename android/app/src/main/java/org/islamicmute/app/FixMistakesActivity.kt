@@ -23,7 +23,7 @@ import android.widget.Toast
 /**
  * "Cover an area": a full-screen, see-through screen over the app the user is in. He drags a rectangle; "Cover it"
  * adds it as a hand cover ([FixMistakes.addHandCover]), drawn opaque by the blur's cover host until "Remove hand
- * covers" or until the blur stops. Opened from the fix notification and from the Screen page.
+ * covers" or until the blur stops. Opened from the filter's notification and from the Screen page.
  *
  * Coordinates are the touch's raw screen position over the real display size, the same frame as the blur's covers
  * ([BlurOverlay.screen]).

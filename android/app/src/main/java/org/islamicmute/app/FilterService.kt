@@ -90,6 +90,19 @@ class FilterService : Service() {
         fun addListener(l: () -> Unit) { listeners += l }
         fun removeListener(l: () -> Unit) { listeners -= l }
         private fun publish(s: State) { state = s; notifyListeners() }
+
+        /** The running service, for [refreshNotification]. */
+        @Volatile private var instance: java.lang.ref.WeakReference<FilterService>? = null
+
+        /** Builds the notification again (its fix actions changed: FixMistakes). Any thread; nothing once stopped. */
+        fun refreshNotification() { main.post { instance?.get()?.updateNotification() } }
+
+        /**
+         * The filter's notification is in a group of its own. Android groups two or more notifications of one app
+         * under one summary, and while the screen is captured Android 15+ hides that summary and all under it: only a
+         * foreground service's notification is left visible. On its own, Stop stays visible and usable.
+         */
+        private const val GROUP = "filter"
         private fun notifyListeners() { main.post { listeners.forEach { it() } } }
     }
 
@@ -109,6 +122,7 @@ class FilterService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = java.lang.ref.WeakReference(this)
         if (BuildConfig.DEBUG) {
             val r = object : android.content.BroadcastReceiver() {
                 override fun onReceive(c: Context?, i: Intent?) {
@@ -483,6 +497,7 @@ class FilterService : Service() {
     }
 
     override fun onDestroy() {
+        instance = null
         stop = true
         holding = false
         debugReceiver?.let { runCatching { unregisterReceiver(it) } }
@@ -533,8 +548,9 @@ class FilterService : Service() {
             .setContentIntent(open)
             .addAction(Notification.Action.Builder(null, getString(R.string.notif_stop), stopIntent).build())
             .setOngoing(true)
+            .setGroup(GROUP)
             .build()
-        return Notification.Builder(this, CHANNEL)
+        val b = Notification.Builder(this, CHANNEL)
             .setContentTitle(getString(R.string.notif_title))
             .setContentText(getString(when {
                 health?.tooSlow == true -> R.string.notif_too_slow
@@ -548,7 +564,10 @@ class FilterService : Service() {
             .setContentIntent(open)
             .addAction(Notification.Action.Builder(null, getString(R.string.notif_stop), stopIntent).build())
             .setOngoing(true)
-            .build()
+            .setGroup(GROUP)
+        // "Cover an area" / "Missed something"... (FixMistakes): here, not on a notification of their own (see GROUP)
+        FixMistakes.notificationActions(this).forEach { b.addAction(it) }
+        return b.build()
     }
 }
 

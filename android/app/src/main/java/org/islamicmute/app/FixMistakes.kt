@@ -1,7 +1,6 @@
 package org.islamicmute.app
 
 import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -34,7 +33,7 @@ import java.lang.ref.WeakReference
  *   the one-time setup; elsewhere (helper mode, accessibility build or no setup without DUMP) the option is shown
  *   disabled and the covers stay. A reading that failed or is older than [FixMistakesForeground.STALE_MS] keeps the
  *   covers ([blurPaused]).
- * - **Cover an area by hand**: [FixMistakesActivity] (from this notification or the Screen page) adds an opaque cover
+ * - **Cover an area by hand**: [FixMistakesActivity] (from the filter's notification or the Screen page) adds an opaque cover
  *   drawn by the blur's own cover host ([BlurOverlay]) until "Remove hand covers" or until the blur stops. Not kept.
  * - **Wrong-detection notes**: [FixMistakesNotes], an app-private file, never sent anywhere.
  *
@@ -43,8 +42,8 @@ import java.lang.ref.WeakReference
 object FixMistakes : Feature {
     override val name = "fix"
     private const val TAG = "IslamicMute"
-    private const val CHANNEL = "fix"
-    private const val NOTIFICATION_ID = 7
+    private const val OLD_CHANNEL = "fix"
+    private const val OLD_NOTIFICATION_ID = 7
     private const val ACTION = "org.islamicmute.app.FIX"
     private const val EXTRA_WHAT = "what"
     private const val EXTRA_TOKEN = "token"
@@ -178,19 +177,19 @@ object FixMistakes : Feature {
             if (hand.size >= MAX_HAND_COVERS) hand.removeAt(0)
             hand += r
         }
-        coversEdited(ctx)
+        coversEdited()
         return true
     }
 
     /** "Remove hand covers", or the blur stopped (they are not kept across blur restarts). */
     fun clearHandCovers(ctx: Context?) {
         val had = synchronized(hand) { val n = hand.size; hand.clear(); n }
-        if (had > 0) coversEdited(ctx)
+        if (had > 0) coversEdited()
     }
 
-    private fun coversEdited(ctx: Context?) {
+    private fun coversEdited() {
         onCoversChanged?.invoke()
-        if (ctx != null) main.post { postNotification(ctx.applicationContext) }
+        actionsChanged()
         refreshUi()
     }
 
@@ -324,13 +323,11 @@ object FixMistakes : Feature {
     // ------------------------------------------------------------------ session and notification
 
     private var receiver: BroadcastReceiver? = null
-    private val blurListener: () -> Unit = { appCtx?.let { postNotification(it) } }
-    private var appCtx: Context? = null
+    private val blurListener: () -> Unit = { actionsChanged() }
 
     /** Filtering started (ScreenBlur runs, parked or not, for the whole filtering session). Main thread. */
     fun sessionStarted(context: Context) {
         val ctx = context.applicationContext
-        appCtx = ctx
         session = true
         startPoller(ctx)
         if (receiver == null) {
@@ -360,7 +357,13 @@ object FixMistakes : Feature {
             receiver = r
         }
         ScreenBlur.addListener(blurListener)
-        postNotification(ctx)
+        // the separate "Fix a mistake" notification of the first 0.2.13 builds: gone, with its channel
+        runCatching {
+            val nm = ctx.getSystemService(NotificationManager::class.java)
+            nm.cancel(OLD_NOTIFICATION_ID)
+            nm.deleteNotificationChannel(OLD_CHANNEL)
+        }
+        actionsChanged()
     }
 
     /** Filtering ended: no hand covers, no poller, no notification. Main thread. */
@@ -371,7 +374,7 @@ object FixMistakes : Feature {
         clearHandCovers(null)
         receiver?.let { runCatching { ctx.unregisterReceiver(it) } }
         receiver = null
-        runCatching { ctx.getSystemService(NotificationManager::class.java).cancel(NOTIFICATION_ID) }
+        FilterService.refreshNotification()
         refreshUi()
     }
 
@@ -381,38 +384,32 @@ object FixMistakes : Feature {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
     /**
-     * Its own quiet notification while filtering, so that the filter's notification (and its Stop) stays as it is.
-     * Android shows three actions: "Cover an area" (or "Remove hand covers" while there are some) when the blur
-     * runs, then the two notes.
+     * The fix actions, carried by the filter's own notification after its Stop (FilterService.notification), never by
+     * a notification of their own: Android 15+ hides every notification but the foreground service's while the screen
+     * is captured, and two notifications of one app are grouped under one hidden summary, which took the filter's
+     * Stop with it. Android shows three actions, so at most two here ([FixMistakesActions.kinds]). Empty outside a
+     * filtering session.
      */
-    private fun postNotification(context: Context) {
-        if (!session) return
+    fun notificationActions(context: Context): List<Notification.Action> {
+        if (!session) return emptyList()
         val ctx = Lang.wrap(context)
-        runCatching {
-            val nm = ctx.getSystemService(NotificationManager::class.java)
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, ctx.getString(R.string.notif_fix_notif_channel),
-                NotificationManager.IMPORTANCE_LOW).apply { setShowBadge(false) })
-            val open = PendingIntent.getActivity(ctx, 70, UiActivity.open(ctx, "screen") ?: UiActivity.main(ctx),
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            val b = Notification.Builder(ctx, CHANNEL)
-                .setContentTitle(ctx.getString(R.string.notif_fix_notif_title))
-                .setContentText(ctx.getString(R.string.notif_fix_notif_text))
-                .setStyle(Notification.BigTextStyle().bigText(ctx.getString(R.string.notif_fix_notif_text)))
-                .setSmallIcon(R.drawable.ic_notification)
-                .setColor(ctx.getColor(R.color.primary))
-                .setContentIntent(open)
-                .setOnlyAlertOnce(true)
-                .setOngoing(true)
-            if (ScreenBlur.state != null) {
-                if (handCoverCount == 0) b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_cover_area),
+        return FixMistakesActions.kinds(ScreenBlur.state != null, handCoverCount).map { kind ->
+            when (kind) {
+                FixMistakesActions.COVER -> Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_cover_area),
                     PendingIntent.getActivity(ctx, 71, FixMistakesActivity.intent(ctx),
-                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)).build())
-                else b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_remove_covers),
-                    broadcast(ctx, "remove", 72)).build())
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)).build()
+                FixMistakesActions.REMOVE -> Notification.Action.Builder(null,
+                    ctx.getString(R.string.notif_fix_remove_covers), broadcast(ctx, "remove", 72)).build()
+                FixMistakesActions.MISSED -> Notification.Action.Builder(null,
+                    ctx.getString(R.string.notif_fix_note_missed), broadcast(ctx, "missed", 73)).build()
+                else -> Notification.Action.Builder(null,
+                    ctx.getString(R.string.notif_fix_note_wrong), broadcast(ctx, "wrong", 74)).build()
             }
-            b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_note_missed), broadcast(ctx, "missed", 73)).build())
-            b.addAction(Notification.Action.Builder(null, ctx.getString(R.string.notif_fix_note_wrong), broadcast(ctx, "wrong", 74)).build())
-            nm.notify(NOTIFICATION_ID, b.build())
-        }.onFailure { Log.w(TAG, "fix: notification: $it") }
+        }
+    }
+
+    /** The actions changed (blur on or off, hand covers added or removed): the filter's notification is built again. */
+    private fun actionsChanged() {
+        if (session) FilterService.refreshNotification()
     }
 }
