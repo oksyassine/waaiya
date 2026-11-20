@@ -1026,4 +1026,15 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। অ্যাপ নিজে কিছুই পাঠায় না।';
+
+  @override
+  String get singingKeepTitle => 'গানের কণ্ঠ রাখুন (পরীক্ষামূলক)';
+
+  @override
+  String get singingKeepBody =>
+      'বাদ্যযন্ত্র সরানো হয় কিন্তু গানের কণ্ঠ থাকে, তাই যে বয়ানের নিচে নাশিদ আছে তাতে নাশিদের কণ্ঠও থাকে; এটি গ্রহণযোগ্য কি না, তা আপনার সিদ্ধান্ত।';
+
+  @override
+  String get singingKeepNoModel =>
+      'এই সংস্করণে গানের মডেল নেই, তাই এটি চালু থাকা পর্যন্ত শব্দ নীরব থাকবে। এটি বন্ধ করুন।';
 }

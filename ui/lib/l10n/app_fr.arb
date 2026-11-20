@@ -286,5 +286,8 @@
   "engineDetectorFailed": "Le détecteur de chant des femmes ne s'est pas chargé : les voix sont donc coupées tant que cette option est activée.",
   "blurStatusUncovered": "Un écran n'est pas couvert par le flou : il ne lui a pas été partagé, ou il a été branché plus tard. Désactivez puis réactivez une option de flou, et choisissez tous les écrans dans la fenêtre de partage d'écran.",
   "blurStatusModelsMissingDesktop": "Les modèles du flou manquent dans cette installation : il ne peut donc rien couvrir, et une barre rouge reste en haut de l'écran. Réinstallez Waaiya.",
-  "diagNoteDesktop": "Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L'application elle-même n'envoie rien."
+  "diagNoteDesktop": "Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L'application elle-même n'envoie rien.",
+  "singingKeepTitle": "Garder le chant (essai)",
+  "singingKeepBody": "Les instruments sont retirés mais les voix chantées restent, donc une conférence avec un nasheed en fond garde aussi la voix du nasheed ; à vous de juger si c'est acceptable.",
+  "singingKeepNoModel": "Cette version n'a pas le modèle du chant : le son reste silencieux tant que cette option est activée. Désactivez-la."
 }

@@ -1028,4 +1028,15 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.';
+
+  @override
+  String get singingKeepTitle => 'Pertahankan nyanyian (uji coba)';
+
+  @override
+  String get singingKeepBody =>
+      'Alat musik dihapus tetapi suara nyanyian tetap ada, sehingga ceramah dengan nasyid di latarnya juga tetap menyimpan suara nasyid; apakah itu dapat diterima adalah pilihan Anda.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Versi ini tidak memiliki model nyanyian, jadi suara tetap senyap selama opsi ini aktif. Matikan opsi ini.';
 }

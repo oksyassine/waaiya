@@ -3,10 +3,15 @@ package org.islamicmute.app
 import android.app.ActivityManager
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.os.BatteryManager
 import android.media.AudioManager
 import android.os.Build
 import android.os.PowerManager
+import android.os.Process
+import android.os.SystemClock
 
 /**
  * A plain-text report of everything that decides whether the filter works on this phone: the setup, the phone's
@@ -16,6 +21,28 @@ import android.os.PowerManager
  * No account, serial number or other identifier is included; app names appear only for apps playing sound now.
  */
 object Diagnostics {
+    /** Battery and CPU at the start of the running filter (FilterService); null before the first start. */
+    @Volatile var power: PowerUse? = null
+        private set
+
+    /** Called by the filter when it starts: the battery and CPU figures the report compares with. */
+    fun filterStarted(ctx: Context) {
+        val b = battery(ctx)
+        power = PowerUse(SystemClock.elapsedRealtime(), Process.getElapsedCpuTime(), b?.percent, b?.charging ?: false)
+    }
+
+    /** The sticky battery broadcast: level, charging, temperature. Null when Android does not give it. */
+    private fun battery(ctx: Context): PowerUse.Battery? = runCatching {
+        val i = ctx.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) ?: return null
+        val status = i.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+        PowerUse.Battery(
+            percent = PowerUse.batteryPercent(i.getIntExtra(BatteryManager.EXTRA_LEVEL, -1), i.getIntExtra(BatteryManager.EXTRA_SCALE, -1)),
+            charging = i.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) != 0 ||
+                status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL,
+            tenthsC = i.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, Int.MIN_VALUE),
+        )
+    }.getOrNull()
+
     fun report(ctx: Context): String = buildString {
         val s = Settings(ctx)
         val yes = { b: Boolean -> if (b) "yes" else "no" }
@@ -61,7 +88,14 @@ object Diagnostics {
                 "given back ${h.trimmedHops} hops, keeping ${h.keepHops * 10} ms")
             appendLine("Capture: level ${h.captureDb} dB, read errors ${h.readErrors}, model errors ${h.engineErrors}")
             appendLine("Women's singing filter: " + if (h.gateShare < 0) "off" else "on, muting %.0f%% of the time".format(java.util.Locale.ROOT, h.gateShare * 100))
+            appendLine("Keep singing model: running ${yes(h.keepSinging)}")
+            power?.let { p ->
+                val b = battery(ctx)
+                val thermal = if (Build.VERSION.SDK_INT >= 29) PowerUse.thermalName(pm.currentThermalStatus) else "not told (Android 10+)"
+                appendLine(p.report(SystemClock.elapsedRealtime(), Process.getElapsedCpuTime(), b, thermal))
+            }
         }
+        appendLine("Keep singing chosen: ${yes(s.keepSinging)}, model bundled: ${yes(ModelStore.hasSinging(ctx))}")
         appendLine("Stereo chosen: ${yes(s.audioStereo)}, starts in mono (learned on this phone): ${yes(s.audioMono)}")
         appendLine("Keep apps silent if filtering stops by itself: ${yes(s.holdSilence)}")
         appendLine("Detector model bundled: ${yes(ModelStore.hasDetector(ctx))}")
@@ -106,4 +140,73 @@ object Diagnostics {
     /** The chip name where Android tells it (API 31+), else the board name. */
     private fun chip(): String =
         if (Build.VERSION.SDK_INT >= 31) "${Build.SOC_MANUFACTURER} ${Build.SOC_MODEL}" else Build.HARDWARE
+}
+
+/**
+ * Battery and heat while filtering (roadmap item 2): battery used per hour, the app's CPU time and which model and
+ * mono / stereo ran since the filter started. The arithmetic has no Android classes: tested on the JVM
+ * (DiagnosticsPowerTest). [startPercent] null: the level was not known; [startCharging]: plugged in at the start.
+ */
+class PowerUse(
+    private val startMs: Long, private val startCpuMs: Long,
+    private val startPercent: Double?, private val startCharging: Boolean,
+) {
+    /** One reading of the sticky ACTION_BATTERY_CHANGED. [tenthsC]: temperature in tenths of a degree C. */
+    data class Battery(val percent: Double?, val charging: Boolean, val tenthsC: Int)
+
+    private val runs = LinkedHashSet<String>()
+
+    /** The model and mode the filter runs with now (called with every health report); each one is listed once. */
+    @Synchronized fun noteRun(model: String, mono: Boolean) { runs += "$model ${if (mono) "mono" else "stereo"}" }
+    @Synchronized fun runs(): List<String> = runs.toList()
+
+    /** The report lines (two, no trailing newline). [nowMs] / [cpuMs]: elapsedRealtime and the process CPU time now. */
+    fun report(nowMs: Long, cpuMs: Long, now: Battery?, thermal: String): String {
+        val wall = nowMs - startMs
+        val min = wall / 60_000.0
+        val rate = batteryPerHour(startPercent, now?.percent, wall, startCharging || now?.charging != false)
+        val cpu = cpuShare(cpuMs - startCpuMs, wall)
+        val l = java.util.Locale.ROOT
+        val battery = when {
+            startCharging || now?.charging == true -> "charging"
+            rate == null && min < MIN_MINUTES -> "measuring (needs ${MIN_MINUTES.toInt()} minutes without charging)"
+            rate == null -> "not known"
+            else -> "%.1f%% per hour (%.0f%% to %.0f%%)".format(l, rate, startPercent, now?.percent)
+        }
+        val temp = now?.tenthsC?.takeIf { it != Int.MIN_VALUE }?.let { "%.1f C".format(l, it / 10.0) } ?: "not known"
+        // the texts are joined, never used as a format: "12.0% per hour" holds a '%'
+        return "Power since start (" + "%.0f".format(l, min) + " min): battery $battery, temperature $temp, thermal $thermal\n" +
+            "CPU of all of Waaiya (blur and screen included): " +
+            (cpu?.let { "%.0f%% of one core (%.1f s per minute)".format(l, it, it * 0.6) } ?: "not known") +
+            ", ran: ${runs().joinToString(", ").ifEmpty { "?" }}"
+    }
+
+    companion object {
+        /** Battery use is shown after this many minutes: the level only moves in whole percents. */
+        const val MIN_MINUTES = 10.0
+
+        /** Level as a percentage, or null when the broadcast has no valid level. */
+        fun batteryPercent(level: Int, scale: Int): Double? =
+            if (level < 0 || scale <= 0 || level > scale) null else level * 100.0 / scale
+
+        /**
+         * Battery percent used per hour, or null when it cannot be told: charging at either reading, a level not known,
+         * less than [MIN_MINUTES], or a level that went up (charged in between).
+         */
+        fun batteryPerHour(startPercent: Double?, nowPercent: Double?, wallMs: Long, charging: Boolean): Double? {
+            if (charging || startPercent == null || nowPercent == null || wallMs < MIN_MINUTES * 60_000) return null
+            val used = startPercent - nowPercent
+            return if (used < 0) null else used * 3_600_000.0 / wallMs
+        }
+
+        /** CPU time as a percentage of one core over [wallMs] (100 = one core busy all the time). */
+        fun cpuShare(cpuMs: Long, wallMs: Long): Double? =
+            if (wallMs <= 0 || cpuMs < 0) null else cpuMs * 100.0 / wallMs
+
+        /** PowerManager.THERMAL_STATUS_* (API 29+). */
+        fun thermalName(status: Int): String = when (status) {
+            0 -> "none"; 1 -> "light"; 2 -> "moderate"; 3 -> "severe"; 4 -> "critical"; 5 -> "emergency"; 6 -> "shutdown"
+            else -> "unknown ($status)"
+        }
+    }
 }

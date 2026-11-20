@@ -1025,4 +1025,15 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'اس کمپیوٹر پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں اور جو آپ کی مدد کر رہا ہو اسے دے دیں۔ ایپ خود کچھ نہیں بھیجتی۔';
+
+  @override
+  String get singingKeepTitle => 'گانے کی آوازیں رکھیں (آزمائشی)';
+
+  @override
+  String get singingKeepBody =>
+      'ساز ہٹا دیے جاتے ہیں مگر گانے کی آوازیں رہتی ہیں، اس لیے جس بیان کے پیچھے نشید ہو اس میں نشید کی آواز بھی رہتی ہے؛ یہ قابلِ قبول ہے یا نہیں، یہ آپ کا فیصلہ ہے۔';
+
+  @override
+  String get singingKeepNoModel =>
+      'اس ورژن میں گانے کا ماڈل نہیں ہے، اس لیے جب تک یہ آن ہے آواز خاموش رہے گی۔ اسے بند کریں۔';
 }

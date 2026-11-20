@@ -130,6 +130,7 @@ val modelAssets = layout.buildDirectory.dir("modelAssets")
 val modelVoice = providers.gradleProperty("imModel").getOrElse(rootProject.file("../models/dfn3/dfn3_stream_int8.onnx").path)
 val modelVision = rootProject.file("../models/vision")
 fun modelFile(prop: String, default: File): File = file(providers.gradleProperty(prop).getOrElse(default.path))
+val modelSinging = modelFile("imSingingModel", rootProject.file("../models/voice/v3/voice_v1_fp16.onnx"))
 // asset name in the APK -> source file
 val requiredModels = linkedMapOf(
     "voice.onnx" to file(modelVoice),
@@ -142,6 +143,10 @@ val requiredModels = linkedMapOf(
     "blur_nsfw.onnx" to modelFile("imBlurNsfw", modelVision.resolve("nsfw_marqo_int8.onnx")),
     // Person segmenter (-PimBlurSeg): covers follow each person's outline; without it, whole rectangles.
     "blur_seg.onnx" to modelFile("imBlurSeg", modelVision.resolve("seg.onnx")),
+    // "Keep singing" (setting keep_singing, a test): voice_v1, removes instruments and keeps singing voices
+    // (eval/results/voice_v1_engine.md). -PimSingingModel overrides; models-v1 release (scripts/fetch_deps.sh models).
+    "voice_singing.onnx" to modelSinging,
+    "voice_singing.state_init.bin" to file(modelSinging.path.removeSuffix(".onnx") + ".state_init.bin"),
 )
 // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
 // In the models-v1 release since 0.2.12 (scripts/fetch_deps.sh detector); a local build without it warns (CI fails).
@@ -162,7 +167,8 @@ gradle.taskGraph.whenReady {
     val missing = requiredModels.filterValues { !it.isFile }
     if (missing.isNotEmpty()) {
         val msg = "models missing: " + missing.entries.joinToString { (asset, src) -> "$asset (from $src)" } +
-            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg."
+            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg / " +
+            "-PimSingingModel."
         if (release) throw GradleException("Release build: $msg")
         logger.warn("warning: $msg Debug build continues without them.")
     }

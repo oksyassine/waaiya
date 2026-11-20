@@ -1036,4 +1036,15 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Ce que Waaiya voit sur cet ordinateur. Copiez-le et donnez-le à la personne qui vous aide. L\'application elle-même n\'envoie rien.';
+
+  @override
+  String get singingKeepTitle => 'Garder le chant (essai)';
+
+  @override
+  String get singingKeepBody =>
+      'Les instruments sont retirés mais les voix chantées restent, donc une conférence avec un nasheed en fond garde aussi la voix du nasheed ; à vous de juger si c\'est acceptable.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Cette version n\'a pas le modèle du chant : le son reste silencieux tant que cette option est activée. Désactivez-la.';
 }

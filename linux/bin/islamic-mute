@@ -11,6 +11,9 @@
 #                                       for men: also mute women's singing (then 'reload'). Fail-closed:
 #                                       if the detector cannot load, voice is muted while this is on.
 #   islamic-mute stereo on | off        stereo sound (default off: mono, lighter on slow computers; then 'reload')
+#   islamic-mute keep-singing on | off  a test: the voice_v1 model, which keeps singing voices and removes the
+#                                       instruments (then 'reload'). Fail-closed: if it is not installed or does not
+#                                       load, the output is silent while this is on.
 #   islamic-mute keep-silent on | off   when filtering stops by itself, apps stay silent (default on) or get
 #                                       their normal sound back with a desktop notice (off)
 #   islamic-mute reload                 apply the settings above: restarts only the filter, apps stay on the
@@ -41,7 +44,12 @@ log() { echo "$APP: $*" >&2; }
 die() { log "$*"; exit 1; }
 current_default() { pactl get-default-sink 2>/dev/null || pactl info 2>/dev/null | sed -n 's/^Default Sink: //p'; }
 sink_exists() { pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -qx "$1"; }
-model_path() { cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"; }
+# keep-singing on: the voice_v1 model ('install' puts it there as singing.onnx); the path is used even when the file
+# is missing, so the engine fails to load and stays silent (fail-closed), never another model
+model_path() {
+    if [ "$(cat "$CFG/keep_singing" 2>/dev/null)" = on ]; then echo "$LIB/models/singing.onnx"; return; fi
+    cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"
+}
 detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.onnx"; }
 policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
 mono_flag() { [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ] || echo "--mono"; }
@@ -107,6 +115,11 @@ install_cmd() {
     echo "$LIB/models/$(basename "$model")" > "$CFG/model"
     local det="$REPO/models/detector/detector_v1.onnx"
     [ -f "$det" ] && cp "$det" "$LIB/models/detector.onnx"
+    # keep singing (voice_v1, a test), when the checkout or bundle has it (scripts/fetch_deps.sh models)
+    local sing="$REPO/models/voice/v3/voice_v1_fp16"
+    if [ -f "$sing.onnx" ] && [ -f "$sing.state_init.bin" ]; then
+        cp "$sing.onnx" "$LIB/models/singing.onnx"; cp "$sing.state_init.bin" "$LIB/models/singing.state_init.bin"
+    else rm -f "$LIB/models/singing.onnx" "$LIB/models/singing.state_init.bin"; fi
     install -m 755 "$HERE/islamic-mute" "$LIB/islamic-mute"
     # engine version marker (desktop app bundle: engine/VERSION); the app reinstalls when it differs
     if [ -f "$REPO/VERSION" ]; then cp "$REPO/VERSION" "$LIB/VERSION"; else rm -f "$LIB/VERSION"; fi
@@ -316,6 +329,7 @@ status_cmd() {
         *) echo "engine:   starting" ;;
     esac
     if [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ]; then echo "sound:    stereo"; else echo "sound:    mono"; fi
+    if [ "$(cat "$CFG/keep_singing" 2>/dev/null)" = on ]; then echo "singing:  kept (test model)"; else echo "singing:  removed"; fi
     if keep_silent; then echo "if the filter stops: apps stay silent"; else echo "if the filter stops: normal sound"; fi
     echo "default:  $(current_default)"
     systemctl --user is-enabled islamic-mute.service >/dev/null 2>&1 && echo "autostart: on" || echo "autostart: off"
@@ -336,6 +350,11 @@ case "${1:-}" in
     stereo)
         case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/stereo"; log "stereo $2; run '$APP reload'" ;;
             *) die "usage: $APP stereo on|off" ;; esac ;;
+    keep-singing)
+        case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/keep_singing"
+                [ "$2" = on ] && [ ! -f "$LIB/models/singing.onnx" ] && log "warning: no keep-singing model installed: the output will be silent while this is on (fail-closed)"
+                log "keep-singing $2; run '$APP reload'" ;;
+            *) die "usage: $APP keep-singing on|off" ;; esac ;;
     keep-silent)
         case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/keep_silent"; log "keep-silent $2" ;;
             *) die "usage: $APP keep-silent on|off" ;; esac ;;
@@ -352,5 +371,5 @@ case "${1:-}" in
             off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP reload'" ;;
             *) die "usage: $APP women-singing on [detector.onnx] | off" ;;
         esac ;;
-    *) sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+    *) sed -n '2,28p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac

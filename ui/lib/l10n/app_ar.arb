@@ -1235,5 +1235,17 @@
   "diagNoteDesktop": "ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.",
   "@diagNoteDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "singingKeepTitle": "إبقاء أصوات الغناء (تجريبي)",
+  "@singingKeepTitle": {
+    "description": "Flutter only (keep singing, lane D)."
+  },
+  "singingKeepBody": "تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.",
+  "@singingKeepBody": {
+    "description": "Flutter only (keep singing, lane D)."
+  },
+  "singingKeepNoModel": "هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.",
+  "@singingKeepNoModel": {
+    "description": "Flutter only (keep singing, lane D)."
   }
 }

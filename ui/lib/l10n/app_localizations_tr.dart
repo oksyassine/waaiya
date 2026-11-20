@@ -1028,4 +1028,15 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Waaiya\'nın bu bilgisayarda gördükleri. Kopyalayın ve size yardım eden kişiye verin. Uygulamanın kendisi hiçbir şey göndermez.';
+
+  @override
+  String get singingKeepTitle => 'Şarkı seslerini koru (deneme)';
+
+  @override
+  String get singingKeepBody =>
+      'Enstrümanlar kaldırılır ama şarkı sesleri kalır, bu yüzden arkasında neşid olan bir sohbette neşidin sesi de kalır; bunun kabul edilebilir olup olmadığı sizin seçiminizdir.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Bu sürümde şarkı modeli yok, bu yüzden bu seçenek açıkken ses sessiz kalır. Kapatın.';
 }

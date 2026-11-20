@@ -1028,4 +1028,15 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+
+  @override
+  String get singingKeepTitle => 'Kekalkan nyanyian (percubaan)';
+
+  @override
+  String get singingKeepBody =>
+      'Alat muzik dibuang tetapi suara nyanyian kekal, jadi ceramah dengan nasyid di belakangnya juga mengekalkan suara nasyid; sama ada itu boleh diterima ialah pilihan anda.';
+
+  @override
+  String get singingKeepNoModel =>
+      'Versi ini tiada model nyanyian, jadi bunyi kekal senyap selagi pilihan ini dihidupkan. Matikannya.';
 }

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Download what a fresh clone needs to build, with checksums:
 #   scripts/fetch_deps.sh ort       ONNX Runtime 1.19.2 for Linux x64 -> third_party/onnxruntime/ (headers, lib, licences)
-#   scripts/fetch_deps.sh models    default voice model (DeepFilterNet3 streaming, int8) -> models/dfn3/
+#   scripts/fetch_deps.sh models    default voice model (DeepFilterNet3 streaming, int8) -> models/dfn3/, and the
+#                                   "keep singing" model (voice_v1, fp16 weights) -> models/voice/v3/
 #   scripts/fetch_deps.sh vision    screen-blur models (people, woman/man, nudity, person outline) -> models/vision/
 #   scripts/fetch_deps.sh detector  women's-singing detector -> models/detector/, only if a release has it (none yet);
 #                                   otherwise a notice, never an error (builds work without it)
@@ -145,7 +146,13 @@ mingw() {
     echo "llvm-mingw $MINGW_VERSION -> third_party/llvm-mingw"
 }
 
-models() { release_files "$MODELS_TAG" models/dfn3 dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin; }
+# The "keep singing" model (setting keep_singing): bundled by the APK and the desktop engine like the default one.
+SINGING_FILES=(voice_v1_fp16.onnx voice_v1_fp16.state_init.bin)
+
+models() {
+    release_files "$MODELS_TAG" models/dfn3 dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin
+    release_files "$MODELS_TAG" models/voice/v3 "${SINGING_FILES[@]}"
+}
 
 vision() { release_files "$VISION_TAG" models/vision "${VISION_FILES[@]}"; }
 

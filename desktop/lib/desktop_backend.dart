@@ -129,6 +129,7 @@ class DesktopBackend extends MemoryBackend {
       ),
       // the covers let every click through (empty input region), so the full-screen fail cover is safe here
       blur: blur != null ? const BlurInfo(overlayAllowed: true, touchPassThrough: true) : const BlurInfo(),
+      features: {'singing': _singingFeature(engine, settings[SettingKeys.keepSinging] == true, false)},
     );
     final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll);
     await b.refresh(); // a filter already running (started at login) shows at once
@@ -194,6 +195,24 @@ class DesktopBackend extends MemoryBackend {
     ));
   }
 
+  // --- Keep singing (setting keep_singing; Linux engine only) ---
+
+  /// `features.singing`: `available` = the bundled Linux engine has the voice_v1 model; `active` = the filter runs
+  /// with it (it loaded: a model that did not load is silent, FilterState.modelFailed).
+  static Map<String, Object?> _singingFeature(FilterHost? e, bool keepSinging, bool filtering) {
+    final available = e is LinuxEngine && e.hasSingingModel;
+    return {'available': available, 'active': available && keepSinging && filtering};
+  }
+
+  void _emitSinging() => emit(state.copyWith(features: {
+        ...state.features,
+        'singing': _singingFeature(engine, state.settings.keepSinging, state.filter.state == FilterState.filtering),
+      }));
+
+  /// `waaiya keep-singing on|off`; Linux only (no other host has the model).
+  static Future<BackendMessage?> _setKeepSinging(FilterHost e, bool on) async =>
+      e is LinuxEngine && e.hasSingingModel ? e.setKeepSinging(on) : null;
+
   // --- Linux engine host ---
 
   void _emitFilter(FilterState s, {bool? autostart, String? problem}) => emit(state.copyWith(
@@ -237,6 +256,7 @@ class DesktopBackend extends MemoryBackend {
       if (st.active == 'failed' && _error == null) _error = BackendMessage('service_failed', await e.journal());
     }
     _emitFilter(s, autostart: st.autostart, problem: problem);
+    _emitSinging();
     await _adoptEngineSettings(e);
   }
 
@@ -296,6 +316,7 @@ class DesktopBackend extends MemoryBackend {
         // fail-safe: never leave women's singing on without a detector (all voice would be muted)
         await e.setWomenSinging(e.hasDetector && state.settings.muteWomenSinging) ??
         await e.setStereo(state.settings.audioStereo) ??
+        await _setKeepSinging(e, state.settings.keepSinging) ??
         await e.setKeepSilent(state.settings.holdSilence) ??
         await e.start());
     if (!ok) {
@@ -325,6 +346,15 @@ class DesktopBackend extends MemoryBackend {
       // read by the daemon when the filter stops by itself: nothing to restart
       final ok = await _act((e) => e.setKeepSilent(value == true));
       if (!ok) _emitFilter(state.filter.state);
+      return;
+    }
+    if (key == SettingKeys.keepSinging) {
+      // the other model: a running filter reloads (a moment of silence, never unfiltered sound)
+      final running = state.filter.running;
+      final ok = await _act((e) async => await _setKeepSinging(e, value == true) ?? (running ? await e.reload() : null));
+      if (!ok) _emitFilter(state.filter.state);
+      await refresh();
+      _emitSinging();
       return;
     }
     if (key == SettingKeys.audioStereo) {
