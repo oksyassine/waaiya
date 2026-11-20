@@ -233,7 +233,8 @@ this file, `ui/lib/src/backend.dart`, `ui/lib/src/channel_backend.dart`,
 
 - Settings added: `filter_off_apps`, `blur_off_apps` (comma-separated), `keep_singing`, `prayer_silent`,
   `prayer_silent_minutes` (5..90), `prayer_adhan_mute`, `prayer_adhan_minutes` (1..30), `prayer_place`,
-  `prayer_method` (0..15), `prayer_asr` (0..1), `protect_delay_minutes` (0..1440). `SettingKeys.ranges` holds every
+  `prayer_method` (0..15), `prayer_asr` (0..1), `prayer_sms_reply`, `prayer_sms_delay_seconds` (3..60),
+  `prayer_sms_text`, `protect_delay_minutes` (0..1440). `SettingKeys.ranges` holds every
   integer range.
 - Snapshot key `features`: `{fix, worship, protect, singing}`, one map per feature, filled only by that feature.
 - Method `<feature>.<name>` (`WaaiyaBackend.invoke`), routed on Android by `UiBridge` to the feature's Kotlin object.
