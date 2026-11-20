@@ -8,9 +8,8 @@
 ///   handCover (bool)         "Cover an area" exists here (Android); handCovers (int) = hand covers now
 ///   blurRunning (bool)       the blur runs now (hand covers can be drawn)
 ///   notes (int)              wrong-detection notes kept on this device (present = notes exist here)
-///   labels (map)             package -> app name, for the apps in either list (Android)
-///   playing (list)           desktop: application names playing sound now
-/// Methods: fix.apps -> [{package, label, icon?}], fix.coverArea -> `opened` | `blur_off`, fix.removeCovers,
+///   labels (map)             package -> app name, for the apps in either list (Android; desktop names are shown as is)
+/// Methods: fix.apps -> [{package, label, icon?}] (desktop: the apps playing now and the chosen ones), fix.coverArea -> `opened` | `blur_off`, fix.removeCovers,
 /// fix.note {kind: missed|wrong, where: filter|screen} -> count, fix.notes -> text, fix.clearNotes.
 library;
 
