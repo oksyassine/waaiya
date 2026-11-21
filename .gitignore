@@ -58,6 +58,7 @@ access_token
 .kaggle/
 .env
 .env.*
+!.env.example
 *.jks
 *.keystore
 *.p12
