@@ -24,6 +24,11 @@ abstract final class SettingKeys {
   /// desktop notice.
   static const holdSilence = 'hold_silence';
 
+  /// Android, TEST (0.2.13): filter without the one-time setup by muting media while filtering (SimpleMode.kt).
+  static const simpleMode = 'simple_mode';
+
+  /// Simple mode's output channel: "alarm" or "notification".
+  static const simpleChannel = 'simple_channel';
   // 0.2.13 features (docs/FEATURES_CONTRACT.md). Changes that weaken protection may be refused with
   // BackendException('protected') by the waiting period or the PIN (Protection.checkSetting on Android).
 
@@ -80,6 +85,8 @@ abstract final class SettingKeys {
     blurStrictness: 0,
     audioStereo: false,
     holdSilence: true,
+    simpleMode: false,
+    simpleChannel: 'alarm',
     filterOffApps: '',
     blurOffApps: '',
     keepSinging: false,
@@ -108,6 +115,9 @@ abstract final class SettingKeys {
     if (def is String) {
       if (value is! String) return '"$key" takes a string';
       if (key == gender && !const {'', 'man', 'woman'}.contains(value)) return 'gender is "", "man" or "woman"';
+      if (key == simpleChannel && !const {'alarm', 'notification'}.contains(value)) {
+        return 'simple_channel is "alarm" or "notification"';
+      }
       if (key == prayerSmsText && value.length > 300) return '"$key" takes at most 300 characters';
     }
     return null;
@@ -126,6 +136,8 @@ class WaaiyaSettings {
     this.blurStrictness = 0,
     this.audioStereo = false,
     this.holdSilence = true,
+    this.simpleMode = false,
+    this.simpleChannel = 'alarm',
     this.filterOffApps = const [],
     this.blurOffApps = const [],
     this.keepSinging = false,
@@ -152,6 +164,8 @@ class WaaiyaSettings {
         blurStrictness: _int(m[SettingKeys.blurStrictness]).clamp(0, 2),
         audioStereo: _bool(m[SettingKeys.audioStereo], false),
         holdSilence: _bool(m[SettingKeys.holdSilence], true),
+        simpleMode: _bool(m[SettingKeys.simpleMode], false),
+        simpleChannel: _str(m[SettingKeys.simpleChannel]) == 'notification' ? 'notification' : 'alarm',
         filterOffApps: _csv(m[SettingKeys.filterOffApps]),
         blurOffApps: _csv(m[SettingKeys.blurOffApps]),
         keepSinging: _bool(m[SettingKeys.keepSinging], false),
@@ -180,6 +194,8 @@ class WaaiyaSettings {
   final int blurStrictness;
   final bool audioStereo;
   final bool holdSilence;
+  final bool simpleMode;
+  final String simpleChannel;
 
   /// Sorted, no empty entries ([SettingKeys.filterOffApps]; stored comma-separated).
   final List<String> filterOffApps;
@@ -210,6 +226,8 @@ class WaaiyaSettings {
         SettingKeys.blurStrictness: blurStrictness,
         SettingKeys.audioStereo: audioStereo,
         SettingKeys.holdSilence: holdSilence,
+        SettingKeys.simpleMode: simpleMode,
+        SettingKeys.simpleChannel: simpleChannel,
         SettingKeys.filterOffApps: filterOffApps.join(','),
         SettingKeys.blurOffApps: blurOffApps.join(','),
         SettingKeys.keepSinging: keepSinging,

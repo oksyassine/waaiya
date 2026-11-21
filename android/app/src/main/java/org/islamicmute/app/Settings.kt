@@ -77,6 +77,16 @@ class Settings(context: Context) {
         get() = p.getBoolean("show_notification_text", false)
         set(v) = p.edit().putBoolean("show_notification_text", v).apply()
 
+    /** Simple mode (TEST): filter without the one-time setup by muting media while filtering ([SimpleMode]). */
+    var simpleMode: Boolean
+        get() = p.getBoolean("simple_mode", false)
+        set(v) = p.edit().putBoolean("simple_mode", v).apply()
+
+    /** Simple mode's output channel: "alarm" or "notification". */
+    var simpleChannel: String
+        get() = p.getString("simple_channel", "alarm")?.takeIf { it == "notification" } ?: "alarm"
+        set(v) = p.edit().putString("simple_channel", v).apply()
+
     /** The user saw what the notification-text tile changes (shown once, at the first turn-on). */
     var notificationTextExplained: Boolean
         get() = p.getBoolean("notification_text_explained", false)

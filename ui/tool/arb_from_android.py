@@ -39,6 +39,7 @@ PLACEHOLDERS = {
     "state_blocked_silenced": [("apps", "String")],
     "state_blocked_unfiltered": [("apps", "String")],
     "wsetup_detail": [("details", "String")],
+    "simple_channel_title": [("channel", "String")],
 }
 
 # Strings the Flutter screens need that the Android screens did not have: ui/tool/extra_strings/<language>.json

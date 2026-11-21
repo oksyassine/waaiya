@@ -191,6 +191,9 @@ def main():
     ap.add_argument("--cover-helper", action="store_true",
                     help="start Waaiya's own cover helper (shell uid, as the on-phone setup does) after installing: "
                          "with --blur the covers are then a pass-through shell layer (Android 12+)")
+    ap.add_argument("--simple", action="store_true",
+                    help="simple mode (test, no setup): media muted while filtering, Waaiya's sound on the alarm channel; "
+                         "checks the mute, the channel, a volume key, the restore on Stop and after a killed process")
     ap.add_argument("--blur", action="store_true", help="also turn the screen blur on (women and immodest images)")
     ap.add_argument("--stereo", action="store_true", help="choose stereo in the settings first (mono is the default)")
     ap.add_argument("--end-capture", action="store_true",
@@ -248,9 +251,22 @@ def main():
         if not e.wait(rid="power", seconds=5) and e.find(rid="choose_man"):
             e.tap(rid="choose_man")
     c.check(e.wait(rid="power", seconds=10) is not None, "main screen shows the power button")
+    def music_muted():
+        m = re.search(r"- STREAM_MUSIC:\s*\n\s*Muted: (\w+)", e.sh("dumpsys audio"))
+        return m is not None and m.group(1) == "true"
+
+    if a.simple:
+        e.page("setup")
+        e.scroll_to("switch_simple_mode")
+        e.tap(rid="switch_simple_mode")
+        c.check(e.checked("switch_simple_mode") is True, "simple mode turned on (Setup page)")
+        for _ in range(4):
+            e.sh("input swipe 540 600 540 2000 150")
+        e.page("filter")
     # Without DUMP, a running helper reads the sound sessions for the app, and the app then counts the setup as done
     # ("helper mode", HelperDumps: phones that refuse the grants). The helper answers a new process within ~4 s.
-    silenced = a.setup == "done" or a.cover_helper
+    # Simple mode counts as silenced too (the media mute), with Android's question at each start.
+    silenced = a.setup == "done" or a.cover_helper or a.simple
     if a.cover_helper and a.setup == "none":
         for _ in range(12):
             if e.find(text=re.escape(ar["setup_banner_title"])) is None:
@@ -311,7 +327,7 @@ def main():
          "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
     time.sleep(a.seconds)
     log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
-    if silenced:
+    if silenced and not a.simple:
         # the other app's player must carry the silencing effect while it plays
         m = re.search(r"muter: original of session (\d+) \(uid (\d+), USAGE_MEDIA\) silenced", log)
         c.check(m is not None, "the muter silenced the other app's player", log[-300:])
@@ -338,6 +354,18 @@ def main():
             # stereo or mono depends on the host's speed; either way the hops must finish in time
             c.check(slow == "false", "fast build: not flagged too slow")
             c.check(float(avg) < 7.5, "fast build: hops finish in time", f"avg {avg} ms")
+
+    if a.simple:
+        uid = re.search(r"(?:appId|userId)=(\d+)", e.sh(f"dumpsys package {PKG}")).group(1)
+        c.check(music_muted(), "simple mode: media is muted while filtering")
+        u = re.search(r"u/pid:%s/\d+ state:started attr:AudioAttributes: usage=(\w+)" % uid, e.sh("dumpsys audio"))
+        c.check(u is not None and u.group(1) == "USAGE_ALARM", "simple mode: Waaiya plays on the alarm channel",
+                u.group(1) if u else "no started track of Waaiya")
+        e.sh("input keyevent KEYCODE_VOLUME_UP")
+        time.sleep(3)
+        log2 = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check("simple mode: volume key" in log2, "simple mode: a volume key press becomes Waaiya's volume")
+        c.check(music_muted(), "simple mode: media muted again after the volume key")
 
     # --- the app's own screen while playing
     e.sh(f"am start -n {PKG}/.MainActivity")
@@ -460,10 +488,13 @@ def main():
     c.check("State: FILTERING" in report and "Speed since start" in report, "report has the live numbers")
     if a.blur and a.cover_helper:
         c.check("shell layer (Waaiya helper)" in report, "report: covers drawn by Waaiya's helper", report[-800:])
-    if silenced and a.setup != "done":
+    if a.simple:
+        c.check("Simple mode (test): on, channel alarm, running yes" in report, "report: simple mode section",
+                report[-900:])
+    if silenced and a.setup != "done" and not a.simple:
         c.check("via Waaiya's helper" in report and "Waaiya's helper reads the sessions (helper running: yes)" in report,
                 "report: the session list comes through Waaiya's helper", report[-800:])
-    if silenced:
+    if silenced and not a.simple:
         c.check("Muter: OK, list from audio_policy" in report, "report: the muter reads the session list", report[-600:])
         if int(e.sh("getprop ro.build.version.sdk").strip() or 0) >= 31:
             c.check("list from audio_policy+audio" in report, "Android 12+: both session lists are read", report[-600:])
@@ -564,6 +595,23 @@ def main():
     e.page("filter")
     e.tap(rid="power")
     c.check(e.wait(text=re.escape(ar["state_off_title"]), seconds=10) is not None, "the button stops filtering")
+    if a.simple:
+        time.sleep(1)
+        c.check(not music_muted(), "simple mode: Stop gives the media sound back")
+        # a killed process (crash, swiped away with "force stop"): the next start of the app gives it back
+        e.tap(rid="power")
+        e.tap(rid="android:id/button1", seconds=15)
+        c.check(e.wait(text=re.escape(ar["state_on_title"]), seconds=60) is not None and music_muted(),
+                "simple mode: filtering again, media muted")
+        e.sh(f"am force-stop {PKG}")
+        time.sleep(2)
+        c.check(music_muted(), "simple mode: after a killed process media stays muted (nothing ran to restore it)")
+        e.sh(f"am start -n {PKG}/.MainActivity")
+        for _ in range(15):
+            if not music_muted():
+                break
+            time.sleep(1)
+        c.check(not music_muted(), "simple mode: the next app start gives the media sound back")
     e.sh("am force-stop com.google.android.apps.youtube.music")
     c.check("FATAL EXCEPTION" not in e.adb("logcat", "-d", "-s", "AndroidRuntime:E"), "no crash")
     print(f"\n{'ALL PASSED' if not c.failed else str(c.failed) + ' FAILED'}  (setup {a.setup}, {os.path.basename(a.apk)})")

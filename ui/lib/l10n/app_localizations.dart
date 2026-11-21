@@ -1720,6 +1720,60 @@ abstract class AppLocalizations {
   /// **'عام'**
   String get settingsGeneralTitle;
 
+  /// Android string simple_title
+  ///
+  /// In ar, this message translates to:
+  /// **'Simple mode (test): no Developer options'**
+  String get simpleTitle;
+
+  /// Android string simple_body
+  ///
+  /// In ar, this message translates to:
+  /// **'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.'**
+  String get simpleBody;
+
+  /// Android string simple_switch
+  ///
+  /// In ar, this message translates to:
+  /// **'Use simple mode'**
+  String get simpleSwitch;
+
+  /// Android string simple_channel_title
+  ///
+  /// In ar, this message translates to:
+  /// **'Sound channel: {channel}'**
+  String simpleChannelTitle(String channel);
+
+  /// Android string simple_channel_alarm
+  ///
+  /// In ar, this message translates to:
+  /// **'Alarm'**
+  String get simpleChannelAlarm;
+
+  /// Android string simple_channel_notification
+  ///
+  /// In ar, this message translates to:
+  /// **'Notification'**
+  String get simpleChannelNotification;
+
+  /// Android string simple_channel_help
+  ///
+  /// In ar, this message translates to:
+  /// **'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.'**
+  String get simpleChannelHelp;
+
+  /// Android string simple_test_note
+  ///
+  /// In ar, this message translates to:
+  /// **'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.'**
+  String get simpleTestNote;
+
+  /// Android string simple_on_detail
+  ///
+  /// In ar, this message translates to:
+  /// **'Simple mode (test): media sound is muted while Waaiya filters.'**
+  String get simpleOnDetail;
+
   /// Android string worship_prayer_fajr
   ///
   /// In ar, this message translates to:
