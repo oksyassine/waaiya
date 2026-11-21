@@ -304,7 +304,7 @@ a.dl-main { color: var(--accent); text-decoration: underline; text-decoration-th
 .prose th, .prose td { text-align: start; vertical-align: top; padding: 10px 12px; background: var(--step); border: 2px solid var(--bg); }
 .prose code { font-family: inherit; background: var(--step); padding: 0 4px; }
 
-/* ---------- motion: the logo's strike draws once; the hero picture opens like a shutter ---------- */
+/* ---------- motion: the logo's ع draws once; the hero picture opens like a shutter ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .js .strike.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 900ms var(--ease-in-out) 250ms forwards; }
   .js .shutter { clip-path: polygon(0 56px, 56px 0, 100% 0, 100% 0, 0 0); transition: clip-path 1100ms var(--ease-in-out); }

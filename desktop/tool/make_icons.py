@@ -1,17 +1,25 @@
-"""Waaiya's icon (the Android adaptive icon: Material "music off" glyph, Apache-2.0, white on #0D6B5E) rendered for
+"""Waaiya's icon (the ع of واعية drawn as an ear, white on #0D6B5E; source /srv/build/waaiya-logo, ain-ear) rendered for
 Windows: the Store package's tiles (desktop/windows/msix/Assets) and the app icon (runner/resources/app_icon.ico).
+Below 40 px the small form is used (no inner arc, heavier stroke) so the letter stays clear.
 
     uvx --with cairosvg --with pillow python desktop/tool/make_icons.py desktop/windows/msix/Assets
 """
 import sys, cairosvg
-P = "M4.27,3L3,4.27l9,9v0.28c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4v-1.73L19.73,21 21,19.73 4.27,3zM14,7h4V3h-6v5.18l2,2z"
+LETTER = "M80.2 22.15 A14.5 14.5 0 1 0 74.67 44.33 A31 31 0 1 0 89.43 86.01"
+INNER = "M66.01 60.2 A13 13 0 1 0 66.01 84.64"
+MINI = "M79.68 23.3 A15 15 0 1 0 73.96 46.23 A29.5 29.5 0 1 0 88.01 85.9"
 def svg(w, h, glyph_frac, bg=True, radius_frac=0.0, color="#FFFFFF"):
-    g = min(w, h) * glyph_frac          # glyph box (24 units)
-    s = g / 24.0
+    g = min(w, h) * glyph_frac          # mark box (120 units)
+    s = g / 120.0
     tx, ty = (w - g) / 2, (h - g) / 2
     rect = f'<rect width="{w}" height="{h}" rx="{min(w,h)*radius_frac}" fill="#0D6B5E"/>' if bg else ""
+    st = f'fill="none" stroke="{color}" stroke-linecap="round" stroke-linejoin="round"'
+    if g < 40:
+        body = f'<path {st} stroke-width="16" d="{MINI}"/>'
+    else:
+        body = f'<path {st} stroke-width="12" d="{LETTER}"/><path {st} stroke-width="8" d="{INNER}"/>'
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">{rect}'
-            f'<g transform="translate({tx},{ty}) scale({s})"><path fill="{color}" d="{P}"/></g></svg>')
+            f'<g transform="translate({tx},{ty}) scale({s})">{body}</g></svg>')
 def png(path, w, h, **k):
     cairosvg.svg2png(bytestring=svg(w, h, **k).encode(), write_to=path)
 if __name__ == "__main__":

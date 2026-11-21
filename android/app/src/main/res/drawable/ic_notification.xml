@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Material icon (Apache-2.0) -->
+<!-- Status bar icon: Waaiya's mark in its small form (the ع-ear without the inner arc, heavier stroke). -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp"
     android:viewportWidth="24" android:viewportHeight="24" android:tint="#FFFFFFFF" android:autoMirrored="false">
-    <path android:fillColor="#FFFFFFFF" android:pathData="M4.27,3L3,4.27l9,9v0.28c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4v-1.73L19.73,21 21,19.73 4.27,3zM14,7h4V3h-6v5.18l2,2z" />
+    <group android:scaleX="0.2" android:scaleY="0.2">
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="16" android:strokeLineCap="round"
+            android:strokeLineJoin="round" android:pathData="M79.68 23.3 A15 15 0 1 0 73.96 46.23 A29.5 29.5 0 1 0 88.01 85.9" />
+    </group>
 </vector>

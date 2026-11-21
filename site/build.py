@@ -299,13 +299,13 @@ POWER_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2v8.2"/>
 
 
 def mark(cls, draw=False):
-    """The logo, redrawn: a note with a strike through it. The strike (and the gap it cuts) can draw on."""
-    d = ' class="strike draw"' if draw else ' class="strike"'
-    return (f'<svg class="{cls}" viewBox="0 0 300 300" aria-hidden="true" focusable="false">'
-            f'<mask id="m-{cls}" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="300"><rect width="300" height="300" fill="#fff"/>'
-            f'<line{d} x1="92" y1="89" x2="215" y2="212" pathLength="1" stroke="#000" stroke-width="30"/></mask>'
-            f'<g mask="url(#m-{cls})" fill="currentColor"><circle cx="137" cy="183" r="27"/><rect x="152" y="90" width="12" height="95"/><rect x="152" y="90" width="38" height="24"/></g>'
-            f'<line{d} x1="96" y1="93" x2="211" y2="208" pathLength="1" stroke="currentColor" stroke-width="14"/></svg>')
+    """The logo: the ع of واعية drawn as an ear («أذنٌ واعية»); the small arc in its bowl is the sound it keeps.
+    Source: /srv/build/waaiya-logo (ain-ear), 120-unit grid. With draw=True the strokes draw on once."""
+    d = ' class="strike draw"' if draw else ""
+    return (f'<svg class="{cls}" viewBox="0 0 120 120" aria-hidden="true" focusable="false">'
+            f'<g transform="translate(12 12) scale(0.8)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'
+            f'<path{d} pathLength="1" stroke-width="13" d="M80.2 22.15 A14.5 14.5 0 1 0 74.67 44.33 A31 31 0 1 0 89.43 86.01"/>'
+            f'<path{d} pathLength="1" stroke-width="9" d="M66.01 60.2 A13 13 0 1 0 66.01 84.64" style="animation-delay:700ms"/></g></svg>')
 
 
 def jsonld(lang, t, root_url):
