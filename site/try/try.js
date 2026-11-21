@@ -13,10 +13,11 @@
   var fileIn = $(".try-file input"), fileBtn = $(".try-file button"), form = $(".try-link"), linkIn = $(".try-link input"),
       linkBtn = $(".try-link button"), st = $(".try-status"), bar = $(".try-bar i"), deck = $(".try-deck"),
       src = $(".try-src"), sides = root.querySelectorAll(".try-ab button"), play = $(".try-play"), playT = $(".try-play span"),
-      seek = $(".try-seek"), now = $(".try-now"), len = $(".try-len");
+      seek = $(".try-seek"), now = $(".try-now"), len = $(".try-len"), video = $(".try-video"), videoUrl = null;
   root.classList.add("try-on");
   if (!EP.length) form.hidden = true;
 
+  var picture = null;  // the clip's video (a file or the link's small picture), shown muted in step with the sound
   var ctx = null, before = null, after = null, side = "after", nodes = null, startAt = 0, offset = 0, raf = 0, working = false;
 
   function say(msg, kind, p) {
@@ -68,15 +69,16 @@
     var why = "all";
     for (var i = 0; i < EP.length; i++) {
       say(i ? T.next : T.fetching, "work");
-      var ac = new AbortController(), timer = setTimeout(function () { ac.abort(); }, 75000);
+      var ac = new AbortController(), timer = setTimeout(function () { ac.abort(); }, 100000);
       try {
         var r = await fetch(EP[i], { method: "POST", body: new URLSearchParams({ url: url }), signal: ac.signal });
         if (r.ok) {
           var meta = {};
           try { meta = JSON.parse(r.headers.get("X-Waaiya-Meta") || "{}"); } catch (e) {}
-          var pcm = mono(await decode(await r.arrayBuffer()));
+          var bytes = await r.arrayBuffer();
+          var pcm = mono(await decode(bytes.slice(0)));
           clearTimeout(timer);
-          return { pcm: pcm, meta: meta };
+          return { pcm: pcm, meta: meta, picture: meta.video ? new Blob([bytes], { type: "video/mp4" }) : null };
         }
         var code = ((await r.json().catch(function () { return {}; })).error) || "";
         if (STOP[code]) { clearTimeout(timer); throw code; }
@@ -106,7 +108,7 @@
 
   async function run(get, label) {
     if (working) return;
-    busy(true); stop(); deck.hidden = true; before = after = null;
+    busy(true); stop(); deck.hidden = true; before = after = null; picture = null; showPicture();
     audio();  // created on the visitor's tap, so it may play later
     try {
       var got = await get();
@@ -117,6 +119,7 @@
       len.textContent = fmt(before.duration); now.textContent = "0:00";
       seek.max = String(Math.floor(before.duration * 10)); seek.value = "0"; offset = 0;
       pick("after");
+      showPicture();
       deck.hidden = false;
       say(T.ready, "done", 1);
     } catch (e) {
@@ -124,6 +127,22 @@
     } finally {
       busy(false);
     }
+  }
+  video.addEventListener("error", function () { if (videoUrl) video.hidden = true; });  // a codec this browser lacks
+  function showPicture() {
+    if (videoUrl) { URL.revokeObjectURL(videoUrl); videoUrl = null; }
+    video.removeAttribute("src"); video.hidden = true;
+    if (!picture) { try { video.load(); } catch (e) {} return; }
+    videoUrl = URL.createObjectURL(picture);
+    video.src = videoUrl; video.hidden = false; video.currentTime = 0;
+  }
+  // The picture follows what is heard: the audio clock minus the output's own latency (a Bluetooth headset can be
+  // far behind), corrected when it drifts.
+  function heard() { return Math.max(0, pos() - (ctx ? (ctx.outputLatency || 0) + (ctx.baseLatency || 0) : 0)); }
+  function syncPicture(force) {
+    if (!videoUrl || video.readyState < 1) return;
+    var t = heard();
+    if (force || Math.abs(video.currentTime - t) > 0.08) { try { video.currentTime = t; } catch (e) {} }
   }
   function buffer(f) { var b = audio().createBuffer(1, f.length, SR); b.copyToChannel ? b.copyToChannel(f, 0) : b.getChannelData(0).set(f); return b; }
 
@@ -138,17 +157,19 @@
     });
     nodes[0].s.onended = function () { if (nodes && pos() >= before.duration - 0.05) { stop(); offset = 0; tick(); } };
     startAt = t - offset;
+    if (videoUrl) { syncPicture(true); var vp = video.play(); if (vp && vp.catch) vp.catch(function () {}); }
     play.setAttribute("aria-pressed", "true"); playT.textContent = T.pause;
     cancelAnimationFrame(raf); loop();
   }
   function stop() {
     if (nodes) { offset = pos(); nodes.forEach(function (n) { n.s.onended = null; try { n.s.stop(); } catch (e) {} n.s.disconnect(); }); nodes = null; }
     cancelAnimationFrame(raf);
+    if (videoUrl) { video.pause(); syncPicture(true); }
     play.setAttribute("aria-pressed", "false"); playT.textContent = T.play;
   }
   function pos() { return nodes ? Math.min(before.duration, Math.max(0, ctx.currentTime - startAt)) : offset; }
   function tick() { var p = pos(); now.textContent = fmt(p); seek.value = String(Math.round(p * 10)); }
-  function loop() { tick(); raf = requestAnimationFrame(loop); }
+  function loop() { tick(); syncPicture(false); raf = requestAnimationFrame(loop); }
   function pick(s) {
     side = s;
     for (var i = 0; i < sides.length; i++) sides[i].setAttribute("aria-pressed", String(sides[i].getAttribute("data-side") === s));
@@ -163,7 +184,8 @@
   fileBtn.addEventListener("click", function () { fileIn.click(); });
   fileIn.addEventListener("change", function () {
     var f = fileIn.files && fileIn.files[0];
-    if (f) run(function () { return fromFile(f); }, T.src_file.replace("{name}", f.name));
+    if (f) run(function () { return fromFile(f).then(function (pcm) { if (/^video\//.test(f.type)) picture = f; return pcm; }); },
+               T.src_file.replace("{name}", f.name));
     fileIn.value = "";
   });
   form.addEventListener("submit", function (e) {
@@ -171,14 +193,14 @@
     var u = linkIn.value.trim();
     if (!/^https?:\/\/\S+$/i.test(u)) { say(T.err.invalid_url, "error"); linkIn.focus(); return; }
     var meta = null;
-    run(function () { return fromLink(u).then(function (r) { meta = r.meta; return r.pcm; }); },
+    run(function () { return fromLink(u).then(function (r) { meta = r.meta; picture = r.picture; return r.pcm; }); },
         function () { return T.src_link.replace("{title}", (meta && meta.title) || u); });
   });
   for (var i = 0; i < sides.length; i++) sides[i].addEventListener("click", function () { pick(this.getAttribute("data-side")); });
   play.addEventListener("click", function () { if (!before) return; if (nodes) stop(); else { if (offset >= before.duration - 0.05) offset = 0; start(); } });
   seek.addEventListener("input", function () {
     var was = !!nodes; if (was) stop();
-    offset = Number(seek.value) / 10; now.textContent = fmt(offset);
+    offset = Number(seek.value) / 10; now.textContent = fmt(offset); if (!was) syncPicture(true);
     if (was) start();
   });
   document.addEventListener("visibilitychange", function () { if (document.hidden && nodes) stop(); });

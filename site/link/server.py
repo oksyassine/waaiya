@@ -95,7 +95,7 @@ class H(BaseHTTPRequestHandler):
         try:
             try:
                 r = subprocess.run([sys.executable, os.path.join(HERE, "waaiya_link.py"), url, out],
-                                   capture_output=True, timeout=55)
+                                   capture_output=True, timeout=80)
                 res = json.loads(r.stdout.decode().strip().splitlines()[-1])
             except subprocess.TimeoutExpired:
                 res = {"ok": False, "error": "timeout"}

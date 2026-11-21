@@ -22,7 +22,8 @@ import time
 from urllib.parse import urlparse
 
 LENGTH = 60          # seconds of sound sent back
-FETCH_TIMEOUT = 40   # ffmpeg's limit; yt-dlp has its own socket timeout
+FETCH_TIMEOUT = 60   # downloads + ffmpeg; yt-dlp has its own socket timeout
+VIDEO_HEIGHT = 360   # the picture sent with the sound, small: it only has to show the lips move with the voice
 SITES = ("youtube.com", "youtu.be", "youtube-nocookie.com", "tiktok.com", "facebook.com", "fb.watch",
          "instagram.com", "x.com", "twitter.com", "soundcloud.com", "dailymotion.com", "dai.ly", "vimeo.com",
          "archive.org", "rumble.com", "twitch.tv", "bilibili.com", "ok.ru", "vk.com", "streamable.com")
@@ -91,12 +92,15 @@ def resolve(url):
             raise Fail("playlist")
         if info.get("is_live") or info.get("live_status") in ("is_live", "is_upcoming"):
             raise Fail("live")
+        def headers(f):
+            h = dict(f.get("http_headers") or {})
+            cookie = y.cookiejar.get_cookie_header(f["url"])  # TikTok serves media only to the session that opened the page
+            if cookie:
+                h["Cookie"] = cookie
+            return h
         fmt = pick(info)
-        headers = dict(fmt.get("http_headers") or {})
-        cookie = y.cookiejar.get_cookie_header(fmt["url"])  # TikTok serves media only to the session that opened the page
-        if cookie:
-            headers["Cookie"] = cookie
-        return info, fmt, headers
+        vid = None if has_video(fmt) else pick_video(info)
+        return info, fmt, headers(fmt), vid, (headers(vid) if vid else None)
     finally:
         tempfile.tempdir = None
         shutil.rmtree(cache, ignore_errors=True)
@@ -119,6 +123,25 @@ def pick(info):
         return min(ok, key=rate) if ok else max(only, key=rate)
     size = lambda f: f.get("filesize") or f.get("filesize_approx") or (f.get("tbr") or 1e9)
     return min(sound, key=size)
+
+
+def has_video(f):
+    return f.get("vcodec") not in (None, "none") and bool(f.get("height") or f.get("width"))
+
+
+def pick_video(info):
+    """A small picture-only format to send with the sound (plain https), or None: the answer is then sound only."""
+    vs = [f for f in (info.get("formats") or []) if str(f.get("url", "")).startswith("https://")
+          and (f.get("protocol") or "https") == "https" and has_video(f)]
+    short = lambda f: min(f.get("width") or 10**5, f.get("height") or 10**5)
+    only = [f for f in vs if f.get("acodec") in ("none",)]
+    fit = [f for f in only if 200 <= short(f) <= 480]
+    if not fit:  # no small picture-only file (TikTok & co.): the smallest file with picture, its sound unused
+        fit = sorted((f for f in vs if short(f) <= 1080), key=short)[:3]
+    if not fit:
+        return None
+    avc = [f for f in fit if str(f.get("vcodec", "")).startswith(("avc", "h264"))]
+    return min(avc or fit, key=lambda f: (short(f), f.get("tbr") or f.get("vbr") or 1e9))
 
 
 MAX_BYTES = 64 << 20  # never download more than this for one answer
@@ -149,58 +172,93 @@ def download(fmt, headers, need, path, deadline):
         raise Fail("limited" if code in (403, 429) else "failed")
 
 
-def fetch(info, fmt, headers, out):
+def need_bytes(f, start, dur):
+    """Bytes from the file's start that cover [start, start + LENGTH], with margin; None = all of it / unknown."""
+    size = f.get("filesize") or f.get("filesize_approx") or 0
+    rate = f.get("tbr") or f.get("abr") or f.get("vbr") or ((size * 8 / 1000 / dur) if size and dur else 0)
+    if not rate:
+        return MAX_BYTES
+    need = int((start + LENGTH + 10) * rate * 1000 / 8 * 1.2) + (512 << 10)
+    return min(need, size) if size else need
+
+
+def ffmpeg(cmd, deadline):
+    try:
+        r = subprocess.run(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+                           timeout=max(5, deadline - time.time()))
+    except subprocess.TimeoutExpired:
+        raise Fail("timeout")
+    if r.returncode != 0:
+        err = r.stderr.decode("utf-8", "replace")
+        raise Fail("limited" if "403" in err or "429" in err else "failed")
+
+
+def fetch(info, fmt, headers, vid, vheaders, out):
+    """Writes [out]: up to LENGTH seconds of mono AAC, with a small H.264 picture when the link has one (re-encoded,
+    so sound and picture start at the same instant). Returns (start, length, has_picture)."""
     t0 = time.time()
+    deadline = t0 + FETCH_TIMEOUT
     dur = info.get("duration") or 0
     start = float(info.get("start_time") or 0)
     if dur and start >= dur - 5:
         start = 0.0
+    if any(need_bytes(f, start, dur) >= MAX_BYTES for f in (fmt, vid) if f and (f.get("protocol") or "https") == "https") and start:
+        start = 0.0  # a start time far into a long video: take its first minute instead
     ff = os.environ.get("WAAIYA_FFMPEG") or shutil.which("ffmpeg") or os.path.expanduser("~/bin/ffmpeg")
     work = tempfile.mkdtemp(prefix="wl-")
+    base = [ff, "-nostdin", "-hide_banner", "-loglevel", "error"]
+    seek = ["-ss", f"{start:.2f}"] if start else []
+    sound = ["-ac", "1", "-ar", "48000", "-c:a", "aac", "-b:a", "96k"]
+    picture = ["-vf", f"scale=-2:'min({VIDEO_HEIGHT},ih)',fps=25", "-c:v", "libx264", "-preset", "veryfast",
+               "-crf", "30", "-pix_fmt", "yuv420p", "-profile:v", "main"]
+    tail = ["-t", str(LENGTH), "-sn", "-dn", "-movflags", "+faststart", "-f", "mp4", "-y", out]
     try:
-        cmd = [ff, "-nostdin", "-hide_banner", "-loglevel", "error"]
         if (fmt.get("protocol") or "https") == "https":
-            size = fmt.get("filesize") or fmt.get("filesize_approx") or 0
-            rate = fmt.get("abr") or fmt.get("tbr") or ((size * 8 / 1000 / dur) if size and dur else 0)
-            need = int((start + LENGTH + 10) * rate * 1000 / 8 * 1.2) + (512 << 10) if rate else MAX_BYTES
-            if need > MAX_BYTES:  # a start time far into a long video: take its first minute instead
-                start, need = 0.0, int((LENGTH + 10) * rate * 1000 / 8 * 1.2) + (512 << 10)
-            if size:
-                need = min(need, size)
-            src = os.path.join(work, "in")
-            download(fmt, headers, min(need, MAX_BYTES), src, t0 + FETCH_TIMEOUT)
-            cmd += ["-protocol_whitelist", "file"]
+            a = os.path.join(work, "a")
+            download(fmt, headers, min(need_bytes(fmt, start, dur), MAX_BYTES), a, deadline)
+            ain = base + ["-protocol_whitelist", "file"] + seek + ["-i", a]
         else:  # HLS: ffmpeg fetches the pieces itself, https only
             hdr = "".join(f"{k}: {v}\r\n" for k, v in headers.items() if k.lower() != "user-agent")
-            cmd += ["-protocol_whitelist", "https,tls,tcp,crypto", "-rw_timeout", "15000000"]
+            ain = base + ["-protocol_whitelist", "https,tls,tcp,crypto", "-rw_timeout", "15000000"]
             if headers.get("User-Agent"):
-                cmd += ["-user_agent", headers["User-Agent"]]
+                ain += ["-user_agent", headers["User-Agent"]]
             if hdr:
-                cmd += ["-headers", hdr]
-            src = fmt["url"]
-        if start:
-            cmd += ["-ss", f"{start:.2f}"]
-        cmd += ["-i", src, "-t", str(LENGTH), "-vn", "-sn", "-dn", "-ac", "1", "-ar", "48000",
-                "-c:a", "aac", "-b:a", "96k", "-movflags", "+faststart", "-f", "mp4", "-y", out]
-        try:
-            r = subprocess.run(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
-                               timeout=max(5, t0 + FETCH_TIMEOUT - time.time()))
-        except subprocess.TimeoutExpired:
-            raise Fail("timeout")
-        if r.returncode != 0 or not os.path.exists(out) or os.path.getsize(out) < 1000:
-            err = r.stderr.decode("utf-8", "replace")
-            raise Fail("limited" if "403" in err or "429" in err else "failed")
+                ain += ["-headers", hdr]
+            ain += seek + ["-i", fmt["url"]]
+        if has_video(fmt):  # one file with both
+            try:
+                ffmpeg(ain + ["-map", "0:v:0", "-map", "0:a:0"] + picture + sound + tail, deadline)
+                return start, length(dur, start), True
+            except Fail:
+                pass
+        elif vid is not None:
+            try:
+                v = os.path.join(work, "v")
+                download(vid, vheaders, min(need_bytes(vid, start, dur), MAX_BYTES), v, deadline - 15)
+                cmd = ain[:len(base)] + ["-protocol_whitelist", "file"] + seek + ["-i", v] + ain[len(base):]
+                ffmpeg(cmd + ["-map", "0:v:0", "-map", "1:a:0"] + picture + sound + tail, deadline)
+                return start, length(dur, start), True
+            except Fail:
+                pass  # the picture is a bonus: send the sound alone
+        ffmpeg(ain + ["-vn"] + sound + tail, deadline)
+        if not os.path.exists(out) or os.path.getsize(out) < 1000:
+            raise Fail("failed")
+        return start, length(dur, start), False
     finally:
         shutil.rmtree(work, ignore_errors=True)
-    return start, min(LENGTH, max(0.0, dur - start)) if dur else LENGTH
+
+
+def length(dur, start):
+    return min(LENGTH, max(0.0, dur - start)) if dur else LENGTH
 
 
 def run(url, out):
     try:
         site = site_of(url)
-        info, fmt, headers = resolve(url)
-        start, length = fetch(info, fmt, headers, out)
-        return {"ok": True, "site": site, "title": (info.get("title") or "")[:200], "start": start, "length": length}
+        info, fmt, headers, vid, vheaders = resolve(url)
+        start, secs, picture = fetch(info, fmt, headers, vid, vheaders, out)
+        return {"ok": True, "site": site, "title": (info.get("title") or "")[:200], "start": start, "length": secs,
+                "video": picture}
     except Fail as e:
         return {"ok": False, "error": e.args[0]}
     except Exception:

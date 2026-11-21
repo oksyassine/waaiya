@@ -59,7 +59,7 @@ register_shutdown_function(function () use ($state) {
 
 $out = "$state/" . bin2hex(random_bytes(8)) . '.m4a';
 register_shutdown_function(function () use ($out) { if (is_file($out)) unlink($out); });
-$cmd = ['/usr/bin/timeout', '-k', '5', '55', HOME_DIR . '/venv/bin/python', HOME_DIR . '/waaiya_link.py', $url, $out];
+$cmd = ['/usr/bin/timeout', '-k', '5', '80', HOME_DIR . '/venv/bin/python', HOME_DIR . '/waaiya_link.py', $url, $out];
 $env = ['PATH' => '/usr/bin:/bin', 'HOME' => HOME_DIR, 'WAAIYA_QJS' => HOME_DIR . '/qjs',
         'WAAIYA_FFMPEG' => HOME . '/bin/ffmpeg', 'TMPDIR' => $state];
 $p = proc_open($cmd, [0 => ['file', '/dev/null', 'r'], 1 => ['pipe', 'w'], 2 => ['file', '/dev/null', 'w']], $pipes, HOME_DIR, $env);
