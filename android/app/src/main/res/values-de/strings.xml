@@ -376,4 +376,27 @@
     <string name="notif_protect_waiting_text">Wartet bis %1$s. Danach in der App bestätigen, wenn Sie es noch möchten. Abbrechen lässt alles, wie es ist.</string>
     <string name="notif_protect_ready_text">Wollen Sie es noch? Bestätigen Sie es in Waaiya vor %1$s, sonst ändert sich nichts.</string>
     <string name="notif_protect_cancel">Abbrechen</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">App-Updates</string>
+    <string name="update_auto">Einmal am Tag nach einer neuen Version suchen</string>
+    <string name="update_auto_body">Waaiya fragt waaiya.mssid.org, ob es eine neuere Version gibt, und sendet sonst nichts. Heruntergeladen wird erst, wenn du auf Jetzt aktualisieren tippst.</string>
+    <string name="update_check">Jetzt suchen</string>
+    <string name="update_checking">Wird gesucht…</string>
+    <string name="update_none">Du hast die neueste Version (%1$s).</string>
+    <string name="update_available">Waaiya %1$s ist verfügbar. Du hast %2$s.</string>
+    <string name="update_size_patch">Download: %1$s, nur die Änderungen (die ganze App hat %2$s).</string>
+    <string name="update_size_full">Download: %1$s.</string>
+    <string name="update_now">Jetzt aktualisieren</string>
+    <string name="update_downloading">Wird heruntergeladen: %1$s</string>
+    <string name="update_preparing">Update wird vorbereitet…</string>
+    <string name="update_installing">Bestätige die Installation auf dem Bildschirm, den Android zeigt.</string>
+    <string name="update_stops_filter">Die Installation beendet das Filtern. Starte es nach dem Update wieder.</string>
+    <string name="update_permission">Erlaube Waaiya, seine Updates zu installieren, und tippe dann noch einmal auf Jetzt aktualisieren.</string>
+    <string name="update_failed">Das Update konnte nicht abgeschlossen werden. Versuche es später noch einmal oder lade es von der Website herunter.</string>
+    <string name="update_open_page">Downloadseite öffnen</string>
+    <string name="update_check_failed">Suchen ist gerade nicht möglich. Versuche es später noch einmal.</string>
+    <string name="notif_update_channel">App-Updates</string>
+    <string name="notif_update_title">Waaiya %1$s ist verfügbar</string>
+    <string name="notif_update_text">Zum Aktualisieren tippen (%1$s).</string>
 </resources>

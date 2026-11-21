@@ -1007,6 +1007,76 @@ class AppLocalizationsIt extends AppLocalizations {
       'È l\'ora della preghiera, ora non posso rispondere. Ti richiamo io.';
 
   @override
+  String get updateTitle => 'Aggiornamenti';
+
+  @override
+  String get updateAuto => 'Cerca una nuova versione una volta al giorno';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya chiede a waaiya.mssid.org se esiste una versione più recente e non invia nient\'altro. Non si scarica nulla finché non tocchi Aggiorna ora.';
+
+  @override
+  String get updateCheck => 'Cerca ora';
+
+  @override
+  String get updateChecking => 'Ricerca in corso…';
+
+  @override
+  String updateNone(String version) {
+    return 'Hai l\'ultima versione ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest è disponibile. Tu hai la $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Download: $size, solo le modifiche (l\'app completa è $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Download: $size.';
+  }
+
+  @override
+  String get updateNow => 'Aggiorna ora';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Download in corso: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Preparazione dell\'aggiornamento…';
+
+  @override
+  String get updateInstalling =>
+      'Conferma l\'installazione nella schermata mostrata da Android.';
+
+  @override
+  String get updateStopsFilter =>
+      'L\'installazione interrompe il filtro. Riavvialo dopo l\'aggiornamento.';
+
+  @override
+  String get updatePermission =>
+      'Consenti a Waaiya di installare i suoi aggiornamenti, poi tocca di nuovo Aggiorna ora.';
+
+  @override
+  String get updateFailed =>
+      'Non è stato possibile completare l\'aggiornamento. Riprova più tardi o scaricalo dal sito.';
+
+  @override
+  String get updateOpenPage => 'Apri la pagina di download';
+
+  @override
+  String get updateCheckFailed =>
+      'Non è possibile controllare ora. Riprova più tardi.';
+
+  @override
   String get desktopPreview =>
       'Anteprima: il motore del filtro non è ancora collegato su questo computer. Il pulsante mostra solo come funzionerà l\'app.';
 

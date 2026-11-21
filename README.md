@@ -232,10 +232,13 @@ Team roles:
 - Approvers: [oksyassine](https://github.com/oksyassine)
 
 Privacy policy: this program will not transfer any information to other networked systems unless specifically
-requested by the user or the person installing or operating it. The filter and the screen blur run on the device
+requested by the user or the person installing or operating it, with one exception: the Android app from the website
+or GitHub checks once a day whether a newer version exists (it reads waaiya.mssid.org/downloads/update.json and sends
+nothing about the phone; turn it off in Settings, "App updates"). The filter and the screen blur run on the device
 and send nothing; there is no account and no analytics. "Open a link" contacts the site of the link you open: on
 Android, and in the Windows app from GitHub (the zip), where saving downloads that video. The Android app's yt-dlp
 downloads its own updates from PyPI. The Windows app from the Microsoft Store only opens the link in your browser.
+Full text: [docs/PRIVACY.md](docs/PRIVACY.md).
 
 ## License
 

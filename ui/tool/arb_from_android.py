@@ -29,6 +29,11 @@ SKIP = re.compile(r"^(notif_(?!stopped_).*|blur_cover_.*|blur_not_working|blur_a
 
 # Android format arguments -> named placeholders, per string.
 PLACEHOLDERS = {
+    "update_none": [("version", "String")],
+    "update_available": [("latest", "String"), ("current", "String")],
+    "update_size_patch": [("size", "String"), ("full", "String")],
+    "update_size_full": [("size", "String")],
+    "update_downloading": [("progress", "String")],
     "state_on_detail": [("delayMs", "int")],
     "step_todo_cd": [("step", "int")],
     "setup_failed": [("details", "String")],

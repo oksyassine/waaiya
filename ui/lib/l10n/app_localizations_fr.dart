@@ -1007,6 +1007,76 @@ class AppLocalizationsFr extends AppLocalizations {
       'C\'est l\'heure de la prière, je ne peux pas répondre maintenant. Je vous rappelle.';
 
   @override
+  String get updateTitle => 'Mises à jour';
+
+  @override
+  String get updateAuto => 'Chercher une nouvelle version une fois par jour';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya demande à waaiya.mssid.org si une version plus récente existe, et n\'envoie rien d\'autre. Rien n\'est téléchargé avant que vous touchiez Mettre à jour.';
+
+  @override
+  String get updateCheck => 'Vérifier maintenant';
+
+  @override
+  String get updateChecking => 'Vérification…';
+
+  @override
+  String updateNone(String version) {
+    return 'Vous avez la dernière version ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest est disponible. Vous avez la $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Téléchargement : $size, seulement les changements (l\'application complète fait $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Téléchargement : $size.';
+  }
+
+  @override
+  String get updateNow => 'Mettre à jour';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Téléchargement : $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Préparation de la mise à jour…';
+
+  @override
+  String get updateInstalling =>
+      'Confirmez l\'installation sur l\'écran affiché par Android.';
+
+  @override
+  String get updateStopsFilter =>
+      'L\'installation arrête le filtrage. Relancez-le après la mise à jour.';
+
+  @override
+  String get updatePermission =>
+      'Autorisez Waaiya à installer ses mises à jour, puis touchez de nouveau Mettre à jour.';
+
+  @override
+  String get updateFailed =>
+      'La mise à jour n\'a pas pu aboutir. Réessayez plus tard, ou téléchargez-la sur le site.';
+
+  @override
+  String get updateOpenPage => 'Ouvrir la page de téléchargement';
+
+  @override
+  String get updateCheckFailed =>
+      'Vérification impossible pour l\'instant. Réessayez plus tard.';
+
+  @override
   String get desktopPreview =>
       'Aperçu : le moteur de filtrage n\'est pas encore connecté sur cet ordinateur. Le bouton montre seulement comment l\'application fonctionnera.';
 

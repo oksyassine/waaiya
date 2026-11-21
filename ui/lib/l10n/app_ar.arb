@@ -1195,6 +1195,109 @@
   "@worshipSmsDefault": {
     "description": "Android string worship_sms_default"
   },
+  "updateTitle": "تحديثات التطبيق",
+  "@updateTitle": {
+    "description": "Android string update_title"
+  },
+  "updateAuto": "ابحث عن إصدار جديد مرة في اليوم",
+  "@updateAuto": {
+    "description": "Android string update_auto"
+  },
+  "updateAutoBody": "تسأل واعية موقع waaiya.mssid.org هل يوجد إصدار أحدث، ولا ترسل شيئًا غير ذلك. ولا يُنزَّل شيء حتى تضغط «حدِّث الآن».",
+  "@updateAutoBody": {
+    "description": "Android string update_auto_body"
+  },
+  "updateCheck": "ابحث الآن",
+  "@updateCheck": {
+    "description": "Android string update_check"
+  },
+  "updateChecking": "جارٍ البحث…",
+  "@updateChecking": {
+    "description": "Android string update_checking"
+  },
+  "updateNone": "لديك أحدث إصدار ({version}).",
+  "@updateNone": {
+    "description": "Android string update_none",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateAvailable": "الإصدار {latest} من واعية متاح. لديك {current}.",
+  "@updateAvailable": {
+    "description": "Android string update_available",
+    "placeholders": {
+      "latest": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "updateSizePatch": "التنزيل: {size}، التغييرات فقط (التطبيق كاملًا {full}).",
+  "@updateSizePatch": {
+    "description": "Android string update_size_patch",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "full": {
+        "type": "String"
+      }
+    }
+  },
+  "updateSizeFull": "التنزيل: {size}.",
+  "@updateSizeFull": {
+    "description": "Android string update_size_full",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "updateNow": "حدِّث الآن",
+  "@updateNow": {
+    "description": "Android string update_now"
+  },
+  "updateDownloading": "جارٍ التنزيل: {progress}",
+  "@updateDownloading": {
+    "description": "Android string update_downloading",
+    "placeholders": {
+      "progress": {
+        "type": "String"
+      }
+    }
+  },
+  "updatePreparing": "جارٍ تجهيز التحديث…",
+  "@updatePreparing": {
+    "description": "Android string update_preparing"
+  },
+  "updateInstalling": "أكِّد التثبيت في الشاشة التي يعرضها أندرويد.",
+  "@updateInstalling": {
+    "description": "Android string update_installing"
+  },
+  "updateStopsFilter": "التثبيت يوقف التصفية. شغّلها مجددًا بعد التحديث.",
+  "@updateStopsFilter": {
+    "description": "Android string update_stops_filter"
+  },
+  "updatePermission": "اسمح لواعية بتثبيت تحديثاتها، ثم اضغط «حدِّث الآن» مرة أخرى.",
+  "@updatePermission": {
+    "description": "Android string update_permission"
+  },
+  "updateFailed": "تعذّر إكمال التحديث. حاول لاحقًا، أو نزّله من الموقع.",
+  "@updateFailed": {
+    "description": "Android string update_failed"
+  },
+  "updateOpenPage": "افتح صفحة التنزيل",
+  "@updateOpenPage": {
+    "description": "Android string update_open_page"
+  },
+  "updateCheckFailed": "تعذّر البحث الآن. حاول لاحقًا.",
+  "@updateCheckFailed": {
+    "description": "Android string update_check_failed"
+  },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {
     "description": "Flutter only. Not reviewed yet except in English."

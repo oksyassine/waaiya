@@ -99,6 +99,8 @@ class WaaiyaApp : Application() {
         ScreenShareProtection.restore(this)
         // The same for simple mode's media mute (SimpleMode: a new process is not filtering)
         SimpleMode.restore(this)
+        // App updates: the daily check (unless turned off), and the files of an update that is now installed
+        AppUpdate.schedule(this)
         // "Save without music" keeps the downloaded original in the cache while it works. If the app was killed
         // in the middle, remove what is left: unfiltered sound must not stay on the phone.
         kotlin.concurrent.thread(name = "im-clean") { runCatching { java.io.File(cacheDir, "export").deleteRecursively() } }

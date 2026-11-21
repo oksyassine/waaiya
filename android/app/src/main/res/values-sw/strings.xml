@@ -376,4 +376,27 @@
     <string name="notif_protect_waiting_text">Kinasubiri hadi %1$s. Kisha thibitisha katika programu kama bado unakitaka. Ghairi huacha kila kitu kama kilivyo.</string>
     <string name="notif_protect_ready_text">Bado unaitaka? Thibitisha katika Waaiya kabla ya %1$s, la sivyo hakuna kitakachobadilika.</string>
     <string name="notif_protect_cancel">Ghairi</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Masasisho ya programu</string>
+    <string name="update_auto">Angalia toleo jipya mara moja kwa siku</string>
+    <string name="update_auto_body">Waaiya huuliza waaiya.mssid.org kama kuna toleo jipya zaidi, na haitumi kitu kingine. Hakuna kinachopakuliwa mpaka uguse Sasisha sasa.</string>
+    <string name="update_check">Angalia sasa</string>
+    <string name="update_checking">Inaangalia…</string>
+    <string name="update_none">Una toleo la karibuni zaidi (%1$s).</string>
+    <string name="update_available">Waaiya %1$s inapatikana. Una %2$s.</string>
+    <string name="update_size_patch">Upakuaji: %1$s, mabadiliko tu (programu nzima ni %2$s).</string>
+    <string name="update_size_full">Upakuaji: %1$s.</string>
+    <string name="update_now">Sasisha sasa</string>
+    <string name="update_downloading">Inapakua: %1$s</string>
+    <string name="update_preparing">Inaandaa sasisho…</string>
+    <string name="update_installing">Thibitisha usakinishaji kwenye skrini ambayo Android inaonyesha.</string>
+    <string name="update_stops_filter">Kusakinisha kunasimamisha uchujaji. Uanzishe tena baada ya sasisho.</string>
+    <string name="update_permission">Ruhusu Waaiya isakinishe masasisho yake, kisha uguse Sasisha sasa tena.</string>
+    <string name="update_failed">Sasisho halikuweza kukamilika. Jaribu tena baadaye, au lipakue kutoka kwenye tovuti.</string>
+    <string name="update_open_page">Fungua ukurasa wa kupakua</string>
+    <string name="update_check_failed">Haikuweza kuangalia sasa. Jaribu tena baadaye.</string>
+    <string name="notif_update_channel">Masasisho ya programu</string>
+    <string name="notif_update_title">Waaiya %1$s inapatikana</string>
+    <string name="notif_update_text">Gusa ili kusasisha (%1$s).</string>
 </resources>

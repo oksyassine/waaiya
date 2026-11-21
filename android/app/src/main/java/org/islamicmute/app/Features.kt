@@ -7,7 +7,7 @@ import android.app.Activity
  * section; UiBridge only routes to it, so features do not edit each other's code.
  */
 interface Feature {
-    /** Snapshot section and method prefix: `fix`, `worship`, `protect`, `singing`. */
+    /** Snapshot section and method prefix: `fix`, `worship`, `protect`, `singing`, `update`. */
     val name: String
 
     /** `features.<name>` in the snapshot. Values must suit Flutter's StandardMethodCodec. */
@@ -29,7 +29,7 @@ interface FeatureHost {
 class FeatureException(val code: String, message: String) : Exception(message)
 
 object Features {
-    val ALL: List<Feature> = listOf(FixMistakes, Worship, Protection, Singing)
+    val ALL: List<Feature> = listOf(FixMistakes, Worship, Protection, Singing, AppUpdate)
 
     fun byMethod(method: String): Pair<Feature, String>? {
         val dot = method.indexOf('.')

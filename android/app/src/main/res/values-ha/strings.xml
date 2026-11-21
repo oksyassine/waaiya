@@ -376,4 +376,27 @@
     <string name="notif_protect_waiting_text">Ana jira har %1$s. Sannan ku tabbatar a manhajar idan har yanzu kuna so. Soke yana barin komai yadda yake.</string>
     <string name="notif_protect_ready_text">Har yanzu kuna so? Ku tabbatar a Waaiya kafin %1$s, in ba haka ba babu abin da zai canza.</string>
     <string name="notif_protect_cancel">Soke</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Sabunta manhaja</string>
+    <string name="update_auto">Duba sabon sigar sau ɗaya a rana</string>
+    <string name="update_auto_body">Waaiya tana tambayar waaiya.mssid.org ko akwai sabuwar siga, kuma ba ta aika komai ba. Ba a sauke komai har sai kun taɓa Sabunta yanzu.</string>
+    <string name="update_check">Duba yanzu</string>
+    <string name="update_checking">Ana dubawa…</string>
+    <string name="update_none">Kuna da sabuwar siga (%1$s).</string>
+    <string name="update_available">Waaiya %1$s ta fito. Kuna da %2$s.</string>
+    <string name="update_size_patch">Saukewa: %1$s, abubuwan da suka canza kawai (manhajar gaba ɗaya %2$s ce).</string>
+    <string name="update_size_full">Saukewa: %1$s.</string>
+    <string name="update_now">Sabunta yanzu</string>
+    <string name="update_downloading">Ana saukewa: %1$s</string>
+    <string name="update_preparing">Ana shirya sabuntawa…</string>
+    <string name="update_installing">Tabbatar da girkawa a allon da Android ke nunawa.</string>
+    <string name="update_stops_filter">Girkawa tana tsayar da tacewa. Sake kunna ta bayan sabuntawa.</string>
+    <string name="update_permission">Ba wa Waaiya izinin girka sabuntawarta, sannan sake taɓa Sabunta yanzu.</string>
+    <string name="update_failed">Ba a iya kammala sabuntawa ba. Sake gwadawa daga baya, ko ku sauke ta daga shafin yanar gizo.</string>
+    <string name="update_open_page">Buɗe shafin saukewa</string>
+    <string name="update_check_failed">Ba a iya dubawa yanzu ba. Sake gwadawa daga baya.</string>
+    <string name="notif_update_channel">Sabunta manhaja</string>
+    <string name="notif_update_title">Waaiya %1$s ta fito</string>
+    <string name="notif_update_text">Taɓa don sabuntawa (%1$s).</string>
 </resources>

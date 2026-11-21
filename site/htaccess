@@ -38,3 +38,10 @@ AddType application/octet-stream .onnx .bin
   ExpiresByType application/wasm "access plus 30 days"
   ExpiresByType application/octet-stream "access plus 7 days"
 </IfModule>
+
+# In-app updates (AppUpdate.kt): the release file must never be served from a cache; patches and APKs never change.
+<Files "update.json">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-store"
+  </IfModule>
+</Files>

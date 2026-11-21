@@ -8,3 +8,7 @@ add_library(imengine SHARED ${ENGINE}/src/im_engine.c ${ENGINE}/src/im_detector.
 target_include_directories(imengine PRIVATE ${ENGINE}/include ${ORT_DIR}/headers)
 target_compile_options(imengine PRIVATE -O2 -Wall -std=c11)
 target_link_libraries(imengine onnxruntime log m)
+
+# Updates: rebuilds a new APK from the installed one and a zstd patch (AppUpdatePatch.kt). Decoder-only zstd.
+add_library(waaiyapatch SHARED zpatch/zpatch.c zpatch/zpatch_jni.c zstd/zstddeclib.c)
+target_compile_options(waaiyapatch PRIVATE -O2 -Wall -std=c11 -D_FILE_OFFSET_BITS=64)

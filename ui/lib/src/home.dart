@@ -1,3 +1,4 @@
+import 'app_update.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -178,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const GeneralSettingsCard(),
             const WorshipCard(),
             const ProtectionCard(),
+            const UpdateCard(),
             const SizedBox(height: 16),
             TestId(
               'diagnostics',

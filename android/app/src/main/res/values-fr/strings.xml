@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">En attente jusqu\'à %1$s. Confirmez ensuite dans l\'application si vous le voulez toujours. Annuler laisse tout tel quel.</string>
     <string name="notif_protect_ready_text">Vous le voulez toujours ? Confirmez dans Waaiya avant %1$s, sinon rien ne change.</string>
     <string name="notif_protect_cancel">Annuler</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Mises à jour</string>
+    <string name="update_auto">Chercher une nouvelle version une fois par jour</string>
+    <string name="update_auto_body">Waaiya demande à waaiya.mssid.org si une version plus récente existe, et n\'envoie rien d\'autre. Rien n\'est téléchargé avant que vous touchiez Mettre à jour.</string>
+    <string name="update_check">Vérifier maintenant</string>
+    <string name="update_checking">Vérification…</string>
+    <string name="update_none">Vous avez la dernière version (%1$s).</string>
+    <string name="update_available">Waaiya %1$s est disponible. Vous avez la %2$s.</string>
+    <string name="update_size_patch">Téléchargement : %1$s, seulement les changements (l\'application complète fait %2$s).</string>
+    <string name="update_size_full">Téléchargement : %1$s.</string>
+    <string name="update_now">Mettre à jour</string>
+    <string name="update_downloading">Téléchargement : %1$s</string>
+    <string name="update_preparing">Préparation de la mise à jour…</string>
+    <string name="update_installing">Confirmez l\'installation sur l\'écran affiché par Android.</string>
+    <string name="update_stops_filter">L\'installation arrête le filtrage. Relancez-le après la mise à jour.</string>
+    <string name="update_permission">Autorisez Waaiya à installer ses mises à jour, puis touchez de nouveau Mettre à jour.</string>
+    <string name="update_failed">La mise à jour n\'a pas pu aboutir. Réessayez plus tard, ou téléchargez-la sur le site.</string>
+    <string name="update_open_page">Ouvrir la page de téléchargement</string>
+    <string name="update_check_failed">Vérification impossible pour l\'instant. Réessayez plus tard.</string>
+    <string name="notif_update_channel">Mises à jour</string>
+    <string name="notif_update_title">Waaiya %1$s est disponible</string>
+    <string name="notif_update_text">Touchez pour mettre à jour (%1$s).</string>
 </resources>

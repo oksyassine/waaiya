@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">Menunggu hingga %1$s. Kemudian sahkan dalam aplikasi jika anda masih mahukannya. Batal mengekalkan semuanya seperti sedia ada.</string>
     <string name="notif_protect_ready_text">Masih mahu? Sahkan dalam Waaiya sebelum %1$s, atau tiada apa yang berubah.</string>
     <string name="notif_protect_cancel">Batal</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Kemas kini aplikasi</string>
+    <string name="update_auto">Semak versi baharu sekali sehari</string>
+    <string name="update_auto_body">Waaiya bertanya kepada waaiya.mssid.org sama ada versi yang lebih baharu wujud, dan tidak menghantar apa-apa lagi. Tiada apa-apa dimuat turun sehingga anda mengetik Kemas kini sekarang.</string>
+    <string name="update_check">Semak sekarang</string>
+    <string name="update_checking">Sedang menyemak…</string>
+    <string name="update_none">Anda menggunakan versi terkini (%1$s).</string>
+    <string name="update_available">Waaiya %1$s tersedia. Anda menggunakan %2$s.</string>
+    <string name="update_size_patch">Muat turun: %1$s, hanya perubahan (aplikasi penuh %2$s).</string>
+    <string name="update_size_full">Muat turun: %1$s.</string>
+    <string name="update_now">Kemas kini sekarang</string>
+    <string name="update_downloading">Sedang memuat turun: %1$s</string>
+    <string name="update_preparing">Menyediakan kemas kini…</string>
+    <string name="update_installing">Sahkan pemasangan pada skrin yang ditunjukkan oleh Android.</string>
+    <string name="update_stops_filter">Pemasangan menghentikan penapisan. Mulakan semula selepas kemas kini.</string>
+    <string name="update_permission">Benarkan Waaiya memasang kemas kininya, kemudian ketik Kemas kini sekarang sekali lagi.</string>
+    <string name="update_failed">Kemas kini tidak dapat diselesaikan. Cuba lagi kemudian, atau muat turun dari laman web.</string>
+    <string name="update_open_page">Buka halaman muat turun</string>
+    <string name="update_check_failed">Tidak dapat menyemak sekarang. Cuba lagi kemudian.</string>
+    <string name="notif_update_channel">Kemas kini aplikasi</string>
+    <string name="notif_update_title">Waaiya %1$s tersedia</string>
+    <string name="notif_update_text">Ketik untuk mengemas kini (%1$s).</string>
 </resources>

@@ -1001,6 +1001,76 @@ class AppLocalizationsMs extends AppLocalizations {
       'Sekarang waktu solat, saya tidak dapat menjawab. Saya akan telefon semula.';
 
   @override
+  String get updateTitle => 'Kemas kini aplikasi';
+
+  @override
+  String get updateAuto => 'Semak versi baharu sekali sehari';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya bertanya kepada waaiya.mssid.org sama ada versi yang lebih baharu wujud, dan tidak menghantar apa-apa lagi. Tiada apa-apa dimuat turun sehingga anda mengetik Kemas kini sekarang.';
+
+  @override
+  String get updateCheck => 'Semak sekarang';
+
+  @override
+  String get updateChecking => 'Sedang menyemak…';
+
+  @override
+  String updateNone(String version) {
+    return 'Anda menggunakan versi terkini ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest tersedia. Anda menggunakan $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Muat turun: $size, hanya perubahan (aplikasi penuh $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Muat turun: $size.';
+  }
+
+  @override
+  String get updateNow => 'Kemas kini sekarang';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Sedang memuat turun: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Menyediakan kemas kini…';
+
+  @override
+  String get updateInstalling =>
+      'Sahkan pemasangan pada skrin yang ditunjukkan oleh Android.';
+
+  @override
+  String get updateStopsFilter =>
+      'Pemasangan menghentikan penapisan. Mulakan semula selepas kemas kini.';
+
+  @override
+  String get updatePermission =>
+      'Benarkan Waaiya memasang kemas kininya, kemudian ketik Kemas kini sekarang sekali lagi.';
+
+  @override
+  String get updateFailed =>
+      'Kemas kini tidak dapat diselesaikan. Cuba lagi kemudian, atau muat turun dari laman web.';
+
+  @override
+  String get updateOpenPage => 'Buka halaman muat turun';
+
+  @override
+  String get updateCheckFailed =>
+      'Tidak dapat menyemak sekarang. Cuba lagi kemudian.';
+
+  @override
   String get desktopPreview =>
       'Pratonton: enjin penapis belum disambungkan pada komputer ini. Butang ini hanya menunjukkan cara apl akan berfungsi.';
 

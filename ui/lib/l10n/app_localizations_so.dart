@@ -1010,6 +1010,75 @@ class AppLocalizationsSo extends AppLocalizations {
       'Waa waqtigii salaadda, hadda ma jawaabi karo. Dib ayaan kuu soo wici doonaa.';
 
   @override
+  String get updateTitle => 'Cusboonaysiinta abka';
+
+  @override
+  String get updateAuto => 'Hubi nooc cusub hal mar maalintii';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya waxay weydiisaa waaiya.mssid.org in nooc ka cusub jiro iyo in kale, waxna kale uma dirto. Waxba lama soo dejiyo ilaa aad taabato Hadda cusboonaysii.';
+
+  @override
+  String get updateCheck => 'Hadda hubi';
+
+  @override
+  String get updateChecking => 'Waa la hubinayaa…';
+
+  @override
+  String updateNone(String version) {
+    return 'Waxaad haysaa noocii ugu dambeeyay ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest waa la heli karaa. Adiga waxaad haysaa $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Soo dejin: $size, kaliya waxa isbeddelay (abka oo dhan waa $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Soo dejin: $size.';
+  }
+
+  @override
+  String get updateNow => 'Hadda cusboonaysii';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Waa la soo dejinayaa: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Cusboonaysiinta waa la diyaarinayaa…';
+
+  @override
+  String get updateInstalling =>
+      'Ku xaqiiji rakibidda shaashadda uu Android muujiyo.';
+
+  @override
+  String get updateStopsFilter =>
+      'Rakibiddu waxay joojisaa sifeynta. Dib u bilow cusboonaysiinta kadib.';
+
+  @override
+  String get updatePermission =>
+      'U oggolow Waaiya inay rakibto cusboonaysiinteeda, kadibna mar kale taabo Hadda cusboonaysii.';
+
+  @override
+  String get updateFailed =>
+      'Cusboonaysiinta lama dhammaystiri karin. Mar dambe isku day, ama ka soo dejiso shabakadda.';
+
+  @override
+  String get updateOpenPage => 'Fur bogga soo dejinta';
+
+  @override
+  String get updateCheckFailed => 'Hadda lama hubin karo. Mar dambe isku day.';
+
+  @override
   String get desktopPreview =>
       'Muuqaal hordhac ah: matoorka shaandhaynta weli lagama xirin kombiyuutarkan. Badhanku wuxuu kaliya muujinayaa sida barnaamijku u shaqayn doono.';
 

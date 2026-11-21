@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">%1$s تک انتظار۔ اگر آپ تب بھی چاہیں تو پھر ایپ میں تصدیق کریں۔ “منسوخ کریں” سے سب کچھ ویسا ہی رہتا ہے۔</string>
     <string name="notif_protect_ready_text">اب بھی چاہتے ہیں؟ %1$s سے پہلے واعية میں تصدیق کریں، ورنہ کچھ نہیں بدلے گا۔</string>
     <string name="notif_protect_cancel">منسوخ کریں</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">ایپ کی اپ ڈیٹس</string>
+    <string name="update_auto">دن میں ایک بار نیا ورژن تلاش کریں</string>
+    <string name="update_auto_body">واعیہ waaiya.mssid.org سے پوچھتی ہے کہ کیا کوئی نیا ورژن ہے، اور کچھ اور نہیں بھیجتی۔ جب تک آپ ابھی اپ ڈیٹ کریں نہ دبائیں، کچھ ڈاؤن لوڈ نہیں ہوتا۔</string>
+    <string name="update_check">ابھی تلاش کریں</string>
+    <string name="update_checking">تلاش ہو رہی ہے…</string>
+    <string name="update_none">آپ کے پاس تازہ ترین ورژن ہے (%1$s)۔</string>
+    <string name="update_available">واعیہ %1$s دستیاب ہے۔ آپ کے پاس %2$s ہے۔</string>
+    <string name="update_size_patch">ڈاؤن لوڈ: %1$s، صرف تبدیلیاں (پوری ایپ %2$s ہے)۔</string>
+    <string name="update_size_full">ڈاؤن لوڈ: %1$s۔</string>
+    <string name="update_now">ابھی اپ ڈیٹ کریں</string>
+    <string name="update_downloading">ڈاؤن لوڈ ہو رہا ہے: %1$s</string>
+    <string name="update_preparing">اپ ڈیٹ تیار ہو رہی ہے…</string>
+    <string name="update_installing">اینڈرائیڈ کی دکھائی گئی اسکرین پر انسٹال کی تصدیق کریں۔</string>
+    <string name="update_stops_filter">انسٹال کرنے سے فلٹرنگ رک جاتی ہے۔ اپ ڈیٹ کے بعد اسے دوبارہ شروع کریں۔</string>
+    <string name="update_permission">واعیہ کو اپنی اپ ڈیٹس انسٹال کرنے کی اجازت دیں، پھر دوبارہ ابھی اپ ڈیٹ کریں دبائیں۔</string>
+    <string name="update_failed">اپ ڈیٹ مکمل نہیں ہو سکی۔ بعد میں کوشش کریں، یا ویب سائٹ سے ڈاؤن لوڈ کریں۔</string>
+    <string name="update_open_page">ڈاؤن لوڈ کا صفحہ کھولیں</string>
+    <string name="update_check_failed">ابھی تلاش نہیں ہو سکی۔ بعد میں کوشش کریں۔</string>
+    <string name="notif_update_channel">ایپ کی اپ ڈیٹس</string>
+    <string name="notif_update_title">واعیہ %1$s دستیاب ہے</string>
+    <string name="notif_update_text">اپ ڈیٹ کے لیے دبائیں (%1$s)۔</string>
 </resources>

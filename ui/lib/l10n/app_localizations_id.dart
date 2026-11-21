@@ -1001,6 +1001,76 @@ class AppLocalizationsId extends AppLocalizations {
       'Sedang waktu salat, saya tidak bisa menjawab sekarang. Nanti saya telepon balik.';
 
   @override
+  String get updateTitle => 'Pembaruan aplikasi';
+
+  @override
+  String get updateAuto => 'Periksa versi baru sekali sehari';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya bertanya ke waaiya.mssid.org apakah ada versi yang lebih baru, dan tidak mengirim apa pun selain itu. Tidak ada yang diunduh sampai Anda mengetuk Perbarui sekarang.';
+
+  @override
+  String get updateCheck => 'Periksa sekarang';
+
+  @override
+  String get updateChecking => 'Memeriksa…';
+
+  @override
+  String updateNone(String version) {
+    return 'Anda memakai versi terbaru ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest tersedia. Anda memakai $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Unduhan: $size, hanya bagian yang berubah (aplikasi lengkap $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Unduhan: $size.';
+  }
+
+  @override
+  String get updateNow => 'Perbarui sekarang';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Mengunduh: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Menyiapkan pembaruan…';
+
+  @override
+  String get updateInstalling =>
+      'Konfirmasi pemasangan di layar yang ditampilkan Android.';
+
+  @override
+  String get updateStopsFilter =>
+      'Pemasangan menghentikan penyaringan. Mulai lagi setelah pembaruan.';
+
+  @override
+  String get updatePermission =>
+      'Izinkan Waaiya memasang pembaruannya, lalu ketuk Perbarui sekarang lagi.';
+
+  @override
+  String get updateFailed =>
+      'Pembaruan tidak dapat diselesaikan. Coba lagi nanti, atau unduh dari situs web.';
+
+  @override
+  String get updateOpenPage => 'Buka halaman unduhan';
+
+  @override
+  String get updateCheckFailed =>
+      'Tidak dapat memeriksa saat ini. Coba lagi nanti.';
+
+  @override
   String get desktopPreview =>
       'Pratinjau: mesin filter belum terhubung di komputer ini. Tombol hanya menunjukkan cara kerja aplikasi.';
 

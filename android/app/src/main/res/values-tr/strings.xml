@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">%1$s saatine kadar bekliyor. Hâlâ istiyorsanız sonra uygulamada onaylayın. İptal her şeyi olduğu gibi bırakır.</string>
     <string name="notif_protect_ready_text">Hâlâ istiyor musunuz? %1$s saatinden önce Waaiya\'da onaylayın, yoksa hiçbir şey değişmez.</string>
     <string name="notif_protect_cancel">İptal</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Uygulama güncellemeleri</string>
+    <string name="update_auto">Yeni sürümü günde bir kez denetle</string>
+    <string name="update_auto_body">Waaiya, waaiya.mssid.org\'a daha yeni bir sürüm olup olmadığını sorar ve başka hiçbir şey göndermez. Şimdi güncelle\'ye dokunana kadar hiçbir şey indirilmez.</string>
+    <string name="update_check">Şimdi denetle</string>
+    <string name="update_checking">Denetleniyor…</string>
+    <string name="update_none">En son sürüme sahipsiniz (%1$s).</string>
+    <string name="update_available">Waaiya %1$s yayımlandı. Sizdeki sürüm %2$s.</string>
+    <string name="update_size_patch">İndirme: %1$s, yalnızca değişenler (uygulamanın tamamı %2$s).</string>
+    <string name="update_size_full">İndirme: %1$s.</string>
+    <string name="update_now">Şimdi güncelle</string>
+    <string name="update_downloading">İndiriliyor: %1$s</string>
+    <string name="update_preparing">Güncelleme hazırlanıyor…</string>
+    <string name="update_installing">Kurulumu Android\'in gösterdiği ekranda onaylayın.</string>
+    <string name="update_stops_filter">Kurulum filtrelemeyi durdurur. Güncellemeden sonra yeniden başlatın.</string>
+    <string name="update_permission">Waaiya\'nın güncellemelerini kurmasına izin verin, sonra yeniden Şimdi güncelle\'ye dokunun.</string>
+    <string name="update_failed">Güncelleme tamamlanamadı. Daha sonra yeniden deneyin ya da web sitesinden indirin.</string>
+    <string name="update_open_page">İndirme sayfasını aç</string>
+    <string name="update_check_failed">Şu anda denetlenemedi. Daha sonra yeniden deneyin.</string>
+    <string name="notif_update_channel">Uygulama güncellemeleri</string>
+    <string name="notif_update_title">Waaiya %1$s yayımlandı</string>
+    <string name="notif_update_text">Güncellemek için dokunun (%1$s).</string>
 </resources>

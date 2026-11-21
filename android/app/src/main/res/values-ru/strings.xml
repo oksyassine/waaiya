@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">Ожидание до %1$s. Затем подтвердите в приложении, если всё ещё хотите. «Отмена» оставляет всё как есть.</string>
     <string name="notif_protect_ready_text">Всё ещё хотите этого? Подтвердите в Waaiya до %1$s, иначе ничего не изменится.</string>
     <string name="notif_protect_cancel">Отмена</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Обновления приложения</string>
+    <string name="update_auto">Проверять новую версию раз в день</string>
+    <string name="update_auto_body">Waaiya спрашивает у waaiya.mssid.org, есть ли более новая версия, и больше ничего не отправляет. Ничего не скачивается, пока вы не нажмёте «Обновить сейчас».</string>
+    <string name="update_check">Проверить сейчас</string>
+    <string name="update_checking">Проверка…</string>
+    <string name="update_none">У вас последняя версия (%1$s).</string>
+    <string name="update_available">Доступна Waaiya %1$s. У вас %2$s.</string>
+    <string name="update_size_patch">Загрузка: %1$s, только изменения (всё приложение — %2$s).</string>
+    <string name="update_size_full">Загрузка: %1$s.</string>
+    <string name="update_now">Обновить сейчас</string>
+    <string name="update_downloading">Загрузка: %1$s</string>
+    <string name="update_preparing">Подготовка обновления…</string>
+    <string name="update_installing">Подтвердите установку на экране, который покажет Android.</string>
+    <string name="update_stops_filter">Установка останавливает фильтрацию. Запустите её снова после обновления.</string>
+    <string name="update_permission">Разрешите Waaiya устанавливать свои обновления, затем снова нажмите «Обновить сейчас».</string>
+    <string name="update_failed">Не удалось завершить обновление. Попробуйте позже или скачайте его с сайта.</string>
+    <string name="update_open_page">Открыть страницу загрузки</string>
+    <string name="update_check_failed">Сейчас проверить не удалось. Попробуйте позже.</string>
+    <string name="notif_update_channel">Обновления приложения</string>
+    <string name="notif_update_title">Доступна Waaiya %1$s</string>
+    <string name="notif_update_text">Нажмите, чтобы обновить (%1$s).</string>
 </resources>

@@ -1000,6 +1000,75 @@ class AppLocalizationsBn extends AppLocalizations {
       'এখন নামাজের সময়, এখন ধরতে পারছি না। পরে আপনাকে ফোন করব।';
 
   @override
+  String get updateTitle => 'অ্যাপ আপডেট';
+
+  @override
+  String get updateAuto => 'দিনে একবার নতুন সংস্করণ খুঁজুন';
+
+  @override
+  String get updateAutoBody =>
+      'ওয়াইয়া waaiya.mssid.org-কে জিজ্ঞেস করে নতুন সংস্করণ আছে কি না, আর কিছুই পাঠায় না। আপনি এখনই আপডেট করুন চাপার আগে কিছুই ডাউনলোড হয় না।';
+
+  @override
+  String get updateCheck => 'এখনই খুঁজুন';
+
+  @override
+  String get updateChecking => 'খোঁজা হচ্ছে…';
+
+  @override
+  String updateNone(String version) {
+    return 'আপনার কাছে সর্বশেষ সংস্করণ আছে ($version)।';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'ওয়াইয়া $latest পাওয়া যাচ্ছে। আপনার কাছে আছে $current।';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'ডাউনলোড: $size, শুধু পরিবর্তনগুলো (পুরো অ্যাপ $full)।';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'ডাউনলোড: $size।';
+  }
+
+  @override
+  String get updateNow => 'এখনই আপডেট করুন';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'ডাউনলোড হচ্ছে: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'আপডেট প্রস্তুত হচ্ছে…';
+
+  @override
+  String get updateInstalling =>
+      'অ্যান্ড্রয়েড যে স্ক্রিন দেখায় সেখানে ইনস্টল নিশ্চিত করুন।';
+
+  @override
+  String get updateStopsFilter =>
+      'ইনস্টল করলে ফিল্টার বন্ধ হয়ে যায়। আপডেটের পরে আবার চালু করুন।';
+
+  @override
+  String get updatePermission =>
+      'ওয়াইয়াকে তার আপডেট ইনস্টল করার অনুমতি দিন, তারপর আবার এখনই আপডেট করুন চাপুন।';
+
+  @override
+  String get updateFailed =>
+      'আপডেট সম্পূর্ণ করা গেল না। পরে আবার চেষ্টা করুন, বা ওয়েবসাইট থেকে ডাউনলোড করুন।';
+
+  @override
+  String get updateOpenPage => 'ডাউনলোড পেজ খুলুন';
+
+  @override
+  String get updateCheckFailed => 'এখন খোঁজা গেল না। পরে আবার চেষ্টা করুন।';
+
+  @override
   String get desktopPreview =>
       'প্রিভিউ: এই কম্পিউটারে ফিল্টার ইঞ্জিন এখনো সংযুক্ত নয়। বোতামটি শুধু দেখায় অ্যাপটি কীভাবে কাজ করবে।';
 

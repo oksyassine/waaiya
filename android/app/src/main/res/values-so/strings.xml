@@ -376,4 +376,27 @@
     <string name="notif_protect_waiting_text">Waa la sugayaa ilaa %1$s. Kadib ku xaqiiji app-ka haddii aad weli rabto. “Ka noqo” wax walba sidooda ayuu u daayaa.</string>
     <string name="notif_protect_ready_text">Weli ma rabtaa? Ku xaqiiji Waaiya ka hor %1$s, haddii kale waxba isma beddelayaan.</string>
     <string name="notif_protect_cancel">Ka noqo</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Cusboonaysiinta abka</string>
+    <string name="update_auto">Hubi nooc cusub hal mar maalintii</string>
+    <string name="update_auto_body">Waaiya waxay weydiisaa waaiya.mssid.org in nooc ka cusub jiro iyo in kale, waxna kale uma dirto. Waxba lama soo dejiyo ilaa aad taabato Hadda cusboonaysii.</string>
+    <string name="update_check">Hadda hubi</string>
+    <string name="update_checking">Waa la hubinayaa…</string>
+    <string name="update_none">Waxaad haysaa noocii ugu dambeeyay (%1$s).</string>
+    <string name="update_available">Waaiya %1$s waa la heli karaa. Adiga waxaad haysaa %2$s.</string>
+    <string name="update_size_patch">Soo dejin: %1$s, kaliya waxa isbeddelay (abka oo dhan waa %2$s).</string>
+    <string name="update_size_full">Soo dejin: %1$s.</string>
+    <string name="update_now">Hadda cusboonaysii</string>
+    <string name="update_downloading">Waa la soo dejinayaa: %1$s</string>
+    <string name="update_preparing">Cusboonaysiinta waa la diyaarinayaa…</string>
+    <string name="update_installing">Ku xaqiiji rakibidda shaashadda uu Android muujiyo.</string>
+    <string name="update_stops_filter">Rakibiddu waxay joojisaa sifeynta. Dib u bilow cusboonaysiinta kadib.</string>
+    <string name="update_permission">U oggolow Waaiya inay rakibto cusboonaysiinteeda, kadibna mar kale taabo Hadda cusboonaysii.</string>
+    <string name="update_failed">Cusboonaysiinta lama dhammaystiri karin. Mar dambe isku day, ama ka soo dejiso shabakadda.</string>
+    <string name="update_open_page">Fur bogga soo dejinta</string>
+    <string name="update_check_failed">Hadda lama hubin karo. Mar dambe isku day.</string>
+    <string name="notif_update_channel">Cusboonaysiinta abka</string>
+    <string name="notif_update_title">Waaiya %1$s waa la heli karaa</string>
+    <string name="notif_update_text">Taabo si aad u cusboonaysiiso (%1$s).</string>
 </resources>
