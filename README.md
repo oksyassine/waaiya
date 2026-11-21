@@ -27,6 +27,11 @@ Download the Android app from the [releases](https://github.com/oksyassine/waaiy
 is handled, and what is shared between them: [docs/PLATFORMS.md](docs/PLATFORMS.md).
 Research behind the design: `reports/System wide instrument muting app.md`.
 
+### Linux desktop app
+
+Unpack `waaiya-desktop-linux-x64-*.tar.gz` anywhere and run `waaiya/waaiya_desktop`. To have Waaiya with its icon in
+your applications menu, run `waaiya/install-desktop-entry.sh` once (your user only; `--remove` takes it out).
+
 ### Windows: what the app changes, and how to remove it
 
 The Windows app (preview) is a folder: unzip it anywhere and run `waaiya\waaiya_desktop.exe`; it needs no
