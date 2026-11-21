@@ -147,6 +147,7 @@ object AppUpdate : Feature {
                 else {
                     plan = choose(c, r)
                     set(if (plan == null) "error" else "available", 0.0, if (plan == null) "no_file" else null)
+                    if (!notify) resumeAfterPermission(c, r)  // only with the app open, never from the daily job
                     if (notify && plan != null && prefs(c).getLong("notified", 0) < r.versionCode && announce(c, r, plan!!)) {
                         prefs(c).edit().putLong("notified", r.versionCode).apply()
                     }
@@ -318,12 +319,16 @@ object AppUpdate : Feature {
         val why = AppUpdateInstall.verify(c, apk, r.versionCode)
         if (why != null) { Log.w(TAG, "install: $why"); apk.delete(); set("error", 0.0, "bad_file"); return }
         if (!c.packageManager.canRequestPackageInstalls()) {
+            // Android 11 and older kill the app when this permission is allowed: the update goes on by itself when
+            // Waaiya is opened again (resumeAfterPermission), so the user does not have to find the button again
+            prefs(c).edit().putLong("installAfterPermission", r.versionCode).apply()
             set("permission", 1.0)
             val i = Intent(AndroidSettings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${c.packageName}"))
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             runCatching { c.startActivity(i) }
             return
         }
+        prefs(c).edit().remove("installAfterPermission").apply()  // the user is asked now: no second prompt later
         if (FilterService.running) {
             // filtering was started while the update downloaded: the same gate as Stop, or wait for the next tap
             try { Protection.checkStop(c) } catch (e: FeatureException) { set("ready", 1.0); return }
@@ -331,6 +336,15 @@ object AppUpdate : Feature {
         }
         set("installing", 1.0)
         AppUpdateInstall.commit(c, apk)?.let { set("error", 1.0, "install") }
+    }
+
+    /** The user tapped "Update now", then allowed installs (which restarted the app): go on, Android still asks. */
+    private fun resumeAfterPermission(c: Context, r: Release) {
+        val p = prefs(c)
+        if (p.getLong("installAfterPermission", 0) != r.versionCode || plan == null) return
+        if (!c.packageManager.canRequestPackageInstalls() || FilterService.running || !canInstall(c)) return
+        p.edit().remove("installAfterPermission").apply()
+        main.post { runCatching { start(c) } }
     }
 
     /** From the installer's answer ([AppUpdateInstall]): the user cancelled, or it failed. */
