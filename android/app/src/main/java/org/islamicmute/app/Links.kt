@@ -71,6 +71,7 @@ object Links {
      * instead of a day. Blocking (network): call off the main thread. Returns true if a new version is now in use.
      */
     fun update(ctx: Context, afterFailure: Boolean = false): Boolean {
+        if (!BuildConfig.SELF_UPDATE) return false  // store build (-PimPlay): only the bundled yt-dlp
         val py = python(ctx)
         val upd = py.getModule("im_update")
         val files = ctx.filesDir.path

@@ -36,7 +36,8 @@ class FilterTileService : TileService() {
 
     override fun onClick() {
         if (FilterService.running) {
-            startService(Intent(this, FilterService::class.java).setAction(FilterService.ACTION_STOP))
+            // the waiting period and the PIN (Protection): when they hold it back, Waaiya opens where it asks
+            Protection.stopOrAsk(this)?.let { openActivity(this, it) }
             return
         }
         // From SILENCED too: starting again resumes filtering (the muter keeps the originals silent meanwhile).
@@ -87,8 +88,10 @@ class TileStartActivity : Activity() {
         if (savedInstanceState != null) return  // recreated while Android's question is open: its answer still comes
         // the "Stop filtering" app shortcut (res/xml/shortcuts.xml); SILENCED too: the other apps sound again
         if (intent?.action == ACTION_STOP_FILTER) {
+            // also the filter notification's Stop. Through the waiting period and the PIN (Protection): when they
+            // hold it back, Waaiya opens at its Settings page, where it asks
             if (FilterService.running || FilterService.state == FilterService.State.SILENCED)
-                startService(Intent(this, FilterService::class.java).setAction(FilterService.ACTION_STOP))
+                Protection.stopOrAsk(this)?.let { runCatching { startActivity(it) } }
             finish()
             return
         }

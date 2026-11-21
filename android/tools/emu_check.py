@@ -206,7 +206,8 @@ def main():
     # words in that language (the name `ar` stays: it was Arabic only).
     phone = (e.sh("getprop persist.sys.locale").strip() or e.sh("getprop ro.product.locale").strip()).split("-")[0]
     lang = {"in": "id"}.get(phone, phone)
-    lang = lang if lang in ("ar", "en", "fr", "ur", "id", "tr", "bn", "fa", "ms") else "ar"
+    lang = lang if lang in ("ar", "en", "fr", "ur", "id", "tr", "bn", "fa", "ms", "es", "nl", "de", "it", "ru", "uz", "sw", "ha",
+                              "so") else "ar"
     ar = strings(lang)
     shot = (lambda name: e.screenshot(os.path.join(a.shots, name + ".png"))) if a.shots else (lambda name: None)
     if a.shots:

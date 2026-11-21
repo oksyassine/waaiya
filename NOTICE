@@ -25,4 +25,5 @@ Full list, licences and dataset notes: THIRD_PARTY_LICENSES.md.
 Models trained by this project use these CC BY 4.0 datasets:
 LibriSpeech (Panayotov et al.), VocalSet (Wilkins et al.), Slakh2100 (Manilow et al.)
 [voice_v1 and detector_v1]; Arabic Speech Corpus (N. Halabi) [voice_v1]; FLEURS (Google) [detector_v1].
-See THIRD_PARTY_LICENSES.md for the Quran recitation data, whose licence is not cleared.
+voice_v1 and detector_v1 were also trained on "Diverse Quran Reciters" (Kaggle abdo3id), whose licence is
+unknown: see THIRD_PARTY_LICENSES.md section 4.

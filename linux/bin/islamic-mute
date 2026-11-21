@@ -11,10 +11,16 @@
 #                                       for men: also mute women's singing (then 'reload'). Fail-closed:
 #                                       if the detector cannot load, voice is muted while this is on.
 #   islamic-mute stereo on | off        stereo sound (default off: mono, lighter on slow computers; then 'reload')
+#   islamic-mute keep-singing on | off  a test: the voice_v1 model, which keeps singing voices and removes the
+#                                       instruments (then 'reload'). Fail-closed: if it is not installed or does not
+#                                       load, the output is silent while this is on.
 #   islamic-mute keep-silent on | off   when filtering stops by itself, apps stay silent (default on) or get
 #                                       their normal sound back with a desktop notice (off)
 #   islamic-mute reload                 apply the settings above: restarts only the filter, apps stay on the
 #                                       virtual output meanwhile (a moment of silence, never unfiltered sound)
+#   islamic-mute filter-off-apps [name...]  apps heard unfiltered (their application.name, exactly); none = all
+#                                       filtered. Applies within a second, no reload
+#   islamic-mute apps                   application names playing sound now
 #
 # How it works: apps play into a virtual output "Waaiya". The filter reads it, removes
 # instruments, and plays the result to the real speakers or headphones.
@@ -41,7 +47,12 @@ log() { echo "$APP: $*" >&2; }
 die() { log "$*"; exit 1; }
 current_default() { pactl get-default-sink 2>/dev/null || pactl info 2>/dev/null | sed -n 's/^Default Sink: //p'; }
 sink_exists() { pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -qx "$1"; }
-model_path() { cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"; }
+# keep-singing on: the voice_v1 model ('install' puts it there as singing.onnx); the path is used even when the file
+# is missing, so the engine fails to load and stays silent (fail-closed), never another model
+model_path() {
+    if [ "$(cat "$CFG/keep_singing" 2>/dev/null)" = on ]; then echo "$LIB/models/singing.onnx"; return; fi
+    cat "$CFG/model" 2>/dev/null || echo "$LIB/models/default.onnx"
+}
 detector_path() { cat "$CFG/detector" 2>/dev/null || echo "$LIB/models/detector.onnx"; }
 policy_flags() { [ "$(cat "$CFG/women_singing" 2>/dev/null)" = on ] && echo "--mute-female-singing --fail-closed" || true; }
 mono_flag() { [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ] || echo "--mono"; }
@@ -67,19 +78,43 @@ stream_bin() { [ -x "$LIB/lib/im-stream" ] && echo "$LIB/lib/im-stream" || echo 
 backend() { echo "${IM_BACKEND:-$(cat "$CFG/backend" 2>/dev/null)}"; }
 pulse_bin() { local b; b="$(dirname "$(stream_bin)")/im-pulse"; [ "$(backend)" != pipe ] && [ -x "$b" ] && echo "$b"; }
 
-# Sink inputs that should be filtered but play elsewhere (the sound server restored an app's last device, an app
-# picked one itself): moved to the virtual output. Never our own output: pacat (client "islamic-mute") or
-# im-pulse (client "Waaiya filter", "Islamic Mute" before 0.2.12, which also asks not to be moved); moving it in would loop the filter into itself.
-move_strays() {
-    local sid; sid="$(pactl list short sinks 2>/dev/null | awk -v s="$SINK" '$2 == s {print $1}')"
-    [ -n "$sid" ] || return 0
-    LC_ALL=C pactl list sink-inputs 2>/dev/null | awk -v sid="$sid" '
-        function out() { if (id != "" && !own && sink != "" && sink != sid) print id }
-        /^Sink Input #/ { out(); id = substr($3, 2); sink = ""; own = 0 }
+# Apps the user chose to hear unfiltered ("Fix mistakes", the app's filter_off_apps): one application.name per
+# line, matched exactly (never as a pattern). Read on every pass, so a change applies within a second.
+OFF_APPS="$CFG/filter_off_apps"
+
+# Sink inputs of one kind, as "id<TAB>sink index" lines: "strays" = should be filtered but play elsewhere (the sound
+# server restored an app's last device, an app picked one itself); "off" = an app heard unfiltered that is not on
+# the real output ($2: its index). Never our own output: pacat (client "islamic-mute") or im-pulse (client "Waaiya
+# filter", "Islamic Mute" before 0.2.12, which also asks not to be moved); moving it in would loop the filter into
+# itself. A stream whose name is not read yet counts as filtered (fail-closed).
+sink_inputs_of() {
+    LC_ALL=C pactl list sink-inputs 2>/dev/null | awk -v want="$1" -v sid="${2:-}" -v mid="${3:-}" -v offfile="$OFF_APPS" '
+        BEGIN { while ((getline line < offfile) > 0) if (line != "") off[line] = 1 }
+        function out() {
+            if (id == "" || own || sink == "") return
+            if (app in off) { if (want == "off" && sink != mid) print id }
+            else if (want == "strays" && sink != sid) print id
+        }
+        /^Sink Input #/ { out(); id = substr($3, 2); sink = ""; own = 0; app = "\001" }
         /^[ \t]*Sink: / { sink = $2 }
+        /^[ \t]*application\.name = "/ { v = $0; sub(/^[^"]*"/, "", v); sub(/"[ \t]*$/, "", v); app = v }
         /application.name = "(islamic-mute|Islamic Mute|Waaiya filter)"/ { own = 1 }
-        END { out() }' | while read -r i; do
+        END { out() }'
+}
+sink_index() { pactl list short sinks 2>/dev/null | awk -v s="$1" '$2 == s {print $1}'; }
+
+# Streams that should be filtered go to the virtual output; streams of apps heard unfiltered go to the real one ($1).
+move_strays() {
+    local sid mid; sid="$(sink_index "$SINK")"
+    [ -n "$sid" ] || return 0
+    sink_inputs_of strays "$sid" | while read -r i; do
         pactl move-sink-input "$i" "$SINK" 2>/dev/null || true
+    done
+    [ -n "${1:-}" ] || return 0
+    mid="$(sink_index "$1")"
+    [ -n "$mid" ] || return 0
+    sink_inputs_of off "$sid" "$mid" | while read -r i; do
+        pactl move-sink-input "$i" "$1" 2>/dev/null || true
     done
 }
 
@@ -88,6 +123,9 @@ move_all_to() {
     # virtual sink would loop the filter into itself and silence the speakers. im-pulse uses DONT_MOVE.
     local own; own="$(LC_ALL=C pactl list sink-inputs 2>/dev/null |
         awk '/^Sink Input #/ {id = substr($3, 2)} /application.name = "islamic-mute"/ {print id}')"
+    # onto the virtual output: not the apps heard unfiltered (they stay on the real output)
+    [ "$1" = "$SINK" ] && own="$own
+$(sink_inputs_of off "" "-1")"
     pactl list short sink-inputs 2>/dev/null | awk '{print $1}' | while read -r i; do
         printf '%s\n' "$own" | grep -qx "$i" && continue
         pactl move-sink-input "$i" "$1" 2>/dev/null || true
@@ -107,6 +145,11 @@ install_cmd() {
     echo "$LIB/models/$(basename "$model")" > "$CFG/model"
     local det="$REPO/models/detector/detector_v1.onnx"
     [ -f "$det" ] && cp "$det" "$LIB/models/detector.onnx"
+    # keep singing (voice_v1, a test), when the checkout or bundle has it (scripts/fetch_deps.sh models)
+    local sing="$REPO/models/voice/v3/voice_v1_fp16"
+    if [ -f "$sing.onnx" ] && [ -f "$sing.state_init.bin" ]; then
+        cp "$sing.onnx" "$LIB/models/singing.onnx"; cp "$sing.state_init.bin" "$LIB/models/singing.state_init.bin"
+    else rm -f "$LIB/models/singing.onnx" "$LIB/models/singing.state_init.bin"; fi
     install -m 755 "$HERE/islamic-mute" "$LIB/islamic-mute"
     # engine version marker (desktop app bundle: engine/VERSION); the app reinstalls when it differs
     if [ -f "$REPO/VERSION" ]; then cp "$REPO/VERSION" "$LIB/VERSION"; else rm -f "$LIB/VERSION"; fi
@@ -254,7 +297,7 @@ run_cmd() {
             if [ -n "$next" ]; then log "output $master gone, using $next"; master="$next"; stop_pipe; start_pipe; fi
         fi
         # streams the sound server put on a real output (its saved per-app device) are filtered too
-        [ $make_default = 1 ] && move_strays
+        [ $make_default = 1 ] && move_strays "$master"
         [ $((tick % 300)) = 0 ] && trim_log
     done
 }
@@ -316,7 +359,9 @@ status_cmd() {
         *) echo "engine:   starting" ;;
     esac
     if [ "$(cat "$CFG/stereo" 2>/dev/null)" = on ]; then echo "sound:    stereo"; else echo "sound:    mono"; fi
+    if [ "$(cat "$CFG/keep_singing" 2>/dev/null)" = on ]; then echo "singing:  kept (test model)"; else echo "singing:  removed"; fi
     if keep_silent; then echo "if the filter stops: apps stay silent"; else echo "if the filter stops: normal sound"; fi
+    if [ -s "$OFF_APPS" ]; then echo "unfiltered apps: $(grep -v '^$' "$OFF_APPS" | paste -sd, -)"; fi
     echo "default:  $(current_default)"
     systemctl --user is-enabled islamic-mute.service >/dev/null 2>&1 && echo "autostart: on" || echo "autostart: off"
 }
@@ -336,6 +381,19 @@ case "${1:-}" in
     stereo)
         case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/stereo"; log "stereo $2; run '$APP reload'" ;;
             *) die "usage: $APP stereo on|off" ;; esac ;;
+    keep-singing)
+        case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/keep_singing"
+                [ "$2" = on ] && [ ! -f "$LIB/models/singing.onnx" ] && log "warning: no keep-singing model installed: the output will be silent while this is on (fail-closed)"
+                log "keep-singing $2; run '$APP reload'" ;;
+            *) die "usage: $APP keep-singing on|off" ;; esac ;;
+    filter-off-apps)
+        shift; mkdir -p "$CFG"
+        if [ $# -eq 0 ]; then rm -f "$OFF_APPS"; log "every app is filtered"
+        else printf '%s\n' "$@" > "$OFF_APPS.tmp" && mv "$OFF_APPS.tmp" "$OFF_APPS"; log "heard unfiltered: $*"; fi ;;
+    apps)
+        LC_ALL=C pactl list sink-inputs 2>/dev/null | awk '/^[ \t]*application\.name = "/ {
+            v = $0; sub(/^[^"]*"/, "", v); sub(/"[ \t]*$/, "", v)
+            if (v !~ /^(islamic-mute|Islamic Mute|Waaiya filter)$/ && !(v in seen)) { seen[v] = 1; print v } }' ;;
     keep-silent)
         case "${2:-}" in on|off) mkdir -p "$CFG"; echo "$2" > "$CFG/keep_silent"; log "keep-silent $2" ;;
             *) die "usage: $APP keep-silent on|off" ;; esac ;;
@@ -352,5 +410,5 @@ case "${1:-}" in
             off) rm -f "$CFG/women_singing"; log "women's singing filter off; run '$APP reload'" ;;
             *) die "usage: $APP women-singing on [detector.onnx] | off" ;;
         esac ;;
-    *) sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+    *) sed -n '2,28p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac

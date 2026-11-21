@@ -103,7 +103,80 @@ class Settings(context: Context) {
         set(v) = p.edit().putInt("audio_mono_version", if (v) BuildConfig.VERSION_CODE else -1)
             .putLong("audio_mono_until", if (v) System.currentTimeMillis() + 7 * 24 * 3600 * 1000L else 0).apply()
 
+    // --- 0.2.13 features (docs/FEATURES_CONTRACT.md). Weakening changes pass Protection.checkSetting first. ---
+
+    /** Apps the live filter leaves alone (comma-separated package names): their sound is neither captured nor muted. */
+    var filterOffApps: Set<String>
+        get() = csv(p.getString("filter_off_apps", ""))
+        set(v) = p.edit().putString("filter_off_apps", v.sorted().joinToString(",")).apply()
+
+    /** Apps the screen blur leaves alone while they are in the foreground (comma-separated package names). */
+    var blurOffApps: Set<String>
+        get() = csv(p.getString("blur_off_apps", ""))
+        set(v) = p.edit().putString("blur_off_apps", v.sorted().joinToString(",")).apply()
+
+    /** Keep singing voices (the voice_v1 model) instead of removing them with the instruments. Test, off by default. */
+    var keepSinging: Boolean
+        get() = p.getBoolean("keep_singing", false)
+        set(v) = p.edit().putBoolean("keep_singing", v).apply()
+
+    /** Ringer silent (Do Not Disturb) for [prayerSilentMinutes] from each prayer time. Off by default. */
+    var prayerSilent: Boolean
+        get() = p.getBoolean("prayer_silent", false)
+        set(v) = p.edit().putBoolean("prayer_silent", v).apply()
+
+    var prayerSilentMinutes: Int
+        get() = p.getInt("prayer_silent_minutes", 20).coerceIn(5, 90)
+        set(v) = p.edit().putInt("prayer_silent_minutes", v.coerceIn(5, 90)).apply()
+
+    /** Media muted for [prayerAdhanMinutes] at each adhan time. Off by default. */
+    var prayerAdhanMute: Boolean
+        get() = p.getBoolean("prayer_adhan_mute", false)
+        set(v) = p.edit().putBoolean("prayer_adhan_mute", v).apply()
+
+    var prayerAdhanMinutes: Int
+        get() = p.getInt("prayer_adhan_minutes", 5).coerceIn(1, 30)
+        set(v) = p.edit().putInt("prayer_adhan_minutes", v.coerceIn(1, 30)).apply()
+
+    /** A city id from the bundled list, or "custom:LAT,LON,TZID"; "" = not chosen (prayer features stay off). */
+    var prayerPlace: String
+        get() = p.getString("prayer_place", "") ?: ""
+        set(v) = p.edit().putString("prayer_place", v).apply()
+
+    /** Calculation method (index into WorshipTimes.METHODS) and Asr rule (0 standard, 1 Hanafi): the user's choice. */
+    var prayerMethod: Int
+        get() = p.getInt("prayer_method", 0).coerceIn(0, 15)
+        set(v) = p.edit().putInt("prayer_method", v.coerceIn(0, 15)).apply()
+
+    var prayerAsr: Int
+        get() = p.getInt("prayer_asr", 0).coerceIn(0, 1)
+        set(v) = p.edit().putInt("prayer_asr", v.coerceIn(0, 1)).apply()
+
+    /**
+     * Reply by SMS to a call that rings unanswered for [prayerSmsDelaySeconds] inside a prayer window (the
+     * [prayerSilentMinutes] from each prayer time). Off by default; not in Play builds (WorshipSms).
+     */
+    var prayerSmsReply: Boolean
+        get() = p.getBoolean("prayer_sms_reply", false)
+        set(v) = p.edit().putBoolean("prayer_sms_reply", v).apply()
+
+    var prayerSmsDelaySeconds: Int
+        get() = p.getInt("prayer_sms_delay_seconds", 5).coerceIn(3, 60)
+        set(v) = p.edit().putInt("prayer_sms_delay_seconds", v.coerceIn(3, 60)).apply()
+
+    /** The SMS text; "" = the default text in the app's language. */
+    var prayerSmsText: String
+        get() = p.getString("prayer_sms_text", "") ?: ""
+        set(v) = p.edit().putString("prayer_sms_text", v).apply()
+
+    /** Waiting period, in minutes, before switching off or weakening takes effect. 0 = none (the default). */
+    var protectDelayMinutes: Int
+        get() = p.getInt("protect_delay_minutes", 0).coerceIn(0, 1440)
+        set(v) = p.edit().putInt("protect_delay_minutes", v.coerceIn(0, 1440)).apply()
+
     companion object {
         val MALE_CLEAR = floatArrayOf(0.999f, 0.99f, 0.98f)
+
+        fun csv(s: String?): Set<String> = s.orEmpty().split(',').map { it.trim() }.filter { it.isNotEmpty() }.toSet()
     }
 }

@@ -54,6 +54,23 @@ class Sessions {
     // record the originals. Their sound is not filtered either, if they play any. Set before start().
     std::vector<std::wstring> leave_alone;
 
+    // Apps the user hears unfiltered (setting filter_off_apps, "Fix mistakes"): lower-case file names, as
+    // leave_alone, but changed while running. A session of such an app gets its level back and is left alone; one
+    // taken off the list is lowered again. Main loop only.
+    void set_off(const std::vector<std::wstring> &names);
+    bool is_off(const std::wstring &exe) const;
+
+    // The processes of the sessions lowered now (main loop): the capture follows them when apps are left
+    // unfiltered (wfilter.cpp, one capture per app).
+    std::vector<DWORD> pids() const;
+
+    // Every app with a sound session now, ours left out: "name.exe" (lower case) and its process id, lowered or
+    // not (for the app's "Fix mistakes" list). Main loop only.
+    std::vector<std::pair<std::wstring, DWORD>> apps() const;
+
+    // "chrome.exe" from a session identifier "...\\chrome.exe%b{...}" ("" for system sounds).
+    static std::wstring exe_of(const std::wstring &id);
+
     // Log lines (wfilter.cpp's logf); may be null.
     void (*log)(const char *fmt, ...) = nullptr;
 
@@ -91,6 +108,8 @@ class Sessions {
     std::atomic<int> mode_{ATTENUATE};
     mutable std::recursive_mutex mu_; // main thread only: outputs_, tracked_, devices_
     mutable std::mutex store_mu_;     // store_ (any thread); never held during an audio call
+    mutable std::mutex off_mu_;       // off_ (any thread: notifications read it)
+    std::vector<std::wstring> off_;
     Com<IMMDeviceEnumerator> devices_;
     DeviceWatch *device_watch_ = nullptr;
     std::vector<Output> outputs_;

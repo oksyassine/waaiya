@@ -17,6 +17,15 @@
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
     <!-- Screen blur without the accessibility service: covers drawn as an app overlay (touches on a cover are lost). -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- Worship helpers (Worship*.kt), all optional and off by default: Do Not Disturb at prayer times (the user
+         allows "Do Not Disturb access"), alarms at prayer times ("Alarms & reminders", asked from the card; without
+         it the alarms come up to 10 minutes late), setting them again after a restart, and a plain ringtone or
+         notification sound ("Modify system settings", asked from the card). Not USE_EXACT_ALARM: Google Play keeps
+         it for alarm-clock and calendar apps. -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
 
     <!-- Android 11+ package visibility: detect "Shizuku installed but not running" and open it. -->
     <queries>
@@ -90,6 +99,7 @@
 
         <!-- Paste or share a link (YouTube, TikTok, ...): watch, save or share it without music. -->
         <activity android:name=".LinkActivity" android:exported="true" android:launchMode="singleTop"
+            android:enabled="${linksEnabled}"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -152,8 +162,39 @@
             android:taskAffinity=""
             android:launchMode="singleTask" />
 
+        <!-- "Cover an area" (FixMistakes): a see-through screen over the current app where a rectangle is dragged. -->
+        <activity android:name=".FixMistakesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.IslamicMute.Invisible"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:launchMode="singleTask" />
+
         <!-- Screen blur's accessibility service (touches pass through the covers) is only in builds made with
              -PimBlurA11y: src/blurA11y/AndroidManifest.xml. Play Protect blocks sideloaded apps that declare one. -->
+        <!-- Worship helpers: Waaiya's own prayer-time alarms and notification buttons (not exported), and the system
+             broadcasts after which the alarms are set again (protected broadcasts: only Android can send them). -->
+        <receiver android:name=".WorshipReceiver" android:exported="false" />
+        <receiver android:name=".WorshipSystemReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Protection: the waiting period's alarms and the notification's Cancel (not exported), and boot or update
+             (protected broadcasts), after which the alarms and the notification come back. -->
+        <receiver android:name=".ProtectionReceiver" android:exported="false" />
+        <receiver android:name=".ProtectionSystemReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
         <service android:name=".FilterService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />

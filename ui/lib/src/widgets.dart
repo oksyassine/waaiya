@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show OverflowBoxFit;
 
 import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
+import 'motion.dart';
 import 'theme.dart';
 
 /// Scrolling page column, at most 640 wide (phones use the full width; desktop windows stay readable).
@@ -69,7 +71,11 @@ class SectionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final text = Theme.of(context).textTheme;
     return Card(
-      child: Padding(
+      child: AnimatedSize(
+        duration: Motion.of(context, Motion.medium),
+        curve: Motion.curve,
+        alignment: Alignment.topCenter,
+        child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -78,6 +84,7 @@ class SectionCard extends StatelessWidget {
             if (body != null) ...[const SizedBox(height: 6), Text(body!, style: text.bodyMedium)],
             ...children,
           ],
+        ),
         ),
       ),
     );
@@ -108,8 +115,12 @@ class SettingSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = WaaiyaColors.of(context);
+    // the press highlight gets room around the text (rounded, 12 px each side); the row is widened by as much into
+    // the card's padding, so the text stays in line with the rest of the card
+    const inset = 12.0;
     final tile = SwitchListTile(
-      contentPadding: EdgeInsets.zero,
+      contentPadding: const EdgeInsets.symmetric(horizontal: inset),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(14))),
       value: value,
       onChanged: onChanged,
       title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
@@ -117,8 +128,18 @@ class SettingSwitch extends StatelessWidget {
           ? null
           : Text(body!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: bodyIsError ? c.error : null)),
     );
+    final wide = LayoutBuilder(
+      builder: (context, box) => box.hasBoundedWidth
+          ? OverflowBox(
+              minWidth: box.maxWidth + 2 * inset,
+              maxWidth: box.maxWidth + 2 * inset,
+              fit: OverflowBoxFit.deferToChild,
+              child: tile,
+            )
+          : tile,
+    );
     // one node: the id on the same node as the switch's checked state
-    return id == null ? tile : MergeSemantics(child: Semantics(identifier: id, child: tile));
+    return id == null ? wide : MergeSemantics(child: Semantics(identifier: id, child: wide));
   }
 }
 
@@ -152,7 +173,8 @@ class StatusText extends StatelessWidget {
       text,
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: color ?? (isError ? WaaiyaColors.of(context).error : null)),
     );
-    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? t : TestId(id!, child: t));
+    final f = SwitchFade(child: KeyedSubtree(key: ValueKey('$text$isError'), child: t));
+    return Padding(padding: const EdgeInsets.only(top: 12), child: id == null ? f : TestId(id!, child: f));
   }
 }
 
@@ -167,12 +189,26 @@ class ValueRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Row(
-          children: [
-            Expanded(child: Text(label, style: Theme.of(context).textTheme.bodyLarge)),
-            TextButton(onPressed: onPressed, child: Text(action)),
-          ],
+        child: LabelAndActions(
+          label: Text(label, style: Theme.of(context).textTheme.bodyLarge),
+          actions: [TextButton(onPressed: onPressed, child: Text(action))],
         ),
+      );
+}
+
+/// A label with its buttons at the end of the same line; when they do not fit (a long language, large text, a
+/// small phone) the buttons go under the label instead of off the screen.
+class LabelAndActions extends StatelessWidget {
+  const LabelAndActions({super.key, required this.label, required this.actions});
+
+  final Widget label;
+  final List<Widget> actions;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [label, Wrap(children: actions)],
       );
 }
 

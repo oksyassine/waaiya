@@ -47,6 +47,7 @@ Future<void> startWirelessSetup(BuildContext context) async {
   await showDialog<void>(
     context: context,
     builder: (ctx) => AlertDialog(
+      scrollable: true, // large text on a small screen: nothing is cut off
       content: Text(l.wsetupDevOff),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l.wsetupCancel)),
@@ -81,6 +82,7 @@ Future<void> askPairingCode(BuildContext context) {
         }
 
         return AlertDialog(
+          scrollable: true, // large text on a small screen: nothing is cut off
           title: Text(l.wsetupCodeDialogTitle),
           content: Column(
             mainAxisSize: MainAxisSize.min,

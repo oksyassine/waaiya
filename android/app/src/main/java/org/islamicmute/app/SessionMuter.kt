@@ -162,7 +162,12 @@ class SessionMuter(private val context: Context, private val settings: Settings)
             else -> "none"
         } + if (context.hasDumpPermission()) "" else " via Waaiya's helper"
         val me = Process.myUid()
-        list = list.filter { it.uid != me && it.id > 0 }
+        // apps the user chose to hear unfiltered (FixMistakes, filter_off_apps): the capture leaves them out, so their
+        // original must play. Left out like our own uid (not "blocked", not counted as unmuted); an effect already on
+        // one of their sessions is released below at once.
+        val off = FixMistakes.filterOffUids(context, settings)
+        val offIds = list.filter { it.uid in off }.map { it.id }.toSet()
+        list = list.filter { it.uid != me && it.id > 0 && it.uid !in off }
         sessions = list
         val seen = HashSet<Int>()
         var failedNow = 0
@@ -197,6 +202,7 @@ class SessionMuter(private val context: Context, private val settings: Settings)
         }
         synchronized(effects) {
             for (id in effects.keys.toList()) {
+                if (id in offIds) { effects.remove(id)?.release(); missed.remove(id); continue }
                 if (id in seen) { missed.remove(id); continue }
                 val m = (missed[id] ?: 0) + 1
                 if (m >= 6) { effects.remove(id)?.release(); missed.remove(id) } else missed[id] = m

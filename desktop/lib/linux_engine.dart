@@ -71,6 +71,49 @@ class LinuxEngine implements FilterHost {
     }
   }
 
+  /// Apps heard unfiltered (setting `filter_off_apps`, "Fix mistakes"): `$CFG/filter_off_apps`, one application name
+  /// per line, read by the daemon every second (no reload, no restart). An empty list removes the file. Written
+  /// whether the engine is installed or not, so the daemon finds it at its next start.
+  void writeFilterOffApps(List<String> names) {
+    final f = File('$configDir/filter_off_apps');
+    final clean = [for (final n in names) if (n.trim().isNotEmpty && !n.contains('\n')) n];
+    try {
+      if (clean.isEmpty) {
+        if (f.existsSync()) f.deleteSync();
+        return;
+      }
+      Directory(configDir).createSync(recursive: true);
+      final tmp = File('${f.path}.tmp');
+      tmp.writeAsStringSync('${clean.join('\n')}\n');
+      tmp.renameSync(f.path); // never half a list
+    } on IOException {
+      // the daemon keeps the last list it read; the app shows the setting as chosen
+    }
+  }
+
+  /// Application names playing sound now (`pactl list sink-inputs`), without the filter's own stream.
+  Future<List<String>> playingApps() async {
+    try {
+      final r = await Process.run('pactl', ['list', 'sink-inputs'],
+          environment: {...env, 'LC_ALL': 'C'}, includeParentEnvironment: false);
+      return r.exitCode == 0 ? appNames('${r.stdout}') : const [];
+    } on ProcessException {
+      return const [];
+    }
+  }
+
+  /// The `application.name` values of a `pactl list sink-inputs` output, once each, ours left out (the same names
+  /// the daemon matches).
+  static List<String> appNames(String out) {
+    final seen = <String>{};
+    for (final m in RegExp(r'^\s*application\.name = "(.*)"\s*$', multiLine: true).allMatches(out)) {
+      final v = m.group(1)!;
+      if (const {'islamic-mute', 'Islamic Mute', 'Waaiya filter'}.contains(v) || v.isEmpty) continue;
+      seen.add(v);
+    }
+    return seen.toList();
+  }
+
   @override
   String get bundledVersion => _readTrim('${dir.path}/VERSION') ?? '';
 
@@ -80,6 +123,18 @@ class LinuxEngine implements FilterHost {
   /// The women's-singing detector is bundled (the public models release has none yet).
   @override
   bool get hasDetector => File('${dir.path}/models/detector/detector_v1.onnx').existsSync();
+
+  /// The "keep singing" model (voice_v1) is bundled (`waaiya install` puts it next to the default model).
+  bool get hasSingingModel =>
+      File('${dir.path}/models/voice/v3/voice_v1_fp16.onnx').existsSync() &&
+      File('${dir.path}/models/voice/v3/voice_v1_fp16.state_init.bin').existsSync();
+
+  /// `waaiya keep-singing on|off` (setting `keep_singing`, a test; applies at the next start, or at once with
+  /// [reload]). Fail-closed in the script: on without the model, the output is silent.
+  Future<BackendMessage?> setKeepSinging(bool on) => _set('keep-singing', on);
+
+  /// What `waaiya keep-singing` last set (`$CFG/keep_singing`); null: never set.
+  bool? get keepSingingSet => _onOff('keep_singing');
 
   /// Can the filter run here at all? Null when it can, else the reason.
   @override

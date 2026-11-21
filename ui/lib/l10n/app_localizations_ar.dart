@@ -33,7 +33,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get onboardWhy =>
-      'هذا يحدد فقط الخيارات الإضافية التي تظهر لك، ويمكنك تغييره لاحقًا.';
+      'هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.';
 
   @override
   String get stateOnTitle => 'التصفية تعمل';
@@ -46,7 +46,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'تُزال الآلات من كل التطبيقات. التأخير نحو $delayMs ميلي ثانية.';
+    return 'تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو $delayMs ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).';
   }
 
   @override
@@ -221,7 +221,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingSingingTitle => 'كتم غناء النساء';
 
   @override
-  String get settingSingingBody => 'يُبقي كلام النساء وتلاوتهن.';
+  String get settingSingingBody =>
+      'مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.';
 
   @override
   String get settingSingingNoModel =>
@@ -385,14 +386,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurWomenBody =>
-      'الجسم كله. ويُموَّه أيضًا كل من لا يتبيّن للتطبيق بوضوح أنه رجل.';
+      'يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.';
 
   @override
   String get blurNudityTitle => 'تمويه الصور غير المحتشمة';
 
   @override
   String get blurNudityBody =>
-      'العري واللباس الكاشف، لأي أحد: تُغطّى الشاشة كلها.';
+      'العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.';
 
   @override
   String get blurFailTitle => 'تغطية الشاشة إذا عجز التمويه عن المتابعة';
@@ -409,11 +410,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: اسمح بذلك عبر Shizuku (يشغّل خدمة الإتاحة «تمويه واعية» فتبقى اللمسات تصل إلى التطبيق تحته). أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد (وحينها تضيع اللمسات على المنطقة المموّهة).';
+      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'يحتاج التمويه إلى الظهور فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku (واسمح لواعية فيه): فيرسم التمويه طبقته الخاصة التي تمرّ عبرها اللمسات. وإلا فاسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، وحينها لا يصل اللمس على منطقة مموّهة إلى التطبيق تحتها.';
+      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurFailUnavailable =>
@@ -958,6 +959,34 @@ class AppLocalizationsAr extends AppLocalizations {
       'Simple mode (test): media sound is muted while Waaiya filters.';
 
   @override
+  String get worshipPrayerFajr => 'الفجر';
+
+  @override
+  String get worshipPrayerSunrise => 'الشروق';
+
+  @override
+  String get worshipPrayerDhuhr => 'الظهر';
+
+  @override
+  String get worshipPrayerAsr => 'العصر';
+
+  @override
+  String get worshipPrayerMaghrib => 'المغرب';
+
+  @override
+  String get worshipPrayerIsha => 'العشاء';
+
+  @override
+  String get worshipEndSilent => 'إنهاء الصمت الآن';
+
+  @override
+  String get worshipUnmute => 'إلغاء الكتم الآن';
+
+  @override
+  String get worshipSmsDefault =>
+      'إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.';
+
+  @override
   String get desktopPreview =>
       'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
 
@@ -1046,4 +1075,678 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get diagNoteDesktop =>
       'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+
+  @override
+  String get settingHoldSilenceBodyDesktop =>
+      'مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.';
+
+  @override
+  String get settingStereoBodyDesktop =>
+      'مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.';
+
+  @override
+  String get linkEntryBodyDesktop =>
+      'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.';
+
+  @override
+  String get linkEntryBodyWatch =>
+      'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.';
+
+  @override
+  String get linkWatchNoteDesktop =>
+      'يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.';
+
+  @override
+  String get linkFilterFailed =>
+      'لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.';
+
+  @override
+  String get linkSavedVideoDesktop => 'في مجلد الفيديو: Waaiya';
+
+  @override
+  String get linkSavedAudioDesktop => 'في مجلد الموسيقى: Waaiya';
+
+  @override
+  String get linkShowInFolder => 'إظهار في المجلد';
+
+  @override
+  String get linkSingingNote => 'يُكتم غناء النساء أيضاً، كما في إعداداتك.';
+
+  @override
+  String get singingKeepTitle => 'إبقاء أصوات الغناء (تجريبي)';
+
+  @override
+  String get singingKeepBody =>
+      'تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.';
+
+  @override
+  String get singingKeepNoModel =>
+      'هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.';
+
+  @override
+  String get fixFilterAppsTitle => 'تطبيقات تُسمع بلا تصفية';
+
+  @override
+  String get fixFilterAppsBody =>
+      'التطبيقات التي تختارها هنا تُسمع كما هي: بلا تصفية وبلا إسكات. مثلًا: تطبيق مكالمات الفيديو، حتى لا يتأخّر الصوت في المكالمات.';
+
+  @override
+  String get fixAddApp => 'إضافة تطبيق';
+
+  @override
+  String fixRemoveApp(Object app) {
+    return 'إزالة $app';
+  }
+
+  @override
+  String get fixNoApps => 'لم يُختر أي تطبيق.';
+
+  @override
+  String get fixPickTitle => 'اختر تطبيقًا';
+
+  @override
+  String get fixPickEmpty => 'لم يُعثر على تطبيق آخر.';
+
+  @override
+  String get fixPickPlayingDesktop =>
+      'التطبيقات التي تُشغّل صوتًا الآن، والتي اختيرت من قبل.';
+
+  @override
+  String get fixCancel => 'إلغاء';
+
+  @override
+  String get fixBlurAppsTitle => 'تطبيقات بلا تمويه';
+
+  @override
+  String get fixBlurAppsBody =>
+      'لا تغطية ما دام أحد هذه التطبيقات يملأ الشاشة، مثل تطبيق الخرائط أو تطبيق البنك. وتعود التغطية فور مغادرته، أو كلما لم تتيقّن واعية من التطبيق الظاهر.';
+
+  @override
+  String get fixBlurAppsNeedsSetup =>
+      'يحتاج الإعداد لمرة واحدة: من دونه لا تعرف واعية أي تطبيق على الشاشة، فيبقى التمويه في كل مكان.';
+
+  @override
+  String get fixBlurAppsHelperMode =>
+      'مساعد واعية لا يعمل، فلا يمكن معرفة التطبيق الظاهر على الشاشة. يبقى التمويه في كل مكان حتى يُشغَّل المساعد من جديد من صفحة الإعداد.';
+
+  @override
+  String get fixHandTitle => 'تغطية جزء باليد';
+
+  @override
+  String get fixHandBody =>
+      'أثناء عمل التمويه يمكنك تغطية جزء من الشاشة بنفسك، مثل صورة فاتت التمويه: اضغط «تغطية جزء» واسحب إصبعك فوقها. تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.';
+
+  @override
+  String get fixHandNotRunning =>
+      'متاح أثناء عمل التمويه: التصفية تعمل وأحد خيارات التمويه مفعّل.';
+
+  @override
+  String get fixCoverArea => 'تغطية جزء';
+
+  @override
+  String fixRemoveCovers(Object count) {
+    return 'إزالة التغطية اليدوية ($count)';
+  }
+
+  @override
+  String get fixNoteTitle => 'تسجيل خطأ';
+
+  @override
+  String get fixNoteBody =>
+      'حين تخطئ واعية، اضغط على ما حدث، مثل «مرّت موسيقى». تحفظ الملاحظة الوقت والتطبيق والإعدادات، لتساعد على معرفة السبب. وتبقى على هذا الجهاز ولا تُرسَل أبدًا.';
+
+  @override
+  String get fixMissedSound => 'مرّت موسيقى';
+
+  @override
+  String get fixWrongSound => 'حُذف صوت خطأً';
+
+  @override
+  String get fixMissedScreen => 'لم يُغطَّ شيء';
+
+  @override
+  String get fixWrongScreen => 'غُطّي خطأً';
+
+  @override
+  String fixNoted(Object count) {
+    return 'سُجّلت الملاحظة (عدد الملاحظات على هذا الجهاز: $count).';
+  }
+
+  @override
+  String fixNotesCount(Object count) {
+    return 'الملاحظات على هذا الجهاز: $count';
+  }
+
+  @override
+  String get fixNotesShow => 'عرض الملاحظات';
+
+  @override
+  String get fixNotesDelete => 'حذف الملاحظات';
+
+  @override
+  String get fixNotesDeleteAsk => 'حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.';
+
+  @override
+  String get fixNotesTitle => 'ملاحظات الأخطاء';
+
+  @override
+  String get worshipTitle => 'أوقات الصلاة';
+
+  @override
+  String get worshipBody =>
+      'اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.';
+
+  @override
+  String worshipPlace(Object place) {
+    return 'المكان: $place';
+  }
+
+  @override
+  String get worshipPlaceNone => 'المكان: لم يُختر بعد';
+
+  @override
+  String get worshipChoose => 'اختيار';
+
+  @override
+  String get worshipPlaceSearch => 'ابحث عن مدينة';
+
+  @override
+  String get worshipPlaceNoMatch =>
+      'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.';
+
+  @override
+  String get worshipPlaceCustom => 'إدخال الإحداثيات';
+
+  @override
+  String get worshipLat => 'خط العرض (شمال +، جنوب −)';
+
+  @override
+  String get worshipLon => 'خط الطول (شرق +، غرب −)';
+
+  @override
+  String get worshipZone => 'المنطقة الزمنية، مثل Africa/Cairo';
+
+  @override
+  String get worshipCustomInvalid => 'تحقّق من الأرقام ومن المنطقة الزمنية.';
+
+  @override
+  String get worshipPlaceInvalid =>
+      'لا يمكن استخدام هذا المكان. اختره من جديد.';
+
+  @override
+  String worshipMethod(Object method) {
+    return 'طريقة الحساب: $method';
+  }
+
+  @override
+  String get worshipMethodTitle => 'طريقة الحساب';
+
+  @override
+  String get worshipMethodNote =>
+      'اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.';
+
+  @override
+  String worshipAsr(Object rule) {
+    return 'العصر: $rule';
+  }
+
+  @override
+  String get worshipAsrTitle => 'وقت العصر';
+
+  @override
+  String get worshipAsrStandard => 'الجمهور (الشافعي والمالكي والحنبلي)';
+
+  @override
+  String get worshipAsrHanafi => 'الحنفي';
+
+  @override
+  String get worshipMethodMwl => 'رابطة العالم الإسلامي';
+
+  @override
+  String get worshipMethodIsna => 'الجمعية الإسلامية لأمريكا الشمالية (ISNA)';
+
+  @override
+  String get worshipMethodEgypt => 'الهيئة المصرية العامة للمساحة';
+
+  @override
+  String get worshipMethodUmmAlQura => 'أم القرى، مكة المكرمة';
+
+  @override
+  String get worshipMethodKarachi => 'جامعة العلوم الإسلامية، كراتشي';
+
+  @override
+  String get worshipMethodTehran => 'معهد الجيوفيزياء، جامعة طهران';
+
+  @override
+  String get worshipMethodGulf => 'منطقة الخليج';
+
+  @override
+  String get worshipMethodKuwait => 'الكويت';
+
+  @override
+  String get worshipMethodQatar => 'قطر';
+
+  @override
+  String get worshipMethodSingapore => 'سنغافورة (المجلس الإسلامي MUIS)';
+
+  @override
+  String get worshipMethodTurkey => 'تركيا (رئاسة الشؤون الدينية)';
+
+  @override
+  String get worshipMethodFrance => 'فرنسا (اتحاد المنظمات الإسلامية، 12°)';
+
+  @override
+  String get worshipMethodMorocco => 'المغرب (وزارة الأوقاف)';
+
+  @override
+  String get worshipMethodIndonesia => 'إندونيسيا (وزارة الشؤون الدينية)';
+
+  @override
+  String get worshipMethodMalaysia => 'ماليزيا (JAKIM)';
+
+  @override
+  String get worshipMethodDubai => 'دبي';
+
+  @override
+  String get worshipToday => 'اليوم';
+
+  @override
+  String get worshipNoTimes =>
+      'لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.';
+
+  @override
+  String get worshipSilentTitle => 'صامت في أوقات الصلاة';
+
+  @override
+  String get worshipSilentBody =>
+      'عند كل وقت صلاة يصبح الهاتف صامتًا («عدم الإزعاج») للدقائق المحدّدة أدناه، ثم يعود كما كان. مثلًا: من الظهر الساعة 12:00 حتى 12:20.';
+
+  @override
+  String worshipSilentMinutes(Object minutes) {
+    return 'مدة الصمت: $minutes دقيقة';
+  }
+
+  @override
+  String get worshipMuteTitle => 'كتم الوسائط عند الأذان';
+
+  @override
+  String get worshipMuteBody =>
+      'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.';
+
+  @override
+  String worshipMuteMinutes(Object minutes) {
+    return 'مدة الكتم: $minutes دقيقة';
+  }
+
+  @override
+  String get worshipMinutesTitle => 'المدة';
+
+  @override
+  String worshipMinutesOption(Object minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get worshipNeedPlace => 'اختر المكان أولاً.';
+
+  @override
+  String worshipNext(Object prayer, Object time) {
+    return 'التالي: $prayer الساعة $time';
+  }
+
+  @override
+  String worshipSilentNow(Object time) {
+    return 'صامت حتى $time.';
+  }
+
+  @override
+  String worshipMutedNow(Object time) {
+    return 'الوسائط مكتومة حتى $time.';
+  }
+
+  @override
+  String get worshipDndNeeded =>
+      'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.';
+
+  @override
+  String get worshipAllow => 'السماح';
+
+  @override
+  String get worshipExactNeeded =>
+      '«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.';
+
+  @override
+  String get worshipNotificationsNeeded =>
+      'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.';
+
+  @override
+  String get worshipTonesTitle => 'نغمة رنين وصوت إشعارات بسيطان';
+
+  @override
+  String get worshipTonesBody =>
+      'لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:';
+
+  @override
+  String worshipToneRing(Object number) {
+    return 'نغمة رنين بسيطة $number';
+  }
+
+  @override
+  String worshipToneNotification(Object number) {
+    return 'صوت إشعار بسيط $number';
+  }
+
+  @override
+  String get worshipTonePlay => 'تشغيل';
+
+  @override
+  String get worshipToneSet => 'استخدام';
+
+  @override
+  String get worshipToneInUse => 'مستخدَمة';
+
+  @override
+  String get worshipToneDone => 'تم.';
+
+  @override
+  String get worshipTonePermission =>
+      'اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.';
+
+  @override
+  String get worshipToneFailed =>
+      'لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».';
+
+  @override
+  String get worshipOpenSound => 'فتح إعدادات الصوت';
+
+  @override
+  String get worshipSmsTitle => 'الرد على المكالمات برسالة أثناء الصلاة';
+
+  @override
+  String get worshipSmsBody =>
+      'في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبداً إلى الأرقام المخفية أو القصيرة.';
+
+  @override
+  String worshipSmsDelay(Object seconds) {
+    return 'بعد: $seconds ثانية من الرنين';
+  }
+
+  @override
+  String get worshipSmsDelayTitle => 'ثوانٍ من الرنين قبل الرسالة';
+
+  @override
+  String worshipSmsSecondsOption(Object seconds) {
+    return '$seconds ثانية';
+  }
+
+  @override
+  String worshipSmsText(Object text) {
+    return 'الرسالة: $text';
+  }
+
+  @override
+  String get worshipSmsTextTitle => 'رسالتك';
+
+  @override
+  String get worshipSmsTextDefault => 'استخدام الرسالة الافتراضية';
+
+  @override
+  String get worshipSmsCost =>
+      'كل رد رسالة عادية من شريحتك بسعر باقتك. ولا يُرسل شيء أثناء التجوال.';
+
+  @override
+  String get worshipSmsRoaming => 'أنت في التجوال الآن: لن تُرسل رسائل.';
+
+  @override
+  String get worshipSmsLogTitle => 'الردود المرسلة (محفوظة على هذا الهاتف فقط)';
+
+  @override
+  String get worshipContinue => 'متابعة';
+
+  @override
+  String get worshipWhyDnd =>
+      'لجعل الهاتف صامتاً في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.';
+
+  @override
+  String get worshipWhyExact =>
+      'للعمل في الوقت تماماً، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.';
+
+  @override
+  String get worshipWhyNotifications =>
+      'اسمح بالإشعارات لترى كل تغيير وتستطيع التراجع عنه.';
+
+  @override
+  String get worshipWhyWrite =>
+      'لتغيير نغمة الرنين أو صوت الإشعارات، اسمح لواعية بتعديل إعدادات النظام في الصفحة التالية.';
+
+  @override
+  String get worshipWhyPhone =>
+      'لمعرفة أن مكالمة ترنّ ومعرفة رقمها، تحتاج واعية إذنَي «الهاتف» و«سجلّ المكالمات». لا يخرج شيء من الهاتف إلا ردّك.';
+
+  @override
+  String get worshipWhySms =>
+      'لإرسال ردّك، تحتاج واعية إذن إرسال الرسائل. ولا ترسل إلا هذا الرد، مرة واحدة على الأكثر لكل رقم في كل صلاة.';
+
+  @override
+  String get worshipMissingDnd =>
+      'لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفاً.';
+
+  @override
+  String get worshipMissingPhone =>
+      'لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفاً.';
+
+  @override
+  String get worshipMissingSms =>
+      'لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفاً.';
+
+  @override
+  String get worshipTryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get protectTitle => 'حماية في لحظات الضعف';
+
+  @override
+  String get protectBody =>
+      'للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.';
+
+  @override
+  String protectDelay(Object value) {
+    return 'الانتظار قبل الإيقاف: $value';
+  }
+
+  @override
+  String get protectDelayTitle => 'الانتظار قبل الإيقاف';
+
+  @override
+  String get protectDelayBody =>
+      'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.';
+
+  @override
+  String get protectDelayOff => 'بلا انتظار';
+
+  @override
+  String get protectDelay1m => 'دقيقة واحدة';
+
+  @override
+  String get protectDelay5m => '٥ دقائق';
+
+  @override
+  String get protectDelay15m => '١٥ دقيقة';
+
+  @override
+  String get protectDelay30m => '٣٠ دقيقة';
+
+  @override
+  String get protectDelay1h => 'ساعة واحدة';
+
+  @override
+  String get protectDelay4h => '٤ ساعات';
+
+  @override
+  String get protectDelay24h => '٢٤ ساعة';
+
+  @override
+  String protectDelayOther(Object minutes) {
+    return '$minutes دقيقة';
+  }
+
+  @override
+  String get protectPinNone => 'الرمز: غير موضوع';
+
+  @override
+  String get protectPinIsSet => 'الرمز: موضوع';
+
+  @override
+  String get protectPinSet => 'ضع رمزًا';
+
+  @override
+  String get protectPinRemove => 'احذف';
+
+  @override
+  String get protectPinBody =>
+      'مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.';
+
+  @override
+  String get protectPinForgot =>
+      'اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.';
+
+  @override
+  String get protectPinTitle => 'أدخل الرمز';
+
+  @override
+  String get protectPinNewTitle => 'اختر رمزًا';
+
+  @override
+  String get protectPinChangeTitle => 'غيِّر الرمز';
+
+  @override
+  String get protectPinCurrent => 'الرمز الحالي';
+
+  @override
+  String get protectPinNew => 'الرمز الجديد (من ٤ إلى ٨ أرقام)';
+
+  @override
+  String get protectPinAgain => 'الرمز الجديد مرة أخرى';
+
+  @override
+  String get protectPinBad => 'استعمل من ٤ إلى ٨ أرقام.';
+
+  @override
+  String get protectPinDiffer => 'الرمزان الجديدان غير متطابقين.';
+
+  @override
+  String protectPinWrong(Object count) {
+    return 'رمز خاطئ. بقيت $count محاولات قبل التوقّف قليلًا.';
+  }
+
+  @override
+  String protectLocked(Object time) {
+    return 'محاولات خاطئة كثيرة. حاول مرة أخرى عند $time.';
+  }
+
+  @override
+  String get protectOk => 'حسنًا';
+
+  @override
+  String get protectCancel => 'إلغاء';
+
+  @override
+  String get protectCancelChange => 'ألغِ التغيير';
+
+  @override
+  String get protectConfirm => 'أكِّد';
+
+  @override
+  String protectPending(Object time, Object what) {
+    return '$what: ينتظر حتى $time، ثم أكِّده في «الإعدادات».';
+  }
+
+  @override
+  String protectReady(Object time, Object what) {
+    return '$what: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل $time، وإلا فلن يتغيّر شيء.';
+  }
+
+  @override
+  String get protectWaitTitle => 'هذا التغيير ينتظر';
+
+  @override
+  String protectWaitBody(Object time, Object what) {
+    return '$what لن يحدث الآن. عند $time، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.';
+  }
+
+  @override
+  String get protectWaitStart => 'ابدأ الانتظار';
+
+  @override
+  String protectAlreadyWaiting(Object time) {
+    return 'ينتظر بالفعل حتى $time.';
+  }
+
+  @override
+  String protectStarted(Object time) {
+    return 'ينتظر حتى $time، ثم أكِّده في «الإعدادات».';
+  }
+
+  @override
+  String protectTomorrow(Object time) {
+    return 'غدًا عند $time';
+  }
+
+  @override
+  String get protectHeldBack =>
+      'ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.';
+
+  @override
+  String get protectLimits =>
+      'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+
+  @override
+  String get protectLimitsDesktop =>
+      'ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+
+  @override
+  String get protectLimitsWindows =>
+      'ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+
+  @override
+  String get protectWhatStop => 'إيقاف التصفية';
+
+  @override
+  String protectWhatOff(Object name) {
+    return 'إطفاء: $name';
+  }
+
+  @override
+  String protectWhatOn(Object name) {
+    return 'تشغيل: $name';
+  }
+
+  @override
+  String protectWhatApps(Object name) {
+    return 'إضافة تطبيق إلى: $name';
+  }
+
+  @override
+  String get protectWhatStrictness => 'جعل التغطية أقل صرامة';
+
+  @override
+  String get protectWhatGender => 'تغيير من يستعمل واعية';
+
+  @override
+  String protectWhatDelay(Object value) {
+    return 'تغيير الانتظار قبل الإيقاف إلى: $value';
+  }
+
+  @override
+  String get protectWhatPinChange => 'تغيير الرمز';
+
+  @override
+  String get protectWhatPinClear => 'حذف الرمز';
+
+  @override
+  String get protectWhatSetting => 'تغيير إعداد';
+
+  @override
+  String get onboardBodyDesktop =>
+      'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.';
 }

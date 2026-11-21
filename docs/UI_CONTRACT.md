@@ -81,6 +81,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `blur.error` | Map? | Desktop: `{code, detail}` from the blur helper. `no_capture`, `no_overlay`, `models_missing`, `failing` (detail = the helper's reason, English, shown under the translated status), `share_dialog` (Wayland: the screen-sharing dialog waits for the user; no detail), `exited` (the helper stopped by itself; detail = exit code and its last lines). Null otherwise |
 | `models.detector` | bool | The women's-singing detector is bundled |
 | `capabilities` | Map<String,bool> | What this platform offers, below |
+| `linkSave` | Map | Desktop "Save without music" (capability `linkSave`): `phase` (`IDLE`, `DOWNLOADING`, `FILTERING`, `DONE`, `FAILED`), `title`, `progress` (0..1 within the phase, negative: unknown), `isVideo`, `error` (`{code, detail}`: `cancelled`, `failed` with the tools' last lines, or a link code), `path` (done: the saved file). Android: always idle (its save runs in the native screen) |
 
 Capabilities (the UI hides what is false):
 
@@ -91,7 +92,9 @@ Capabilities (the UI hides what is false):
 | `captureConsent` (Android asks to share the screen at start) | true | false |
 | `screenBlur` (blur card, and "who is left uncovered" inside it, the only place it is shown) | true | Linux: true when the bundle has `engine/build/im-blur` and the three models. Windows: false (later: capture + overlay), so the strictness row is not shown anywhere |
 | `blurStandalone` (the blur runs while a blur option is on, filtering on or off; the card's texts say so) | false (the blur runs while filtering: it shares the screen capture) | Linux with the blur |
-| `links` (open/share a link screen) | true | false (later: `yt-dlp` + `cli/im-process`) |
+| `links` (the Links page) | true | Windows with the filter; Linux once its bundle has the link tools |
+| `linkPage` (the page is drawn in Flutter: `resolveLink`, `watchLink`, ... instead of `openLinkScreen`) | false | true |
+| `linkSave` ("Save without music" on that page) | false (the native screen saves) | Windows zip build: true when `engine\links\{yt-dlp,qjs,ffmpeg}.exe` and `engine\im-process.exe` are there. Microsoft Store package: false (watch only; `make_msix.ps1` leaves the tools out) |
 | `womenSinging` | true | only when the engine bundles the detector (without it the engine mutes all voice while the option is on) |
 | `autostart` (start at login) | false | Linux with the bundled engine |
 
@@ -130,7 +133,11 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS` when Developer options are on, else `ACTION_DEVICE_INFO_SETTINGS` (About phone, to turn them on). From the guide. | `unsupported` |
 | `openOverlaySettings` | none | null | Android's "Display over other apps" page | `unsupported` |
 | `setLanguage` | `{tag: "ar"\|"en"}` | null | Saved natively for the native screens, services and notifications (`Lang`); no activity restart, Flutter switches in place | JSON file |
-| `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` (later) |
+| `openLinkScreen` | none | null | Starts the native `LinkActivity` | `unsupported` |
+| `resolveLink` | `{url}` | `{url, title, site, durationSec, isLive, hasVideo, audioOnly}` | `unsupported` | `yt-dlp -J` (`desktop/lib/links.dart`); without the save tools only the link's host. Errors: `invalid_url`, `login`, `limited`, `unsupported_site`, `playlist`, `no_format`, `failed` |
+| `watchLink` | `{url}` | null | `unsupported` | Starts the filter if needed, waits until it filters, then opens the link in the default browser; `filter_failed` instead of ever opening it unfiltered |
+| `saveLink` | `{url}` | null | `unsupported` | Resolves, then saves in the background (state in `linkSave`): yt-dlp downloads, `ffmpeg` -> `im-process --raw` (women's singing when on, fail-closed) -> `ffmpeg`, then `Videos\Waaiya` / `Music\Waaiya`. `busy`, `live`, link codes |
+| `cancelLinkSave`, `openSavedLink`, `showSavedLink` | none | null | `unsupported` | Stops the save (nothing kept); plays the saved file; shows it in Explorer |
 | `getLicences` | none | `{notice, docs: [{label, file}]}` | Assets copied at build time (`copyLicences`) | Files next to the app, else a link to the repository |
 | `getLicenceText` | `{file}` | String | One asset from `docs` | idem |
 | `diagnosticsReport` | none | String | `Diagnostics.report`: what the app sees on this phone (plain text, English) | Linux: version, session, settings, filter and blur state, `waaiya status`, the service journal and the end of `filter.log` |
@@ -199,8 +206,9 @@ Flutter's own `Clipboard`; it needs no backend method.
   screens for 4 s only). The Wayland
   screen-sharing permission is kept in `$XDG_CONFIG_HOME/waaiya/screencast-restore-token`. `blur.touchPassThrough`
   and `blur.overlayAllowed` are always true there (no permission to ask; clicks pass through the covers).
-- No Shizuku / adb setup, no capture consent, no link screen, and no screen blur on Windows yet: their capabilities
-  are false and their methods throw `unsupported`. A desktop setup checklist (for example the virtual audio device on Windows)
+- No Shizuku / adb setup and no capture consent: their capabilities are false and their methods throw
+  `unsupported`. Links is a Flutter page (`linkPage`), not a native screen. Watch opens the browser with the system
+  filter on (it covers every app) instead of Android's in-app player. A desktop setup checklist (for example the virtual audio device on Windows)
   will add its own `setup.*` keys and capability when it exists.
 - Manual audio checks (no sound server on the build machine): `desktop/TESTING.md`.
 
@@ -230,3 +238,18 @@ Texts: Android's `res/values*/strings.xml` stay the source of every text. Flutte
 Add keys, never rename them; a backend that does not know a key leaves it out and the UI uses the default. Change
 this file, `ui/lib/src/backend.dart`, `ui/lib/src/channel_backend.dart`,
 `android/app/src/main/java/org/islamicmute/app/UiBridge.kt` and `desktop/lib/desktop_backend.dart` together.
+
+## 0.2.13 features (docs/FEATURES_CONTRACT.md)
+
+- Settings added: `filter_off_apps`, `blur_off_apps` (comma-separated), `keep_singing`, `prayer_silent`,
+  `prayer_silent_minutes` (5..90), `prayer_adhan_mute`, `prayer_adhan_minutes` (1..30), `prayer_place`,
+  `prayer_method` (0..15), `prayer_asr` (0..1), `prayer_sms_reply`, `prayer_sms_delay_seconds` (3..60),
+  `prayer_sms_text`, `protect_delay_minutes` (0..1440). `SettingKeys.ranges` holds every
+  integer range.
+- Snapshot key `features`: `{fix, worship, protect, singing}`, one map per feature, filled only by that feature.
+- Method `<feature>.<name>` (`WaaiyaBackend.invoke`), routed on Android by `UiBridge` to the feature's Kotlin object.
+- New error code `protected`: the waiting period or the PIN holds a change back (`setSetting`, `stopFilter`). Its
+  message is JSON: `{need: pin|wait|pin_wait|waiting, what, value, delayMinutes, dueAt?}`; Flutter answers with
+  `protect.request {what, value?, pin?}` (`what` = a setting key or `stop`), `protect.confirm`, `protect.cancel`,
+  `protect.setPin {pin, oldPin?}`, `protect.clearPin`, `protect.promptShown`. `features.protect`: `pinSet`,
+  `delayMinutes`, `pending {what, value, dueAt, confirmUntil, ready}?`, `lockedUntil?`, `prompt?`.
