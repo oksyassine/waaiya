@@ -14,6 +14,7 @@ Thank you for helping. Bug reports, translations, tests on real devices and code
 ```bash
 scripts/fetch_deps.sh                 # ONNX Runtime 1.19.2 and the default model, with checksums
 make                                  # Linux engine, CLI, LADSPA plugin, im-pulse
+(cd ui_module && flutter pub get)     # once: the Android main screen is Flutter (ui/, Flutter 3.41+)
 cd android && ./gradlew assembleDebug # Android (JDK 17, Android SDK + NDK 27.1, Python 3.11 on PATH)
 ```
 
@@ -37,4 +38,5 @@ cd android && ./gradlew assembleDebug # Android (JDK 17, Android SDK + NDK 27.1,
 - Keep each pull request to one change, and say how you tested it: which device or OS, and what you heard or
   measured.
 - CI (Android build and lint, Linux engine build and smoke test) must pass.
-- By contributing you agree that your contribution is licensed under the GNU Affero General Public License, version 3 or any later version (`LICENSE`).
+- By contributing you agree that your contribution is licensed under the GNU Affero General Public License,
+  version 3 or any later version (`LICENSE`).

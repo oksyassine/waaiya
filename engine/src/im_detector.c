@@ -1,5 +1,6 @@
 /* Women's-singing detector: streaming power-spectrum front end + ONNX classifier. See im_detector.h. */
 #include "im_detector.h"
+#include "im_path.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -171,7 +172,7 @@ im_detector *im_detector_create(const OrtApi *api, OrtEnv *env, const char *path
         for (int i = 0; i < 3; i++)
             if (o[i]) api->ReleaseStatus(o[i]);
     }
-    st = api->CreateSession(env, path, so, &d->sess);
+    st = im_create_session(api, env, path, so, &d->sess);
     api->ReleaseSessionOptions(so);
     if (st) { fail(err, errlen, "cannot load", api->GetErrorMessage(st)); api->ReleaseStatus(st); goto bad; }
 

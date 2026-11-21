@@ -80,12 +80,30 @@ switch, and `emu_check.py` on Android 11 and 15 emulators with the setup missing
 Not provable without a phone, so still open: how many real phones need mono, sound quality by ear, Bluetooth.
 The diagnostics report is how those answers will come back.
 
+## Built after 0.2.12 (PR #14, branch `features`): items 2, 4, 5, 6, 8, 9
+
+Each feature is a separate part (docs/FEATURES_CONTRACT.md) with its own tests; off by default unless said.
+
+| Item | What the user gets | Where it stops |
+|---|---|---|
+| 5. Fix mistakes on the spot | Filter off for chosen apps (left out of the capture, not muted; Linux: their streams stay on the real output); blur off for chosen apps (only while a fresh reading shows that app alone on screen: DUMP or Waaiya's helper; otherwise the covers stay); cover an area by hand (a picker, opaque cover until removed or the blur stops); local "missed" / "covered wrongly" notes the user can share himself | The foreground app cannot be read without the setup or the helper; the accessibility build does not read app switches |
+| 6. Keep singing (test) | voice_v1 (fp16, 4.4 MB): instruments removed, singing and recitation kept (-1.8 / -2.7 dB instead of -24 / -13), music-only leak -55 dB; switches live while filtering; Android and Linux (eval/results/voice_v1_engine.md) | Arabic speech gets about 18 dB of suppression instead of 21; trained on Quran data of unknown licence (THIRD_PARTY_LICENSES.md section 4, published by the owner's decision) |
+| 2. Battery and heat | The diagnostics report gives battery % per hour while filtering, battery temperature, thermal status, CPU % of one core, the models and mono/stereo | Per-phone figures still need real phones |
+| 4. Waiting period and PIN | A waiting period (1 min to 24 h) before any switch-off or weakening takes effect, confirmed afterwards; a local PIN (PBKDF2) for parents; every Stop path (screen, notification, tile, shortcut) goes through one guard; a reboot or a clock change never shortens the wait; desktop too | Force-stop, uninstall, clearing data and Android's own settings cannot be blocked (said in the card); the `waaiya` command line on desktop |
+| 8. Worship helpers | Prayer times on the phone (365 cities or coordinates, 16 methods, Hanafi Asr, checked against official timetables within 2 min), silent (Do Not Disturb) from each prayer time, media muted at the adhan, an SMS reply to unanswered calls during prayer (custom text, after N s, once per number) | Permissions are asked only when an option is turned on; the SMS reply is not in the Play build (Play forbids call-log and SMS permissions for such apps) |
+| 9. Plain tones | Six plain tones (own work, CC0) to preview and set as ringtone or notification sound | Phones that refuse the system-settings permission get the Sound settings page |
+
+Also: privacy page (`docs/PRIVACY.md`), build-it-yourself notes (`docs/REPRODUCIBLE_BUILDS.md`), distribution plan and
+Play build options (`docs/DISTRIBUTION.md`).
+
 ## Next, in order
 
 1. **Setup without a second app.** Today the setup needs Shizuku or a computer; it is longer than any
    competitor's, and a crash or confusion during first-run setup is a known reason people give up (finding 3.16).
-   - a. Pair with Android's wireless debugging from inside Waaiya (Android 11+) and run the two grants directly.
-     Shizuku stays optional, for the touch-through blur layer. Large: needs the ADB pairing protocol in the app.
+   - a. Done (0.2.10): pair with Android's wireless debugging from inside Waaiya (Android 11+) and run the grants
+     directly. 0.2.11: the same connection starts Waaiya's own cover helper, so Shizuku is no longer needed for the
+     touch-through blur layer either; it stays an alternative (rooted Android 10). The helper must be started
+     again after each restart (one tap); a start at boot is not done.
    - b. A "use a computer" page that does the grant from Chrome over USB (WebUSB), no ADB install. Medium.
 2. **A lighter live model, and measured battery and heat** (need 3: the most common complaint about every similar
    tool). Benchmark model variants on ARM through the diagnostics numbers; try the two channels on two threads
@@ -100,18 +118,25 @@ The diagnostics report is how those answers will come back.
 6. **Keep singing as an option** (need 1, lectures with a nasheed under them [S6]): finish `voice_v1`; a setting,
    since what counts as acceptable differs.
 7. **Proof of the privacy claim** (need 5): a plain privacy page, a test that the filter and blur paths open no
-   network connection, reproducible-build notes. Competitors' store labels contradict their claims
+   network connection, reproducible-build notes. Done in 0.2.12: `linux/test_no_network.sh` (CI) runs the file,
+   stream and live filters and the detector with every internet socket refused and logged, and
+   `NoNetworkTest.kt` keeps network APIs out of Android's filter, muter and blur code (only the link screen and the
+   setup may use them); the Linux blur helper runs its X11 end-to-end test the same way. The privacy page
+   (`docs/PRIVACY.md`, English and Arabic) and the build-it-yourself notes (`docs/REPRODUCIBLE_BUILDS.md`) are written;
+   still open: hosting the page at a short URL, and checking that two machines build identical APKs. Competitors' store labels contradict their claims
    (finding 2.6); this is cheap and sets Waaiya apart.
 8. **Worship helpers that reuse what Waaiya already holds** (needs 9, 16): silent at prayer times and an optional
    "mute media at the adhan", computed on the phone from a city the user picks, each action announced in a
    notification ([W3]). Off by default. Well served by other apps, so small scope only.
 9. **Plain tones helper** (need 15): one screen that sets a plain ringtone and notification tone. Ring and
    notification sound cannot be filtered, only replaced.
-10. **More languages** (need 11): Urdu, Indonesian, Malay, Turkish, French, Persian. Each needs a native reviewer;
-    "Arabic that needs fixing" is itself a complaint (finding 3.15).
-11. **Distribution**: decide on Google's developer verification (live in Indonesia, Brazil, Singapore, Thailand
-    since 2026-09-30, global in 2027 [D5]; it needs an identity check); a Play build without the link
-    downloader's self-update; F-Droid.
+10. **More languages** (need 11): French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay are in since 0.2.12
+    as machine translations, with Android's own Settings wording and pictures of the setup in each. Each still
+    needs a native reviewer; "Arabic that needs fixing" is itself a complaint (finding 3.15).
+11. **Distribution** (`docs/DISTRIBUTION.md`): decide on Google's developer verification (live in Indonesia, Brazil,
+    Singapore, Thailand since 2026-09-30, global in 2027 [D5]; it needs an identity check). Ready: a Play build
+    option without the link downloader's self-update (`-PimPlay`) and one without links (`-PimNoLinks`), fastlane
+    texts for IzzyOnDroid (en, ar, fr). F-Droid's main repository needs builds from source of ONNX Runtime.
 12. **Other platforms**: Windows engine and blur; Linux blur on real Wayland sessions; Android TV (need 8,
     [G6]); iPhone in-app player and Safari extension (need 12).
 
@@ -120,23 +145,34 @@ The diagnostics report is how those answers will come back.
 Android:
 - When the capture ends by itself the blur stops too, so the screen is uncovered while the sound stays silent
   (see "Done in 0.2.10"). Keeping a cover would need its own decision: nothing can be analysed then.
-- `im_engine_set_enabled(e, 0)` (the Linux LADSPA plugin's A/B switch) passes the original through even on an
-  engine whose model failed to load. Android never calls it.
+- Fixed (0.2.12): `im_engine_set_enabled(e, 0)` (the Linux LADSPA plugin's A/B switch) passed the original
+  through on an engine whose model failed to load; a failed engine now ignores it and stays silent
+  (`engine/test/test_failclosed.c`).
 
-Linux and desktop (branch `flutter-ui`):
-- Nudity cover over a still image lasts 3 s, then stays off until a pixel changes (the same last-frame gap as
-  fixed on Android). The other half, the cover lifting every 3 s because it is part of the capture, is fixed in
-  the shared tracker (`full_max_hold_ms`, 0.2.10); the desktop app still has to take that engine.
-- A second monitor that is not shared, or whose stream dies, has no covers while the state says on.
-- Switching the women's-singing setting restarts the service and plays unfiltered sound for a few seconds.
-- Streams that the sound server moves back to the real output are not moved again.
-- A permanent blur failure covers every monitor, the app's own window included.
-- A monitor rotated during a frame grab can crash the Wayland helper; GNOME ignores a resolution change.
-- `filter.log` grows without limit; "running" only means the virtual sink exists; the app shows version 0.2.6.
+Linux and desktop (branch `flutter-ui`): the 2026-11-12 audit's items are fixed there, not released yet:
+- Fixed: a nudity cover over a still image came back no more after 3 s (the last frame is now analysed again
+  until every pass ran; test_x11.py checks it with a fake nudity result).
+- Fixed: capture failure is counted per monitor, a closed screen-cast session is reported, and a monitor the
+  blur does not see is said in the app ("a monitor is not covered"). Still open: a monitor plugged in after the
+  share dialog is only reported, not added (turning a blur option off and on asks again).
+- Fixed: the women's-singing switch reloads the filter only (no unfiltered sound); streams the sound server puts
+  back on the real output are moved again every second.
+- Fixed: a permanent blur failure covers the screens for 4 s, then the red bar; the helper is restarted when its
+  capture ends or it hangs.
+- Fixed: the frame grab could read freed memory on a format change; GNOME/XWayland follows a resolution change.
+- Fixed: `filter.log` is bounded; "running" checks the daemon, the filter and its model; the version comes from
+  the build.
+- Not verified on real hardware yet: multi-monitor Wayland (portal) and a resolution change under GNOME are
+  covered by code review and unit tests only; CI runs Xvfb and sway headless with one output.
+- Fixed (0.2.12): a filter that kept crashing between two status polls read as filtering. `waaiya status` now
+  says `restarts: N in the last minute`, and the app shows "The filter stopped with an error" from 3 restarts
+  (`linux/test_daemon_fake.py`, `desktop/test/linux_engine_test.dart`). Open: mono by default (0.2.10) not yet
+  heard on a real sound server. Done in 0.2.10: the stereo and keep-silent switches, "Stop:
+  hear apps unfiltered" while apps are held silent, the desktop notice in Arabic or English.
 
-CI: no release asset holds the women's-singing detector, so release APKs built by CI have no women's-singing
-filter (the build warns) and `test-detector` is skipped there with a notice. The owner decides whether to publish
-`detector_v1.onnx` as a release asset. No test yet covers the blur loop on a device or the link export.
+CI: the women's-singing detector is in the `models-v1` release since 0.2.12 (owner's decision, 2026-11-20); every
+CI build (Linux, Android, Windows, releases) fetches it and fails without it, and `test-detector` runs on Linux and
+Windows. No test yet covers the blur loop on a device or the link export.
 
 ## Not building
 
@@ -154,5 +190,4 @@ filter (the build warns) and `test-detector` is skipped there with a notice. The
 
 - Developer verification: register (identity check) or rely on the advanced install flow.
 - Whether the waiting period (item 4) may delay switching the filter off, or only weakening the blur.
-- Whether to publish the women's-singing detector (`detector_v1.onnx`) as a release asset, so CI-built APKs
-  include it.
+- Decided 2026-11-20: the women's-singing detector is published (`models-v1`), so every build has it.

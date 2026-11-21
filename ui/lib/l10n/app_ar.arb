@@ -1,0 +1,2167 @@
+{
+  "@@locale": "ar",
+  "appName": "واعية",
+  "@appName": {
+    "description": "Android string app_name"
+  },
+  "tagline": "يزيل الآلات الموسيقية من صوت كل التطبيقات، ويُبقي الكلام والتلاوة.",
+  "@tagline": {
+    "description": "Android string tagline"
+  },
+  "onboardTitle": "أهلًا بك",
+  "@onboardTitle": {
+    "description": "Android string onboard_title"
+  },
+  "onboardBody": "تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.",
+  "@onboardBody": {
+    "description": "Android string onboard_body"
+  },
+  "onboardQuestion": "أنا",
+  "@onboardQuestion": {
+    "description": "Android string onboard_question"
+  },
+  "genderMan": "رجل",
+  "@genderMan": {
+    "description": "Android string gender_man"
+  },
+  "genderWoman": "امرأة",
+  "@genderWoman": {
+    "description": "Android string gender_woman"
+  },
+  "onboardWhy": "هذا يحدّد فقط الخيارات الاختيارية التي تظهر لك. مثلًا: «كتم غناء النساء» يظهر للرجال فقط. ويمكنك تغييره لاحقًا.",
+  "@onboardWhy": {
+    "description": "Android string onboard_why"
+  },
+  "stateOnTitle": "التصفية تعمل",
+  "@stateOnTitle": {
+    "description": "Android string state_on_title"
+  },
+  "stateOffTitle": "التصفية متوقفة",
+  "@stateOffTitle": {
+    "description": "Android string state_off_title"
+  },
+  "stateStarting": "جارٍ التشغيل…",
+  "@stateStarting": {
+    "description": "Android string state_starting"
+  },
+  "stateOnDetail": "تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو {delayMs} ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).",
+  "@stateOnDetail": {
+    "description": "Android string state_on_detail",
+    "placeholders": {
+      "delayMs": {
+        "type": "int"
+      }
+    }
+  },
+  "stateOffDetail": "اضغط الزر للتشغيل.",
+  "@stateOffDetail": {
+    "description": "Android string state_off_detail"
+  },
+  "stateModelFailed": "تعذّر تحميل نموذج الصوت، فكُتم الصوت احتياطًا.",
+  "@stateModelFailed": {
+    "description": "Android string state_model_failed"
+  },
+  "stateCaptureDenied": "يلزم إذن الميكروفون لاستقبال صوت التطبيقات الأخرى.",
+  "@stateCaptureDenied": {
+    "description": "Android string state_capture_denied"
+  },
+  "stateStoppedBySystem": "أوقف أندرويد التصفية. اضغط الزر للتشغيل من جديد.",
+  "@stateStoppedBySystem": {
+    "description": "Android string state_stopped_by_system"
+  },
+  "stateSilencedTitle": "توقفت التصفية",
+  "@stateSilencedTitle": {
+    "description": "Android string state_silenced_title"
+  },
+  "stateSilenced": "توقفت التصفية: التطبيقات الأخرى مكتومة. اضغط الزر للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.",
+  "@stateSilenced": {
+    "description": "Android string state_silenced"
+  },
+  "releaseSilence": "إيقاف: سماع التطبيقات دون تصفية",
+  "@releaseSilence": {
+    "description": "Android string release_silence"
+  },
+  "powerStartCd": "تشغيل التصفية",
+  "@powerStartCd": {
+    "description": "Android string power_start_cd"
+  },
+  "powerStopCd": "إيقاف التصفية",
+  "@powerStopCd": {
+    "description": "Android string power_stop_cd"
+  },
+  "captureHint": "سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.",
+  "@captureHint": {
+    "description": "Android string capture_hint"
+  },
+  "needRecordAudio": "تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.",
+  "@needRecordAudio": {
+    "description": "Android string need_record_audio"
+  },
+  "setupBannerTitle": "بقيت خطوة واحدة",
+  "@setupBannerTitle": {
+    "description": "Android string setup_banner_title"
+  },
+  "setupBannerBody": "بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.",
+  "@setupBannerBody": {
+    "description": "Android string setup_banner_body"
+  },
+  "step1Title": "ثبّت Shizuku",
+  "@step1Title": {
+    "description": "Android string step1_title"
+  },
+  "step1Body": "تطبيق مساعد مجاني من متجر Play.",
+  "@step1Body": {
+    "description": "Android string step1_body"
+  },
+  "step1Action": "تحميل Shizuku",
+  "@step1Action": {
+    "description": "Android string step1_action"
+  },
+  "step2Title": "شغّل Shizuku",
+  "@step2Title": {
+    "description": "Android string step2_title"
+  },
+  "step2Body": "يعمل Shizuku عبر الـ Wi‑Fi باستخدام ‏«تصحيح الأخطاء اللاسلكي»‏ في أندرويد. اضغط الزر لترى الخطوات، ثم ارجع إلى هنا.",
+  "@step2Body": {
+    "description": "Android string step2_body"
+  },
+  "step2Action": "فتح Shizuku",
+  "@step2Action": {
+    "description": "Android string step2_action"
+  },
+  "step2Update": "تحديث Shizuku",
+  "@step2Update": {
+    "description": "Android string step2_update"
+  },
+  "step2TooOld": "نسخة Shizuku قديمة. حدّثها من متجر Play.",
+  "@step2TooOld": {
+    "description": "Android string step2_too_old"
+  },
+  "step2Denied": "تم ضبط Shizuku على رفض واعية دائمًا. اسمح لها من قائمة التطبيقات في Shizuku.",
+  "@step2Denied": {
+    "description": "Android string step2_denied"
+  },
+  "step3Title": "امنح الإذن",
+  "@step3Title": {
+    "description": "Android string step3_title"
+  },
+  "step3Body": "ضغطة واحدة، ثم اختر «سماح».",
+  "@step3Body": {
+    "description": "Android string step3_body"
+  },
+  "step3Action": "منح الإذن",
+  "@step3Action": {
+    "description": "Android string step3_action"
+  },
+  "step3Busy": "جارٍ الإعداد…",
+  "@step3Busy": {
+    "description": "Android string step3_busy"
+  },
+  "setupDoneRestart": "تم. أوقف التصفية ثم شغّلها مرة واحدة لتطبيق ذلك.",
+  "@setupDoneRestart": {
+    "description": "Android string setup_done_restart"
+  },
+  "setupFailed": "لم يكتمل الإعداد. التفاصيل:\n{details}",
+  "@setupFailed": {
+    "description": "Android string setup_failed",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "shizukuRefused": "رُفض إذن Shizuku. اضغط الزر للمحاولة مرة أخرى.",
+  "@shizukuRefused": {
+    "description": "Android string shizuku_refused"
+  },
+  "setupSlow": "يستغرق Shizuku وقتًا أطول من المعتاد. انتظر قليلًا: في بعض الهواتف يحتاج مساعده إلى دقيقة ليبدأ أول مرة.",
+  "@setupSlow": {
+    "description": "Android string setup_slow"
+  },
+  "setupTimeout": "لم يُجب Shizuku خلال دقيقتين. افتح Shizuku وتأكد أنه يعمل، ثم اضغط الزر مرة أخرى. إذا اكتمل الإعداد لاحقًا فستتحدّث هذه الشاشة وحدها.",
+  "@setupTimeout": {
+    "description": "Android string setup_timeout"
+  },
+  "setupRefusedXiaomi": "رفض الهاتف منح الأذونات. في هواتف شاومي وريدمي وبوكو، فعّل ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ في ‏«خيارات المطور»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم حاول مرة أخرى.",
+  "@setupRefusedXiaomi": {
+    "description": "Android string setup_refused_xiaomi"
+  },
+  "setupRefusedColoros": "رفض الهاتف منح الأذونات. في هواتف أوبو وون بلس وريلمي، فعّل في ‏«خيارات المطور»‏ ‏«تعطيل مراقبة الأذونات»‏ (اسمه في أحدث الإصدارات ‏«تعطيل تحسين النظام»‏، وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية: Disable permission monitoring أو Disable system optimization). ثم حاول مرة أخرى.",
+  "@setupRefusedColoros": {
+    "description": "Android string setup_refused_coloros"
+  },
+  "setupNoteXiaomi": "شاومي وريدمي وبوكو: إذا لم يظهر في الإشعار مكان لكتابة الرمز، فاختر نمط الإشعارات ‏«Android»‏ في إعدادات الإشعارات، أو اكتب الرمز في واعية مع تقسيم الشاشة.",
+  "@setupNoteXiaomi": {
+    "description": "Android string setup_note_xiaomi"
+  },
+  "stepDoneCd": "تم",
+  "@stepDoneCd": {
+    "description": "Android string step_done_cd"
+  },
+  "stepTodoCd": "الخطوة {step}",
+  "@stepTodoCd": {
+    "description": "Android string step_todo_cd",
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "computerToggle": "استخدم حاسوبًا بدلًا من ذلك",
+  "@computerToggle": {
+    "description": "Android string computer_toggle"
+  },
+  "computerBody": "فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:",
+  "@computerBody": {
+    "description": "Android string computer_body"
+  },
+  "copy": "نسخ",
+  "@copy": {
+    "description": "Android string copy"
+  },
+  "copied": "تم النسخ",
+  "@copied": {
+    "description": "Android string copied"
+  },
+  "computerNote": "السطر الثاني اختياري: يوقف سؤال مشاركة الشاشة عند كل تشغيل.",
+  "@computerNote": {
+    "description": "Android string computer_note"
+  },
+  "settingsTitle": "الإعدادات",
+  "@settingsTitle": {
+    "description": "Android string settings_title"
+  },
+  "settingSilenceTitle": "كتم التطبيقات التي تمنع التصفية",
+  "@settingSilenceTitle": {
+    "description": "Android string setting_silence_title"
+  },
+  "settingSilenceBody": "مستحسن. بعض التطبيقات لا تسمح بتصفية صوتها، فيُكتم بدل أن تمرّ الموسيقى.",
+  "@settingSilenceBody": {
+    "description": "Android string setting_silence_body"
+  },
+  "settingHoldSilenceTitle": "إبقاء التطبيقات صامتة إذا توقفت التصفية من تلقاء نفسها",
+  "@settingHoldSilenceTitle": {
+    "description": "Android string setting_hold_silence_title"
+  },
+  "settingHoldSilenceBody": "مستحسن. إذا أنهى أندرويد التصفية (لا أنت)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية. يحتاج إلى الإعداد لمرة واحدة.",
+  "@settingHoldSilenceBody": {
+    "description": "Android string setting_hold_silence_body"
+  },
+  "settingStereoTitle": "صوت ستيريو",
+  "@settingStereoTitle": {
+    "description": "Android string setting_stereo_title"
+  },
+  "settingStereoBody": "مُطفأ: صوت أحادي (مونو)، يستهلك نحو نصف البطارية ويتابع على هواتف أكثر. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الهاتف أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.",
+  "@settingStereoBody": {
+    "description": "Android string setting_stereo_body"
+  },
+  "settingSingingTitle": "كتم غناء النساء",
+  "@settingSingingTitle": {
+    "description": "Android string setting_singing_title"
+  },
+  "settingSingingBody": "مثلًا: تُكتم أغنية تغنّيها امرأة، أما امرأة تُلقي درسًا أو كلمة فيبقى صوتها مسموعًا.",
+  "@settingSingingBody": {
+    "description": "Android string setting_singing_body"
+  },
+  "settingSingingNoModel": "هذه النسخة بلا كاشف للغناء، لذا تُكتم كل الأصوات ما دام هذا الخيار مفعّلًا.",
+  "@settingSingingNoModel": {
+    "description": "Android string setting_singing_no_model"
+  },
+  "settingRestart": "أوقف التصفية ثم شغّلها لتطبيق التغييرات.",
+  "@settingRestart": {
+    "description": "Android string setting_restart"
+  },
+  "settingGenderTitle": "أنا",
+  "@settingGenderTitle": {
+    "description": "Android string setting_gender_title"
+  },
+  "change": "تغيير",
+  "@change": {
+    "description": "Android string change"
+  },
+  "playerTitle": "فيديو بتزامن تام",
+  "@playerTitle": {
+    "description": "Android string player_title"
+  },
+  "playerBody": "شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.",
+  "@playerBody": {
+    "description": "Android string player_body"
+  },
+  "licences": "تراخيص المصادر المفتوحة",
+  "@licences": {
+    "description": "Android string licences"
+  },
+  "licencesIntro": "واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث. الشيفرة المصدرية: https://github.com/oksyassine/waaiya",
+  "@licencesIntro": {
+    "description": "Android string licences_intro"
+  },
+  "licencesCc": "رخصة المشاع الإبداعي - النسبة 4.0 (بيانات التدريب): https://creativecommons.org/licenses/by/4.0/",
+  "@licencesCc": {
+    "description": "Android string licences_cc"
+  },
+  "licencesFull": "النصوص الكاملة",
+  "@licencesFull": {
+    "description": "Android string licences_full"
+  },
+  "back": "رجوع",
+  "@back": {
+    "description": "Android string back"
+  },
+  "linkEntryTitle": "فتح رابط",
+  "@linkEntryTitle": {
+    "description": "Android string link_entry_title"
+  },
+  "linkEntryBody": "الصق رابطًا من YouTube أو TikTok أو Instagram لمشاهدته أو حفظه بلا موسيقى.",
+  "@linkEntryBody": {
+    "description": "Android string link_entry_body"
+  },
+  "linkTitle": "فتح رابط",
+  "@linkTitle": {
+    "description": "Android string link_title"
+  },
+  "linkHint": "https://… (YouTube، TikTok، Instagram…)",
+  "@linkHint": {
+    "description": "Android string link_hint"
+  },
+  "linkFieldLabel": "رابط الفيديو أو الصوت",
+  "@linkFieldLabel": {
+    "description": "Android string link_field_label"
+  },
+  "linkPaste": "لصق",
+  "@linkPaste": {
+    "description": "Android string link_paste"
+  },
+  "linkOpen": "فتح",
+  "@linkOpen": {
+    "description": "Android string link_open"
+  },
+  "linkResolving": "جارٍ فتح الرابط…",
+  "@linkResolving": {
+    "description": "Android string link_resolving"
+  },
+  "linkMeta": "{first} · {second}",
+  "@linkMeta": {
+    "description": "Android string link_meta",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "linkWatch": "مشاهدة بلا موسيقى",
+  "@linkWatch": {
+    "description": "Android string link_watch"
+  },
+  "linkSave": "حفظ بلا موسيقى",
+  "@linkSave": {
+    "description": "Android string link_save"
+  },
+  "linkListen": "استماع بلا موسيقى",
+  "@linkListen": {
+    "description": "Android string link_listen"
+  },
+  "linkAudioOnly": "لا يمكن فتح صورة هذا المقطع بعد: صوته فقط.",
+  "@linkAudioOnly": {
+    "description": "Android string link_audio_only"
+  },
+  "linkDownloading": "جارٍ التنزيل…",
+  "@linkDownloading": {
+    "description": "Android string link_downloading"
+  },
+  "linkFiltering": "جارٍ إزالة الموسيقى…",
+  "@linkFiltering": {
+    "description": "Android string link_filtering"
+  },
+  "linkCancel": "إلغاء",
+  "@linkCancel": {
+    "description": "Android string link_cancel"
+  },
+  "linkCancelled": "أُلغي، ولم يُحفظ شيء.",
+  "@linkCancelled": {
+    "description": "Android string link_cancelled"
+  },
+  "linkTimedOut": "أوقف أندرويد الحفظ: فهو لا يسمح بهذا النوع من العمل إلا بضع ساعات في اليوم. لم يُحفظ شيء؛ افتح واعية وحاول من جديد.",
+  "@linkTimedOut": {
+    "description": "Android string link_timed_out"
+  },
+  "linkExportFailed": "تعذّر الحفظ، ولم يُحفظ شيء.",
+  "@linkExportFailed": {
+    "description": "Android string link_export_failed"
+  },
+  "linkSaved": "حُفظ بلا موسيقى",
+  "@linkSaved": {
+    "description": "Android string link_saved"
+  },
+  "linkSavedVideo": "في المعرض: الأفلام › Waaiya",
+  "@linkSavedVideo": {
+    "description": "Android string link_saved_video"
+  },
+  "linkSavedAudio": "في الموسيقى: Music › Waaiya",
+  "@linkSavedAudio": {
+    "description": "Android string link_saved_audio"
+  },
+  "linkPlay": "تشغيل",
+  "@linkPlay": {
+    "description": "Android string link_play"
+  },
+  "linkShare": "مشاركة",
+  "@linkShare": {
+    "description": "Android string link_share"
+  },
+  "linkShareNote": "لا تشارك إلا المقاطع التي يحق لك مشاركتها.",
+  "@linkShareNote": {
+    "description": "Android string link_share_note"
+  },
+  "linkLive": "لا يمكن حفظ البث المباشر.",
+  "@linkLive": {
+    "description": "Android string link_live"
+  },
+  "linkBusy": "يجري حفظ مقطع آخر، يرجى الانتظار حتى ينتهي.",
+  "@linkBusy": {
+    "description": "Android string link_busy"
+  },
+  "linkInvalid": "الصق رابط ويب (يبدأ بـ https://).",
+  "@linkInvalid": {
+    "description": "Android string link_invalid"
+  },
+  "linkLogin": "لم يعرض الموقع هذا المقطع دون حساب. المنشورات العامة تُفتح عادةً: حاول مرة أخرى بعد بضع دقائق. أما المنشورات الخاصة فلا يمكن فتحها.",
+  "@linkLogin": {
+    "description": "Android string link_login"
+  },
+  "linkUnsupported": "هذا الموقع غير مدعوم.",
+  "@linkUnsupported": {
+    "description": "Android string link_unsupported"
+  },
+  "linkPlaylist": "هذه قائمة تشغيل. افتح مقطعًا واحدًا.",
+  "@linkPlaylist": {
+    "description": "Android string link_playlist"
+  },
+  "linkNoFormat": "هذا المقطع بصيغة لا تستطيع واعية تصفيتها بعد.",
+  "@linkNoFormat": {
+    "description": "Android string link_no_format"
+  },
+  "linkFailed": "تعذّر فتح هذا الرابط. تحقّق من الاتصال وحاول مرة أخرى.",
+  "@linkFailed": {
+    "description": "Android string link_failed"
+  },
+  "linkPlayFailed": "تعذّر تشغيل هذا المقطع، ولم يُشغَّل أي صوت دون تصفية.",
+  "@linkPlayFailed": {
+    "description": "Android string link_play_failed"
+  },
+  "linkLimited": "الموقع يحدّ من الطلبات الآن. حاول مرة أخرى بعد بضع دقائق.",
+  "@linkLimited": {
+    "description": "Android string link_limited"
+  },
+  "blurTitle": "تمويه الشاشة",
+  "@blurTitle": {
+    "description": "Android string blur_title"
+  },
+  "blurBody": "يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.",
+  "@blurBody": {
+    "description": "Android string blur_body"
+  },
+  "blurWomenTitle": "تمويه النساء",
+  "@blurWomenTitle": {
+    "description": "Android string blur_women_title"
+  },
+  "blurWomenBody": "يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.",
+  "@blurWomenBody": {
+    "description": "Android string blur_women_body"
+  },
+  "blurNudityTitle": "تمويه الصور غير المحتشمة",
+  "@blurNudityTitle": {
+    "description": "Android string blur_nudity_title"
+  },
+  "blurNudityBody": "العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.",
+  "@blurNudityBody": {
+    "description": "Android string blur_nudity_body"
+  },
+  "blurFailTitle": "تغطية الشاشة إذا عجز التمويه عن المتابعة",
+  "@blurFailTitle": {
+    "description": "Android string blur_fail_title"
+  },
+  "blurFailBody": "مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailBody": {
+    "description": "Android string blur_fail_body"
+  },
+  "blurSetupShizuku": "السماح عبر Shizuku",
+  "@blurSetupShizuku": {
+    "description": "Android string blur_setup_shizuku"
+  },
+  "blurSetupManual": "السماح من إعدادات أندرويد",
+  "@blurSetupManual": {
+    "description": "Android string blur_setup_manual"
+  },
+  "blurStatusNeedsSetup": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
+  "@blurStatusNeedsSetup": {
+    "description": "Android string blur_status_needs_setup"
+  },
+  "blurStatusNeedsOverlay": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
+  "@blurStatusNeedsOverlay": {
+    "description": "Android string blur_status_needs_overlay"
+  },
+  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailUnavailable": {
+    "description": "Android string blur_fail_unavailable"
+  },
+  "blurFailNeedsA11y": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailNeedsA11y": {
+    "description": "Android string blur_fail_needs_a11y"
+  },
+  "languageTitle": "اللغة",
+  "@languageTitle": {
+    "description": "Android string language_title"
+  },
+  "settingLanguageTitle": "اللغة: {language}",
+  "@settingLanguageTitle": {
+    "description": "Android string setting_language_title",
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
+  "languageAr": "العربية",
+  "@languageAr": {
+    "description": "Android string language_ar"
+  },
+  "languageEn": "English",
+  "@languageEn": {
+    "description": "Android string language_en"
+  },
+  "blurStatusRestart": "أوقف التصفية ثم شغّلها لتطبيق إعدادات التمويه.",
+  "@blurStatusRestart": {
+    "description": "Android string blur_status_restart"
+  },
+  "blurStatusStarting": "جارٍ تشغيل التمويه…",
+  "@blurStatusStarting": {
+    "description": "Android string blur_status_starting"
+  },
+  "blurStatusOn": "التمويه يعمل.",
+  "@blurStatusOn": {
+    "description": "Android string blur_status_on"
+  },
+  "blurStatusOnVisible": "التمويه يعمل بوضع الحذر: هذا الهاتف يُظهر التمويه في التقاط الشاشة نفسه، فتبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.",
+  "@blurStatusOnVisible": {
+    "description": "Android string blur_status_on_visible"
+  },
+  "blurStatusModels": "هذه النسخة تفتقد نموذج التمويه للخيار المختار.",
+  "@blurStatusModels": {
+    "description": "Android string blur_status_models"
+  },
+  "blurStatusFailing": "التمويه عاجز عن المتابعة الآن.",
+  "@blurStatusFailing": {
+    "description": "Android string blur_status_failing"
+  },
+  "blurStatusNoOverlay": "لا يستطيع التمويه الظهور فوق التطبيقات الأخرى: اسمح بذلك أعلاه.",
+  "@blurStatusNoOverlay": {
+    "description": "Android string blur_status_no_overlay"
+  },
+  "blurStatusNoCapture": "لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}",
+  "@blurStatusNoCapture": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "blurSetupFailed": "تعذّر السماح عبر Shizuku:\n{details}",
+  "@blurSetupFailed": {
+    "description": "Android string blur_setup_failed",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "step2Guide": "كيف أشغّل Shizuku؟",
+  "@step2Guide": {
+    "description": "Android string step2_guide"
+  },
+  "blurFailOldAndroid": "معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "@blurFailOldAndroid": {
+    "description": "Android string blur_fail_old_android"
+  },
+  "guideTitle": "تشغيل Shizuku خطوة بخطوة",
+  "@guideTitle": {
+    "description": "Android string guide_title"
+  },
+  "guideOpenDev": "خيارات المطور",
+  "@guideOpenDev": {
+    "description": "Android string guide_open_dev"
+  },
+  "guideOpenShizuku": "فتح Shizuku",
+  "@guideOpenShizuku": {
+    "description": "Android string guide_open_shizuku"
+  },
+  "guideClose": "إغلاق",
+  "@guideClose": {
+    "description": "Android string guide_close"
+  },
+  "guideBody": "تحتاج إلى شبكة Wi‑Fi وأندرويد 11 أو أحدث. الإقران يكون مرة واحدة فقط، وبعد إعادة تشغيل الهاتف تكرّر الخطوة 7 وحدها.\n\n1. اتصل بشبكة Wi‑Fi.\n\n2. فعّل ‏«خيارات المطور»‏: الإعدادات › حول الهاتف › معلومات البرنامج › اضغط على ‏«رقم الإصدار»‏ 7 مرات. (في الهواتف الأخرى: الإعدادات › حول الهاتف › رقم الإصدار.)\n\n3. افتح Shizuku. إذا طلب إظهار الإشعارات فاسمح له، لأن رمز الإقران يُكتب داخل إشعار Shizuku.\n\n4. في Shizuku، تحت ‏«Start via Wireless debugging»‏ (التشغيل عبر تصحيح الأخطاء اللاسلكي)، اضغط ‏«Pairing»‏ (إقران). في الصفحة التي تفتح اضغط ‏«Developer options»‏ (خيارات المطور)، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ووافق بـ‏«سماح»‏.\n\n5. اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها (لا على المفتاح)، ثم ‏«إقران الجهاز باستخدام رمز الإقران»‏. سيظهر رمز من 6 أرقام.\n\n6. اترك تلك الشاشة مفتوحة واسحب الإشعارات إلى الأسفل. عندما يظهر في إشعار Shizuku ‏«Pairing service found»‏ (تم العثور على خدمة الإقران) اضغط ‏«Enter pairing code»‏ (إدخال رمز الإقران)، واكتب الرمز. سيُخبرك Shizuku بنجاح الإقران.\n\n7. ارجع إلى Shizuku واضغط ‏«Start»‏ (بدء) تحت ‏«Start via Wireless debugging»‏، وانتظر حتى تظهر عبارة ‏«Shizuku is running»‏ (Shizuku يعمل).\n\n8. ارجع إلى واعية واضغط ‏«منح الإذن»‏ ثم ‏«السماح»‏.\n\nبعد إعادة تشغيل الهاتف يتوقف Shizuku: اتصل بالـ Wi‑Fi، وأعد تفعيل ‏«تصحيح الأخطاء اللاسلكي»‏ إن كان مطفأً، ثم افتح Shizuku واضغط ‏«Start»‏. لا حاجة إلى إقران جديد.",
+  "@guideBody": {
+    "description": "Android string guide_body"
+  },
+  "wsetupRouteTitle": "الإعداد على هذا الهاتف",
+  "@wsetupRouteTitle": {
+    "description": "Android string wsetup_route_title"
+  },
+  "wsetupRouteBody": "أربع خطوات قصيرة، مرة واحدة فقط. دون تطبيق إضافي ودون حاسوب. تضع واعية علامة على كل خطوة عند إتمامها.",
+  "@wsetupRouteBody": {
+    "description": "Android string wsetup_route_body"
+  },
+  "wizDevTitle": "فعّل ‏«خيارات المطور»‏",
+  "@wizDevTitle": {
+    "description": "Android string wiz_dev_title"
+  },
+  "wizDevBody": "في صفحة ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا. إن لم تجده، فابحث عن ‏«رقم الإصدار»‏ في الإعدادات.",
+  "@wizDevBody": {
+    "description": "Android string wiz_dev_body"
+  },
+  "wizDevBodySamsung": "في ‏«حول الهاتف»‏ › ‏«معلومات البرنامج»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.",
+  "@wizDevBodySamsung": {
+    "description": "Android string wiz_dev_body_samsung"
+  },
+  "wizDevBodyXiaomi": "في ‏«حول الهاتف»‏، اضغط على ‏«إصدار النظام»‏ 7 مرات (في الهواتف الأقدم ‏«إصدار MIUI»‏، وفي بعضها داخل ‏«المعلومات والمواصفات التفصيلية»‏)، ثم ارجع إلى هنا.",
+  "@wizDevBodyXiaomi": {
+    "description": "Android string wiz_dev_body_xiaomi"
+  },
+  "wizDevBodyColoros": "في ‏«حول الجهاز»‏ (أو ‏«حول الهاتف»‏) › ‏«الإصدار»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.",
+  "@wizDevBodyColoros": {
+    "description": "Android string wiz_dev_body_coloros"
+  },
+  "wizDevBodyVivo": "في ‏«حول الهاتف»‏، اضغط على ‏«إصدار البرنامج»‏ 7 مرات (في بعض الهواتف: ‏«معلومات البرنامج»‏ › ‏«رقم الإصدار»‏)، ثم ارجع إلى هنا.",
+  "@wizDevBodyVivo": {
+    "description": "Android string wiz_dev_body_vivo"
+  },
+  "wizDevBodyHuawei": "في ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.",
+  "@wizDevBodyHuawei": {
+    "description": "Android string wiz_dev_body_huawei"
+  },
+  "wizDevBodyTranssion": "في ‏«هاتفي»‏ (أو ‏«حول الهاتف»‏)، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.",
+  "@wizDevBodyTranssion": {
+    "description": "Android string wiz_dev_body_transsion"
+  },
+  "setupNoteHuawei": "هواوي: كثير من هواتف هواوي ليس فيها ‏«تصحيح الأخطاء اللاسلكي»‏. إن لم تجده في ‏«خيارات المطور»‏، فاستعمل حاسوبًا (‏«طرق أخرى»‏ في الأسفل).",
+  "@setupNoteHuawei": {
+    "description": "Android string setup_note_huawei"
+  },
+  "wsetupFilterOn": "التصفية تعمل: في هذا الإصدار من أندرويد لا يمكن كتابة الرمز في الإشعار أثناء عملها. أوقف التصفية أولًا، أو استعمل تقسيم الشاشة و‏«اكتب الرمز هنا»‏.",
+  "@wsetupFilterOn": {
+    "description": "Android string wsetup_filter_on"
+  },
+  "wizDevSearch": "قد تختلف الأسماء بحسب لغة الهاتف: إن لم تجده، فاستعمل البحث في أعلى الإعدادات.",
+  "@wizDevSearch": {
+    "description": "Android string wiz_dev_search"
+  },
+  "wizDevAction": "افتح ‏«حول الهاتف»‏",
+  "@wizDevAction": {
+    "description": "Android string wiz_dev_action"
+  },
+  "wizWifiTitle": "اتصل بشبكة Wi-Fi",
+  "@wizWifiTitle": {
+    "description": "Android string wiz_wifi_title"
+  },
+  "wizWifiBody": "أي شبكة Wi-Fi تكفي؛ لا يلزم الإنترنت.",
+  "@wizWifiBody": {
+    "description": "Android string wiz_wifi_body"
+  },
+  "wizWifiAction": "افتح إعدادات Wi-Fi",
+  "@wizWifiAction": {
+    "description": "Android string wiz_wifi_action"
+  },
+  "wizWdTitle": "فعّل ‏«تصحيح الأخطاء اللاسلكي»‏",
+  "@wizWdTitle": {
+    "description": "Android string wiz_wd_title"
+  },
+  "wizWdBody": "تفتح واعية ‏«خيارات المطور»‏ عند ‏«تصحيح الأخطاء اللاسلكي»‏. فعّله واضغط ‏«سماح»‏.",
+  "@wizWdBody": {
+    "description": "Android string wiz_wd_body"
+  },
+  "wizWdAction": "افتح خيارات المطور",
+  "@wizWdAction": {
+    "description": "Android string wiz_wd_action"
+  },
+  "wizPairTitle": "اكتب رمز الإقران",
+  "@wizPairTitle": {
+    "description": "Android string wiz_pair_title"
+  },
+  "wizPairBody": "اضغط على عبارة ‏«تصحيح الأخطاء اللاسلكي»‏ نفسها، ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏. اكتب الأرقام الستة في إشعار واعية، وتكمل واعية الباقي.",
+  "@wizPairBody": {
+    "description": "Android string wiz_pair_body"
+  },
+  "wizPairBodyPaired": "سبق إقران واعية بهذا الهاتف: لا حاجة لأي رمز. اضغط الزر وتكمل واعية وحدها.",
+  "@wizPairBodyPaired": {
+    "description": "Android string wiz_pair_body_paired"
+  },
+  "wizPairAction": "متابعة",
+  "@wizPairAction": {
+    "description": "Android string wiz_pair_action"
+  },
+  "wizAgain": "أعد تنفيذ الإعداد",
+  "@wizAgain": {
+    "description": "Android string wiz_again"
+  },
+  "setupShizukuReadyTitle": "عبر Shizuku، وهو يعمل الآن",
+  "@setupShizukuReadyTitle": {
+    "description": "Android string setup_shizuku_ready_title"
+  },
+  "setupOtherWaysPlain": "طرق أخرى لإتمام الإعداد",
+  "@setupOtherWaysPlain": {
+    "description": "Android string setup_other_ways_plain"
+  },
+  "wizSkip": "انتقل مباشرة إلى ‏«تصحيح الأخطاء اللاسلكي»‏",
+  "@wizSkip": {
+    "description": "Android string wiz_skip"
+  },
+  "setupOtherWays": "طرق أخرى: Shizuku أو حاسوب",
+  "@setupOtherWays": {
+    "description": "Android string setup_other_ways"
+  },
+  "wsetupEnterHere": "اكتب الرمز هنا",
+  "@wsetupEnterHere": {
+    "description": "Android string wsetup_enter_here"
+  },
+  "wsetupCancel": "إلغاء",
+  "@wsetupCancel": {
+    "description": "Android string wsetup_cancel"
+  },
+  "wsetupAndroid10": "أندرويد 10 لا يستطيع إتمام الإعداد وحده: يحتاج إلى حاسوب، إما مباشرة (في الأسفل) أو لتشغيل Shizuku مرة واحدة.",
+  "@wsetupAndroid10": {
+    "description": "Android string wsetup_android10"
+  },
+  "wsetupShizukuHeading": "أو باستخدام تطبيق Shizuku",
+  "@wsetupShizukuHeading": {
+    "description": "Android string wsetup_shizuku_heading"
+  },
+  "wsetupShizukuNote": "يسمح Shizuku أيضًا بمرور اللمس عبر أغطية الشاشة.",
+  "@wsetupShizukuNote": {
+    "description": "Android string wsetup_shizuku_note"
+  },
+  "wsetupChannel": "الإعداد لمرة واحدة",
+  "@wsetupChannel": {
+    "description": "Android string wsetup_channel"
+  },
+  "wsetupNotifTitle": "إعداد واعية: في انتظار رمز الإقران",
+  "@wsetupNotifTitle": {
+    "description": "Android string wsetup_notif_title"
+  },
+  "wsetupFoundTitle": "وُجدت شاشة الإقران",
+  "@wsetupFoundTitle": {
+    "description": "Android string wsetup_found_title"
+  },
+  "wsetupBusyTitle": "إعداد واعية",
+  "@wsetupBusyTitle": {
+    "description": "Android string wsetup_busy_title"
+  },
+  "wsetupDoneTitle": "اكتمل الإعداد",
+  "@wsetupDoneTitle": {
+    "description": "Android string wsetup_done_title"
+  },
+  "wsetupDoneBody": "تستطيع واعية الآن كتم الصوت الأصلي. يمكنك إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏.",
+  "@wsetupDoneBody": {
+    "description": "Android string wsetup_done_body"
+  },
+  "wsetupDoneHelperBody": "تم. هذا الهاتف لا يسمح للتطبيقات بالاحتفاظ بهذه الأذونات، لذلك يتولى مساعد واعية كتم الصوت الأصلي. يتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية. عند فتح واعية بعد ذلك، تشغّله من جديد تلقائيًا إن كان ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا؛ وإلا فتعرض زرًّا لذلك.",
+  "@wsetupDoneHelperBody": {
+    "description": "Android string wsetup_done_helper_body"
+  },
+  "helperMissingTitle": "مساعد واعية متوقف",
+  "@helperMissingTitle": {
+    "description": "Android string helper_missing_title"
+  },
+  "helperMissingBody": "هذا الهاتف لا يحتفظ بأذونات واعية، لذلك تستعمل واعية مساعدها. يتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية. اتصل بشبكة Wi-Fi، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏ في ‏«خيارات المطور»‏، ثم اضغط ‏«تشغيل مساعد واعية»‏.",
+  "@helperMissingBody": {
+    "description": "Android string helper_missing_body"
+  },
+  "helperChannel": "مساعد واعية",
+  "@helperChannel": {
+    "description": "Android string helper_channel"
+  },
+  "helperStarting": "جارٍ تشغيل المساعد…",
+  "@helperStarting": {
+    "description": "Android string helper_starting"
+  },
+  "helperModeNote": "هذا الهاتف لا يسمح للتطبيقات بالاحتفاظ بهذه الأذونات: مساعد واعية يقوم بالعمل. يتوقف عند إعادة تشغيل الهاتف وعند تحديث واعية. عند فتح واعية بعد ذلك، تشغّله من جديد تلقائيًا إن كان ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا؛ وإلا فتعرض زرًّا لذلك.",
+  "@helperModeNote": {
+    "description": "Android string helper_mode_note"
+  },
+  "helperTipXiaomi": "اختياري، للاحتفاظ بالأذونات نهائيًا (دون مساعد بعد إعادة التشغيل): فعّل في ‏«خيارات المطور»‏ ‏«تصحيح أخطاء USB (إعدادات الأمان)»‏ (يطلب تسجيل الدخول إلى حساب شاومي)، ثم أعد الإعداد.",
+  "@helperTipXiaomi": {
+    "description": "Android string helper_tip_xiaomi"
+  },
+  "helperTipColoros": "اختياري، للاحتفاظ بالأذونات نهائيًا (دون مساعد بعد إعادة التشغيل): فعّل في ‏«خيارات المطور»‏ ‏«تعطيل مراقبة الأذونات»‏ (في أحدث الإصدارات ‏«تعطيل تحسين النظام»‏؛ وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية: Disable permission monitoring أو Disable system optimization)، ثم أعد الإعداد.",
+  "@helperTipColoros": {
+    "description": "Android string helper_tip_coloros"
+  },
+  "stateOnHelperMissing": "الصوت الأصلي لم يُكتم، ولذلك تسمع الموسيقى مع الصوت المُصفّى: مساعد واعية متوقف. اتصل بشبكة Wi-Fi، وفعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط ‏«تشغيل مساعد واعية»‏.",
+  "@stateOnHelperMissing": {
+    "description": "Android string state_on_helper_missing"
+  },
+  "setupRefusedTryWireless": "أو استعمل ‏«الإعداد على هذا الهاتف»‏ في هذه الصفحة: يعمل مساعد واعية حينها دون ذلك الخيار.",
+  "@setupRefusedTryWireless": {
+    "description": "Android string setup_refused_try_wireless"
+  },
+  "helperStartAnywayTitle": "مساعد واعية متوقف",
+  "@helperStartAnywayTitle": {
+    "description": "Android string helper_start_anyway_title"
+  },
+  "helperStartAnywayBody": "من دونه ستسمع الموسيقى مع الصوت المُصفّى. شغّل المساعد أولًا (يجب أن يكون ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا)، أو ابدأ التصفية على أي حال.",
+  "@helperStartAnywayBody": {
+    "description": "Android string helper_start_anyway_body"
+  },
+  "wsetupFailedTitle": "لم يكتمل الإعداد",
+  "@wsetupFailedTitle": {
+    "description": "Android string wsetup_failed_title"
+  },
+  "wsetupPairing": "جارٍ الإقران…",
+  "@wsetupPairing": {
+    "description": "Android string wsetup_pairing"
+  },
+  "wsetupConnecting": "جارٍ الاتصال ومنح الأذونات…",
+  "@wsetupConnecting": {
+    "description": "Android string wsetup_connecting"
+  },
+  "wsetupNeedWifi": "اتصل بشبكة Wi‑Fi أولًا (لا يلزم الإنترنت): ‏«تصحيح الأخطاء اللاسلكي»‏ لا يعمل إلا عبر Wi‑Fi.",
+  "@wsetupNeedWifi": {
+    "description": "Android string wsetup_need_wifi"
+  },
+  "wsetupNeedWirelessDebugging": "في ‏«خيارات المطور»‏، فعّل ‏«تصحيح الأخطاء اللاسلكي»‏، ثم اضغط على اسمه ثم على ‏«إقران الجهاز باستخدام رمز الإقران»‏.",
+  "@wsetupNeedWirelessDebugging": {
+    "description": "Android string wsetup_need_wireless_debugging"
+  },
+  "wsetupOpenDialog": "في ‏«تصحيح الأخطاء اللاسلكي»‏، اضغط ‏«إقران الجهاز باستخدام رمز الإقران»‏. اترك الرمز ظاهرًا على الشاشة واضغط ‏«أدخل الرمز»‏ هنا.",
+  "@wsetupOpenDialog": {
+    "description": "Android string wsetup_open_dialog"
+  },
+  "wsetupEnterCodeBody": "اضغط ‏«أدخل الرمز»‏ واكتب الرمز المكوّن من 6 أرقام الظاهر في الإعدادات.",
+  "@wsetupEnterCodeBody": {
+    "description": "Android string wsetup_enter_code_body"
+  },
+  "wsetupCodeWaiting": "وصل الرمز. في انتظار شاشة ‏«إقران الجهاز باستخدام رمز الإقران»‏: اتركها مفتوحة.",
+  "@wsetupCodeWaiting": {
+    "description": "Android string wsetup_code_waiting"
+  },
+  "wsetupWrongCode": "لم يُقبل هذا الرمز. تحقّق من الأرقام الستة الظاهرة على الشاشة وأدخلها مرة أخرى. إذا أُغلقت شاشة الإقران فافتحها من جديد، فالرمز يتغيّر.",
+  "@wsetupWrongCode": {
+    "description": "Android string wsetup_wrong_code"
+  },
+  "wsetupPairingFailed": "لم ينجح الإقران. أغلق شاشة الإقران، وافتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ مرة أخرى وأدخل الرمز الجديد.",
+  "@wsetupPairingFailed": {
+    "description": "Android string wsetup_pairing_failed"
+  },
+  "wsetupWaitingConnect": "تم الإقران. أبقِ ‏«تصحيح الأخطاء اللاسلكي»‏ مفعّلًا: واعية تتصل الآن.",
+  "@wsetupWaitingConnect": {
+    "description": "Android string wsetup_waiting_connect"
+  },
+  "wsetupNotPaired": "لم يعد هذا الهاتف يعرف واعية (أُزيل الإقران أو انتهت مدته). افتح ‏«إقران الجهاز باستخدام رمز الإقران»‏ وأدخل الرمز.",
+  "@wsetupNotPaired": {
+    "description": "Android string wsetup_not_paired"
+  },
+  "wsetupConnectFailed": "تعذّر الاتصال بـ ‏«تصحيح الأخطاء اللاسلكي»‏. أوقفه ثم فعّله مرة أخرى، وستعيد واعية المحاولة وحدها.",
+  "@wsetupConnectFailed": {
+    "description": "Android string wsetup_connect_failed"
+  },
+  "wsetupGrantFailed": "تم الاتصال، لكن الأذونات ما زالت ناقصة. استخدم Shizuku أو حاسوبًا (في الأسفل).",
+  "@wsetupGrantFailed": {
+    "description": "Android string wsetup_grant_failed"
+  },
+  "wsetupTimeout": "توقّف الإعداد بعد 10 دقائق دون أن يكتمل. يمكنك المحاولة مرة أخرى.",
+  "@wsetupTimeout": {
+    "description": "Android string wsetup_timeout"
+  },
+  "wsetupCodeUnreadable": "اكتب الأرقام الستة لرمز الإقران.",
+  "@wsetupCodeUnreadable": {
+    "description": "Android string wsetup_code_unreadable"
+  },
+  "wsetupCodeHint": "رمز من 6 أرقام",
+  "@wsetupCodeHint": {
+    "description": "Android string wsetup_code_hint"
+  },
+  "wsetupEnterCode": "أدخل الرمز",
+  "@wsetupEnterCode": {
+    "description": "Android string wsetup_enter_code"
+  },
+  "wsetupDetail": "التفاصيل: {details}",
+  "@wsetupDetail": {
+    "description": "Android string wsetup_detail",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "wsetupErrTimeout": "لم يأتِ رد في الوقت المحدد",
+  "@wsetupErrTimeout": {
+    "description": "Android string wsetup_err_timeout"
+  },
+  "wsetupErrRefused": "رُفض الاتصال",
+  "@wsetupErrRefused": {
+    "description": "Android string wsetup_err_refused"
+  },
+  "wsetupDevOff": "‏«خيارات المطور»‏ غير مفعّلة. في صفحة ‏«حول الهاتف»‏، اضغط على ‏«رقم الإصدار»‏ 7 مرات، ثم ارجع إلى هنا.",
+  "@wsetupDevOff": {
+    "description": "Android string wsetup_dev_off"
+  },
+  "wsetupOpenAbout": "حول الهاتف",
+  "@wsetupOpenAbout": {
+    "description": "Android string wsetup_open_about"
+  },
+  "wsetupNotifOff": "إشعارات واعية متوقفة، فلا يمكن كتابة الرمز في إشعار. استخدم تقسيم الشاشة (الإعدادات في نصف وواعية في النصف الآخر) واضغط ‏«اكتب الرمز هنا»‏.",
+  "@wsetupNotifOff": {
+    "description": "Android string wsetup_notif_off"
+  },
+  "wsetupCodeDialogTitle": "رمز الإقران",
+  "@wsetupCodeDialogTitle": {
+    "description": "Android string wsetup_code_dialog_title"
+  },
+  "wsetupCodeDialogBody": "مع تقسيم الشاشة فقط (الإعدادات في نصف وواعية في النصف الآخر): الخروج من الإعدادات يُغلق شاشة الإقران فيتوقف رمزها عن العمل. اكتب الرمز المكوّن من 6 أرقام الظاهر تحت ‏«إقران الجهاز باستخدام رمز الإقران»‏.",
+  "@wsetupCodeDialogBody": {
+    "description": "Android string wsetup_code_dialog_body"
+  },
+  "wsetupCodeOk": "إقران",
+  "@wsetupCodeOk": {
+    "description": "Android string wsetup_code_ok"
+  },
+  "blurStrictTitle": "مَن يبقى دون تغطية",
+  "@blurStrictTitle": {
+    "description": "Android string blur_strict_title"
+  },
+  "blurStrictValue": "مَن يبقى دون تغطية: {level}",
+  "@blurStrictValue": {
+    "description": "Android string blur_strict_value",
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "blurStrict0": "صارم: فقط من يكاد التطبيق يجزم أنه رجل",
+  "@blurStrict0": {
+    "description": "Android string blur_strict_0"
+  },
+  "blurStrict1": "متوازن: نحو ضعف عدد الرجال دون تغطية",
+  "@blurStrict1": {
+    "description": "Android string blur_strict_1"
+  },
+  "blurStrict2": "متساهل: رجال أكثر قليلًا من المتوازن",
+  "@blurStrict2": {
+    "description": "Android string blur_strict_2"
+  },
+  "blurStrict0Short": "صارم",
+  "@blurStrict0Short": {
+    "description": "Android string blur_strict_0_short"
+  },
+  "blurStrict1Short": "متوازن",
+  "@blurStrict1Short": {
+    "description": "Android string blur_strict_1_short"
+  },
+  "blurStrict2Short": "متساهل",
+  "@blurStrict2Short": {
+    "description": "Android string blur_strict_2_short"
+  },
+  "blurStrictHelp": "كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.",
+  "@blurStrictHelp": {
+    "description": "Android string blur_strict_help"
+  },
+  "stateOnNotMuted": "الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.",
+  "@stateOnNotMuted": {
+    "description": "Android string state_on_not_muted"
+  },
+  "stateOnMuteFailing": "لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).",
+  "@stateOnMuteFailing": {
+    "description": "Android string state_on_mute_failing"
+  },
+  "stateTooSlow": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.",
+  "@stateTooSlow": {
+    "description": "Android string state_too_slow"
+  },
+  "stateMonoNote": "الصوت أحادي (مونو) ليتمكن هذا الهاتف من المتابعة.",
+  "@stateMonoNote": {
+    "description": "Android string state_mono_note"
+  },
+  "stateBlockedSilenced": "كُتم صوته لأنه لا يسمح بالتصفية: {apps}.",
+  "@stateBlockedSilenced": {
+    "description": "Android string state_blocked_silenced",
+    "placeholders": {
+      "apps": {
+        "type": "String"
+      }
+    }
+  },
+  "stateBlockedUnfiltered": "يُسمع دون تصفية لأنه لا يسمح بها: {apps}.",
+  "@stateBlockedUnfiltered": {
+    "description": "Android string state_blocked_unfiltered",
+    "placeholders": {
+      "apps": {
+        "type": "String"
+      }
+    }
+  },
+  "stateCaptureFailed": "لم يُعطِ أندرويد واعية صوت التطبيقات الأخرى. اضغط الزر للتشغيل من جديد.",
+  "@stateCaptureFailed": {
+    "description": "Android string state_capture_failed"
+  },
+  "stateCaptureCancelled": "أُلغي التشغيل عند سؤال أندرويد عن مشاركة الشاشة. تحتاج واعية أن تختار «بدء» هناك لاستقبال الصوت. لا يُسجَّل شيء ولا يُرسَل.",
+  "@stateCaptureCancelled": {
+    "description": "Android string state_capture_cancelled"
+  },
+  "startNoSetupTitle": "ستبقى الموسيقى مسموعة",
+  "@startNoSetupTitle": {
+    "description": "Android string start_no_setup_title"
+  },
+  "startNoSetupBody": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.",
+  "@startNoSetupBody": {
+    "description": "Android string start_no_setup_body"
+  },
+  "startNoSetupSetup": "أكمل الإعداد",
+  "@startNoSetupSetup": {
+    "description": "Android string start_no_setup_setup"
+  },
+  "startNoSetupAnyway": "شغّل على أي حال",
+  "@startNoSetupAnyway": {
+    "description": "Android string start_no_setup_anyway"
+  },
+  "diagButton": "مشكلة؟ تقرير التشخيص",
+  "@diagButton": {
+    "description": "Android string diag_button"
+  },
+  "diagTitle": "تقرير التشخيص",
+  "@diagTitle": {
+    "description": "Android string diag_title"
+  },
+  "diagNote": "ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.",
+  "@diagNote": {
+    "description": "Android string diag_note"
+  },
+  "notifStoppedTitle": "توقفت واعية",
+  "@notifStoppedTitle": {
+    "description": "Android string notif_stopped_title"
+  },
+  "notifStoppedText": "الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.",
+  "@notifStoppedText": {
+    "description": "Android string notif_stopped_text"
+  },
+  "wsetupGuide": "الخطوات بالصور",
+  "@wsetupGuide": {
+    "description": "Android string wsetup_guide"
+  },
+  "navFilter": "التصفية",
+  "@navFilter": {
+    "description": "Android string nav_filter"
+  },
+  "navScreen": "الشاشة",
+  "@navScreen": {
+    "description": "Android string nav_screen"
+  },
+  "navLinks": "الروابط",
+  "@navLinks": {
+    "description": "Android string nav_links"
+  },
+  "navSetup": "الإعداد",
+  "@navSetup": {
+    "description": "Android string nav_setup"
+  },
+  "navSettings": "الإعدادات",
+  "@navSettings": {
+    "description": "Android string nav_settings"
+  },
+  "setupDoneTitle": "اكتمل الإعداد",
+  "@setupDoneTitle": {
+    "description": "Android string setup_done_title"
+  },
+  "setupDoneBody": "تستطيع واعية كتم الصوت الأصلي للتطبيقات الأخرى. لا تُعِده إلا إذا تغيّر شيء (أُلغي الإعداد، أو قالت واعية إنه ناقص).",
+  "@setupDoneBody": {
+    "description": "Android string setup_done_body"
+  },
+  "setupRedo": "إظهار الإعداد من جديد",
+  "@setupRedo": {
+    "description": "Android string setup_redo"
+  },
+  "setupGo": "الذهاب إلى الإعداد",
+  "@setupGo": {
+    "description": "Android string setup_go"
+  },
+  "helperTitle": "مرور اللمس عبر الأغطية",
+  "@helperTitle": {
+    "description": "Android string helper_title"
+  },
+  "helperBodyOff": "دون مساعدة، يمنع الغطاء اللمس تحته. يرسم مساعد واعية الأغطية بحيث يمرّ اللمس من خلالها. فعّل ‏«تصحيح الأخطاء اللاسلكي»‏ (يلزم Wi‑Fi) واضغط الزر؛ في المرة الأولى تُقرن الهاتف مرة واحدة كما في الإعداد. بعد إعادة تشغيل الهاتف اضغطه من جديد.",
+  "@helperBodyOff": {
+    "description": "Android string helper_body_off"
+  },
+  "helperStart": "تشغيل مساعد واعية",
+  "@helperStart": {
+    "description": "Android string helper_start"
+  },
+  "helperOn": "مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.",
+  "@helperOn": {
+    "description": "Android string helper_on"
+  },
+  "helperShizukuOn": "Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.",
+  "@helperShizukuOn": {
+    "description": "Android string helper_shizuku_on"
+  },
+  "helperOrShizuku": "أو باستخدام Shizuku:",
+  "@helperOrShizuku": {
+    "description": "Android string helper_or_shizuku"
+  },
+  "filterOptionsTitle": "خيارات التصفية",
+  "@filterOptionsTitle": {
+    "description": "Android string filter_options_title"
+  },
+  "settingsGeneralTitle": "عام",
+  "@settingsGeneralTitle": {
+    "description": "Android string settings_general_title"
+  },
+  "simpleTitle": "Simple mode (test): no Developer options",
+  "@simpleTitle": {
+    "description": "Android string simple_title"
+  },
+  "simpleBody": "For phones where the setup below is too hard. While Waaiya filters, it mutes the phone's media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya's volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.",
+  "@simpleBody": {
+    "description": "Android string simple_body"
+  },
+  "simpleSwitch": "Use simple mode",
+  "@simpleSwitch": {
+    "description": "Android string simple_switch"
+  },
+  "simpleChannelTitle": "Sound channel: {channel}",
+  "@simpleChannelTitle": {
+    "description": "Android string simple_channel_title",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "simpleChannelAlarm": "Alarm",
+  "@simpleChannelAlarm": {
+    "description": "Android string simple_channel_alarm"
+  },
+  "simpleChannelNotification": "Notification",
+  "@simpleChannelNotification": {
+    "description": "Android string simple_channel_notification"
+  },
+  "simpleChannelHelp": "If you hear nothing, or the sound comes from the phone's speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.",
+  "@simpleChannelHelp": {
+    "description": "Android string simple_channel_help"
+  },
+  "simpleTestNote": "This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.",
+  "@simpleTestNote": {
+    "description": "Android string simple_test_note"
+  },
+  "simpleOnDetail": "Simple mode (test): media sound is muted while Waaiya filters.",
+  "@simpleOnDetail": {
+    "description": "Android string simple_on_detail"
+  },
+  "worshipPrayerFajr": "الفجر",
+  "@worshipPrayerFajr": {
+    "description": "Android string worship_prayer_fajr"
+  },
+  "worshipPrayerSunrise": "الشروق",
+  "@worshipPrayerSunrise": {
+    "description": "Android string worship_prayer_sunrise"
+  },
+  "worshipPrayerDhuhr": "الظهر",
+  "@worshipPrayerDhuhr": {
+    "description": "Android string worship_prayer_dhuhr"
+  },
+  "worshipPrayerAsr": "العصر",
+  "@worshipPrayerAsr": {
+    "description": "Android string worship_prayer_asr"
+  },
+  "worshipPrayerMaghrib": "المغرب",
+  "@worshipPrayerMaghrib": {
+    "description": "Android string worship_prayer_maghrib"
+  },
+  "worshipPrayerIsha": "العشاء",
+  "@worshipPrayerIsha": {
+    "description": "Android string worship_prayer_isha"
+  },
+  "worshipEndSilent": "إنهاء الصمت الآن",
+  "@worshipEndSilent": {
+    "description": "Android string worship_end_silent"
+  },
+  "worshipUnmute": "إلغاء الكتم الآن",
+  "@worshipUnmute": {
+    "description": "Android string worship_unmute"
+  },
+  "worshipSmsDefault": "إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.",
+  "@worshipSmsDefault": {
+    "description": "Android string worship_sms_default"
+  },
+  "updateTitle": "تحديثات التطبيق",
+  "@updateTitle": {
+    "description": "Android string update_title"
+  },
+  "updateAuto": "ابحث عن إصدار جديد مرة في اليوم",
+  "@updateAuto": {
+    "description": "Android string update_auto"
+  },
+  "updateAutoBody": "تسأل واعية موقع waaiya.mssid.org هل يوجد إصدار أحدث، ولا ترسل شيئًا غير ذلك. ولا يُنزَّل شيء حتى تضغط «حدِّث الآن».",
+  "@updateAutoBody": {
+    "description": "Android string update_auto_body"
+  },
+  "updateCheck": "ابحث الآن",
+  "@updateCheck": {
+    "description": "Android string update_check"
+  },
+  "updateChecking": "جارٍ البحث…",
+  "@updateChecking": {
+    "description": "Android string update_checking"
+  },
+  "updateNone": "لديك أحدث إصدار ({version}).",
+  "@updateNone": {
+    "description": "Android string update_none",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateAvailable": "الإصدار {latest} من واعية متاح. لديك {current}.",
+  "@updateAvailable": {
+    "description": "Android string update_available",
+    "placeholders": {
+      "latest": {
+        "type": "String"
+      },
+      "current": {
+        "type": "String"
+      }
+    }
+  },
+  "updateSizePatch": "التنزيل: {size}، التغييرات فقط (التطبيق كاملًا {full}).",
+  "@updateSizePatch": {
+    "description": "Android string update_size_patch",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      },
+      "full": {
+        "type": "String"
+      }
+    }
+  },
+  "updateSizeFull": "التنزيل: {size}.",
+  "@updateSizeFull": {
+    "description": "Android string update_size_full",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "updateNow": "حدِّث الآن",
+  "@updateNow": {
+    "description": "Android string update_now"
+  },
+  "updateDownloading": "جارٍ التنزيل: {progress}",
+  "@updateDownloading": {
+    "description": "Android string update_downloading",
+    "placeholders": {
+      "progress": {
+        "type": "String"
+      }
+    }
+  },
+  "updatePreparing": "جارٍ تجهيز التحديث…",
+  "@updatePreparing": {
+    "description": "Android string update_preparing"
+  },
+  "updateInstalling": "أكِّد التثبيت في الشاشة التي يعرضها أندرويد.",
+  "@updateInstalling": {
+    "description": "Android string update_installing"
+  },
+  "updateStopsFilter": "التثبيت يوقف التصفية. شغّلها مجددًا بعد التحديث.",
+  "@updateStopsFilter": {
+    "description": "Android string update_stops_filter"
+  },
+  "updatePermission": "اسمح لواعية بتثبيت تحديثاتها، ثم اضغط «حدِّث الآن» مرة أخرى.",
+  "@updatePermission": {
+    "description": "Android string update_permission"
+  },
+  "updateFailed": "تعذّر إكمال التحديث. حاول لاحقًا، أو نزّله من الموقع.",
+  "@updateFailed": {
+    "description": "Android string update_failed"
+  },
+  "updateOpenPage": "افتح صفحة التنزيل",
+  "@updateOpenPage": {
+    "description": "Android string update_open_page"
+  },
+  "updateCheckFailed": "تعذّر البحث الآن. حاول لاحقًا.",
+  "@updateCheckFailed": {
+    "description": "Android string update_check_failed"
+  },
+  "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
+  "@desktopPreview": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "actionFailed": "تعذّر ذلك: {details}",
+  "@actionFailed": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "stateOnDetailNoDelay": "تُزال الآلات من كل التطبيقات.",
+  "@stateOnDetailNoDelay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorNoPactl": "لم يُعثر على أدوات الصوت (pactl). تحتاج واعية إلى PulseAudio، أو PipeWire مع pipewire-pulse.",
+  "@engineErrorNoPactl": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorNoSoundServer": "خادم الصوت لا يعمل (PulseAudio أو PipeWire).",
+  "@engineErrorNoSoundServer": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorNoSystemd": "لا توجد في هذا النظام جلسة systemd للمستخدم، وهي التي تشغّل التصفية في الخلفية.",
+  "@engineErrorNoSystemd": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorNoOutput": "لم يُعثر على مكبّرات صوت أو سماعات.",
+  "@engineErrorNoOutput": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorInstallFailed": "تعذّر تثبيت التصفية. التفاصيل:\n{details}",
+  "@engineErrorInstallFailed": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "engineErrorStartFailed": "لم تبدأ التصفية. التفاصيل:\n{details}",
+  "@engineErrorStartFailed": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "engineErrorServiceFailed": "توقّفت التصفية بسبب خطأ. التفاصيل:\n{details}",
+  "@engineErrorServiceFailed": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "autostartTitle": "التشغيل عند تسجيل الدخول",
+  "@autostartTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "autostartBody": "تصفية الصوت فور تسجيل الدخول.",
+  "@autostartBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurBodyDesktop": "يغطّي الأشخاص والصور على الشاشة، فوق كل النوافذ، ما دامت واعية مفتوحة (سواء كانت تصفية الصوت تعمل أم لا). يعمل على هذا الحاسوب، ولا يُرسَل شيء إلى أي مكان. إغلاق نافذة واعية يوقف التمويه.",
+  "@blurBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurFailBodyDesktop": "مفعّل: تُغطّى الشاشة كلها إذا كان الحاسوب أبطأ من اللازم أو تعطّل التمويه، وتبقى النقرات تصل إلى النوافذ تحته. معطّل: تبقى الشاشة ظاهرة مع شريط أحمر في أعلاها.",
+  "@blurFailBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurStatusOnVisibleDesktop": "التمويه يعمل. يظهر التمويه في التقاط الشاشة على هذا الحاسوب، لذا تبقى المنطقة المموّهة مموّهة حتى يتغيّر المشهد.",
+  "@blurStatusOnVisibleDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurStatusNoOverlayDesktop": "لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n{details}",
+  "@blurStatusNoOverlayDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "blurStatusShareDialog": "اختر شاشتك في نافذة مشاركة الشاشة واسمح بها. تسأل واعية مرة واحدة فقط، وتبقى الصورة على هذا الحاسوب.",
+  "@blurStatusShareDialog": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurStatusExited": "توقّف التمويه على نحو غير متوقّع. أطفئ أحد خيارات التمويه ثم شغّله لتجرّب من جديد. التفاصيل:\n{details}",
+  "@blurStatusExited": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "engineDetectorFailed": "لم يُحمَّل كاشف غناء النساء، لذا تُكتم الأصوات ما دام هذا الخيار مفعّلًا.",
+  "@engineDetectorFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurStatusUncovered": "إحدى الشاشات لا يغطّيها التمويه: لم تُشارَك معه، أو وُصلت لاحقًا. أطفئ أحد خيارات التمويه ثم شغّله، واختر كل الشاشات في نافذة مشاركة الشاشة.",
+  "@blurStatusUncovered": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurStatusModelsMissingDesktop": "نماذج التمويه غير موجودة في هذا التثبيت، لذا لا يستطيع تغطية شيء، ويبقى شريط أحمر في أعلى الشاشة. أعد تثبيت واعية.",
+  "@blurStatusModelsMissingDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "diagNoteDesktop": "ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.",
+  "@diagNoteDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "settingHoldSilenceBodyDesktop": "مستحسن. إذا توقفت التصفية من تلقاء نفسها (بسبب خطأ، لا بفعلك)، تبقى التطبيقات الأخرى صامتة حتى تشغّلها من جديد أو تضغط «إيقاف»، بدل أن تُسمع الموسيقى دون تصفية.",
+  "@settingHoldSilenceBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "settingStereoBodyDesktop": "مُطفأ: صوت أحادي (مونو)، يُثقل الحاسوب أقل. مُشغَّل: يُبقي جهتَي اليمين واليسار منفصلتين. وإن كان الحاسوب أبطأ من الستيريو، يعود إلى المونو من تلقاء نفسه.",
+  "@settingStereoBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkEntryBodyDesktop": "الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.",
+  "@linkEntryBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkEntryBodyWatch": "الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.",
+  "@linkEntryBodyWatch": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkWatchNoteDesktop": "يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.",
+  "@linkWatchNoteDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkFilterFailed": "لم تبدأ التصفية، فلم يُفتح الرابط. شغّلها من صفحة التصفية ثم حاول مرة أخرى.",
+  "@linkFilterFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSavedVideoDesktop": "في مجلد الفيديو: Waaiya",
+  "@linkSavedVideoDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSavedAudioDesktop": "في مجلد الموسيقى: Waaiya",
+  "@linkSavedAudioDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkShowInFolder": "إظهار في المجلد",
+  "@linkShowInFolder": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "linkSingingNote": "يُكتم غناء النساء أيضاً، كما في إعداداتك.",
+  "@linkSingingNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "singingKeepTitle": "إبقاء أصوات الغناء (تجريبي)",
+  "@singingKeepTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "singingKeepBody": "تُزال الآلات الموسيقية وتبقى أصوات الغناء، فالمحاضرة التي تحتها نشيد يبقى معها صوت النشيد أيضًا؛ وقبول ذلك من عدمه راجعٌ إليك.",
+  "@singingKeepBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "singingKeepNoModel": "هذه النسخة بلا نموذج الغناء، لذا يبقى الصوت صامتًا ما دام هذا الخيار مفعّلًا. أطفئه.",
+  "@singingKeepNoModel": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixFilterAppsTitle": "تطبيقات تُسمع بلا تصفية",
+  "@fixFilterAppsTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixFilterAppsBody": "التطبيقات التي تختارها هنا تُسمع كما هي: بلا تصفية وبلا إسكات. مثلًا: تطبيق مكالمات الفيديو، حتى لا يتأخّر الصوت في المكالمات.",
+  "@fixFilterAppsBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixAddApp": "إضافة تطبيق",
+  "@fixAddApp": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixRemoveApp": "إزالة {app}",
+  "@fixRemoveApp": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNoApps": "لم يُختر أي تطبيق.",
+  "@fixNoApps": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixPickTitle": "اختر تطبيقًا",
+  "@fixPickTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixPickEmpty": "لم يُعثر على تطبيق آخر.",
+  "@fixPickEmpty": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixPickPlayingDesktop": "التطبيقات التي تُشغّل صوتًا الآن، والتي اختيرت من قبل.",
+  "@fixPickPlayingDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixCancel": "إلغاء",
+  "@fixCancel": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixBlurAppsTitle": "تطبيقات بلا تمويه",
+  "@fixBlurAppsTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixBlurAppsBody": "لا تغطية ما دام أحد هذه التطبيقات يملأ الشاشة، مثل تطبيق الخرائط أو تطبيق البنك. وتعود التغطية فور مغادرته، أو كلما لم تتيقّن واعية من التطبيق الظاهر.",
+  "@fixBlurAppsBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixBlurAppsNeedsSetup": "يحتاج الإعداد لمرة واحدة: من دونه لا تعرف واعية أي تطبيق على الشاشة، فيبقى التمويه في كل مكان.",
+  "@fixBlurAppsNeedsSetup": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixBlurAppsHelperMode": "مساعد واعية لا يعمل، فلا يمكن معرفة التطبيق الظاهر على الشاشة. يبقى التمويه في كل مكان حتى يُشغَّل المساعد من جديد من صفحة الإعداد.",
+  "@fixBlurAppsHelperMode": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixHandTitle": "تغطية جزء باليد",
+  "@fixHandTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixHandBody": "أثناء عمل التمويه يمكنك تغطية جزء من الشاشة بنفسك، مثل صورة فاتت التمويه: اضغط «تغطية جزء» واسحب إصبعك فوقها. تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.",
+  "@fixHandBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixHandNotRunning": "متاح أثناء عمل التمويه: التصفية تعمل وأحد خيارات التمويه مفعّل.",
+  "@fixHandNotRunning": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixCoverArea": "تغطية جزء",
+  "@fixCoverArea": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixRemoveCovers": "إزالة التغطية اليدوية ({count})",
+  "@fixRemoveCovers": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNoteTitle": "تسجيل خطأ",
+  "@fixNoteTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNoteBody": "حين تخطئ واعية، اضغط على ما حدث، مثل «مرّت موسيقى». تحفظ الملاحظة الوقت والتطبيق والإعدادات، لتساعد على معرفة السبب. وتبقى على هذا الجهاز ولا تُرسَل أبدًا.",
+  "@fixNoteBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixMissedSound": "مرّت موسيقى",
+  "@fixMissedSound": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixWrongSound": "حُذف صوت خطأً",
+  "@fixWrongSound": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixMissedScreen": "لم يُغطَّ شيء",
+  "@fixMissedScreen": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixWrongScreen": "غُطّي خطأً",
+  "@fixWrongScreen": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNoted": "سُجّلت الملاحظة (عدد الملاحظات على هذا الجهاز: {count}).",
+  "@fixNoted": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNotesCount": "الملاحظات على هذا الجهاز: {count}",
+  "@fixNotesCount": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNotesShow": "عرض الملاحظات",
+  "@fixNotesShow": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNotesDelete": "حذف الملاحظات",
+  "@fixNotesDelete": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNotesDeleteAsk": "حذف كل الملاحظات؟ لا يمكن التراجع عن ذلك.",
+  "@fixNotesDeleteAsk": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "fixNotesTitle": "ملاحظات الأخطاء",
+  "@fixNotesTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipTitle": "أوقات الصلاة",
+  "@worshipTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipBody": "اختياري. تُحسب على هذا الهاتف من المكان الذي تختاره، ولا يُرسَل شيء.",
+  "@worshipBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlace": "المكان: {place}",
+  "@worshipPlace": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceNone": "المكان: لم يُختر بعد",
+  "@worshipPlaceNone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipChoose": "اختيار",
+  "@worshipChoose": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceSearch": "ابحث عن مدينة",
+  "@worshipPlaceSearch": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceNoMatch": "لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.",
+  "@worshipPlaceNoMatch": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceCustom": "إدخال الإحداثيات",
+  "@worshipPlaceCustom": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLat": "خط العرض (شمال +، جنوب −)",
+  "@worshipLat": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLon": "خط الطول (شرق +، غرب −)",
+  "@worshipLon": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipZone": "المنطقة الزمنية، مثل Africa/Cairo",
+  "@worshipZone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipCustomInvalid": "تحقّق من الأرقام ومن المنطقة الزمنية.",
+  "@worshipCustomInvalid": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceInvalid": "لا يمكن استخدام هذا المكان. اختره من جديد.",
+  "@worshipPlaceInvalid": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethod": "طريقة الحساب: {method}",
+  "@worshipMethod": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodTitle": "طريقة الحساب",
+  "@worshipMethodTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodNote": "اختيرت حسب بلد المدينة. اختر ما يتبعه مسجدك.",
+  "@worshipMethodNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipAsr": "العصر: {rule}",
+  "@worshipAsr": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipAsrTitle": "وقت العصر",
+  "@worshipAsrTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipAsrStandard": "الجمهور (الشافعي والمالكي والحنبلي)",
+  "@worshipAsrStandard": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipAsrHanafi": "الحنفي",
+  "@worshipAsrHanafi": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodMwl": "رابطة العالم الإسلامي",
+  "@worshipMethodMwl": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodIsna": "الجمعية الإسلامية لأمريكا الشمالية (ISNA)",
+  "@worshipMethodIsna": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodEgypt": "الهيئة المصرية العامة للمساحة",
+  "@worshipMethodEgypt": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodUmmAlQura": "أم القرى، مكة المكرمة",
+  "@worshipMethodUmmAlQura": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodKarachi": "جامعة العلوم الإسلامية، كراتشي",
+  "@worshipMethodKarachi": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodTehran": "معهد الجيوفيزياء، جامعة طهران",
+  "@worshipMethodTehran": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodGulf": "منطقة الخليج",
+  "@worshipMethodGulf": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodKuwait": "الكويت",
+  "@worshipMethodKuwait": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodQatar": "قطر",
+  "@worshipMethodQatar": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodSingapore": "سنغافورة (المجلس الإسلامي MUIS)",
+  "@worshipMethodSingapore": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodTurkey": "تركيا (رئاسة الشؤون الدينية)",
+  "@worshipMethodTurkey": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodFrance": "فرنسا (اتحاد المنظمات الإسلامية، 12°)",
+  "@worshipMethodFrance": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodMorocco": "المغرب (وزارة الأوقاف)",
+  "@worshipMethodMorocco": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodIndonesia": "إندونيسيا (وزارة الشؤون الدينية)",
+  "@worshipMethodIndonesia": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodMalaysia": "ماليزيا (JAKIM)",
+  "@worshipMethodMalaysia": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMethodDubai": "دبي",
+  "@worshipMethodDubai": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToday": "اليوم",
+  "@worshipToday": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipNoTimes": "لا أوقات صلاة هنا اليوم: الشمس لا تشرق أو لا تغرب.",
+  "@worshipNoTimes": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSilentTitle": "صامت في أوقات الصلاة",
+  "@worshipSilentTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSilentBody": "عند كل وقت صلاة يصبح الهاتف صامتًا («عدم الإزعاج») للدقائق المحدّدة أدناه، ثم يعود كما كان. مثلًا: من الظهر الساعة 12:00 حتى 12:20.",
+  "@worshipSilentBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSilentMinutes": "مدة الصمت: {minutes} دقيقة",
+  "@worshipSilentMinutes": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMuteTitle": "كتم الوسائط عند الأذان",
+  "@worshipMuteTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMuteBody": "عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.",
+  "@worshipMuteBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMuteMinutes": "مدة الكتم: {minutes} دقيقة",
+  "@worshipMuteMinutes": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMinutesTitle": "المدة",
+  "@worshipMinutesTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMinutesOption": "{minutes} دقيقة",
+  "@worshipMinutesOption": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipNeedPlace": "اختر المكان أولاً.",
+  "@worshipNeedPlace": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipNext": "التالي: {prayer} الساعة {time}",
+  "@worshipNext": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSilentNow": "صامت حتى {time}.",
+  "@worshipSilentNow": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMutedNow": "الوسائط مكتومة حتى {time}.",
+  "@worshipMutedNow": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipDndNeeded": "اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.",
+  "@worshipDndNeeded": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipAllow": "السماح",
+  "@worshipAllow": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipExactNeeded": "«المنبّهات والتذكيرات» غير مسموحة لواعية، لذا قد يتأخر كل تغيير حتى 10 دقائق، أو أكثر أثناء سكون الهاتف.",
+  "@worshipExactNeeded": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipNotificationsNeeded": "الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.",
+  "@worshipNotificationsNeeded": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipTonesTitle": "نغمة رنين وصوت إشعارات بسيطان",
+  "@worshipTonesTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipTonesBody": "لا تستطيع واعية تصفية نغمة الرنين وأصوات الإشعارات، بل استبدالها فقط. اختر نغمة بسيطة بلا موسيقى:",
+  "@worshipTonesBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToneRing": "نغمة رنين بسيطة {number}",
+  "@worshipToneRing": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToneNotification": "صوت إشعار بسيط {number}",
+  "@worshipToneNotification": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipTonePlay": "تشغيل",
+  "@worshipTonePlay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToneSet": "استخدام",
+  "@worshipToneSet": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToneInUse": "مستخدَمة",
+  "@worshipToneInUse": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToneDone": "تم.",
+  "@worshipToneDone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipTonePermission": "اسمح لواعية بتعديل إعدادات النظام، ثم ارجع واضغط مرة أخرى.",
+  "@worshipTonePermission": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipToneFailed": "لم يسمح هذا الهاتف لواعية بتغييرها. في إعدادات الصوت، اختر نغمة اسمها «Waaiya plain».",
+  "@worshipToneFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipOpenSound": "فتح إعدادات الصوت",
+  "@worshipOpenSound": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsTitle": "الرد على المكالمات برسالة أثناء الصلاة",
+  "@worshipSmsTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsBody": "في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبداً إلى الأرقام المخفية أو القصيرة.",
+  "@worshipSmsBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsDelay": "بعد: {seconds} ثانية من الرنين",
+  "@worshipSmsDelay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsDelayTitle": "ثوانٍ من الرنين قبل الرسالة",
+  "@worshipSmsDelayTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsSecondsOption": "{seconds} ثانية",
+  "@worshipSmsSecondsOption": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsText": "الرسالة: {text}",
+  "@worshipSmsText": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsTextTitle": "رسالتك",
+  "@worshipSmsTextTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsTextDefault": "استخدام الرسالة الافتراضية",
+  "@worshipSmsTextDefault": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsCost": "كل رد رسالة عادية من شريحتك بسعر باقتك. ولا يُرسل شيء أثناء التجوال.",
+  "@worshipSmsCost": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsRoaming": "أنت في التجوال الآن: لن تُرسل رسائل.",
+  "@worshipSmsRoaming": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipSmsLogTitle": "الردود المرسلة (محفوظة على هذا الهاتف فقط)",
+  "@worshipSmsLogTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipContinue": "متابعة",
+  "@worshipContinue": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyDnd": "لجعل الهاتف صامتاً في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.",
+  "@worshipWhyDnd": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyExact": "للعمل في الوقت تماماً، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.",
+  "@worshipWhyExact": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyNotifications": "اسمح بالإشعارات لترى كل تغيير وتستطيع التراجع عنه.",
+  "@worshipWhyNotifications": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyWrite": "لتغيير نغمة الرنين أو صوت الإشعارات، اسمح لواعية بتعديل إعدادات النظام في الصفحة التالية.",
+  "@worshipWhyWrite": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyPhone": "لمعرفة أن مكالمة ترنّ ومعرفة رقمها، تحتاج واعية إذنَي «الهاتف» و«سجلّ المكالمات». لا يخرج شيء من الهاتف إلا ردّك.",
+  "@worshipWhyPhone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhySms": "لإرسال ردّك، تحتاج واعية إذن إرسال الرسائل. ولا ترسل إلا هذا الرد، مرة واحدة على الأكثر لكل رقم في كل صلاة.",
+  "@worshipWhySms": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMissingDnd": "لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفاً.",
+  "@worshipMissingDnd": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMissingPhone": "لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفاً.",
+  "@worshipMissingPhone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipMissingSms": "لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفاً.",
+  "@worshipMissingSms": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipTryAgain": "حاول مرة أخرى",
+  "@worshipTryAgain": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectTitle": "حماية في لحظات الضعف",
+  "@protectTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectBody": "للحظة ضعف قد تريد فيها إيقاف التصفية. اختر الآن، وأنت هادئ، مدةً للانتظار: عندها لا يُوقف زرّ الإيقاف التصفيةَ فورًا، وتقرّر من جديد حين تنتهي المدة. ويمكن للوالدين أيضًا وضع رمز.",
+  "@protectBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay": "الانتظار قبل الإيقاف: {value}",
+  "@protectDelay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayTitle": "الانتظار قبل الإيقاف",
+  "@protectDelayTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayBody": "مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.",
+  "@protectDelayBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayOff": "بلا انتظار",
+  "@protectDelayOff": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay1m": "دقيقة واحدة",
+  "@protectDelay1m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay5m": "٥ دقائق",
+  "@protectDelay5m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay15m": "١٥ دقيقة",
+  "@protectDelay15m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay30m": "٣٠ دقيقة",
+  "@protectDelay30m": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay1h": "ساعة واحدة",
+  "@protectDelay1h": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay4h": "٤ ساعات",
+  "@protectDelay4h": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelay24h": "٢٤ ساعة",
+  "@protectDelay24h": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayOther": "{minutes} دقيقة",
+  "@protectDelayOther": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinNone": "الرمز: غير موضوع",
+  "@protectPinNone": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinIsSet": "الرمز: موضوع",
+  "@protectPinIsSet": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinSet": "ضع رمزًا",
+  "@protectPinSet": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinRemove": "احذف",
+  "@protectPinRemove": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinBody": "مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.",
+  "@protectPinBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinForgot": "اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.",
+  "@protectPinForgot": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinTitle": "أدخل الرمز",
+  "@protectPinTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinNewTitle": "اختر رمزًا",
+  "@protectPinNewTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinChangeTitle": "غيِّر الرمز",
+  "@protectPinChangeTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinCurrent": "الرمز الحالي",
+  "@protectPinCurrent": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinNew": "الرمز الجديد (من ٤ إلى ٨ أرقام)",
+  "@protectPinNew": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinAgain": "الرمز الجديد مرة أخرى",
+  "@protectPinAgain": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinBad": "استعمل من ٤ إلى ٨ أرقام.",
+  "@protectPinBad": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinDiffer": "الرمزان الجديدان غير متطابقين.",
+  "@protectPinDiffer": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPinWrong": "رمز خاطئ. بقيت {count} محاولات قبل التوقّف قليلًا.",
+  "@protectPinWrong": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLocked": "محاولات خاطئة كثيرة. حاول مرة أخرى عند {time}.",
+  "@protectLocked": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectOk": "حسنًا",
+  "@protectOk": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectCancel": "إلغاء",
+  "@protectCancel": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectCancelChange": "ألغِ التغيير",
+  "@protectCancelChange": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectConfirm": "أكِّد",
+  "@protectConfirm": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectPending": "{what}: ينتظر حتى {time}، ثم أكِّده في «الإعدادات».",
+  "@protectPending": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectReady": "{what}: انتهى الانتظار. أما زلت تريده؟ اضغط «أكِّد» قبل {time}، وإلا فلن يتغيّر شيء.",
+  "@protectReady": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWaitTitle": "هذا التغيير ينتظر",
+  "@protectWaitTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWaitBody": "{what} لن يحدث الآن. عند {time}، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.",
+  "@protectWaitBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWaitStart": "ابدأ الانتظار",
+  "@protectWaitStart": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectAlreadyWaiting": "ينتظر بالفعل حتى {time}.",
+  "@protectAlreadyWaiting": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectStarted": "ينتظر حتى {time}، ثم أكِّده في «الإعدادات».",
+  "@protectStarted": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectTomorrow": "غدًا عند {time}",
+  "@protectTomorrow": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectHeldBack": "ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.",
+  "@protectHeldBack": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLimits": "ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimits": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLimitsDesktop": "ما لا تستطيع منعه: أمر waaiya في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimitsDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectLimitsWindows": "ما لا تستطيع منعه: أمر waaiya-filter.exe في الطرفية، وإزالة واعية، وحذف مجلد إعداداتها. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.",
+  "@protectLimitsWindows": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatStop": "إيقاف التصفية",
+  "@protectWhatStop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatOff": "إطفاء: {name}",
+  "@protectWhatOff": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatOn": "تشغيل: {name}",
+  "@protectWhatOn": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatApps": "إضافة تطبيق إلى: {name}",
+  "@protectWhatApps": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatStrictness": "جعل التغطية أقل صرامة",
+  "@protectWhatStrictness": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatGender": "تغيير من يستعمل واعية",
+  "@protectWhatGender": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatDelay": "تغيير الانتظار قبل الإيقاف إلى: {value}",
+  "@protectWhatDelay": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatPinChange": "تغيير الرمز",
+  "@protectWhatPinChange": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatPinClear": "حذف الرمز",
+  "@protectWhatPinClear": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectWhatSetting": "تغيير إعداد",
+  "@protectWhatSetting": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "onboardBodyDesktop": "تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.",
+  "@onboardBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  }
+}

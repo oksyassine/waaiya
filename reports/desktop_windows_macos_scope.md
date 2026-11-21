@@ -1,4 +1,11 @@
-# Windows and macOS ports: scope (not implemented)
+# Windows and macOS ports: scope
+
+**Update 2026-11-12: the Windows route C2 was built and measured** (`windows/filter`, CI
+`windows/test/audio_test.py` on Windows Server 2022 and 2025 runners with the Scream virtual output): a session at
+1e-4 is still captured by process loopback in float; x 1e4 gives the level back within 0.03 dB with a
+harmonic-to-noise ratio above 120 dB (16-bit would give about 4 dB). New sessions lowered inside
+`OnSessionCreated` start without a leak. Found on the way: a loopback recorder's session is lowered too (its
+recording drops 80 dB), and the session meter cannot tell recorders from players. macOS: not started.
 
 Date: 2026-11-09. Scope only: nothing here has been built or run on Windows or macOS. It builds on
 `reports/System wide instrument muting app.md` (desktop section) and its source notes in

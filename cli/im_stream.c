@@ -44,10 +44,23 @@ static long pipe_queued(int fd) {
     return n;
 }
 
+/* --status-file: what the engine loaded, for 'waaiya status' (one line: ok | model_failed <why> |
+ * detector_failed <why>), written once at start, atomically. */
+static void write_status(const char *path, const char *what, const char *why) {
+    if (!path) return;
+    char tmp[4096];
+    snprintf(tmp, sizeof tmp, "%s.tmp", path);
+    FILE *f = fopen(tmp, "w");
+    if (!f) return;
+    fprintf(f, "%s%s%s\n", what, why && *why ? " " : "", why ? why : "");
+    if (fclose(f) == 0) rename(tmp, path);
+    else remove(tmp);
+}
+
 int main(int argc, char **argv) {
     const char *detector = NULL;
     unsigned policy = 0;
-    const char *model = NULL;
+    const char *model = NULL, *status_file = NULL;
     int ch = 2, rate = 48000, block = 480, mono = 0, threads = 1, max_backlog_ms = 30;
     for (int i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "-m") && i + 1 < argc) model = argv[++i];
@@ -57,13 +70,14 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[i], "--threads") && i + 1 < argc) threads = atoi(argv[++i]);
         else if (!strcmp(argv[i], "--max-backlog") && i + 1 < argc) max_backlog_ms = atoi(argv[++i]);
         else if (!strcmp(argv[i], "--mono")) mono = 1;
+        else if (!strcmp(argv[i], "--status-file") && i + 1 < argc) status_file = argv[++i];
         else if (!strcmp(argv[i], "-d") && i + 1 < argc) detector = argv[++i];
         else if (!strcmp(argv[i], "--mute-female-singing")) policy |= IM_POLICY_MUTE_FEMALE_SINGING;
         else if (!strcmp(argv[i], "--mute-female-voice")) policy |= IM_POLICY_MUTE_FEMALE_VOICE;
         else if (!strcmp(argv[i], "--fail-closed")) policy |= IM_POLICY_FAIL_CLOSED;
     }
     if (!model || ch < 1 || ch > 8 || block < 1) {
-        fprintf(stderr, "usage: im-stream -m model.onnx [--channels 2] [--rate 48000] [--block 480] [--mono] [--max-backlog 30] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]]\n");
+        fprintf(stderr, "usage: im-stream -m model.onnx [--channels 2] [--rate 48000] [--block 480] [--mono] [--max-backlog 30] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]] [--status-file PATH]\n");
         return 2;
     }
     char err[512];
@@ -82,6 +96,10 @@ int main(int argc, char **argv) {
         fprintf(stderr, "im-stream: %s%s\n", im_engine_detector_error(e),
                 (policy & IM_POLICY_FAIL_CLOSED) ? " -> voice muted while the policy is on (fail-closed)" : "");
     im_engine_set_policy(e, policy);
+    if (!created) write_status(status_file, "model_failed", err);
+    else if (detector && im_engine_detector_status(e, NULL) < 0)
+        write_status(status_file, "detector_failed", im_engine_detector_error(e));
+    else write_status(status_file, "ok", NULL);
     size_t bytes = sizeof(float) * (size_t)block * ch;
     float *in = malloc(bytes), *out = malloc(bytes);
     if (!in || !out) return 1;

@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.SystemClock
 import android.os.Process
 import android.util.Log
 import rikka.shizuku.Shizuku
@@ -23,6 +24,8 @@ import kotlin.system.exitProcess
  *   appops set <pkg> PROJECT_MEDIA allow       -> SystemUI skips the screen-capture consent dialog
  *                                                 (MediaProjectionPermissionActivity returns at once when
  *                                                 hasProjectionPermission(); present on API 29-35)
+ *   pm grant <pkg> android.permission.WRITE_SECURE_SETTINGS -> optional, for the notification-text tile
+ *                                                 (ScreenShareProtection)
  *
  * Mechanism: a Shizuku UserService ([SetupService]) that runs the stable `cmd package` / `cmd appops`
  * shell commands. Why this one:
@@ -61,20 +64,45 @@ object ShizukuSetup {
     /** Shows Shizuku's own "allow Islamic Mute?" dialog; the result arrives on OnRequestPermissionResultListener. */
     fun requestPermission() = Shizuku.requestPermission(REQUEST_CODE)
 
+    /** [done]'s text when Shizuku never answered within [GIVE_UP_MS] (the UI words it). */
+    const val TIMEOUT = "timeout"
+    /** After this long the screen says "still working": the helper process is slow to start on some phones. */
+    const val SLOW_MS = 20_000L
+    /** Only then does the screen say it failed. A later answer still counts ([addListener]). */
+    const val GIVE_UP_MS = 120_000L
+
+    private val main = Handler(Looper.getMainLooper())
+    private val listeners = java.util.concurrent.CopyOnWriteArraySet<() -> Unit>()
+
+    /**
+     * Called on the main thread whenever a Shizuku grant ends, also after its caller stopped waiting: on some Xiaomi
+     * phones the answer came after the old 20 s limit, the grants had worked, and only a restart showed it.
+     */
+    fun addListener(l: () -> Unit) { listeners += l }
+    fun removeListener(l: () -> Unit) { listeners -= l }
+
     /**
      * Starts [SetupService] through Shizuku, runs the grants, removes the service.
-     * [done] runs on the main thread with the command log or an error message. The caller re-checks the
-     * real state (checkSelfPermission / app-op) afterwards: that is the source of truth, not this text.
+     * [slow] runs on the main thread after [SLOW_MS] without an answer; [done] runs once, on the main thread, with
+     * the command log, an error message or [TIMEOUT]. The caller re-checks the real state (checkSelfPermission /
+     * app-op) afterwards: that is the source of truth, not this text.
      */
-    fun grant(ctx: Context, done: (String) -> Unit) = run(ctx, done) { it.grantSetup() }
+    fun grant(ctx: Context, slow: () -> Unit = {}, done: (String) -> Unit) =
+        run(ctx.applicationContext, "Shizuku setup", slow, done) { it.grantSetup() }
 
     /** Screen blur: overlay permission + the covers' accessibility service, through the same UserService. */
-    fun grantBlur(ctx: Context, done: (String) -> Unit) = run(ctx, done) { it.grantBlur() }
+    fun grantBlur(ctx: Context, slow: () -> Unit = {}, done: (String) -> Unit) =
+        run(ctx.applicationContext, "Shizuku blur setup", slow, done) { it.grantBlur() }
 
-    private fun run(ctx: Context, done: (String) -> Unit, call: (ISetupService) -> String) {
-        val main = Handler(Looper.getMainLooper())
+    private fun run(ctx: Context, route: String, slow: () -> Unit, done: (String) -> Unit, call: (ISetupService) -> String) {
+        val started = SystemClock.elapsedRealtime()
         var finished = false  // only touched on the main thread
         fun finish(msg: String) = main.post { if (!finished) { finished = true; done(msg) } }
+        fun ended(msg: String) {
+            SetupLog.record(ctx, route, SystemClock.elapsedRealtime() - started, msg)
+            finish(msg)
+            main.post { listeners.forEach { it() } }  // also when [done] was already called with TIMEOUT
+        }
 
         val args = Shizuku.UserServiceArgs(ComponentName(ctx.packageName, SetupService::class.java.name))
             .daemon(false)
@@ -83,13 +111,13 @@ object ShizukuSetup {
             .version(BuildConfig.VERSION_CODE)
         val conn = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-                if (binder == null || !binder.pingBinder()) { finish("Shizuku service did not start"); return }
+                if (binder == null || !binder.pingBinder()) { ended("Shizuku service did not start"); return }
                 val conn = this
                 thread(name = "im-shizuku") {
                     val result = runCatching { call(ISetupService.Stub.asInterface(binder)) }
                     result.onSuccess { Log.i(TAG, "shizuku setup:\n$it") }.onFailure { Log.w(TAG, "shizuku setup failed", it) }
                     runCatching { Shizuku.unbindUserService(args, conn, true) }
-                    finish(result.getOrElse { "Shizuku: ${it.message ?: it.javaClass.simpleName}" })
+                    ended(result.getOrElse { "Shizuku: ${it.message ?: it.javaClass.simpleName}" })
                 }
             }
             override fun onServiceDisconnected(name: ComponentName?) {}
@@ -97,9 +125,14 @@ object ShizukuSetup {
         try {
             Shizuku.bindUserService(args, conn)
         } catch (t: Throwable) {
-            finish("Shizuku: ${t.message ?: t.javaClass.simpleName}"); return
+            ended("Shizuku: ${t.message ?: t.javaClass.simpleName}"); return
         }
-        main.postDelayed({ finish("Shizuku did not answer in time. Is it still running?") }, 20_000)
+        main.postDelayed({ if (!finished) slow() }, SLOW_MS)
+        main.postDelayed({
+            if (finished) return@postDelayed
+            SetupLog.record(ctx, route, GIVE_UP_MS, "no answer from Shizuku after ${GIVE_UP_MS / 1000} s (a late answer is still applied)")
+            finish(TIMEOUT)
+        }, GIVE_UP_MS)
     }
 }
 
@@ -117,11 +150,14 @@ class SetupService : ISetupService.Stub() {
     override fun destroy() { exitProcess(0) }
 
     override fun grantSetup(): String {
+        debugDelay()
         val pkg = BuildConfig.APPLICATION_ID
         // `cmd <service> ...` is what the `pm` and `appops` wrapper scripts call; no shell, no PATH needed.
         val log = StringBuilder()
         log.appendLine(run("/system/bin/cmd", "package", "grant", pkg, "android.permission.DUMP"))
         log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "PROJECT_MEDIA", "allow"))
+        // Optional: lets the notification-text tile turn Android 15's screen-share protection off while filtering.
+        log.appendLine(run("/system/bin/cmd", "package", "grant", pkg, "android.permission.WRITE_SECURE_SETTINGS"))
         return log.toString()
     }
 
@@ -142,6 +178,16 @@ class SetupService : ISetupService.Stub() {
         }
         log.appendLine(run("/system/bin/settings", "put", "secure", "accessibility_enabled", "1"))
         return log.toString()
+    }
+
+    /**
+     * Debug builds only: `adb shell setprop debug.waaiya.setup_delay <seconds>` makes the helper answer that late, to
+     * test a slow Shizuku (seen on a Xiaomi) on an emulator. Release builds never read it.
+     */
+    private fun debugDelay() {
+        if (!BuildConfig.DEBUG) return
+        val s = output("/system/bin/getprop", "debug.waaiya.setup_delay").toLongOrNull() ?: return
+        Thread.sleep(s * 1000)
     }
 
     private fun output(vararg cmd: String): String = runCatching {

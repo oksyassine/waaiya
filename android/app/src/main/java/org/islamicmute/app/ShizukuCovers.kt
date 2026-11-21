@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
+import android.os.ParcelFileDescriptor
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
@@ -50,10 +51,25 @@ class ShizukuCovers(private val ctx: Context) {
         private set
     @Volatile private var checking = false
 
+    /** Who hosts the layer: Waaiya's own helper ([CoverHelper]) when it runs, else Shizuku. */
+    var via = ""
+        private set
+
     /** Binds the service and creates the layer. [done] runs on the main thread: true = covers can be drawn. */
     fun connect(done: (Boolean) -> Unit) {
         var finished = false
         fun finish(ok: Boolean) = main.post { if (!finished) { finished = true; done(ok) } }
+        CoverHelper.service?.let { s ->
+            via = "Waaiya helper"
+            thread(name = "im-covers-start") {
+                val ok = runCatching { s.start(token) }.onFailure { Log.w(TAG, "covers: helper start failed", it) }
+                    .getOrDefault(false)
+                if (ok) svc = s
+                finish(ok)
+            }
+            return
+        }
+        via = "Shizuku"
         val c = object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
                 if (binder == null || !binder.pingBinder()) { finish(false); return }
@@ -97,7 +113,8 @@ class ShizukuCovers(private val ctx: Context) {
         svc = null
         thread(name = "im-covers-stop") {
             runCatching { s?.stop() }
-            runCatching { conn?.let { Shizuku.unbindUserService(args, it, true) } }
+            // the helper stays for the next blur; a Shizuku UserService is removed with the binding
+            if (via == "Shizuku") runCatching { conn?.let { Shizuku.unbindUserService(args, it, true) } }
         }
     }
 
@@ -115,7 +132,11 @@ class ShizukuCovers(private val ctx: Context) {
  * Shizuku UserService (shell uid, own process, not started by Android: not in the manifest). Hidden SurfaceControl
  * methods are called by reflection; hidden-API checks do not apply to app_process processes.
  */
-class CoverService : ICoverService.Stub() {
+/**
+ * [allowedUid] >= 0 when hosted by Waaiya's own helper ([CoverHelper]): only that uid may call it, and destroy() does
+ * not end the helper. Under Shizuku (-1) Shizuku hands the binder to this app only.
+ */
+class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
     private companion object {
         /** Colour layers at most: the app's rects (Vision.MAX_RECTS, outlines as strips) plus badge and test square. */
         const val MAX_LAYERS = Vision.MAX_RECTS + 2
@@ -140,9 +161,14 @@ class CoverService : ICoverService.Stub() {
         }
     }
 
-    override fun destroy() { clear(); exitProcess(0) }
+    private fun checkCaller() {
+        if (allowedUid >= 0 && Binder.getCallingUid() != allowedUid) throw SecurityException("not Waaiya")
+    }
+
+    override fun destroy() { checkCaller(); clear(); if (allowedUid < 0) exitProcess(0) }
 
     override fun start(app: IBinder): Boolean = synchronized(lock) {
+        checkCaller()
         clear()
         try {
             val b = SurfaceControl.Builder().setName("waaiya-covers")
@@ -177,6 +203,7 @@ class CoverService : ICoverService.Stub() {
     }
 
     override fun update(rects: FloatArray, count: Int): Unit = synchronized(lock) {
+        if (allowedUid >= 0 && Binder.getCallingUid() != allowedUid) return@synchronized  // one-way: drop, no throw
         val r = root ?: return@synchronized
         last = SystemClock.uptimeMillis()
         val n = count.coerceIn(0, rects.size / ShizukuCovers.RECORD).coerceAtMost(MAX_LAYERS)
@@ -208,6 +235,7 @@ class CoverService : ICoverService.Stub() {
     }
 
     override fun health(): Int = synchronized(lock) {
+        checkCaller()
         val r = when { root == null -> 1; updateFailed -> 2; else -> 0 }
         updateFailed = false
         r
@@ -233,7 +261,41 @@ class CoverService : ICoverService.Stub() {
         t.setLayer(c, if (kind == ShizukuCovers.KIND_BADGE || kind == ShizukuCovers.KIND_TEST) 10 else 1)
     }
 
-    override fun stop(): Unit = clear()
+    override fun stop() { checkCaller(); clear() }
+
+    override fun dumpAudio(service: String, sink: ParcelFileDescriptor): Boolean {
+        try {
+            checkCaller()
+            if (service !in HelperDumps.SERVICES) return false
+            // as SessionMuter.dump() does with its own DUMP permission: the service writes into the app's pipe in
+            // the background (one-way), so a full pipe never blocks this call; the app reads until the end
+            val b = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java)
+                .invoke(null, service) as? IBinder ?: return false
+            b.dumpAsync(sink.fileDescriptor, arrayOf())
+            return true
+        } finally {
+            runCatching { sink.close() }  // the service holds its own copy
+        }
+    }
+
+    override fun dumpVisibleApps(sink: ParcelFileDescriptor): Boolean {
+        try {
+            checkCaller()
+            val b = Class.forName("android.os.ServiceManager").getMethod("getService", String::class.java)
+                .invoke(null, "window") as? IBinder ?: return false
+            b.dumpAsync(sink.fileDescriptor, arrayOf("visible-apps"))
+            return true
+        } finally {
+            runCatching { sink.close() }
+        }
+    }
+
+    override fun putScreenShareProtection(value: Int): Boolean {
+        checkCaller()
+        if (value != 0 && value != 1) return false
+        return runCatching { HelperDumps.putGlobal(ScreenShareProtection.KEY, value.toString()) }
+            .onFailure { Log.w("IslamicMute", "helper: cannot write ${ScreenShareProtection.KEY}", it) }.getOrDefault(false)
+    }
 
     private fun hideAll(): Unit = synchronized(lock) {
         val t = SurfaceControl.Transaction()

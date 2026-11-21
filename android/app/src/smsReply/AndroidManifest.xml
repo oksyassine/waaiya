@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "Reply to calls by SMS during prayer" (WorshipSms.kt). Added to every build except -PimPlay (build.gradle.kts):
+     Google Play restricts SMS and call-log permissions to default SMS/phone apps. All three are runtime permissions,
+     asked only when the user turns the option on. READ_PHONE_STATE: a call is ringing, answered or ended.
+     READ_CALL_LOG: the ringing call's number (Android sends it only to apps holding it). SEND_SMS: the reply. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- tablets without a phone can still install the app -->
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+
+    <application>
+        <!-- The phone-state broadcast is protected: only Android can send it. -->
+        <receiver android:name=".WorshipCallReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

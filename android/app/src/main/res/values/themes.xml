@@ -24,6 +24,11 @@
         <item name="android:colorAccent">#7AD8C6</item>
     </style>
 
+    <!-- TileStartActivity: no window of its own, only Android's screen-capture question when it is shown. -->
+    <style name="Theme.IslamicMute.Invisible" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
     <style name="Text"><item name="android:textAlignment">viewStart</item></style>
     <style name="Button" />
     <style name="Text.Title"><item name="android:textSize">28sp</item><item name="android:textColor">@color/text_primary</item><item name="android:fontFamily">sans-serif-medium</item></style>

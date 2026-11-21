@@ -1,6 +1,6 @@
 /* im-pulse: the Linux live filter in one process, talking to PulseAudio (or pipewire-pulse) directly.
  *
- *   record <source> (the "Islamic Mute" null-sink monitor) -> engine, whole hops -> play <sink> (real output)
+ *   record <source> (the Waaiya null-sink monitor) -> engine, whole hops -> play <sink> (real output)
  *
  * Replaces  parec | im-stream | pacat.  Why: pipes and pacat's server-side buffer hide how much audio is
  * queued, so every playback underrun added 6-10 ms of delay that stayed until restart. Here the record
@@ -361,11 +361,24 @@ static void stats_line(void) {
 static void usage(void) {
     fprintf(stderr, "usage: im-pulse -m model.onnx --sink <sink> [--source islamic_mute.monitor] [--target-ms 35] [--max-target-ms 0]\n"
                     "                [--mono] [--threads 1] [-d detector.onnx --mute-female-singing|--mute-female-voice [--fail-closed]]\n"
-                    "                [--channels 2] [--rate 48000] [--minreq-ms 10] [--stats-s 10]\n");
+                    "                [--channels 2] [--rate 48000] [--minreq-ms 10] [--stats-s 10] [--status-file PATH]\n");
+}
+
+/* --status-file: what the engine loaded, for 'waaiya status' (one line: ok | model_failed <why> |
+ * detector_failed <why>), written once at start, atomically. */
+static void write_status(const char *path, const char *what, const char *why) {
+    if (!path) return;
+    char tmp[4096];
+    snprintf(tmp, sizeof tmp, "%s.tmp", path);
+    FILE *f = fopen(tmp, "w");
+    if (!f) return;
+    fprintf(f, "%s%s%s\n", what, why && *why ? " " : "", why ? why : "");
+    if (fclose(f) == 0) rename(tmp, path);
+    else remove(tmp);
 }
 
 int main(int argc, char **argv) {
-    const char *model = NULL, *detector = NULL, *source = "islamic_mute.monitor", *sink = NULL;
+    const char *model = NULL, *detector = NULL, *status_file = NULL, *source = "islamic_mute.monitor", *sink = NULL;
     unsigned policy = 0;
     int ch = 2, rate = 48000, mono = 0, threads = 1;
     double target_ms = 35, max_target_ms = 0, minreq_ms = 10, stats_s = 10;
@@ -377,6 +390,7 @@ int main(int argc, char **argv) {
         else if (!strcmp(argv[i], "--max-target-ms") && i + 1 < argc) max_target_ms = atof(argv[++i]);
         else if (!strcmp(argv[i], "--minreq-ms") && i + 1 < argc) minreq_ms = atof(argv[++i]);
         else if (!strcmp(argv[i], "--stats-s") && i + 1 < argc) stats_s = atof(argv[++i]);
+        else if (!strcmp(argv[i], "--status-file") && i + 1 < argc) status_file = argv[++i];
         else if (!strcmp(argv[i], "--channels") && i + 1 < argc) ch = atoi(argv[++i]);
         else if (!strcmp(argv[i], "--rate") && i + 1 < argc) rate = atoi(argv[++i]);
         else if (!strcmp(argv[i], "--threads") && i + 1 < argc) threads = atoi(argv[++i]);
@@ -399,6 +413,10 @@ int main(int argc, char **argv) {
     if (detector && A.e && im_engine_detector_status(A.e, NULL) < 0)
         logf_("%s%s", im_engine_detector_error(A.e),
               (policy & IM_POLICY_FAIL_CLOSED) ? " -> voice muted while the policy is on (fail-closed)" : "");
+    if (!A.e) write_status(status_file, "model_failed", err);
+    else if (detector && im_engine_detector_status(A.e, NULL) < 0)
+        write_status(status_file, "detector_failed", im_engine_detector_error(A.e));
+    else write_status(status_file, "ok", NULL);
     A.ch = ch; A.rate = rate;
     A.frame = sizeof(float) * (size_t)ch;
     A.hop_bytes = A.frame * (size_t)A.hop;
@@ -423,7 +441,7 @@ int main(int argc, char **argv) {
 
     A.ml = pa.pa_threaded_mainloop_new();
     if (!A.ml) { logf_("cannot create mainloop"); return 1; }
-    A.ctx = pa.pa_context_new(pa.pa_threaded_mainloop_get_api(A.ml), "Islamic Mute");
+    A.ctx = pa.pa_context_new(pa.pa_threaded_mainloop_get_api(A.ml), "Waaiya filter");
     pa.pa_context_set_state_callback(A.ctx, ctx_state_cb, NULL);
     pa.pa_threaded_mainloop_lock(A.ml);
     int rc = 1;

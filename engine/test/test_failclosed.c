@@ -1,7 +1,7 @@
 /* Fail-closed behaviour of the engine (see im_engine.h):
  *  (a) an engine whose model did not load (bad path, not an ONNX file, wrong sample rate) reports the error,
  *      im_engine_failed() == 1, and outputs exact zeros (bitwise +0.0f) for a loud input through every
- *      processing path, with a delay that does not change from call to call. A failed engine has no model
+ *      processing path, with a delay that does not change from call to call, also with the A/B bypass on. A failed engine has no model
  *      look-ahead: im_engine_latency() == hop and im_engine_aligned_latency() == 0 (a working engine reports
  *      look-ahead + hop), so the failed delay is shorter than the working one; its output is silence anyway.
  *  (b) a working voice model with IM_POLICY_MUTE_FEMALE_SINGING | IM_POLICY_FAIL_CLOSED and no usable detector
@@ -118,6 +118,21 @@ static void check_failed(const char *what, im_engine *e, int rc, const char *err
     CHECK(rc_ok && zero, "%s: hop-aligned path in place is exact zeros", what);
     CHECK(steady && same_delay(e, lat, alat, hop), "%s: delay never changed (latency %d, aligned %d)", what, lat, alat);
     CHECK(im_engine_failed(e) == 1, "%s: still failed after processing", what);
+
+    /* the A/B bypass (im_engine_set_enabled 0, the LADSPA plugin's switch) never passes the original through a
+     * failed engine */
+    im_engine_set_enabled(e, 0);
+    zero = 1;
+    for (int k = 0; k < 50; k++) {
+        fill(in, BLOCK, pos);
+        pos += BLOCK;
+        set_all(out, (size_t)BLOCK * CH, SENTINEL);
+        im_engine_process_interleaved(e, in, out, BLOCK);
+        zero &= all_zero_bits(out, (size_t)BLOCK * CH);
+    }
+    CHECK(zero, "%s: bypass switched on: still exact zeros (no original sound)", what);
+    im_engine_set_enabled(e, 1);
+    im_engine_reset(e); /* the hop-aligned check below needs no partial hop held */
 
     /* a failed engine with the fail-closed voice policy is silent too */
     im_engine_set_policy(e, IM_POLICY_MUTE_FEMALE_SINGING | IM_POLICY_FAIL_CLOSED);

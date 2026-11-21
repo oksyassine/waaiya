@@ -22,4 +22,19 @@ interface ICoverService {
     // Two-way health check (update() is one-way and cannot report): 0 = the layer exists and every update since
     // the last call was drawn; 1 = no layer; 2 = an update failed (the error is in the shell's logcat).
     int health() = 4;
+
+    // --- Waaiya's helper only (CoverHelper): what the app would need a permission for, on phones whose system
+    // refuses the one-time grants (Xiaomi, OPPO family without their Developer options switch). The shell user holds
+    // these permissions itself. Narrow on purpose: no command execution.
+
+    // Writes the system's dump of `service` (only "media.audio_policy" or "audio": the sound sessions SessionMuter
+    // silences) into `sink`, in the background; the app reads `sink` until it ends. False for another service.
+    boolean dumpAudio(String service, in ParcelFileDescriptor sink) = 5;
+
+    // The global setting "disable_screen_share_protections_for_apps_and_notifications" (ScreenShareProtection), 0 or 1.
+    boolean putScreenShareProtection(int value) = 6;
+
+    // Writes `dumpsys window visible-apps` (which app is on screen, for "blur off for chosen apps") into `sink`.
+    // Only that section of the window manager's dump; no other arguments are accepted.
+    boolean dumpVisibleApps(in ParcelFileDescriptor sink) = 7;
 }

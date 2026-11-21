@@ -1,0 +1,1 @@
+Updates inside the app: Waaiya checks once a day for a new version and tells you. "Update now" downloads only what changed (a few MB instead of about 100), and Android asks you to confirm. Turn the check off in Settings, "App updates".

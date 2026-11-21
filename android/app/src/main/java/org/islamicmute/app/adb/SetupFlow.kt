@@ -28,6 +28,8 @@ class SetupFlow(pairedBefore: Boolean, private val clock: () -> Long = System::c
         NOT_PAIRED,
         CONNECT_FAILED,
         GRANT_FAILED,
+        /** Done, but the phone refused the grants: Waaiya's helper does the work until the phone restarts. */
+        VIA_HELPER,
         TIMEOUT,
     }
 
@@ -93,10 +95,10 @@ class SetupFlow(pairedBefore: Boolean, private val clock: () -> Long = System::c
         note = if (wrongCode) Note.WRONG_CODE else Note.PAIRING_FAILED
     }
 
-    /** The grants ran and the caller checked them on the app's side. */
-    fun grantsDone(verified: Boolean) {
+    /** The grants ran and the caller checked them on the app's side ([viaHelper]: refused, Waaiya's helper took over). */
+    fun grantsDone(verified: Boolean, viaHelper: Boolean = false) {
         phase = if (verified) Phase.DONE else Phase.FAILED
-        note = if (verified) Note.NONE else Note.GRANT_FAILED
+        note = if (!verified) Note.GRANT_FAILED else if (viaHelper) Note.VIA_HELPER else Note.NONE
     }
 
     /** adbd refused our key: forget "paired" and ask for a pairing code. */

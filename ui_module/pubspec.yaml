@@ -1,0 +1,25 @@
+name: waaiya_ui_module
+description: Waaiya's Flutter screens inside the Android app (add-to-app module; see docs/UI_CONTRACT.md).
+version: 0.2.6+8
+publish_to: none
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  waaiya_ui:
+    path: ../ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  module:
+    androidX: true
+    androidPackage: org.islamicmute.ui
+    iosBundleIdentifier: org.islamicmute.ui

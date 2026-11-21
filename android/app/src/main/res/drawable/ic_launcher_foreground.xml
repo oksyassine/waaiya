@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Adaptive icon foreground: the "music off" glyph (Material, Apache-2.0), 48dp inside the 66dp safe zone. -->
+<!-- Adaptive icon foreground: Waaiya's mark, the ع of واعية drawn as an ear (120-unit grid, scaled to 60dp inside the
+     66dp safe zone). The small arc in its bowl is the sound the ear keeps. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <group android:scaleX="2" android:scaleY="2" android:translateX="30" android:translateY="30">
-        <path android:fillColor="#FFFFFFFF" android:pathData="M4.27,3L3,4.27l9,9v0.28c-0.59,-0.34 -1.27,-0.55 -2,-0.55 -2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4v-1.73L19.73,21 21,19.73 4.27,3zM14,7h4V3h-6v5.18l2,2z" />
+    <group android:scaleX="0.5" android:scaleY="0.5" android:translateX="24" android:translateY="24">
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="12" android:strokeLineCap="round"
+            android:strokeLineJoin="round" android:pathData="M80.2 22.15 A14.5 14.5 0 1 0 74.67 44.33 A31 31 0 1 0 89.43 86.01" />
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="8" android:strokeLineCap="round"
+            android:strokeLineJoin="round" android:pathData="M66.01 60.2 A13 13 0 1 0 66.01 84.64" />
     </group>
 </vector>

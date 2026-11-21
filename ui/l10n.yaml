@@ -1,0 +1,7 @@
+# Arabic is the template and the default language. The ARB files are generated from the Android strings by
+# tool/arb_from_android.py (the Arabic texts are reviewed there; keep them verbatim).
+arb-dir: lib/l10n
+template-arb-file: app_ar.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false

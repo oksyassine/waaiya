@@ -68,7 +68,10 @@ class Emu:
                 m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds", ""))
                 if m:
                     x1, y1, x2, y2 = map(int, m.groups())
-                    out.append((n.get("resource-id", ""), n.get("text", ""), ((x1 + x2) // 2, (y1 + y2) // 2)))
+                    # Flutter screens put their words in content-desc and their ids (Semantics.identifier) in
+                    # resource-id without the "package:id/" part
+                    out.append((n.get("resource-id", ""), n.get("text", "") or n.get("content-desc", ""),
+                                ((x1 + x2) // 2, (y1 + y2) // 2)))
             # another app (or the system UI) is slow on a loaded host: Android's "isn't responding" dialog hides
             # the screen under test; answer "Wait" and look again
             if any(re.search(r"isn't responding|لا يستجيب", t) for _, t, _ in out):
@@ -84,7 +87,7 @@ class Emu:
         """The 'checked' state of a view by resource id, or None when it is not on screen."""
         self.sh("uiautomator dump /sdcard/emu_check.xml")
         xml = self.sh("cat /sdcard/emu_check.xml")
-        m = re.search(r'resource-id="[^"]*:id/%s"[^>]*checked="(\w+)"' % rid, xml)
+        m = re.search(r'resource-id="(?:[^"]*:id/)?%s"[^>]*checked="(\w+)"' % rid, xml)
         return None if not m else m.group(1) == "true"
 
     def scroll_to(self, rid, down=True):
@@ -94,12 +97,27 @@ class Emu:
             self.sh("input swipe 540 1500 540 900 200" if down else "input swipe 540 600 540 2000 150")
         return self.find(rid=rid) is not None
 
+    def page(self, name):
+        """Flutter screens: shows a page through the bottom bar (the native screen has one long page)."""
+        # a tap right after a fling can be taken by the scrolling, and on a loaded host the page takes a while to
+        # change (the filter keeps a core busy): check and tap again
+        for attempt in range(6):
+            hit = self.find(rid="nav_" + name)
+            if not hit:
+                return
+            self.sh(f"input tap {hit[2][0]} {hit[2][1]}")
+            time.sleep(1 if attempt < 2 else 3)
+            self.sh("uiautomator dump /sdcard/emu_check.xml")
+            xml = self.sh("cat /sdcard/emu_check.xml")
+            if re.search(r'resource-id="nav_%s"[^>]*selected="true"' % name, xml):
+                return
+
     def broadcast(self, action, extra=""):
         return self.sh(f"am broadcast -a {PKG}.{action} -p {PKG} {extra}")
 
     def find(self, rid=None, text=None):
         for r, t, c in self.nodes():
-            if rid and r.endswith(":id/" + rid):
+            if rid and (r == rid or r.endswith(":id/" + rid)):
                 return r, t, c
             if text and re.search(text, t):
                 return r, t, c
@@ -128,7 +146,8 @@ class Emu:
 
 def strings(lang):
     """name -> text of the app's strings in one language."""
-    path = os.path.join(RES, "values-ar" if lang == "ar" else "values", "strings.xml")
+    folder = "values" if lang == "en" else "values-" + ("in" if lang == "id" else lang)
+    path = os.path.join(RES, folder, "strings.xml")
     out = {}
     for s in ET.parse(path).getroot().iter("string"):
         out[s.get("name")] = (s.text or "").replace("\\n", "\n").replace("\\'", "'").replace('\\"', '"')
@@ -169,6 +188,12 @@ def main():
     ap.add_argument("--seconds", type=int, default=45, help="how long to play before reading the numbers")
     ap.add_argument("--shots", help="folder for screenshots")
     ap.add_argument("--keep", action="store_true", help="keep the app data (default: start from a fresh install)")
+    ap.add_argument("--cover-helper", action="store_true",
+                    help="start Waaiya's own cover helper (shell uid, as the on-phone setup does) after installing: "
+                         "with --blur the covers are then a pass-through shell layer (Android 12+)")
+    ap.add_argument("--simple", action="store_true",
+                    help="simple mode (test, no setup): media muted while filtering, Waaiya's sound on the alarm channel; "
+                         "checks the mute, the channel, a volume key, the restore on Stop and after a killed process")
     ap.add_argument("--blur", action="store_true", help="also turn the screen blur on (women and immodest images)")
     ap.add_argument("--stereo", action="store_true", help="choose stereo in the settings first (mono is the default)")
     ap.add_argument("--end-capture", action="store_true",
@@ -176,7 +201,14 @@ def main():
     ap.add_argument("--blur-fail", action="store_true",
                     help="debug APK: make the blur's capture fail and check the screen says so")
     a = ap.parse_args()
-    e, c, ar = Emu(a.serial), Checks(), strings("ar")
+    e, c = Emu(a.serial), Checks()
+    # First launch (0.2.12): the phone's language when Waaiya has it, else Arabic. The checks find the screens'
+    # words in that language (the name `ar` stays: it was Arabic only).
+    phone = (e.sh("getprop persist.sys.locale").strip() or e.sh("getprop ro.product.locale").strip()).split("-")[0]
+    lang = {"in": "id"}.get(phone, phone)
+    lang = lang if lang in ("ar", "en", "fr", "ur", "id", "tr", "bn", "fa", "ms", "es", "nl", "de", "it", "ru", "uz", "sw", "ha",
+                              "so") else "ar"
+    ar = strings(lang)
     shot = (lambda name: e.screenshot(os.path.join(a.shots, name + ".png"))) if a.shots else (lambda name: None)
     if a.shots:
         os.makedirs(a.shots, exist_ok=True)
@@ -198,18 +230,53 @@ def main():
         e.sh(f"pm revoke {PKG} android.permission.DUMP")
         e.sh(f"appops set {PKG} PROJECT_MEDIA default")
     e.adb("logcat", "-c")
+    if a.cover_helper:
+        # the same shell line as CoverHelper.startCommand (WirelessSetupService runs it over Wireless debugging)
+        dump = e.sh(f"dumpsys package {PKG}")
+        # "appId=" from Android 12, "userId=" before
+        uid, vc = re.search(r"(?:appId|userId)=(\d+)", dump).group(1), re.search(r"versionCode=(\d+)", dump).group(1)
+        e.sh("for p in $(pidof waaiya_covers); do kill $p; done; "
+             f"P=$(pm path {PKG} | head -n 1 | cut -d: -f2); CLASSPATH=$P setsid app_process /system/bin "
+             f"--nice-name=waaiya_covers org.islamicmute.app.CoverHelper {uid} {vc} </dev/null >/dev/null 2>&1 & "
+             "for i in 1 2 3 4 5 6 7 8 9 10; do sleep 0.5; pidof waaiya_covers >/dev/null && break; done")
+        c.check(e.sh("pidof waaiya_covers").strip() != "", "cover helper runs as a shell process")
     e.sh("input keyevent KEYCODE_WAKEUP")
     e.sh(f"am start -n {PKG}/.MainActivity")
 
     # --- first launch: Arabic, the man/woman question
-    if e.wait(rid="choose_man", seconds=15):
-        c.check(e.find(text=re.escape(ar["onboard_title"])) is not None, "first launch is in Arabic")
+    if e.wait(rid="choose_man", seconds=45):  # a debug Flutter build takes ~20 s to start on an emulator
+        c.check(e.find(text=re.escape(ar["onboard_title"])) is not None, f"first launch is in the phone's language ({lang})")
         e.tap(rid="choose_man")
+        # Flutter: the first frame can be on screen before it takes taps; tap again if nothing moved
+        if not e.wait(rid="power", seconds=5) and e.find(rid="choose_man"):
+            e.tap(rid="choose_man")
     c.check(e.wait(rid="power", seconds=10) is not None, "main screen shows the power button")
+    def music_muted():
+        m = re.search(r"- STREAM_MUSIC:\s*\n\s*Muted: (\w+)", e.sh("dumpsys audio"))
+        return m is not None and m.group(1) == "true"
+
+    if a.simple:
+        e.page("setup")
+        e.scroll_to("switch_simple_mode")
+        e.tap(rid="switch_simple_mode")
+        c.check(e.checked("switch_simple_mode") is True, "simple mode turned on (Setup page)")
+        for _ in range(4):
+            e.sh("input swipe 540 600 540 2000 150")
+        e.page("filter")
+    # Without DUMP, a running helper reads the sound sessions for the app, and the app then counts the setup as done
+    # ("helper mode", HelperDumps: phones that refuse the grants). The helper answers a new process within ~4 s.
+    # Simple mode counts as silenced too (the media mute), with Android's question at each start.
+    silenced = a.setup == "done" or a.cover_helper or a.simple
+    if a.cover_helper and a.setup == "none":
+        for _ in range(12):
+            if e.find(text=re.escape(ar["setup_banner_title"])) is None:
+                break
+            time.sleep(1)
     banner = e.find(text=re.escape(ar["setup_banner_title"]))
-    c.check((banner is not None) == (a.setup == "none"), "setup banner shown only when the setup is missing")
+    c.check((banner is not None) == (not silenced), "setup banner shown only when the setup is missing")
     shot("1_idle")
     if a.stereo:
+        e.page("filter")
         e.scroll_to("switch_stereo")
         e.tap(rid="switch_stereo")
         c.check(e.checked("switch_stereo") is True, "stereo chosen")
@@ -217,26 +284,38 @@ def main():
             e.sh("input swipe 540 600 540 2000 150")
 
     # --- start
+    e.page("filter")
     e.tap(rid="power")
-    if a.setup == "none":
+    if not silenced:
         c.check(e.wait(text=re.escape(ar["start_no_setup_title"]), seconds=5) is not None,
                 "start without setup: a dialog says the music will still be heard")
         shot("2_start_dialog")
         e.tap(text=re.escape(ar["start_no_setup_anyway"]))
-        # Android's own question (in the phone's language)
-        e.tap(text=r"^(Start|Start now|ابدأ|بدء|البدء الآن)$", seconds=15)
+        # Android's own question, in the phone's language: its positive button
+        e.tap(rid="android:id/button1", seconds=15)
     else:
         c.check(e.wait(text=re.escape(ar["start_no_setup_title"]), seconds=3) is None, "setup done: no warning dialog")
-        if e.find(text=r"^(Start|Start now)$"):
+        if a.setup != "done":
+            # helper mode: the phone refused PROJECT_MEDIA too, so Android asks before each capture
+            e.tap(rid="android:id/button1", seconds=15)
+        elif e.find(text=r"^(Start|Start now)$"):
             c.check(False, "setup done: Android should not ask to share the screen")
             e.tap(text=r"^(Start|Start now)$")
     on = e.wait(text=re.escape(ar["state_on_title"]), seconds=60)
     c.check(on is not None, "the screen says filtering is on")
     time.sleep(2)
+    e.page("filter")
     detail = (e.find(rid="state_detail") or ("", "", None))[1]
-    if a.setup == "none":
+    if not silenced:
         c.check(detail == ar["state_on_not_muted"], "state line warns the original sound is not silenced", detail)
-        c.check(ar["notif_not_muted"] in e.sh("dumpsys notification --noredact"), "notification warns too")
+        for _ in range(10):  # posted a moment after the screen changes
+            notes = e.sh("dumpsys notification --noredact")
+            if ar["notif_not_muted"] in notes or (a.expect_slow and ar["notif_too_slow"] in notes):
+                break
+            time.sleep(1)
+        # on a host too slow for this build, the "too slow" warning takes the notification's one line first
+        notes = e.sh("dumpsys notification --noredact")
+        c.check(ar["notif_not_muted"] in notes or (a.expect_slow and ar["notif_too_slow"] in notes), "notification warns too")
     shot("3_filtering")
 
     # --- play something in another app
@@ -248,7 +327,7 @@ def main():
          "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
     time.sleep(a.seconds)
     log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
-    if a.setup == "done":
+    if silenced and not a.simple:
         # the other app's player must carry the silencing effect while it plays
         m = re.search(r"muter: original of session (\d+) \(uid (\d+), USAGE_MEDIA\) silenced", log)
         c.check(m is not None, "the muter silenced the other app's player", log[-300:])
@@ -268,7 +347,7 @@ def main():
         print(f"      numbers: hop avg {avg} ms, max {mx} ms, late {late}%, dropouts {under}, waiting {buffered} ms, "
               f"mono {mono}, too slow {slow}, capture {cap} dB, muter {muter}")
         c.check(int(cap) > -60, "the other app's sound reaches the filter", f"capture {cap} dB")
-        c.check(muter == ("OK" if a.setup == "done" else "NO_PERMISSION"), "muter state matches the setup", muter)
+        c.check(muter == ("OK" if silenced else "NO_PERMISSION"), "muter state matches the setup", muter)
         if a.expect_slow or not a.stereo:
             c.check(mono == "true", "slow build or the default: mono" if not a.stereo else "slow build: switched to mono")
         if not a.expect_slow:
@@ -276,11 +355,24 @@ def main():
             c.check(slow == "false", "fast build: not flagged too slow")
             c.check(float(avg) < 7.5, "fast build: hops finish in time", f"avg {avg} ms")
 
+    if a.simple:
+        uid = re.search(r"(?:appId|userId)=(\d+)", e.sh(f"dumpsys package {PKG}")).group(1)
+        c.check(music_muted(), "simple mode: media is muted while filtering")
+        u = re.search(r"u/pid:%s/\d+ state:started attr:AudioAttributes: usage=(\w+)" % uid, e.sh("dumpsys audio"))
+        c.check(u is not None and u.group(1) == "USAGE_ALARM", "simple mode: Waaiya plays on the alarm channel",
+                u.group(1) if u else "no started track of Waaiya")
+        e.sh("input keyevent KEYCODE_VOLUME_UP")
+        time.sleep(3)
+        log2 = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check("simple mode: volume key" in log2, "simple mode: a volume key press becomes Waaiya's volume")
+        c.check(music_muted(), "simple mode: media muted again after the volume key")
+
     # --- the app's own screen while playing
     e.sh(f"am start -n {PKG}/.MainActivity")
     time.sleep(2)
+    e.page("filter")
     detail = (e.find(rid="state_detail") or ("", "", None))[1]
-    if a.setup == "done":
+    if silenced:
         ok_line = ar["state_on_detail"].split("%1$d")[0]
         slow_line = ar["state_too_slow"]
         c.check(detail.startswith(ok_line) or detail == slow_line, "state line: delay, or the too-slow message",
@@ -294,6 +386,7 @@ def main():
     # --- screen blur: on, over a still screen, and the last frame gets its extra passes
     if a.blur:
         e.sh(f"appops set {PKG} SYSTEM_ALERT_WINDOW allow")
+        e.page("screen")
         for rid in ("switch_blur_women", "switch_blur_nudity"):
             for _ in range(6):
                 if e.find(rid=rid):
@@ -305,10 +398,36 @@ def main():
         time.sleep(5)
         e.sh(f"am start -n {PKG}/.MainActivity")
         time.sleep(2)
-        shizuku = "READY" in e.sh(f"dumpsys activity service {PKG}") and False  # no Shizuku on these emulators
-        if not shizuku:
+        if a.cover_helper:
+            # Shell layer drawn by Waaiya's helper: covers are a trusted overlay, so a tap ON a cover reaches the app
+            e.page("filter")
+            e.scroll_to("switch_hold_silence")
+            e.broadcast("DEBUG_COVERS", "--es covers '0.0,0.0,0.3,1.0,1;0.7,0.0,1.0,1.0,1'")
+            e.sh("input swipe 540 1200 540 1150 300")
+            time.sleep(5)
+            c.check("waaiya-covers" in e.sh("dumpsys SurfaceFlinger --list"), "helper: the covers are a shell layer")
+            c.check(not re.search(r"Window\{[^}]*Waaiya blur\}", e.sh("dumpsys window windows")),
+                    "helper: no cover windows")
+            shot("6_blur_helper_covers")
+            hit = e.find(rid="switch_hold_silence")
+            if hit:
+                before = e.checked("switch_hold_silence")
+                w = int(re.search(r"(\d+)x(\d+)", e.sh("wm size")).group(1))
+                e.sh(f"input tap {w // 8} {hit[2][1]}")
+                time.sleep(1)
+                c.check(e.checked("switch_hold_silence") == (not before), "helper: a tap on a cover reaches the app")
+                if e.checked("switch_hold_silence") != before:
+                    e.sh(f"input tap {w // 8} {hit[2][1]}")
+                    time.sleep(1)
+            else:
+                c.check(False, "the hold-silence switch is on screen for the touch test")
+            e.broadcast("DEBUG_COVERS")
+            for _ in range(4):
+                e.sh("input swipe 540 600 540 2000 150")
+        else:
             # App-overlay host: two covers, left and right; a tap in the gap must reach the app; a tap on a cover
             # must not on Android 12+ (the cover windows take their touches so that Android keeps them opaque).
+            e.page("filter")
             e.scroll_to("switch_hold_silence")
             e.broadcast("DEBUG_COVERS", "--es covers '0.0,0.0,0.3,1.0,1;0.7,0.0,1.0,1.0,1'")
             e.sh("input swipe 540 1200 540 1150 300")   # a small scroll: a new frame carries the covers
@@ -355,6 +474,7 @@ def main():
     # the button must be clear of the navigation bar: a tap on its visible edge would land on the bar
     m = re.search(r"(\d+)x(\d+)", e.sh("wm size").splitlines()[-1])
     screen_h = int(m.group(2)) if m else 2280
+    e.page("settings")
     for _ in range(10):
         hit = e.find(rid="diagnostics")
         if hit and hit[2][1] < screen_h * 0.8:
@@ -366,7 +486,15 @@ def main():
     c.check("[Filter]" in report and "[Original sound]" in report, "diagnostics report opens", report[:200])
     c.check(f"Silence originals (DUMP): {'yes' if a.setup == 'done' else 'no'}" in report, "report states the setup")
     c.check("State: FILTERING" in report and "Speed since start" in report, "report has the live numbers")
-    if a.setup == "done":
+    if a.blur and a.cover_helper:
+        c.check("shell layer (Waaiya helper)" in report, "report: covers drawn by Waaiya's helper", report[-800:])
+    if a.simple:
+        c.check("Simple mode (test): on, channel alarm, running yes" in report, "report: simple mode section",
+                report[-900:])
+    if silenced and a.setup != "done" and not a.simple:
+        c.check("via Waaiya's helper" in report and "Waaiya's helper reads the sessions (helper running: yes)" in report,
+                "report: the session list comes through Waaiya's helper", report[-800:])
+    if silenced and not a.simple:
         c.check("Muter: OK, list from audio_policy" in report, "report: the muter reads the session list", report[-600:])
         if int(e.sh("getprop ro.build.version.sdk").strip() or 0) >= 31:
             c.check("list from audio_policy+audio" in report, "Android 12+: both session lists are read", report[-600:])
@@ -383,7 +511,7 @@ def main():
     e.sh("input keyevent KEYCODE_BACK")
 
     # --- Android ends the capture (debug hook): the other apps stay silent, the service stays in the foreground
-    if a.end_capture and a.setup == "done":
+    if a.end_capture and silenced:
         e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
              "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
         time.sleep(5)
@@ -395,9 +523,12 @@ def main():
         notif = e.sh("dumpsys notification --noredact")
         c.check(ar["notif_silenced_title"] in notif, "notification: filtering stopped, other apps silenced")
         e.sh(f"am start -n {PKG}/.MainActivity")
+        time.sleep(2)
+        e.page("filter")
         for _ in range(4):
             e.sh("input swipe 540 600 540 2000 150")   # the top of the screen: state and buttons
         c.check(e.wait(text=re.escape(ar["state_silenced_title"]), seconds=10) is not None, "screen: filtering stopped")
+        e.page("filter")
         detail = (e.find(rid="state_detail") or ("", "", None))[1]
         c.check(detail == ar["state_silenced"], "screen: other apps are silenced, start again or stop", detail)
         c.check(e.find(rid="release_silence") is not None, "screen: a Stop button to hear apps unfiltered")
@@ -411,31 +542,45 @@ def main():
             c.check(any(re.search(r"session %s\b" % sid, flinger, re.I) for sid in sessions) or not sessions,
                     "the other app's session still carries the silencing effect")
         # start again from the silence: back to filtering, no question (setup done)
+        e.page("filter")
         e.scroll_to("power", down=False)
+        e.page("filter")
         e.tap(rid="power")
         c.check(e.wait(text=re.escape(ar["state_on_title"]), seconds=30) is not None, "start again from the silence")
         # and the Stop button releases everything
         e.broadcast("DEBUG_END_CAPTURE")
+        e.page("filter")
         e.scroll_to("power", down=False)
         c.check(e.wait(rid="release_silence", seconds=10) is not None, "silenced again")
         e.tap(rid="release_silence")
         c.check(e.wait(text=re.escape(ar["state_off_title"]), seconds=10) is not None, "Stop: filtering off")
         svc = e.sh(f"dumpsys activity services {PKG}/.FilterService")
         c.check("ServiceRecord" not in svc, "Stop: the service is gone", svc[-300:])
+        # the other app still plays: its sound must come back at once (no effect left on any of its sessions)
+        flinger = e.sh("dumpsys media.audio_flinger")
+        sessions = set(re.findall(r"muter: original of session (\d+)", e.adb("logcat", "-d", "-s", "IslamicMute:V") + log))
+        left = [sid for sid in sessions if re.search(r"session %s\b" % sid, flinger, re.I)]
+        c.check(not left, "Stop while another app plays: its sound is back (no silencing effect left)", str(left))
         e.sh("am force-stop com.google.android.apps.youtube.music")
+        e.page("filter")
         e.scroll_to("power", down=False)
+        e.page("filter")
         e.tap(rid="power")   # running again for the steps below
         e.wait(text=re.escape(ar["state_on_title"]), seconds=30)
 
     # --- the blur's capture fails (debug hook): the blur line says so instead of "starting" for ever
     if a.blur_fail:
         e.broadcast("DEBUG_FAIL_BLUR", "--ez fail true")
+        e.page("filter")
         e.scroll_to("power", down=False)
+        e.page("filter")
         e.tap(rid="power")
         e.wait(text=re.escape(ar["state_off_title"]), seconds=10)
+        e.page("filter")
         e.tap(rid="power")
         e.wait(text=re.escape(ar["state_on_title"]), seconds=30)
         e.broadcast("DEBUG_FAIL_BLUR", "--ez fail false")
+        e.page("screen")
         e.scroll_to("blur_status")
         time.sleep(2)
         st = (e.find(rid="blur_status") or ("", "", None))[1]
@@ -447,8 +592,26 @@ def main():
     # --- stop
     for _ in range(4):
         e.sh("input swipe 540 600 540 2000 150")
+    e.page("filter")
     e.tap(rid="power")
     c.check(e.wait(text=re.escape(ar["state_off_title"]), seconds=10) is not None, "the button stops filtering")
+    if a.simple:
+        time.sleep(1)
+        c.check(not music_muted(), "simple mode: Stop gives the media sound back")
+        # a killed process (crash, swiped away with "force stop"): the next start of the app gives it back
+        e.tap(rid="power")
+        e.tap(rid="android:id/button1", seconds=15)
+        c.check(e.wait(text=re.escape(ar["state_on_title"]), seconds=60) is not None and music_muted(),
+                "simple mode: filtering again, media muted")
+        e.sh(f"am force-stop {PKG}")
+        time.sleep(2)
+        c.check(music_muted(), "simple mode: after a killed process media stays muted (nothing ran to restore it)")
+        e.sh(f"am start -n {PKG}/.MainActivity")
+        for _ in range(15):
+            if not music_muted():
+                break
+            time.sleep(1)
+        c.check(not music_muted(), "simple mode: the next app start gives the media sound back")
     e.sh("am force-stop com.google.android.apps.youtube.music")
     c.check("FATAL EXCEPTION" not in e.adb("logcat", "-d", "-s", "AndroidRuntime:E"), "no crash")
     print(f"\n{'ALL PASSED' if not c.failed else str(c.failed) + ' FAILED'}  (setup {a.setup}, {os.path.basename(a.apk)})")

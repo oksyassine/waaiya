@@ -12,8 +12,20 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <!-- Granted once by the user over ADB/Shizuku; lets the app list other apps' audio sessions to mute the originals. -->
     <uses-permission android:name="android.permission.DUMP" tools:ignore="ProtectedPermissions" />
+    <!-- Granted by the same one-time setup; optional. Only for the Quick Settings tile "notification text"
+         (ScreenShareProtection): Android 15+'s "Disable screen share protections" switch, only while filtering. -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
     <!-- Screen blur without the accessibility service: covers drawn as an app overlay (touches on a cover are lost). -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- Worship helpers (Worship*.kt), all optional and off by default: Do Not Disturb at prayer times (the user
+         allows "Do Not Disturb access"), alarms at prayer times ("Alarms & reminders", asked from the card; without
+         it the alarms come up to 10 minutes late), setting them again after a restart, and a plain ringtone or
+         notification sound ("Modify system settings", asked from the card). Not USE_EXACT_ALARM: Google Play keeps
+         it for alarm-clock and calendar apps. -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
 
     <!-- Android 11+ package visibility: detect "Shizuku installed but not running" and open it. -->
     <queries>
@@ -39,14 +51,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IslamicMute">
 
-        <activity android:name=".MainActivity" android:exported="true">
+        <!-- Main screen: the shared Flutter screens (ui/, docs/UI_CONTRACT.md). The launcher entry keeps the name
+             ".MainActivity" so existing home-screen icons and the notifications keep working (the native
+             MainActivity screen was retired in 0.2.11).
+             configChanges: Flutter redraws itself, and a language switch must not restart the screen. -->
+        <activity android:name=".UiActivity" android:exported="false" android:launchMode="singleTop"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" />
+        <activity-alias android:name=".MainActivity" android:targetActivity=".UiActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+            <!-- Start / Stop filtering from the icon (long press) or the home screen -->
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
+        </activity-alias>
 
         <activity android:name=".LicencesActivity" android:exported="false" />
+        <!-- The on-phone setup step by step, with screenshots (opened from the setup card). -->
+        <activity android:name=".SetupGuideActivity" android:exported="false" />
 
         <!-- "Share to" / "Open with" player: perfect lip-sync for videos from WhatsApp, Telegram, files. -->
         <activity android:name=".PlayerActivity" android:exported="true" android:theme="@style/Theme.IslamicMute.Player"
@@ -75,6 +99,7 @@
 
         <!-- Paste or share a link (YouTube, TikTok, ...): watch, save or share it without music. -->
         <activity android:name=".LinkActivity" android:exported="true" android:launchMode="singleTop"
+            android:enabled="${linksEnabled}"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -92,6 +117,14 @@
             android:exported="true"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
+        <!-- Waaiya's own cover helper (CoverHelper, shell uid) hands its binder here. Only the shell and root hold
+             INTERACT_ACROSS_USERS_FULL; the provider checks the caller's uid again. -->
+        <provider
+            android:name=".CoverHelperProvider"
+            android:authorities="${applicationId}.coverhelper"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
         <service android:name=".LinkExportService"
             android:exported="false"
             android:foregroundServiceType="dataSync|mediaProcessing" />
@@ -102,8 +135,69 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <!-- Quick Settings tiles: start/stop filtering, and notification text while filtering (Android 15+ only:
+             the switch it changes exists from Android 15, so the tile is enabled only there, values-v35/bools.xml). -->
+        <service android:name=".FilterTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_notification"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter><action android:name="android.service.quicksettings.action.QS_TILE" /></intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="true" />
+        </service>
+        <service android:name=".ScreenShareTileService"
+            android:exported="true"
+            android:enabled="@bool/screen_share_tile"
+            android:icon="@drawable/ic_tile_notification_text"
+            android:label="@string/tile_text_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter><action android:name="android.service.quicksettings.action.QS_TILE" /></intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="true" />
+        </service>
+        <!-- Invisible: the filter tile's start (Android's screen-capture token can only be asked from an activity). -->
+        <activity android:name=".TileStartActivity"
+            android:exported="false"
+            android:theme="@style/Theme.IslamicMute.Invisible"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:launchMode="singleTask" />
+
+        <!-- "Cover an area" (FixMistakes): a see-through screen over the current app where a rectangle is dragged. -->
+        <activity android:name=".FixMistakesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.IslamicMute.Invisible"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:launchMode="singleTask" />
+
         <!-- Screen blur's accessibility service (touches pass through the covers) is only in builds made with
              -PimBlurA11y: src/blurA11y/AndroidManifest.xml. Play Protect blocks sideloaded apps that declare one. -->
+        <!-- Worship helpers: Waaiya's own prayer-time alarms and notification buttons (not exported), and the system
+             broadcasts after which the alarms are set again (protected broadcasts: only Android can send them). -->
+        <receiver android:name=".WorshipReceiver" android:exported="false" />
+        <receiver android:name=".WorshipSystemReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Protection: the waiting period's alarms and the notification's Cancel (not exported), and boot or update
+             (protected broadcasts), after which the alarms and the notification come back. -->
+        <receiver android:name=".ProtectionReceiver" android:exported="false" />
+        <receiver android:name=".ProtectionSystemReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- App updates: the daily check (AppUpdateJob). Scheduled only by builds with the updater (not -PimPlay). -->
+        <service android:name=".AppUpdateJob" android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".FilterService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />

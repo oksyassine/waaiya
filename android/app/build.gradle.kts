@@ -27,6 +27,11 @@ val signingProps = Properties().apply {
 // Screen blur: declare the accessibility service only on request (Play Protect blocks sideloaded apps that have one).
 val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
 
+// Store builds (docs/DISTRIBUTION.md). -PimPlay: no yt-dlp self-update (Google Play forbids apps that download
+// code to run). -PimNoLinks: no "Open a link" at all (its share target is disabled and the Links page is hidden).
+val playBuild = providers.gradleProperty("imPlay").isPresent
+val noLinks = providers.gradleProperty("imNoLinks").isPresent
+
 android {
     namespace = "org.islamicmute.app"
     compileSdk = 35
@@ -36,10 +41,15 @@ android {
         applicationId = "org.islamicmute.app"
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 12
-        versionName = "0.2.10"
+        versionCode = 17
+        versionName = "0.2.14"
+        // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
+        providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
+        buildConfigField("boolean", "SELF_UPDATE", (!playBuild).toString())
+        buildConfigField("boolean", "LINKS", (!noLinks).toString())
+        manifestPlaceholders["linksEnabled"] = (!noLinks).toString()
         if (blurA11y) versionNameSuffix = "-a11y"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
@@ -104,8 +114,11 @@ dependencies {
     implementation("dev.rikka.shizuku:provider:$shizukuVersion")
     // Screen blur: sets the hidden "skip screenshot" flag on our overlay so the screen capture shows what is under it.
     implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+    // Shared Flutter screens: ../ui_module (add-to-app, from source; included in settings.gradle.kts).
+    implementation(project(":flutter"))
     // JVM tests of the parts with no Android classes (LoadMonitor, AudioDump): ./gradlew testDebugUnitTest
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20240303")  // AppUpdateTest: Android's org.json is a stub in JVM tests
     // Host-side check of the Wireless debugging client against a real adbd (AdbInteropTest, skipped unless asked):
     // Conscrypt gives the JVM the TLS exporter that Android has built in. Tests only, not in the APK.
     testImplementation("org.conscrypt:conscrypt-openjdk-uber:2.5.2")
@@ -128,6 +141,7 @@ val modelAssets = layout.buildDirectory.dir("modelAssets")
 val modelVoice = providers.gradleProperty("imModel").getOrElse(rootProject.file("../models/dfn3/dfn3_stream_int8.onnx").path)
 val modelVision = rootProject.file("../models/vision")
 fun modelFile(prop: String, default: File): File = file(providers.gradleProperty(prop).getOrElse(default.path))
+val modelSinging = modelFile("imSingingModel", rootProject.file("../models/voice/v3/voice_v1_fp16.onnx"))
 // asset name in the APK -> source file
 val requiredModels = linkedMapOf(
     "voice.onnx" to file(modelVoice),
@@ -140,9 +154,13 @@ val requiredModels = linkedMapOf(
     "blur_nsfw.onnx" to modelFile("imBlurNsfw", modelVision.resolve("nsfw_marqo_int8.onnx")),
     // Person segmenter (-PimBlurSeg): covers follow each person's outline; without it, whole rectangles.
     "blur_seg.onnx" to modelFile("imBlurSeg", modelVision.resolve("seg.onnx")),
+    // "Keep singing" (setting keep_singing, a test): voice_v1, removes instruments and keeps singing voices
+    // (eval/results/voice_v1_engine.md). -PimSingingModel overrides; models-v1 release (scripts/fetch_deps.sh models).
+    "voice_singing.onnx" to modelSinging,
+    "voice_singing.state_init.bin" to file(modelSinging.path.removeSuffix(".onnx") + ".state_init.bin"),
 )
 // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
-// Optional in every build: no release asset has it yet (scripts/fetch_deps.sh detector), so a build without it warns.
+// In the models-v1 release since 0.2.12 (scripts/fetch_deps.sh detector); a local build without it warns (CI fails).
 val detectorModel = modelFile("imDetector", rootProject.file("../models/detector/detector_v1.onnx"))
 // Sync, not Copy: build/modelAssets ends up holding exactly the files found now, so a model whose source is gone
 // cannot ship from a stale copy left there by an older build.
@@ -160,7 +178,8 @@ gradle.taskGraph.whenReady {
     val missing = requiredModels.filterValues { !it.isFile }
     if (missing.isNotEmpty()) {
         val msg = "models missing: " + missing.entries.joinToString { (asset, src) -> "$asset (from $src)" } +
-            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg."
+            ". Run scripts/fetch_deps.sh, or pass -PimModel / -PimBlurPerson / -PimBlurGender / -PimBlurNsfw / -PimBlurSeg / " +
+            "-PimSingingModel."
         if (release) throw GradleException("Release build: $msg")
         logger.warn("warning: $msg Debug build continues without them.")
     }
@@ -173,7 +192,14 @@ android.sourceSets["main"].assets.srcDir(modelAssets)
 
 // -PimBlurA11y: also declare the screen blur's accessibility service (touches pass through the covers).
 androidComponents {
-    onVariants { v -> if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml") }
+    onVariants { v ->
+        if (blurA11y) v.sources.manifests.addStaticManifestFile("src/blurA11y/AndroidManifest.xml")
+        // Worship: reply to calls by SMS during prayer (WorshipSms). Not in Play builds (-PimPlay): Google Play
+        // restricts SMS and call-log permissions.
+        if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/smsReply/AndroidManifest.xml")
+        // App updates (AppUpdate.kt): not in Play builds, where Google Play updates the app.
+        if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/selfUpdate/AndroidManifest.xml")
+    }
 }
 
 // Link feature: yt-dlp (+ EJS scripts) under Python 3.11, and QuickJS shipped as an executable named lib*.so so it
@@ -216,7 +242,7 @@ val copyLicences by tasks.registering(Sync::class) {
     val ortDir = file(providers.gradleProperty("imOrtDir").getOrElse(repo.resolve("third_party/onnxruntime").path))
     val rootTexts = mapOf(
         "NOTICE" to "NOTICE.txt",
-        "LICENSE" to "LICENSE-Apache-2.0.txt",
+        "LICENSE" to "LICENSE-AGPL-3.0.txt",
         "THIRD_PARTY_LICENSES.md" to "THIRD_PARTY_LICENSES.txt",  // .txt: WebView shows it as plain text
         "models/detector/efficientat/LICENSE" to "EfficientAT-LICENSE.txt",
     )

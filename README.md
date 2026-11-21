@@ -9,15 +9,14 @@
 Waaiya removes musical instruments from everything your device plays and keeps the voice: speech, Quran
 recitation, lectures. It runs on the device, in real time, and fails closed: if the filter itself cannot run, you
 hear silence, never the unfiltered sound. (On Android, when the system ends the capture, filtering stops and a
-notification says the sound is no longer filtered.) (The project was called "Islamic Mute" before; some internal names, such as
-the Android package `org.islamicmute.app` and the Linux service, keep the old name so existing installs update.)
+notification says the sound is no longer filtered.)
 
 | Platform | Status | How it works |
 |---|---|---|
 | **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. Optional screen blur (women, immodest images) over every app. |
 | **Linux** (PulseAudio, PipeWire-Pulse) | Works | Virtual output + always-on user service (`waaiya install`, `waaiya start`). |
 | **macOS** 14.4+ | Planned | Core Audio process tap; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
-| **Windows** 10/11 | Planned | Per-app loopback capture or a virtual device; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
+| **Windows** 10 (2004+) / 11 | Preview (desktop app) | Every other app turned down to −80 dB, their mix captured per process, brought back up, filtered and played; no driver, no admin rights. Optional screen blur with covers every click passes through. Tested on Windows Server 2022 and 2025 CI runners, not yet on a real PC: [docs/PLATFORMS.md](docs/PLATFORMS.md). |
 | **iOS / iPadOS** | Limited by Apple | No app may change other apps' sound. Planned: in-app player for links, Safari extension. |
 | **Browsers** | Planned | Extension filtering the tab's media (desktop Chrome, Firefox, Edge, Safari). |
 
@@ -27,6 +26,28 @@ per-app language settings).
 Download the Android app from the [releases](https://github.com/oksyassine/waaiya/releases). How each platform
 is handled, and what is shared between them: [docs/PLATFORMS.md](docs/PLATFORMS.md).
 Research behind the design: `reports/System wide instrument muting app.md`.
+
+### Linux desktop app
+
+Unpack `waaiya-desktop-linux-x64-*.tar.gz` anywhere and run `waaiya/waaiya_desktop`. To have Waaiya with its icon in
+your applications menu, run `waaiya/install-desktop-entry.sh` once (your user only; `--remove` takes it out).
+
+### Windows: what the app changes, and how to remove it
+
+The Windows app (preview) is a folder: unzip it anywhere and run `waaiya\waaiya_desktop.exe`; it needs no
+installation and no admin rights. While filtering is on it changes, for your user only:
+
+- **every other app's volume** in the Volume Mixer, turned down to -80 dB (that is how the original sound is
+  silenced; the filtered copy is what you hear). Your own level of each app is kept in
+  `%LOCALAPPDATA%\Waaiya\filter\levels.txt` and given back when you press Stop, also to apps that were closed
+  meanwhile (the next time they play);
+- with "Start at login" on, a value `WaaiyaFilter` under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`.
+
+To remove it: open the app, press Stop and turn "Start at login" off (or run `engine\waaiya-filter.exe stop` and
+delete that Run value), then delete the app folder, `%LOCALAPPDATA%\Waaiya` and `%APPDATA%\Waaiya`. The Microsoft
+Store version gives every running app its level back by itself when it is updated or uninstalled while filtering.
+An app that was closed while filtering gets its level back the next time it plays only while Waaiya's restorer runs;
+if one stays quiet after an uninstall, raise it in the Volume Mixer.
 
 ## Layout
 
@@ -83,6 +104,8 @@ python eval/evaluate.py --candidate dfn3=models/dfn3/dfn3_stream.onnx [--asr bas
 
 ```bash
 scripts/fetch_deps.sh                   # default model (the APK bundles it)
+# The main screen is Flutter (ui/, docs/UI_CONTRACT.md): needs Flutter 3.41+, and once per checkout:
+(cd ui_module && flutter pub get)
 # Needs Python 3.11 on the build machine (Chaquopy runs the link feature's yt-dlp in the app):
 cd android && ./gradlew assembleDebug -PimBuildPython=/path/to/python3.11
 #   -PimModel=/path/model.onnx   bundle another voice model
@@ -108,6 +131,7 @@ Both are granted once, in one of two ways:
   ```bash
   adb shell pm grant org.islamicmute.app android.permission.DUMP
   adb shell appops set org.islamicmute.app PROJECT_MEDIA allow   # optional
+  adb shell pm grant org.islamicmute.app android.permission.WRITE_SECURE_SETTINGS   # optional: notification-text tile
   ```
 
 ## Links: watch or save a video without music
@@ -191,7 +215,35 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). In short:
 - Only train on data whose licence allows redistributing the resulting model (`THIRD_PARTY_LICENSES.md`, section 5).
 - Contributions are accepted under the project licence (AGPL-3.0-or-later, `LICENSE`).
 
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by
+[SignPath Foundation](https://signpath.org/).
+
+What is signed: the Windows desktop app's own programs (`waaiya_desktop.exe`, `engine\waaiya-filter.exe`,
+`engine\waaiya-blur.exe`), built from this repository by GitHub Actions (`.github/workflows/release.yml`) on
+GitHub-hosted runners and submitted to SignPath from there (`.signpath/artifact-configuration.xml`). Third-party
+libraries in the package (ONNX Runtime, Flutter) are shipped as their projects publish them. Every release is
+signed only after an approver approves it in SignPath. (Until SignPath has accepted the project, Windows releases
+are unsigned and Windows names no publisher.)
+
+Team roles:
+- Committers and reviewers: [oksyassine](https://github.com/oksyassine) (the repository's owner)
+- Approvers: [oksyassine](https://github.com/oksyassine)
+
+Privacy policy: this program will not transfer any information to other networked systems unless specifically
+requested by the user or the person installing or operating it, with one exception: the Android app from the website
+or GitHub checks once a day whether a newer version exists (it reads waaiya.mssid.org/downloads/update.json and sends
+nothing about the phone; turn it off in Settings, "App updates"). The filter and the screen blur run on the device
+and send nothing; there is no account and no analytics. "Open a link" contacts the site of the link you open: on
+Android, and in the Windows app from GitHub (the zip), where saving downloads that video. The Android app's yt-dlp
+downloads its own updates from PyPI. The Windows app from the Microsoft Store only opens the link in your browser.
+Full text: [docs/PRIVACY.md](docs/PRIVACY.md).
+
 ## License
 
-GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later): see `LICENSE` and `NOTICE`. Third-party code, models and datasets, with their licences and
+GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later): see `LICENSE` and `NOTICE`. Anyone may use,
+change and share Waaiya, also for money, but whoever distributes it, or offers a changed version to others over
+a network, must give their users the complete source code under the same licence. The name "Waaiya" is
+reserved: see `TRADEMARKS.md`. Third-party code, models and datasets, with their licences and
 open questions (notably the Quran recitation training data), are listed in `THIRD_PARTY_LICENSES.md`.

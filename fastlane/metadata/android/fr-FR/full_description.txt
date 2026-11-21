@@ -1,0 +1,16 @@
+Waaiya retire les instruments de musique de tout ce que joue votre téléphone et garde la voix : paroles, cours et récitation du Coran. Elle fonctionne avec toutes les applications (YouTube, Instagram, TikTok, navigateurs, jeux), en direct, sur le téléphone.
+
+<ul>
+<li>Un seul bouton : Waaiya filtre le son de toutes vos applications jusqu'à ce que vous l'arrêtiez.</li>
+<li>Sécurité d'abord : si le filtre ne peut pas tourner, les applications restent muettes au lieu de jouer la musique.</li>
+<li>Floutage de l'écran en option : couvre les femmes, ou les images indécentes, au-dessus de toutes les applications.</li>
+<li>En option : couper aussi le chant des femmes.</li>
+<li>Ouvrir un lien : regarder ou enregistrer une vidéo sans sa musique.</li>
+<li>Neuf langues : arabe, anglais, français, ourdou, indonésien, turc, bengali, persan, malais.</li>
+</ul>
+
+Confidentialité : le filtre et le floutage tournent sur le téléphone et n'envoient rien. Pas de compte, pas de statistiques, pas de publicité. En ligne seulement pour « Ouvrir un lien » (le site du lien) et la recherche quotidienne d'une nouvelle version, que vous pouvez désactiver.
+
+Une configuration unique (sur le téléphone, avec le débogage sans fil d'Android) permet à Waaiya de couper le son d'origine de l'application filtrée. Sans elle, Waaiya fonctionne mais demande avant chaque démarrage.
+
+Libre (AGPL-3.0-or-later) : https://github.com/oksyassine/waaiya

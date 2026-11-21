@@ -33,3 +33,9 @@
 }
 -keep class org.islamicmute.app.ICoverService { *; }
 -keep class org.islamicmute.app.ICoverService$** { *; }
+
+# Waaiya's own cover helper: started by class name with app_process (CoverHelper.startCommand), so nothing in the
+# app calls its main. CoverHelperProvider is declared in the manifest (kept by aapt's rules).
+-keep class org.islamicmute.app.CoverHelper {
+    public static void main(java.lang.String[]);
+}

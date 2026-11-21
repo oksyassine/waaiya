@@ -1,0 +1,47 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+Options -Indexes
+AddType video/mp4 .mp4
+AddType image/webp .webp
+AddType font/woff2 .woff2
+AddType audio/webm .webm
+AddType audio/mp4 .m4a
+AddType text/plain .txt
+AddType application/wasm .wasm
+AddType text/javascript .mjs
+AddType application/octet-stream .onnx .bin
+# the in-browser filter (assets/try/): ~11 MB of wasm is ~3 MB compressed. The host does not compress it on the fly,
+# so build.py writes a .wasm.gz next to it, which try-worker.js asks for by name (sent as gzip-encoded wasm).
+<FilesMatch "\.wasm\.gz$">
+  ForceType application/wasm
+  <IfModule mod_headers.c>
+    Header set Content-Encoding gzip
+    Header append Vary Accept-Encoding
+  </IfModule>
+  SetEnv no-gzip 1
+</FilesMatch>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE application/wasm text/javascript application/javascript text/css text/html image/svg+xml
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType audio/webm "access plus 30 days"
+  ExpiresByType audio/mp4 "access plus 30 days"
+  ExpiresByType text/html "access plus 10 minutes"
+  ExpiresByType application/wasm "access plus 30 days"
+  ExpiresByType application/octet-stream "access plus 7 days"
+</IfModule>
+
+# In-app updates (AppUpdate.kt): the release file must never be served from a cache; patches and APKs never change.
+<Files "update.json">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-store"
+  </IfModule>
+</Files>

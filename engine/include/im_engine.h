@@ -57,7 +57,8 @@ int im_engine_failed(const im_engine *e);       /* 1 if the model never loaded *
 unsigned long im_engine_run_errors(const im_engine *e);
 const char *im_engine_model_name(const im_engine *e);
 
-/* 1 = filter on (default). 0 = pass the input through with the same delay (A/B listening). */
+/* 1 = filter on (default). 0 = pass the input through with the same delay (A/B listening). Ignored by an engine
+ * whose model failed (im_engine_failed): it stays silent, never passes the original through. */
 void im_engine_set_enabled(im_engine *e, int enabled);
 /* External gain gate in [0,1], smoothed over ~5 ms (used by the singing/gender filter). */
 void im_engine_set_gate(im_engine *e, float gain);

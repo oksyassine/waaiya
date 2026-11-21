@@ -6,6 +6,10 @@ After=pulseaudio.service pipewire-pulse.service wireplumber.service
 Type=simple
 ExecStartPre=/bin/sleep 2
 ExecStart=@BIN@ run --default
+# the daemon crashed or was killed: normal sound back only if the user chose so ('keep-silent off')
+ExecStopPost=@BIN@ stopped
+# 'reload' signals the daemon only (never the filter process in its group)
+ExecReload=/bin/kill -HUP $MAINPID
 KillMode=mixed
 Restart=on-failure
 RestartSec=2

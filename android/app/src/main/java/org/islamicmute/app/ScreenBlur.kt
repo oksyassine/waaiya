@@ -139,7 +139,15 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             thread.quitSafely()
         }
         main.post(watchdog)
+        // Fix mistakes (FixMistakes): covers left off for a chosen app on screen, hand covers; both are applied in
+        // BlurOverlay.show(), this only redraws when they change
+        val redraw: () -> Unit = { main.post { if (!stopped && policy > 0) overlay.refresh() } }
+        coversChanged = redraw
+        FixMistakes.onCoversChanged = redraw
+        FixMistakes.sessionStarted(context)
     }
+
+    private var coversChanged: (() -> Unit)? = null
 
     /** Applies the blur settings (main thread): off parks everything, on/changed (re)loads the models. */
     private fun apply(p: Int) {
@@ -147,6 +155,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val was = policy
         policy = p
         if (p == 0) {
+            FixMistakes.clearHandCovers(context)  // hand covers last while the blur runs, not across restarts
             overlay.detach()
             testedHost = null
             worker.post {
@@ -181,6 +190,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
 
     fun stop() {
         stopped = true
+        if (FixMistakes.onCoversChanged === coversChanged) FixMistakes.onCoversChanged = null
+        FixMistakes.sessionEnded(context)
         stats = null
         coverInfo = null
         main.removeCallbacks(watchdog)
@@ -389,7 +400,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             }
             // Shizuku layer: "drawing" only means its calls did not fail (the layer is left out of the capture, so
             // the app cannot see it on screen)
-            coverInfo = "Covers drawn by: ${overlay.host ?: if (overlay.connecting) "Shizuku layer (connecting)" else "nothing"}" +
+            coverInfo = "Covers drawn by: ${overlay.hostName ?: if (overlay.connecting) "shell layer (connecting)" else "nothing"}" +
                 ", skip-screenshot flag ${if (overlay.skipApplied) "on" else "off"}, covers in the capture " +
                 (if (!testDone) "being tested" else if (coversVisible) "yes" else "no")
             worker.post { resizeIfNeeded() } // a shape change that sent no display event (e.g. some foldables)

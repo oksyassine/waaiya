@@ -8,12 +8,12 @@
     <string name="onboard_question">I am</string>
     <string name="gender_man">A man</string>
     <string name="gender_woman">A woman</string>
-    <string name="onboard_why">This only decides which optional settings you see. You can change it later.</string>
+    <string name="onboard_why">This only decides which optional settings you see. For example, “Mute women\'s singing” is offered only to men. You can change it later.</string>
 
     <string name="state_on_title">Filtering is on</string>
     <string name="state_off_title">Filtering is off</string>
     <string name="state_starting">Starting…</string>
-    <string name="state_on_detail">Instruments are removed from all apps. Delay about %1$d ms.</string>
+    <string name="state_on_detail">Instruments are removed from all apps. The sound comes about %1$d ms late (1000 ms is one second).</string>
     <string name="state_off_detail">Tap the button to start.</string>
     <string name="state_model_failed">The sound model could not load, so the sound is muted for safety.</string>
     <string name="state_capture_denied">The microphone permission is needed to receive other apps\' sound.</string>
@@ -28,8 +28,6 @@
 
     <string name="setup_banner_title">One more step</string>
     <string name="setup_banner_body">Without the one-time setup below, you will hear the music and the filtered sound together.</string>
-    <string name="setup_title">One-time setup</string>
-    <string name="setup_body">Lets Waaiya silence the original sound. You do it once; it stays until you uninstall the app.</string>
     <string name="step1_title">Install Shizuku</string>
     <string name="step1_body">A free helper app from the Play Store.</string>
     <string name="step1_action">Get Shizuku</string>
@@ -46,6 +44,11 @@
     <string name="setup_done_restart">Done. Stop and start filtering once to apply it.</string>
     <string name="setup_failed">Setup did not finish. Details:\n%1$s</string>
     <string name="shizuku_refused">Shizuku permission was refused. Tap the button to try again.</string>
+    <string name="setup_slow">Shizuku is taking longer than usual. Keep waiting: on some phones its helper takes up to a minute to start the first time.</string>
+    <string name="setup_timeout">Shizuku did not answer within 2 minutes. Open Shizuku, check that it says it is running, then tap the button again. If the setup finishes later, this screen updates by itself.</string>
+    <string name="setup_refused_xiaomi">This phone refused the permissions. On Xiaomi, Redmi and POCO, turn on “USB debugging (Security settings)” in Developer options (it asks you to sign in to a Xiaomi account), then try again.</string>
+    <string name="setup_refused_coloros">This phone refused the permissions. On OPPO, OnePlus and realme, in Developer options, turn on “Disable permission monitoring” (on the newest versions it is called “Disable system optimization”, and may show only with the phone set to English). To find it, search “permission” in Settings. Then try again.</string>
+    <string name="setup_note_xiaomi">Xiaomi, Redmi and POCO: if the notification has no field to type the code in, set the notification style to “Android” in the notification settings, or type the code in Waaiya using split screen.</string>
     <string name="step_done_cd">Done</string>
     <string name="step_todo_cd">Step %1$d</string>
     <string name="computer_toggle">Use a computer instead</string>
@@ -62,7 +65,7 @@
     <string name="setting_stereo_title">Stereo sound</string>
     <string name="setting_stereo_body">Off: mono, which uses about half the battery and keeps up on more phones. On: keeps the left and right sides apart. If the phone is too slow for stereo, it still switches to mono by itself.</string>
     <string name="setting_singing_title">Mute women\'s singing</string>
-    <string name="setting_singing_body">Women\'s speech and recitation are kept.</string>
+    <string name="setting_singing_body">For example, a song sung by a woman is muted, but a woman giving a talk is still heard.</string>
     <string name="setting_singing_no_model">This version has no singing detector, so all voices are muted while this is on.</string>
     <string name="setting_restart">Stop and start filtering to apply changes.</string>
     <string name="setting_gender_title">I am</string>
@@ -71,7 +74,7 @@
     <string name="player_title">Videos in perfect sync</string>
     <string name="player_body">Share a video to Waaiya (or use \"Open with\") to watch it filtered with no delay.</string>
     <string name="licences">Open-source licences</string>
-    <string name="licences_intro">Waaiya is free software under the GNU Affero General Public License v3 or later.</string>
+    <string name="licences_intro">Waaiya is free software under the GNU Affero General Public License v3 or later. Source code: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (training data): https://creativecommons.org/licenses/by/4.0/</string>
     <string name="licences_full">Full texts</string>
     <string name="back">Back</string>
@@ -122,16 +125,16 @@
     <string name="blur_title">Screen blur</string>
     <string name="blur_body">Covers people and images on screen, in every app, while filtering is on. It runs on the phone; nothing is sent anywhere.</string>
     <string name="blur_women_title">Blur women</string>
-    <string name="blur_women_body">Whole body. People the app cannot clearly tell are men are blurred too.</string>
+    <string name="blur_women_body">Covers the whole body. If the app is not sure that a person is a man, it covers them too.</string>
     <string name="blur_nudity_title">Blur immodest images</string>
-    <string name="blur_nudity_body">Nudity and revealing clothing, of anyone: the whole screen is covered.</string>
+    <string name="blur_nudity_body">Nudity or revealing clothes, on anyone: the whole screen is covered.</string>
     <string name="blur_fail_title">Cover the screen if the blur cannot keep up</string>
     <string name="blur_fail_body">On: the whole screen is covered when the phone is too slow or the blur fails. Off: the screen stays visible with a warning.</string>
     <string name="blur_setup_shizuku">Allow with Shizuku</string>
     <string name="blur_setup_manual">Allow in Android settings</string>
-    <string name="blur_status_needs_setup">The blur needs to draw over other apps. Best: allow it with Shizuku (turns on the Waaiya Blur accessibility service, so touches still reach the app underneath). Or allow "Display over other apps" in Android settings (touches on a blurred area are then lost).</string>
-    <string name="blur_status_needs_overlay">The blur needs to draw over other apps. Best: start Shizuku (and allow Waaiya in it): the blur then draws its own layer, which taps pass through. Otherwise allow "Display over other apps" in Android settings; a tap on a blurred area then does not reach the app underneath.</string>
-    <string name="blur_fail_unavailable">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) and it turns on: the covers are then drawn by Shizuku and taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.</string>
+    <string name="blur_status_needs_setup">To blur, Waaiya has to draw over other apps. Best: “Allow with Shizuku”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.</string>
+    <string name="blur_status_needs_overlay">To blur, Waaiya has to draw over other apps. Best: start Shizuku and allow Waaiya in it, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.</string>
+    <string name="blur_fail_unavailable">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper or Shizuku (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.</string>
     <string name="blur_fail_needs_a11y">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) or turn on the Waaiya Blur accessibility service (Allow with Shizuku above) and it turns on. Until then, the screen stays visible with a warning.</string>
     <string name="language_title">Language</string>
     <string name="setting_language_title">Language: %1$s</string>
@@ -159,10 +162,35 @@
     <string name="guide_close">Close</string>
     <string name="guide_body">You need Wi-Fi and Android 11 or newer. Pairing is done once; after the phone restarts you only repeat step 7.\n\n1. Connect the phone to Wi-Fi.\n\n2. Turn on Developer options: Settings › About phone › Software information › tap “Build number” 7 times. (On other phones: Settings › About phone › Build number.)\n\n3. Open Shizuku. If it asks to show notifications, allow it: the pairing code is typed in a Shizuku notification.\n\n4. In Shizuku, under “Start via Wireless debugging”, tap “Pairing”. On the page that opens, tap “Developer options”, turn on “Wireless debugging” and confirm “Allow”.\n\n5. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n6. Keep that screen open and pull down the notifications. When Shizuku\'s notification says “Pairing service found”, tap “Enter pairing code” and type the code. Shizuku says pairing succeeded.\n\n7. Go back to Shizuku and tap “Start” under “Start via Wireless debugging”. Wait until it says “Shizuku is running”.\n\n8. Come back to Waaiya and tap “Give permission”, then “Allow”.\n\nAfter a phone restart Shizuku stops: connect to Wi-Fi, turn “Wireless debugging” back on if it is off, open Shizuku and tap “Start”. No new pairing.</string>
     <!-- One-time setup on the phone itself (WirelessSetup.kt): Android's Wireless debugging, no Shizuku, no computer. -->
-    <string name="wsetup_route_title">Set up on this phone (no extra app)</string>
-    <string name="wsetup_route_body">With Android\'s own Wireless debugging. You need Wi-Fi (internet is not needed). Pairing is done once.</string>
-    <string name="wsetup_steps">1. Tap “Start”. Waaiya opens Developer options and shows a notification.\n\n2. If Developer options are off, About phone opens instead: tap “Build number” 7 times (on some phones it is under Software information), come back and tap “Start” again.\n\n3. Scroll down to “Wireless debugging” (under Debugging), turn it on and confirm “Allow”.\n\n4. Tap the words “Wireless debugging” (not the switch), then “Pair device with pairing code”. A 6-digit code appears.\n\n5. Keep that screen open. Pull down the notifications, tap “Enter code” in Waaiya\'s notification and type the code.\n\n6. Waaiya finishes by itself and says “Setup done”. You can then turn Wireless debugging off.</string>
-    <string name="wsetup_start">Start</string>
+    <string name="wsetup_route_title">Set up on this phone</string>
+    <string name="wsetup_route_body">Four short steps, done once. No extra app and no computer. Waaiya ticks each step when it is done.</string>
+    <string name="wiz_dev_title">Turn on Developer options</string>
+    <string name="wiz_dev_body">In About phone, tap “Build number” 7 times, then come back here. If you cannot find it, search “Build number” in Settings.</string>
+    <string name="wiz_dev_body_samsung">In About phone › Software information, tap “Build number” 7 times, then come back here.</string>
+    <string name="wiz_dev_body_xiaomi">In About phone, tap “OS version” 7 times (on older phones “MIUI version”; on some it is under “Detailed info and specs”), then come back here.</string>
+    <string name="wiz_dev_body_coloros">In About device (or About phone) › Version, tap “Build number” 7 times, then come back here.</string>
+    <string name="wiz_dev_body_vivo">In About phone, tap “Software version” 7 times (on some phones: Software information › “Build number”), then come back here.</string>
+    <string name="wiz_dev_body_huawei">In About phone, tap “Build number” 7 times, then come back here.</string>
+    <string name="wiz_dev_body_transsion">In My phone (or About phone), tap “Build number” 7 times, then come back here.</string>
+    <string name="setup_note_huawei">Huawei: many Huawei phones have no “Wireless debugging”. If you cannot find it in Developer options, use a computer (“Other ways” below).</string>
+    <string name="wsetup_filter_on">Filtering is on: on this Android version the code cannot be typed in a notification while it runs. Stop filtering first, or use split screen and “Type the code here”.</string>
+    <string name="wiz_dev_search">The names can differ with the phone’s language: if you cannot find it, use the search at the top of Settings.</string>
+    <string name="wiz_dev_action">Open About phone</string>
+    <string name="wiz_wifi_title">Connect to Wi-Fi</string>
+    <string name="wiz_wifi_body">Any Wi-Fi network will do; internet is not needed.</string>
+    <string name="wiz_wifi_action">Open Wi-Fi settings</string>
+    <string name="wiz_wd_title">Turn on Wireless debugging</string>
+    <string name="wiz_wd_body">Waaiya opens Developer options at “Wireless debugging”. Turn it on and tap “Allow”.</string>
+    <string name="wiz_wd_action">Open Developer options</string>
+    <string name="wiz_pair_title">Type the pairing code</string>
+    <string name="wiz_pair_body">Tap the words “Wireless debugging”, then “Pair device with pairing code”. Type the 6 digits in Waaiya’s notification. Waaiya does the rest.</string>
+    <string name="wiz_pair_body_paired">Waaiya is already paired with this phone: no code is needed. Tap the button and Waaiya finishes by itself.</string>
+    <string name="wiz_pair_action">Continue</string>
+    <string name="wiz_again">Run the setup again</string>
+    <string name="setup_shizuku_ready_title">With Shizuku, which is already running</string>
+    <string name="setup_other_ways_plain">Other ways to do the setup</string>
+    <string name="wiz_skip">Skip to Wireless debugging</string>
+    <string name="setup_other_ways">Other ways: Shizuku or a computer</string>
     <string name="wsetup_enter_here">Type the code here</string>
     <string name="wsetup_cancel">Cancel</string>
     <string name="wsetup_android10">Android 10 cannot do the setup on its own: it needs a computer, directly (below) or to start Shizuku once.</string>
@@ -174,6 +202,19 @@
     <string name="wsetup_busy_title">Waaiya setup</string>
     <string name="wsetup_done_title">Setup done</string>
     <string name="wsetup_done_body">Waaiya can now silence the original sound. You can turn Wireless debugging off.</string>
+    <string name="wsetup_done_helper_body">Done. This phone does not let apps keep these permissions, so Waaiya’s helper silences the original sound instead. The helper stops when the phone restarts and when Waaiya is updated. When you open Waaiya after that, it starts the helper again by itself if Wireless debugging is on; if not, it shows a button for it.</string>
+    <string name="helper_missing_title">Waaiya’s helper is stopped</string>
+    <string name="helper_missing_body">This phone does not keep Waaiya’s permissions, so Waaiya uses its helper. The helper stops when the phone restarts and when Waaiya is updated. Connect to Wi-Fi, turn on “Wireless debugging” in Developer options, then tap “Start Waaiya’s helper”.</string>
+    <string name="helper_channel">Waaiya’s helper</string>
+    <string name="helper_starting">Starting the helper…</string>
+    <string name="helper_mode_note">This phone does not let apps keep these permissions: Waaiya’s helper does the work. It stops when the phone restarts and when Waaiya is updated. When you open Waaiya after that, it starts the helper again by itself if Wireless debugging is on; if not, it shows a button for it.</string>
+    <string name="helper_tip_xiaomi">Optional, to keep the permissions for good (no helper after restarts): in Developer options, turn on “USB debugging (Security settings)” (it asks you to sign in to a Xiaomi account), then do the setup again.</string>
+    <string name="helper_tip_coloros">Optional, to keep the permissions for good (no helper after restarts): in Developer options, turn on “Disable permission monitoring” (on the newest versions “Disable system optimization”; it may show only with the phone set to English), then do the setup again.</string>
+    <string name="state_on_helper_missing">The original sound is not silenced, so you hear the music together with the filtered sound: Waaiya’s helper is stopped. Connect to Wi-Fi, turn on Wireless debugging, then tap “Start Waaiya’s helper”.</string>
+    <string name="notif_helper_missing">On, but the music is still heard: Waaiya’s helper is stopped. Open Waaiya to start it</string>
+    <string name="setup_refused_try_wireless">Or use “Set up on this phone” on this page: Waaiya’s helper then works without that switch.</string>
+    <string name="helper_start_anyway_title">Waaiya’s helper is stopped</string>
+    <string name="helper_start_anyway_body">Without it you will hear the music together with the filtered sound. Start the helper first (Wireless debugging must be on), or start filtering anyway.</string>
     <string name="wsetup_failed_title">Setup did not finish</string>
     <string name="wsetup_pairing">Pairing…</string>
     <string name="wsetup_connecting">Connecting and giving the permissions…</string>
@@ -188,14 +229,14 @@
     <string name="wsetup_not_paired">This phone no longer knows Waaiya (the pairing was removed or expired). Open “Pair device with pairing code” and enter the code.</string>
     <string name="wsetup_connect_failed">Could not connect to Wireless debugging. Turn it off and on again: Waaiya tries again by itself.</string>
     <string name="wsetup_grant_failed">Connected, but the permissions are still missing. Use Shizuku or a computer below.</string>
-    <string name="wsetup_timeout">Stopped after 10 minutes without finishing. Tap “Start” to try again.</string>
+    <string name="wsetup_timeout">Stopped after 10 minutes without finishing. You can try again.</string>
     <string name="wsetup_code_unreadable">Type the 6 digits of the pairing code.</string>
     <string name="wsetup_code_hint">6-digit code</string>
     <string name="wsetup_enter_code">Enter code</string>
     <string name="wsetup_detail">Details: %1$s</string>
     <string name="wsetup_err_timeout">no answer in time</string>
     <string name="wsetup_err_refused">connection refused</string>
-    <string name="wsetup_dev_off">Developer options are off. In About phone, tap “Build number” 7 times (on some phones it is under Software information), then come back and tap “Start” again.</string>
+    <string name="wsetup_dev_off">Developer options are off. In About phone, tap “Build number” 7 times, then come back.</string>
     <string name="wsetup_open_about">About phone</string>
     <string name="wsetup_notif_off">Notifications are off for Waaiya, so the code cannot be typed in a notification. Use split screen (Settings in one half, Waaiya in the other) and tap “Type the code here”.</string>
     <string name="wsetup_code_dialog_title">Pairing code</string>
@@ -233,4 +274,142 @@
     <string name="notif_stopped_text">The sound is not filtered any more. Tap to start again.</string>
     <string name="notif_silenced_title">Filtering stopped: other apps are silenced</string>
     <string name="notif_silenced_text">Tap to start again, or Stop to hear them unfiltered.</string>
+    <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
+    <string name="tile_on">On</string>
+    <string name="tile_off">Off</string>
+    <string name="tile_starting">Starting…</string>
+    <string name="tile_silenced">Stopped, apps silenced</string>
+    <string name="tile_on_not_muted">On, setup needed</string>
+    <string name="tile_open_app">Open Waaiya</string>
+    <string name="tile_text_label">Notification text</string>
+    <string name="tile_text_shown">Shown while filtering</string>
+    <string name="tile_text_hidden">Hidden while filtering</string>
+    <string name="tile_text_refused">This phone refuses it</string>
+    <string name="tile_text_needs_setup">Setup needed</string>
+    <string name="tile_text_granting">Asking Shizuku…</string>
+    <string name="tile_text_next_start">From the next start</string>
+    <string name="tile_text_explain_title">Show notification text while filtering?</string>
+    <string name="tile_text_explain_body">Android hides the text of notifications while an app captures the screen, and filtering counts as one. Waaiya can turn off this protection while it filters, and turns it back on when filtering stops.\n\nWhile it is off, a screen share at the same time (a video call, for example) can also show your notifications and codes to others.</string>
+    <string name="tile_text_turn_on">Turn on</string>
+    <string name="tile_text_setup_title">One more permission is needed</string>
+    <string name="tile_text_setup_body">Open Waaiya and do the one-time setup again (Wireless debugging, Shizuku or a computer). It now also allows this tile. On Xiaomi phones, turn on “USB debugging (Security settings)” in Developer options first.</string>
+    <!-- The illustrated guide (SetupGuideActivity) -->
+    <string name="wsetup_guide">Steps with pictures</string>
+    <string name="guide_w_title">Setup step by step</string>
+    <string name="guide_w_intro">The one-time setup on this phone, with pictures. The pictures come from one phone: on yours the menus may look a little different, but the names are the same.</string>
+    <string name="guide_w_step">%1$d. %2$s</string>
+    <string name="guide_w_1">Turn on Developer options: in Settings › About phone, tap “Build number” 7 times (on some phones it is under Software information). Skip this if Developer options are already on.</string>
+    <string name="guide_w_2">In Waaiya, on the Setup page, tap “Open Developer options”. Waaiya opens Developer options and shows a notification.</string>
+    <string name="guide_w_3">Scroll down to “Wireless debugging” (under Debugging) and tap its name, not the switch.</string>
+    <string name="guide_w_4">Turn on “Use wireless debugging” and confirm with “Allow”.</string>
+    <string name="guide_w_5">Tap “Pair device with pairing code”.</string>
+    <string name="guide_w_6">A 6-digit code appears. Keep this screen open.</string>
+    <string name="guide_w_7">Pull down the notifications. In Waaiya\'s notification, tap “Enter code”.</string>
+    <string name="guide_w_8">Type the 6 digits and tap send.</string>
+    <string name="guide_w_9">Waaiya finishes by itself and says “Setup done”. You can now turn Wireless debugging off, unless Waaiya says it uses its helper on your phone.</string>
+    <string name="guide_w_trouble_title">If something is different</string>
+    <string name="guide_w_trouble">• Cannot find a menu: use the search at the top of Settings and type “Build number” or “Wireless debugging”.\n• Wireless debugging needs Wi-Fi (internet is not needed). Without Wi-Fi it does not turn on.\n• No “Enter code” in the notification (notifications are off for Waaiya, or the phone hides the field): open Settings and Waaiya side by side (split screen) and tap “Type the code here” in Waaiya.\n• The code was not accepted: it changes each time the pairing screen opens. Open it again and type the new code.</string>
+    <string name="guide_w_shizuku_title">Using Shizuku instead</string>
+    <string name="guide_w_shizuku">Shizuku\'s own guide shows its steps with pictures too. Shizuku also lets touches pass through the screen covers.</string>
+    <string name="guide_w_shizuku_open">Open Shizuku\'s guide</string>
+    <!-- Flutter screens: bottom bar and pages -->
+    <string name="nav_filter">Filter</string>
+    <string name="nav_screen">Screen</string>
+    <string name="nav_links">Links</string>
+    <string name="nav_setup">Setup</string>
+    <string name="nav_settings">Settings</string>
+    <string name="setup_done_title">Setup done</string>
+    <string name="setup_done_body">Waaiya can silence the original sound of other apps. Do it again only if something changed (the setup was undone, or Waaiya says it is missing).</string>
+    <string name="setup_redo">Show the setup again</string>
+    <string name="setup_go">Go to the setup</string>
+    <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
+    <string name="helper_title">Touches through the covers</string>
+    <string name="helper_body_off">Without help, a cover blocks the touches under it. Waaiya\'s helper draws the covers so that touches pass through. Turn on Wireless debugging (Wi-Fi is needed) and tap the button; the first time, pair once as in the setup. After the phone restarts, tap it again.</string>
+    <string name="helper_start">Start Waaiya\'s helper</string>
+    <string name="helper_on">Waaiya\'s helper draws the covers: touches pass through them. It stops when the phone restarts or when USB debugging is turned off; tap the button again then.</string>
+    <string name="helper_shizuku_on">Shizuku draws the covers: touches pass through them.</string>
+    <string name="helper_or_shizuku">Or with Shizuku:</string>
+    <string name="guide_w_helper_note">With the screen blur on, the setup also starts Waaiya\'s helper, so that touches pass through the covers. Keep “USB debugging” on for it (Wireless debugging can be off). After the phone restarts, start the helper again from the Screen page.</string>
+    <string name="filter_options_title">Filter options</string>
+    <string name="settings_general_title">General</string>
+    <!-- App shortcuts (long-press the icon), native only -->
+    <string name="shortcut_start_short">Start</string>
+    <string name="shortcut_start_long">Start filtering</string>
+    <string name="shortcut_stop_short">Stop</string>
+    <string name="shortcut_stop_long">Stop filtering</string>
+    <string name="notif_channel_silenced">Apps kept silent</string>
+
+    <!-- Simple mode: a TEST (0.2.13), English only until real phones prove it (then translated). -->
+    <string name="simple_title" translatable="false">Simple mode (test): no Developer options</string>
+    <string name="simple_body" translatable="false">For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.</string>
+    <string name="simple_switch" translatable="false">Use simple mode</string>
+    <string name="simple_channel_title" translatable="false">Sound channel: %1$s</string>
+    <string name="simple_channel_alarm" translatable="false">Alarm</string>
+    <string name="simple_channel_notification" translatable="false">Notification</string>
+    <string name="simple_channel_help" translatable="false">If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.</string>
+    <string name="simple_test_note" translatable="false">This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.</string>
+    <string name="simple_on_detail" translatable="false">Simple mode (test): media sound is muted while Waaiya filters.</string>
+    <string name="notif_fix_cover_area">Cover an area</string>
+    <string name="notif_fix_remove_covers">Remove hand covers</string>
+    <string name="notif_fix_note_missed">Missed something</string>
+    <string name="notif_fix_note_wrong">Hidden by mistake</string>
+    <string name="notif_fix_noted">Noted (%1$d notes on this phone)</string>
+    <string name="notif_fix_picker_hint">Drag your finger over the area to cover.</string>
+    <string name="notif_fix_picker_cover">Cover it</string>
+    <string name="notif_fix_picker_cancel">Cancel</string>
+    <string name="notif_fix_picker_no_blur">The screen blur is not running. Turn on a blur option while filtering first.</string>
+    <!-- Worship helpers (Worship*.kt). {name} placeholders, replaced in Kotlin. notif_*: notifications only; the Flutter-only texts are in ui/tool/extra_strings. -->
+    <string name="worship_prayer_fajr">Fajr</string>
+    <string name="worship_prayer_sunrise">Sunrise</string>
+    <string name="worship_prayer_dhuhr">Dhuhr</string>
+    <string name="worship_prayer_asr">Asr</string>
+    <string name="worship_prayer_maghrib">Maghrib</string>
+    <string name="worship_prayer_isha">Isha</string>
+    <string name="worship_end_silent">End silence now</string>
+    <string name="worship_unmute">Unmute now</string>
+    <string name="notif_worship_channel">Prayer times</string>
+    <string name="notif_worship_silent_title">{prayer}: phone on silent</string>
+    <string name="notif_worship_silent_text">Do Not Disturb is on until {time}.</string>
+    <string name="notif_worship_silent_end_title">Silent time is over</string>
+    <string name="notif_worship_silent_end_text">Do Not Disturb is off again.</string>
+    <string name="notif_worship_silent_left">You changed Do Not Disturb yourself, so Waaiya left it as it is.</string>
+    <string name="notif_worship_no_access">Waaiya could not turn on Do Not Disturb. Allow it on Waaiya\'s Settings page.</string>
+    <string name="notif_worship_mute_title">{prayer}: media muted</string>
+    <string name="notif_worship_mute_text">Media sound is muted until {time}.</string>
+    <string name="notif_worship_mute_end_title">Media sound is back</string>
+    <string name="notif_worship_mute_end_text">The media volume is as you had it.</string>
+    <string name="notif_worship_mute_left">You changed the media volume yourself, so Waaiya left it as it is.</string>
+    <string name="worship_sms_default">It\'s prayer time, I can\'t answer now. I\'ll call you back.</string>
+    <string name="notif_worship_sms_title">Replied by SMS</string>
+    <string name="notif_worship_sms_text">Your prayer-time reply was sent to {number}.</string>
+    <string name="notif_protect_channel">Wait before turning off</string>
+    <string name="notif_protect_what_stop">Stopping the filter</string>
+    <string name="notif_protect_what_pin">Changing or removing the PIN</string>
+    <string name="notif_protect_what_setting">A change that lowers protection</string>
+    <string name="notif_protect_waiting_text">Waiting until %1$s. Then confirm it in the app if you still want it. Cancel keeps things as they are.</string>
+    <string name="notif_protect_ready_text">Still want it? Confirm in Waaiya before %1$s, or nothing changes.</string>
+    <string name="notif_protect_cancel">Cancel</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">App updates</string>
+    <string name="update_auto">Check for new versions once a day</string>
+    <string name="update_auto_body">Waaiya asks waaiya.mssid.org whether a newer version exists, and sends nothing else. Nothing is downloaded until you tap Update now.</string>
+    <string name="update_check">Check now</string>
+    <string name="update_checking">Checking…</string>
+    <string name="update_none">You have the latest version (%1$s).</string>
+    <string name="update_available">Waaiya %1$s is available. You have %2$s.</string>
+    <string name="update_size_patch">Download: %1$s, only what changed (the full app is %2$s).</string>
+    <string name="update_size_full">Download: %1$s.</string>
+    <string name="update_now">Update now</string>
+    <string name="update_downloading">Downloading: %1$s</string>
+    <string name="update_preparing">Preparing the update…</string>
+    <string name="update_installing">Confirm the installation on the screen Android shows.</string>
+    <string name="update_stops_filter">Installing stops filtering. Start it again after the update.</string>
+    <string name="update_permission">Allow Waaiya to install its updates, then tap Update now again.</string>
+    <string name="update_failed">The update could not be completed. Try again later, or download it from the website.</string>
+    <string name="update_open_page">Open the download page</string>
+    <string name="update_check_failed">Could not check right now. Try again later.</string>
+    <string name="notif_update_channel">App updates</string>
+    <string name="notif_update_title">Waaiya %1$s is available</string>
+    <string name="notif_update_text">Tap to update (%1$s).</string>
 </resources>
