@@ -1118,6 +1118,47 @@
   "@settingsGeneralTitle": {
     "description": "Android string settings_general_title"
   },
+  "simpleTitle": "Simple mode (test): no Developer options",
+  "@simpleTitle": {
+    "description": "Android string simple_title"
+  },
+  "simpleBody": "For phones where the setup below is too hard. While Waaiya filters, it mutes the phone's media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya's volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.",
+  "@simpleBody": {
+    "description": "Android string simple_body"
+  },
+  "simpleSwitch": "Use simple mode",
+  "@simpleSwitch": {
+    "description": "Android string simple_switch"
+  },
+  "simpleChannelTitle": "Sound channel: {channel}",
+  "@simpleChannelTitle": {
+    "description": "Android string simple_channel_title",
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "simpleChannelAlarm": "Alarm",
+  "@simpleChannelAlarm": {
+    "description": "Android string simple_channel_alarm"
+  },
+  "simpleChannelNotification": "Notification",
+  "@simpleChannelNotification": {
+    "description": "Android string simple_channel_notification"
+  },
+  "simpleChannelHelp": "If you hear nothing, or the sound comes from the phone's speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.",
+  "@simpleChannelHelp": {
+    "description": "Android string simple_channel_help"
+  },
+  "simpleTestNote": "This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.",
+  "@simpleTestNote": {
+    "description": "Android string simple_test_note"
+  },
+  "simpleOnDetail": "Simple mode (test): media sound is muted while Waaiya filters.",
+  "@simpleOnDetail": {
+    "description": "Android string simple_on_detail"
+  },
   "worshipPrayerFajr": "الفجر",
   "@worshipPrayerFajr": {
     "description": "Android string worship_prayer_fajr"

@@ -151,6 +151,51 @@ class HelperMissingBanner extends StatelessWidget {
   }
 }
 
+/// Simple mode (TEST, Android): filtering without the one-time setup by muting media while Waaiya filters
+/// (SimpleMode.kt). English only until real phones prove it.
+class SimpleModeCard extends StatelessWidget {
+  const SimpleModeCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final st = WaaiyaScope.of(context).state.settings;
+    final channel = st.simpleChannel == 'notification' ? l.simpleChannelNotification : l.simpleChannelAlarm;
+    return SectionCard(
+      title: l.simpleTitle,
+      body: l.simpleBody,
+      children: [
+        SettingSwitch(
+          key: const Key('simple_mode'),
+          id: 'switch_simple_mode',
+          title: l.simpleSwitch,
+          value: st.simpleMode,
+          onChanged: (v) => runAction(context, (b) => b.setSetting(SettingKeys.simpleMode, v)),
+        ),
+        if (st.simpleMode) ...[
+          ValueRow(
+            label: l.simpleChannelTitle(channel),
+            action: l.change,
+            onPressed: () async {
+              const values = ['alarm', 'notification'];
+              final i = await chooseOne(context,
+                  title: l.simpleChannelTitle(''),
+                  options: [l.simpleChannelAlarm, l.simpleChannelNotification],
+                  selected: values.indexOf(st.simpleChannel));
+              if (i != null && context.mounted) {
+                await runAction(context, (b) => b.setSetting(SettingKeys.simpleChannel, values[i]));
+              }
+            },
+          ),
+          Text(l.simpleChannelHelp, style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: 8),
+          Text(l.simpleTestNote, style: Theme.of(context).textTheme.bodyMedium),
+        ],
+      ],
+    );
+  }
+}
+
 /// The Setup page: the one-time setup on the phone (Wireless debugging), with Shizuku, or from a computer.
 /// When it is done, a short "done" card, with the steps one tap away.
 class SetupSection extends StatefulWidget {
@@ -165,6 +210,16 @@ class _SetupSectionState extends State<SetupSection> {
 
   @override
   Widget build(BuildContext context) {
+    final s = WaaiyaScope.of(context).state;
+    // simple mode (test) on Android: its card first; the real setup stays below it
+    if (!s.capabilities.shizukuSetup) return _setup(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [const SimpleModeCard(), _setup(context)],
+    );
+  }
+
+  Widget _setup(BuildContext context) {
     final l = AppLocalizations.of(context);
     final c = WaaiyaColors.of(context);
     final text = Theme.of(context).textTheme;
@@ -199,7 +254,8 @@ class _SetupSectionState extends State<SetupSection> {
     };
     // a run in progress stays on screen even when the permissions arrived meanwhile; the helper's own automatic
     // restart is not such a run (the banner says "starting")
-    if (!needed && !_showAgain && (!setup.wireless.running || setup.helperRestarting)) {
+    // simple mode counts as "originals muted" (no banner, no warning), but the setup itself is still offered
+    if (!needed && !_showAgain && !s.settings.simpleMode && (!setup.wireless.running || setup.helperRestarting)) {
       return SectionCard(
         title: l.setupDoneTitle,
         body: setup.helperMode ? l.helperModeNote : l.setupDoneBody,

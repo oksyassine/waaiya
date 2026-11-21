@@ -96,10 +96,10 @@ class TileStartActivity : Activity() {
             return
         }
         if (FilterService.running) { finish(); return }
-        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
-            !setupDone()) {
+        val ready = setupDone() || Settings(this).simpleMode  // simple mode (test) needs no setup
+        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || !ready) {
             // the setup is missing: the Setup page explains; the microphone question belongs to the Filter page
-            UiActivity.open(this, if (setupDone()) "filter" else "setup")?.let { runCatching { startActivity(it) } }
+            UiActivity.open(this, if (ready) "filter" else "setup")?.let { runCatching { startActivity(it) } }
             finish()
             return
         }

@@ -98,10 +98,16 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(ar.setupBannerTitle), findsNothing);
     await goTo(tester, 'setup');
+    // Android: the simple-mode test card comes first
+    await tester.scrollUntilVisible(find.text(ar.setupDoneTitle), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text(ar.setupDoneTitle), findsOneWidget);
     expect(find.text(ar.wsetupRouteTitle), findsNothing);
+    await tester.ensureVisible(find.text(ar.setupRedo));
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -200)); // out from under the bottom bar
+    await tester.pumpAndSettle();
     await tester.tap(find.text(ar.setupRedo));
     await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.text(ar.wsetupRouteTitle), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text(ar.wsetupRouteTitle), findsOneWidget);
   });
 

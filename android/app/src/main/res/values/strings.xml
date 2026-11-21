@@ -338,6 +338,17 @@
     <string name="shortcut_stop_short">Stop</string>
     <string name="shortcut_stop_long">Stop filtering</string>
     <string name="notif_channel_silenced">Apps kept silent</string>
+
+    <!-- Simple mode: a TEST (0.2.13), English only until real phones prove it (then translated). -->
+    <string name="simple_title" translatable="false">Simple mode (test): no Developer options</string>
+    <string name="simple_body" translatable="false">For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.</string>
+    <string name="simple_switch" translatable="false">Use simple mode</string>
+    <string name="simple_channel_title" translatable="false">Sound channel: %1$s</string>
+    <string name="simple_channel_alarm" translatable="false">Alarm</string>
+    <string name="simple_channel_notification" translatable="false">Notification</string>
+    <string name="simple_channel_help" translatable="false">If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.</string>
+    <string name="simple_test_note" translatable="false">This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.</string>
+    <string name="simple_on_detail" translatable="false">Simple mode (test): media sound is muted while Waaiya filters.</string>
     <string name="notif_fix_cover_area">Cover an area</string>
     <string name="notif_fix_remove_covers">Remove hand covers</string>
     <string name="notif_fix_note_missed">Missed something</string>

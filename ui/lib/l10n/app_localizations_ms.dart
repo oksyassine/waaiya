@@ -940,6 +940,39 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
+  String get simpleTitle => 'Simple mode (test): no Developer options';
+
+  @override
+  String get simpleBody =>
+      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+
+  @override
+  String get simpleSwitch => 'Use simple mode';
+
+  @override
+  String simpleChannelTitle(String channel) {
+    return 'Sound channel: $channel';
+  }
+
+  @override
+  String get simpleChannelAlarm => 'Alarm';
+
+  @override
+  String get simpleChannelNotification => 'Notification';
+
+  @override
+  String get simpleChannelHelp =>
+      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+
+  @override
+  String get simpleTestNote =>
+      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+
+  @override
+  String get simpleOnDetail =>
+      'Simple mode (test): media sound is muted while Waaiya filters.';
+
+  @override
   String get worshipPrayerFajr => 'Subuh';
 
   @override
