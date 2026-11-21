@@ -15,3 +15,9 @@ The landing page: Arabic at `/`, English at `/en/`, the privacy policy (`docs/PR
 - Nothing is fetched from another server: IBM Plex Sans Arabic (OFL, `assets/fonts/OFL.txt`) and GSAP 3.15.0
   (`assets/js/GSAP-LICENSE.txt`) are in `assets/`. The only outside links are the downloads and the source.
 - Phone pictures: the 0.2.12 release on the Android 15 emulator. Film: the 50 s intro (`/srv/build/waaiya-intro`).
+
+## Try it on your sound
+
+`try/` holds the in-browser filter (the app's model via ONNX Runtime Web, copied into `assets/try/` by `build.py`,
+which needs the model in `models/dfn3` or `WAAIYA_MODELS=<dir>`). A link is fetched by the servers in `link/`:
+see `link/README.md`.

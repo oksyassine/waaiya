@@ -14,6 +14,7 @@ if [ "${1:-}" = "--preview" ]; then
 else
   python3 build.py
   cp htaccess public/.htaccess
+  mkdir -p public/api && cp link/link.php public/api/link.php   # "try a link", first server (link/README.md)
   # keep the preview folder when the live site is replaced
   rsync -a --delete --exclude /preview/ --exclude /downloads/ public/ o2:waaiya.mssid.org/
   echo "deployed: https://waaiya.mssid.org/"

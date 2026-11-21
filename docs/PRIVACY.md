@@ -51,6 +51,17 @@ two folders when you uninstall the app, and you can delete them yourself.
 Waaiya collects nothing from anyone, children included. A parent PIN and a waiting period are local settings and
 are not reported to anyone.
 
+## The website's "Try it on your sound"
+
+- **A file from your device** is read and filtered in your browser. It is not uploaded anywhere.
+- **A link** is sent to our servers, asked in this order until one succeeds: o2switch (France), Oracle Cloud
+  (Casablanca), then a server run by the developer. That server fetches at most one minute of the link's
+  sound from its site and sends it back to your browser, where it is filtered. The site of the link sees our server,
+  not you. The link travels in the body of the request, so it is not in any access log; neither the link nor the sound
+  is stored, and the temporary file is deleted once it is sent. To limit abuse each server counts requests per
+  address for ten minutes (on o2switch as a hash that changes every day) and the total per day, nothing more. The
+  hosts keep their usual access logs (address, time, page).
+
 ## Changes and contact
 
 Changes to this policy are made in this file in the public repository, where their history is kept:
@@ -98,6 +109,16 @@ Changes to this policy are made in this file in the public repository, where the
 الإشعارات لإظهار أن الترشيح يعمل وإيقافه. الظهور فوق التطبيقات لرسم الأغطية. إذنا `DUMP` و`WRITE_SECURE_SETTINGS`
 تمنحهما أنت مرة واحدة في الإعداد لإسكات الصوت الأصلي. الإنترنت لفتح الروابط فقط. إذن «عدم الإزعاج» والمنبّهات
 وإعدادات النظام فقط إن فعّلت أدوات الصلاة.
+
+### «جرّبها على صوتك» في الموقع
+
+- **الملف من جهازك** يُقرأ ويُصفّى في متصفحك، ولا يُرفع إلى أي مكان.
+- **الرابط** يُرسَل إلى خوادمنا، بهذا الترتيب حتى ينجح أحدها: o2switch (فرنسا)، ثم Oracle Cloud (الدار البيضاء)،
+  ثم خادم يديره المطوّر. يجلب الخادم دقيقةً على الأكثر من صوت الرابط من موقعه، ويعيدها إلى متصفحك فتُصفّى
+  فيه. موقع الرابط يرى خادمنا لا أنت. يُرسَل الرابط في جسم الطلب فلا يظهر في سجلات الزيارات، ولا يُحفظ الرابط ولا
+  الصوت، ويُحذف الملف المؤقت بعد إرساله. وللحدّ من إساءة الاستخدام يعدّ كل خادم الطلبات لكل عنوان مدة عشر دقائق (في
+  o2switch بصيغة مشفّرة تتغير كل يوم) ومجموعها في اليوم، لا أكثر. وتحتفظ جهات الاستضافة بسجلاتها المعتادة (العنوان
+  والوقت والصفحة).
 
 ### التواصل
 
