@@ -1,6 +1,7 @@
 /* Waaiya's real voice filter in the visitor's browser: the app's model (DeepFilterNet3 streaming, int8) run hop by
    hop with ONNX Runtime Web, exactly as the app's engine runs it (480 samples at 48 kHz, state carried between hops,
-   1440 samples of delay taken out). Fail-closed: any error returns an error, never the input. */
+   and the engine's own delay of 1440 samples (30 ms) KEPT, so the page plays "after" as late as the app does).
+   Fail-closed: any error returns an error, never the input. */
 self.onmessage = async function (e) {
   var base = e.data.base, x = e.data.pcm;
   try {
@@ -26,7 +27,7 @@ self.onmessage = async function (e) {
       state = r.state_out.data;
       if (h % 50 === 0) self.postMessage({ p: h / hops });
     }
-    var out = y.slice(LAT, LAT + N);
+    var out = y.slice(0, N);  // as the app plays it: 30 ms behind the original (LAT samples)
     for (var i = 0; i < out.length; i++) if (!isFinite(out[i])) throw new Error("not finite");
     self.postMessage({ out: out }, [out.buffer]);
   } catch (err) {

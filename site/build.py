@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "public"
 SITE = "https://waaiya.mssid.org/"
 REPO = "https://github.com/oksyassine/waaiya"
-VERSION = "0.2.12"
+VERSION = "0.2.13"
 DL = "https://waaiya.mssid.org/downloads/"   # every download lives here (site/upload_downloads.sh); GitHub has the same files
 APK = DL + "waaiya.apk"                      # the universal APK under a stable name
 APK_ARM64 = DL + f"waaiya-v{VERSION}-arm64-v8a-release.apk"
@@ -32,7 +32,6 @@ LINUX_DESKTOP = DL + f"waaiya-desktop-linux-x64-v{VERSION}.tar.gz"
 LINUX_CLI = DL + f"waaiya-linux-x64-v{VERSION}.tar.gz"
 SUMS = DL + "SHA256SUMS"
 RELEASES = REPO + "/releases/latest"
-VERSION = "0.2.12"
 GSAP = "js/gsap-3.15.0.min.js"
 # "Try it on your sound" (site/try/, site/link/): the servers asked for a link, in order; empty hides the link box.
 LINK_ENDPOINTS = ["https://waaiya.mssid.org/api/link.php", "https://link.waaiya.mssid.org/oracle",
@@ -62,12 +61,13 @@ T = {
         try_h="جرّبها على صوتك",
         try_p="اختر ملفًا من جهازك أو ألصق رابطًا. تعمل تصفية واعية الحقيقية هنا في متصفحك، ثم تنتقل بين قبل وبعد في اللحظة نفسها.",
         try_file="اختر ملفًا من جهازك",
-        try_file_note="صوت أو فيديو، وتُصفّى أول دقيقة منه. الملف لا يغادر جهازك.",
+        try_file_note="صوت أو فيديو، وتُصفّى أول دقيقة منه وتراه معها. الملف لا يغادر جهازك.",
         try_or="أو",
         try_link_label="رابط من [[YouTube]] أو [[TikTok]] أو [[SoundCloud]]",
         try_link_btn="جرّب الرابط",
-        try_link_note="يجلب خادمُنا دقيقةً من صوته، من الوقت المذكور في الرابط إن وُجد، ثم تُصفّى هنا على جهازك. لا نحفظ الرابط ولا الصوت.",
+        try_link_note="يجلب خادمُنا دقيقةً منه، صوتًا وصورةً صغيرة، من الوقت المذكور في الرابط إن وُجد، ثم يُصفّى الصوت هنا على جهازك. لا نحفظ الرابط ولا المقطع.",
         try_idle="لم تختر شيئًا بعد.",
+        try_delay="«بعد واعية» تسمعه بتأخير التطبيق الحقيقي، نحو [[30]] جزءًا من الألف من الثانية. إن كان للمقطع صورة فقارن حركة الشفاه بالكلام.",
         try_before="قبل واعية", try_after="بعد واعية", try_ab="الصوت",
         try_js=dict(
             reading="قراءة الملف…", fetching="جلب دقيقة من الرابط…", next="لم يستطع هذا الخادم، نجرّب خادمًا آخر…",
@@ -137,7 +137,7 @@ T = {
         phone_h="على هاتفك",
         phones=[("on", "التصفية", "زر واحد لكل التطبيقات"), ("screen", "الشاشة", "تمويه النساء والصور غير المحتشمة"),
                 ("settings2", "أوقات الصلاة", "صمت، ورسالة لمن يتصل"), ("settings3", "الحماية", "الانتظار قبل الإيقاف، والرمز")],
-        phone_meta="أندرويد [[15]] · واعية [[0.2.12]]",
+        phone_meta="أندرويد [[15]] · واعية [[0.2.13]]",
         how_h="كيف تبدأ",
         how=[
             ("أولًا، ثبّت واعية.", "ملف [[waaiya.apk]] لأندرويد [[10]] أو أحدث. أو نسخة ويندوز ولينكس."),
@@ -165,7 +165,7 @@ T = {
         dl_btn="تنزيل", dl_soon="قريبًا في متجر مايكروسوفت",
         dl_for={"android": "حمّل واعية لأندرويد", "windows": "حمّل واعية لويندوز", "linux": "حمّل واعية للينكس"},
         dl_rows=[
-            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.12]]، يعمل على كل الهواتف، أندرويد [[10]] أو أحدث · [[108 MB]]",
+            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.13]]، يعمل على كل الهواتف، أندرويد [[10]] أو أحدث · [[108 MB]]",
              [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
               ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
             ("windows", "ويندوز: قريبًا في متجر مايكروسوفت", None, "الطلب قيد المراجعة. ويندوز [[10 (2004)]] أو أحدث.",
@@ -191,12 +191,13 @@ T = {
         try_h="Try it on your sound",
         try_p="Pick a file from your device or paste a link. Waaiya's real filter runs here in your browser; then switch between before and after at the same moment.",
         try_file="Pick a file from your device",
-        try_file_note="Audio or video; its first minute is filtered. The file never leaves your device.",
+        try_file_note="Audio or video; its first minute is filtered, with its picture. The file never leaves your device.",
         try_or="or",
         try_link_label="A YouTube, TikTok or SoundCloud link",
         try_link_btn="Try the link",
-        try_link_note="Our server fetches a minute of its sound, from the time in the link if it has one; it is then filtered here, on your device. We keep neither the link nor the sound.",
+        try_link_note="Our server fetches a minute of it, sound and a small picture, from the time in the link if it has one; the sound is then filtered here, on your device. We keep neither the link nor the clip.",
         try_idle="Nothing chosen yet.",
+        try_delay="\u201cAfter Waaiya\u201d plays with the app's real delay, about 30 milliseconds. If the clip has a picture, watch the lips against the voice.",
         try_before="Before Waaiya", try_after="After Waaiya", try_ab="Sound",
         try_js=dict(
             reading="Reading the file…", fetching="Fetching a minute from the link…", next="That server could not; trying another…",
@@ -266,7 +267,7 @@ T = {
         phone_h="On your phone",
         phones=[("on", "Filter", "One button for every app"), ("screen", "Screen", "Blur for women and immodest images"),
                 ("settings2", "Prayer times", "Silence, and a text to callers"), ("settings3", "Protection", "Wait before turning off, and a PIN")],
-        phone_meta="Android 15 · Waaiya 0.2.12",
+        phone_meta="Android 15 · Waaiya 0.2.13",
         how_h="How to start",
         how=[
             ("First, install Waaiya.", "waaiya.apk for Android 10 or newer. Or the Windows and Linux apps."),
@@ -294,7 +295,7 @@ T = {
         dl_btn="Download", dl_soon="Soon in the Microsoft Store",
         dl_for={"android": "Get Waaiya for Android", "windows": "Get Waaiya for Windows", "linux": "Get Waaiya for Linux"},
         dl_rows=[
-            ("android", "Android: waaiya.apk", APK, "Version 0.2.12, for every phone, Android 10 or newer · 108 MB",
+            ("android", "Android: waaiya.apk", APK, "Version 0.2.13, for every phone, Android 10 or newer · 108 MB",
              [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
               ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
             ("windows", "Windows: soon in the Microsoft Store", None, "Under review. Windows 10 (2004) or newer.",
@@ -499,6 +500,7 @@ def page(lang, root):
     <button type="button" class="power power-l" data-power aria-pressed="false" aria-describedby="readout">{POWER_SVG}<span class="ring" aria-hidden="true"></span><span class="vh">{e(t['power_label'])}</span></button>
     <div class="readout" id="readout" aria-live="polite"><strong>{e(t['r_off_h'])}</strong><span>{e(t['r_off'])}</span></div>
   </div>
+  <figure class="film hero-film"><video src="{a}waaiya-intro.mp4" poster="{a}waaiya-intro.jpg" width="540" height="960" controls playsinline muted loop preload="metadata" aria-label="{e(t['film_alt'])}"></video><figcaption>{e(t['film_cap'])}</figcaption></figure>
   <figure class="stage" dir="ltr">
     <div class="stage-img shutter"><img class="s-after" src="{a}spec-after-dark.webp" width="2400" height="840" alt="{e(t['spec_cap_on'])}"><img class="s-before" src="{a}spec-before-dark.webp" width="2400" height="840" alt="{e(t['spec_cap_off'])}"></div>
     <figcaption dir="{t['dir']}"><strong class="cap-state">{e(t['spec_cap_on'])}</strong><span>{e(t['spec_what'])}</span></figcaption>
@@ -539,8 +541,10 @@ def page(lang, root):
       <div class="try-bar" aria-hidden="true"><i></i></div>
       <div class="try-deck" hidden>
         <p class="try-src" dir="auto"></p>
+        <video class="try-video" muted playsinline preload="auto" hidden></video>
         <div class="try-ab" role="group" aria-label="{e(t['try_ab'])}"><button type="button" data-side="before" aria-pressed="false">{e(t['try_before'])}</button><button type="button" data-side="after" aria-pressed="true">{e(t['try_after'])}</button></div>
         <div class="try-row try-play-row"><button type="button" class="play try-play" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg><span>{e(t['try_js']['play'])}</span></button><input class="try-seek" type="range" min="0" max="600" step="1" value="0" aria-label="{e(t['try_ab'])}" dir="ltr"><span class="pl-time"><bdi dir="ltr"><span class="try-now">0:00</span> / <span class="try-len">0:00</span></bdi></span></div>
+        <p class="try-delay">{e(t['try_delay'])}</p>
       </div>
     </div>
   </div>
@@ -604,7 +608,6 @@ def page(lang, root):
     <p data-e>{e(t['priv_p'])}</p>
     <ul class="facts" data-e>{facts}</ul>
   </div>
-  <figure class="film"><video src="{a}waaiya-intro.mp4" poster="{a}waaiya-intro.jpg" width="540" height="960" controls playsinline muted loop preload="metadata" aria-label="{e(t['film_alt'])}"></video><figcaption>{e(t['film_cap'])}</figcaption></figure>
 </section>
 {strip}
 <section class="faq" id="faq" aria-labelledby="faq-h">

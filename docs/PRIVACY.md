@@ -56,8 +56,9 @@ are not reported to anyone.
 - **A file from your device** is read and filtered in your browser. It is not uploaded anywhere.
 - **A link** is sent to our servers, asked in this order until one succeeds: o2switch (France), Oracle Cloud
   (Casablanca), then a server run by the developer. That server fetches at most one minute of the link's
-  sound from its site and sends it back to your browser, where it is filtered. The site of the link sees our server,
-  not you. The link travels in the body of the request, so it is not in any access log; neither the link nor the sound
+  sound, with a small picture when it has one, from its site and sends it back to your browser, where the sound is
+  filtered. The site of the link sees our server,
+  not you. The link travels in the body of the request, so it is not in any access log; neither the link nor the clip
   is stored, and the temporary file is deleted once it is sent. To limit abuse each server counts requests per
   address for ten minutes (on o2switch as a hash that changes every day) and the total per day, nothing more. The
   hosts keep their usual access logs (address, time, page).
@@ -114,9 +115,9 @@ Changes to this policy are made in this file in the public repository, where the
 
 - **الملف من جهازك** يُقرأ ويُصفّى في متصفحك، ولا يُرفع إلى أي مكان.
 - **الرابط** يُرسَل إلى خوادمنا، بهذا الترتيب حتى ينجح أحدها: o2switch (فرنسا)، ثم Oracle Cloud (الدار البيضاء)،
-  ثم خادم يديره المطوّر. يجلب الخادم دقيقةً على الأكثر من صوت الرابط من موقعه، ويعيدها إلى متصفحك فتُصفّى
-  فيه. موقع الرابط يرى خادمنا لا أنت. يُرسَل الرابط في جسم الطلب فلا يظهر في سجلات الزيارات، ولا يُحفظ الرابط ولا
-  الصوت، ويُحذف الملف المؤقت بعد إرساله. وللحدّ من إساءة الاستخدام يعدّ كل خادم الطلبات لكل عنوان مدة عشر دقائق (في
+  ثم خادم يديره المطوّر. يجلب الخادم دقيقةً على الأكثر من صوت الرابط، مع صورة صغيرة إن كانت له، من موقعه، ويعيدها
+  إلى متصفحك فيُصفّى الصوت فيه. موقع الرابط يرى خادمنا لا أنت. يُرسَل الرابط في جسم الطلب فلا يظهر في سجلات الزيارات، ولا يُحفظ الرابط ولا
+  المقطع، ويُحذف الملف المؤقت بعد إرساله. وللحدّ من إساءة الاستخدام يعدّ كل خادم الطلبات لكل عنوان مدة عشر دقائق (في
   o2switch بصيغة مشفّرة تتغير كل يوم) ومجموعها في اليوم، لا أكثر. وتحتفظ جهات الاستضافة بسجلاتها المعتادة (العنوان
   والوقت والصفحة).
 

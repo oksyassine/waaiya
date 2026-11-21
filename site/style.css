@@ -82,13 +82,13 @@ html:not(.js) .power { display: none; }
 
 /* ---------- hero: the deep field, the headline, the switch, the spectrogram full-bleed ---------- */
 .hero { background: #053D35; color: #E6F2EF; display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr; column-gap: 24px; padding: clamp(40px, 5vw, 80px) var(--m) 0; min-height: calc(100svh - 64px); }
-.hero-text { grid-column: 1 / span 8; }
+.hero-text { grid-column: 1 / span 7; }
 .hero h1 { font-size: var(--s1); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; max-width: 16ch; text-wrap: balance; }
 html[lang="ar"] .hero h1 { letter-spacing: 0; line-height: 1.25; }
 .lead { font-size: var(--s3); line-height: 1.5; max-width: 34em; margin-top: 24px; }
 .btn-hero { margin-top: 32px; background: #D3EFE8; color: #053D35; min-height: 56px; padding: 0 32px; }
 @media (hover: hover) and (pointer: fine) { .btn-hero:hover { background: #fff; color: #053D35; } }
-.hero-power { grid-column: 9 / span 4; align-self: center; display: grid; justify-items: start; gap: 20px; }
+.hero-power { grid-column: 1 / span 7; grid-row: 2; align-self: center; margin-top: 32px; display: grid; grid-template-columns: auto 1fr; align-items: center; justify-items: start; gap: 24px; }
 .readout { display: grid; gap: 4px; max-width: 22em; }
 .readout strong { font-size: var(--s4); font-weight: 600; }
 .readout span { font-size: var(--s5); color: #B9D3CC; }
@@ -235,7 +235,7 @@ html[lang="ar"] .how h3 { letter-spacing: 0; line-height: 1.35; }
 .how li p { font-size: var(--s4); max-width: 44ch; }
 
 /* ---------- nothing leaves your device, and the film ---------- */
-.priv { background: #053D35; color: #E6F2EF; display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 5vw, 96px); padding: clamp(64px, 8vw, 128px) var(--m); align-items: center; }
+.priv { background: #053D35; color: #E6F2EF; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 96px); padding: clamp(64px, 8vw, 128px) var(--m); align-items: center; }
 .priv-text { display: grid; gap: 28px; }
 .priv-text > p { font-size: var(--s3); line-height: 1.5; max-width: 36ch; }
 .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 12px; }
@@ -243,6 +243,7 @@ html[lang="ar"] .how h3 { letter-spacing: 0; line-height: 1.35; }
 .facts strong { font-size: var(--s1); font-weight: 700; line-height: 1; }
 .facts span { font-size: var(--s5); color: #CFE3DD; }
 .film { justify-self: center; width: min(100%, 380px); }
+.hero-film { grid-column: 8 / span 5; grid-row: 1 / span 2; justify-self: center; align-self: center; width: min(100%, 430px, calc((100svh - 200px) * 0.5625)); min-width: 260px; margin: 0; }
 .film video { width: 100%; background: #000; aspect-ratio: 540 / 960; }
 .film figcaption { margin-top: 12px; font-size: var(--s5); color: #B9D3CC; }
 
@@ -355,6 +356,9 @@ a.dl-main { color: var(--accent); text-decoration: underline; text-decoration-th
 .try:not(.try-busy) .try-bar { visibility: hidden; }
 .try-deck { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
 .try-deck[hidden] { display: none; }
+.try-video { width: 100%; max-height: 360px; background: #000; border-radius: 8px; }
+.try-video[hidden] { display: none; }
+.try .try-delay { font-size: var(--s5); }
 .try .try-src { font-size: var(--s5); color: var(--muted); overflow-wrap: anywhere; }
 .try-ab { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border-radius: 10px; padding: 4px; gap: 4px; }
 .try-ab button { min-height: 52px; border: 0; border-radius: 8px; background: transparent; color: var(--ink); font: inherit; font-weight: 600; font-size: var(--s4); transition: background-color 180ms ease, color 180ms ease, transform 140ms var(--ease-out); }
@@ -369,7 +373,8 @@ html:not(.js) .try-tool, .try:not(.try-on) .try-tool { display: none; }
 @media (max-width: 1080px) {
   .links { display: none; }
   .hero-text { grid-column: 1 / span 12; }
-  .hero-power { grid-column: 1 / span 12; margin-top: 40px; grid-template-columns: auto 1fr; align-items: center; gap: 24px; }
+  .hero-power { grid-column: 1 / span 12; grid-row: auto; margin-top: 40px; }
+  .hero-film { grid-column: 1 / span 12; grid-row: auto; justify-self: center; margin-top: 40px; width: min(100%, 280px); }
   .power-l { width: 112px; height: 112px; }
   .langs-head { grid-template-columns: 1fr; row-gap: 16px; }
   .langs { grid-template-columns: 1fr; }
