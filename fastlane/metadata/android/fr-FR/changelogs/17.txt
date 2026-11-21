@@ -1,0 +1,1 @@
+Mises à jour dans l’application : Waaiya cherche une nouvelle version une fois par jour et vous prévient. « Mettre à jour » ne télécharge que les changements (quelques Mo au lieu d’une centaine), puis Android demande votre confirmation. Désactivez la recherche dans Paramètres, « Mises à jour ».
