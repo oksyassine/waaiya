@@ -21,3 +21,15 @@ The landing page: Arabic at `/`, English at `/en/`, the privacy policy (`docs/PR
 `try/` holds the in-browser filter (the app's model via ONNX Runtime Web, copied into `assets/try/` by `build.py`,
 which needs the model in `models/dfn3` or `WAAIYA_MODELS=<dir>`). A link is fetched by the servers in `link/`:
 see `link/README.md`.
+
+## Automatic deploy
+
+The live site follows `main`: `site/auto_deploy.sh`, run every 5 minutes by a systemd user timer, fetches `main` into
+its own clone and runs `deploy.sh` when a new commit touched `site/`, `docs/PRIVACY.md` or `models/SHA256SUMS`.
+Install it (or update it) on the machine that has the `o2` ssh alias:
+
+    site/install_auto_deploy.sh <clone dir> [voice model dir]
+    journalctl --user -u waaiya-site-deploy -n 20     # what it did
+    site/install_auto_deploy.sh --remove
+
+Merging to `main` is publishing; use `deploy.sh --preview` to look at a change first.
