@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "public"
 SITE = "https://waaiya.mssid.org/"
 REPO = "https://github.com/oksyassine/waaiya"
-VERSION = "0.2.12"
+VERSION = "0.2.13"
 DL = "https://waaiya.mssid.org/downloads/"   # every download lives here (site/upload_downloads.sh); GitHub has the same files
 APK = DL + "waaiya.apk"                      # the universal APK under a stable name
 APK_ARM64 = DL + f"waaiya-v{VERSION}-arm64-v8a-release.apk"
@@ -32,7 +32,6 @@ LINUX_DESKTOP = DL + f"waaiya-desktop-linux-x64-v{VERSION}.tar.gz"
 LINUX_CLI = DL + f"waaiya-linux-x64-v{VERSION}.tar.gz"
 SUMS = DL + "SHA256SUMS"
 RELEASES = REPO + "/releases/latest"
-VERSION = "0.2.12"
 GSAP = "js/gsap-3.15.0.min.js"
 # "Try it on your sound" (site/try/, site/link/): the servers asked for a link, in order; empty hides the link box.
 LINK_ENDPOINTS = ["https://waaiya.mssid.org/api/link.php", "https://link.waaiya.mssid.org/oracle",
@@ -138,7 +137,7 @@ T = {
         phone_h="على هاتفك",
         phones=[("on", "التصفية", "زر واحد لكل التطبيقات"), ("screen", "الشاشة", "تمويه النساء والصور غير المحتشمة"),
                 ("settings2", "أوقات الصلاة", "صمت، ورسالة لمن يتصل"), ("settings3", "الحماية", "الانتظار قبل الإيقاف، والرمز")],
-        phone_meta="أندرويد [[15]] · واعية [[0.2.12]]",
+        phone_meta="أندرويد [[15]] · واعية [[0.2.13]]",
         how_h="كيف تبدأ",
         how=[
             ("أولًا، ثبّت واعية.", "ملف [[waaiya.apk]] لأندرويد [[10]] أو أحدث. أو نسخة ويندوز ولينكس."),
@@ -166,7 +165,7 @@ T = {
         dl_btn="تنزيل", dl_soon="قريبًا في متجر مايكروسوفت",
         dl_for={"android": "حمّل واعية لأندرويد", "windows": "حمّل واعية لويندوز", "linux": "حمّل واعية للينكس"},
         dl_rows=[
-            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.12]]، يعمل على كل الهواتف، أندرويد [[10]] أو أحدث · [[108 MB]]",
+            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.13]]، يعمل على كل الهواتف، أندرويد [[10]] أو أحدث · [[108 MB]]",
              [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
               ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
             ("windows", "ويندوز: قريبًا في متجر مايكروسوفت", None, "الطلب قيد المراجعة. ويندوز [[10 (2004)]] أو أحدث.",
@@ -268,7 +267,7 @@ T = {
         phone_h="On your phone",
         phones=[("on", "Filter", "One button for every app"), ("screen", "Screen", "Blur for women and immodest images"),
                 ("settings2", "Prayer times", "Silence, and a text to callers"), ("settings3", "Protection", "Wait before turning off, and a PIN")],
-        phone_meta="Android 15 · Waaiya 0.2.12",
+        phone_meta="Android 15 · Waaiya 0.2.13",
         how_h="How to start",
         how=[
             ("First, install Waaiya.", "waaiya.apk for Android 10 or newer. Or the Windows and Linux apps."),
@@ -296,7 +295,7 @@ T = {
         dl_btn="Download", dl_soon="Soon in the Microsoft Store",
         dl_for={"android": "Get Waaiya for Android", "windows": "Get Waaiya for Windows", "linux": "Get Waaiya for Linux"},
         dl_rows=[
-            ("android", "Android: waaiya.apk", APK, "Version 0.2.12, for every phone, Android 10 or newer · 108 MB",
+            ("android", "Android: waaiya.apk", APK, "Version 0.2.13, for every phone, Android 10 or newer · 108 MB",
              [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
               ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
             ("windows", "Windows: soon in the Microsoft Store", None, "Under review. Windows 10 (2004) or newer.",
