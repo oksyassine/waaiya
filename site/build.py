@@ -7,6 +7,7 @@ template, plus privacy.html / en/privacy.html from docs/PRIVACY.md.
     site/deploy.sh [--preview]         # build and rsync to the host
 
 The page asks nothing of any other server: the typeface (IBM Plex Sans Arabic, OFL) and GSAP are in assets/.
+The one exception is "try a link" (site/link/), and only when the visitor submits a link.
 Generated pictures and the filtered sound come from real material: see make_assets.py.
 """
 import html
@@ -33,6 +34,13 @@ SUMS = DL + "SHA256SUMS"
 RELEASES = REPO + "/releases/latest"
 VERSION = "0.2.12"
 GSAP = "js/gsap-3.15.0.min.js"
+# "Try it on your sound" (site/try/, site/link/): the servers asked for a link, in order; empty hides the link box.
+LINK_ENDPOINTS = ["https://waaiya.mssid.org/api/link.php", "https://link.waaiya.mssid.org/oracle",
+                  "https://link.waaiya.mssid.org/mhost"]
+ORT_VERSION = "1.20.1"   # onnxruntime-web, from the npm registry, checked below; files copied to assets/try/
+ORT_TGZ_SHA256 = "0a38facf0672dfaaeaf352e8a9f44533732b60b4af93b9dd507fe7c2d2be437b"
+ORT_FILES = ("ort.wasm.min.js", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm")
+MODEL_FILES = ("dfn3_stream_int8.onnx", "dfn3_stream_int8.state_init.bin")  # the app's voice model (models/SHA256SUMS)
 PREVIEW = "--preview" in sys.argv
 
 LANGS = [("ar", "العربية"), ("en", "English"), ("fr", "Français"), ("ur", "اردو"), ("id", "Bahasa Indonesia"),
@@ -47,8 +55,35 @@ T = {
         dir="rtl", other="en", other_label="English", other_href="en/",
         title="واعية: تطبيق يزيل المعازف ويُبقي الكلام",
         desc="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس، يزيل الآلات الموسيقية من صوت كل التطبيقات مباشرةً ويُبقي الكلام والتلاوة. لا يخرج شيء من جهازك.",
-        nav=[("hear", "اسمع"), ("cover", "التمويه"), ("lang", "لغتك"), ("faq", "أسئلة")],
+        nav=[("hear", "اسمع"), ("try", "جرّب"), ("cover", "التمويه"), ("lang", "لغتك"), ("faq", "أسئلة")],
         nav_cta="حمّل",
+        try_nav="جرّب",
+        try_hero="أو جرّبها على ملفك أو رابط",
+        try_h="جرّبها على صوتك",
+        try_p="اختر ملفًا من جهازك أو ألصق رابطًا. تعمل تصفية واعية الحقيقية هنا في متصفحك، ثم تنتقل بين قبل وبعد في اللحظة نفسها.",
+        try_file="اختر ملفًا من جهازك",
+        try_file_note="صوت أو فيديو، وتُصفّى أول دقيقة منه. الملف لا يغادر جهازك.",
+        try_or="أو",
+        try_link_label="رابط من [[YouTube]] أو [[TikTok]] أو [[SoundCloud]]",
+        try_link_btn="جرّب الرابط",
+        try_link_note="يجلب خادمُنا دقيقةً من صوته، من الوقت المذكور في الرابط إن وُجد، ثم تُصفّى هنا على جهازك. لا نحفظ الرابط ولا الصوت.",
+        try_idle="لم تختر شيئًا بعد.",
+        try_before="قبل واعية", try_after="بعد واعية", try_ab="الصوت",
+        try_js=dict(
+            reading="قراءة الملف…", fetching="جلب دقيقة من الرابط…", next="لم يستطع هذا الخادم، نجرّب خادمًا آخر…",
+            loading="تحميل المصفّي، نحو [[6 MB]] مرة واحدة…", filtering="التصفية على جهازك: [[{p}]]٪",
+            ready="جاهز. انتقل بين قبل وبعد وأنت تستمع.", play="تشغيل", pause="إيقاف مؤقت",
+            src_file="ملفك: {name}", src_link="من الرابط: {title}",
+            err=dict(
+                all="تعذّر جلب هذا الرابط الآن من خوادمنا كلّها. جرّب رابطًا آخر أو ملفًا من جهازك، أو افتحه في تطبيق واعية.",
+                invalid_url="هذا ليس رابطًا صالحًا. ألصق رابط المقطع كاملًا.",
+                unsupported_site="هذا الموقع غير مدعوم هنا. جرّب [[YouTube]] أو [[TikTok]] أو [[SoundCloud]]، أو افتحه في تطبيق واعية.",
+                playlist="هذه قائمة تشغيل أو قناة. ألصق رابط مقطع واحد.",
+                live="هذا بثّ مباشر. ألصق رابط مقطع مسجَّل.",
+                no_format="لم نجد صوتًا في هذا الرابط.",
+                file_long="الملف طويل على هذا المتصفح. قصّه أو اختر مقطعًا أقصر.",
+                decode="لم يستطع المتصفح قراءة هذا الملف. جرّب [[MP3]] أو [[M4A]] أو [[MP4]].",
+                filter="تعذّرت التصفية على هذا الجهاز، فلن نُسمِعك شيئًا على أنه «بعد واعية».")),
         h1="يزيل المعازف ويُبقي الكلام",
         lead="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس. يزيل الآلات الموسيقية من صوت كل التطبيقات مباشرةً، ويُبقي الكلام والتلاوة. ولا يخرج شيء من جهازك.",
         cta="حمّل واعية",
@@ -149,8 +184,35 @@ T = {
         dir="ltr", other="ar", other_label="العربية", other_href="../",
         title="Waaiya: remove the music, keep the voice",
         desc="A free, open-source app for Android, Windows and Linux that removes musical instruments from everything you play, live, and keeps speech and Quran recitation.",
-        nav=[("hear", "Listen"), ("cover", "Screen blur"), ("lang", "Your language"), ("faq", "Questions")],
+        nav=[("hear", "Listen"), ("try", "Try it"), ("cover", "Screen blur"), ("lang", "Your language"), ("faq", "Questions")],
         nav_cta="Download",
+        try_nav="Try it",
+        try_hero="Or try it on your file or a link",
+        try_h="Try it on your sound",
+        try_p="Pick a file from your device or paste a link. Waaiya's real filter runs here in your browser; then switch between before and after at the same moment.",
+        try_file="Pick a file from your device",
+        try_file_note="Audio or video; its first minute is filtered. The file never leaves your device.",
+        try_or="or",
+        try_link_label="A YouTube, TikTok or SoundCloud link",
+        try_link_btn="Try the link",
+        try_link_note="Our server fetches a minute of its sound, from the time in the link if it has one; it is then filtered here, on your device. We keep neither the link nor the sound.",
+        try_idle="Nothing chosen yet.",
+        try_before="Before Waaiya", try_after="After Waaiya", try_ab="Sound",
+        try_js=dict(
+            reading="Reading the file…", fetching="Fetching a minute from the link…", next="That server could not; trying another…",
+            loading="Loading the filter, about 6 MB, once…", filtering="Filtering on your device: {p}%",
+            ready="Ready. Switch between before and after while you listen.", play="Play", pause="Pause",
+            src_file="Your file: {name}", src_link="From the link: {title}",
+            err=dict(
+                all="None of our servers could fetch this link right now. Try another link or a file from your device, or open it in the Waaiya app.",
+                invalid_url="That is not a valid link. Paste the full link of the video.",
+                unsupported_site="This site is not supported here. Try YouTube, TikTok or SoundCloud, or open it in the Waaiya app.",
+                playlist="That is a playlist or a channel. Paste the link of one video.",
+                live="That is a live stream. Paste the link of a recorded video.",
+                no_format="We found no sound at this link.",
+                file_long="This file is too long for this browser. Trim it or pick a shorter clip.",
+                decode="The browser could not read this file. Try MP3, M4A or MP4.",
+                filter="Filtering failed on this device, so nothing is played as \u201cafter Waaiya\u201d.")),
         h1="Removes music, keeps the voice",
         lead="A free, open-source app for Android, Windows and Linux. It removes musical instruments from the sound of every app, live, and keeps speech and Quran recitation. Nothing leaves your device.",
         cta="Get Waaiya",
@@ -378,6 +440,9 @@ def page(lang, root):
     i18n["apk"] = APK
     i18n["releases"] = RELEASES
     i18n["linux"] = LINUX_DESKTOP
+    def plain_tree(v):
+        return {k: plain_tree(x) for k, x in v.items()} if isinstance(v, dict) else plain(v)
+    i18n["try"] = plain_tree(t["try_js"])
     i18n_json = json.dumps(i18n, ensure_ascii=False).replace("</", "<\\/")
     sub = "arabic" if rtl else "latin"
     alt_url = SITE + ("" if lang == "en" else "en/")
@@ -428,6 +493,7 @@ def page(lang, root):
     <h1 id="h1" data-e>{e(t['h1'])}</h1>
     <p class="lead" data-e>{e(t['lead'])}</p>
     <a class="btn btn-hero" href="#download" data-e>{e(t['cta'])}</a>
+    <a class="hero-try" href="#try" data-e>{e(t['try_hero'])}</a>
   </div>
   <div class="hero-power">
     <button type="button" class="power power-l" data-power aria-pressed="false" aria-describedby="readout">{POWER_SVG}<span class="ring" aria-hidden="true"></span><span class="vh">{e(t['power_label'])}</span></button>
@@ -457,6 +523,26 @@ def page(lang, root):
     <p data-e>{e(t['hear_out'])}</p>
     <p class="credit" data-e>{e(t['hear_credit'])}</p>
     <h2 data-e>{e(t['hear_h2'])}</h2>
+  </div>
+</section>
+<section class="try" id="try" aria-labelledby="try-h" data-base="{a}try/" data-endpoints='{json.dumps(LINK_ENDPOINTS)}'>
+  <div class="try-text" data-enter>
+    <h2 id="try-h" data-e>{e(t['try_h'])}</h2>
+    <p data-e>{e(t['try_p'])}</p>
+  </div>
+  <div class="try-tool" data-ui>
+    <div class="try-file"><input type="file" accept="audio/*,video/*" hidden tabindex="-1"><button type="button" class="btn try-pick">{e(t['try_file'])}</button><p>{e(t['try_file_note'])}</p></div>
+    <p class="try-or" aria-hidden="true"><span>{e(t['try_or'])}</span></p>
+    <form class="try-link" novalidate><label for="try-url">{e(t['try_link_label'])}</label><div class="try-row"><input id="try-url" type="url" inputmode="url" dir="ltr" autocomplete="off" spellcheck="false" placeholder="https://youtu.be/…"><button type="submit" class="btn try-go">{e(t['try_link_btn'])}</button></div><p>{e(t['try_link_note'])}</p></form>
+    <div class="try-out">
+      <p class="try-status" role="status" aria-live="polite">{e(t['try_idle'])}</p>
+      <div class="try-bar" aria-hidden="true"><i></i></div>
+      <div class="try-deck" hidden>
+        <p class="try-src" dir="auto"></p>
+        <div class="try-ab" role="group" aria-label="{e(t['try_ab'])}"><button type="button" data-side="before" aria-pressed="false">{e(t['try_before'])}</button><button type="button" data-side="after" aria-pressed="true">{e(t['try_after'])}</button></div>
+        <div class="try-row try-play-row"><button type="button" class="play try-play" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M8 5.5v13l11-6.5z"/><path class="i-pause" d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg><span>{e(t['try_js']['play'])}</span></button><input class="try-seek" type="range" min="0" max="600" step="1" value="0" aria-label="{e(t['try_ab'])}" dir="ltr"><span class="pl-time"><bdi dir="ltr"><span class="try-now">0:00</span> / <span class="try-len">0:00</span></bdi></span></div>
+      </div>
+    </div>
   </div>
 </section>
 {strip}
@@ -535,6 +621,7 @@ def page(lang, root):
 <script type="application/json" id="i18n">{i18n_json}</script>
 <script src="{a}{GSAP}"></script>
 <script>{JS}</script>
+<script src="{a}try/try.js" defer></script>
 </body>
 </html>
 """
@@ -617,11 +704,52 @@ LLMS = f"""# Waaiya (واعية)
 """
 
 
+def sha256(path):
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for b in iter(lambda: f.read(1 << 20), b""):
+            h.update(b)
+    return h.hexdigest()
+
+
+def try_assets(dst):
+    """The in-browser filter: try.js + its worker, ONNX Runtime Web (npm tarball, cached in .work/, checked) and the
+    app's voice model (models/dfn3, checked against models/SHA256SUMS; WAAIYA_MODELS=<dir> to take it elsewhere)."""
+    import os, tarfile, urllib.request
+    dst.mkdir(parents=True)
+    for f in ("try.js", "try-worker.js"):
+        shutil.copy(HERE / "try" / f, dst / f)
+    work = HERE / ".work"
+    work.mkdir(exist_ok=True)
+    tgz = work / f"onnxruntime-web-{ORT_VERSION}.tgz"
+    if not tgz.exists() or sha256(tgz) != ORT_TGZ_SHA256:
+        urllib.request.urlretrieve(f"https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-{ORT_VERSION}.tgz", tgz)
+    if sha256(tgz) != ORT_TGZ_SHA256:
+        sys.exit(f"onnxruntime-web {ORT_VERSION}: checksum mismatch")
+    with tarfile.open(tgz) as t:
+        for f in ORT_FILES:
+            with t.extractfile(f"package/dist/{f}") as src, open(dst / f, "wb") as out:
+                shutil.copyfileobj(src, out)
+    import gzip  # the host does not compress wasm itself; htaccess sends this copy to browsers that accept gzip
+    with open(dst / ORT_FILES[2], "rb") as src, gzip.open(dst / (ORT_FILES[2] + ".gz"), "wb", 9) as out:
+        shutil.copyfileobj(src, out)
+    models = Path(os.environ.get("WAAIYA_MODELS") or HERE.parent / "models/dfn3")
+    sums = dict(reversed(l.split()) for l in (HERE.parent / "models/SHA256SUMS").read_text().splitlines() if l.strip())
+    for f in MODEL_FILES:
+        if not (models / f).exists():
+            sys.exit(f"missing {models / f}: run scripts/fetch_deps.sh models, or set WAAIYA_MODELS")
+        if sha256(models / f) != sums[f]:
+            sys.exit(f"{f}: checksum does not match models/SHA256SUMS")
+        shutil.copy(models / f, dst / f)
+
+
 def main():
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "en").mkdir(parents=True)
     shutil.copytree(HERE / "assets", OUT / "assets")
+    try_assets(OUT / "assets/try")
     (OUT / "index.html").write_text(page("ar", ""))
     (OUT / "en/index.html").write_text(page("en", "../"))
     (OUT / "privacy.html").write_text(privacy("ar", ""))
