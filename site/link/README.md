@@ -2,7 +2,7 @@
 
 The landing page's try section (`site/try/`) filters sound in the visitor's browser with the app's own model. A file
 from the visitor's device never leaves it. A link cannot be read by a browser, so the page asks these servers, in
-order, for up to 60 s of the link's sound (from the link's `t=` time if it has one), as a mono M4A:
+order, for up to 60 s of the link's sound (from the link's `t=` time if it has one) as mono AAC, with a small H.264 picture (at most 360p, re-encoded so both start together) when the link has video:
 
 | # | Server | Endpoint | Runs |
 |---|---|---|---|
@@ -22,7 +22,7 @@ TikTok and SoundCloud work from all three; Vimeo needs a login everywhere.
 no shell anywhere; the media is downloaded by Python and ffmpeg only reads that local file (`-protocol_whitelist file`;
 HLS, the rare case, is https-only). One fetch at a time per server, 6 per address per 10 min, 400 per day. The
 containers run as a non-root user, read-only, without capabilities, 1 CPU / 768 MB, port on 127.0.0.1 only, no logs.
-o2switch cannot be sandboxed: there it is a lock, a 55 s limit and the same caps. The link is sent by POST and never
+o2switch cannot be sandboxed: there it is a lock, an 80 s limit and the same caps. The link is sent by POST and never
 logged; the temporary file is deleted after the answer.
 
 **yt-dlp stays current.**

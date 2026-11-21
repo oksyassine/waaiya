@@ -293,7 +293,7 @@
     }
   }
 
-  // ---------- the film plays muted while in view; its controls give the sound (voice only) ----------
+  // ---------- the film (in the hero) plays muted while in view; its controls give the sound (voice only) ----------
   var v = $(".film video");
   if (v && "IntersectionObserver" in window && !reduce()) {
     new IntersectionObserver(function (es) {
