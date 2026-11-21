@@ -1,6 +1,6 @@
 #!/bin/bash
 # Puts a release's files on https://waaiya.mssid.org/downloads/ (the page's download links point here):
-#   site/upload_downloads.sh 0.2.13
+#   site/upload_downloads.sh 0.2.14
 # Takes the signed APKs from build/apk/ and the desktop files + SHA256SUMS from the GitHub release (publish it first,
 # with the signed APKs). waaiya.apk is the universal APK under a stable name. Then update VERSION in build.py and deploy.
 # It also publishes the in-app update (make_update.py): patches/ and update.json, the release file read by the apps.
