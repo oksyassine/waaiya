@@ -987,6 +987,74 @@ class AppLocalizationsAr extends AppLocalizations {
       'إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.';
 
   @override
+  String get updateTitle => 'تحديثات التطبيق';
+
+  @override
+  String get updateAuto => 'ابحث عن إصدار جديد مرة في اليوم';
+
+  @override
+  String get updateAutoBody =>
+      'تسأل واعية موقع waaiya.mssid.org هل يوجد إصدار أحدث، ولا ترسل شيئًا غير ذلك. ولا يُنزَّل شيء حتى تضغط «حدِّث الآن».';
+
+  @override
+  String get updateCheck => 'ابحث الآن';
+
+  @override
+  String get updateChecking => 'جارٍ البحث…';
+
+  @override
+  String updateNone(String version) {
+    return 'لديك أحدث إصدار ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'الإصدار $latest من واعية متاح. لديك $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'التنزيل: $size، التغييرات فقط (التطبيق كاملًا $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'التنزيل: $size.';
+  }
+
+  @override
+  String get updateNow => 'حدِّث الآن';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'جارٍ التنزيل: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'جارٍ تجهيز التحديث…';
+
+  @override
+  String get updateInstalling => 'أكِّد التثبيت في الشاشة التي يعرضها أندرويد.';
+
+  @override
+  String get updateStopsFilter =>
+      'التثبيت يوقف التصفية. شغّلها مجددًا بعد التحديث.';
+
+  @override
+  String get updatePermission =>
+      'اسمح لواعية بتثبيت تحديثاتها، ثم اضغط «حدِّث الآن» مرة أخرى.';
+
+  @override
+  String get updateFailed =>
+      'تعذّر إكمال التحديث. حاول لاحقًا، أو نزّله من الموقع.';
+
+  @override
+  String get updateOpenPage => 'افتح صفحة التنزيل';
+
+  @override
+  String get updateCheckFailed => 'تعذّر البحث الآن. حاول لاحقًا.';
+
+  @override
   String get desktopPreview =>
       'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
 

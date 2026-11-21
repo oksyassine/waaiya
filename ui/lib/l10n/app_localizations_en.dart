@@ -997,6 +997,75 @@ class AppLocalizationsEn extends AppLocalizations {
       'It\'s prayer time, I can\'t answer now. I\'ll call you back.';
 
   @override
+  String get updateTitle => 'App updates';
+
+  @override
+  String get updateAuto => 'Check for new versions once a day';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya asks waaiya.mssid.org whether a newer version exists, and sends nothing else. Nothing is downloaded until you tap Update now.';
+
+  @override
+  String get updateCheck => 'Check now';
+
+  @override
+  String get updateChecking => 'Checking…';
+
+  @override
+  String updateNone(String version) {
+    return 'You have the latest version ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest is available. You have $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Download: $size, only what changed (the full app is $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Download: $size.';
+  }
+
+  @override
+  String get updateNow => 'Update now';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Downloading: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Preparing the update…';
+
+  @override
+  String get updateInstalling =>
+      'Confirm the installation on the screen Android shows.';
+
+  @override
+  String get updateStopsFilter =>
+      'Installing stops filtering. Start it again after the update.';
+
+  @override
+  String get updatePermission =>
+      'Allow Waaiya to install its updates, then tap Update now again.';
+
+  @override
+  String get updateFailed =>
+      'The update could not be completed. Try again later, or download it from the website.';
+
+  @override
+  String get updateOpenPage => 'Open the download page';
+
+  @override
+  String get updateCheckFailed => 'Could not check right now. Try again later.';
+
+  @override
   String get desktopPreview =>
       'Preview: the filter engine is not connected on this computer yet. The button only shows how the app will work.';
 

@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">%1$s পর্যন্ত অপেক্ষা। তখনও চাইলে অ্যাপে নিশ্চিত করুন। বাতিল করলে সবকিছু যেমন আছে তেমন থাকে।</string>
     <string name="notif_protect_ready_text">এখনও চান? %1$s-এর আগে Waaiya-তে নিশ্চিত করুন, নইলে কিছুই বদলাবে না।</string>
     <string name="notif_protect_cancel">বাতিল</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">অ্যাপ আপডেট</string>
+    <string name="update_auto">দিনে একবার নতুন সংস্করণ খুঁজুন</string>
+    <string name="update_auto_body">ওয়াইয়া waaiya.mssid.org-কে জিজ্ঞেস করে নতুন সংস্করণ আছে কি না, আর কিছুই পাঠায় না। আপনি এখনই আপডেট করুন চাপার আগে কিছুই ডাউনলোড হয় না।</string>
+    <string name="update_check">এখনই খুঁজুন</string>
+    <string name="update_checking">খোঁজা হচ্ছে…</string>
+    <string name="update_none">আপনার কাছে সর্বশেষ সংস্করণ আছে (%1$s)।</string>
+    <string name="update_available">ওয়াইয়া %1$s পাওয়া যাচ্ছে। আপনার কাছে আছে %2$s।</string>
+    <string name="update_size_patch">ডাউনলোড: %1$s, শুধু পরিবর্তনগুলো (পুরো অ্যাপ %2$s)।</string>
+    <string name="update_size_full">ডাউনলোড: %1$s।</string>
+    <string name="update_now">এখনই আপডেট করুন</string>
+    <string name="update_downloading">ডাউনলোড হচ্ছে: %1$s</string>
+    <string name="update_preparing">আপডেট প্রস্তুত হচ্ছে…</string>
+    <string name="update_installing">অ্যান্ড্রয়েড যে স্ক্রিন দেখায় সেখানে ইনস্টল নিশ্চিত করুন।</string>
+    <string name="update_stops_filter">ইনস্টল করলে ফিল্টার বন্ধ হয়ে যায়। আপডেটের পরে আবার চালু করুন।</string>
+    <string name="update_permission">ওয়াইয়াকে তার আপডেট ইনস্টল করার অনুমতি দিন, তারপর আবার এখনই আপডেট করুন চাপুন।</string>
+    <string name="update_failed">আপডেট সম্পূর্ণ করা গেল না। পরে আবার চেষ্টা করুন, বা ওয়েবসাইট থেকে ডাউনলোড করুন।</string>
+    <string name="update_open_page">ডাউনলোড পেজ খুলুন</string>
+    <string name="update_check_failed">এখন খোঁজা গেল না। পরে আবার চেষ্টা করুন।</string>
+    <string name="notif_update_channel">অ্যাপ আপডেট</string>
+    <string name="notif_update_title">ওয়াইয়া %1$s পাওয়া যাচ্ছে</string>
+    <string name="notif_update_text">আপডেট করতে চাপুন (%1$s)।</string>
 </resources>

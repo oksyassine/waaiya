@@ -9,7 +9,7 @@ Waaiya retire les instruments de musique de tout ce que joue votre téléphone e
 <li>Neuf langues : arabe, anglais, français, ourdou, indonésien, turc, bengali, persan, malais.</li>
 </ul>
 
-Confidentialité : le filtre et le floutage tournent sur le téléphone et n'envoient rien. Pas de compte, pas de statistiques, pas de publicité. Seul « Ouvrir un lien » va sur Internet, vers le site du lien.
+Confidentialité : le filtre et le floutage tournent sur le téléphone et n'envoient rien. Pas de compte, pas de statistiques, pas de publicité. En ligne seulement pour « Ouvrir un lien » (le site du lien) et la recherche quotidienne d'une nouvelle version, que vous pouvez désactiver.
 
 Une configuration unique (sur le téléphone, avec le débogage sans fil d'Android) permet à Waaiya de couper le son d'origine de l'application filtrée. Sans elle, Waaiya fonctionne mais demande avant chaque démarrage.
 

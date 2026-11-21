@@ -9,7 +9,7 @@ Waaiya removes musical instruments from everything your phone plays and keeps th
 <li>Nine languages: Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay.</li>
 </ul>
 
-Private by design: the filter and the blur run on the phone and send nothing. No account, no analytics, no ads. Only "Open a link" goes online, to the site of the link.
+Private by design: the filter and the blur run on the phone and send nothing. No account, no analytics, no ads. Online only for "Open a link" (the site of the link) and a daily check for a new version, which you can turn off.
 
 A one-time setup (on the phone, with Android's Wireless debugging) lets Waaiya silence the original sound of the app being filtered. Without it, Waaiya still works but asks before each start.
 

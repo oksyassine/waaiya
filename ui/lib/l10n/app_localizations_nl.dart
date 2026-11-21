@@ -1001,6 +1001,76 @@ class AppLocalizationsNl extends AppLocalizations {
       'Het is gebedstijd, ik kan nu niet opnemen. Ik bel je terug.';
 
   @override
+  String get updateTitle => 'App-updates';
+
+  @override
+  String get updateAuto => 'Eén keer per dag naar een nieuwe versie zoeken';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya vraagt waaiya.mssid.org of er een nieuwere versie is, en stuurt verder niets. Er wordt niets gedownload tot je op Nu bijwerken tikt.';
+
+  @override
+  String get updateCheck => 'Nu zoeken';
+
+  @override
+  String get updateChecking => 'Bezig met zoeken…';
+
+  @override
+  String updateNone(String version) {
+    return 'Je hebt de nieuwste versie ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest is beschikbaar. Jij hebt $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Download: $size, alleen de wijzigingen (de volledige app is $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Download: $size.';
+  }
+
+  @override
+  String get updateNow => 'Nu bijwerken';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Downloaden: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Update voorbereiden…';
+
+  @override
+  String get updateInstalling =>
+      'Bevestig de installatie op het scherm dat Android toont.';
+
+  @override
+  String get updateStopsFilter =>
+      'Installeren stopt het filteren. Start het opnieuw na de update.';
+
+  @override
+  String get updatePermission =>
+      'Sta Waaiya toe zijn updates te installeren en tik daarna opnieuw op Nu bijwerken.';
+
+  @override
+  String get updateFailed =>
+      'De update kon niet worden voltooid. Probeer het later opnieuw of download hem van de website.';
+
+  @override
+  String get updateOpenPage => 'Downloadpagina openen';
+
+  @override
+  String get updateCheckFailed =>
+      'Zoeken lukt nu niet. Probeer het later opnieuw.';
+
+  @override
   String get desktopPreview =>
       'Voorbeeld: de filtermotor is nog niet verbonden op deze computer. De knop laat alleen zien hoe de app gaat werken.';
 

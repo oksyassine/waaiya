@@ -999,6 +999,75 @@ class AppLocalizationsUr extends AppLocalizations {
       'نماز کا وقت ہے، ابھی جواب نہیں دے سکتا۔ میں آپ کو بعد میں کال کروں گا۔';
 
   @override
+  String get updateTitle => 'ایپ کی اپ ڈیٹس';
+
+  @override
+  String get updateAuto => 'دن میں ایک بار نیا ورژن تلاش کریں';
+
+  @override
+  String get updateAutoBody =>
+      'واعیہ waaiya.mssid.org سے پوچھتی ہے کہ کیا کوئی نیا ورژن ہے، اور کچھ اور نہیں بھیجتی۔ جب تک آپ ابھی اپ ڈیٹ کریں نہ دبائیں، کچھ ڈاؤن لوڈ نہیں ہوتا۔';
+
+  @override
+  String get updateCheck => 'ابھی تلاش کریں';
+
+  @override
+  String get updateChecking => 'تلاش ہو رہی ہے…';
+
+  @override
+  String updateNone(String version) {
+    return 'آپ کے پاس تازہ ترین ورژن ہے ($version)۔';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'واعیہ $latest دستیاب ہے۔ آپ کے پاس $current ہے۔';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'ڈاؤن لوڈ: $size، صرف تبدیلیاں (پوری ایپ $full ہے)۔';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'ڈاؤن لوڈ: $size۔';
+  }
+
+  @override
+  String get updateNow => 'ابھی اپ ڈیٹ کریں';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'ڈاؤن لوڈ ہو رہا ہے: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'اپ ڈیٹ تیار ہو رہی ہے…';
+
+  @override
+  String get updateInstalling =>
+      'اینڈرائیڈ کی دکھائی گئی اسکرین پر انسٹال کی تصدیق کریں۔';
+
+  @override
+  String get updateStopsFilter =>
+      'انسٹال کرنے سے فلٹرنگ رک جاتی ہے۔ اپ ڈیٹ کے بعد اسے دوبارہ شروع کریں۔';
+
+  @override
+  String get updatePermission =>
+      'واعیہ کو اپنی اپ ڈیٹس انسٹال کرنے کی اجازت دیں، پھر دوبارہ ابھی اپ ڈیٹ کریں دبائیں۔';
+
+  @override
+  String get updateFailed =>
+      'اپ ڈیٹ مکمل نہیں ہو سکی۔ بعد میں کوشش کریں، یا ویب سائٹ سے ڈاؤن لوڈ کریں۔';
+
+  @override
+  String get updateOpenPage => 'ڈاؤن لوڈ کا صفحہ کھولیں';
+
+  @override
+  String get updateCheckFailed => 'ابھی تلاش نہیں ہو سکی۔ بعد میں کوشش کریں۔';
+
+  @override
   String get desktopPreview =>
       'پیش نظارہ: اس کمپیوٹر پر فلٹر انجن ابھی منسلک نہیں ہے۔ بٹن صرف یہ دکھاتا ہے کہ ایپ کیسے کام کرے گی۔';
 

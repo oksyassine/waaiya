@@ -376,4 +376,27 @@
     <string name="notif_protect_waiting_text">Wacht tot %1$s. Bevestig het daarna in de app als je het nog wilt. Annuleren laat alles zoals het is.</string>
     <string name="notif_protect_ready_text">Wil je het nog? Bevestig het in Waaiya vóór %1$s, anders verandert er niets.</string>
     <string name="notif_protect_cancel">Annuleren</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">App-updates</string>
+    <string name="update_auto">Eén keer per dag naar een nieuwe versie zoeken</string>
+    <string name="update_auto_body">Waaiya vraagt waaiya.mssid.org of er een nieuwere versie is, en stuurt verder niets. Er wordt niets gedownload tot je op Nu bijwerken tikt.</string>
+    <string name="update_check">Nu zoeken</string>
+    <string name="update_checking">Bezig met zoeken…</string>
+    <string name="update_none">Je hebt de nieuwste versie (%1$s).</string>
+    <string name="update_available">Waaiya %1$s is beschikbaar. Jij hebt %2$s.</string>
+    <string name="update_size_patch">Download: %1$s, alleen de wijzigingen (de volledige app is %2$s).</string>
+    <string name="update_size_full">Download: %1$s.</string>
+    <string name="update_now">Nu bijwerken</string>
+    <string name="update_downloading">Downloaden: %1$s</string>
+    <string name="update_preparing">Update voorbereiden…</string>
+    <string name="update_installing">Bevestig de installatie op het scherm dat Android toont.</string>
+    <string name="update_stops_filter">Installeren stopt het filteren. Start het opnieuw na de update.</string>
+    <string name="update_permission">Sta Waaiya toe zijn updates te installeren en tik daarna opnieuw op Nu bijwerken.</string>
+    <string name="update_failed">De update kon niet worden voltooid. Probeer het later opnieuw of download hem van de website.</string>
+    <string name="update_open_page">Downloadpagina openen</string>
+    <string name="update_check_failed">Zoeken lukt nu niet. Probeer het later opnieuw.</string>
+    <string name="notif_update_channel">App-updates</string>
+    <string name="notif_update_title">Waaiya %1$s is beschikbaar</string>
+    <string name="notif_update_text">Tik om bij te werken (%1$s).</string>
 </resources>

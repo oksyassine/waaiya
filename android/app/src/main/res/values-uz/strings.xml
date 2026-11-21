@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">%1$s gacha kutilmoqda. Hali ham xohlasangiz, soʻng ilovada tasdiqlang. Bekor qilish hammasini oʻz holicha qoldiradi.</string>
     <string name="notif_protect_ready_text">Hali ham xohlaysizmi? %1$s gacha Waaiyada tasdiqlang, aks holda hech narsa oʻzgarmaydi.</string>
     <string name="notif_protect_cancel">Bekor qilish</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Ilova yangilanishlari</string>
+    <string name="update_auto">Kuniga bir marta yangi versiyani tekshirish</string>
+    <string name="update_auto_body">Waaiya waaiya.mssid.org saytidan yangiroq versiya bor-yoʻqligini soʻraydi va boshqa hech narsa yubormaydi. Hozir yangilash tugmasini bosmaguningizcha hech narsa yuklab olinmaydi.</string>
+    <string name="update_check">Hozir tekshirish</string>
+    <string name="update_checking">Tekshirilmoqda…</string>
+    <string name="update_none">Sizda eng soʻnggi versiya (%1$s).</string>
+    <string name="update_available">Waaiya %1$s chiqdi. Sizda %2$s.</string>
+    <string name="update_size_patch">Yuklab olish: %1$s, faqat oʻzgarishlar (toʻliq ilova %2$s).</string>
+    <string name="update_size_full">Yuklab olish: %1$s.</string>
+    <string name="update_now">Hozir yangilash</string>
+    <string name="update_downloading">Yuklab olinmoqda: %1$s</string>
+    <string name="update_preparing">Yangilanish tayyorlanmoqda…</string>
+    <string name="update_installing">Android koʻrsatgan ekranda oʻrnatishni tasdiqlang.</string>
+    <string name="update_stops_filter">Oʻrnatish filtrlashni toʻxtatadi. Yangilanishdan keyin uni qayta yoqing.</string>
+    <string name="update_permission">Waaiya’ga yangilanishlarini oʻrnatishga ruxsat bering, soʻng yana Hozir yangilash tugmasini bosing.</string>
+    <string name="update_failed">Yangilanishni yakunlab boʻlmadi. Keyinroq urinib koʻring yoki saytdan yuklab oling.</string>
+    <string name="update_open_page">Yuklab olish sahifasini ochish</string>
+    <string name="update_check_failed">Hozir tekshirib boʻlmadi. Keyinroq urinib koʻring.</string>
+    <string name="notif_update_channel">Ilova yangilanishlari</string>
+    <string name="notif_update_title">Waaiya %1$s chiqdi</string>
+    <string name="notif_update_text">Yangilash uchun bosing (%1$s).</string>
 </resources>

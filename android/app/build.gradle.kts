@@ -43,6 +43,8 @@ android {
         targetSdk = 35
         versionCode = 16
         versionName = "0.2.13"
+        // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
+        providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         buildConfigField("boolean", "SELF_UPDATE", (!playBuild).toString())
@@ -116,6 +118,7 @@ dependencies {
     implementation(project(":flutter"))
     // JVM tests of the parts with no Android classes (LoadMonitor, AudioDump): ./gradlew testDebugUnitTest
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.json:json:20240303")  // AppUpdateTest: Android's org.json is a stub in JVM tests
     // Host-side check of the Wireless debugging client against a real adbd (AdbInteropTest, skipped unless asked):
     // Conscrypt gives the JVM the TLS exporter that Android has built in. Tests only, not in the APK.
     testImplementation("org.conscrypt:conscrypt-openjdk-uber:2.5.2")
@@ -194,6 +197,8 @@ androidComponents {
         // Worship: reply to calls by SMS during prayer (WorshipSms). Not in Play builds (-PimPlay): Google Play
         // restricts SMS and call-log permissions.
         if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/smsReply/AndroidManifest.xml")
+        // App updates (AppUpdate.kt): not in Play builds, where Google Play updates the app.
+        if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/selfUpdate/AndroidManifest.xml")
     }
 }
 

@@ -1007,6 +1007,76 @@ class AppLocalizationsDe extends AppLocalizations {
       'Es ist Gebetszeit, ich kann gerade nicht rangehen. Ich rufe zurück.';
 
   @override
+  String get updateTitle => 'App-Updates';
+
+  @override
+  String get updateAuto => 'Einmal am Tag nach einer neuen Version suchen';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya fragt waaiya.mssid.org, ob es eine neuere Version gibt, und sendet sonst nichts. Heruntergeladen wird erst, wenn du auf Jetzt aktualisieren tippst.';
+
+  @override
+  String get updateCheck => 'Jetzt suchen';
+
+  @override
+  String get updateChecking => 'Wird gesucht…';
+
+  @override
+  String updateNone(String version) {
+    return 'Du hast die neueste Version ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest ist verfügbar. Du hast $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Download: $size, nur die Änderungen (die ganze App hat $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Download: $size.';
+  }
+
+  @override
+  String get updateNow => 'Jetzt aktualisieren';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Wird heruntergeladen: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Update wird vorbereitet…';
+
+  @override
+  String get updateInstalling =>
+      'Bestätige die Installation auf dem Bildschirm, den Android zeigt.';
+
+  @override
+  String get updateStopsFilter =>
+      'Die Installation beendet das Filtern. Starte es nach dem Update wieder.';
+
+  @override
+  String get updatePermission =>
+      'Erlaube Waaiya, seine Updates zu installieren, und tippe dann noch einmal auf Jetzt aktualisieren.';
+
+  @override
+  String get updateFailed =>
+      'Das Update konnte nicht abgeschlossen werden. Versuche es später noch einmal oder lade es von der Website herunter.';
+
+  @override
+  String get updateOpenPage => 'Downloadseite öffnen';
+
+  @override
+  String get updateCheckFailed =>
+      'Suchen ist gerade nicht möglich. Versuche es später noch einmal.';
+
+  @override
   String get desktopPreview =>
       'Vorschau: Der Filter ist auf diesem Computer noch nicht eingebunden. Die Taste zeigt nur, wie die App funktionieren wird.';
 

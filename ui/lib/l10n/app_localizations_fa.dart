@@ -1000,6 +1000,76 @@ class AppLocalizationsFa extends AppLocalizations {
       'وقت نماز است، الان نمی‌توانم جواب بدهم. بعداً با شما تماس می‌گیرم.';
 
   @override
+  String get updateTitle => 'به‌روزرسانی برنامه';
+
+  @override
+  String get updateAuto => 'روزی یک بار نسخهٔ جدید را بررسی کن';
+
+  @override
+  String get updateAutoBody =>
+      'واعیه از waaiya.mssid.org می‌پرسد که آیا نسخهٔ تازه‌تری هست، و چیز دیگری نمی‌فرستد. تا وقتی «همین حالا به‌روز کن» را نزنید چیزی دانلود نمی‌شود.';
+
+  @override
+  String get updateCheck => 'همین حالا بررسی کن';
+
+  @override
+  String get updateChecking => 'در حال بررسی…';
+
+  @override
+  String updateNone(String version) {
+    return 'آخرین نسخه را دارید ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'واعیه $latest آمده است. نسخهٔ شما $current است.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'دانلود: $size، فقط تغییرات (کل برنامه $full است).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'دانلود: $size.';
+  }
+
+  @override
+  String get updateNow => 'همین حالا به‌روز کن';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'در حال دانلود: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'در حال آماده‌سازی به‌روزرسانی…';
+
+  @override
+  String get updateInstalling =>
+      'نصب را در صفحه‌ای که اندروید نشان می‌دهد تأیید کنید.';
+
+  @override
+  String get updateStopsFilter =>
+      'نصب، پالایش را متوقف می‌کند. پس از به‌روزرسانی دوباره آن را روشن کنید.';
+
+  @override
+  String get updatePermission =>
+      'به واعیه اجازه دهید به‌روزرسانی‌هایش را نصب کند، سپس دوباره «همین حالا به‌روز کن» را بزنید.';
+
+  @override
+  String get updateFailed =>
+      'به‌روزرسانی کامل نشد. بعداً دوباره امتحان کنید، یا آن را از وب‌سایت دانلود کنید.';
+
+  @override
+  String get updateOpenPage => 'باز کردن صفحهٔ دانلود';
+
+  @override
+  String get updateCheckFailed =>
+      'اکنون بررسی ممکن نشد. بعداً دوباره امتحان کنید.';
+
+  @override
   String get desktopPreview =>
       'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
 

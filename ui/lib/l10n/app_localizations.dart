@@ -1828,6 +1828,114 @@ abstract class AppLocalizations {
   /// **'إنه وقت الصلاة، لا أستطيع الرد الآن. سأعاود الاتصال بك.'**
   String get worshipSmsDefault;
 
+  /// Android string update_title
+  ///
+  /// In ar, this message translates to:
+  /// **'تحديثات التطبيق'**
+  String get updateTitle;
+
+  /// Android string update_auto
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث عن إصدار جديد مرة في اليوم'**
+  String get updateAuto;
+
+  /// Android string update_auto_body
+  ///
+  /// In ar, this message translates to:
+  /// **'تسأل واعية موقع waaiya.mssid.org هل يوجد إصدار أحدث، ولا ترسل شيئًا غير ذلك. ولا يُنزَّل شيء حتى تضغط «حدِّث الآن».'**
+  String get updateAutoBody;
+
+  /// Android string update_check
+  ///
+  /// In ar, this message translates to:
+  /// **'ابحث الآن'**
+  String get updateCheck;
+
+  /// Android string update_checking
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ البحث…'**
+  String get updateChecking;
+
+  /// Android string update_none
+  ///
+  /// In ar, this message translates to:
+  /// **'لديك أحدث إصدار ({version}).'**
+  String updateNone(String version);
+
+  /// Android string update_available
+  ///
+  /// In ar, this message translates to:
+  /// **'الإصدار {latest} من واعية متاح. لديك {current}.'**
+  String updateAvailable(String latest, String current);
+
+  /// Android string update_size_patch
+  ///
+  /// In ar, this message translates to:
+  /// **'التنزيل: {size}، التغييرات فقط (التطبيق كاملًا {full}).'**
+  String updateSizePatch(String size, String full);
+
+  /// Android string update_size_full
+  ///
+  /// In ar, this message translates to:
+  /// **'التنزيل: {size}.'**
+  String updateSizeFull(String size);
+
+  /// Android string update_now
+  ///
+  /// In ar, this message translates to:
+  /// **'حدِّث الآن'**
+  String get updateNow;
+
+  /// Android string update_downloading
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ التنزيل: {progress}'**
+  String updateDownloading(String progress);
+
+  /// Android string update_preparing
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ تجهيز التحديث…'**
+  String get updatePreparing;
+
+  /// Android string update_installing
+  ///
+  /// In ar, this message translates to:
+  /// **'أكِّد التثبيت في الشاشة التي يعرضها أندرويد.'**
+  String get updateInstalling;
+
+  /// Android string update_stops_filter
+  ///
+  /// In ar, this message translates to:
+  /// **'التثبيت يوقف التصفية. شغّلها مجددًا بعد التحديث.'**
+  String get updateStopsFilter;
+
+  /// Android string update_permission
+  ///
+  /// In ar, this message translates to:
+  /// **'اسمح لواعية بتثبيت تحديثاتها، ثم اضغط «حدِّث الآن» مرة أخرى.'**
+  String get updatePermission;
+
+  /// Android string update_failed
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر إكمال التحديث. حاول لاحقًا، أو نزّله من الموقع.'**
+  String get updateFailed;
+
+  /// Android string update_open_page
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح صفحة التنزيل'**
+  String get updateOpenPage;
+
+  /// Android string update_check_failed
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر البحث الآن. حاول لاحقًا.'**
+  String get updateCheckFailed;
+
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:

@@ -377,4 +377,27 @@
     <string name="notif_protect_waiting_text">In attesa fino alle %1$s. Poi confermalo nell\'app se lo vuoi ancora. Annulla lascia tutto com\'è.</string>
     <string name="notif_protect_ready_text">Lo vuoi ancora? Conferma in Waaiya prima delle %1$s, altrimenti non cambia nulla.</string>
     <string name="notif_protect_cancel">Annulla</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">Aggiornamenti</string>
+    <string name="update_auto">Cerca una nuova versione una volta al giorno</string>
+    <string name="update_auto_body">Waaiya chiede a waaiya.mssid.org se esiste una versione più recente e non invia nient\'altro. Non si scarica nulla finché non tocchi Aggiorna ora.</string>
+    <string name="update_check">Cerca ora</string>
+    <string name="update_checking">Ricerca in corso…</string>
+    <string name="update_none">Hai l\'ultima versione (%1$s).</string>
+    <string name="update_available">Waaiya %1$s è disponibile. Tu hai la %2$s.</string>
+    <string name="update_size_patch">Download: %1$s, solo le modifiche (l\'app completa è %2$s).</string>
+    <string name="update_size_full">Download: %1$s.</string>
+    <string name="update_now">Aggiorna ora</string>
+    <string name="update_downloading">Download in corso: %1$s</string>
+    <string name="update_preparing">Preparazione dell\'aggiornamento…</string>
+    <string name="update_installing">Conferma l\'installazione nella schermata mostrata da Android.</string>
+    <string name="update_stops_filter">L\'installazione interrompe il filtro. Riavvialo dopo l\'aggiornamento.</string>
+    <string name="update_permission">Consenti a Waaiya di installare i suoi aggiornamenti, poi tocca di nuovo Aggiorna ora.</string>
+    <string name="update_failed">Non è stato possibile completare l\'aggiornamento. Riprova più tardi o scaricalo dal sito.</string>
+    <string name="update_open_page">Apri la pagina di download</string>
+    <string name="update_check_failed">Non è possibile controllare ora. Riprova più tardi.</string>
+    <string name="notif_update_channel">Aggiornamenti</string>
+    <string name="notif_update_title">Waaiya %1$s è disponibile</string>
+    <string name="notif_update_text">Tocca per aggiornare (%1$s).</string>
 </resources>

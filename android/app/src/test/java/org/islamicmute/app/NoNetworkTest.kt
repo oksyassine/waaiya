@@ -7,11 +7,12 @@ import java.io.File
 /**
  * Privacy claim, "nothing is sent": only the code that has to talk to a network may use network APIs. That is the
  * link screen (Links, LinkExport, the bundled yt-dlp) and the one-time setup, which talks to the phone's own
- * Wireless debugging (WirelessSetup, adb/). The filter, the muter, the screen blur and the rest never do; a new
+ * Wireless debugging (WirelessSetup, adb/), and the update check and download (AppUpdate: the release file and the
+ * update itself, from waaiya.mssid.org only). The filter, the muter, the screen blur and the rest never do; a new
  * use there fails this test and has to be added here on purpose. (The Linux side: linux/test_no_network.sh.)
  */
 class NoNetworkTest {
-    private val allowed = setOf("LinkExport.kt", "Links.kt", "LinkActivity.kt", "WirelessSetup.kt")
+    private val allowed = setOf("LinkExport.kt", "Links.kt", "LinkActivity.kt", "WirelessSetup.kt", "AppUpdate.kt")
     private val network = listOf(
         "java.net.", "javax.net.", "HttpURLConnection", "HttpsURLConnection", "okhttp", "android.net.http",
         "Socket(", "DatagramSocket", "URL(", "WebView", "ConnectivityManager",

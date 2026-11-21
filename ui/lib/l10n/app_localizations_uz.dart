@@ -1002,6 +1002,76 @@ class AppLocalizationsUz extends AppLocalizations {
       'Hozir namoz vaqti, javob bera olmayman. Keyinroq oʻzim qoʻngʻiroq qilaman.';
 
   @override
+  String get updateTitle => 'Ilova yangilanishlari';
+
+  @override
+  String get updateAuto => 'Kuniga bir marta yangi versiyani tekshirish';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya waaiya.mssid.org saytidan yangiroq versiya bor-yoʻqligini soʻraydi va boshqa hech narsa yubormaydi. Hozir yangilash tugmasini bosmaguningizcha hech narsa yuklab olinmaydi.';
+
+  @override
+  String get updateCheck => 'Hozir tekshirish';
+
+  @override
+  String get updateChecking => 'Tekshirilmoqda…';
+
+  @override
+  String updateNone(String version) {
+    return 'Sizda eng soʻnggi versiya ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest chiqdi. Sizda $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Yuklab olish: $size, faqat oʻzgarishlar (toʻliq ilova $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Yuklab olish: $size.';
+  }
+
+  @override
+  String get updateNow => 'Hozir yangilash';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Yuklab olinmoqda: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Yangilanish tayyorlanmoqda…';
+
+  @override
+  String get updateInstalling =>
+      'Android koʻrsatgan ekranda oʻrnatishni tasdiqlang.';
+
+  @override
+  String get updateStopsFilter =>
+      'Oʻrnatish filtrlashni toʻxtatadi. Yangilanishdan keyin uni qayta yoqing.';
+
+  @override
+  String get updatePermission =>
+      'Waaiya’ga yangilanishlarini oʻrnatishga ruxsat bering, soʻng yana Hozir yangilash tugmasini bosing.';
+
+  @override
+  String get updateFailed =>
+      'Yangilanishni yakunlab boʻlmadi. Keyinroq urinib koʻring yoki saytdan yuklab oling.';
+
+  @override
+  String get updateOpenPage => 'Yuklab olish sahifasini ochish';
+
+  @override
+  String get updateCheckFailed =>
+      'Hozir tekshirib boʻlmadi. Keyinroq urinib koʻring.';
+
+  @override
   String get desktopPreview =>
       'Namoyish rejimi: filtr mexanizmi bu kompyuterda hali ulanmagan. Tugma faqat ilova qanday ishlashini koʻrsatadi.';
 

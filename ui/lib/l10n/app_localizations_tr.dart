@@ -1001,6 +1001,76 @@ class AppLocalizationsTr extends AppLocalizations {
       'Namaz vakti, şu an cevap veremiyorum. Sizi geri arayacağım.';
 
   @override
+  String get updateTitle => 'Uygulama güncellemeleri';
+
+  @override
+  String get updateAuto => 'Yeni sürümü günde bir kez denetle';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya, waaiya.mssid.org\'a daha yeni bir sürüm olup olmadığını sorar ve başka hiçbir şey göndermez. Şimdi güncelle\'ye dokunana kadar hiçbir şey indirilmez.';
+
+  @override
+  String get updateCheck => 'Şimdi denetle';
+
+  @override
+  String get updateChecking => 'Denetleniyor…';
+
+  @override
+  String updateNone(String version) {
+    return 'En son sürüme sahipsiniz ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest yayımlandı. Sizdeki sürüm $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'İndirme: $size, yalnızca değişenler (uygulamanın tamamı $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'İndirme: $size.';
+  }
+
+  @override
+  String get updateNow => 'Şimdi güncelle';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'İndiriliyor: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Güncelleme hazırlanıyor…';
+
+  @override
+  String get updateInstalling =>
+      'Kurulumu Android\'in gösterdiği ekranda onaylayın.';
+
+  @override
+  String get updateStopsFilter =>
+      'Kurulum filtrelemeyi durdurur. Güncellemeden sonra yeniden başlatın.';
+
+  @override
+  String get updatePermission =>
+      'Waaiya\'nın güncellemelerini kurmasına izin verin, sonra yeniden Şimdi güncelle\'ye dokunun.';
+
+  @override
+  String get updateFailed =>
+      'Güncelleme tamamlanamadı. Daha sonra yeniden deneyin ya da web sitesinden indirin.';
+
+  @override
+  String get updateOpenPage => 'İndirme sayfasını aç';
+
+  @override
+  String get updateCheckFailed =>
+      'Şu anda denetlenemedi. Daha sonra yeniden deneyin.';
+
+  @override
   String get desktopPreview =>
       'Önizleme: filtre motoru bu bilgisayara henüz bağlı değil. Düğme yalnızca uygulamanın nasıl çalışacağını gösterir.';
 

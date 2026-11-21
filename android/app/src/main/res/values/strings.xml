@@ -389,4 +389,27 @@
     <string name="notif_protect_waiting_text">Waiting until %1$s. Then confirm it in the app if you still want it. Cancel keeps things as they are.</string>
     <string name="notif_protect_ready_text">Still want it? Confirm in Waaiya before %1$s, or nothing changes.</string>
     <string name="notif_protect_cancel">Cancel</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">App updates</string>
+    <string name="update_auto">Check for new versions once a day</string>
+    <string name="update_auto_body">Waaiya asks waaiya.mssid.org whether a newer version exists, and sends nothing else. Nothing is downloaded until you tap Update now.</string>
+    <string name="update_check">Check now</string>
+    <string name="update_checking">Checking…</string>
+    <string name="update_none">You have the latest version (%1$s).</string>
+    <string name="update_available">Waaiya %1$s is available. You have %2$s.</string>
+    <string name="update_size_patch">Download: %1$s, only what changed (the full app is %2$s).</string>
+    <string name="update_size_full">Download: %1$s.</string>
+    <string name="update_now">Update now</string>
+    <string name="update_downloading">Downloading: %1$s</string>
+    <string name="update_preparing">Preparing the update…</string>
+    <string name="update_installing">Confirm the installation on the screen Android shows.</string>
+    <string name="update_stops_filter">Installing stops filtering. Start it again after the update.</string>
+    <string name="update_permission">Allow Waaiya to install its updates, then tap Update now again.</string>
+    <string name="update_failed">The update could not be completed. Try again later, or download it from the website.</string>
+    <string name="update_open_page">Open the download page</string>
+    <string name="update_check_failed">Could not check right now. Try again later.</string>
+    <string name="notif_update_channel">App updates</string>
+    <string name="notif_update_title">Waaiya %1$s is available</string>
+    <string name="notif_update_text">Tap to update (%1$s).</string>
 </resources>

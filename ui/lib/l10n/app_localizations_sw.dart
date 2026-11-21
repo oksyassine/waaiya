@@ -1006,6 +1006,76 @@ class AppLocalizationsSw extends AppLocalizations {
       'Ni wakati wa swala, siwezi kujibu sasa. Nitakupigia baadaye.';
 
   @override
+  String get updateTitle => 'Masasisho ya programu';
+
+  @override
+  String get updateAuto => 'Angalia toleo jipya mara moja kwa siku';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya huuliza waaiya.mssid.org kama kuna toleo jipya zaidi, na haitumi kitu kingine. Hakuna kinachopakuliwa mpaka uguse Sasisha sasa.';
+
+  @override
+  String get updateCheck => 'Angalia sasa';
+
+  @override
+  String get updateChecking => 'Inaangalia…';
+
+  @override
+  String updateNone(String version) {
+    return 'Una toleo la karibuni zaidi ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest inapatikana. Una $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Upakuaji: $size, mabadiliko tu (programu nzima ni $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Upakuaji: $size.';
+  }
+
+  @override
+  String get updateNow => 'Sasisha sasa';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Inapakua: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Inaandaa sasisho…';
+
+  @override
+  String get updateInstalling =>
+      'Thibitisha usakinishaji kwenye skrini ambayo Android inaonyesha.';
+
+  @override
+  String get updateStopsFilter =>
+      'Kusakinisha kunasimamisha uchujaji. Uanzishe tena baada ya sasisho.';
+
+  @override
+  String get updatePermission =>
+      'Ruhusu Waaiya isakinishe masasisho yake, kisha uguse Sasisha sasa tena.';
+
+  @override
+  String get updateFailed =>
+      'Sasisho halikuweza kukamilika. Jaribu tena baadaye, au lipakue kutoka kwenye tovuti.';
+
+  @override
+  String get updateOpenPage => 'Fungua ukurasa wa kupakua';
+
+  @override
+  String get updateCheckFailed =>
+      'Haikuweza kuangalia sasa. Jaribu tena baadaye.';
+
+  @override
   String get desktopPreview =>
       'Onyesho la majaribio: injini ya kichujio bado haijaunganishwa kwenye kompyuta hii. Kitufe kinaonyesha tu jinsi programu itakavyofanya kazi.';
 

@@ -1000,6 +1000,76 @@ class AppLocalizationsHa extends AppLocalizations {
       'Lokacin salla ne, ba zan iya amsawa yanzu ba. Zan kira ka daga baya.';
 
   @override
+  String get updateTitle => 'Sabunta manhaja';
+
+  @override
+  String get updateAuto => 'Duba sabon sigar sau ɗaya a rana';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya tana tambayar waaiya.mssid.org ko akwai sabuwar siga, kuma ba ta aika komai ba. Ba a sauke komai har sai kun taɓa Sabunta yanzu.';
+
+  @override
+  String get updateCheck => 'Duba yanzu';
+
+  @override
+  String get updateChecking => 'Ana dubawa…';
+
+  @override
+  String updateNone(String version) {
+    return 'Kuna da sabuwar siga ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Waaiya $latest ta fito. Kuna da $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Saukewa: $size, abubuwan da suka canza kawai (manhajar gaba ɗaya $full ce).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Saukewa: $size.';
+  }
+
+  @override
+  String get updateNow => 'Sabunta yanzu';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Ana saukewa: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Ana shirya sabuntawa…';
+
+  @override
+  String get updateInstalling =>
+      'Tabbatar da girkawa a allon da Android ke nunawa.';
+
+  @override
+  String get updateStopsFilter =>
+      'Girkawa tana tsayar da tacewa. Sake kunna ta bayan sabuntawa.';
+
+  @override
+  String get updatePermission =>
+      'Ba wa Waaiya izinin girka sabuntawarta, sannan sake taɓa Sabunta yanzu.';
+
+  @override
+  String get updateFailed =>
+      'Ba a iya kammala sabuntawa ba. Sake gwadawa daga baya, ko ku sauke ta daga shafin yanar gizo.';
+
+  @override
+  String get updateOpenPage => 'Buɗe shafin saukewa';
+
+  @override
+  String get updateCheckFailed =>
+      'Ba a iya dubawa yanzu ba. Sake gwadawa daga baya.';
+
+  @override
   String get desktopPreview =>
       'Samfoti: injin tacewa bai haɗu a wannan kwamfuta ba tukuna. Maɓallin yana nuna yadda manhajar za ta yi aiki ne kawai.';
 

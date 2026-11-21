@@ -1001,6 +1001,76 @@ class AppLocalizationsRu extends AppLocalizations {
       'Сейчас время намаза, я не могу ответить. Я вам перезвоню.';
 
   @override
+  String get updateTitle => 'Обновления приложения';
+
+  @override
+  String get updateAuto => 'Проверять новую версию раз в день';
+
+  @override
+  String get updateAutoBody =>
+      'Waaiya спрашивает у waaiya.mssid.org, есть ли более новая версия, и больше ничего не отправляет. Ничего не скачивается, пока вы не нажмёте «Обновить сейчас».';
+
+  @override
+  String get updateCheck => 'Проверить сейчас';
+
+  @override
+  String get updateChecking => 'Проверка…';
+
+  @override
+  String updateNone(String version) {
+    return 'У вас последняя версия ($version).';
+  }
+
+  @override
+  String updateAvailable(String latest, String current) {
+    return 'Доступна Waaiya $latest. У вас $current.';
+  }
+
+  @override
+  String updateSizePatch(String size, String full) {
+    return 'Загрузка: $size, только изменения (всё приложение — $full).';
+  }
+
+  @override
+  String updateSizeFull(String size) {
+    return 'Загрузка: $size.';
+  }
+
+  @override
+  String get updateNow => 'Обновить сейчас';
+
+  @override
+  String updateDownloading(String progress) {
+    return 'Загрузка: $progress';
+  }
+
+  @override
+  String get updatePreparing => 'Подготовка обновления…';
+
+  @override
+  String get updateInstalling =>
+      'Подтвердите установку на экране, который покажет Android.';
+
+  @override
+  String get updateStopsFilter =>
+      'Установка останавливает фильтрацию. Запустите её снова после обновления.';
+
+  @override
+  String get updatePermission =>
+      'Разрешите Waaiya устанавливать свои обновления, затем снова нажмите «Обновить сейчас».';
+
+  @override
+  String get updateFailed =>
+      'Не удалось завершить обновление. Попробуйте позже или скачайте его с сайта.';
+
+  @override
+  String get updateOpenPage => 'Открыть страницу загрузки';
+
+  @override
+  String get updateCheckFailed =>
+      'Сейчас проверить не удалось. Попробуйте позже.';
+
+  @override
   String get desktopPreview =>
       'Предварительный просмотр: движок фильтра на этом компьютере пока не подключён. Кнопка только показывает, как будет работать приложение.';
 

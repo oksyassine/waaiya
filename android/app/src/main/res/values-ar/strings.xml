@@ -376,4 +376,27 @@
     <string name="notif_protect_waiting_text">ينتظر حتى %1$s، ثم أكِّده في التطبيق إن بقيت تريده. «إلغاء» يُبقي كل شيء كما هو.</string>
     <string name="notif_protect_ready_text">أما زلت تريده؟ أكِّده في واعية قبل %1$s، وإلا فلن يتغيّر شيء.</string>
     <string name="notif_protect_cancel">إلغاء</string>
+
+    <!-- App updates (AppUpdate.kt). notif_*: the notification only. -->
+    <string name="update_title">تحديثات التطبيق</string>
+    <string name="update_auto">ابحث عن إصدار جديد مرة في اليوم</string>
+    <string name="update_auto_body">تسأل واعية موقع waaiya.mssid.org هل يوجد إصدار أحدث، ولا ترسل شيئًا غير ذلك. ولا يُنزَّل شيء حتى تضغط «حدِّث الآن».</string>
+    <string name="update_check">ابحث الآن</string>
+    <string name="update_checking">جارٍ البحث…</string>
+    <string name="update_none">لديك أحدث إصدار (%1$s).</string>
+    <string name="update_available">الإصدار %1$s من واعية متاح. لديك %2$s.</string>
+    <string name="update_size_patch">التنزيل: %1$s، التغييرات فقط (التطبيق كاملًا %2$s).</string>
+    <string name="update_size_full">التنزيل: %1$s.</string>
+    <string name="update_now">حدِّث الآن</string>
+    <string name="update_downloading">جارٍ التنزيل: %1$s</string>
+    <string name="update_preparing">جارٍ تجهيز التحديث…</string>
+    <string name="update_installing">أكِّد التثبيت في الشاشة التي يعرضها أندرويد.</string>
+    <string name="update_stops_filter">التثبيت يوقف التصفية. شغّلها مجددًا بعد التحديث.</string>
+    <string name="update_permission">اسمح لواعية بتثبيت تحديثاتها، ثم اضغط «حدِّث الآن» مرة أخرى.</string>
+    <string name="update_failed">تعذّر إكمال التحديث. حاول لاحقًا، أو نزّله من الموقع.</string>
+    <string name="update_open_page">افتح صفحة التنزيل</string>
+    <string name="update_check_failed">تعذّر البحث الآن. حاول لاحقًا.</string>
+    <string name="notif_update_channel">تحديثات التطبيق</string>
+    <string name="notif_update_title">الإصدار %1$s من واعية متاح</string>
+    <string name="notif_update_text">اضغط للتحديث (%1$s).</string>
 </resources>
