@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- App updates (AppUpdate.kt): the daily "is there a new version?" check and the install of a checked update APK.
      Added to every build except -PimPlay (build.gradle.kts): Google Play updates apps itself and does not allow an app
-     to install its own updates. REQUEST_INSTALL_PACKAGES only lets Waaiya open Android's installer, which always asks
+     to install its own updates. The daily-check job is declared in the main manifest (lint reads <service> elements from one
+     manifest only); in Play builds nothing schedules it. REQUEST_INSTALL_PACKAGES only lets Waaiya open Android's installer, which always asks
      the user to confirm; Android refuses an update signed by anyone else. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application>
-        <service android:name=".AppUpdateJob" android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
         <receiver android:name=".AppUpdateInstallReceiver" android:exported="false" />
     </application>
 </manifest>

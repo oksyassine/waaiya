@@ -195,6 +195,9 @@
             </intent-filter>
         </receiver>
 
+        <!-- App updates: the daily check (AppUpdateJob). Scheduled only by builds with the updater (not -PimPlay). -->
+        <service android:name=".AppUpdateJob" android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".FilterService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
