@@ -18,7 +18,7 @@ Comment[ar]=يزيل المعازف من صوت كل التطبيقات ويُب
 Exec="$dir/waaiya_desktop"
 Icon=$dir/data/waaiya.png
 Terminal=false
-Categories=AudioVideo;Audio;Utility;
+Categories=AudioVideo;Audio;
 StartupWMClass=org.islamicmute.waaiya_desktop
 DESKTOP
 command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "$apps" >/dev/null 2>&1 || true
