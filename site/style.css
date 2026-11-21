@@ -243,7 +243,7 @@ html[lang="ar"] .how h3 { letter-spacing: 0; line-height: 1.35; }
 .facts strong { font-size: var(--s1); font-weight: 700; line-height: 1; }
 .facts span { font-size: var(--s5); color: #CFE3DD; }
 .film { justify-self: center; width: min(100%, 380px); }
-.hero-film { grid-column: 9 / span 4; grid-row: 1 / span 2; justify-self: end; align-self: center; width: min(100%, 300px); margin: 0; }
+.hero-film { grid-column: 8 / span 5; grid-row: 1 / span 2; justify-self: center; align-self: center; width: min(100%, 430px, calc((100svh - 200px) * 0.5625)); min-width: 260px; margin: 0; }
 .film video { width: 100%; background: #000; aspect-ratio: 540 / 960; }
 .film figcaption { margin-top: 12px; font-size: var(--s5); color: #B9D3CC; }
 
