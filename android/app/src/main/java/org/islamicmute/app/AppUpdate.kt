@@ -46,6 +46,9 @@ object AppUpdate : Feature {
     const val CHANNEL = "updates"
     private const val NOTIFICATION_ID = 4710
     private const val PREFS = "app_update"
+    /** The release signing certificate (SHA-256). Other builds (a rebuild by someone else, the -a11y build, whose APK
+     *  is not in the release file) only point to the download page: an APK from the release file would not fit them. */
+    private const val RELEASE_CERT = "296a57bf8fa04481d91d434f2650531ac0b8a475816994a1560657f58dc3d2a8"
 
     data class Asset(val url: String, val sha256: String, val size: Long)
     data class Patch(val from: String, val variant: String, val asset: Asset)
@@ -80,15 +83,20 @@ object AppUpdate : Feature {
         val c = host.activity
         if (!BuildConfig.SELF_UPDATE) return mapOf("supported" to false)
         // the screen is open: a check older than a day happens now (no notification: the screen shows it)
+        // automatic checks never run while filtering (the site says the filter makes no connection)
         val now = System.currentTimeMillis()
-        if (auto(c) && state == "idle" && now - prefs(c).getLong("lastCheck", 0) > DAY && now - lastAttempt > HOUR) check(c, notify = false)
+        // a known newer version is read again at once in a new process: Android restarts the app when "install unknown
+        // apps" is allowed (Android 11 and older), and the card must still offer "Update now"
+        val pending = prefs(c).getLong("available", 0) > BuildConfig.VERSION_CODE
+        if (state == "idle" && !FilterService.running && now - lastAttempt > HOUR &&
+            (pending || (auto(c) && now - prefs(c).getLong("lastCheck", 0) > DAY))) check(c, notify = false)
         val r = release
         val p = plan
         return mapOf(
             "supported" to true, "auto" to auto(c), "state" to state, "current" to BuildConfig.VERSION_NAME,
             "latest" to r?.versionName, "notes" to r?.notes, "download" to p?.download, "full" to p?.target?.size,
             "patch" to (p?.patch != null), "progress" to progress, "error" to error,
-            "lastCheck" to prefs(c).getLong("lastCheck", 0), "page" to PAGE_URL,
+            "lastCheck" to prefs(c).getLong("lastCheck", 0), "page" to PAGE_URL, "canInstall" to canInstall(c),
         )
     }
 
@@ -105,6 +113,7 @@ object AppUpdate : Feature {
             "start" -> {
                 if (state !in setOf("available", "error", "permission", "ready")) throw FeatureException("busy", state)
                 // installing stops the filter: the same gate as Stop (PIN, waiting period) before anything starts
+                if (!canInstall(c)) throw FeatureException("unsupported", "this build updates from the download page")
                 if (FilterService.running) Protection.checkStop(c)
                 start(c)
             }
@@ -132,14 +141,13 @@ object AppUpdate : Feature {
         worker.execute {
             try {
                 val r = parse(fetchText(manifestUrl(c)))
-                prefs(c).edit().putLong("lastCheck", System.currentTimeMillis()).apply()
+                prefs(c).edit().putLong("lastCheck", System.currentTimeMillis()).putLong("available", r.versionCode).apply()
                 release = r
                 if (r.versionCode <= BuildConfig.VERSION_CODE) { plan = null; set("none") }
                 else {
                     plan = choose(c, r)
                     set(if (plan == null) "error" else "available", 0.0, if (plan == null) "no_file" else null)
-                    if (notify && plan != null && prefs(c).getLong("notified", 0) < r.versionCode) {
-                        announce(c, r, plan!!)
+                    if (notify && plan != null && prefs(c).getLong("notified", 0) < r.versionCode && announce(c, r, plan!!)) {
                         prefs(c).edit().putLong("notified", r.versionCode).apply()
                     }
                 }
@@ -346,9 +354,10 @@ object AppUpdate : Feature {
         AppUpdateJob.schedule(c, auto(c))
     }
 
-    private fun announce(c: Context, r: Release, p: Plan) {
+    /** Posts the notification; false when notifications are off (the version is then announced another day). */
+    private fun announce(c: Context, r: Release, p: Plan): Boolean {
         val nm = c.getSystemService(NotificationManager::class.java)
-        if (!nm.areNotificationsEnabled()) return
+        if (!nm.areNotificationsEnabled()) return false
         nm.createNotificationChannel(NotificationChannel(CHANNEL, c.getString(R.string.notif_update_channel), NotificationManager.IMPORTANCE_DEFAULT))
         val open = UiActivity.open(c, "settings") ?: UiActivity.main(c)
         val pi = PendingIntent.getActivity(c, NOTIFICATION_ID, open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -359,6 +368,20 @@ object AppUpdate : Feature {
             .setContentText(c.getString(R.string.notif_update_text, sizeText(p.download)))
             .setContentIntent(pi).setAutoCancel(true).build()
         nm.notify(NOTIFICATION_ID, n)
+        return true
+    }
+
+    /** This build can install the release's APK over itself: signed with the release certificate, not the -a11y
+     *  build. Debug builds may (end-to-end tests, with a test release file). */
+    @Volatile private var installable: Boolean? = null
+    fun canInstall(c: Context): Boolean = installable ?: run {
+        val ok = !BuildConfig.BLUR_A11Y && (BuildConfig.DEBUG || runCatching {
+            val si = c.packageManager.getPackageInfo(c.packageName, android.content.pm.PackageManager.GET_SIGNING_CERTIFICATES).signingInfo!!
+            val certs = if (si.hasMultipleSigners()) si.apkContentsSigners else si.signingCertificateHistory
+            certs.any { MessageDigest.getInstance("SHA-256").digest(it.toByteArray()).joinToString("") { b -> "%02x".format(b) } == RELEASE_CERT }
+        }.getOrDefault(false))
+        installable = ok
+        ok
     }
 
     private fun sizeText(bytes: Long): String =

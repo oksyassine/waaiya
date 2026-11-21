@@ -10,6 +10,7 @@ import android.content.Context
 /** The daily "is there a new version?" check ([AppUpdate.check]), when a network is there; kept across restarts. */
 class AppUpdateJob : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
+        if (FilterService.running) return false  // never while filtering: the next day's run checks
         AppUpdate.check(this, notify = true) { jobFinished(params, false) }
         return true
     }

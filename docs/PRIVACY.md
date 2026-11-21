@@ -17,7 +17,7 @@ hear and see stays in memory on your device and is not saved.
 | Windows: "Watch" on the Links page | Nothing from Waaiya: it starts the filter and hands the link to your own web browser, which opens it as usual. The Windows app from the Microsoft Store only does this: it has no download tools and never contacts a site itself | What your browser's site learns, as without Waaiya |
 | Android: the bundled link reader (yt-dlp) checks for a newer version, at most once a day, only around a link you open | PyPI (pypi.org and files.pythonhosted.org), with Python's default client name, never Waaiya's | Your IP address and that some Python program asked for yt-dlp |
 | Windows: the Microsoft Store updates Waaiya | Microsoft, as for every Store app | As in Microsoft's own privacy statement |
-| Android (the app from the website or GitHub; store builds have no updater): the check for a new version, once a day and when you open the Settings page. Turn it off in Settings, "App updates" | waaiya.mssid.org (our website, hosted by o2switch in France) reads the file `downloads/update.json`, with the client name `Waaiya-Update/1` only: no device, version or identifier. Your phone compares the versions itself | What any website learns from a visitor: your IP address and the time |
+| Android (the app from the website or GitHub; store builds have no updater): the check for a new version, once a day and when you open Waaiya, never while filtering. Turn it off in Settings, "App updates" | waaiya.mssid.org (our website, hosted by o2switch in France) reads the file `downloads/update.json`, with the client name `Waaiya-Update/1` only: no device, version or identifier. Your phone compares the versions itself | What any website learns from a visitor: your IP address and the time |
 | Android: you tap "Update now" | waaiya.mssid.org again, for the update file (only the changes when possible). Your phone checks it is the published file, signed like the app you have, before Android's installer asks you to confirm | The same, and which update file was downloaded |
 
 Nothing else opens a network connection. The filter, the women's-singing detector and the screen blur are checked
@@ -95,8 +95,8 @@ Changes to this policy are made in this file in the public repository, where the
 - في أندرويد: قارئ الروابط المرفق (yt-dlp) يبحث عن إصدار أحدث، مرة في اليوم على الأكثر وعند فتح رابط فقط، من موقع
   PyPI، باسم بايثون العام لا باسم واعية.
 - في ويندوز: متجر مايكروسوفت يحدّث واعية كما يحدّث كل تطبيقاته.
-- في أندرويد (النسخة من الموقع أو GitHub؛ نسخ المتاجر بلا تحديث ذاتي): البحث عن إصدار جديد مرة في اليوم وعند فتح صفحة
-  الإعدادات، ويمكن إيقافه من «تحديثات التطبيق» في الإعدادات. يُقرأ الملف `downloads/update.json` من موقعنا waaiya.mssid.org
+- في أندرويد (النسخة من الموقع أو GitHub؛ نسخ المتاجر بلا تحديث ذاتي): البحث عن إصدار جديد مرة في اليوم وعند فتح واعية،
+  ولا يحدث أثناء التصفية أبدًا، ويمكن إيقافه من «تحديثات التطبيق» في الإعدادات. يُقرأ الملف `downloads/update.json` من موقعنا waaiya.mssid.org
   (لدى o2switch في فرنسا) باسم العميل `Waaiya-Update/1` وحده، بلا جهاز ولا إصدار ولا مُعرِّف، ويقارن هاتفك الإصدارات بنفسه.
   فيعرف الموقع ما يعرفه أي موقع عن زائره: عنوان IP والوقت.
 - في أندرويد، حين تضغط «حدِّث الآن»: يُنزَّل ملف التحديث من الموقع نفسه (التغييرات فقط إن أمكن)، ويتحقق هاتفك أنه الملف
