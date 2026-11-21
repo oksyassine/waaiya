@@ -10,6 +10,7 @@ The page asks nothing of any other server: the typeface (IBM Plex Sans Arabic, O
 The one exception is "try a link" (site/link/), and only when the visitor submits a link.
 Generated pictures and the filtered sound come from real material: see make_assets.py.
 """
+import datetime
 import html
 import json
 import re
@@ -23,6 +24,8 @@ OUT = HERE / "public"
 SITE = "https://waaiya.mssid.org/"
 REPO = "https://github.com/oksyassine/waaiya"
 VERSION = "0.2.13"
+INDEXNOW_KEY = "975a156c404dff8c423982350b431cc8"  # public by design: Bing, Yandex and others fetch /<key>.txt
+VIDEO_DATE = "2026-11-21"  # the introduction video's upload date (VideoObject)
 DL = "https://waaiya.mssid.org/downloads/"   # every download lives here (site/upload_downloads.sh); GitHub has the same files
 APK = DL + "waaiya.apk"                      # the universal APK under a stable name
 APK_ARM64 = DL + f"waaiya-v{VERSION}-arm64-v8a-release.apk"
@@ -52,7 +55,7 @@ RTL_LANGS = {"ar", "ur", "fa"}
 T = {
     "ar": dict(
         dir="rtl", other="en", other_label="English", other_href="en/",
-        title="واعية: تطبيق يزيل المعازف ويُبقي الكلام",
+        title="واعية: تطبيق يحذف الموسيقى والمعازف ويُبقي الكلام",
         desc="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس، يزيل الآلات الموسيقية من صوت كل التطبيقات لحظةً بلحظة، ويُبقي الكلام وتلاوة القرآن. لا يخرج شيء من جهازك.",
         nav=[("hear", "اسمع"), ("try", "جرّب"), ("cover", "تمويه الشاشة"), ("lang", "لغتك"), ("faq", "أسئلة")],
         nav_cta="حمّل",
@@ -131,7 +134,7 @@ T = {
         card_done="توقفت التصفية في هذه الصفحة. أما التشغيل فيسري فورًا دائمًا.",
         card_kept="لم يتغيّر شيء: التصفية باقية.",
         lang_h="واعية تتكلّم لغتك",
-        lang_p="[[18]] لغة، ويبدأ التطبيق على أندرويد بلغة هاتفك إن كانت منها. اختر لغة لترى بها صفحة التصفية في واعية على ويندوز.",
+        lang_p="[[18]] لغة، ويبدأ التطبيق على أندرويد بلغة هاتفك إن كانت منها. اختر لغة لترى بها صفحة التصفية على ويندوز.",
         lang_cap="واعية على ويندوز، صفحة التصفية: {name}",
         lang_alt="صفحة التصفية في واعية على ويندوز بلغة: {name}",
         phone_h="على هاتفك",
@@ -143,7 +146,7 @@ T = {
             ("أولًا، ثبّت واعية.", "ملف [[waaiya.apk]] لأندرويد [[10]] أو أحدث، أو نسخة ويندوز أو لينكس."),
             ("ثم الإعداد لمرة واحدة.", "على الهاتف نفسه، في أربع خطوات: [[Wi‑Fi]]، و«خيارات المطور»، و«تصحيح الأخطاء اللاسلكي»، ورمز الإقران. لكل خطوة صورة بلغتك، وتظهر عليها علامة الإتمام تلقائيًا حين تُنجزها."),
             ("ثم اضغط الزر.", "تُزال الآلات الموسيقية من كل التطبيقات. يبقى الإشعار ظاهرًا، وفيه زر الإيقاف."),
-            ("وشغّل ما شئت.", "يوتيوب، إنستغرام، المتصفح، الألعاب: محاضرة أو خبر أو وصفة، يصل الكلام وحده."),
+            ("وشغّل ما شئت.", "يوتيوب، إنستغرام، المتصفح، وأي تطبيق: محاضرة أو خبر أو وصفة، يصل الكلام وحده."),
         ],
         priv_h="لا يخرج شيء من جهازك",
         priv_p="التصفية وتمويه الشاشة يعملان على الجهاز. لا حساب، ولا إحصاءات، ولا إعلانات. وكل تغيير في الشيفرة يُختبر والإنترنت مقطوع عنه. والشيفرة كاملة على [[GitHub]] برخصة [[AGPL]]: يستطيع أي أحد أن يبني التطبيق منها ويقارنه بما ننشر.",
@@ -182,7 +185,7 @@ T = {
     ),
     "en": dict(
         dir="ltr", other="ar", other_label="العربية", other_href="../",
-        title="Waaiya: remove the music, keep the voice",
+        title="Waaiya: remove music from any app, keep the voice",
         desc="A free, open-source app for Android, Windows and Linux. It removes musical instruments from the sound of every app, live, and keeps speech and Quran recitation.",
         nav=[("hear", "Listen"), ("try", "Try it"), ("cover", "Screen blur"), ("lang", "Your language"), ("faq", "Questions")],
         nav_cta="Download",
@@ -261,7 +264,7 @@ T = {
         card_done="Filtering is off on this page. Turning it on always takes effect at once.",
         card_kept="Nothing changed: filtering stays on.",
         lang_h="Waaiya speaks your language",
-        lang_p="18 languages. On Android the app starts in your phone's language if it is one of them. Pick one to see Waaiya's filter page on Windows in it.",
+        lang_p="18 languages. On Android, Waaiya starts in your phone's language if it has it. Pick one to see its Windows filter page.",
         lang_cap="Waaiya on Windows, the filter page: {name}",
         lang_alt="Waaiya's filter page on Windows in {name}",
         phone_h="On your phone",
@@ -273,7 +276,7 @@ T = {
             ("First, install Waaiya.", "waaiya.apk for Android 10 or newer. Or the Windows and Linux apps."),
             ("Then set it up once.", "On the phone itself, in four steps: Wi‑Fi, Developer options, Wireless debugging and the pairing code. Each step has a picture in your language and is checked off automatically when you finish it."),
             ("Then press the button.", "Musical instruments are removed from every app. The notification stays, with its Stop button."),
-            ("And play anything.", "YouTube, Instagram, the browser, games: a lecture, the news, a recipe, only the voice comes through."),
+            ("And play anything.", "YouTube, Instagram, the browser, any app: a lecture, the news, a recipe, only the voice comes through."),
         ],
         priv_h="Nothing leaves your device",
         priv_p="Filtering and screen blur run on the device. No account, no analytics, no ads. Every change to the code is tested with the internet cut off. All the code is on GitHub under the AGPL: anyone can build the app from it and compare it with what we publish.",
@@ -387,7 +390,10 @@ def jsonld(lang, t, root_url):
     }
     faq = {"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": lang,
            "mainEntity": [{"@type": "Question", "name": plain(q), "acceptedAnswer": {"@type": "Answer", "text": plain(ans)}} for q, ans in t["faq"]]}
-    return json.dumps([app, faq], ensure_ascii=False).replace("</", "<\\/")
+    video = {"@context": "https://schema.org", "@type": "VideoObject", "name": plain(t["film_alt"]),
+             "description": plain(t["film_cap"]), "inLanguage": "ar", "uploadDate": VIDEO_DATE, "duration": "PT52S",
+             "thumbnailUrl": SITE + "assets/waaiya-intro.jpg", "contentUrl": SITE + "assets/waaiya-intro.mp4"}
+    return json.dumps([app, faq, video], ensure_ascii=False).replace("</", "<\\/")
 
 
 def page(lang, root):
@@ -465,9 +471,17 @@ def page(lang, root):
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{html.escape(t['title'])}">
 <meta property="og:description" content="{html.escape(t['desc'])}">
+<meta property="og:site_name" content="{'واعية' if rtl else 'Waaiya'}">
 <meta property="og:image" content="{SITE}assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{html.escape(plain(t['cover_alt']))}">
 <meta property="og:locale" content="{'ar_AR' if rtl else 'en_US'}">
+<meta property="og:locale:alternate" content="{'en_US' if rtl else 'ar_AR'}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{html.escape(t['title'])}">
+<meta name="twitter:description" content="{html.escape(t['desc'])}">
+<meta name="twitter:image" content="{SITE}assets/og.jpg">
 <meta name="theme-color" content="#053D35">
 <link rel="icon" href="{a}logo.png">
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -679,6 +693,8 @@ def privacy(lang, root):
     return f"""<!doctype html>
 <html lang="en" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Waaiya: {e(T['en']['privacy_title'])} · {e(T['ar']['privacy_title'])}</title>{robots}
+<meta name="description" content="What Waaiya does with your data: the filter and the screen blur work on your device and send nothing. سياسة الخصوصية لتطبيق واعية.">
+<link rel="canonical" href="{SITE}privacy.html">
 <link rel="icon" href="{root}assets/logo.png">
 <style>{fonts(root + 'assets/')}
 {CSS}</style></head>
@@ -747,6 +763,27 @@ def try_assets(dst):
         shutil.copy(models / f, dst / f)
 
 
+ROBOTS = f"""User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /preview/
+
+Sitemap: {SITE}sitemap.xml
+"""
+
+
+def sitemap():
+    """The two language pages (each naming the other) and the privacy page; lastmod is the build date."""
+    today = datetime.date.today().isoformat()
+    alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{h}" href="{u}"/>'
+                   for h, u in (("ar", SITE), ("en", SITE + "en/"), ("x-default", SITE)))
+    urls = [(SITE, alts, "1.0"), (SITE + "en/", alts, "0.9"), (SITE + "privacy.html", "", "0.3")]
+    body = "".join(f"  <url>\n    <loc>{u}</loc>{a}\n    <lastmod>{today}</lastmod>\n    <priority>{p}</priority>\n  </url>\n"
+                   for u, a, p in urls)
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+            'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + body + "</urlset>\n")
+
+
 def main():
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -758,6 +795,10 @@ def main():
     (OUT / "privacy.html").write_text(privacy("ar", ""))
     (OUT / "en/privacy.html").write_text(privacy("en", "../"))
     (OUT / "llms.txt").write_text(LLMS)
+    if not PREVIEW:
+        (OUT / "robots.txt").write_text(ROBOTS)
+        (OUT / "sitemap.xml").write_text(sitemap())
+        (OUT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY)
     print("wrote", OUT, "(preview)" if PREVIEW else "")
 
 
