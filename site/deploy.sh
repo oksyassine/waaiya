@@ -18,4 +18,10 @@ else
   # keep the preview folder when the live site is replaced
   rsync -a --delete --exclude /preview/ --exclude /downloads/ public/ o2:waaiya.mssid.org/
   echo "deployed: https://waaiya.mssid.org/"
+  # tell the search engines that share IndexNow (Bing, Yandex, Seznam, Naver...) that the pages changed.
+  # Google reads sitemap.xml (robots.txt names it). Only the public page addresses are sent.
+  KEY=$(python3 -c "import build; print(build.INDEXNOW_KEY)")
+  curl -sS -o /dev/null -w "IndexNow: %{http_code}\n" -H "Content-Type: application/json; charset=utf-8" \
+    --data "{\"host\":\"waaiya.mssid.org\",\"key\":\"$KEY\",\"keyLocation\":\"https://waaiya.mssid.org/$KEY.txt\",\"urlList\":[\"https://waaiya.mssid.org/\",\"https://waaiya.mssid.org/en/\",\"https://waaiya.mssid.org/privacy.html\"]}" \
+    https://api.indexnow.org/indexnow || true
 fi

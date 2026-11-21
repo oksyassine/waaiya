@@ -234,7 +234,7 @@ html:not(.js) .lshot { grid-column: 1 / -1; }
 html[lang="ar"] .how h3 { letter-spacing: 0; line-height: 1.35; }
 .how li p { font-size: var(--s4); max-width: 44ch; }
 
-/* ---------- nothing leaves your device, and the film ---------- */
+/* ---------- nothing leaves your device, and the introduction video ---------- */
 .priv { background: #053D35; color: #E6F2EF; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 96px); padding: clamp(64px, 8vw, 128px) var(--m); align-items: center; }
 .priv-text { display: grid; gap: 28px; }
 .priv-text > p { font-size: var(--s3); line-height: 1.5; max-width: 36ch; }
