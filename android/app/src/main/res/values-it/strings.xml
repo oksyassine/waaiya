@@ -401,4 +401,16 @@
     <string name="notif_update_channel">Aggiornamenti</string>
     <string name="notif_update_title">Waaiya %1$s è disponibile</string>
     <string name="notif_update_text">Tocca per aggiornare (%1$s).</string>
+    <string name="notif_move_title">Waaiya si è trasferita in una nuova app</string>
+    <string name="notif_move_text">Questa versione non riceverà più aggiornamenti. Apri Waaiya per installare la nuova: le tue impostazioni la seguono.</string>
+    <string name="move_old_title">Waaiya si è trasferita</string>
+    <string name="move_old_body">Su Android Waaiya ora arriva come una nuova app (la stessa Waaiya con un nuovo nome), e questa non riceverà più aggiornamenti. Installa la nuova: le tue impostazioni la seguono. Poi fai la sua configurazione iniziale e rimuovi questa.</string>
+    <string name="move_old_installed">La nuova Waaiya è installata. Aprila: prende le tue impostazioni. Fai la sua configurazione iniziale, poi rimuovi questa vecchia così che le due non filtrino mai insieme.</string>
+    <string name="move_install">Installa la nuova Waaiya</string>
+    <string name="move_open_new">Apri la nuova Waaiya</string>
+    <string name="move_remove_this">Rimuovi questa vecchia Waaiya</string>
+    <string name="move_new_title">La vecchia Waaiya è ancora installata</string>
+    <string name="move_new_body">La vecchia Waaiya (precedente alla versione 0.2.15) è ancora su questo telefono. Rimuovila così che le due non filtrino mai insieme.</string>
+    <string name="move_new_imported">Le tue impostazioni sono state prese da lì.</string>
+    <string name="move_remove_old">Rimuovi la vecchia Waaiya</string>
 </resources>

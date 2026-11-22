@@ -401,4 +401,16 @@
     <string name="notif_update_channel">Ilova yangilanishlari</string>
     <string name="notif_update_title">Waaiya %1$s chiqdi</string>
     <string name="notif_update_text">Yangilash uchun bosing (%1$s).</string>
+    <string name="notif_move_title">Waaiya yangi ilovaga ko‘chdi</string>
+    <string name="notif_move_text">Bu versiya endi yangilanmaydi. Yangisini o‘rnatish uchun Waaiya’ni oching: sozlamalaringiz ham ko‘chadi.</string>
+    <string name="move_old_title">Waaiya ko‘chdi</string>
+    <string name="move_old_body">Endi Waaiya Android’da yangi ilova sifatida chiqadi (o‘sha Waaiya, yangi nom bilan), bu ilova esa endi yangilanmaydi. Yangisini o‘rnating: sozlamalaringiz ham ko‘chadi. So‘ng uning bir martalik sozlashini bajaring va buni o‘chiring.</string>
+    <string name="move_old_installed">Yangi Waaiya o‘rnatildi. Uni oching: u sozlamalaringizni oladi. Bir martalik sozlashni bajaring, so‘ng ikkalasi hech qachon birga filtrlamasligi uchun bu eskisini o‘chiring.</string>
+    <string name="move_install">Yangi Waaiya’ni o‘rnatish</string>
+    <string name="move_open_new">Yangi Waaiya’ni ochish</string>
+    <string name="move_remove_this">Bu eski Waaiya’ni o‘chirish</string>
+    <string name="move_new_title">Eski Waaiya hali ham o‘rnatilgan</string>
+    <string name="move_new_body">Eski Waaiya (0.2.15 versiyasidan oldingi) hali ham bu telefonda. Ikkalasi hech qachon birga filtrlamasligi uchun uni o‘chiring.</string>
+    <string name="move_new_imported">Sozlamalaringiz undan olib kelindi.</string>
+    <string name="move_remove_old">Eski Waaiya’ni o‘chirish</string>
 </resources>

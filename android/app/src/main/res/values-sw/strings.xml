@@ -400,4 +400,16 @@
     <string name="notif_update_channel">Masasisho ya programu</string>
     <string name="notif_update_title">Waaiya %1$s inapatikana</string>
     <string name="notif_update_text">Gusa ili kusasisha (%1$s).</string>
+    <string name="notif_move_title">Waaiya imehamia programu mpya</string>
+    <string name="notif_move_text">Toleo hili halitapata masasisho tena. Fungua Waaiya ili usakinishe mpya: mipangilio yako inahamia pamoja nayo.</string>
+    <string name="move_old_title">Waaiya imehamia</string>
+    <string name="move_old_body">Sasa Waaiya inakuja kama programu mpya kwenye Android (Waaiya ileile kwa jina jipya), na hii haitapata masasisho tena. Sakinisha mpya: mipangilio yako inahamia. Kisha fanya mpangilio wake wa mara moja na uondoe hii.</string>
+    <string name="move_old_installed">Waaiya mpya imesakinishwa. Ifungue: inachukua mipangilio yako. Fanya mpangilio wake wa mara moja, kisha uondoe hii ya zamani ili mbili zisichuje kwa wakati mmoja.</string>
+    <string name="move_install">Sakinisha Waaiya mpya</string>
+    <string name="move_open_new">Fungua Waaiya mpya</string>
+    <string name="move_remove_this">Ondoa Waaiya hii ya zamani</string>
+    <string name="move_new_title">Waaiya ya zamani bado imesakinishwa</string>
+    <string name="move_new_body">Waaiya ya zamani (ya kabla ya toleo 0.2.15) bado iko kwenye simu hii. Iondoe ili mbili zisichuje kwa wakati mmoja.</string>
+    <string name="move_new_imported">Mipangilio yako imeletwa kutoka kwake.</string>
+    <string name="move_remove_old">Ondoa Waaiya ya zamani</string>
 </resources>

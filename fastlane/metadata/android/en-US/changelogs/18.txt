@@ -1,0 +1,1 @@
+Waaiya has a new name on Android: org.waaiya.app (the same Waaiya). Your app shows a card that installs the new one and brings your settings over; then do the one-time setup in it and remove the old one. Also new: set up from a computer in Chrome or Edge over a USB cable, nothing to install: waaiya.mssid.org/usb

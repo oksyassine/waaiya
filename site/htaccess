@@ -39,9 +39,10 @@ AddType application/octet-stream .onnx .bin
   ExpiresByType application/octet-stream "access plus 7 days"
 </IfModule>
 
-# In-app updates (AppUpdate.kt): the release file must never be served from a cache; patches and APKs never change.
-<Files "update.json">
+# In-app updates (AppUpdate.kt): the release files (update.json for org.islamicmute.app, waaiya-update.json for
+# org.waaiya.app) must never be served from a cache; patches and APKs never change.
+<FilesMatch "^(waaiya-)?update\.json$">
   <IfModule mod_headers.c>
     Header set Cache-Control "no-store"
   </IfModule>
-</Files>
+</FilesMatch>

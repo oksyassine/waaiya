@@ -1,0 +1,1 @@
+Waaiya a un nouveau nom sous Android : org.waaiya.app (la même Waaiya). Votre appli affiche une carte qui installe la nouvelle et y reporte vos réglages ; faites ensuite sa configuration unique et supprimez l’ancienne. Nouveau aussi : la configuration depuis un ordinateur dans Chrome ou Edge par câble USB, sans rien installer : waaiya.mssid.org/usb

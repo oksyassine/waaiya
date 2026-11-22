@@ -401,4 +401,16 @@
     <string name="notif_update_channel">অ্যাপ আপডেট</string>
     <string name="notif_update_title">ওয়াইয়া %1$s পাওয়া যাচ্ছে</string>
     <string name="notif_update_text">আপডেট করতে চাপুন (%1$s)।</string>
+    <string name="notif_move_title">ওয়াইয়া একটি নতুন অ্যাপে চলে গেছে</string>
+    <string name="notif_move_text">এই সংস্করণ আর আপডেট পাবে না। নতুনটি ইনস্টল করতে ওয়াইয়া খুলুন: আপনার সেটিংস সঙ্গে যাবে।</string>
+    <string name="move_old_title">ওয়াইয়া চলে গেছে</string>
+    <string name="move_old_body">ওয়াইয়া এখন Android-এ একটি নতুন অ্যাপ হিসেবে আসে (একই ওয়াইয়া, নতুন নামে), আর এটি আর আপডেট পাবে না। নতুনটি ইনস্টল করুন: আপনার সেটিংস সঙ্গে যাবে। তারপর এর এককালীন সেটআপ করুন এবং এটি সরিয়ে দিন।</string>
+    <string name="move_old_installed">নতুন ওয়াইয়া ইনস্টল হয়েছে। এটি খুলুন: এটি আপনার সেটিংস নেবে। এর এককালীন সেটআপ করুন, তারপর এই পুরোনোটি সরিয়ে দিন যাতে দুটি একসঙ্গে ফিল্টার না করে।</string>
+    <string name="move_install">নতুন ওয়াইয়া ইনস্টল করুন</string>
+    <string name="move_open_new">নতুন ওয়াইয়া খুলুন</string>
+    <string name="move_remove_this">এই পুরোনো ওয়াইয়া সরান</string>
+    <string name="move_new_title">পুরোনো ওয়াইয়া এখনও ইনস্টল আছে</string>
+    <string name="move_new_body">পুরোনো ওয়াইয়া (0.2.15 সংস্করণের আগের) এখনও এই ফোনে আছে। এটি সরিয়ে দিন যাতে দুটি একসঙ্গে ফিল্টার না করে।</string>
+    <string name="move_new_imported">আপনার সেটিংস এটি থেকে আনা হয়েছে।</string>
+    <string name="move_remove_old">পুরোনো ওয়াইয়া সরান</string>
 </resources>

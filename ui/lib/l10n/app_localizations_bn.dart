@@ -1073,6 +1073,39 @@ class AppLocalizationsBn extends AppLocalizations {
   String get updateCheckFailed => 'এখন খোঁজা গেল না। পরে আবার চেষ্টা করুন।';
 
   @override
+  String get moveOldTitle => 'ওয়াইয়া চলে গেছে';
+
+  @override
+  String get moveOldBody =>
+      'ওয়াইয়া এখন Android-এ একটি নতুন অ্যাপ হিসেবে আসে (একই ওয়াইয়া, নতুন নামে), আর এটি আর আপডেট পাবে না। নতুনটি ইনস্টল করুন: আপনার সেটিংস সঙ্গে যাবে। তারপর এর এককালীন সেটআপ করুন এবং এটি সরিয়ে দিন।';
+
+  @override
+  String get moveOldInstalled =>
+      'নতুন ওয়াইয়া ইনস্টল হয়েছে। এটি খুলুন: এটি আপনার সেটিংস নেবে। এর এককালীন সেটআপ করুন, তারপর এই পুরোনোটি সরিয়ে দিন যাতে দুটি একসঙ্গে ফিল্টার না করে।';
+
+  @override
+  String get moveInstall => 'নতুন ওয়াইয়া ইনস্টল করুন';
+
+  @override
+  String get moveOpenNew => 'নতুন ওয়াইয়া খুলুন';
+
+  @override
+  String get moveRemoveThis => 'এই পুরোনো ওয়াইয়া সরান';
+
+  @override
+  String get moveNewTitle => 'পুরোনো ওয়াইয়া এখনও ইনস্টল আছে';
+
+  @override
+  String get moveNewBody =>
+      'পুরোনো ওয়াইয়া (0.2.15 সংস্করণের আগের) এখনও এই ফোনে আছে। এটি সরিয়ে দিন যাতে দুটি একসঙ্গে ফিল্টার না করে।';
+
+  @override
+  String get moveNewImported => 'আপনার সেটিংস এটি থেকে আনা হয়েছে।';
+
+  @override
+  String get moveRemoveOld => 'পুরোনো ওয়াইয়া সরান';
+
+  @override
   String get desktopPreview =>
       'প্রিভিউ: এই কম্পিউটারে ফিল্টার ইঞ্জিন এখনো সংযুক্ত নয়। বোতামটি শুধু দেখায় অ্যাপটি কীভাবে কাজ করবে।';
 

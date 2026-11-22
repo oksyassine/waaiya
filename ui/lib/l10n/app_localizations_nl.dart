@@ -1075,6 +1075,39 @@ class AppLocalizationsNl extends AppLocalizations {
       'Zoeken lukt nu niet. Probeer het later opnieuw.';
 
   @override
+  String get moveOldTitle => 'Waaiya is verhuisd';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya komt op Android nu als een nieuwe app (dezelfde Waaiya onder een nieuwe naam), en deze krijgt geen updates meer. Installeer de nieuwe: uw instellingen verhuizen mee. Doe daarna de eenmalige instelling en verwijder deze.';
+
+  @override
+  String get moveOldInstalled =>
+      'De nieuwe Waaiya is geïnstalleerd. Open hem: hij neemt uw instellingen over. Doe de eenmalige instelling en verwijder daarna deze oude, zodat ze nooit allebei tegelijk filteren.';
+
+  @override
+  String get moveInstall => 'Nieuwe Waaiya installeren';
+
+  @override
+  String get moveOpenNew => 'Nieuwe Waaiya openen';
+
+  @override
+  String get moveRemoveThis => 'Deze oude Waaiya verwijderen';
+
+  @override
+  String get moveNewTitle => 'De oude Waaiya is nog geïnstalleerd';
+
+  @override
+  String get moveNewBody =>
+      'De oude Waaiya (van vóór versie 0.2.15) staat nog op deze telefoon. Verwijder hem, zodat ze nooit allebei tegelijk filteren.';
+
+  @override
+  String get moveNewImported => 'Uw instellingen zijn eruit overgenomen.';
+
+  @override
+  String get moveRemoveOld => 'Oude Waaiya verwijderen';
+
+  @override
   String get desktopPreview =>
       'Voorbeeld: de filtermotor is nog niet verbonden op deze computer. De knop laat alleen zien hoe de app gaat werken.';
 

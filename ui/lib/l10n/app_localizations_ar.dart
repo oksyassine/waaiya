@@ -1059,6 +1059,39 @@ class AppLocalizationsAr extends AppLocalizations {
   String get updateCheckFailed => 'تعذّر البحث الآن. حاول لاحقًا.';
 
   @override
+  String get moveOldTitle => 'انتقلت واعية';
+
+  @override
+  String get moveOldBody =>
+      'صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.';
+
+  @override
+  String get moveOldInstalled =>
+      'ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.';
+
+  @override
+  String get moveInstall => 'ثبّت واعية الجديدة';
+
+  @override
+  String get moveOpenNew => 'افتح واعية الجديدة';
+
+  @override
+  String get moveRemoveThis => 'احذف واعية القديمة هذه';
+
+  @override
+  String get moveNewTitle => 'ما زالت واعية القديمة مثبّتة';
+
+  @override
+  String get moveNewBody =>
+      'ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.';
+
+  @override
+  String get moveNewImported => 'نُقلت إعداداتك منها.';
+
+  @override
+  String get moveRemoveOld => 'احذف واعية القديمة';
+
+  @override
   String get desktopPreview =>
       'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
 

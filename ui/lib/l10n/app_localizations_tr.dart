@@ -1075,6 +1075,39 @@ class AppLocalizationsTr extends AppLocalizations {
       'Şu anda denetlenemedi. Daha sonra yeniden deneyin.';
 
   @override
+  String get moveOldTitle => 'Waaiya taşındı';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya artık Android\'de yeni bir uygulama olarak geliyor (aynı Waaiya, yeni bir adla) ve bu uygulama artık güncelleme almayacak. Yenisini kurun: ayarlarınız da taşınır. Sonra onun tek seferlik kurulumunu yapın ve bunu kaldırın.';
+
+  @override
+  String get moveOldInstalled =>
+      'Yeni Waaiya kuruldu. Açın: ayarlarınızı alır. Tek seferlik kurulumunu yapın, sonra ikisi asla aynı anda filtrelemesin diye bu eskisini kaldırın.';
+
+  @override
+  String get moveInstall => 'Yeni Waaiya\'yı kur';
+
+  @override
+  String get moveOpenNew => 'Yeni Waaiya\'yı aç';
+
+  @override
+  String get moveRemoveThis => 'Bu eski Waaiya\'yı kaldır';
+
+  @override
+  String get moveNewTitle => 'Eski Waaiya hâlâ yüklü';
+
+  @override
+  String get moveNewBody =>
+      'Eski Waaiya (0.2.15 sürümünden önceki) hâlâ bu telefonda. İkisi asla aynı anda filtrelemesin diye kaldırın.';
+
+  @override
+  String get moveNewImported => 'Ayarlarınız ondan alındı.';
+
+  @override
+  String get moveRemoveOld => 'Eski Waaiya\'yı kaldır';
+
+  @override
   String get desktopPreview =>
       'Önizleme: filtre motoru bu bilgisayara henüz bağlı değil. Düğme yalnızca uygulamanın nasıl çalışacağını gösterir.';
 

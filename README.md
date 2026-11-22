@@ -125,14 +125,17 @@ Both are granted once, in one of two ways:
 - **Without a computer (Shizuku):** install and start [Shizuku](https://shizuku.rikka.app) (wireless debugging
   on Android 11+, or root), open Waaiya and tap **Grant with Shizuku**, then allow it in Shizuku's dialog.
   The app runs a short-lived Shizuku UserService that executes `cmd package grant` and `cmd appops set`
-  (see `android/app/src/main/java/org/islamicmute/app/ShizukuSetup.kt`). Shizuku can be stopped afterwards:
+  (see `android/app/src/main/java/org/waaiya/app/ShizukuSetup.kt`). Shizuku can be stopped afterwards:
   both grants persist until the app is uninstalled.
+- **With a computer, nothing to install:** open [waaiya.mssid.org/usb](https://waaiya.mssid.org/en/usb/) in Chrome or
+  Edge, turn on USB debugging and connect the phone (`docs/SETUP.md`).
 - **With a computer (ADB):**
   ```bash
-  adb shell pm grant org.islamicmute.app android.permission.DUMP
-  adb shell appops set org.islamicmute.app PROJECT_MEDIA allow   # optional
-  adb shell pm grant org.islamicmute.app android.permission.WRITE_SECURE_SETTINGS   # optional: notification-text tile
+  adb shell pm grant org.waaiya.app android.permission.DUMP
+  adb shell appops set org.waaiya.app PROJECT_MEDIA allow   # optional
+  adb shell pm grant org.waaiya.app android.permission.WRITE_SECURE_SETTINGS   # optional: notification-text tile
   ```
+  Since 0.2.15 the Android package is `org.waaiya.app` (before: `org.islamicmute.app`; `docs/MOVE.md`).
 
 ## Links: watch or save a video without music
 

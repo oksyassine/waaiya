@@ -27,9 +27,19 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
 
-    <!-- Android 11+ package visibility: detect "Shizuku installed but not running" and open it. -->
+    <!-- The move from org.islamicmute.app to org.waaiya.app (AppMove.kt, docs/MOVE.md): the old app's last version
+         hands its settings to the new one through a provider that only apps signed like Waaiya may call. Only the old
+         app declares the permission (src/move): a second declaration by an app signed otherwise (a rebuild from
+         source) would stop Android from installing it. -->
+    <uses-permission android:name="org.waaiya.permission.MOVE" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+
+    <!-- Android 11+ package visibility: detect "Shizuku installed but not running" and open it; each Waaiya sees the
+         other during the move. -->
     <queries>
         <package android:name="moe.shizuku.privileged.api" />
+        <package android:name="org.islamicmute.app" />
+        <package android:name="org.waaiya.app" />
         <!-- Apps with a launcher icon: to name the app whose sound cannot be filtered ("X does not allow filtering"). -->
         <intent>
             <action android:name="android.intent.action.MAIN" />

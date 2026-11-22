@@ -1302,6 +1302,46 @@
   "@updateCheckFailed": {
     "description": "Android string update_check_failed"
   },
+  "moveOldTitle": "انتقلت واعية",
+  "@moveOldTitle": {
+    "description": "Android string move_old_title"
+  },
+  "moveOldBody": "صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.",
+  "@moveOldBody": {
+    "description": "Android string move_old_body"
+  },
+  "moveOldInstalled": "ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.",
+  "@moveOldInstalled": {
+    "description": "Android string move_old_installed"
+  },
+  "moveInstall": "ثبّت واعية الجديدة",
+  "@moveInstall": {
+    "description": "Android string move_install"
+  },
+  "moveOpenNew": "افتح واعية الجديدة",
+  "@moveOpenNew": {
+    "description": "Android string move_open_new"
+  },
+  "moveRemoveThis": "احذف واعية القديمة هذه",
+  "@moveRemoveThis": {
+    "description": "Android string move_remove_this"
+  },
+  "moveNewTitle": "ما زالت واعية القديمة مثبّتة",
+  "@moveNewTitle": {
+    "description": "Android string move_new_title"
+  },
+  "moveNewBody": "ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.",
+  "@moveNewBody": {
+    "description": "Android string move_new_body"
+  },
+  "moveNewImported": "نُقلت إعداداتك منها.",
+  "@moveNewImported": {
+    "description": "Android string move_new_imported"
+  },
+  "moveRemoveOld": "احذف واعية القديمة",
+  "@moveRemoveOld": {
+    "description": "Android string move_remove_old"
+  },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {
     "description": "Flutter only. Not reviewed yet except in English."

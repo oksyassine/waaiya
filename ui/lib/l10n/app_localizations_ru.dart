@@ -1075,6 +1075,39 @@ class AppLocalizationsRu extends AppLocalizations {
       'Сейчас проверить не удалось. Попробуйте позже.';
 
   @override
+  String get moveOldTitle => 'Waaiya переехала';
+
+  @override
+  String get moveOldBody =>
+      'Теперь Waaiya выходит на Android как новое приложение (та же Waaiya под новым именем), а это больше не будет обновляться. Установите новое: ваши настройки перейдут в него. Затем выполните в нём одноразовую настройку и удалите это.';
+
+  @override
+  String get moveOldInstalled =>
+      'Новая Waaiya установлена. Откройте её: она заберёт ваши настройки. Выполните одноразовую настройку, затем удалите эту старую, чтобы они никогда не фильтровали одновременно.';
+
+  @override
+  String get moveInstall => 'Установить новую Waaiya';
+
+  @override
+  String get moveOpenNew => 'Открыть новую Waaiya';
+
+  @override
+  String get moveRemoveThis => 'Удалить эту старую Waaiya';
+
+  @override
+  String get moveNewTitle => 'Старая Waaiya всё ещё установлена';
+
+  @override
+  String get moveNewBody =>
+      'Старая Waaiya (до версии 0.2.15) всё ещё на этом телефоне. Удалите её, чтобы они никогда не фильтровали одновременно.';
+
+  @override
+  String get moveNewImported => 'Ваши настройки перенесены из неё.';
+
+  @override
+  String get moveRemoveOld => 'Удалить старую Waaiya';
+
+  @override
   String get desktopPreview =>
       'Предварительный просмотр: движок фильтра на этом компьютере пока не подключён. Кнопка только показывает, как будет работать приложение.';
 

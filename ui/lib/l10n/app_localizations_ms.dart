@@ -1075,6 +1075,39 @@ class AppLocalizationsMs extends AppLocalizations {
       'Tidak dapat menyemak sekarang. Cuba lagi kemudian.';
 
   @override
+  String get moveOldTitle => 'Waaiya telah berpindah';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya kini hadir sebagai aplikasi baharu di Android (Waaiya yang sama dengan nama baharu), dan aplikasi ini tidak akan menerima kemas kini lagi. Pasang yang baharu: tetapan anda ikut berpindah. Kemudian buat persediaan sekali sahaja di sana dan buang yang ini.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya baharu telah dipasang. Bukanya: ia mengambil tetapan anda. Buat persediaan sekali sahajanya, kemudian buang yang lama ini supaya kedua-duanya tidak menapis serentak.';
+
+  @override
+  String get moveInstall => 'Pasang Waaiya baharu';
+
+  @override
+  String get moveOpenNew => 'Buka Waaiya baharu';
+
+  @override
+  String get moveRemoveThis => 'Buang Waaiya lama ini';
+
+  @override
+  String get moveNewTitle => 'Waaiya lama masih dipasang';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya lama (sebelum versi 0.2.15) masih ada pada telefon ini. Buangnya supaya kedua-duanya tidak menapis serentak.';
+
+  @override
+  String get moveNewImported => 'Tetapan anda telah dibawa daripadanya.';
+
+  @override
+  String get moveRemoveOld => 'Buang Waaiya lama';
+
+  @override
   String get desktopPreview =>
       'Pratonton: enjin penapis belum disambungkan pada komputer ini. Butang ini hanya menunjukkan cara apl akan berfungsi.';
 

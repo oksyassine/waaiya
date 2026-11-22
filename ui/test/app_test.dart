@@ -95,7 +95,7 @@ void main() {
           originalsMuted: false,
           consentSkipped: false,
           shizuku: ShizukuState.notRunning,
-          adbCommands: 'adb shell pm grant org.islamicmute.app android.permission.DUMP',
+          adbCommands: 'adb shell pm grant org.waaiya.app android.permission.DUMP',
         ),
       ),
     );

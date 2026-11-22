@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The old app's last version (-PimMoveBuild, package org.islamicmute.app; AppMove.kt, docs/MOVE.md).
+     - The launcher entry keeps its pre-0.2.15 full name, so the icon on the home screen keeps working (the classes
+       now live in org.waaiya.app). The long-press shortcuts name the new package, so this build has none.
+     - MoveProvider hands the settings to the new app, guarded by a signature permission declared here only. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <permission android:name="org.waaiya.permission.MOVE" android:protectionLevel="signature" />
+
+    <application>
+        <activity-alias android:name="org.waaiya.app.MainActivity" tools:node="remove" />
+        <activity-alias android:name="org.islamicmute.app.MainActivity" android:targetActivity="org.waaiya.app.UiActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <provider android:name="org.waaiya.app.MoveProvider" android:authorities="${applicationId}.move"
+            android:exported="true" android:permission="org.waaiya.permission.MOVE" />
+    </application>
+</manifest>

@@ -237,7 +237,7 @@ Texts: Android's `res/values*/strings.xml` stay the source of every text. Flutte
 
 Add keys, never rename them; a backend that does not know a key leaves it out and the UI uses the default. Change
 this file, `ui/lib/src/backend.dart`, `ui/lib/src/channel_backend.dart`,
-`android/app/src/main/java/org/islamicmute/app/UiBridge.kt` and `desktop/lib/desktop_backend.dart` together.
+`android/app/src/main/java/org/waaiya/app/UiBridge.kt` and `desktop/lib/desktop_backend.dart` together.
 
 ## 0.2.13 features (docs/FEATURES_CONTRACT.md)
 

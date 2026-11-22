@@ -401,4 +401,16 @@
     <string name="notif_update_channel">Uygulama güncellemeleri</string>
     <string name="notif_update_title">Waaiya %1$s yayımlandı</string>
     <string name="notif_update_text">Güncellemek için dokunun (%1$s).</string>
+    <string name="notif_move_title">Waaiya yeni bir uygulamaya taşındı</string>
+    <string name="notif_move_text">Bu sürüm artık güncelleme almayacak. Yenisini kurmak için Waaiya\'yı açın: ayarlarınız da taşınır.</string>
+    <string name="move_old_title">Waaiya taşındı</string>
+    <string name="move_old_body">Waaiya artık Android\'de yeni bir uygulama olarak geliyor (aynı Waaiya, yeni bir adla) ve bu uygulama artık güncelleme almayacak. Yenisini kurun: ayarlarınız da taşınır. Sonra onun tek seferlik kurulumunu yapın ve bunu kaldırın.</string>
+    <string name="move_old_installed">Yeni Waaiya kuruldu. Açın: ayarlarınızı alır. Tek seferlik kurulumunu yapın, sonra ikisi asla aynı anda filtrelemesin diye bu eskisini kaldırın.</string>
+    <string name="move_install">Yeni Waaiya\'yı kur</string>
+    <string name="move_open_new">Yeni Waaiya\'yı aç</string>
+    <string name="move_remove_this">Bu eski Waaiya\'yı kaldır</string>
+    <string name="move_new_title">Eski Waaiya hâlâ yüklü</string>
+    <string name="move_new_body">Eski Waaiya (0.2.15 sürümünden önceki) hâlâ bu telefonda. İkisi asla aynı anda filtrelemesin diye kaldırın.</string>
+    <string name="move_new_imported">Ayarlarınız ondan alındı.</string>
+    <string name="move_remove_old">Eski Waaiya\'yı kaldır</string>
 </resources>

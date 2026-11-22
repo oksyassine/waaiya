@@ -1942,6 +1942,66 @@ abstract class AppLocalizations {
   /// **'تعذّر البحث الآن. حاول لاحقًا.'**
   String get updateCheckFailed;
 
+  /// Android string move_old_title
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقلت واعية'**
+  String get moveOldTitle;
+
+  /// Android string move_old_body
+  ///
+  /// In ar, this message translates to:
+  /// **'صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.'**
+  String get moveOldBody;
+
+  /// Android string move_old_installed
+  ///
+  /// In ar, this message translates to:
+  /// **'ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.'**
+  String get moveOldInstalled;
+
+  /// Android string move_install
+  ///
+  /// In ar, this message translates to:
+  /// **'ثبّت واعية الجديدة'**
+  String get moveInstall;
+
+  /// Android string move_open_new
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح واعية الجديدة'**
+  String get moveOpenNew;
+
+  /// Android string move_remove_this
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف واعية القديمة هذه'**
+  String get moveRemoveThis;
+
+  /// Android string move_new_title
+  ///
+  /// In ar, this message translates to:
+  /// **'ما زالت واعية القديمة مثبّتة'**
+  String get moveNewTitle;
+
+  /// Android string move_new_body
+  ///
+  /// In ar, this message translates to:
+  /// **'ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.'**
+  String get moveNewBody;
+
+  /// Android string move_new_imported
+  ///
+  /// In ar, this message translates to:
+  /// **'نُقلت إعداداتك منها.'**
+  String get moveNewImported;
+
+  /// Android string move_remove_old
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف واعية القديمة'**
+  String get moveRemoveOld;
+
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:

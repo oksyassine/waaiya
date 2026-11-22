@@ -2,12 +2,12 @@
 
 Waaiya needs two things that Android only gives to the shell user (ADB):
 
-    cmd package grant org.islamicmute.app android.permission.DUMP     # list other apps' sessions, mute the originals
-    cmd appops set org.islamicmute.app PROJECT_MEDIA allow            # no screen-sharing question at every start
+    cmd package grant org.waaiya.app android.permission.DUMP     # list other apps' sessions, mute the originals
+    cmd appops set org.waaiya.app PROJECT_MEDIA allow            # no screen-sharing question at every start
 
 and, optionally, one more for the "Notification text" Quick Settings tile (Android 15+):
 
-    cmd package grant org.islamicmute.app android.permission.WRITE_SECURE_SETTINGS
+    cmd package grant org.waaiya.app android.permission.WRITE_SECURE_SETTINGS
 
 Without the first one the user hears the music and the filtered sound together. Both grants survive reboots and
 app updates; they are lost only on uninstall (or `pm revoke`).
@@ -70,7 +70,7 @@ attempt and a code that Settings shows on screen and discards).
 
 ## How it was verified
 
-- JVM unit tests (`./gradlew testDebugUnitTest --tests 'org.islamicmute.app.adb.*'`): RFC 8032 public keys,
+- JVM unit tests (`./gradlew testDebugUnitTest --tests 'org.waaiya.app.adb.*'`): RFC 8032 public keys,
   BoringSSL's M/N points against the coordinates in its source, the password-scalar fix, SPAKE2 agreement and a fixed
   regression vector, RFC 5869 HKDF vectors, the GCM nonce counter, pairing and adb framing, the adb public key
   against `adb keygen` output, the certificate, code parsing (Arabic-Indic digits, code + port), mDNS filtering and
@@ -183,7 +183,7 @@ prompt on a real adbd (the emulators here do not ask: `ro.adb.secure=0`).
   filtering before typing the pairing code (`wsetup_filter_on`).
 - A grant refused by the system through Shizuku (`SecurityException`, `GRANT_RUNTIME_PERMISSIONS`, ...) is explained
   with that phone's switch, and points to the on-phone setup, which does not need it.
-- Debug builds: `adb shell run-as org.islamicmute.app touch files/simulate_refused` makes the grants answer like a
+- Debug builds: `adb shell run-as org.waaiya.app touch files/simulate_refused` makes the grants answer like a
   refusing phone, to test helper mode on an emulator.
 - Shizuku's helper process can take long to start (seen on a Xiaomi). The screen says "still working" after 20 s and
   gives up only after 2 min; an answer after that is still applied (`ShizukuSetup.addListener`).
@@ -216,7 +216,7 @@ pass through. Shizuku was the only such process; `CoverHelper.kt` is Waaiya's ow
 - **Start.** With a blur option on, the on-phone setup (or the "Start Waaiya's helper" button on the Screen page,
   the same run) also sends `CoverHelper.startCommand` over the Wireless debugging connection: it stops an older
   helper, then `CLASSPATH=<apk> setsid app_process /system/bin --nice-name=waaiya_covers
-  org.islamicmute.app.CoverHelper <uid> <version>`, as Shizuku starts its server.
+  org.waaiya.app.CoverHelper <uid> <version>`, as Shizuku starts its server.
 - **Hand-over.** The helper hosts `CoverService` (the same one Shizuku runs) and gives its binder to the app through
   `CoverHelperProvider`, a content-provider call (`IActivityManager.getContentProviderExternal` +
   `IContentProvider.call`, API 31+). The provider is exported but needs `INTERACT_ACROSS_USERS_FULL` (shell and root

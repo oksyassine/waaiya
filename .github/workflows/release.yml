@@ -105,7 +105,19 @@ jobs:
           for f in android/app/build/outputs/apk/release/*.apk; do
             cp "$f" "out/waaiya-${GITHUB_REF_NAME}-$(basename "$f" | sed 's/^app-//')"
           done
-          rm -rf "$RUNNER_TEMP/signing"
+      # 0.2.15 only: the last version under the old name org.islamicmute.app, which installs the new app and hands
+      # it the settings (docs/MOVE.md). Older phones reach it through their in-app update (update.json).
+      - name: Build and collect the old name's move APKs (v0.2.15)
+        if: github.ref_name == 'v0.2.15'
+        working-directory: android
+        run: |
+          ./gradlew --no-daemon assembleRelease -PimAbiSplit -PimMoveBuild -PimBuildPython="$(which python3.11)" ${SIGNING:-}
+          for f in app/build/outputs/apk/release/*.apk; do
+            cp "$f" "../out/waaiya-${GITHUB_REF_NAME}-move-$(basename "$f" | sed 's/^app-//')"
+          done
+      - name: Forget the signing key
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/signing"
       - uses: actions/upload-artifact@v4
         with: { name: android, path: out/*.apk }
 

@@ -1075,6 +1075,39 @@ class AppLocalizationsId extends AppLocalizations {
       'Tidak dapat memeriksa saat ini. Coba lagi nanti.';
 
   @override
+  String get moveOldTitle => 'Waaiya telah pindah';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya kini hadir sebagai aplikasi baru di Android (Waaiya yang sama dengan nama baru), dan aplikasi ini tidak akan mendapat pembaruan lagi. Pasang yang baru: setelan Anda ikut pindah. Lalu lakukan penyiapan satu kali di sana dan hapus yang ini.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya baru sudah terpasang. Buka: setelan Anda diambilnya. Lakukan penyiapan satu kalinya, lalu hapus yang lama ini agar keduanya tidak pernah memfilter bersamaan.';
+
+  @override
+  String get moveInstall => 'Pasang Waaiya baru';
+
+  @override
+  String get moveOpenNew => 'Buka Waaiya baru';
+
+  @override
+  String get moveRemoveThis => 'Hapus Waaiya lama ini';
+
+  @override
+  String get moveNewTitle => 'Waaiya lama masih terpasang';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya lama (sebelum versi 0.2.15) masih ada di ponsel ini. Hapus agar keduanya tidak pernah memfilter bersamaan.';
+
+  @override
+  String get moveNewImported => 'Setelan Anda sudah dibawa dari sana.';
+
+  @override
+  String get moveRemoveOld => 'Hapus Waaiya lama';
+
+  @override
   String get desktopPreview =>
       'Pratinjau: mesin filter belum terhubung di komputer ini. Tombol hanya menunjukkan cara kerja aplikasi.';
 

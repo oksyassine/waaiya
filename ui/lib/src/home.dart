@@ -1,3 +1,4 @@
+import 'app_move.dart';
 import 'app_update.dart';
 import 'dart:math' as math;
 
@@ -138,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const AppHeader(),
             const SizedBox(height: 24),
+            const MoveCard(),
             const PowerSection(),
             const SizedBox(height: 16),
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
@@ -176,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _ => PageColumn(
           children: [
             PageTitle(l.navSettings),
+            const MoveCard(),
             const GeneralSettingsCard(),
             const WorshipCard(),
             const ProtectionCard(),
