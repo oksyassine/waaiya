@@ -53,6 +53,7 @@
     <string name="step_done_cd">Bajarildi</string>
     <string name="step_todo_cd">%1$d-qadam</string>
     <string name="computer_toggle">Oʻrniga kompyuterdan foydalanish</string>
+    <string name="computer_web">Eng osoni: kompyuterda Chrome yoki Edge’da waaiya.mssid.org/usb sahifasini oching, “USB orqali debaglash” ni yoqing va telefonni kabel bilan ulang. Hech narsa o‘rnatish shart emas, Android 10 da ham ishlaydi. Yoki adb o‘rnatilgan bo‘lsa:</string>
     <string name="computer_body">“USB orqali debaglash” (USB debugging) ni yoqing, telefonni kompyuterga ulang va quyidagini ishga tushiring:</string>
     <string name="copy">Nusxalash</string>
     <string name="copied">Nusxalandi</string>

@@ -104,7 +104,9 @@ Play build options (`docs/DISTRIBUTION.md`).
      directly. 0.2.11: the same connection starts Waaiya's own cover helper, so Shizuku is no longer needed for the
      touch-through blur layer either; it stays an alternative (rooted Android 10). The helper must be started
      again after each restart (one tap); a start at boot is not done.
-   - b. A "use a computer" page that does the grant from Chrome over USB (WebUSB), no ADB install. Medium.
+   - b. Done (after 0.2.14): waaiya.mssid.org/usb does the grant from Chrome or Edge over USB (WebUSB), no adb
+     install, also on Android 10 and on phones without Wireless debugging; on refusing phones it starts Waaiya's
+     helper. Not yet tried with a real phone (`docs/SETUP.md`).
 2. **A lighter live model, and measured battery and heat** (need 3: the most common complaint about every similar
    tool). Benchmark model variants on ARM through the diagnostics numbers; try the two channels on two threads
    for those who choose stereo (mono is the default since 0.2.10); publish per-phone figures.
@@ -123,7 +125,7 @@ Play build options (`docs/DISTRIBUTION.md`).
    `NoNetworkTest.kt` keeps network APIs out of Android's filter, muter and blur code (only the link screen and the
    setup may use them); the Linux blur helper runs its X11 end-to-end test the same way. The privacy page
    (`docs/PRIVACY.md`, English and Arabic) and the build-it-yourself notes (`docs/REPRODUCIBLE_BUILDS.md`) are written;
-   still open: hosting the page at a short URL, and checking that two machines build identical APKs. Competitors' store labels contradict their claims
+   the page is live at waaiya.mssid.org/privacy.html; still open: checking that two machines build identical APKs. Competitors' store labels contradict their claims
    (finding 2.6); this is cheap and sets Waaiya apart.
 8. **Worship helpers that reuse what Waaiya already holds** (needs 9, 16): silent at prayer times and an optional
    "mute media at the adhan", computed on the phone from a city the user picks, each action announced in a

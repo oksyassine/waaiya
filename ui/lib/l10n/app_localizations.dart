@@ -424,6 +424,12 @@ abstract class AppLocalizations {
   /// **'استخدم حاسوبًا بدلًا من ذلك'**
   String get computerToggle;
 
+  /// Android string computer_web
+  ///
+  /// In ar, this message translates to:
+  /// **'الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:'**
+  String get computerWeb;
+
   /// Android string computer_body
   ///
   /// In ar, this message translates to:

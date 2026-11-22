@@ -49,6 +49,7 @@
   "stepDoneCd": "Klaar",
   "stepTodoCd": "Stap {step}",
   "computerToggle": "Liever een computer gebruiken",
+  "computerWeb": "Het eenvoudigst: open op een computer waaiya.mssid.org/usb in Chrome of Edge, zet USB-foutopsporing aan en sluit de telefoon aan met een kabel. Niets te installeren, en het werkt ook op Android 10. Of, als adb geïnstalleerd is:",
   "computerBody": "Zet USB-foutopsporing aan, sluit de telefoon aan en voer dit uit:",
   "copy": "Kopiëren",
   "copied": "Gekopieerd",

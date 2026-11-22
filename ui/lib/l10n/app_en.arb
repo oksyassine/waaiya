@@ -49,6 +49,7 @@
   "stepDoneCd": "Done",
   "stepTodoCd": "Step {step}",
   "computerToggle": "Use a computer instead",
+  "computerWeb": "Easiest: on a computer, open waaiya.mssid.org/usb in Chrome or Edge, turn on USB debugging and connect the phone with a cable. Nothing to install, and it works on Android 10 too. Or, with adb installed:",
   "computerBody": "Turn on USB debugging, connect the phone and run:",
   "copy": "Copy",
   "copied": "Copied",

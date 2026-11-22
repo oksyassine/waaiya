@@ -53,6 +53,7 @@
     <string name="step_done_cd">সম্পন্ন</string>
     <string name="step_todo_cd">ধাপ %1$d</string>
     <string name="computer_toggle">বরং কম্পিউটার ব্যবহার করুন</string>
+    <string name="computer_web">সবচেয়ে সহজ: কম্পিউটারে Chrome বা Edge-এ waaiya.mssid.org/usb খুলুন, USB ডিবাগিং চালু করুন এবং কেবল দিয়ে ফোনটি সংযুক্ত করুন। কিছু ইনস্টল করতে হবে না, Android 10-এও কাজ করে। অথবা adb ইনস্টল থাকলে:</string>
     <string name="computer_body">USB ডিবাগিং চালু করুন, ফোনটি সংযুক্ত করুন এবং চালান:</string>
     <string name="copy">কপি করুন</string>
     <string name="copied">কপি হয়েছে</string>

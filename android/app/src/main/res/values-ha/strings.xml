@@ -53,6 +53,7 @@
     <string name="step_done_cd">An gama</string>
     <string name="step_todo_cd">Mataki na %1$d</string>
     <string name="computer_toggle">Yi amfani da kwamfuta maimakon haka</string>
+    <string name="computer_web">Hanya mafi sauƙi: a kwamfuta, buɗe waaiya.mssid.org/usb a Chrome ko Edge, kunna “USB debugging” sannan ku haɗa wayar da waya (cable). Babu abin da za a saka, kuma yana aiki a Android 10 ma. Ko kuma, idan adb yana kan kwamfutar:</string>
     <string name="computer_body">Kunna zaɓin “USB debugging”, haɗa wayar da kwamfuta sannan ku gudanar da wannan umarni:</string>
     <string name="copy">Kwafa</string>
     <string name="copied">An kwafa</string>

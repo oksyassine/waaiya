@@ -182,6 +182,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get computerToggle => 'Liever een computer gebruiken';
 
   @override
+  String get computerWeb =>
+      'Het eenvoudigst: open op een computer waaiya.mssid.org/usb in Chrome of Edge, zet USB-foutopsporing aan en sluit de telefoon aan met een kabel. Niets te installeren, en het werkt ook op Android 10. Of, als adb geïnstalleerd is:';
+
+  @override
   String get computerBody =>
       'Zet USB-foutopsporing aan, sluit de telefoon aan en voer dit uit:';
 

@@ -49,6 +49,7 @@
   "stepDoneCd": "Selesai",
   "stepTodoCd": "Langkah {step}",
   "computerToggle": "Gunakan komputer saja",
+  "computerWeb": "Paling mudah: di komputer, buka waaiya.mssid.org/usb di Chrome atau Edge, aktifkan Proses debug USB, lalu sambungkan ponsel dengan kabel. Tidak perlu memasang apa pun, dan juga berfungsi di Android 10. Atau, jika adb sudah terpasang:",
   "computerBody": "Aktifkan Proses debug USB, sambungkan ponsel, lalu jalankan:",
   "copy": "Salin",
   "copied": "Disalin",

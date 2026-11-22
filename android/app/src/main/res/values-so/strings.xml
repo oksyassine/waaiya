@@ -53,6 +53,7 @@
     <string name="step_done_cd">Waa la dhammeeyay</string>
     <string name="step_todo_cd">Tallaabada %1$d</string>
     <string name="computer_toggle">Isticmaal kombiyuutar beddelkeeda</string>
+    <string name="computer_web">Habka ugu fudud: kombiyuutar ka fur waaiya.mssid.org/usb adigoo isticmaalaya Chrome ama Edge, daar “USB debugging”, kadibna taleefanka ku xir xadhig (cable). Wax lama rakibayo, waxayna ku shaqaysaa Android 10 sidoo kale. Ama, haddii adb ku rakiban yahay:</string>
     <string name="computer_body">Daar “USB debugging”, taleefanka ku xir kombiyuutarka oo socodsii:</string>
     <string name="copy">Koobiyee</string>
     <string name="copied">Waa la koobiyeeyay</string>

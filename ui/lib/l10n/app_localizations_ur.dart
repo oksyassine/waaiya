@@ -182,6 +182,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get computerToggle => 'اس کے بجائے کمپیوٹر استعمال کریں';
 
   @override
+  String get computerWeb =>
+      '‏سب سے آسان: کمپیوٹر پر Chrome یا Edge میں waaiya.mssid.org/usb کھولیں، USB ڈیبگنگ آن کریں اور فون کو کیبل سے جوڑیں۔ کچھ انسٹال نہیں کرنا پڑتا، اور یہ Android 10 پر بھی کام کرتا ہے۔ یا، اگر adb انسٹال ہے:';
+
+  @override
   String get computerBody =>
       '‏USB ڈیبگنگ آن کریں، فون کو کمپیوٹر سے منسلک کریں اور یہ چلائیں:';
 

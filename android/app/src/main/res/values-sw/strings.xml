@@ -53,6 +53,7 @@
     <string name="step_done_cd">Imekamilika</string>
     <string name="step_todo_cd">Hatua ya %1$d</string>
     <string name="computer_toggle">Tumia kompyuta badala yake</string>
+    <string name="computer_web">Njia rahisi zaidi: kwenye kompyuta, fungua waaiya.mssid.org/usb katika Chrome au Edge, washa Utatuzi wa USB kisha unganisha simu kwa kebo. Hakuna cha kusakinisha, na inafanya kazi kwenye Android 10 pia. Au, ikiwa adb imesakinishwa:</string>
     <string name="computer_body">Washa Utatuzi wa USB, unganisha simu kisha uendeshe:</string>
     <string name="copy">Nakili</string>
     <string name="copied">Imenakiliwa</string>

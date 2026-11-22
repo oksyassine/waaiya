@@ -182,6 +182,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get computerToggle => 'Usar un ordenador en su lugar';
 
   @override
+  String get computerWeb =>
+      'Lo más sencillo: en un ordenador, abra waaiya.mssid.org/usb en Chrome o Edge, active la depuración por USB y conecte el teléfono con un cable. No hay que instalar nada y funciona también en Android 10. O, con adb instalado:';
+
+  @override
   String get computerBody =>
       'Active la depuración por USB, conecte el teléfono y ejecute:';
 

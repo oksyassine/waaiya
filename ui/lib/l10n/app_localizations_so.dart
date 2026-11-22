@@ -184,6 +184,10 @@ class AppLocalizationsSo extends AppLocalizations {
   String get computerToggle => 'Isticmaal kombiyuutar beddelkeeda';
 
   @override
+  String get computerWeb =>
+      'Habka ugu fudud: kombiyuutar ka fur waaiya.mssid.org/usb adigoo isticmaalaya Chrome ama Edge, daar “USB debugging”, kadibna taleefanka ku xir xadhig (cable). Wax lama rakibayo, waxayna ku shaqaysaa Android 10 sidoo kale. Ama, haddii adb ku rakiban yahay:';
+
+  @override
   String get computerBody =>
       'Daar “USB debugging”, taleefanka ku xir kombiyuutarka oo socodsii:';
 

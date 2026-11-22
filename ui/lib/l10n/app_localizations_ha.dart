@@ -182,6 +182,10 @@ class AppLocalizationsHa extends AppLocalizations {
   String get computerToggle => 'Yi amfani da kwamfuta maimakon haka';
 
   @override
+  String get computerWeb =>
+      'Hanya mafi sauƙi: a kwamfuta, buɗe waaiya.mssid.org/usb a Chrome ko Edge, kunna “USB debugging” sannan ku haɗa wayar da waya (cable). Babu abin da za a saka, kuma yana aiki a Android 10 ma. Ko kuma, idan adb yana kan kwamfutar:';
+
+  @override
   String get computerBody =>
       'Kunna zaɓin “USB debugging”, haɗa wayar da kwamfuta sannan ku gudanar da wannan umarni:';
 
