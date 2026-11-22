@@ -1,4 +1,4 @@
-# Status (2026-11-22, 0.2.14 released: updates inside the app; simple mode in test)
+# Status (2026-11-22, 0.2.15: the Android app moves to org.waaiya.app; setup from a computer in the browser)
 
 What comes next, and why: `docs/ROADMAP.md`.
 
@@ -11,6 +11,8 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Android: silence the originals | done; helper mode not proven on a real Xiaomi/OPPO | Session list from the audio policy dump (Android 10+); one-time grant on the phone (Wireless debugging, Android 11+), with Shizuku or ADB; slow-Shizuku handling (0.2.11). 0.2.12: guided four-step setup page; phones that refuse the grant (Xiaomi, OPPO family) use Waaiya's shell helper for the session list instead of a hidden Developer options switch (`docs/SETUP.md`), checked on emulators with a simulated refusal |
 | Android: simple mode (test) | in 0.2.14 as a "Simple mode (test)" card on the setup page (not named in the 0.2.14 release notes); emulators only; English texts only | For people who will not do the one-time setup: media is muted while Waaiya filters and its own sound plays on the alarm or notification channel (a setting); the mute is recorded first and undone on Stop, when the service ends and after a crash; volume keys become Waaiya's own volume (`SimpleMode.kt`). `emu_check.py --simple` passes on API 30 and 35. Open on real phones: is the channel heard with media muted, earphones (alarm also rings on the speaker), vibrate and Do Not Disturb, Bluetooth absolute volume; the diagnostics report has a "Simple mode" section for this |
 | Android: updates inside the app | released (0.2.14); the first real update is the one after 0.2.14 | Daily check of one file on waaiya.mssid.org (never while filtering; can be turned off), notification, a zstd patch rebuilt on the phone (6 MB instead of 108 MB) checked against the published SHA-256, version and signing certificate, full APK as fallback; goes through the PIN and waiting period like Stop. Not in `-PimPlay` builds. `AppUpdateTest`, `app_update_test.dart`; emulator API 35: notification, patch and installer 10/10, a broken patch fell back to the full APK. Patches made by `site/make_update.py` from the APKs in `/srv/build/waaiya-downloads` |
+| Android: the move to org.waaiya.app | 0.2.15 | Two builds from one source: `org.waaiya.app` for everyone, and the old name's last version (`-PimMoveBuild`, through 0.2.14's in-app update), which installs the new app; the new app takes the old one's settings through a signature-protected provider and offers to remove it. Emulator API 35: install, settings, removal; 0.2.14 updated in place to the move build. `docs/MOVE.md` |
+| Android: setup from a computer in the browser | in 0.2.15 (waaiya.mssid.org/usb) | Chrome or Edge over USB (WebUSB), nothing to install; also Android 10 and phones without Wireless debugging. Tested against an emulator's adbd and with a simulated USB phone; not yet with a real phone. `docs/SETUP.md` |
 | Android: Quick Settings tiles, icon shortcuts | done (0.2.11) | "Waaiya" tile and Start/Stop shortcuts on the icon; "Notification text" tile (Android 15+) shows notification text while filtering |
 | Open a link (YouTube, TikTok, Instagram) | done | Video links stay video; saved files keep the original picture with filtered sound |
 | Screen blur (Android) | released | Person detector with tiles, woman/man classifier v2, outlines, steady covers: `eval/results/blur_*.md`. 0.2.10: one window per cover group without Shizuku, checked Shizuku layer, self-test on every host change. Speed on phones not measured |
@@ -26,6 +28,7 @@ What comes next, and why: `docs/ROADMAP.md`.
 Baseline DeepFilterNet3: speech kept (-2.6 dB) with 21-24 dB instrument suppression; recitation (-13 dB) and singing (-25 dB) are lost, hence the own voice model.
 
 ## Not verified on a real phone or PC yet
+- The move to org.waaiya.app on a real phone, and the setup page waaiya.mssid.org/usb with a real phone and cable.
 - Simple mode (see its row above).
 - An update from one release to the next through the app (the first one is after 0.2.14).
 - The Windows app on a real PC: speakers, Bluetooth, players with copy protection, several monitors.

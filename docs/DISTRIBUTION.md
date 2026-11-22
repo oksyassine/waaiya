@@ -18,7 +18,7 @@ From 2026-09-30, phones certified by Google in Brazil, Indonesia, Singapore and 
 developer is verified, also outside Play; worldwide in 2027. Indonesian is one of Waaiya's nine languages.
 
 - What it takes: an Android Developer Console account (an individual one is enough), an identity check with a
-  government ID, and registering the package name `org.islamicmute.app` with the existing release signing key
+  government ID, and registering the package name `org.waaiya.app` with the existing release signing key
   (certificate SHA-256 `296a57bf…`). The APK and the signing key do not change.
 - **Owner**: register as an individual developer now. Recommended: yes, before the next release, because without it
   new users in Indonesia cannot install the APK at all on a certified phone.

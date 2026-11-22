@@ -1074,6 +1074,39 @@ class AppLocalizationsHa extends AppLocalizations {
       'Ba a iya dubawa yanzu ba. Sake gwadawa daga baya.';
 
   @override
+  String get moveOldTitle => 'Waaiya ta koma';
+
+  @override
+  String get moveOldBody =>
+      'Yanzu Waaiya tana zuwa a matsayin sabuwar manhaja a Android (Waaiya ɗaya ce da sabon suna), kuma wannan ba za ta ƙara samun sabuntawa ba. Saka sabuwar: saitunanku za su bi ta. Sannan ku yi saitin farko na sau ɗaya a cikinta, ku cire wannan.';
+
+  @override
+  String get moveOldInstalled =>
+      'An saka sabuwar Waaiya. Buɗe ta: za ta ɗauki saitunanku. Yi saitin farko na sau ɗaya, sannan ku cire wannan tsohuwar don kada su biyu su tace a lokaci ɗaya.';
+
+  @override
+  String get moveInstall => 'Saka sabuwar Waaiya';
+
+  @override
+  String get moveOpenNew => 'Buɗe sabuwar Waaiya';
+
+  @override
+  String get moveRemoveThis => 'Cire wannan tsohuwar Waaiya';
+
+  @override
+  String get moveNewTitle => 'Tsohuwar Waaiya tana nan a kan wayar';
+
+  @override
+  String get moveNewBody =>
+      'Tsohuwar Waaiya (ta kafin siga 0.2.15) tana nan a wannan wayar. Cire ta don kada su biyu su tace a lokaci ɗaya.';
+
+  @override
+  String get moveNewImported => 'An kawo saitunanku daga gare ta.';
+
+  @override
+  String get moveRemoveOld => 'Cire tsohuwar Waaiya';
+
+  @override
   String get desktopPreview =>
       'Samfoti: injin tacewa bai haɗu a wannan kwamfuta ba tukuna. Maɓallin yana nuna yadda manhajar za ta yi aiki ne kawai.';
 

@@ -401,4 +401,16 @@
     <string name="notif_update_channel">به‌روزرسانی برنامه</string>
     <string name="notif_update_title">واعیه %1$s آمده است</string>
     <string name="notif_update_text">برای به‌روزرسانی بزنید (%1$s).</string>
+    <string name="notif_move_title">‏واعیه به یک برنامهٔ تازه منتقل شد</string>
+    <string name="notif_move_text">‏این نسخه دیگر به‌روزرسانی نمی‌گیرد. واعیه را باز کنید تا نسخهٔ تازه را نصب کنید: تنظیمات شما هم منتقل می‌شود.</string>
+    <string name="move_old_title">‏واعیه منتقل شد</string>
+    <string name="move_old_body">‏واعیه اکنون در Android به‌صورت یک برنامهٔ تازه عرضه می‌شود (همان واعیه با نامی تازه) و این یکی دیگر به‌روزرسانی نمی‌گیرد. نسخهٔ تازه را نصب کنید: تنظیمات شما هم منتقل می‌شود. سپس راه‌اندازی یک‌بارهٔ آن را انجام دهید و این را حذف کنید.</string>
+    <string name="move_old_installed">‏واعیهٔ تازه نصب شد. آن را باز کنید: تنظیمات شما را برمی‌دارد. راه‌اندازی یک‌باره‌اش را انجام دهید، سپس این قدیمی را حذف کنید تا هرگز هر دو با هم پالایش نکنند.</string>
+    <string name="move_install">‏نصب واعیهٔ تازه</string>
+    <string name="move_open_new">‏باز کردن واعیهٔ تازه</string>
+    <string name="move_remove_this">‏حذف این واعیهٔ قدیمی</string>
+    <string name="move_new_title">‏واعیهٔ قدیمی هنوز نصب است</string>
+    <string name="move_new_body">‏واعیهٔ قدیمی (پیش از نسخهٔ 0.2.15) هنوز روی این تلفن است. آن را حذف کنید تا هرگز هر دو با هم پالایش نکنند.</string>
+    <string name="move_new_imported">‏تنظیمات شما از آن منتقل شد.</string>
+    <string name="move_remove_old">‏حذف واعیهٔ قدیمی</string>
 </resources>

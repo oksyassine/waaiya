@@ -400,4 +400,16 @@
     <string name="notif_update_channel">App-updates</string>
     <string name="notif_update_title">Waaiya %1$s is beschikbaar</string>
     <string name="notif_update_text">Tik om bij te werken (%1$s).</string>
+    <string name="notif_move_title">Waaiya is verhuisd naar een nieuwe app</string>
+    <string name="notif_move_text">Deze versie krijgt geen updates meer. Open Waaiya om de nieuwe te installeren: uw instellingen verhuizen mee.</string>
+    <string name="move_old_title">Waaiya is verhuisd</string>
+    <string name="move_old_body">Waaiya komt op Android nu als een nieuwe app (dezelfde Waaiya onder een nieuwe naam), en deze krijgt geen updates meer. Installeer de nieuwe: uw instellingen verhuizen mee. Doe daarna de eenmalige instelling en verwijder deze.</string>
+    <string name="move_old_installed">De nieuwe Waaiya is geïnstalleerd. Open hem: hij neemt uw instellingen over. Doe de eenmalige instelling en verwijder daarna deze oude, zodat ze nooit allebei tegelijk filteren.</string>
+    <string name="move_install">Nieuwe Waaiya installeren</string>
+    <string name="move_open_new">Nieuwe Waaiya openen</string>
+    <string name="move_remove_this">Deze oude Waaiya verwijderen</string>
+    <string name="move_new_title">De oude Waaiya is nog geïnstalleerd</string>
+    <string name="move_new_body">De oude Waaiya (van vóór versie 0.2.15) staat nog op deze telefoon. Verwijder hem, zodat ze nooit allebei tegelijk filteren.</string>
+    <string name="move_new_imported">Uw instellingen zijn eruit overgenomen.</string>
+    <string name="move_remove_old">Oude Waaiya verwijderen</string>
 </resources>

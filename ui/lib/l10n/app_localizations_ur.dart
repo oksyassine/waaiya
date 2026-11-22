@@ -1072,6 +1072,39 @@ class AppLocalizationsUr extends AppLocalizations {
   String get updateCheckFailed => 'ابھی تلاش نہیں ہو سکی۔ بعد میں کوشش کریں۔';
 
   @override
+  String get moveOldTitle => '‏واعیہ منتقل ہو گئی ہے';
+
+  @override
+  String get moveOldBody =>
+      '‏واعیہ اب Android پر ایک نئی ایپ کے طور پر آتی ہے (وہی واعیہ، نئے نام سے)، اور اس ایپ کو اب کوئی اپ ڈیٹ نہیں ملے گی۔ نئی ایپ انسٹال کریں: آپ کی سیٹنگز ساتھ جائیں گی۔ پھر اس کا ایک بار کا سیٹ اپ کریں اور اسے ہٹا دیں۔';
+
+  @override
+  String get moveOldInstalled =>
+      '‏نئی واعیہ انسٹال ہو گئی ہے۔ اسے کھولیں: یہ آپ کی سیٹنگز لے لے گی۔ اس کا ایک بار کا سیٹ اپ کریں، پھر اس پرانی کو ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔';
+
+  @override
+  String get moveInstall => '‏نئی واعیہ انسٹال کریں';
+
+  @override
+  String get moveOpenNew => '‏نئی واعیہ کھولیں';
+
+  @override
+  String get moveRemoveThis => '‏یہ پرانی واعیہ ہٹائیں';
+
+  @override
+  String get moveNewTitle => '‏پرانی واعیہ ابھی تک انسٹال ہے';
+
+  @override
+  String get moveNewBody =>
+      '‏پرانی واعیہ (ورژن 0.2.15 سے پہلے کی) ابھی تک اس فون پر ہے۔ اسے ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔';
+
+  @override
+  String get moveNewImported => '‏آپ کی سیٹنگز اس سے لے آئی گئی ہیں۔';
+
+  @override
+  String get moveRemoveOld => '‏پرانی واعیہ ہٹائیں';
+
+  @override
   String get desktopPreview =>
       'پیش نظارہ: اس کمپیوٹر پر فلٹر انجن ابھی منسلک نہیں ہے۔ بٹن صرف یہ دکھاتا ہے کہ ایپ کیسے کام کرے گی۔';
 

@@ -1076,6 +1076,39 @@ class AppLocalizationsUz extends AppLocalizations {
       'Hozir tekshirib boʻlmadi. Keyinroq urinib koʻring.';
 
   @override
+  String get moveOldTitle => 'Waaiya ko‘chdi';
+
+  @override
+  String get moveOldBody =>
+      'Endi Waaiya Android’da yangi ilova sifatida chiqadi (o‘sha Waaiya, yangi nom bilan), bu ilova esa endi yangilanmaydi. Yangisini o‘rnating: sozlamalaringiz ham ko‘chadi. So‘ng uning bir martalik sozlashini bajaring va buni o‘chiring.';
+
+  @override
+  String get moveOldInstalled =>
+      'Yangi Waaiya o‘rnatildi. Uni oching: u sozlamalaringizni oladi. Bir martalik sozlashni bajaring, so‘ng ikkalasi hech qachon birga filtrlamasligi uchun bu eskisini o‘chiring.';
+
+  @override
+  String get moveInstall => 'Yangi Waaiya’ni o‘rnatish';
+
+  @override
+  String get moveOpenNew => 'Yangi Waaiya’ni ochish';
+
+  @override
+  String get moveRemoveThis => 'Bu eski Waaiya’ni o‘chirish';
+
+  @override
+  String get moveNewTitle => 'Eski Waaiya hali ham o‘rnatilgan';
+
+  @override
+  String get moveNewBody =>
+      'Eski Waaiya (0.2.15 versiyasidan oldingi) hali ham bu telefonda. Ikkalasi hech qachon birga filtrlamasligi uchun uni o‘chiring.';
+
+  @override
+  String get moveNewImported => 'Sozlamalaringiz undan olib kelindi.';
+
+  @override
+  String get moveRemoveOld => 'Eski Waaiya’ni o‘chirish';
+
+  @override
   String get desktopPreview =>
       'Namoyish rejimi: filtr mexanizmi bu kompyuterda hali ulanmagan. Tugma faqat ilova qanday ishlashini koʻrsatadi.';
 

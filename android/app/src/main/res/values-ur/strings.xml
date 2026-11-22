@@ -401,4 +401,16 @@
     <string name="notif_update_channel">ایپ کی اپ ڈیٹس</string>
     <string name="notif_update_title">واعیہ %1$s دستیاب ہے</string>
     <string name="notif_update_text">اپ ڈیٹ کے لیے دبائیں (%1$s)۔</string>
+    <string name="notif_move_title">‏واعیہ ایک نئی ایپ میں منتقل ہو گئی ہے</string>
+    <string name="notif_move_text">‏اس ورژن کو اب کوئی اپ ڈیٹ نہیں ملے گی۔ نئی ایپ انسٹال کرنے کے لیے واعیہ کھولیں: آپ کی سیٹنگز ساتھ جائیں گی۔</string>
+    <string name="move_old_title">‏واعیہ منتقل ہو گئی ہے</string>
+    <string name="move_old_body">‏واعیہ اب Android پر ایک نئی ایپ کے طور پر آتی ہے (وہی واعیہ، نئے نام سے)، اور اس ایپ کو اب کوئی اپ ڈیٹ نہیں ملے گی۔ نئی ایپ انسٹال کریں: آپ کی سیٹنگز ساتھ جائیں گی۔ پھر اس کا ایک بار کا سیٹ اپ کریں اور اسے ہٹا دیں۔</string>
+    <string name="move_old_installed">‏نئی واعیہ انسٹال ہو گئی ہے۔ اسے کھولیں: یہ آپ کی سیٹنگز لے لے گی۔ اس کا ایک بار کا سیٹ اپ کریں، پھر اس پرانی کو ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔</string>
+    <string name="move_install">‏نئی واعیہ انسٹال کریں</string>
+    <string name="move_open_new">‏نئی واعیہ کھولیں</string>
+    <string name="move_remove_this">‏یہ پرانی واعیہ ہٹائیں</string>
+    <string name="move_new_title">‏پرانی واعیہ ابھی تک انسٹال ہے</string>
+    <string name="move_new_body">‏پرانی واعیہ (ورژن 0.2.15 سے پہلے کی) ابھی تک اس فون پر ہے۔ اسے ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔</string>
+    <string name="move_new_imported">‏آپ کی سیٹنگز اس سے لے آئی گئی ہیں۔</string>
+    <string name="move_remove_old">‏پرانی واعیہ ہٹائیں</string>
 </resources>

@@ -401,4 +401,16 @@
     <string name="notif_update_channel">Kemas kini aplikasi</string>
     <string name="notif_update_title">Waaiya %1$s tersedia</string>
     <string name="notif_update_text">Ketik untuk mengemas kini (%1$s).</string>
+    <string name="notif_move_title">Waaiya telah berpindah ke aplikasi baharu</string>
+    <string name="notif_move_text">Versi ini tidak akan menerima kemas kini lagi. Buka Waaiya untuk memasang yang baharu: tetapan anda ikut berpindah.</string>
+    <string name="move_old_title">Waaiya telah berpindah</string>
+    <string name="move_old_body">Waaiya kini hadir sebagai aplikasi baharu di Android (Waaiya yang sama dengan nama baharu), dan aplikasi ini tidak akan menerima kemas kini lagi. Pasang yang baharu: tetapan anda ikut berpindah. Kemudian buat persediaan sekali sahaja di sana dan buang yang ini.</string>
+    <string name="move_old_installed">Waaiya baharu telah dipasang. Bukanya: ia mengambil tetapan anda. Buat persediaan sekali sahajanya, kemudian buang yang lama ini supaya kedua-duanya tidak menapis serentak.</string>
+    <string name="move_install">Pasang Waaiya baharu</string>
+    <string name="move_open_new">Buka Waaiya baharu</string>
+    <string name="move_remove_this">Buang Waaiya lama ini</string>
+    <string name="move_new_title">Waaiya lama masih dipasang</string>
+    <string name="move_new_body">Waaiya lama (sebelum versi 0.2.15) masih ada pada telefon ini. Buangnya supaya kedua-duanya tidak menapis serentak.</string>
+    <string name="move_new_imported">Tetapan anda telah dibawa daripadanya.</string>
+    <string name="move_remove_old">Buang Waaiya lama</string>
 </resources>

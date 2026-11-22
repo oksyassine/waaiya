@@ -3,7 +3,7 @@
 #include "zpatch.h"
 
 JNIEXPORT jstring JNICALL
-Java_org_islamicmute_app_AppUpdatePatch_nativeApply(JNIEnv *env, jclass cls, jstring old_path, jstring patch_path,
+Java_org_waaiya_app_AppUpdatePatch_nativeApply(JNIEnv *env, jclass cls, jstring old_path, jstring patch_path,
                                                      jstring out_path, jlong out_size) {
     (void)cls;
     const char *o = (*env)->GetStringUTFChars(env, old_path, NULL);

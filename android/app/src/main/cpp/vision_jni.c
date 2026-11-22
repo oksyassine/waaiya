@@ -1,4 +1,4 @@
-/* JNI bridge: org.islamicmute.app.Vision <-> screen blur (engine/src/im_vision.c, im_cover.c). */
+/* JNI bridge: org.waaiya.app.Vision <-> screen blur (engine/src/im_vision.c, im_cover.c). */
 #include <android/log.h>
 #include <jni.h>
 #include <stdint.h>
@@ -19,7 +19,7 @@ typedef struct {
 static const char *str(JNIEnv *env, jstring s) { return s ? (*env)->GetStringUTFChars(env, s, NULL) : NULL; }
 static void unstr(JNIEnv *env, jstring s, const char *c) { if (s) (*env)->ReleaseStringUTFChars(env, s, c); }
 
-JNIEXPORT jlong JNICALL Java_org_islamicmute_app_Vision_nativeCreate(JNIEnv *env, jclass cls, jstring person,
+JNIEXPORT jlong JNICALL Java_org_waaiya_app_Vision_nativeCreate(JNIEnv *env, jclass cls, jstring person,
                                                                        jstring gender, jstring nsfw, jstring seg,
                                                                        jint threads, jint policy, jboolean coversVisible) {
     (void)cls;
@@ -38,7 +38,7 @@ JNIEXPORT jlong JNICALL Java_org_islamicmute_app_Vision_nativeCreate(JNIEnv *env
     return (jlong)(intptr_t)b;
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeDestroy(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeDestroy(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     blur *b = (blur *)(intptr_t)h;
     if (!b) return;
@@ -48,19 +48,19 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeDestroy(JNIEnv *env
 }
 
 /* Bits of the policy the models cannot serve (0 = fine). */
-JNIEXPORT jint JNICALL Java_org_islamicmute_app_Vision_nativeStatus(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jint JNICALL Java_org_waaiya_app_Vision_nativeStatus(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     blur *b = (blur *)(intptr_t)h;
     return b && b->v && b->c ? (jint)im_vision_status(b->v) : -1;
 }
 
-JNIEXPORT jstring JNICALL Java_org_islamicmute_app_Vision_nativeError(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jstring JNICALL Java_org_waaiya_app_Vision_nativeError(JNIEnv *env, jclass cls, jlong h) {
     (void)cls;
     blur *b = (blur *)(intptr_t)h;
     return (*env)->NewStringUTF(env, b && b->v ? im_vision_error(b->v) : "out of memory");
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetCoversVisible(JNIEnv *env, jclass cls, jlong h,
+JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetCoversVisible(JNIEnv *env, jclass cls, jlong h,
                                                                                 jboolean visible) {
     (void)env; (void)cls;
     blur *b = (blur *)(intptr_t)h;
@@ -73,7 +73,7 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetCoversVisible(JN
 }
 
 /* Person-detector tiles run per frame on elongated frames: 0 = all every frame, n = n per frame taking turns. */
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetTilesPerFrame(JNIEnv *env, jclass cls, jlong h,
+JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetTilesPerFrame(JNIEnv *env, jclass cls, jlong h,
                                                                                jint n) {
     (void)env; (void)cls;
     blur *b = (blur *)(intptr_t)h;
@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetTilesPerFrame(JN
 }
 
 /* Classifier threshold: a person is left uncovered only when p(man or boy) >= this (the user's strictness). */
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetMaleClear(JNIEnv *env, jclass cls, jlong h,
+JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetMaleClear(JNIEnv *env, jclass cls, jlong h,
                                                                            jfloat t) {
     (void)env; (void)cls;
     blur *b = (blur *)(intptr_t)h;
@@ -100,7 +100,7 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetMaleClear(JNIEnv
  * out: float[max * 5] = x0, y0, x1, y1 (0..1), kind (| IM_VK_PART for a strip of an outlined person or a bridge). thumb: optional int[tw * th] ARGB, the frame shrunk by area
  * averaging (the overlay draws it enlarged as the blurred picture). Returns the rect count m, or -(m + 1) when the
  * models failed on this frame (the tracker still ran and the rects are still valid: held covers). */
-JNIEXPORT jint JNICALL Java_org_islamicmute_app_Vision_nativeFrame(JNIEnv *env, jclass cls, jlong h, jobject buf,
+JNIEXPORT jint JNICALL Java_org_waaiya_app_Vision_nativeFrame(JNIEnv *env, jclass cls, jlong h, jobject buf,
                                                                      jint w, jint hh, jint stride, jdouble tMs,
                                                                      jboolean models, jboolean nsfw, jfloatArray out,
                                                                      jintArray thumb, jint tw, jint th) {

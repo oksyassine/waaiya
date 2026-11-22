@@ -1074,6 +1074,39 @@ class AppLocalizationsFa extends AppLocalizations {
       'اکنون بررسی ممکن نشد. بعداً دوباره امتحان کنید.';
 
   @override
+  String get moveOldTitle => '‏واعیه منتقل شد';
+
+  @override
+  String get moveOldBody =>
+      '‏واعیه اکنون در Android به‌صورت یک برنامهٔ تازه عرضه می‌شود (همان واعیه با نامی تازه) و این یکی دیگر به‌روزرسانی نمی‌گیرد. نسخهٔ تازه را نصب کنید: تنظیمات شما هم منتقل می‌شود. سپس راه‌اندازی یک‌بارهٔ آن را انجام دهید و این را حذف کنید.';
+
+  @override
+  String get moveOldInstalled =>
+      '‏واعیهٔ تازه نصب شد. آن را باز کنید: تنظیمات شما را برمی‌دارد. راه‌اندازی یک‌باره‌اش را انجام دهید، سپس این قدیمی را حذف کنید تا هرگز هر دو با هم پالایش نکنند.';
+
+  @override
+  String get moveInstall => '‏نصب واعیهٔ تازه';
+
+  @override
+  String get moveOpenNew => '‏باز کردن واعیهٔ تازه';
+
+  @override
+  String get moveRemoveThis => '‏حذف این واعیهٔ قدیمی';
+
+  @override
+  String get moveNewTitle => '‏واعیهٔ قدیمی هنوز نصب است';
+
+  @override
+  String get moveNewBody =>
+      '‏واعیهٔ قدیمی (پیش از نسخهٔ 0.2.15) هنوز روی این تلفن است. آن را حذف کنید تا هرگز هر دو با هم پالایش نکنند.';
+
+  @override
+  String get moveNewImported => '‏تنظیمات شما از آن منتقل شد.';
+
+  @override
+  String get moveRemoveOld => '‏حذف واعیهٔ قدیمی';
+
+  @override
   String get desktopPreview =>
       'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
 

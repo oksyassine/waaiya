@@ -1080,6 +1080,39 @@ class AppLocalizationsSw extends AppLocalizations {
       'Haikuweza kuangalia sasa. Jaribu tena baadaye.';
 
   @override
+  String get moveOldTitle => 'Waaiya imehamia';
+
+  @override
+  String get moveOldBody =>
+      'Sasa Waaiya inakuja kama programu mpya kwenye Android (Waaiya ileile kwa jina jipya), na hii haitapata masasisho tena. Sakinisha mpya: mipangilio yako inahamia. Kisha fanya mpangilio wake wa mara moja na uondoe hii.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya mpya imesakinishwa. Ifungue: inachukua mipangilio yako. Fanya mpangilio wake wa mara moja, kisha uondoe hii ya zamani ili mbili zisichuje kwa wakati mmoja.';
+
+  @override
+  String get moveInstall => 'Sakinisha Waaiya mpya';
+
+  @override
+  String get moveOpenNew => 'Fungua Waaiya mpya';
+
+  @override
+  String get moveRemoveThis => 'Ondoa Waaiya hii ya zamani';
+
+  @override
+  String get moveNewTitle => 'Waaiya ya zamani bado imesakinishwa';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya ya zamani (ya kabla ya toleo 0.2.15) bado iko kwenye simu hii. Iondoe ili mbili zisichuje kwa wakati mmoja.';
+
+  @override
+  String get moveNewImported => 'Mipangilio yako imeletwa kutoka kwake.';
+
+  @override
+  String get moveRemoveOld => 'Ondoa Waaiya ya zamani';
+
+  @override
   String get desktopPreview =>
       'Onyesho la majaribio: injini ya kichujio bado haijaunganishwa kwenye kompyuta hii. Kitufe kinaonyesha tu jinsi programu itakavyofanya kazi.';
 

@@ -1081,6 +1081,39 @@ class AppLocalizationsDe extends AppLocalizations {
       'Suchen ist gerade nicht möglich. Versuche es später noch einmal.';
 
   @override
+  String get moveOldTitle => 'Waaiya ist umgezogen';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya kommt unter Android jetzt als neue App (dasselbe Waaiya unter neuem Namen), und diese hier erhält keine Updates mehr. Installieren Sie die neue: Ihre Einstellungen kommen mit. Richten Sie sie dann einmalig ein und entfernen Sie diese.';
+
+  @override
+  String get moveOldInstalled =>
+      'Das neue Waaiya ist installiert. Öffnen Sie es: Es übernimmt Ihre Einstellungen. Richten Sie es einmalig ein und entfernen Sie dann dieses alte, damit nie beide gleichzeitig filtern.';
+
+  @override
+  String get moveInstall => 'Neues Waaiya installieren';
+
+  @override
+  String get moveOpenNew => 'Neues Waaiya öffnen';
+
+  @override
+  String get moveRemoveThis => 'Dieses alte Waaiya entfernen';
+
+  @override
+  String get moveNewTitle => 'Das alte Waaiya ist noch installiert';
+
+  @override
+  String get moveNewBody =>
+      'Das alte Waaiya (von vor Version 0.2.15) ist noch auf diesem Telefon. Entfernen Sie es, damit nie beide gleichzeitig filtern.';
+
+  @override
+  String get moveNewImported => 'Ihre Einstellungen wurden daraus übernommen.';
+
+  @override
+  String get moveRemoveOld => 'Altes Waaiya entfernen';
+
+  @override
   String get desktopPreview =>
       'Vorschau: Der Filter ist auf diesem Computer noch nicht eingebunden. Die Taste zeigt nur, wie die App funktionieren wird.';
 

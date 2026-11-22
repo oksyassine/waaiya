@@ -1083,6 +1083,39 @@ class AppLocalizationsSo extends AppLocalizations {
   String get updateCheckFailed => 'Hadda lama hubin karo. Mar dambe isku day.';
 
   @override
+  String get moveOldTitle => 'Waaiya way guurtay';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya hadda waxay Android ku timaaddaa ab cusub (isla Waaiya, magac cusub), tanna wax cusboonaysiin ah ma helayso mar dambe. Rakib midda cusub: dejimahaagu way u guurayaan. Kadib samee diyaarinteeda hal mar ah oo ka saar tan.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya cusub waa la rakibay. Fur: waxay qaadanaysaa dejimahaaga. Samee diyaarinteeda hal mar ah, kadib ka saar tan duugga ah si aanay labaduba marna isku mar u shaandhayn.';
+
+  @override
+  String get moveInstall => 'Rakib Waaiya cusub';
+
+  @override
+  String get moveOpenNew => 'Fur Waaiya cusub';
+
+  @override
+  String get moveRemoveThis => 'Ka saar Waaiya duugga ah ee tan';
+
+  @override
+  String get moveNewTitle => 'Waaiya duugga ah weli waa rakiban tahay';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya duugga ah (ka hor nooca 0.2.15) weli waxay ku jirtaa taleefankan. Ka saar si aanay labaduba marna isku mar u shaandhayn.';
+
+  @override
+  String get moveNewImported => 'Dejimahaaga waa laga soo qaaday.';
+
+  @override
+  String get moveRemoveOld => 'Ka saar Waaiya duugga ah';
+
+  @override
   String get desktopPreview =>
       'Muuqaal hordhac ah: matoorka shaandhaynta weli lagama xirin kombiyuutarkan. Badhanku wuxuu kaliya muujinayaa sida barnaamijku u shaqayn doono.';
 

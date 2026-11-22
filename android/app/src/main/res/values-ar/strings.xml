@@ -400,4 +400,16 @@
     <string name="notif_update_channel">تحديثات التطبيق</string>
     <string name="notif_update_title">الإصدار %1$s من واعية متاح</string>
     <string name="notif_update_text">اضغط للتحديث (%1$s).</string>
+    <string name="notif_move_title">انتقلت واعية إلى تطبيق جديد</string>
+    <string name="notif_move_text">لن تصل تحديثات أخرى لهذا الإصدار. افتح واعية لتثبيت الجديد: تنتقل إليه إعداداتك.</string>
+    <string name="move_old_title">انتقلت واعية</string>
+    <string name="move_old_body">صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.</string>
+    <string name="move_old_installed">ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.</string>
+    <string name="move_install">ثبّت واعية الجديدة</string>
+    <string name="move_open_new">افتح واعية الجديدة</string>
+    <string name="move_remove_this">احذف واعية القديمة هذه</string>
+    <string name="move_new_title">ما زالت واعية القديمة مثبّتة</string>
+    <string name="move_new_body">ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.</string>
+    <string name="move_new_imported">نُقلت إعداداتك منها.</string>
+    <string name="move_remove_old">احذف واعية القديمة</string>
 </resources>

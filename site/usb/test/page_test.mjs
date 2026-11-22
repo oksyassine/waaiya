@@ -32,13 +32,14 @@ const MOCK = String.raw`
     h.setUint32(20, (cmd ^ 0xffffffff) >>> 0, true);
     out(new Uint8Array(h.buffer)); if (d.length) out(d);
   };
-  const refuse = s === "helper" || s === "refused10";
+  const refuse = s === "helper" || s === "refused10" || s === "oldhelper";
+  const old = s === "oldhelper";   // Waaiya 0.2.14, still under the old name org.islamicmute.app
   const answer = (c) => {
-    if (c.startsWith("getprop")) return s === "helper" ? "34\n14\nXiaomi\nRedmi Note 13\n" : s === "refused10" ? "29\n10\nXiaomi\nRedmi 9\n" : "35\n15\nGoogle\nPixel 8\n";
-    if (c.startsWith("pm path")) return s === "noapp" ? "" : "package:/data/app/x/base.apk\n";
+    if (c.startsWith("getprop")) return s === "helper" || old ? "34\n14\nXiaomi\nRedmi Note 13\n" : s === "refused10" ? "29\n10\nXiaomi\nRedmi 9\n" : "35\n15\nGoogle\nPixel 8\n";
+    if (c.startsWith("pm path")) return s === "noapp" ? "" : old ? "old=yes\n" : "new=yes\n";
     if (c.startsWith("cmd package grant")) return refuse ? "Exception occurred while executing 'grant':\njava.lang.SecurityException: grantRuntimePermission: Neither user 2000 nor current process has android.permission.GRANT_RUNTIME_PERMISSIONS.\ndump=255\nproject_media=0\nsecure_settings=255\n" : "dump=0\nproject_media=0\nsecure_settings=0\n";
     if (c.startsWith("D=$(dumpsys")) return refuse ? "project_media=allow\n" : s === "vivo" ? "dump=granted\nsecure_settings=granted\n" : "dump=granted\nsecure_settings=granted\nproject_media=allow\n";
-    if (c.startsWith("dumpsys package")) return "  userId=10177\n    versionCode=17 minSdk=29 targetSdk=35\n";
+    if (c.startsWith("dumpsys package")) return "  userId=10177\n    versionCode=" + (old ? 17 : 18) + " minSdk=29 targetSdk=35\n";
     if (c.startsWith("for p in")) return "helper=started\n";
     return "";
   };
@@ -87,11 +88,15 @@ const MOCK = String.raw`
 })();`;
 
 const CASES = [
-  ["done", "en", /Done: Waaiya has its permissions on Pixel 8\./, (sh) => sh.length === 4],
+  ["done", "en", /Done: Waaiya has its permissions on Pixel 8\./,
+   (sh) => sh.length === 4 && sh.some((c) => c.startsWith("cmd package grant org.waaiya.app android.permission.DUMP"))],
   ["prompt", "en", /Done: Waaiya has its permissions/, null],
   ["vivo", "en", /Android will ask at every start/, null],
   ["helper", "en", /Redmi Note 13 refused the permissions, so Waaiya's helper[\s\S]*USB debugging \(Security settings\)/,
-   (sh) => sh.some((c) => c.includes("app_process /system/bin --nice-name=waaiya_covers org.islamicmute.app.CoverHelper 10177 17"))],
+   (sh) => sh.some((c) => c.includes("pm path org.waaiya.app |") && c.includes("--nice-name=waaiya_covers org.waaiya.app.CoverHelper 10177 18"))],
+  ["oldhelper", "en", /refused the permissions, so Waaiya's helper/,
+   (sh) => sh.some((c) => c.startsWith("cmd package grant org.islamicmute.app ")) &&
+           sh.some((c) => c.includes("pm path org.islamicmute.app |") && c.includes("org.islamicmute.app.CoverHelper 10177 17"))],
   ["refused10", "en", /refused the permissions[\s\S]*needs Android 11/, (sh) => !sh.some((c) => c.includes("app_process"))],
   ["noapp", "en", /not installed on this phone/, (sh) => sh.length === 2],
   ["none", "en", /No phone was chosen/, null],

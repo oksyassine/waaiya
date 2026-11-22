@@ -1,4 +1,4 @@
-Waaiya's setup over Wireless debugging (android/app/src/main/java/org/islamicmute/app/adb/) is Waaiya's own Kotlin
+Waaiya's setup over Wireless debugging (android/app/src/main/java/org/waaiya/app/adb/) is Waaiya's own Kotlin
 code, written from these Apache-2.0 sources. No code or binary from them is bundled; the protocol constants,
 data layouts and algorithms below were ported. The Apache License 2.0 text is the "Apache License 2.0" entry of
 this screen.

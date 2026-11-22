@@ -364,10 +364,10 @@ void main() {
 
   test('every string name Android can send in setup.wireless has words', () async {
     final l = await AppLocalizations.delegate.load(const Locale('en'));
-    final kotlin = File('../android/app/src/main/java/org/islamicmute/app/WirelessSetup.kt').readAsStringSync();
+    final kotlin = File('../android/app/src/main/java/org/waaiya/app/WirelessSetup.kt').readAsStringSync();
     final texts = kotlin.substring(kotlin.indexOf('object WirelessSetupTexts'));
     final names = RegExp(r'R\.string\.(\w+)').allMatches(texts.substring(0, texts.indexOf('fun title('))).map((m) => m[1]!).toSet();
-    final bridge = File('../android/app/src/main/java/org/islamicmute/app/UiBridge.kt').readAsStringSync();
+    final bridge = File('../android/app/src/main/java/org/waaiya/app/UiBridge.kt').readAsStringSync();
     names.addAll(RegExp(r'wirelessHint = "(\w+)"').allMatches(bridge).map((m) => m[1]!));
     expect(names.length, greaterThan(20));
     for (final n in names) {

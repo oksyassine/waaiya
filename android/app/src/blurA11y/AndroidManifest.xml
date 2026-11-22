@@ -6,7 +6,7 @@
     <application>
         <!-- Only hosts the screen-blur covers window (touches pass through accessibility overlays). It reads no
              screen content and handles no events: see res/xml/blur_accessibility.xml. -->
-        <service android:name="org.islamicmute.app.BlurAccessibilityService"
+        <service android:name="org.waaiya.app.BlurAccessibilityService"
             android:exported="false"
             android:label="@string/blur_a11y_label"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
