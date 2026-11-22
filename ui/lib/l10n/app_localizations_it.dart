@@ -182,6 +182,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get computerToggle => 'Usa invece un computer';
 
   @override
+  String get computerWeb =>
+      'Il modo più semplice: su un computer apri waaiya.mssid.org/usb in Chrome o Edge, attiva il Debug USB e collega il telefono con un cavo. Niente da installare, e funziona anche con Android 10. Oppure, con adb installato:';
+
+  @override
   String get computerBody =>
       'Attiva il Debug USB, collega il telefono ed esegui:';
 

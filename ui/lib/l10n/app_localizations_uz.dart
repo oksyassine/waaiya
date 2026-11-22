@@ -182,6 +182,10 @@ class AppLocalizationsUz extends AppLocalizations {
   String get computerToggle => 'Oʻrniga kompyuterdan foydalanish';
 
   @override
+  String get computerWeb =>
+      'Eng osoni: kompyuterda Chrome yoki Edge’da waaiya.mssid.org/usb sahifasini oching, “USB orqali debaglash” ni yoqing va telefonni kabel bilan ulang. Hech narsa o‘rnatish shart emas, Android 10 da ham ishlaydi. Yoki adb o‘rnatilgan bo‘lsa:';
+
+  @override
   String get computerBody =>
       '“USB orqali debaglash” (USB debugging) ni yoqing, telefonni kompyuterga ulang va quyidagini ishga tushiring:';
 

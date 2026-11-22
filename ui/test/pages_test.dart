@@ -208,6 +208,30 @@ void main() {
     expect(find.byKey(const Key('power')), findsOneWidget);
   });
 
+  testWidgets('computer route: the page that needs no adb comes before the adb commands', (tester) async {
+    final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    expect(ar.computerWeb, contains('waaiya.mssid.org/usb'));
+    final b = _Recording(const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(originalsMuted: false, shizuku: ShizukuState.notInstalled,
+            wireless: WirelessInfo(supported: true), adbCommands: 'adb shell cmd package grant x y')));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    await goTo(tester, 'setup');
+    await tester.ensureVisible(find.text(ar.setupOtherWays));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.setupOtherWays));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text(ar.computerToggle));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.computerToggle));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.computerWeb), findsOneWidget);
+    expect(find.text(ar.computerBody), findsOneWidget);
+    expect(tester.getTopLeft(find.text(ar.computerWeb)).dy, lessThan(tester.getTopLeft(find.text(ar.computerBody)).dy));
+  });
+
   testWidgets('guided setup: steps tick themselves, one button for the current step, never a dead end',
       (tester) async {
     final ar = await AppLocalizations.delegate.load(const Locale('ar'));

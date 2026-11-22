@@ -183,6 +183,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get computerToggle => 'Использовать компьютер';
 
   @override
+  String get computerWeb =>
+      'Проще всего: на компьютере откройте waaiya.mssid.org/usb в Chrome или Edge, включите отладку по USB и подключите телефон кабелем. Ничего устанавливать не нужно, работает и на Android 10. Или, если установлен adb:';
+
+  @override
   String get computerBody =>
       'Включите отладку по USB, подключите телефон и выполните:';
 

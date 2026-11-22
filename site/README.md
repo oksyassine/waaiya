@@ -22,6 +22,17 @@ The landing page: Arabic at `/`, English at `/en/`, the privacy policy (`docs/PR
 which needs the model in `models/dfn3` or `WAAIYA_MODELS=<dir>`). A link is fetched by the servers in `link/`:
 see `link/README.md`.
 
+## Set up from a computer (/usb/)
+
+`usb/` holds the page that gives Waaiya its Android permissions from Chrome or Edge over a USB cable (WebUSB, our own
+small ADB client; nothing loaded from elsewhere). `build.py` writes `usb/index.html` (Arabic) and `en/usb/index.html`
+and copies the scripts to `assets/usb/`. How it works and what was checked: `docs/SETUP.md`, "Route 3 from a
+browser". Tests:
+
+    node site/usb/test/adb_unit.mjs                         # signatures, adb's key format, the "Allow" prompt
+    python3 site/build.py --preview && node site/usb/test/page_test.mjs    # the page with a simulated USB phone
+    adb kill-server && node site/usb/test/adb_e2e.mjs 127.0.0.1:<emulator port + 1> --setup   # a real adbd
+
 ## Automatic deploy
 
 The live site follows `main`: `site/auto_deploy.sh`, run every 5 minutes by a systemd user timer, fetches `main` into

@@ -182,6 +182,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get computerToggle => 'Gunakan komputer sebaliknya';
 
   @override
+  String get computerWeb =>
+      'Paling mudah: pada komputer, buka waaiya.mssid.org/usb dalam Chrome atau Edge, hidupkan Penyahpepijatan USB dan sambungkan telefon dengan kabel. Tiada apa-apa perlu dipasang, dan ia berfungsi pada Android 10 juga. Atau, jika adb dipasang:';
+
+  @override
   String get computerBody =>
       'Hidupkan Penyahpepijatan USB, sambungkan telefon dan jalankan:';
 

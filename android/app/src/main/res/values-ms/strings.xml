@@ -53,6 +53,7 @@
     <string name="step_done_cd">Selesai</string>
     <string name="step_todo_cd">Langkah %1$d</string>
     <string name="computer_toggle">Gunakan komputer sebaliknya</string>
+    <string name="computer_web">Paling mudah: pada komputer, buka waaiya.mssid.org/usb dalam Chrome atau Edge, hidupkan Penyahpepijatan USB dan sambungkan telefon dengan kabel. Tiada apa-apa perlu dipasang, dan ia berfungsi pada Android 10 juga. Atau, jika adb dipasang:</string>
     <string name="computer_body">Hidupkan Penyahpepijatan USB, sambungkan telefon dan jalankan:</string>
     <string name="copy">Salin</string>
     <string name="copied">Disalin</string>

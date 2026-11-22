@@ -49,6 +49,7 @@
   "stepDoneCd": "An gama",
   "stepTodoCd": "Mataki na {step}",
   "computerToggle": "Yi amfani da kwamfuta maimakon haka",
+  "computerWeb": "Hanya mafi sauƙi: a kwamfuta, buɗe waaiya.mssid.org/usb a Chrome ko Edge, kunna “USB debugging” sannan ku haɗa wayar da waya (cable). Babu abin da za a saka, kuma yana aiki a Android 10 ma. Ko kuma, idan adb yana kan kwamfutar:",
   "computerBody": "Kunna zaɓin “USB debugging”, haɗa wayar da kwamfuta sannan ku gudanar da wannan umarni:",
   "copy": "Kwafa",
   "copied": "An kwafa",

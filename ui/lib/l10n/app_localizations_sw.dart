@@ -182,6 +182,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get computerToggle => 'Tumia kompyuta badala yake';
 
   @override
+  String get computerWeb =>
+      'Njia rahisi zaidi: kwenye kompyuta, fungua waaiya.mssid.org/usb katika Chrome au Edge, washa Utatuzi wa USB kisha unganisha simu kwa kebo. Hakuna cha kusakinisha, na inafanya kazi kwenye Android 10 pia. Au, ikiwa adb imesakinishwa:';
+
+  @override
   String get computerBody =>
       'Washa Utatuzi wa USB, unganisha simu kisha uendeshe:';
 

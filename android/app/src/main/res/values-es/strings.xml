@@ -53,6 +53,7 @@
     <string name="step_done_cd">Hecho</string>
     <string name="step_todo_cd">Paso %1$d</string>
     <string name="computer_toggle">Usar un ordenador en su lugar</string>
+    <string name="computer_web">Lo más sencillo: en un ordenador, abra waaiya.mssid.org/usb en Chrome o Edge, active la depuración por USB y conecte el teléfono con un cable. No hay que instalar nada y funciona también en Android 10. O, con adb instalado:</string>
     <string name="computer_body">Active la depuración por USB, conecte el teléfono y ejecute:</string>
     <string name="copy">Copiar</string>
     <string name="copied">Copiado</string>

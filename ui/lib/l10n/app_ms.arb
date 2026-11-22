@@ -49,6 +49,7 @@
   "stepDoneCd": "Selesai",
   "stepTodoCd": "Langkah {step}",
   "computerToggle": "Gunakan komputer sebaliknya",
+  "computerWeb": "Paling mudah: pada komputer, buka waaiya.mssid.org/usb dalam Chrome atau Edge, hidupkan Penyahpepijatan USB dan sambungkan telefon dengan kabel. Tiada apa-apa perlu dipasang, dan ia berfungsi pada Android 10 juga. Atau, jika adb dipasang:",
   "computerBody": "Hidupkan Penyahpepijatan USB, sambungkan telefon dan jalankan:",
   "copy": "Salin",
   "copied": "Disalin",

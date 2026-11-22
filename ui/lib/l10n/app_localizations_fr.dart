@@ -182,6 +182,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get computerToggle => 'Utiliser plutôt un ordinateur';
 
   @override
+  String get computerWeb =>
+      'Le plus simple : sur un ordinateur, ouvrez waaiya.mssid.org/usb dans Chrome ou Edge, activez le débogage USB et branchez le téléphone avec un câble. Rien à installer, et cela marche aussi sous Android 10. Ou, si adb est installé :';
+
+  @override
   String get computerBody =>
       'Activez le débogage USB, branchez le téléphone et lancez :';
 

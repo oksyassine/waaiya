@@ -53,6 +53,7 @@
     <string name="step_done_cd">Готово</string>
     <string name="step_todo_cd">Шаг %1$d</string>
     <string name="computer_toggle">Использовать компьютер</string>
+    <string name="computer_web">Проще всего: на компьютере откройте waaiya.mssid.org/usb в Chrome или Edge, включите отладку по USB и подключите телефон кабелем. Ничего устанавливать не нужно, работает и на Android 10. Или, если установлен adb:</string>
     <string name="computer_body">Включите отладку по USB, подключите телефон и выполните:</string>
     <string name="copy">Копировать</string>
     <string name="copied">Скопировано</string>

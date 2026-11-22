@@ -53,6 +53,7 @@
     <string name="step_done_cd">Fatto</string>
     <string name="step_todo_cd">Passaggio %1$d</string>
     <string name="computer_toggle">Usa invece un computer</string>
+    <string name="computer_web">Il modo più semplice: su un computer apri waaiya.mssid.org/usb in Chrome o Edge, attiva il Debug USB e collega il telefono con un cavo. Niente da installare, e funziona anche con Android 10. Oppure, con adb installato:</string>
     <string name="computer_body">Attiva il Debug USB, collega il telefono ed esegui:</string>
     <string name="copy">Copia</string>
     <string name="copied">Copiato</string>

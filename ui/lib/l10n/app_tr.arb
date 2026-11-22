@@ -49,6 +49,7 @@
   "stepDoneCd": "Tamamlandı",
   "stepTodoCd": "Adım {step}",
   "computerToggle": "Bunun yerine bilgisayar kullan",
+  "computerWeb": "En kolayı: bir bilgisayarda Chrome veya Edge ile waaiya.mssid.org/usb adresini açın, USB hata ayıklamasını açın ve telefonu kabloyla bağlayın. Hiçbir şey kurmanız gerekmez, Android 10'da da çalışır. Ya da adb kuruluysa:",
   "computerBody": "USB hata ayıklamasını açın, telefonu bağlayın ve şunu çalıştırın:",
   "copy": "Kopyala",
   "copied": "Kopyalandı",

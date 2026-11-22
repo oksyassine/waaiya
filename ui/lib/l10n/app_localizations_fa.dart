@@ -182,6 +182,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get computerToggle => 'به‌جای آن از رایانه استفاده کنید';
 
   @override
+  String get computerWeb =>
+      '‏ساده‌ترین راه: در یک رایانه، waaiya.mssid.org/usb را در Chrome یا Edge باز کنید، اشکال‌زدایی USB را روشن کنید و تلفن را با کابل وصل کنید. چیزی نصب نمی‌شود و روی Android 10 هم کار می‌کند. یا اگر adb نصب است:';
+
+  @override
   String get computerBody =>
       '‏اشکال‌زدایی USB را روشن کنید، تلفن را وصل کنید و این را اجرا کنید:';
 

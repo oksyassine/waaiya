@@ -52,6 +52,7 @@
     <string name="step_done_cd">تم</string>
     <string name="step_todo_cd">الخطوة %1$d</string>
     <string name="computer_toggle">استخدم حاسوبًا بدلًا من ذلك</string>
+    <string name="computer_web">الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:</string>
     <string name="computer_body">فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:</string>
     <string name="copy">نسخ</string>
     <string name="copied">تم النسخ</string>

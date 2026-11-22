@@ -53,6 +53,7 @@
     <string name="step_done_cd">Klaar</string>
     <string name="step_todo_cd">Stap %1$d</string>
     <string name="computer_toggle">Liever een computer gebruiken</string>
+    <string name="computer_web">Het eenvoudigst: open op een computer waaiya.mssid.org/usb in Chrome of Edge, zet USB-foutopsporing aan en sluit de telefoon aan met een kabel. Niets te installeren, en het werkt ook op Android 10. Of, als adb geïnstalleerd is:</string>
     <string name="computer_body">Zet USB-foutopsporing aan, sluit de telefoon aan en voer dit uit:</string>
     <string name="copy">Kopiëren</string>
     <string name="copied">Gekopieerd</string>

@@ -53,6 +53,7 @@
     <string name="step_done_cd">Tamamlandı</string>
     <string name="step_todo_cd">Adım %1$d</string>
     <string name="computer_toggle">Bunun yerine bilgisayar kullan</string>
+    <string name="computer_web">En kolayı: bir bilgisayarda Chrome veya Edge ile waaiya.mssid.org/usb adresini açın, USB hata ayıklamasını açın ve telefonu kabloyla bağlayın. Hiçbir şey kurmanız gerekmez, Android 10\'da da çalışır. Ya da adb kuruluysa:</string>
     <string name="computer_body">USB hata ayıklamasını açın, telefonu bağlayın ve şunu çalıştırın:</string>
     <string name="copy">Kopyala</string>
     <string name="copied">Kopyalandı</string>

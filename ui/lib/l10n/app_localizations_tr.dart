@@ -182,6 +182,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get computerToggle => 'Bunun yerine bilgisayar kullan';
 
   @override
+  String get computerWeb =>
+      'En kolayı: bir bilgisayarda Chrome veya Edge ile waaiya.mssid.org/usb adresini açın, USB hata ayıklamasını açın ve telefonu kabloyla bağlayın. Hiçbir şey kurmanız gerekmez, Android 10\'da da çalışır. Ya da adb kuruluysa:';
+
+  @override
   String get computerBody =>
       'USB hata ayıklamasını açın, telefonu bağlayın ve şunu çalıştırın:';
 

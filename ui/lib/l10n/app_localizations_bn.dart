@@ -182,6 +182,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get computerToggle => 'বরং কম্পিউটার ব্যবহার করুন';
 
   @override
+  String get computerWeb =>
+      'সবচেয়ে সহজ: কম্পিউটারে Chrome বা Edge-এ waaiya.mssid.org/usb খুলুন, USB ডিবাগিং চালু করুন এবং কেবল দিয়ে ফোনটি সংযুক্ত করুন। কিছু ইনস্টল করতে হবে না, Android 10-এও কাজ করে। অথবা adb ইনস্টল থাকলে:';
+
+  @override
   String get computerBody =>
       'USB ডিবাগিং চালু করুন, ফোনটি সংযুক্ত করুন এবং চালান:';
 

@@ -180,6 +180,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get computerToggle => 'استخدم حاسوبًا بدلًا من ذلك';
 
   @override
+  String get computerWeb =>
+      'الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:';
+
+  @override
   String get computerBody => 'فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:';
 
   @override

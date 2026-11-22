@@ -702,6 +702,176 @@ def privacy(lang, root):
 """
 
 
+# ---------- /usb/: the one-time Android setup from a computer, over WebUSB (site/usb/) ----------
+# Static texts render here; the script's messages go to the page as JSON (#usb-text). {model} is filled in by setup.js.
+USB = {
+    "en": dict(
+        dir="ltr", title="Set up Waaiya from a computer",
+        desc="Give Waaiya its one-time Android permissions from Chrome or Edge over a USB cable. Nothing to install.",
+        lead="Nothing to install: in Chrome or Edge, this page talks to your phone over the USB cable and gives Waaiya the "
+             "same permissions as the setup on the phone. It also works on Android 10 and on phones without "
+             "Wireless debugging.",
+        steps=["Install Waaiya on the phone ({apk}).",
+               "Turn on Developer options: in Settings › About phone, tap “Build number” 7 times (Samsung: About phone › "
+               "Software information; Xiaomi: “OS version”).",
+               "In Developer options, turn on “USB debugging”.",
+               "Connect the phone to this computer with a USB cable, unlock it, and press the button."],
+        apk="waaiya.apk", button="Connect the phone",
+        privacy="The page runs in your browser and talks only to the phone: nothing is sent anywhere. It keeps a key in "
+                "this browser so the phone can remember the computer (“Revoke USB debugging authorizations” in "
+                "Developer options makes the phone forget it).",
+        log="What was run on the phone", source="Source", home="Waaiya",
+        js=dict(
+            choose="Choose your phone in the browser's list.",
+            opening="Opening the phone…",
+            allow="On the phone: “Allow USB debugging?” Tick “Always allow from this computer”, then tap Allow.",
+            allowWhy="This lets the page run the setup commands. If nothing shows, unlock the phone, or unplug it and "
+                     "plug it in again.",
+            step_phone="Reading the phone…", step_grants="Giving Waaiya its permissions…",
+            step_helper="This phone refused the permissions: starting Waaiya's helper instead…",
+            thePhone="the phone",
+            done="Done: Waaiya has its permissions on {model}.",
+            noProjectMedia="This phone does not keep the permission that skips Android's screen-sharing question, so "
+                           "Android will ask at every start (vivo and iQOO phones do this).",
+            doneAfter="Unplug the phone and open Waaiya: its setup page ticks itself. You can turn USB debugging off "
+                      "again; the permissions stay until Waaiya is uninstalled.",
+            helper="{model} refused the permissions, so Waaiya's helper now lists the sound for it instead.",
+            helperAfter="Open Waaiya now, and leave USB debugging on. The helper stops when the phone restarts or USB "
+                        "debugging is turned off: then connect here again, or do Waaiya's own setup on the phone "
+                        "once (Wireless debugging) and it restarts the helper by itself.",
+            tipXiaomi="To keep the permissions for good: in Developer options, turn on “USB debugging (Security "
+                      "settings)” (it asks you to sign in to a Xiaomi account), then connect again.",
+            tipColoros="To keep the permissions for good: in Developer options, turn on “Disable permission "
+                       "monitoring” (on the newest versions “Disable system optimization”, sometimes shown only with "
+                       "the phone in English), then connect again.",
+            refused="This phone refused the permissions.",
+            refusedOld="Waaiya's helper needs Android 11 or newer, so on this phone the permissions must be allowed "
+                       "in Developer options (Xiaomi: “USB debugging (Security settings)”; OPPO, OnePlus, realme: "
+                       "“Disable permission monitoring”).",
+            refusedOther="Check that the phone is unlocked and connect again. If it keeps refusing, copy what was run "
+                         "(below) and send it to us on GitHub.",
+            noApp="Waaiya is not installed on this phone. Install it first (waaiya.mssid.org/downloads/), then connect "
+                  "again.",
+            tooOld="Waaiya needs Android 10 or newer.",
+            unsupported="This browser cannot reach USB devices. Open this page in Chrome, Edge or another Chromium "
+                        "browser, on Windows, macOS, Linux or ChromeOS.",
+            err_unsupported="This browser cannot reach USB devices.",
+            err_none="No phone was chosen. If the list was empty: unlock the phone, check that USB debugging is on, and "
+                     "try another cable (some cables only charge).",
+            err_noadb="That device has no USB debugging. Turn on “USB debugging” in Developer options and choose "
+                      "the phone again.",
+            err_access="The browser was not allowed to open the phone.",
+            accessWindows="On Windows the phone needs the WinUSB driver: some phone makers' drivers block it. Install "
+                          "Google's USB driver, or try another computer.",
+            accessLinux="On Linux, install your distribution's android-udev-rules package (or add a udev rule for the "
+                        "phone), then unplug the phone and plug it in again.",
+            accessOther="Unplug the phone, plug it in again and retry.",
+            err_busy="Another program is using the phone: close Android Studio or phone manager apps, and if adb is "
+                     "installed run “adb kill-server”. Then try again.",
+            err_io="The connection to the phone broke off. Unplug it, plug it in again and retry.",
+            lost="The phone was disconnected. Plug it in again and retry.",
+            error="Something went wrong. Unplug the phone, plug it in again and retry.",
+        )),
+    "ar": dict(
+        dir="rtl", title="إعداد واعية من حاسوب",
+        desc="امنح واعية أذونات أندرويد مرة واحدة من متصفح Chrome أو Edge عبر كابل USB، دون تثبيت أي برنامج.",
+        lead="لا حاجة إلى تثبيت شيء: في متصفح Chrome أو Edge، تتصل هذه الصفحة بهاتفك عبر كابل USB وتمنح واعية الأذونات "
+             "نفسها التي يمنحها الإعداد على الهاتف. وتعمل أيضًا على أندرويد 10 وعلى الهواتف التي ليس فيها "
+             "«تصحيح الأخطاء اللاسلكي».",
+        steps=["ثبّت واعية على الهاتف ({apk}).",
+               "فعّل «خيارات المطور»: في الإعدادات › «حول الهاتف»، اضغط على «رقم الإصدار» 7 مرات (سامسونج: «حول الهاتف» › "
+               "«معلومات البرنامج»؛ شاومي: «إصدار النظام»).",
+               "في «خيارات المطور»، فعّل «تصحيح أخطاء USB».",
+               "وصّل الهاتف بهذا الحاسوب بكابل USB، وافتح قفله، ثم اضغط الزر."],
+        apk="waaiya.apk", button="وصّل الهاتف",
+        privacy="تعمل الصفحة في متصفحك ولا تتصل إلا بالهاتف: لا يُرسَل شيء إلى أي مكان. وتحفظ في هذا المتصفح مفتاحًا "
+                "ليتذكّر الهاتف هذا الحاسوب (يُنسيه الهاتفَ خيارُ «إبطال تفويضات تصحيح أخطاء USB» في «خيارات المطور»).",
+        log="ما نُفِّذ على الهاتف", source="المصدر", home="واعية",
+        js=dict(
+            choose="اختر هاتفك من قائمة المتصفح.",
+            opening="جارٍ فتح الهاتف…",
+            allow="على الهاتف: «هل تريد السماح بتصحيح أخطاء USB؟» ضع علامة على «السماح دائمًا من هذا الكمبيوتر»، ثم اضغط «سماح».",
+            allowWhy="هذا يتيح للصفحة تنفيذ أوامر الإعداد. إن لم يظهر شيء، فافتح قفل الهاتف، أو افصله ثم وصّله من جديد.",
+            step_phone="جارٍ قراءة الهاتف…", step_grants="جارٍ منح واعية أذوناتها…",
+            step_helper="رفض الهاتف منح الأذونات: جارٍ تشغيل مساعد واعية بدلًا منها…",
+            thePhone="الهاتف",
+            done="تمّ: صارت لواعية أذوناتها على {model}.",
+            noProjectMedia="هذا الهاتف لا يحتفظ بالإذن الذي يتخطّى سؤال أندرويد عن مشاركة الشاشة، فسيسأل أندرويد عند كل "
+                           "تشغيل (تفعل ذلك هواتف vivo وiQOO).",
+            doneAfter="افصل الهاتف وافتح واعية: صفحة الإعداد تؤشّر خطواتها وحدها. ويمكنك إيقاف «تصحيح أخطاء USB» من "
+                      "جديد؛ تبقى الأذونات حتى تُحذف واعية.",
+            helper="رفض {model} منح الأذونات، فصار مساعد واعية يقرأ الأصوات بدلًا منها.",
+            helperAfter="افتح واعية الآن، واترك «تصحيح أخطاء USB» مفعّلًا. يتوقف المساعد عند إعادة تشغيل الهاتف أو عند "
+                        "إيقاف «تصحيح أخطاء USB»: فوصّل الهاتف هنا من جديد، أو أتمّ إعداد واعية على الهاتف مرة واحدة "
+                        "(«تصحيح الأخطاء اللاسلكي») فتعيد تشغيل المساعد وحدها.",
+            tipXiaomi="للاحتفاظ بالأذونات نهائيًا: فعّل في «خيارات المطور» «تصحيح أخطاء USB (إعدادات الأمان)» (يطلب "
+                      "تسجيل الدخول إلى حساب شاومي)، ثم وصّل الهاتف من جديد.",
+            tipColoros="للاحتفاظ بالأذونات نهائيًا: فعّل في «خيارات المطور» «تعطيل مراقبة الأذونات» (اسمه في أحدث "
+                       "الإصدارات «تعطيل تحسين النظام»، وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية)، ثم وصّل "
+                       "الهاتف من جديد.",
+            refused="رفض الهاتف منح الأذونات.",
+            refusedOld="مساعد واعية يحتاج إلى أندرويد 11 أو أحدث، فلا بد في هذا الهاتف من السماح بالأذونات في «خيارات "
+                       "المطور» (شاومي: «تصحيح أخطاء USB (إعدادات الأمان)»؛ أوبو وون بلس وريلمي: «تعطيل مراقبة الأذونات»).",
+            refusedOther="تأكّد أن الهاتف مفتوح القفل ثم وصّله من جديد. وإن ظل يرفض، فانسخ ما نُفِّذ (في الأسفل) "
+                         "وأرسله إلينا على GitHub.",
+            noApp="واعية غير مثبّتة على هذا الهاتف. ثبّتها أولًا (waaiya.mssid.org/downloads/)، ثم وصّل الهاتف من جديد.",
+            tooOld="تحتاج واعية إلى أندرويد 10 أو أحدث.",
+            unsupported="هذا المتصفح لا يصل إلى أجهزة USB. افتح هذه الصفحة في Chrome أو Edge أو متصفح آخر مبني على "
+                        "Chromium، على ويندوز أو ماك أو لينكس أو ChromeOS.",
+            err_unsupported="هذا المتصفح لا يصل إلى أجهزة USB.",
+            err_none="لم يُختر أي هاتف. إن كانت القائمة فارغة: افتح قفل الهاتف، وتأكّد أن «تصحيح أخطاء USB» مفعّل، "
+                     "وجرّب كابلًا آخر (بعض الكابلات للشحن فقط).",
+            err_noadb="هذا الجهاز ليس فيه «تصحيح أخطاء USB». فعّله في «خيارات المطور» ثم اختر الهاتف من جديد.",
+            err_access="لم يُسمح للمتصفح بفتح الهاتف.",
+            accessWindows="في ويندوز يحتاج الهاتف إلى تعريف WinUSB، وبعض تعريفات الشركات المصنّعة تمنعه. ثبّت تعريف USB "
+                          "من Google، أو جرّب حاسوبًا آخر.",
+            accessLinux="في لينكس، ثبّت حزمة android-udev-rules من توزيعتك (أو أضف قاعدة udev للهاتف)، ثم افصل الهاتف "
+                        "ووصّله من جديد.",
+            accessOther="افصل الهاتف ووصّله من جديد، ثم أعد المحاولة.",
+            err_busy="برنامج آخر يستعمل الهاتف: أغلق Android Studio أو برامج إدارة الهاتف، وإن كان adb مثبّتًا فنفّذ "
+                     "«adb kill-server». ثم أعد المحاولة.",
+            err_io="انقطع الاتصال بالهاتف. افصله ووصّله من جديد، ثم أعد المحاولة.",
+            lost="فُصل الهاتف. وصّله من جديد ثم أعد المحاولة.",
+            error="حدث خطأ. افصل الهاتف ووصّله من جديد، ثم أعد المحاولة.",
+        )),
+}
+USB_FILES = ("adb.js", "usb.js", "flow.js", "setup.js")
+
+
+def usb_page(lang, root):
+    u = USB[lang]
+    other, other_label, other_href = ("en", "English", "en/usb/") if lang == "ar" else ("ar", "العربية", "usb/")
+    robots = '<meta name="robots" content="noindex">' if PREVIEW else ""
+    home = root + ("en/" if lang == "en" else "")
+    link = '<a href="' + APK + '">' + e(u["apk"]) + "</a>"
+    steps = "".join("<li>" + e(s).replace("{apk}", link) + "</li>" for s in u["steps"])
+    text = json.dumps(u["js"], ensure_ascii=False).replace("</", "<\\/")
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{u['dir']}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(u['title'])} · Waaiya</title>{robots}
+<meta name="description" content="{e(u['desc'])}">
+<link rel="canonical" href="{SITE}{'en/' if lang == 'en' else ''}usb/">
+<link rel="alternate" hreflang="ar" href="{SITE}usb/"><link rel="alternate" hreflang="en" href="{SITE}en/usb/">
+<link rel="icon" href="{root}assets/logo.png">
+<style>{fonts(root + 'assets/')}
+{CSS}</style></head>
+<body class="doc"><a class="doc-home" href="{home}">{e(u['home'])}</a>
+<a class="doc-lang" href="{root}{other_href}" lang="{other}" hreflang="{other}">{other_label}</a>
+<main class="prose usb">
+<h1>{e(u['title'])}</h1>
+<p class="usb-lead">{e(u['lead'])}</p>
+<ol class="usb-steps">{steps}</ol>
+<p><button id="usb-connect" class="cbtn" type="button">{e(u['button'])}</button></p>
+<div id="usb-status" class="usb-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+<details id="usb-log" class="usb-log" hidden><summary>{e(u['log'])}</summary><pre id="usb-log-text" dir="ltr"></pre></details>
+<p class="usb-privacy">{e(u['privacy'])} <a href="{REPO}/tree/main/site/usb">{e(u['source'])}</a></p>
+</main>
+<script type="application/json" id="usb-text">{text}</script>
+<script type="module" src="{root}assets/usb/setup.js"></script>
+</body></html>
+"""
+
+
 LLMS = f"""# Waaiya (واعية)
 
 > Waaiya is a free, open-source (AGPL) app for Android 10+, Windows 10 (2004)+ and Linux that removes musical
@@ -714,6 +884,7 @@ LLMS = f"""# Waaiya (واعية)
 - [Waaiya, in Arabic]({SITE}): the main page
 - [Waaiya, in English]({SITE}en/)
 - [Privacy policy]({SITE}privacy.html)
+- [Set up Android from a computer over USB (Chrome, Edge)]({SITE}en/usb/)
 
 ## Downloads and source
 
@@ -777,7 +948,8 @@ def sitemap():
     today = datetime.date.today().isoformat()
     alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{h}" href="{u}"/>'
                    for h, u in (("ar", SITE), ("en", SITE + "en/"), ("x-default", SITE)))
-    urls = [(SITE, alts, "1.0"), (SITE + "en/", alts, "0.9"), (SITE + "privacy.html", "", "0.3")]
+    urls = [(SITE, alts, "1.0"), (SITE + "en/", alts, "0.9"), (SITE + "privacy.html", "", "0.3"),
+            (SITE + "usb/", "", "0.4"), (SITE + "en/usb/", "", "0.4")]
     body = "".join(f"  <url>\n    <loc>{u}</loc>{a}\n    <lastmod>{today}</lastmod>\n    <priority>{p}</priority>\n  </url>\n"
                    for u, a, p in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
@@ -794,6 +966,13 @@ def main():
     (OUT / "en/index.html").write_text(page("en", "../"))
     (OUT / "privacy.html").write_text(privacy("ar", ""))
     (OUT / "en/privacy.html").write_text(privacy("en", "../"))
+    (OUT / "assets/usb").mkdir(parents=True)
+    for f in USB_FILES:
+        shutil.copy(HERE / "usb" / f, OUT / "assets/usb" / f)
+    (OUT / "usb").mkdir()
+    (OUT / "en/usb").mkdir()
+    (OUT / "usb/index.html").write_text(usb_page("ar", "../"))
+    (OUT / "en/usb/index.html").write_text(usb_page("en", "../../"))
     (OUT / "llms.txt").write_text(LLMS)
     if not PREVIEW:
         (OUT / "robots.txt").write_text(ROBOTS)

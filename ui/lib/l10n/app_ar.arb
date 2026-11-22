@@ -211,6 +211,10 @@
   "@computerToggle": {
     "description": "Android string computer_toggle"
   },
+  "computerWeb": "الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:",
+  "@computerWeb": {
+    "description": "Android string computer_web"
+  },
   "computerBody": "فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:",
   "@computerBody": {
     "description": "Android string computer_body"

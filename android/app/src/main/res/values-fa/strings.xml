@@ -53,6 +53,7 @@
     <string name="step_done_cd">انجام شد</string>
     <string name="step_todo_cd">مرحلهٔ %1$d</string>
     <string name="computer_toggle">به‌جای آن از رایانه استفاده کنید</string>
+    <string name="computer_web">‏ساده‌ترین راه: در یک رایانه، waaiya.mssid.org/usb را در Chrome یا Edge باز کنید، اشکال‌زدایی USB را روشن کنید و تلفن را با کابل وصل کنید. چیزی نصب نمی‌شود و روی Android 10 هم کار می‌کند. یا اگر adb نصب است:</string>
     <string name="computer_body">‏اشکال‌زدایی USB را روشن کنید، تلفن را وصل کنید و این را اجرا کنید:</string>
     <string name="copy">کپی</string>
     <string name="copied">کپی شد</string>

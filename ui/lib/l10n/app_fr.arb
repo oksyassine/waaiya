@@ -49,6 +49,7 @@
   "stepDoneCd": "Terminé",
   "stepTodoCd": "Étape {step}",
   "computerToggle": "Utiliser plutôt un ordinateur",
+  "computerWeb": "Le plus simple : sur un ordinateur, ouvrez waaiya.mssid.org/usb dans Chrome ou Edge, activez le débogage USB et branchez le téléphone avec un câble. Rien à installer, et cela marche aussi sous Android 10. Ou, si adb est installé :",
   "computerBody": "Activez le débogage USB, branchez le téléphone et lancez :",
   "copy": "Copier",
   "copied": "Copié",
