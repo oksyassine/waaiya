@@ -2,6 +2,11 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# the downloads folder itself (shared as "waaiya.mssid.org/downloads/"): no listing (-Indexes below), so send people
+# to the download section of the home page, in Arabic or English after the browser's language
+RewriteCond %{HTTP:Accept-Language} ^ar [NC]
+RewriteRule ^downloads/?$ /#download [NE,L,R=302]
+RewriteRule ^downloads/?$ /en/#download [NE,L,R=302]
 Options -Indexes
 AddType video/mp4 .mp4
 AddType image/webp .webp
