@@ -1854,4 +1854,39 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.';
+
+  @override
+  String get worshipUseLocation => 'استخدم موقعي';
+
+  @override
+  String get worshipWhyLocation =>
+      'لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.';
+
+  @override
+  String get worshipLocating => 'جارٍ تحديد مكانك…';
+
+  @override
+  String get worshipLocationDenied =>
+      'لم يُسمح بالموقع. يمكنك البحث عن مدينتك بدلًا من ذلك.';
+
+  @override
+  String get worshipLocationOff =>
+      'الموقع مُطفأ في هذا الهاتف. شغّله ثم أعد المحاولة، أو ابحث عن مدينتك.';
+
+  @override
+  String get worshipLocationSettings => 'إعدادات الموقع';
+
+  @override
+  String get worshipLocationFailed =>
+      'تعذّر تحديد موقعك. أعد المحاولة بعد قليل، أو ابحث عن مدينتك.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'قرب $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة $city.';
+  }
 }

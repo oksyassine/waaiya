@@ -520,5 +520,14 @@
   "protectWhatPinChange": "Canza PIN",
   "protectWhatPinClear": "Cire PIN",
   "protectWhatSetting": "Canza saiti",
-  "onboardBodyDesktop": "Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur'ani. A yanzu, ana cire muryoyin waƙa ma."
+  "onboardBodyDesktop": "Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur'ani. A yanzu, ana cire muryoyin waƙa ma.",
+  "worshipUseLocation": "Yi amfani da wurina",
+  "worshipWhyLocation": "Don gano lokutan sallah a inda kake, Waaiya na karanta kimanin wurin wannan waya sau ɗaya, yanzu. Ana ajiye shi a waya a matsayin wurinka, ba a aika shi ko'ina.",
+  "worshipLocating": "Ana neman inda kake…",
+  "worshipLocationDenied": "Ba a ba da izinin wuri ba. Za ka iya neman garinka maimakon haka.",
+  "worshipLocationOff": "An kashe wuri a wannan waya. Kunna shi ka sake gwadawa, ko ka nemi garinka.",
+  "worshipLocationSettings": "Saitunan wuri",
+  "worshipLocationFailed": "Ba a sami wurinka ba. Sake gwadawa nan ba da jimawa ba, ko ka nemi garinka.",
+  "worshipPlaceNear": "kusa da {city}",
+  "worshipHabousNote": "Lokutan hukuma na Ma'aikatar Habous da Harkokin Musulunci na {city}."
 }

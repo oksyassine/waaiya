@@ -1874,4 +1874,39 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya убирает музыкальные инструменты из звука всех приложений на этом компьютере. Речь и чтение Корана сохраняются. Пока что пение тоже убирается.';
+
+  @override
+  String get worshipUseLocation => 'Моё местоположение';
+
+  @override
+  String get worshipWhyLocation =>
+      'Чтобы найти время намаза там, где вы находитесь, Waaiya один раз, сейчас, считывает примерное местоположение телефона. Оно хранится на телефоне как ваше место и никуда не отправляется.';
+
+  @override
+  String get worshipLocating => 'Определяем, где вы…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Доступ к местоположению не разрешён. Вместо этого можно найти свой город.';
+
+  @override
+  String get worshipLocationOff =>
+      'Геолокация на этом телефоне выключена. Включите её и повторите, или найдите свой город.';
+
+  @override
+  String get worshipLocationSettings => 'Настройки геолокации';
+
+  @override
+  String get worshipLocationFailed =>
+      'Не удалось определить местоположение. Повторите чуть позже или найдите свой город.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'рядом с $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Официальное время Министерства хабусов и исламских дел для города $city.';
+  }
 }

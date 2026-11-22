@@ -1,6 +1,6 @@
 # Waaiya privacy policy
 
-Last change: 2026-11-21. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
+Last change: 2026-11-22. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
 
 ## In short
 
@@ -17,7 +17,7 @@ hear and see stays in memory on your device and is not saved.
 | Windows: "Watch" on the Links page | Nothing from Waaiya: it starts the filter and hands the link to your own web browser, which opens it as usual. The Windows app from the Microsoft Store only does this: it has no download tools and never contacts a site itself | What your browser's site learns, as without Waaiya |
 | Android: the bundled link reader (yt-dlp) checks for a newer version, at most once a day, only around a link you open | PyPI (pypi.org and files.pythonhosted.org), with Python's default client name, never Waaiya's | Your IP address and that some Python program asked for yt-dlp |
 | Windows: the Microsoft Store updates Waaiya | Microsoft, as for every Store app | As in Microsoft's own privacy statement |
-| Android (the app from the website or GitHub; store builds have no updater): the check for a new version, once a day and when you open Waaiya, never while filtering. Turn it off in Settings, "App updates" | waaiya.mssid.org (our website, hosted by o2switch in France) reads the file `downloads/update.json`, with the client name `Waaiya-Update/1` only: no device, version or identifier. Your phone compares the versions itself | What any website learns from a visitor: your IP address and the time |
+| Android (the app from the website or GitHub; store builds have no updater): the check for a new version, once a day and when you open Waaiya, never while filtering. Turn it off in Settings, "App updates" | waaiya.mssid.org (our website, hosted by o2switch in France) reads the file `downloads/waaiya-update.json` (`downloads/update.json` for the old app, 0.2.14 and before), with the client name `Waaiya-Update/1` only: no device, version or identifier. Your phone compares the versions itself | What any website learns from a visitor: your IP address and the time |
 | Android: you tap "Update now" | waaiya.mssid.org again, for the update file (only the changes when possible). Your phone checks it is the published file, signed like the app you have, before Android's installer asks you to confirm | The same, and which update file was downloaded |
 
 Nothing else opens a network connection. The filter, the women's-singing detector and the screen blur are checked
@@ -27,7 +27,12 @@ them tries one (`linux/test_no_network.sh`, the Linux blur's end-to-end test, an
 ## What stays on your device
 
 - Your settings (who uses the device, the filter and blur options, the language, and the optional prayer-time
-  place, which is a city you pick or coordinates you type: Waaiya never reads your location).
+  place: a city you pick, coordinates you type, or your approximate location if you tap "Use my location").
+- Android, "Use my location" for the prayer times: only when you tap it, and Android asks you first. Waaiya reads
+  the phone's approximate position (about 2 km, never the precise one) once, at that moment, through Android
+  itself, and keeps only the resulting place (in Morocco the nearest city of the Ministry of Habous's list,
+  elsewhere the coordinates). It is never sent anywhere and never read again in the background; tap it again after
+  travelling.
 - The diagnostics report and the "wrong detection" notes: plain text kept in the app's private storage. They leave
   the device only if you share them yourself, to whoever you choose.
 - Android: cloud backup and device-to-device transfer are switched off for Waaiya's data.
@@ -48,6 +53,7 @@ two folders when you uninstall the app, and you can delete them yourself.
 | Internet | Only for "Open a link" and the check for new versions (above) |
 | Install unknown apps (`REQUEST_INSTALL_PACKAGES`; not in store builds) | To hand a downloaded update to Android's installer, which always asks you to confirm. Android asks you to allow it the first time |
 | Do Not Disturb access, alarms, system settings (only if you turn on the worship helpers) | To silence the phone at prayer times and to set a plain ringtone |
+| Approximate location (only if you tap "Use my location" for the prayer times) | To find the place of the prayer times once, at that moment. Not the precise location; not in the background |
 | Accessibility (only in the separate `-a11y` build) | To draw covers that let touches through on phones without the setup |
 
 ## Children
@@ -78,7 +84,7 @@ Changes to this policy are made in this file in the public repository, where the
 
 ## سياسة الخصوصية
 
-آخر تعديل: 2026-11-20. تنطبق على واعية في أندرويد ولينكس وويندوز.
+آخر تعديل: 2026-11-22. تنطبق على واعية في أندرويد ولينكس وويندوز.
 
 ### باختصار
 
@@ -96,7 +102,7 @@ Changes to this policy are made in this file in the public repository, where the
   PyPI، باسم بايثون العام لا باسم واعية.
 - في ويندوز: متجر مايكروسوفت يحدّث واعية كما يحدّث كل تطبيقاته.
 - في أندرويد (النسخة من الموقع أو GitHub؛ نسخ المتاجر بلا تحديث ذاتي): البحث عن إصدار جديد مرة في اليوم وعند فتح واعية،
-  ولا يحدث أثناء التصفية أبدًا، ويمكن إيقافه من «تحديثات التطبيق» في الإعدادات. يُقرأ الملف `downloads/update.json` من موقعنا waaiya.mssid.org
+  ولا يحدث أثناء التصفية أبدًا، ويمكن إيقافه من «تحديثات التطبيق» في الإعدادات. يُقرأ الملف `downloads/waaiya-update.json` (و`downloads/update.json` للتطبيق القديم، 0.2.14 وما قبله) من موقعنا waaiya.mssid.org
   (لدى o2switch في فرنسا) باسم العميل `Waaiya-Update/1` وحده، بلا جهاز ولا إصدار ولا مُعرِّف، ويقارن هاتفك الإصدارات بنفسه.
   فيعرف الموقع ما يعرفه أي موقع عن زائره: عنوان IP والوقت.
 - في أندرويد، حين تضغط «حدِّث الآن»: يُنزَّل ملف التحديث من الموقع نفسه (التغييرات فقط إن أمكن)، ويتحقق هاتفك أنه الملف
@@ -107,7 +113,11 @@ Changes to this policy are made in this file in the public repository, where the
 
 ### ما يبقى على جهازك
 
-- إعداداتك، ومنها مكان أوقات الصلاة إن اخترته: مدينة تختارها أو إحداثيات تكتبها، ولا تقرأ واعية موقعك أبدًا.
+- إعداداتك، ومنها مكان أوقات الصلاة إن اخترته: مدينة تختارها، أو إحداثيات تكتبها، أو موقعك التقريبي إن ضغطت «استخدم موقعي».
+- في أندرويد، «استخدم موقعي» لأوقات الصلاة: فقط حين تضغطه، وبعد أن يسألك أندرويد. تقرأ واعية الموقع التقريبي للهاتف
+  (نحو كيلومترين، لا الموقع الدقيق أبدًا) مرة واحدة في تلك اللحظة، عن طريق أندرويد نفسه، ولا تحفظ إلا المكان الناتج (في
+  المغرب أقرب مدينة من قائمة وزارة الأوقاف، وفي غيره الإحداثيات). لا يُرسل إلى أي جهة، ولا يُقرأ مرة أخرى في الخلفية؛ اضغطه
+  من جديد بعد السفر.
 - تقرير التشخيص وملاحظات «اكتشاف خاطئ»: نص في مساحة التطبيق الخاصة، لا يخرج من الجهاز إلا إذا شاركته بنفسك.
 - في أندرويد: النسخ الاحتياطي السحابي والنقل بين الأجهزة معطَّلان لبيانات واعية.
 
@@ -121,7 +131,8 @@ Changes to this policy are made in this file in the public repository, where the
 الإشعارات لإظهار أن الترشيح يعمل وإيقافه. الظهور فوق التطبيقات لرسم الأغطية. إذنا `DUMP` و`WRITE_SECURE_SETTINGS`
 تمنحهما أنت مرة واحدة في الإعداد لإسكات الصوت الأصلي. الإنترنت لفتح الروابط والبحث عن إصدار جديد فقط. إذن «تثبيت التطبيقات غير المعروفة» (ليس في نسخ المتاجر) لتسليم
 التحديث المنزَّل إلى مثبّت أندرويد، الذي يطلب تأكيدك دائمًا. إذن «عدم الإزعاج» والمنبّهات
-وإعدادات النظام فقط إن فعّلت أدوات الصلاة.
+وإعدادات النظام فقط إن فعّلت أدوات الصلاة. الموقع التقريبي فقط إن ضغطت «استخدم موقعي» لأوقات الصلاة، لمعرفة المكان مرة
+واحدة في تلك اللحظة، لا الموقع الدقيق ولا في الخلفية.
 
 ### «جرّبها على صوتك» في الموقع
 

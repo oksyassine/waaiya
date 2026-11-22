@@ -1874,4 +1874,39 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya membuang alat muzik daripada bunyi setiap apl pada komputer ini. Percakapan dan bacaan al-Quran dikekalkan. Buat masa ini, suara nyanyian turut dibuang.';
+
+  @override
+  String get worshipUseLocation => 'Guna lokasi saya';
+
+  @override
+  String get worshipWhyLocation =>
+      'Untuk mencari waktu solat di tempat anda, Waaiya membaca anggaran lokasi telefon ini sekali, sekarang. Ia disimpan dalam telefon sebagai tempat anda dan tidak dihantar ke mana-mana.';
+
+  @override
+  String get worshipLocating => 'Mencari lokasi anda…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Lokasi tidak dibenarkan. Anda boleh mencari bandar anda.';
+
+  @override
+  String get worshipLocationOff =>
+      'Lokasi dimatikan pada telefon ini. Hidupkan dan cuba lagi, atau cari bandar anda.';
+
+  @override
+  String get worshipLocationSettings => 'Tetapan lokasi';
+
+  @override
+  String get worshipLocationFailed =>
+      'Lokasi anda tidak dapat ditemui. Cuba lagi sebentar lagi, atau cari bandar anda.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'berhampiran $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Waktu rasmi Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi $city.';
+  }
 }

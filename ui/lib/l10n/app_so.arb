@@ -520,5 +520,14 @@
   "protectWhatPinChange": "Beddel PIN-ka",
   "protectWhatPinClear": "Ka saar PIN-ka",
   "protectWhatSetting": "Beddel dejin",
-  "onboardBodyDesktop": "Waaiya waxay ka saartaa qalabka muusigga codka barnaamij kasta oo kombiyuutarkan ku jira. Hadalka iyo akhriska Qur'aanka waa la hayaa. Hadda, codadka heesaha sidoo kale waa la saaraa."
+  "onboardBodyDesktop": "Waaiya waxay ka saartaa qalabka muusigga codka barnaamij kasta oo kombiyuutarkan ku jira. Hadalka iyo akhriska Qur'aanka waa la hayaa. Hadda, codadka heesaha sidoo kale waa la saaraa.",
+  "worshipUseLocation": "Isticmaal goobtayda",
+  "worshipWhyLocation": "Si loo helo waqtiyada salaadda meesha aad joogto, Waaiya waxay hal mar, hadda, akhrisaa goobta qiyaasta ah ee taleefankan. Waxay ku jirtaa taleefanka sida goobtaada, meelna looma diro.",
+  "worshipLocating": "Waxaa la raadinayaa meesha aad joogto…",
+  "worshipLocationDenied": "Goobta looma oggolaan. Waxaad raadin kartaa magaaladaada beddelkeeda.",
+  "worshipLocationOff": "Goobta waa ka dansan tahay taleefankan. Shid oo isku day mar kale, ama raadi magaaladaada.",
+  "worshipLocationSettings": "Dejinta goobta",
+  "worshipLocationFailed": "Goobtaada lama helin. Isku day mar kale wax yar kadib, ama raadi magaaladaada.",
+  "worshipPlaceNear": "u dhow {city}",
+  "worshipHabousNote": "Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee {city}."
 }

@@ -47,8 +47,8 @@ android {
         applicationId = if (moveBuild) OLD_ID else NEW_ID
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 18
-        versionName = "0.2.15"
+        versionCode = 19
+        versionName = "0.2.16"
         // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
         providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")

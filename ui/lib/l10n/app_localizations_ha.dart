@@ -1879,4 +1879,39 @@ class AppLocalizationsHa extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur\'ani. A yanzu, ana cire muryoyin waƙa ma.';
+
+  @override
+  String get worshipUseLocation => 'Yi amfani da wurina';
+
+  @override
+  String get worshipWhyLocation =>
+      'Don gano lokutan sallah a inda kake, Waaiya na karanta kimanin wurin wannan waya sau ɗaya, yanzu. Ana ajiye shi a waya a matsayin wurinka, ba a aika shi ko\'ina.';
+
+  @override
+  String get worshipLocating => 'Ana neman inda kake…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Ba a ba da izinin wuri ba. Za ka iya neman garinka maimakon haka.';
+
+  @override
+  String get worshipLocationOff =>
+      'An kashe wuri a wannan waya. Kunna shi ka sake gwadawa, ko ka nemi garinka.';
+
+  @override
+  String get worshipLocationSettings => 'Saitunan wuri';
+
+  @override
+  String get worshipLocationFailed =>
+      'Ba a sami wurinka ba. Sake gwadawa nan ba da jimawa ba, ko ka nemi garinka.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'kusa da $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Lokutan hukuma na Ma\'aikatar Habous da Harkokin Musulunci na $city.';
+  }
 }

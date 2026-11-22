@@ -520,5 +520,14 @@
   "protectWhatPinChange": "Ubah PIN",
   "protectWhatPinClear": "Hapus PIN",
   "protectWhatSetting": "Ubah pengaturan",
-  "onboardBodyDesktop": "Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus."
+  "onboardBodyDesktop": "Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.",
+  "worshipUseLocation": "Gunakan lokasi saya",
+  "worshipWhyLocation": "Untuk mengetahui waktu salat di tempat Anda, Waaiya membaca perkiraan lokasi ponsel ini satu kali, sekarang. Lokasi disimpan di ponsel sebagai tempat Anda dan tidak dikirim ke mana pun.",
+  "worshipLocating": "Mencari lokasi Anda…",
+  "worshipLocationDenied": "Lokasi tidak diizinkan. Anda bisa mencari kota Anda sebagai gantinya.",
+  "worshipLocationOff": "Lokasi mati di ponsel ini. Nyalakan lalu coba lagi, atau cari kota Anda.",
+  "worshipLocationSettings": "Setelan lokasi",
+  "worshipLocationFailed": "Lokasi Anda tidak dapat ditemukan. Coba lagi sebentar lagi, atau cari kota Anda.",
+  "worshipPlaceNear": "dekat {city}",
+  "worshipHabousNote": "Waktu resmi Kementerian Wakaf dan Urusan Islam (Habous) untuk {city}."
 }

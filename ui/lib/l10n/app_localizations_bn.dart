@@ -1870,4 +1870,39 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya এই কম্পিউটারের সব অ্যাপের শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। আপাতত গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
+
+  @override
+  String get worshipUseLocation => 'আমার অবস্থান ব্যবহার করুন';
+
+  @override
+  String get worshipWhyLocation =>
+      'আপনি যেখানে আছেন সেখানকার নামাজের সময় জানতে Waaiya এই ফোনের আনুমানিক অবস্থান এখন একবার পড়ে। এটি ফোনে আপনার জায়গা হিসেবে থাকে এবং কোথাও পাঠানো হয় না।';
+
+  @override
+  String get worshipLocating => 'আপনার অবস্থান খোঁজা হচ্ছে…';
+
+  @override
+  String get worshipLocationDenied =>
+      'অবস্থানের অনুমতি দেওয়া হয়নি। এর বদলে আপনার শহর খুঁজতে পারেন।';
+
+  @override
+  String get worshipLocationOff =>
+      'এই ফোনে অবস্থান বন্ধ আছে। চালু করে আবার চেষ্টা করুন, অথবা আপনার শহর খুঁজুন।';
+
+  @override
+  String get worshipLocationSettings => 'অবস্থান সেটিংস';
+
+  @override
+  String get worshipLocationFailed =>
+      'আপনার অবস্থান পাওয়া যায়নি। একটু পরে আবার চেষ্টা করুন, অথবা আপনার শহর খুঁজুন।';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city-এর কাছে';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return '$city-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সরকারি সময়।';
+  }
 }

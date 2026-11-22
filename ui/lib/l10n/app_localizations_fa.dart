@@ -1871,4 +1871,39 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'واعية سازهای موسیقی را از صدای همهٔ برنامه‌های این رایانه حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. فعلاً صدای آواز هم حذف می‌شود.';
+
+  @override
+  String get worshipUseLocation => 'استفاده از مکان من';
+
+  @override
+  String get worshipWhyLocation =>
+      'برای یافتن اوقات نماز در جایی که هستید، واعیه مکان تقریبی این گوشی را یک بار، همین حالا، می‌خواند. این مکان روی گوشی به‌عنوان محل شما نگه داشته می‌شود و به جایی فرستاده نمی‌شود.';
+
+  @override
+  String get worshipLocating => 'در حال یافتن مکان شما…';
+
+  @override
+  String get worshipLocationDenied =>
+      'اجازهٔ مکان داده نشد. می‌توانید به‌جای آن شهرتان را جستجو کنید.';
+
+  @override
+  String get worshipLocationOff =>
+      'مکان‌یابی در این گوشی خاموش است. آن را روشن کنید و دوباره امتحان کنید، یا شهرتان را جستجو کنید.';
+
+  @override
+  String get worshipLocationSettings => 'تنظیمات مکان';
+
+  @override
+  String get worshipLocationFailed =>
+      'مکان شما پیدا نشد. کمی بعد دوباره امتحان کنید، یا شهرتان را جستجو کنید.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'نزدیک $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'اوقات رسمی وزارت اوقاف و امور اسلامی مراکش برای $city.';
+  }
 }

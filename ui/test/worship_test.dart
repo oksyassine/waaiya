@@ -366,6 +366,125 @@ void main() {
     expect(calls.last, 'openSoundSettings');
   });
 
+  group('use my location', () {
+    /// worship.locate answers {id: 7}, then the snapshot's `locate` says what was found (as WorshipLocation does).
+    List<String> locate(MemoryBackend b, Map<String, Object?> answer, {bool granted = true}) {
+      final calls = _record(b, granted: granted);
+      b.methods['worship.locate'] = (args) async {
+        calls.add('locate');
+        Future(() => b.emit(b.state.copyWith(features: {
+              'worship': {...b.state.feature('worship'), 'locate': {'id': 7, ...answer}},
+            })));
+        return {'id': 7};
+      };
+      b.methods['worship.openLocationSettings'] = (args) async {
+        calls.add('openLocationSettings');
+        return null;
+      };
+      return calls;
+    }
+
+    Future<void> tapUseLocation(WidgetTester tester) async {
+      await _show(tester, find.byKey(const Key('worship_use_location')));
+      await tester.tap(find.byKey(const Key('worship_use_location')));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('in Morocco: one sentence, Android\'s question, then the Habous city; no method to choose', (tester) async {
+      final l = await AppLocalizations.delegate.load(const Locale('en'));
+      final b = MemoryBackend(initial: _state(worship: {..._worship(place: false), 'location': false}));
+      final calls = locate(b, {'state': 'found', 'setting': 'rabat', 'method': 12, 'habous': true, 'label': 'Rabat'});
+      await _openSettings(tester, b);
+      expect(calls, isEmpty); // nothing asked before the tap
+      await tapUseLocation(tester);
+      expect(find.text(l.worshipWhyLocation), findsOneWidget);
+      await _continue(tester);
+      expect(calls, ['ask location', 'locate']);
+      expect(b.state.settings.prayerPlace, 'rabat');
+      expect(b.state.settings.prayerMethod, 12);
+      expect(find.text(l.worshipMethodTitle), findsNothing); // the official table: nothing to choose
+    });
+
+    testWidgets('elsewhere: the coordinates, then the user chooses the method, the country\'s preselected', (tester) async {
+      final l = await AppLocalizations.delegate.load(const Locale('en'));
+      final b = MemoryBackend(initial: _state(worship: {..._worship(place: false), 'location': true}));
+      final calls = locate(b, {'state': 'found', 'setting': 'custom:48.9362,2.3574,Europe/Paris', 'method': 11, 'habous': false});
+      await _openSettings(tester, b);
+      // from the place dialog this time
+      await _show(tester, find.byKey(const Key('worship_place')));
+      await tester.tap(find.descendant(of: find.byKey(const Key('worship_place')), matching: find.byType(TextButton)));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('worship_place_locate')));
+      await tester.pumpAndSettle();
+      expect(calls, ['cities', 'locate']); // already allowed: no sentence, no question
+      expect(b.state.settings.prayerPlace, 'custom:48.9362,2.3574,Europe/Paris');
+      expect(find.text(l.worshipMethodTitle), findsOneWidget);
+      await tester.tap(find.text(l.worshipMethodMwl));
+      await tester.pumpAndSettle();
+      expect(b.state.settings.prayerMethod, 0);
+    });
+
+    testWidgets('closing the method list keeps the country\'s method', (tester) async {
+      final l = await AppLocalizations.delegate.load(const Locale('en'));
+      final b = MemoryBackend(initial: _state(worship: {..._worship(place: false), 'location': true}));
+      locate(b, {'state': 'found', 'setting': 'custom:30.0000,31.3000,Africa/Cairo', 'method': 2, 'habous': false});
+      await _openSettings(tester, b);
+      await tapUseLocation(tester);
+      expect(find.text(l.worshipMethodTitle), findsOneWidget);
+      await tester.tapAt(const Offset(5, 5)); // outside the list
+      await tester.pumpAndSettle();
+      expect(b.state.settings.prayerMethod, 2);
+    });
+
+    testWidgets('refused, off or not found: says so, saves nothing; off opens the location settings', (tester) async {
+      final l = await AppLocalizations.delegate.load(const Locale('en'));
+      var b = MemoryBackend(initial: _state(worship: {..._worship(place: false), 'location': false}));
+      var calls = locate(b, const {'state': 'none'}, granted: false);
+      await _openSettings(tester, b);
+      await tapUseLocation(tester);
+      await _continue(tester);
+      expect(calls, ['ask location']);
+      expect(find.text(l.worshipLocationDenied), findsOneWidget);
+      expect(b.state.settings.prayerPlace, '');
+
+      b = MemoryBackend(initial: _state(worship: {..._worship(place: false), 'location': true}));
+      calls = locate(b, const {'state': 'off'});
+      await _openSettings(tester, b);
+      await tapUseLocation(tester);
+      expect(find.text(l.worshipLocationOff), findsOneWidget);
+      await tester.tap(find.byKey(const Key('worship_location_settings')));
+      await tester.pumpAndSettle();
+      expect(calls, ['locate', 'openLocationSettings']);
+      expect(b.state.settings.prayerPlace, '');
+
+      b = MemoryBackend(initial: _state(worship: {..._worship(place: false), 'location': true}));
+      locate(b, const {'state': 'none'});
+      await _openSettings(tester, b);
+      await tapUseLocation(tester);
+      expect(find.text(l.worshipLocationFailed), findsOneWidget);
+      expect(b.state.settings.prayerPlace, '');
+    });
+
+    testWidgets('a Habous city says its times are the ministry\'s; coordinates are named after a near city', (tester) async {
+      final l = await AppLocalizations.delegate.load(const Locale('en'));
+      var b = MemoryBackend(initial: _state(
+          worship: {..._worship(), 'placeLabel': 'Rabat', 'habous': true, 'suggestedMethod': 12},
+          settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'rabat', prayerMethod: 12)));
+      await _openSettings(tester, b);
+      await _show(tester, find.byKey(const Key('worship_habous')));
+      expect(find.text(l.worshipHabousNote('Rabat')), findsOneWidget);
+      expect(find.text(l.worshipMethodNote), findsNothing);
+      expect(find.byKey(const Key('worship_use_location')), findsNothing); // a place is set
+
+      b = MemoryBackend(initial: _state(
+          worship: {..._worship(), 'placeLabel': '48.9362, 2.3574', 'placeCustom': true, 'placeNear': 'Paris', 'suggestedMethod': null},
+          settings: const WaaiyaSettings(gender: 'man', prayerPlace: 'custom:48.9362,2.3574,Europe/Paris', prayerMethod: 11)));
+      await _openSettings(tester, b);
+      await _show(tester, find.byKey(const Key('worship_place')));
+      expect(find.text(l.worshipPlace(l.worshipPlaceNear('Paris'))), findsOneWidget);
+    });
+  });
+
   for (final tag in appLanguages.keys) {
     testWidgets('$tag: the card with everything on fits a small phone', (tester) async {
       final b = MemoryBackend(initial: _state(
@@ -379,6 +498,19 @@ void main() {
         await tester.drag(list, const Offset(0, -400));
         await tester.pumpAndSettle();
       }
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('$tag: no place yet, with Use my location, fits a small phone', (tester) async {
+      final b = MemoryBackend(initial: _state(language: tag, worship: {..._worship(place: false), 'location': true}));
+      tester.view.physicalSize = const Size(720, 1280);
+      tester.view.devicePixelRatio = 2;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(WaaiyaApp(key: UniqueKey(), backend: b));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('nav_settings')));
+      await tester.pumpAndSettle();
+      await _show(tester, find.byKey(const Key('worship_use_location')));
       expect(tester.takeException(), isNull);
     });
   }

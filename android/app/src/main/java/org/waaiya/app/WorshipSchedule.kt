@@ -100,10 +100,11 @@ object WorshipSchedule {
      * The five prayers from yesterday to tomorrow at the place (its own dates, so a window that crosses midnight
      * and the next Fajr are both there), in time order. Days with no times (polar day or night) are left out.
      */
-    fun prayersAround(now: Instant, lat: Double, lon: Double, zone: ZoneId, method: Int, asr: Int): List<PrayerTime> {
+    fun prayersAround(now: Instant, lat: Double, lon: Double, zone: ZoneId, method: Int, asr: Int,
+                      horizon: WorshipTimes.Horizon? = null): List<PrayerTime> {
         val today = now.atZone(zone).toLocalDate()
         return (-1L..1L).flatMap { d ->
-            val day = WorshipTimes.compute(today.plusDays(d), lat, lon, zone, method, asr) ?: return@flatMap emptyList()
+            val day = WorshipTimes.compute(today.plusDays(d), lat, lon, zone, method, asr, horizon) ?: return@flatMap emptyList()
             WorshipTimes.FIVE.map { PrayerTime(it.key, day[it].toEpochMilli()) }
         }.sortedBy { it.at }
     }
