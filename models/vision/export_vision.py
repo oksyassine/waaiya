@@ -123,7 +123,7 @@ def export_torch_classifier(model, size, mean, std, labels, out, name, source):
     w = Wrap(model).eval()
     h, wd = size
     x = torch.rand(1, 3, h, wd)
-    torch.onnx.export(w, x, out, input_names=["image"], output_names=["probs"], opset_version=OPSET)
+    torch.onnx.export(w, x, out, input_names=["image"], output_names=["probs"], opset_version=OPSET, dynamo=False)
     m = onnx.load(out)
     set_meta(m, **{"im.kind": "classifier", "im.input_w": wd, "im.input_h": h, "im.labels": ",".join(labels),
                    "im.model_name": name, "im.source": source})
@@ -190,7 +190,7 @@ def export_seg(src, out, size=None):
             return torch.sigmoid(train_seg.low_res(self.net, (image - self.mean) / self.std))
 
     w = Wrap().eval()
-    torch.onnx.export(w, torch.rand(1, 3, *hw), out, input_names=["image"], output_names=["prob"], opset_version=OPSET)
+    torch.onnx.export(w, torch.rand(1, 3, *hw), out, input_names=["image"], output_names=["prob"], opset_version=OPSET, dynamo=False)
     m = onnx.load(out)
     set_meta(m, **{"im.kind": "segmenter", "im.input_w": hw[1], "im.input_h": hw[0], "im.context": ctx,
                    "im.model_name": name, "im.source": source})
