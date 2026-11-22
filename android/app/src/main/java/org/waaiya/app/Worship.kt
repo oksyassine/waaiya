@@ -17,13 +17,17 @@ import java.time.ZoneId
  *
  * Snapshot `features.worship` (facts and codes only; Flutter chooses the words):
  * - `supported` true (desktop has no such section, so the card is hidden there);
- * - `placeSet`, `placeValid`, `placeLabel` (in the app's language), `placeCustom`, `zone`, `deviceZone`,
- *   `suggestedMethod` (the city's country's usual method, or null), `methods` (method keys by index);
+ * - `placeSet`, `placeValid`, `placeLabel` (in the app's language), `placeCustom`, `placeNear` (coordinates: the
+ *   closest listed city's name within 40 km, or null), `zone`, `deviceZone`, `suggestedMethod` (the city's usual
+ *   method, or null), `methods` (method keys by index), `habous` (true: the place is one of the Ministry of Habous's
+ *   cities and the method is Morocco's, so the times are that city's official table);
  * - `date` (today at the place), `times`: [{name: fajr|sunrise|dhuhr|asr|maghrib|isha, hm: "HH:mm", at: epoch ms}]
  *   or null (no place, or no sunrise/sunset today);
  * - `next`: {prayer, hm, at} the next prayer that will act, or null; `silentUntil`/`muteUntil` (epoch ms, 0 = none)
  *   with `silentUntilHm`/`muteUntilHm`;
- * - `dndAccess`, `exactAlarms`, `notifications`, `writeSettings` (permission states);
+ * - `dndAccess`, `exactAlarms`, `notifications`, `writeSettings`, `location` (permission states);
+ * - `locate`: the last "Use my location", {id, state: working|found|off|denied|none, and when found: setting (for
+ *   prayer_place), method (to preselect), habous (true: a Ministry of Habous city, its official table), label};
  * - `tones`: [{id, kind: ring|notification, number}], `ringtone` and `notificationTone`: the id of Waaiya's tone
  *   that is the phone's default now, or "";
  * - SMS reply during prayer ([WorshipSms]): `smsSupported` (false in Play builds), `smsPhone` (phone state and call
@@ -31,21 +35,26 @@ import java.time.ZoneId
  * - `ask`: the last permission asked with askPermission, {id, name, done, granted}.
  *
  * Methods `worship.<name>`: cities {query, limit}, times {date?, place?, method?, asr?}, customPlace {lat, lon, tz},
- * zones {query}, askPermission {name: dnd|exact|notifications|write|phone|sms} -> {id, done, granted} (done false:
+ * zones {query}, locate -> {id} (the answer comes as `locate` in the snapshot; nothing is saved by it),
+ * openLocationSettings, askPermission {name: dnd|exact|notifications|write|phone|sms|location} -> {id, done, granted} (done false:
  * Android's question or settings page is open; `ask` in the snapshot says when the user is back), openSoundSettings,
  * previewTone {id}, stopTone, setTone {id}, unmuteNow, endSilentNow.
  *
  * Nothing is asked by itself: not at install, first launch or when the card shows. Each permission is asked only
- * when the user turns on the option that needs it (owner's decision, 2026-11-20).
+ * when the user turns on the option that needs it (owner's decision, 2026-11-20); the location only when the user
+ * taps "Use my location" (owner's request, 2026-11-22), and it is read once then (WorshipLocation).
  */
 object Worship : Feature {
     override val name = "worship"
 
     @Volatile private var cityCache: List<WorshipCities.City>? = null
 
-    /** The bundled list (assets/cities.tsv), read once. */
+    /** The bundled list (assets/cities.tsv), read once; notes the phone's time-zone data version (Morocco's clock). */
     fun cities(ctx: Context): List<WorshipCities.City> = cityCache
-        ?: ctx.assets.open("cities.tsv").bufferedReader().use { WorshipCities.parse(it.readText()) }.also { cityCache = it }
+        ?: ctx.assets.open("cities.tsv").bufferedReader().use { WorshipCities.parse(it.readText()) }.also {
+            WorshipCities.tzdata = runCatching { android.icu.util.TimeZone.getTZDataVersion() }.getOrNull()
+            cityCache = it
+        }
 
     override fun snapshot(host: FeatureHost): Map<String, Any?> =
         runCatching { snapshot(host.activity) }.getOrElse { mapOf("supported" to true, "error" to (it.message ?: "")) }
@@ -64,13 +73,14 @@ object Worship : Feature {
         val now = System.currentTimeMillis()
         val zone = place?.zone
         val today = zone?.let { Instant.ofEpochMilli(now).atZone(it).toLocalDate() }
-        val day = place?.let { WorshipTimes.compute(today!!, it.lat, it.lon, it.zone, st.prayerMethod, st.prayerAsr) }
+        val day = place?.let { WorshipTimes.compute(today!!, it.lat, it.lon, it.zone, st.prayerMethod, st.prayerAsr, it.horizon) }
         val state = WorshipAlarms.state(ctx)
         val next = place?.let {
             val opts = WorshipSchedule.Options(st.prayerSilent, st.prayerSilentMinutes, st.prayerAdhanMute, st.prayerAdhanMinutes)
             WorshipSchedule.plan(now, WorshipAlarms.prayersAround(Instant.ofEpochMilli(now), it, st.prayerMethod, st.prayerAsr),
                 opts, state).next
         }
+        val loc = locating
         val shownZone = zone ?: ZoneId.systemDefault()
         fun until(t: Long) = if (t > now) t else 0L
         return mapOf(
@@ -79,10 +89,12 @@ object Worship : Feature {
             "placeValid" to (place != null),
             "placeLabel" to place?.label(lang),
             "placeCustom" to (place != null && place.city == null),
+            "placeNear" to place?.near?.name(lang),
             "zone" to zone?.id,
             "deviceZone" to ZoneId.systemDefault().id,
-            "suggestedMethod" to place?.city?.let { WorshipCities.suggestedMethod(it.cc) },
+            "suggestedMethod" to place?.city?.let { WorshipCities.suggestedMethod(it) },
             "methods" to WorshipTimes.METHODS.map { it.key },
+            "habous" to (place?.city?.habous?.let { it > 0 } == true && st.prayerMethod == WorshipCities.MOROCCO),
             "date" to today?.toString(),
             "times" to timesList(day),
             "next" to next?.let { mapOf("prayer" to it.prayer, "hm" to WorshipAlarms.hm(it.at, shownZone), "at" to it.at) },
@@ -94,6 +106,11 @@ object Worship : Feature {
             "exactAlarms" to WorshipAlarms.exactAllowed(ctx),
             "notifications" to WorshipAlarms.notificationsAllowed(ctx),
             "writeSettings" to WorshipTones.canWriteSettings(ctx),
+            "location" to WorshipLocation.allowed(ctx),
+            "locate" to loc?.let { l ->
+                mapOf("id" to l.id, "state" to l.state, "setting" to l.result?.setting, "method" to l.result?.method,
+                    "habous" to l.result?.habous, "label" to l.label)
+            },
             "tones" to WorshipTones.ALL.map { mapOf("id" to it.id, "kind" to it.kind, "number" to it.number) },
             "ringtone" to WorshipTones.current(ctx, "ring"),
             "notificationTone" to WorshipTones.current(ctx, "notification"),
@@ -118,7 +135,7 @@ object Worship : Feature {
                 val limit = (args["limit"] as? Int)?.coerceIn(1, 500) ?: 50
                 WorshipCities.search(cities(ctx), str("query") ?: "", lang, limit, ZoneId.systemDefault().id).map {
                     mapOf("id" to it.id, "name" to it.name(lang), "en" to it.name("en"), "ar" to it.name("ar"),
-                        "cc" to it.cc, "tz" to it.tz, "method" to WorshipCities.suggestedMethod(it.cc))
+                        "cc" to it.cc, "tz" to it.tz, "method" to WorshipCities.suggestedMethod(it))
                 }
             }
             "times" -> {
@@ -130,7 +147,7 @@ object Worship : Feature {
                 val m = (args["method"] as? Int)?.takeIf { it in WorshipTimes.METHODS.indices } ?: st.prayerMethod
                 val asr = (args["asr"] as? Int)?.takeIf { it in 0..1 } ?: st.prayerAsr
                 mapOf("date" to date.toString(), "zone" to place.zone.id, "label" to place.label(Lang.current(ctx)),
-                    "times" to timesList(WorshipTimes.compute(date, place.lat, place.lon, place.zone, m, asr)))
+                    "times" to timesList(WorshipTimes.compute(date, place.lat, place.lon, place.zone, m, asr, place.horizon)))
             }
             "customPlace" -> {
                 val lat = (args["lat"] as? Number)?.toDouble()?.takeIf { it in -90.0..90.0 }
@@ -147,6 +164,8 @@ object Worship : Feature {
                     .sorted().take(50)
             }
             "askPermission" -> askPermission(host, str("name") ?: throw FeatureException("bad_args", "name"))
+            "locate" -> locate(host)
+            "openLocationSettings" -> open(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS))
             "openSoundSettings" -> open(Intent(android.provider.Settings.ACTION_SOUND_SETTINGS))
             "previewTone" -> WorshipTones.preview(ctx, str("id"))
             "stopTone" -> WorshipTones.stop()
@@ -175,6 +194,7 @@ object Worship : Feature {
         "write" -> WorshipTones.canWriteSettings(ctx)
         "phone" -> WorshipSms.phoneAllowed(ctx)
         "sms" -> WorshipSms.smsAllowed(ctx)
+        "location" -> WorshipLocation.allowed(ctx)
         else -> throw FeatureException("bad_args", "permission $name")
     }
 
@@ -214,6 +234,8 @@ object Worship : Feature {
             "phone" -> WorshipSms.PHONE_PERMISSIONS
             "sms" -> WorshipSms.SMS_PERMISSIONS
             "notifications" -> if (Build.VERSION.SDK_INT >= 33) arrayOf(android.Manifest.permission.POST_NOTIFICATIONS) else null
+            // the approximate position is enough for prayer times: never the precise one
+            "location" -> arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION)
             else -> null
         }
         if (runtime != null) {
@@ -240,4 +262,35 @@ object Worship : Feature {
 
     /** Request code of Waaiya's own permission questions here (UiBridge uses lower ones). */
     private const val REQ_ASK = 7310
+
+    // --- "Use my location": one position, turned into a place; Flutter saves it (and asks for the method) ---
+
+    private class Locating(val id: Int) {
+        @Volatile var state = "working"
+        @Volatile var result: WorshipCities.Located? = null
+        @Volatile var label: String? = null
+    }
+
+    @Volatile private var locating: Locating? = null
+    private var locateCount = 0
+
+    private fun locate(host: FeatureHost): Map<String, Any?> {
+        val ctx = host.activity
+        val l = Locating(++locateCount)
+        locating = l
+        WorshipLocation.locate(ctx.applicationContext) { r ->
+            if (locating !== l) return@locate
+            if (r is android.location.Location) {
+                val found = WorshipCities.fromLocation(r.latitude, r.longitude, ZoneId.systemDefault().id, cities(ctx))
+                val lang = Lang.current(ctx)
+                l.result = found
+                l.label = WorshipCities.place(found.setting, cities(ctx))?.let { p -> p.city?.name(lang) ?: p.near?.name(lang) ?: p.label(lang) }
+                l.state = "found"
+            } else {
+                l.state = (r as WorshipLocation.Failure).code
+            }
+            host.refresh()
+        }
+        return mapOf("id" to l.id)
+    }
 }

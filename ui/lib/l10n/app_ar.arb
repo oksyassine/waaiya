@@ -2207,5 +2207,41 @@
   "onboardBodyDesktop": "تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.",
   "@onboardBodyDesktop": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipUseLocation": "استخدم موقعي",
+  "@worshipUseLocation": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyLocation": "لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.",
+  "@worshipWhyLocation": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocating": "جارٍ تحديد مكانك…",
+  "@worshipLocating": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationDenied": "لم يُسمح بالموقع. يمكنك البحث عن مدينتك بدلًا من ذلك.",
+  "@worshipLocationDenied": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationOff": "الموقع مُطفأ في هذا الهاتف. شغّله ثم أعد المحاولة، أو ابحث عن مدينتك.",
+  "@worshipLocationOff": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationSettings": "إعدادات الموقع",
+  "@worshipLocationSettings": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationFailed": "تعذّر تحديد موقعك. أعد المحاولة بعد قليل، أو ابحث عن مدينتك.",
+  "@worshipLocationFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceNear": "قرب {city}",
+  "@worshipPlaceNear": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipHabousNote": "الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.",
+  "@worshipHabousNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }

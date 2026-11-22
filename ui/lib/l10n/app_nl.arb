@@ -520,5 +520,14 @@
   "protectWhatPinChange": "Pincode wijzigen",
   "protectWhatPinClear": "Pincode verwijderen",
   "protectWhatSetting": "Een instelling wijzigen",
-  "onboardBodyDesktop": "Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze computer. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd."
+  "onboardBodyDesktop": "Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze computer. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd.",
+  "worshipUseLocation": "Mijn locatie gebruiken",
+  "worshipWhyLocation": "Om de gebedstijden te vinden waar je bent, leest Waaiya nu één keer de geschatte locatie van deze telefoon. Die blijft op de telefoon als je plaats en wordt nergens heen gestuurd.",
+  "worshipLocating": "Je locatie zoeken…",
+  "worshipLocationDenied": "Locatie is niet toegestaan. Je kunt in plaats daarvan je stad zoeken.",
+  "worshipLocationOff": "Locatie staat uit op deze telefoon. Zet die aan en probeer het opnieuw, of zoek je stad.",
+  "worshipLocationSettings": "Locatie-instellingen",
+  "worshipLocationFailed": "Je locatie kon niet worden gevonden. Probeer het zo opnieuw, of zoek je stad.",
+  "worshipPlaceNear": "bij {city}",
+  "worshipHabousNote": "De officiële tijden van het ministerie van Habous en Islamitische Zaken voor {city}."
 }

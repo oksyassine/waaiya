@@ -1,5 +1,10 @@
-/// The place for the prayer times: a city from the bundled list (search in any language), or coordinates and a time
-/// zone. No location permission and nothing online: the list and the search are on the phone (`worship.cities`).
+/// The place for the prayer times: the phone's location ("Use my location", read once when tapped), a city from the
+/// bundled list (search in any language), or coordinates and a time zone. Nothing online: the list, the search and
+/// the place are worked out on the phone (`worship.cities`, `worship.locate`).
+///
+/// Morocco: the place is one of the Ministry of Habous's 190 cities and the times are its official table (the
+/// method is Morocco's, nothing to choose). Elsewhere the user chooses the calculation method, the country's usual
+/// one preselected.
 library;
 
 import 'dart:async';
@@ -10,6 +15,7 @@ import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
 import 'home.dart';
+import 'widgets.dart';
 import 'worship.dart';
 
 /// Opens the place dialog. Picking a city sets `prayer_place` and preselects the method usually used in its country
@@ -17,6 +23,7 @@ import 'worship.dart';
 Future<void> chooseWorshipPlace(BuildContext context, WorshipInfo info) async {
   final picked = await showDialog<_Picked>(context: context, builder: (_) => const _PlaceDialog());
   if (picked == null || !context.mounted) return;
+  if (picked.locate) return useMyLocation(context);
   if (picked.custom) {
     final setting = await showDialog<String>(
         context: context, builder: (_) => _CustomPlaceDialog(zone: info.zone ?? info.deviceZone ?? ''));
@@ -29,14 +36,171 @@ Future<void> chooseWorshipPlace(BuildContext context, WorshipInfo info) async {
 }
 
 class _Picked {
-  const _Picked.city(this.id, this.method) : custom = false;
+  const _Picked.city(this.id, this.method)
+      : custom = false,
+        locate = false;
   const _Picked.custom()
       : id = '',
         method = null,
-        custom = true;
+        custom = true,
+        locate = false;
+  const _Picked.locate()
+      : id = '',
+        method = null,
+        custom = false,
+        locate = true;
   final String id;
   final int? method;
   final bool custom;
+  final bool locate;
+}
+
+/// "Use my location": Android's question for the approximate location (asked only now, because the user tapped),
+/// one position read on the phone (`worship.locate`), then the place. In Morocco: the nearest of the Ministry of
+/// Habous's cities and its official times. Elsewhere: the coordinates, and the user picks the calculation method
+/// (the country's usual one preselected; closing the list keeps it).
+Future<void> useMyLocation(BuildContext context) async {
+  final l = AppLocalizations.of(context);
+  if (!await worshipAsk(context, 'location', l.worshipWhyLocation)) {
+    if (context.mounted) await _tell(context, l.worshipLocationDenied);
+    return;
+  }
+  if (!context.mounted) return;
+  final r = await showDialog<Map<Object?, Object?>>(
+      context: context, barrierDismissible: false, builder: (_) => const _LocatingDialog());
+  if (r == null || !context.mounted) return; // cancelled
+  switch (r['state']) {
+    case 'found':
+      final setting = r['setting'];
+      if (setting is! String) return;
+      final method = r['method'] is int ? r['method'] as int : 0;
+      await HomeScreen.set(context, SettingKeys.prayerPlace, setting);
+      if (!context.mounted) return;
+      if (r['habous'] == true) {
+        await HomeScreen.set(context, SettingKeys.prayerMethod, method);
+        return;
+      }
+      final i = await chooseOne(context,
+          title: l.worshipMethodTitle,
+          options: [for (var i = 0; i < worshipMethodKeys.length; i++) worshipMethodName(l, i)],
+          selected: method);
+      if (context.mounted) await HomeScreen.set(context, SettingKeys.prayerMethod, i ?? method);
+    case 'off':
+      final open = await showDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          scrollable: true,
+          content: Text(l.worshipLocationOff),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(dialog, false),
+                child: Text(MaterialLocalizations.of(dialog).cancelButtonLabel)),
+            TextButton(
+                key: const Key('worship_location_settings'),
+                onPressed: () => Navigator.pop(dialog, true),
+                child: Text(l.worshipLocationSettings)),
+          ],
+        ),
+      );
+      if (open == true && context.mounted) await runAction(context, (b) => b.invoke('worship.openLocationSettings'));
+    case 'denied':
+      await _tell(context, l.worshipLocationDenied);
+    default:
+      await _tell(context, l.worshipLocationFailed);
+  }
+}
+
+Future<void> _tell(BuildContext context, String text) => showDialog<void>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        scrollable: true,
+        content: Text(text),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(dialog), child: Text(MaterialLocalizations.of(dialog).okButtonLabel)),
+        ],
+      ),
+    );
+
+/// "Finding where you are…" while the phone reads one position (at most 30 s natively); pops with the snapshot's
+/// `locate` once it is no longer working, or null on Cancel.
+class _LocatingDialog extends StatefulWidget {
+  const _LocatingDialog();
+
+  @override
+  State<_LocatingDialog> createState() => _LocatingDialogState();
+}
+
+class _LocatingDialogState extends State<_LocatingDialog> {
+  StreamSubscription<AppState>? _sub;
+  Timer? _timeout;
+  Object? _id;
+  Map<Object?, Object?>? _last;
+
+  @override
+  void initState() {
+    super.initState();
+    _timeout = Timer(const Duration(seconds: 45), () => _done(const {'state': 'none'}));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final backend = WaaiyaScope.of(context).backend;
+      // listen before asking, so that a quick answer cannot slip by
+      _sub = backend.states.listen((s) {
+        final a = s.feature('worship')['locate'];
+        if (a is Map) {
+          _last = a;
+          _check();
+        }
+      });
+      try {
+        final r = await backend.invoke('worship.locate');
+        if (r is Map) _id = r['id'];
+        _check();
+      } on BackendException {
+        _done(const {'state': 'none'});
+      }
+    });
+  }
+
+  void _check() {
+    final a = _last;
+    if (_id != null && a != null && a['id'] == _id && a['state'] != 'working') _done(a);
+  }
+
+  bool _popped = false;
+
+  void _done(Map<Object?, Object?>? result) {
+    _timeout?.cancel();
+    if (_popped || !mounted) return;
+    _popped = true;
+    Navigator.pop(context, result);
+  }
+
+  @override
+  void dispose() {
+    _timeout?.cancel();
+    unawaited(_sub?.cancel());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return AlertDialog(
+      key: const Key('worship_locating'),
+      content: Row(
+        children: [
+          const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 3)),
+          const SizedBox(width: 16),
+          Expanded(child: Text(l.worshipLocating)),
+        ],
+      ),
+      actions: [
+        TextButton(
+            onPressed: () => _done(null), child: Text(MaterialLocalizations.of(context).cancelButtonLabel)),
+      ],
+    );
+  }
 }
 
 /// Search field and the matching cities; "Enter coordinates" at the bottom.
@@ -92,6 +256,13 @@ class _PlaceDialogState extends State<_PlaceDialog> {
                   _debounce = Timer(const Duration(milliseconds: 200), () => _search(q));
                 },
               ),
+              ListTile(
+                key: const Key('worship_place_locate'),
+                leading: const Icon(Icons.my_location),
+                title: Text(l.worshipUseLocation),
+                onTap: () => Navigator.pop(context, const _Picked.locate()),
+              ),
+              const Divider(height: 1),
               const SizedBox(height: 8),
               Expanded(
                 child: _cities.isEmpty

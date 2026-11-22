@@ -208,5 +208,14 @@
   "protect_what_pin_change": "Changer le code",
   "protect_what_pin_clear": "Supprimer le code",
   "protect_what_setting": "Changer un réglage",
-  "onboard_body_desktop": "Waaiya supprime les instruments de musique du son de toutes les applications de cet ordinateur. La parole et la récitation du Coran sont conservées. Pour l'instant, les voix chantées sont aussi supprimées."
+  "onboard_body_desktop": "Waaiya supprime les instruments de musique du son de toutes les applications de cet ordinateur. La parole et la récitation du Coran sont conservées. Pour l'instant, les voix chantées sont aussi supprimées.",
+  "worship_use_location": "Utiliser ma position",
+  "worship_why_location": "Pour trouver les heures de prière là où vous êtes, Waaiya lit une seule fois, maintenant, la position approximative de ce téléphone. Elle reste sur le téléphone comme votre lieu et n'est envoyée nulle part.",
+  "worship_locating": "Recherche de votre position…",
+  "worship_location_denied": "La position n'a pas été autorisée. Vous pouvez chercher votre ville à la place.",
+  "worship_location_off": "La localisation est désactivée sur ce téléphone. Activez-la puis réessayez, ou cherchez votre ville.",
+  "worship_location_settings": "Paramètres de localisation",
+  "worship_location_failed": "Votre position n'a pas pu être trouvée. Réessayez dans un instant, ou cherchez votre ville.",
+  "worship_place_near": "près de {city}",
+  "worship_habous_note": "Les horaires officiels du ministère des Habous et des Affaires islamiques pour {city}."
 }

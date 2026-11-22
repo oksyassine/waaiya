@@ -25,6 +25,10 @@ import kotlin.math.tan
  * The method, the Asr rule and so the times are the user's choice (Settings.prayerMethod, Settings.prayerAsr); the
  * app only preselects the method usually used in the chosen city's country ([WorshipCities.suggestedMethod]).
  *
+ * Morocco: the Ministry of Habous publishes each city's times, with sunrise and Maghrib corrected for the city's
+ * altitude. Its 190 cities are in the city list with the horizon that reproduces their tables ([Horizon], fitted by
+ * scripts/habous/make_habous.py); WorshipHabousTest checks every city against the published tables.
+ *
  * Places where the sun does not go low enough for Fajr or Isha (summer at high latitudes): the angle-based rule.
  * The night (sunset to next sunrise) is split in 60 parts; Fajr is at most angle/60 of the night before sunrise
  * and Isha at most angle/60 of the night after sunset (e.g. 18° = 18/60 = 0.3 of the night). It is applied when
@@ -48,6 +52,8 @@ object WorshipTimes {
      * @param maghribAngle Maghrib when the sun is this far below the horizon (Tehran 4.5°); 0 = at sunset.
      * @param offsets minutes added to each time of [Prayer] (in that order) after the calculation: the publisher's
      *   own precaution minutes (ihtiyat, temkin), as documented in docs and checked against its timetables.
+     * @param horizon the sun's position for sunrise and Maghrib (when [maghribAngle] is 0); [local]: a place's own
+     *   [Horizon] (WorshipCities.Place.horizon) replaces it.
      */
     class Method(
         val key: String,
@@ -57,7 +63,22 @@ object WorshipTimes {
         val ishaMinutesRamadan: Int = 0,
         val maghribAngle: Double = 0.0,
         val offsets: IntArray = IntArray(6),
+        val horizon: Horizon = Horizon.STANDARD,
+        val local: Boolean = false,
     )
+
+    /**
+     * Degrees below the horizon of the sun's centre at sunrise ([rise]) and at Maghrib ([set]). Standard: 0.833 (the
+     * sun's upper edge on a sea-level horizon). The Ministry of Habous's tables put both lower, more with altitude,
+     * and Maghrib a little later than sunset: per city in the city list.
+     */
+    class Horizon(val rise: Double, val set: Double) {
+        companion object {
+            val STANDARD = Horizon(RISE_SET, RISE_SET)
+            /** The Ministry of Habous at sea level (the fit over its 190 cities, at 0 m). */
+            val HABOUS_SEA_LEVEL = Horizon(1.36, 1.58)
+        }
+    }
 
     /**
      * Settings.prayerMethod is an index into this list: the order never changes (it is stored), new methods would
@@ -77,17 +98,19 @@ object WorshipTimes {
      * | 9 | singapore | 20° | 18° | Majlis Ugama Islam Singapura (MUIS); dhuhr +1 (MUIS's table is about 1 min later still) |
      * | 10 | turkey | 18° | 17° | Diyanet İşleri Başkanlığı; temkin: sunrise −7, dhuhr +5, asr +4, maghrib +7, isha +0 |
      * | 11 | france | 12° | 12° | Union des organisations islamiques de France (UOIF) |
-     * | 12 | morocco | 19° | 17° | Ministry of Habous; sunrise −3, dhuhr +5, maghrib +5 |
+     * | 12 | morocco | 19.1° | 17° | Ministry of Habous; dhuhr +5; sunrise and Maghrib at the city's own [Horizon] |
      * | 13 | indonesia | 20° | 18° | Kementerian Agama (Kemenag); ihtiyat +2 on every time, sunrise −2 |
      * | 14 | malaysia | 18° | 18° | JAKIM: Subuh at 18° since the MKI decision of 2019 (before: 20°); ihtiyat +2 on the five prayers |
      * | 15 | dubai | 18.2° | 18.2° | Dubai (IACAD); sunrise −3, dhuhr +3, asr +3, maghrib +3 |
      *
      * Checked against published timetables in src/test/resources/worship_reference.tsv (Umm al-Qura, Egypt,
      * Diyanet, JAKIM, MUIS, Kemenag; ISNA and UOIF through calculators that state the method): within 2 minutes.
+     * Morocco: the Ministry of Habous's tables of its 190 cities (src/test/resources/habous_times.tsv): within 1
+     * minute, 97% to the minute.
      * MWL has no independent timetable yet: a London calculator's rows match these to the minute but one day off
      * (the page's dates are shifted), so they are kept there but not asserted.
-     * The Kemenag, Morocco and Dubai offsets are the usual published precaution minutes; Morocco, Dubai, Karachi,
-     * Tehran, Gulf, Kuwait and Qatar have no fetched timetable yet.
+     * The Kemenag and Dubai offsets are the usual published precaution minutes; Dubai, Karachi, Tehran, Gulf, Kuwait
+     * and Qatar have no fetched timetable yet.
      */
     val METHODS: List<Method> = listOf(
         Method("mwl", 18.0, 17.0),
@@ -102,7 +125,7 @@ object WorshipTimes {
         Method("singapore", 20.0, 18.0, offsets = intArrayOf(0, 0, 1, 0, 0, 0)),
         Method("turkey", 18.0, 17.0, offsets = intArrayOf(0, -7, 5, 4, 7, 0)),
         Method("france", 12.0, 12.0),
-        Method("morocco", 19.0, 17.0, offsets = intArrayOf(0, -3, 5, 0, 5, 0)),
+        Method("morocco", 19.1, 17.0, offsets = intArrayOf(0, 0, 5, 0, 0, 0), horizon = Horizon.HABOUS_SEA_LEVEL, local = true),
         Method("indonesia", 20.0, 18.0, offsets = intArrayOf(2, -2, 2, 2, 2, 2)),
         Method("malaysia", 18.0, 18.0, offsets = intArrayOf(2, 0, 2, 2, 2, 2)),
         Method("dubai", 18.2, 18.2, offsets = intArrayOf(0, -3, 3, 3, 3, 0)),
@@ -122,36 +145,43 @@ object WorshipTimes {
 
     /**
      * The times of the local [date] at [lat], [lon] (degrees, east and north positive) in [zone].
-     * @param method index into [METHODS]; @param asr 0 standard, 1 Hanafi.
+     * @param method index into [METHODS]; @param asr 0 standard, 1 Hanafi; @param horizon the place's own, used by
+     *   methods that take one ([Method.local]: Morocco).
      */
-    fun compute(date: LocalDate, lat: Double, lon: Double, zone: ZoneId, method: Int, asr: Int): Day? {
+    fun compute(date: LocalDate, lat: Double, lon: Double, zone: ZoneId, method: Int, asr: Int, horizon: Horizon? = null): Day? {
         val m = METHODS[method.coerceIn(0, METHODS.size - 1)]
         val day = Solar(date, lat, lon)
         val factor = shadowFactor(asr)
+        val h = if (m.local && horizon != null) horizon else m.horizon
 
         // first guesses (hours, local mean solar time turned into UTC), then refined: the sun's position is taken
         // again at each found time, twice
         val g = -lon / 15.0
+        // sunrise and sunset: the standard horizon (the night's length below); shownRise and maghrib: the method's
         var fajr = 5.0 + g; var sunrise = 6.0 + g; var dhuhr = 12.0 + g; var asrT = 13.0 + g
-        var sunset = 18.0 + g; var maghrib = 18.0 + g; var isha = 18.0 + g
+        var sunset = 18.0 + g; var maghrib = 18.0 + g; var isha = 18.0 + g; var shownRise = sunrise
         repeat(3) {
             dhuhr = day.noon(dhuhr)
             fajr = day.noon(fajr) - day.hourAngle(fajr, m.fajr)
             sunrise = day.noon(sunrise) - day.hourAngle(sunrise, RISE_SET)
+            shownRise = day.noon(shownRise) - day.hourAngle(shownRise, h.rise)
             asrT = day.noon(asrT) + day.asrHourAngle(asrT, factor)
             sunset = day.noon(sunset) + day.hourAngle(sunset, RISE_SET)
-            maghrib = if (m.maghribAngle > 0) day.noon(maghrib) + day.hourAngle(maghrib, m.maghribAngle) else sunset
+            maghrib = day.noon(maghrib) + day.hourAngle(maghrib, if (m.maghribAngle > 0) m.maghribAngle else h.set)
             isha = if (m.ishaMinutes == 0) day.noon(isha) + day.hourAngle(isha, m.isha) else isha
             // NaN in a guess would poison the next round: start again from sunrise/sunset there
             if (fajr.isNaN() && !sunrise.isNaN()) fajr = sunrise
             if (isha.isNaN() && !sunset.isNaN()) isha = sunset
             if (maghrib.isNaN() && !sunset.isNaN()) maghrib = sunset
+            if (shownRise.isNaN() && !sunrise.isNaN()) shownRise = sunrise
         }
         if (sunrise.isNaN() || sunset.isNaN() || dhuhr.isNaN() || asrT.isNaN()) return null
+        if (shownRise.isNaN()) shownRise = sunrise
         // recompute the angle-based ones once more from the settled guesses, keeping NaN where never reached
         fajr = day.noon(fajr) - day.hourAngle(fajr, m.fajr)
         if (m.ishaMinutes == 0) isha = day.noon(isha) + day.hourAngle(isha, m.isha)
         if (m.maghribAngle > 0) maghrib = day.noon(maghrib) + day.hourAngle(maghrib, m.maghribAngle)
+        else if (maghrib.isNaN()) maghrib = sunset
 
         // high latitudes: angle-based rule (see the class comment)
         val night = 24.0 - (sunset - sunrise)
@@ -170,7 +200,7 @@ object WorshipTimes {
             maghrib + minutes / 60.0
         } else limitAfter(isha, m.isha)
 
-        val hours = doubleArrayOf(fajr, sunrise, dhuhr, asrT, maghrib, isha)
+        val hours = doubleArrayOf(fajr, shownRise, dhuhr, asrT, maghrib, isha)
         val base = date.atStartOfDay(java.time.ZoneOffset.UTC).toInstant()
         val times = Prayer.entries.associateWith { p ->
             val minutes = round(hours[p.ordinal] * 60.0).toLong() + m.offsets[p.ordinal]

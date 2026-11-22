@@ -26,6 +26,12 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:ignore="ProtectedPermissions" />
+    <!-- "Use my location" for the prayer times (WorshipLocation.kt): the approximate position, read once when the
+         user taps it. Not the precise one; no location hardware required to install. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.network" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
 
     <!-- The move from org.islamicmute.app to org.waaiya.app (AppMove.kt, docs/MOVE.md): the old app's last version
          hands its settings to the new one through a provider that only apps signed like Waaiya may call. Only the old

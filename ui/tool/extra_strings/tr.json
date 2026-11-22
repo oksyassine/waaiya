@@ -208,5 +208,14 @@
   "protect_what_pin_change": "PIN'i değiştir",
   "protect_what_pin_clear": "PIN'i kaldır",
   "protect_what_setting": "Bir ayarı değiştir",
-  "onboard_body_desktop": "Waaiya, bu bilgisayardaki her uygulamanın sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şimdilik şarkı söyleyen sesler de kaldırılır."
+  "onboard_body_desktop": "Waaiya, bu bilgisayardaki her uygulamanın sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şimdilik şarkı söyleyen sesler de kaldırılır.",
+  "worship_use_location": "Konumumu kullan",
+  "worship_why_location": "Bulunduğunuz yerin namaz vakitlerini bulmak için Waaiya bu telefonun yaklaşık konumunu şimdi bir kez okur. Konum telefonda yeriniz olarak kalır ve hiçbir yere gönderilmez.",
+  "worship_locating": "Konumunuz bulunuyor…",
+  "worship_location_denied": "Konum izni verilmedi. Bunun yerine şehrinizi arayabilirsiniz.",
+  "worship_location_off": "Bu telefonda konum kapalı. Açıp yeniden deneyin ya da şehrinizi arayın.",
+  "worship_location_settings": "Konum ayarları",
+  "worship_location_failed": "Konumunuz bulunamadı. Birazdan yeniden deneyin ya da şehrinizi arayın.",
+  "worship_place_near": "{city} yakını",
+  "worship_habous_note": "Habous ve İslami İşler Bakanlığı'nın {city} için resmî vakitleri."
 }

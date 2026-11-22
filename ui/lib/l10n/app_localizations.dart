@@ -3255,6 +3255,60 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.'**
   String get onboardBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدم موقعي'**
+  String get worshipUseLocation;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.'**
+  String get worshipWhyLocation;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ تحديد مكانك…'**
+  String get worshipLocating;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بالموقع. يمكنك البحث عن مدينتك بدلًا من ذلك.'**
+  String get worshipLocationDenied;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموقع مُطفأ في هذا الهاتف. شغّله ثم أعد المحاولة، أو ابحث عن مدينتك.'**
+  String get worshipLocationOff;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات الموقع'**
+  String get worshipLocationSettings;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحديد موقعك. أعد المحاولة بعد قليل، أو ابحث عن مدينتك.'**
+  String get worshipLocationFailed;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'قرب {city}'**
+  String worshipPlaceNear(Object city);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.'**
+  String worshipHabousNote(Object city);
 }
 
 class _AppLocalizationsDelegate

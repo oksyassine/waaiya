@@ -1868,4 +1868,39 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya removes musical instruments from the sound of every app on this computer. Speech and Quran recitation are kept. For now, singing voices are removed too.';
+
+  @override
+  String get worshipUseLocation => 'Use my location';
+
+  @override
+  String get worshipWhyLocation =>
+      'To find the prayer times where you are, Waaiya reads this phone\'s approximate location once, now. It is kept on the phone as your place and sent nowhere.';
+
+  @override
+  String get worshipLocating => 'Finding where you are…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Location was not allowed. You can search for your city instead.';
+
+  @override
+  String get worshipLocationOff =>
+      'Location is off on this phone. Turn it on and try again, or search for your city.';
+
+  @override
+  String get worshipLocationSettings => 'Location settings';
+
+  @override
+  String get worshipLocationFailed =>
+      'Your location could not be found. Try again in a moment, or search for your city.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'near $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'The official times of the Ministry of Habous and Islamic Affairs for $city.';
+  }
 }

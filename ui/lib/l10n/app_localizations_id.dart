@@ -1873,4 +1873,39 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.';
+
+  @override
+  String get worshipUseLocation => 'Gunakan lokasi saya';
+
+  @override
+  String get worshipWhyLocation =>
+      'Untuk mengetahui waktu salat di tempat Anda, Waaiya membaca perkiraan lokasi ponsel ini satu kali, sekarang. Lokasi disimpan di ponsel sebagai tempat Anda dan tidak dikirim ke mana pun.';
+
+  @override
+  String get worshipLocating => 'Mencari lokasi Anda…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Lokasi tidak diizinkan. Anda bisa mencari kota Anda sebagai gantinya.';
+
+  @override
+  String get worshipLocationOff =>
+      'Lokasi mati di ponsel ini. Nyalakan lalu coba lagi, atau cari kota Anda.';
+
+  @override
+  String get worshipLocationSettings => 'Setelan lokasi';
+
+  @override
+  String get worshipLocationFailed =>
+      'Lokasi Anda tidak dapat ditemukan. Coba lagi sebentar lagi, atau cari kota Anda.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'dekat $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Waktu resmi Kementerian Wakaf dan Urusan Islam (Habous) untuk $city.';
+  }
 }

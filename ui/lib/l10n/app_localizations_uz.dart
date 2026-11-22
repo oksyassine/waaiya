@@ -1878,4 +1878,39 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya bu kompyuterdagi barcha ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Hozircha qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
+
+  @override
+  String get worshipUseLocation => 'Joylashuvimdan foydalanish';
+
+  @override
+  String get worshipWhyLocation =>
+      'Siz turgan joydagi namoz vaqtlarini topish uchun Waaiya bu telefonning taxminiy joylashuvini hozir bir marta o\'qiydi. U telefonda joyingiz sifatida saqlanadi va hech qayerga yuborilmaydi.';
+
+  @override
+  String get worshipLocating => 'Joylashuvingiz aniqlanmoqda…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Joylashuvga ruxsat berilmadi. Buning o\'rniga shahringizni qidirishingiz mumkin.';
+
+  @override
+  String get worshipLocationOff =>
+      'Bu telefonda joylashuv o\'chiq. Uni yoqib, qayta urinib ko\'ring yoki shahringizni qidiring.';
+
+  @override
+  String get worshipLocationSettings => 'Joylashuv sozlamalari';
+
+  @override
+  String get worshipLocationFailed =>
+      'Joylashuvingiz topilmadi. Birozdan so\'ng qayta urinib ko\'ring yoki shahringizni qidiring.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city yaqinida';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Habus va islomiy ishlar vazirligining $city uchun rasmiy vaqtlari.';
+  }
 }

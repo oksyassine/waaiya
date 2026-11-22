@@ -1869,4 +1869,39 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'واعية اس کمپیوٹر کی ہر ایپ کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ فی الحال گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
+
+  @override
+  String get worshipUseLocation => 'میرا مقام استعمال کریں';
+
+  @override
+  String get worshipWhyLocation =>
+      'جہاں آپ ہیں وہاں کے نماز کے اوقات جاننے کے لیے واعیہ اس فون کا تقریبی مقام ایک بار، ابھی، پڑھتا ہے۔ یہ فون پر آپ کی جگہ کے طور پر رہتا ہے اور کہیں نہیں بھیجا جاتا۔';
+
+  @override
+  String get worshipLocating => 'آپ کا مقام تلاش کیا جا رہا ہے…';
+
+  @override
+  String get worshipLocationDenied =>
+      'مقام کی اجازت نہیں دی گئی۔ اس کے بجائے آپ اپنا شہر تلاش کر سکتے ہیں۔';
+
+  @override
+  String get worshipLocationOff =>
+      'اس فون میں مقام بند ہے۔ اسے آن کر کے دوبارہ کوشش کریں، یا اپنا شہر تلاش کریں۔';
+
+  @override
+  String get worshipLocationSettings => 'مقام کی ترتیبات';
+
+  @override
+  String get worshipLocationFailed =>
+      'آپ کا مقام نہیں مل سکا۔ تھوڑی دیر بعد دوبارہ کوشش کریں، یا اپنا شہر تلاش کریں۔';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city کے قریب';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return '$city کے لیے وزارتِ اوقاف و امورِ اسلامیہ (مراکش) کے سرکاری اوقات۔';
+  }
 }

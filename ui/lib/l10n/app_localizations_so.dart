@@ -1888,4 +1888,39 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya waxay ka saartaa qalabka muusigga codka barnaamij kasta oo kombiyuutarkan ku jira. Hadalka iyo akhriska Qur\'aanka waa la hayaa. Hadda, codadka heesaha sidoo kale waa la saaraa.';
+
+  @override
+  String get worshipUseLocation => 'Isticmaal goobtayda';
+
+  @override
+  String get worshipWhyLocation =>
+      'Si loo helo waqtiyada salaadda meesha aad joogto, Waaiya waxay hal mar, hadda, akhrisaa goobta qiyaasta ah ee taleefankan. Waxay ku jirtaa taleefanka sida goobtaada, meelna looma diro.';
+
+  @override
+  String get worshipLocating => 'Waxaa la raadinayaa meesha aad joogto…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Goobta looma oggolaan. Waxaad raadin kartaa magaaladaada beddelkeeda.';
+
+  @override
+  String get worshipLocationOff =>
+      'Goobta waa ka dansan tahay taleefankan. Shid oo isku day mar kale, ama raadi magaaladaada.';
+
+  @override
+  String get worshipLocationSettings => 'Dejinta goobta';
+
+  @override
+  String get worshipLocationFailed =>
+      'Goobtaada lama helin. Isku day mar kale wax yar kadib, ama raadi magaaladaada.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'u dhow $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee $city.';
+  }
 }

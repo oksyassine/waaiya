@@ -520,5 +520,14 @@
   "protectWhatPinChange": "Kubadilisha PIN",
   "protectWhatPinClear": "Kuondoa PIN",
   "protectWhatSetting": "Kubadilisha mpangilio",
-  "onboardBodyDesktop": "Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia."
+  "onboardBodyDesktop": "Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.",
+  "worshipUseLocation": "Tumia mahali nilipo",
+  "worshipWhyLocation": "Ili kupata nyakati za swala mahali ulipo, Waaiya husoma mahali takriban pa simu hii mara moja, sasa. Huhifadhiwa kwenye simu kama mahali pako na haitumwi popote.",
+  "worshipLocating": "Inatafuta mahali ulipo…",
+  "worshipLocationDenied": "Mahali hapakuruhusiwa. Unaweza kutafuta mji wako badala yake.",
+  "worshipLocationOff": "Huduma ya mahali imezimwa kwenye simu hii. Iwashe ujaribu tena, au utafute mji wako.",
+  "worshipLocationSettings": "Mipangilio ya mahali",
+  "worshipLocationFailed": "Mahali ulipo hapakupatikana. Jaribu tena baada ya muda mfupi, au utafute mji wako.",
+  "worshipPlaceNear": "karibu na {city}",
+  "worshipHabousNote": "Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa {city}."
 }

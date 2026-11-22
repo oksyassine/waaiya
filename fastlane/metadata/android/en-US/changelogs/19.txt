@@ -1,0 +1,1 @@
+Prayer times: "Use my location" finds your place in one tap (approximate location, read once, kept on the phone). In Morocco, the official times of the Ministry of Habous for the nearest of its 190 cities, now all in the list; elsewhere you choose the calculation method. Moroccan times are right even on phones whose time-zone data still puts Morocco at GMT+1.

@@ -1883,4 +1883,39 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo computer. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano.';
+
+  @override
+  String get worshipUseLocation => 'Usa la mia posizione';
+
+  @override
+  String get worshipWhyLocation =>
+      'Per trovare gli orari di preghiera dove ti trovi, Waaiya legge una sola volta, ora, la posizione approssimativa di questo telefono. Resta sul telefono come tuo luogo e non viene inviata da nessuna parte.';
+
+  @override
+  String get worshipLocating => 'Ricerca della tua posizione…';
+
+  @override
+  String get worshipLocationDenied =>
+      'La posizione non è stata consentita. Puoi cercare la tua città.';
+
+  @override
+  String get worshipLocationOff =>
+      'La localizzazione è disattivata su questo telefono. Attivala e riprova, oppure cerca la tua città.';
+
+  @override
+  String get worshipLocationSettings => 'Impostazioni di localizzazione';
+
+  @override
+  String get worshipLocationFailed =>
+      'Impossibile trovare la tua posizione. Riprova tra un momento, oppure cerca la tua città.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'vicino a $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Gli orari ufficiali del Ministero degli Habous e degli Affari islamici per $city.';
+  }
 }

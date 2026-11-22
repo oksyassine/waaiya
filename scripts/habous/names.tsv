@@ -1,0 +1,195 @@
+# Latin names of the Ministry of Habous's prayer-time cities (habous.gov.ma lists them in Arabic only), written by
+# hand in their usual Moroccan French spelling, checked against GeoNames (CC BY 4.0) and the fitted positions.
+# The seven cities Waaiya already had keep their ids (rabat, casablanca, ...). cc and tz: Ceuta and Melilla are ES,
+# Africa/Ceuta; places south of 27°40' N use Africa/El_Aaiun (the same clock as Africa/Casablanca).
+code	id	latin
+1	rabat	Rabat
+2	khemisset	Khémisset
+3	tiflet	Tiflet
+4	rommani	Rommani
+5	oulmes	Oulmès
+6	bouznika	Bouznika
+7	kenitra	Kénitra
+8	sidi_kacem	Sidi Kacem
+9	sidi_yahya_el_gharb	Sidi Yahya El Gharb
+10	sidi_slimane	Sidi Slimane
+11	souk_el_arbaa	Souk El Arbaâ du Gharb
+12	arbaoua	Arbaoua
+13	moulay_bousselham	Moulay Bousselham
+14	tangier	Tanger
+15	tetouan	Tétouan
+16	larache	Larache
+17	asilah	Asilah
+18	chefchaouen	Chefchaouen
+19	martil	Martil
+20	mdiq	M'diq
+21	ksar_el_kebir	Ksar El Kébir
+22	ksar_sghir	Ksar Sghir
+23	al_hoceima	Al Hoceïma
+24	ceuta	Ceuta (Sebta)
+25	fnideq	Fnideq
+26	jebha	El Jebha
+27	oued_laou	Oued Laou
+28	bab_berred	Bab Berred
+29	ouazzane	Ouazzane
+30	bouskour	Bouskour
+31	oujda	Oujda
+32	berkane	Berkane
+33	figuig	Figuig
+34	bouarfa	Bouarfa
+35	guercif	Guercif
+36	jerada	Jerada
+37	ain_chair	Aïn Chaïr
+38	taourirt	Taourirt
+39	nador	Nador
+40	melilla	Melilla
+41	debdou	Debdou
+42	selouane	Selouane
+43	beni_ansar	Beni Ansar
+44	farkhana	Farkhana
+45	talsint	Talsint
+46	tendrara	Tendrara
+47	el_aioun_sidi_mellouk	El Aïoun Sidi Mellouk
+48	beni_drar	Beni Drar
+49	saidia	Saïdia
+50	ras_el_ma	Ras El Ma
+51	taforalt	Taforalt
+52	fezouane	Fezouane
+53	ahfir	Ahfir
+54	zaio	Zaïo
+55	driouch	Driouch
+56	beni_tadjit	Beni Tadjit
+57	bouanane	Bouanane
+58	casablanca	Casablanca
+59	mohammedia	Mohammédia
+60	benslimane	Benslimane
+61	settat	Settat
+62	el_gara	El Gara
+63	el_borouj	El Borouj
+64	ben_ahmed	Ben Ahmed
+65	berrechid	Berrechid
+66	el_jadida	El Jadida
+67	azemmour	Azemmour
+68	sidi_bennour	Sidi Bennour
+69	zemamra	Khémis Zemamra
+70	khenifra	Khénifra
+71	moulay_bouazza	Moulay Bouazza
+72	zaouiat_ahansal	Zaouiat Ahansal
+73	beni_mellal	Béni Mellal
+74	azilal	Azilal
+75	fquih_ben_salah	Fquih Ben Salah
+76	demnate	Demnate
+77	el_ksiba	El Ksiba
+78	kasba_tadla	Kasba Tadla
+79	khouribga	Khouribga
+80	oued_zem	Oued Zem
+81	fez	Fès
+82	sefrou	Sefrou
+83	moulay_yacoub	Moulay Yacoub
+84	boulemane	Boulemane
+85	missour	Missour
+86	ribat_el_kheir	Ribat El Kheir
+87	el_menzel	El Menzel Beni Yazgha
+88	imouzzer_kandar	Imouzzer Kandar
+89	taza	Taza
+90	taounate	Taounate
+91	aknoul	Aknoul
+92	tizi_ouasli	Tizi Ouasli
+93	boured	Boured
+94	tahla	Tahla
+95	tissa	Tissa
+96	karia_ba_mohamed	Karia Ba Mohamed
+97	ketama	Ketama
+98	oued_amlil	Oued Amlil
+99	meknes	Meknès
+100	ifrane	Ifrane
+101	el_hajeb	El Hajeb
+102	zerhoun	Zerhoun
+103	azrou	Azrou
+104	marrakesh	Marrakech
+105	kelaat_sraghna	El Kelaâ des Sraghna
+106	essaouira	Essaouira
+107	chichaoua	Chichaoua
+108	ben_guerir	Ben Guerir
+109	rehamna	Rehamna (Skhour Rehamna)
+110	tamanar	Tamanar
+111	safi	Safi
+112	oualidia	Oualidia
+113	youssoufia	Youssoufia
+114	tassoultante	Tassoultante
+115	tameslouht	Tameslouht
+116	kettara	Kettara
+117	agadir	Agadir
+118	taroudant	Taroudant
+119	tiznit	Tiznit
+120	igherm	Igherm
+121	taliouine	Taliouine
+122	tafraout	Tafraout
+123	tata	Tata
+124	akka	Akka
+125	foum_el_hisn	Foum El Hisn
+126	biougra	Biougra
+127	ouled_teima	Ouled Teïma
+128	errachidia	Errachidia
+129	rissani	Rissani
+130	erfoud	Erfoud
+131	tendite	Tendite
+132	goulmima	Goulmima
+133	imilchil	Imilchil
+134	tinejdad	Tinejdad
+135	rich	Rich
+136	midelt	Midelt
+137	zagora	Zagora
+138	ouarzazate	Ouarzazate
+139	tinghir	Tinghir
+140	skoura	Skoura
+141	kelaat_mgouna	Kelaât M'Gouna
+142	agdz	Agdz
+143	boumalne_dades	Boumalne Dadès
+144	alnif	Alnif
+145	assoul	Assoul
+146	msemrir	Msemrir
+147	tazarine	Tazarine
+148	sidi_ifni	Sidi Ifni
+149	guelmim	Guelmim
+150	assa	Assa
+151	zag	Zag
+152	tan_tan	Tan-Tan
+153	bouizakarne	Bouizakarne
+154	mahbes	Mahbès
+155	lemsid	Lemsid
+156	laayoune	Laâyoune
+157	smara	Smara
+158	boujdour	Boujdour
+159	tarfaya	Tarfaya
+160	tifariti	Tifariti
+161	boukraa	Boukraâ
+162	guelta_zemmour	Guelta Zemmour
+163	amgala	Amgala
+164	akhfennir	Akhfennir
+165	dakhla	Dakhla
+166	lagouira	Lagouira
+167	aousserd	Aousserd
+168	bir_gandouz	Bir Gandouz
+169	bir_anzarane	Bir Anzarane
+301	khemis_sidi_abdeljalil	Khémis Sidi Abdeljalil
+302	oulad_ayad	Oulad Ayad
+304	matmata	Matmata
+305	imintanoute	Imintanoute
+306	sidi_ghanem	Sidi Ghanem
+307	tafantant	Tafantant
+308	ait_el_kak	Aït El Kak
+309	agoudal_imilchil	Agoudal (Imilchil)
+310	agoudal_midelt	Agoudal (Imilchil, Midelt)
+311	agaiouar	Agaïouar
+312	ain_aouda	Aïn Aouda
+313	asguine	Asguine
+314	ait_ourir	Aït Ourir
+315	zaouiat_moulay_brahim	Zaouiat Moulay Brahim
+316	toulkoult	Toulkoult
+317	iks	Iks
+318	kerss	Kerss
+319	tissint	Tissint
+320	foum_zguid	Foum Zguid
+321	ksar_ich	Ksar Ich
+322	imin_tlat	Imin Tlat

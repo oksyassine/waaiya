@@ -68,7 +68,7 @@ object WorshipAlarms {
         st.prayerAdhanMinutes, st.prayerPlace, st.prayerMethod, st.prayerAsr).joinToString("|")
 
     fun prayersAround(now: Instant, place: WorshipCities.Place, method: Int, asr: Int) =
-        WorshipSchedule.prayersAround(now, place.lat, place.lon, place.zone, method, asr)
+        WorshipSchedule.prayersAround(now, place.lat, place.lon, place.zone, method, asr, place.horizon)
 
     /**
      * Called whenever the screen refreshes (cheap): when the prayer settings changed since the last time, marks the

@@ -1888,4 +1888,39 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.';
+
+  @override
+  String get worshipUseLocation => 'Tumia mahali nilipo';
+
+  @override
+  String get worshipWhyLocation =>
+      'Ili kupata nyakati za swala mahali ulipo, Waaiya husoma mahali takriban pa simu hii mara moja, sasa. Huhifadhiwa kwenye simu kama mahali pako na haitumwi popote.';
+
+  @override
+  String get worshipLocating => 'Inatafuta mahali ulipo…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Mahali hapakuruhusiwa. Unaweza kutafuta mji wako badala yake.';
+
+  @override
+  String get worshipLocationOff =>
+      'Huduma ya mahali imezimwa kwenye simu hii. Iwashe ujaribu tena, au utafute mji wako.';
+
+  @override
+  String get worshipLocationSettings => 'Mipangilio ya mahali';
+
+  @override
+  String get worshipLocationFailed =>
+      'Mahali ulipo hapakupatikana. Jaribu tena baada ya muda mfupi, au utafute mji wako.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'karibu na $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa $city.';
+  }
 }

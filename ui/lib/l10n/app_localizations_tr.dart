@@ -1872,4 +1872,39 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya, bu bilgisayardaki her uygulamanın sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şimdilik şarkı söyleyen sesler de kaldırılır.';
+
+  @override
+  String get worshipUseLocation => 'Konumumu kullan';
+
+  @override
+  String get worshipWhyLocation =>
+      'Bulunduğunuz yerin namaz vakitlerini bulmak için Waaiya bu telefonun yaklaşık konumunu şimdi bir kez okur. Konum telefonda yeriniz olarak kalır ve hiçbir yere gönderilmez.';
+
+  @override
+  String get worshipLocating => 'Konumunuz bulunuyor…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Konum izni verilmedi. Bunun yerine şehrinizi arayabilirsiniz.';
+
+  @override
+  String get worshipLocationOff =>
+      'Bu telefonda konum kapalı. Açıp yeniden deneyin ya da şehrinizi arayın.';
+
+  @override
+  String get worshipLocationSettings => 'Konum ayarları';
+
+  @override
+  String get worshipLocationFailed =>
+      'Konumunuz bulunamadı. Birazdan yeniden deneyin ya da şehrinizi arayın.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city yakını';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Habous ve İslami İşler Bakanlığı\'nın $city için resmî vakitleri.';
+  }
 }

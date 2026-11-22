@@ -1,6 +1,7 @@
 package org.waaiya.app
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -85,6 +86,65 @@ class WorshipCitiesTest {
         for (bad in listOf("custom:", "custom:1,2", "custom:91,0,UTC", "custom:0,181,UTC", "custom:0,0,Nowhere/Town",
             "custom:a,b,UTC"))
             assertNull(bad, WorshipCities.place(bad, cities))
+    }
+
+    @Test
+    fun myLocationInMoroccoIsTheNearestHabousCity() {
+        // Salé, across the river from Rabat: the ministry's table for Rabat
+        val sale = WorshipCities.fromLocation(34.04, -6.80, "Africa/Casablanca", cities)
+        assertEquals("rabat", sale.setting)
+        assertTrue(sale.habous)
+        assertEquals(WorshipCities.MOROCCO, sale.method)
+        // a village in the Atlas: the nearest of the ministry's cities, whatever its size
+        val atlas = WorshipCities.fromLocation(31.06, -7.91, "Africa/Casablanca", cities)
+        assertTrue(atlas.habous)
+        assertTrue(atlas.setting, cities.single { it.id == atlas.setting }.habous > 0)
+        // Dakhla, on Western Sahara's zone id (the same clock)
+        assertEquals("dakhla", WorshipCities.fromLocation(23.70, -15.95, "Africa/El_Aaiun", cities).setting)
+        // Ceuta is in the ministry's list
+        assertEquals("ceuta", WorshipCities.fromLocation(35.89, -5.32, "Africa/Ceuta", cities).setting)
+    }
+
+    @Test
+    fun myLocationElsewhereIsTheCoordinatesAndTheCountrysUsualMethod() {
+        // Tarifa, Spain: nearer to Tangier than to any Spanish city in the list, but on Spain's clock
+        val tarifa = WorshipCities.fromLocation(36.0143, -5.6044, "Europe/Madrid", cities)
+        assertFalse(tarifa.habous)
+        assertEquals("custom:36.0143,-5.6044,Europe/Madrid", tarifa.setting)
+        assertEquals(WorshipCities.suggestedMethod("ES"), tarifa.method)
+        // Saint-Denis, next to Paris: named after Paris, France's usual method
+        val stDenis = WorshipCities.fromLocation(48.9362, 2.3574, "Europe/Paris", cities)
+        assertEquals(11, stDenis.method)
+        assertEquals("paris", stDenis.near?.id)
+        val place = WorshipCities.place(stDenis.setting, cities)!!
+        assertEquals("paris", place.near?.id)
+        assertNull(place.city)
+        // Cairo's suburbs: Egypt
+        assertEquals(2, WorshipCities.fromLocation(30.0, 31.3, "Africa/Cairo", cities).method)
+        // the middle of nowhere on a clock without listed cities: Muslim World League, no name
+        val sea = WorshipCities.fromLocation(-40.0, -30.0, "Atlantic/South_Georgia", cities)
+        assertEquals(0, sea.method)
+        assertNull(sea.near)
+    }
+
+    @Test
+    fun coordinatesInMoroccoTakeTheNearestHabousHorizon() {
+        val ifrane = cities.single { it.id == "ifrane" }
+        val p = WorshipCities.place(WorshipCities.customSetting(ifrane.lat + 0.05, ifrane.lon, "Africa/Casablanca"), cities)!!
+        assertEquals(ifrane.horizon!!.rise, p.horizon!!.rise, 1e-9)
+        // far from any of the ministry's cities: none (the method's sea-level horizon applies)
+        assertNull(WorshipCities.place("custom:48.8566,2.3522,Europe/Paris", cities)!!.horizon)
+    }
+
+    @Test
+    fun moroccoIsOnGmtEvenWithOldTimeZoneData() {
+        val casa = ZoneId.of("Africa/Casablanca")
+        assertEquals(java.time.ZoneOffset.UTC, WorshipCities.clockZone(casa, "2024a"))
+        assertEquals(java.time.ZoneOffset.UTC, WorshipCities.clockZone(ZoneId.of("Africa/El_Aaiun"), "2026b"))
+        assertEquals(casa, WorshipCities.clockZone(casa, "2026c"))   // the data that knows it
+        assertEquals(casa, WorshipCities.clockZone(casa, null))      // unknown: as it is
+        val paris = ZoneId.of("Europe/Paris")
+        assertEquals(paris, WorshipCities.clockZone(paris, "2024a"))
     }
 
     @Test
