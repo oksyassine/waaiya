@@ -217,5 +217,9 @@
   "worship_location_settings": "Tetapan lokasi",
   "worship_location_failed": "Lokasi anda tidak dapat ditemui. Cuba lagi sebentar lagi, atau cari bandar anda.",
   "worship_place_near": "berhampiran {city}",
-  "worship_habous_note": "Waktu rasmi Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi {city}."
+  "worship_habous_note": "Waktu rasmi Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi {city}.",
+  "tray_open": "Buka Waaiya",
+  "tray_quit": "Keluar",
+  "engine_error_autostart_blocked": "Windows tidak membenarkan Waaiya bermula semasa log masuk. Hidupkan Waaiya dalam Tetapan › Aplikasi › Permulaan, kemudian hidupkan pilihan ini semula.",
+  "engine_error_autostart_policy": "Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk."
 }

@@ -6,13 +6,16 @@
 
 #include <memory>
 
+#include "startup.h"
+#include "tray.h"
 #include "win32_window.h"
 
 // A window that does nothing but host a Flutter view.
 class FlutterWindow : public Win32Window {
  public:
   // Creates a new FlutterWindow hosting a Flutter view running |project|.
-  explicit FlutterWindow(const flutter::DartProject& project);
+  // [start_hidden]: started at login (--tray): only the icon next to the clock, no window.
+  explicit FlutterWindow(const flutter::DartProject& project, bool start_hidden = false);
   virtual ~FlutterWindow();
 
  protected:
@@ -28,6 +31,10 @@ class FlutterWindow : public Win32Window {
 
   // The Flutter instance hosted by this window.
   std::unique_ptr<flutter::FlutterViewController> flutter_controller_;
+
+  std::unique_ptr<Tray> tray_;
+  std::unique_ptr<Startup> startup_;
+  bool start_hidden_;
 };
 
 #endif  // RUNNER_FLUTTER_WINDOW_H_

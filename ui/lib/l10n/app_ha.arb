@@ -529,5 +529,9 @@
   "worshipLocationSettings": "Saitunan wuri",
   "worshipLocationFailed": "Ba a sami wurinka ba. Sake gwadawa nan ba da jimawa ba, ko ka nemi garinka.",
   "worshipPlaceNear": "kusa da {city}",
-  "worshipHabousNote": "Lokutan hukuma na Ma'aikatar Habous da Harkokin Musulunci na {city}."
+  "worshipHabousNote": "Lokutan hukuma na Ma'aikatar Habous da Harkokin Musulunci na {city}.",
+  "trayOpen": "Buɗe Waaiya",
+  "trayQuit": "Fita",
+  "engineErrorAutostartBlocked": "Windows ba ya barin Waaiya ta fara lokacin shiga. Kunna Waaiya a Settings › Apps › Startup, sannan ka sake kunna wannan.",
+  "engineErrorAutostartPolicy": "Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga."
 }

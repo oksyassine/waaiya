@@ -217,5 +217,9 @@
   "worship_location_settings": "Locatie-instellingen",
   "worship_location_failed": "Je locatie kon niet worden gevonden. Probeer het zo opnieuw, of zoek je stad.",
   "worship_place_near": "bij {city}",
-  "worship_habous_note": "De officiële tijden van het ministerie van Habous en Islamitische Zaken voor {city}."
+  "worship_habous_note": "De officiële tijden van het ministerie van Habous en Islamitische Zaken voor {city}.",
+  "tray_open": "Waaiya openen",
+  "tray_quit": "Afsluiten",
+  "engine_error_autostart_blocked": "Windows laat Waaiya niet starten bij het aanmelden. Zet Waaiya aan in Instellingen › Apps › Opstarten en zet deze optie daarna weer aan.",
+  "engine_error_autostart_policy": "De instellingen van deze computer, gekozen door de beheerder, laten Waaiya niet starten bij het aanmelden."
 }

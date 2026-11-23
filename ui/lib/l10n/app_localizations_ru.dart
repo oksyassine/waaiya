@@ -1909,4 +1909,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Официальное время Министерства хабусов и исламских дел для города $city.';
   }
+
+  @override
+  String get trayOpen => 'Открыть Waaiya';
+
+  @override
+  String get trayQuit => 'Выйти';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows не разрешает Waaiya запускаться при входе в систему. Включите Waaiya в Параметры › Приложения › Автозагрузка, затем снова включите этот параметр.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Настройки этого компьютера, выбранные его администратором, не разрешают Waaiya запускаться при входе в систему.';
 }

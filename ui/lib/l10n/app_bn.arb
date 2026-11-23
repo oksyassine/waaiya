@@ -529,5 +529,9 @@
   "worshipLocationSettings": "অবস্থান সেটিংস",
   "worshipLocationFailed": "আপনার অবস্থান পাওয়া যায়নি। একটু পরে আবার চেষ্টা করুন, অথবা আপনার শহর খুঁজুন।",
   "worshipPlaceNear": "{city}-এর কাছে",
-  "worshipHabousNote": "{city}-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সরকারি সময়।"
+  "worshipHabousNote": "{city}-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সরকারি সময়।",
+  "trayOpen": "Waaiya খুলুন",
+  "trayQuit": "প্রস্থান",
+  "engineErrorAutostartBlocked": "Windows লগইনের সময় Waaiya চালু হতে দিচ্ছে না। Settings › Apps › Startup-এ Waaiya চালু করুন, তারপর এটি আবার চালু করুন।",
+  "engineErrorAutostartPolicy": "এই কম্পিউটারের সেটিংস, যা এর প্রশাসক বেছে নিয়েছেন, লগইনের সময় Waaiya চালু হতে দেয় না।"
 }

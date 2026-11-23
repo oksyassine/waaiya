@@ -529,5 +529,9 @@
   "worshipLocationSettings": "Location settings",
   "worshipLocationFailed": "Your location could not be found. Try again in a moment, or search for your city.",
   "worshipPlaceNear": "near {city}",
-  "worshipHabousNote": "The official times of the Ministry of Habous and Islamic Affairs for {city}."
+  "worshipHabousNote": "The official times of the Ministry of Habous and Islamic Affairs for {city}.",
+  "trayOpen": "Open Waaiya",
+  "trayQuit": "Quit",
+  "engineErrorAutostartBlocked": "Windows is not letting Waaiya start at login. Turn Waaiya on in Settings › Apps › Startup, then turn this on again.",
+  "engineErrorAutostartPolicy": "This computer's settings, chosen by its administrator, do not let Waaiya start at login."
 }

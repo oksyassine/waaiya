@@ -18,6 +18,7 @@ kwa moja, kwenye kompyuta yako.
 - Programu zinazosikika bila kuchujwa: chagua programu zinazosikika kwa sauti yake asili; hazichujwi wala hazinyamazishwi.
 - Ulinzi kwa nyakati za udhaifu: kusimamisha kunaweza kusubiri (kwa mfano dakika 30) kisha kukuuliza tena, na mzazi anaweza kuweka PIN.
 - Andika kosa: weka alama kwenye muziki uliopita au sauti iliyoondolewa kimakosa; maelezo hubaki kwenye kompyuta yako.
+- Ikoni karibu na saa: fungua Waaiya, au washa na zima uchujaji, bila kutafuta programu.
 - Anza unapoingia, ukitaka.
 - Kila kitu hufanya kazi kwenye kompyuta yako. Hakuna kinachotumwa popote: hakuna akaunti, hakuna takwimu, hakuna
   matangazo.
@@ -32,16 +33,9 @@ polepole, Waaiya hujibadilisha yenyewe kuwa mono.
 
 ## What's new in this version
 
-Toleo la kwanza kwenye Microsoft Store.
-- Ukurasa mpya wa Viungo: tazama kiungo cha YouTube, TikTok au Instagram kichujio kikiwa kimewashwa.
-- Nyamazisha uimbaji wa wanawake (toleo la mwanzo), sasa kwenye Windows pia.
-- Programu zinazosikika bila kuchujwa
-- Ulinzi kwa nyakati za udhaifu
-- Andika kosa
-- Lugha 18 (mpya: Kihispania, Kiholanzi, Kijerumani, Kiitaliano, Kirusi, Kiuzbeki, Kiswahili, Kihausa, Kisomali).
-- Muundo laini zaidi: vitufe hujibu mara moja, mihuisho tulivu (hakuna mihuisho Windows ikiomba mwendo mdogo).
-- Marekebisho: kichujio cha zamani cha Waaiya kilichoacha kujibu hakizuii tena kipya; maelezo ya hitilafu ni rahisi
-  zaidi kusoma.
+- Ikoni karibu na saa: fungua Waaiya, au washa na zima uchujaji kutoka kwenye menyu yake. Kufunga dirisha kunaiacha Waaiya hapo.
+- Anza unapoingia: Waaiya inaanza karibu na saa, na Windows inaomba ruhusa yako inapohitajika.
+- Nembo mpya: herufi ع ya واعية imechorwa kama sikio, inaonekana wazi hata kwenye ikoni ndogo.
 
 ## Product features (one per line, at most 20)
 
@@ -55,6 +49,7 @@ Toleo la kwanza kwenye Microsoft Store.
 - Ulinzi kwa nyakati za udhaifu
 - Andika kosa
 - Anza unapoingia
+- Ikoni karibu na saa: washa na zima uchujaji
 - Lugha 18
 - Bure na chanzo huria
 

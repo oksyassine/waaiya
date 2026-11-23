@@ -217,5 +217,9 @@
   "worship_location_settings": "Konum ayarları",
   "worship_location_failed": "Konumunuz bulunamadı. Birazdan yeniden deneyin ya da şehrinizi arayın.",
   "worship_place_near": "{city} yakını",
-  "worship_habous_note": "Habous ve İslami İşler Bakanlığı'nın {city} için resmî vakitleri."
+  "worship_habous_note": "Habous ve İslami İşler Bakanlığı'nın {city} için resmî vakitleri.",
+  "tray_open": "Waaiya uygulamasını aç",
+  "tray_quit": "Çık",
+  "engine_error_autostart_blocked": "Windows, Waaiya'nın oturum açılırken başlamasına izin vermiyor. Ayarlar › Uygulamalar › Başlangıç bölümünde Waaiya'yı açın, ardından bu seçeneği yeniden açın.",
+  "engine_error_autostart_policy": "Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya'nın oturum açılırken başlamasına izin vermiyor."
 }

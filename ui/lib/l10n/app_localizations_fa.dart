@@ -1906,4 +1906,18 @@ class AppLocalizationsFa extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'اوقات رسمی وزارت اوقاف و امور اسلامی مراکش برای $city.';
   }
+
+  @override
+  String get trayOpen => 'باز کردن واعية';
+
+  @override
+  String get trayQuit => 'خروج';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'ویندوز اجازه نمی‌دهد واعية هنگام ورود اجرا شود. واعية را در تنظیمات › برنامه‌ها › راه‌اندازی روشن کنید، سپس این گزینه را دوباره روشن کنید.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'تنظیمات این رایانه، که مدیر آن انتخاب کرده است، اجازه نمی‌دهد واعية هنگام ورود اجرا شود.';
 }

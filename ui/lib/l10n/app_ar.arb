@@ -2243,5 +2243,21 @@
   "worshipHabousNote": "الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.",
   "@worshipHabousNote": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "trayOpen": "افتح واعية",
+  "@trayOpen": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "trayQuit": "خروج",
+  "@trayQuit": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorAutostartBlocked": "ويندوز لا يسمح لواعية بالبدء عند تسجيل الدخول. فعّل واعية في الإعدادات › التطبيقات › بدء التشغيل، ثم فعّل هذا الخيار من جديد.",
+  "@engineErrorAutostartBlocked": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorAutostartPolicy": "إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.",
+  "@engineErrorAutostartPolicy": {
+    "description": "Flutter only. Not reviewed yet except in English."
   }
 }

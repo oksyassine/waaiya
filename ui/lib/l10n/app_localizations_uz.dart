@@ -1913,4 +1913,18 @@ class AppLocalizationsUz extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Habus va islomiy ishlar vazirligining $city uchun rasmiy vaqtlari.';
   }
+
+  @override
+  String get trayOpen => 'Waaiyani ochish';
+
+  @override
+  String get trayQuit => 'Chiqish';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows tizimga kirishda Waaiya ishga tushishiga ruxsat bermayapti. Sozlamalar › Ilovalar › Ishga tushirish bo\'limida Waaiya\'ni yoqing, so\'ng bu parametrni qayta yoqing.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Bu kompyuterning administrator tanlagan sozlamalari tizimga kirishda Waaiya ishga tushishiga ruxsat bermaydi.';
 }

@@ -1909,4 +1909,18 @@ class AppLocalizationsMs extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Waktu rasmi Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi $city.';
   }
+
+  @override
+  String get trayOpen => 'Buka Waaiya';
+
+  @override
+  String get trayQuit => 'Keluar';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows tidak membenarkan Waaiya bermula semasa log masuk. Hidupkan Waaiya dalam Tetapan › Aplikasi › Permulaan, kemudian hidupkan pilihan ini semula.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk.';
 }

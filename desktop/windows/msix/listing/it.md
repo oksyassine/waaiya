@@ -18,6 +18,7 @@ e recitazione del Corano. Funziona con ogni app (browser, lettori video, giochi)
 - App ascoltate senza filtro: scegli app che mantengono il loro suono originale; non vengono né filtrate né silenziate.
 - Protezione per i momenti di debolezza: l'arresto può attendere (per esempio 30 minuti) e poi chiederti di nuovo, e un genitore può impostare un PIN.
 - Annota un errore: segna la musica sfuggita o una voce rimossa per errore; le note restano sul tuo computer.
+- Un'icona accanto all'orologio: apri Waaiya, o avvia e ferma il filtro, senza cercare l'app.
 - Avvia all'accesso, se vuoi.
 - Tutto funziona sul tuo computer. Non viene inviato nulla: nessun account, nessuna statistica, nessuna pubblicità.
 - Gratuito e open source (AGPL-3.0)
@@ -31,16 +32,9 @@ mono da solo.
 
 ## What's new in this version
 
-Prima versione nel Microsoft Store.
-- Nuova pagina Link: guarda un link di YouTube, TikTok o Instagram con il filtro attivo.
-- Silenzia il canto femminile (prima versione), ora anche su Windows.
-- App ascoltate senza filtro
-- Protezione per i momenti di debolezza
-- Annota un errore
-- 18 lingue (nuove: spagnolo, olandese, tedesco, italiano, russo, uzbeko, swahili, hausa, somalo).
-- Design più fluido: i pulsanti rispondono subito, animazioni delicate (nessuna se Windows chiede meno movimento).
-- Correzioni: un vecchio filtro di Waaiya che non rispondeva più non blocca più quello nuovo; i dettagli degli errori
-  sono più facili da leggere.
+- Un'icona accanto all'orologio: apri Waaiya, o avvia e ferma il filtro dal suo menu. Chiudendo la finestra, Waaiya resta lì.
+- Avvia all'accesso: Waaiya parte accanto all'orologio, e Windows ti chiede il permesso quando serve.
+- Nuovo logo: la ع di واعية disegnata come un orecchio, chiara anche nelle icone piccole.
 
 ## Product features (one per line, at most 20)
 
@@ -54,6 +48,7 @@ Prima versione nel Microsoft Store.
 - Protezione per i momenti di debolezza
 - Annota un errore
 - Avvia all'accesso
+- Icona accanto all'orologio: avvia e ferma il filtro
 - 18 lingue
 - Gratuito e open source
 

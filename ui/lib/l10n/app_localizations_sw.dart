@@ -1923,4 +1923,18 @@ class AppLocalizationsSw extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa $city.';
   }
+
+  @override
+  String get trayOpen => 'Fungua Waaiya';
+
+  @override
+  String get trayQuit => 'Ondoka';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows hairuhusu Waaiya kuanza unapoingia. Washa Waaiya katika Mipangilio › Programu › Kuanzisha, kisha uwashe chaguo hili tena.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia.';
 }

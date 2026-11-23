@@ -1903,4 +1903,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'The official times of the Ministry of Habous and Islamic Affairs for $city.';
   }
+
+  @override
+  String get trayOpen => 'Open Waaiya';
+
+  @override
+  String get trayQuit => 'Quit';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows is not letting Waaiya start at login. Turn Waaiya on in Settings › Apps › Startup, then turn this on again.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'This computer\'s settings, chosen by its administrator, do not let Waaiya start at login.';
 }

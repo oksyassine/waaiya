@@ -529,5 +529,9 @@
   "worshipLocationSettings": "Joylashuv sozlamalari",
   "worshipLocationFailed": "Joylashuvingiz topilmadi. Birozdan so'ng qayta urinib ko'ring yoki shahringizni qidiring.",
   "worshipPlaceNear": "{city} yaqinida",
-  "worshipHabousNote": "Habus va islomiy ishlar vazirligining {city} uchun rasmiy vaqtlari."
+  "worshipHabousNote": "Habus va islomiy ishlar vazirligining {city} uchun rasmiy vaqtlari.",
+  "trayOpen": "Waaiyani ochish",
+  "trayQuit": "Chiqish",
+  "engineErrorAutostartBlocked": "Windows tizimga kirishda Waaiya ishga tushishiga ruxsat bermayapti. Sozlamalar › Ilovalar › Ishga tushirish bo'limida Waaiya'ni yoqing, so'ng bu parametrni qayta yoqing.",
+  "engineErrorAutostartPolicy": "Bu kompyuterning administrator tanlagan sozlamalari tizimga kirishda Waaiya ishga tushishiga ruxsat bermaydi."
 }

@@ -217,5 +217,9 @@
   "worship_location_settings": "Saitunan wuri",
   "worship_location_failed": "Ba a sami wurinka ba. Sake gwadawa nan ba da jimawa ba, ko ka nemi garinka.",
   "worship_place_near": "kusa da {city}",
-  "worship_habous_note": "Lokutan hukuma na Ma'aikatar Habous da Harkokin Musulunci na {city}."
+  "worship_habous_note": "Lokutan hukuma na Ma'aikatar Habous da Harkokin Musulunci na {city}.",
+  "tray_open": "Buɗe Waaiya",
+  "tray_quit": "Fita",
+  "engine_error_autostart_blocked": "Windows ba ya barin Waaiya ta fara lokacin shiga. Kunna Waaiya a Settings › Apps › Startup, sannan ka sake kunna wannan.",
+  "engine_error_autostart_policy": "Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga."
 }

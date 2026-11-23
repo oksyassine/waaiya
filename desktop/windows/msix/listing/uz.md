@@ -18,6 +18,7 @@ kompyuteringizda.
 - Filtrsiz eshitiladigan ilovalar: asl ovozi bilan eshitiladigan ilovalarni tanlang; ular na filtrlanadi, na o‘chiriladi.
 - Zaif damlar uchun himoya: toʻxtatishni kutishga qoʻyish mumkin (masalan, 30 daqiqa), soʻng sizdan yana soʻraladi; ota-ona PIN kod qoʻyishi mumkin.
 - Xatoni qayd etish: o‘tib ketgan musiqa yoki xato bilan olib tashlangan ovozni belgilang; qaydlar kompyuteringizda qoladi.
+- Soat yonida belgi: ilovani qidirmasdan Waaiya'ni oching yoki filtrlashni yoqing va o'chiring.
 - Xohlasangiz, tizimga kirganda ishga tushirish.
 - Hammasi kompyuteringizda ishlaydi. Hech narsa hech qayerga yuborilmaydi: hisob yoʻq, tahlil yoʻq, reklama yoʻq.
 - Bepul va ochiq kodli (AGPL-3.0)
@@ -31,16 +32,9 @@ Waaiya oʻzi monoga oʻtadi.
 
 ## What's new in this version
 
-Microsoft Store doʻkonidagi birinchi versiya.
-- Yangi Havolalar sahifasi: YouTube, TikTok yoki Instagram havolasini filtr yoqilgan holda koʻring.
-- Ayollar qoʻshigʻini oʻchirish (dastlabki versiya), endi Windows uchun ham.
-- Filtrsiz eshitiladigan ilovalar
-- Zaif damlar uchun himoya
-- Xatoni qayd etish
-- 18 til (yangi: ispan, niderland, nemis, italyan, rus, oʻzbek, suahili, hausa, somali).
-- Silliqroq dizayn: tugmalar darhol javob beradi, yumshoq animatsiyalar (Windows kamroq harakat soʻrasa, animatsiya
-  yoʻq).
-- Tuzatishlar: javob bermay qolgan eski Waaiya filtri endi yangisini toʻsmaydi; xato tafsilotlarini oʻqish osonroq.
+- Soat yonida belgi: Waaiya'ni oching yoki uning menyusidan filtrlashni yoqing va o'chiring. Oynani yopsangiz, Waaiya o'sha yerda qoladi.
+- Tizimga kirganda ishga tushirish: Waaiya soat yonida ishga tushadi, kerak bo'lsa Windows sizdan ruxsat so'raydi.
+- Yangi logotip: واعية dagi ع harfi quloq shaklida chizilgan, kichik belgilarda ham aniq.
 
 ## Product features (one per line, at most 20)
 
@@ -54,6 +48,7 @@ Microsoft Store doʻkonidagi birinchi versiya.
 - Zaif damlar uchun himoya
 - Xatoni qayd etish
 - Tizimga kirganda ishga tushirish
+- Soat yonida belgi: filtrlashni yoqish va o'chirish
 - 18 til
 - Bepul va ochiq kodli
 

@@ -51,7 +51,7 @@ from commit 703bd88 and again for the final package from commit 4904eb8 (after t
 | Support contact | https://github.com/oksyassine/waaiya/issues (or the owner's support email) |
 | Contact details | Only for a company account: the owner's details (never put in this repository). |
 | Display mode, product declarations | Leave as they are (no accessibility claims, no in-app purchases, no Xbox). |
-| System requirements | Optional. Minimum: Windows 10 version 2004 (build 19041), x64; memory 4 GB. |
+| System requirements | Optional. Windows 10 version 2004 (build 19041), x64. Memory: minimum "Not specified" (a minimum makes the Store warn people below it and stops them rating the app), recommended 4 GB (never shows a warning). |
 
 ## 3. Age ratings (IARC questionnaire, required)
 
