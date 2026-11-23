@@ -23,7 +23,7 @@ Status: **OK** = permissive, attribution only. **Flag** = needs a decision or re
 | Component | Version | Used by | Licence | Source of truth | Status |
 |---|---|---|---|---|---|
 | ONNX Runtime (C API, Linux x64) | 1.19.2 (commit ffceed9d) | engine, CLI, LADSPA; `make` copies `libonnxruntime.so` into `build/` | MIT, (c) Microsoft | `third_party/onnxruntime/LICENSE`, `VERSION_NUMBER` | OK. Binary releases must include `LICENSE` and `ThirdPartyNotices.txt` (338 KB, covers ORT's own deps) |
-| onnxruntime-android (AAR) | 1.19.2 | Android app (`libonnxruntime.so` in the APK) | MIT | Maven POM | OK, same notice rule |
+| onnxruntime-android (AAR) | 1.20.0 (first release with 16 KB-aligned libraries) | Android app (`libonnxruntime.so` in the APK) | MIT | Maven POM | OK, same notice rule |
 | Shizuku-API: api, provider, aidl, shared | 13.1.5 | Android one-tap setup | MIT | Maven POMs (`<license>MIT License`, RikkaApps/Shizuku-API) | OK |
 | androidx.media3 (exoplayer, ui, common, container, datasource, decoder, extractor, database) | 1.5.1 | Android player | Apache-2.0 | Maven POMs | OK |
 | Other AndroidX (annotation, arch.core, collection, concurrent-futures, core, customview, exifinterface, lifecycle, media, recyclerview, versionedparcelable) | various | transitive | Apache-2.0 | Maven POMs (Google Maven) | OK |

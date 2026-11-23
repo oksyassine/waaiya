@@ -8,6 +8,9 @@
 // font family (Roboto) is filled with Amiri (Arabic and Latin, SIL OFL) instead.
 //
 // 1366x768 window at 2x = 2732x1536 PNGs (the Store takes 1366x768 up to 3840x2160), per language and page.
+//
+// --dart-define=FORM=phone: the Android app of the store build (no links, no updater; docs/STORES.md) on a
+// 1080x2400 phone (411x914 at 2.625x), for Google Play and the other Android stores: <lang>-phone-<page>.png.
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -20,6 +23,7 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 const out = String.fromEnvironment('SHOTS');
 const lang = String.fromEnvironment('LANG', defaultValue: 'en');
 const arabicDir = String.fromEnvironment('ARABIC_FONT_DIR');
+const phone = String.fromEnvironment('FORM') == 'phone';
 
 Future<void> loadFont(String family, List<String> files) async {
   final l = FontLoader(family);
@@ -46,8 +50,9 @@ void main() {
 
   {
     testWidgets('store screenshots $lang', (tester) async {
-      tester.view.physicalSize = const Size(2732, 1536);
-      tester.view.devicePixelRatio = 2;
+      tester.view.physicalSize = phone ? const Size(1080, 2400) : const Size(2732, 1536);
+      tester.view.devicePixelRatio = phone ? 2.625 : 2;
+      final dpr = tester.view.devicePixelRatio;
       addTearDown(tester.view.reset);
       final key = GlobalKey();
       await tester.pumpWidget(
@@ -55,7 +60,30 @@ void main() {
           key: key,
           child: WaaiyaApp(
             backend: MemoryBackend(
-              initial: AppState(
+              initial: phone
+                  ? AppState(
+                      version: '0.2.16',
+                      language: lang,
+                      settings: const WaaiyaSettings(gender: 'man', prayerSilent: true),
+                      filter: const FilterInfo(state: FilterState.filtering, delayMs: 30),
+                      setup: const SetupInfo(originalsMuted: true, consentSkipped: true),
+                      blur: const BlurInfo(
+                          overlayAllowed: true, touchPassThrough: true, shizukuLayer: true, layerSupported: true),
+                      features: {
+                        'worship': {
+                          'supported': true, 'placeSet': true, 'placeValid': true, 'placeLabel': lang == 'ar' ? 'الدار البيضاء' : 'Casablanca',
+                          'times': [
+                            {'name': 'fajr', 'hm': '06:12'}, {'name': 'sunrise', 'hm': '07:41'},
+                            {'name': 'dhuhr', 'hm': '13:16'}, {'name': 'asr', 'hm': '15:58'},
+                            {'name': 'maghrib', 'hm': '18:22'}, {'name': 'isha', 'hm': '19:42'},
+                          ],
+                        },
+                      },
+                      capabilities: const Capabilities(
+                          shizukuSetup: true, adbSetup: true, captureConsent: true, screenBlur: true,
+                          links: false, womenSinging: true),
+                    )
+                  : AppState(
                 platform: 'windows',
                 version: '0.2.13',
                 language: lang,
@@ -76,7 +104,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      for (final page in ['filter', 'screen', 'settings']) {
+      for (final page in phone ? ['filter', 'screen', 'settings'] : ['filter', 'screen', 'settings']) {
         final nav = find.byKey(Key('nav_$page'));
         if (nav.evaluate().isNotEmpty) {
           await tester.tap(nav);
@@ -84,10 +112,10 @@ void main() {
         }
         await tester.runAsync(() async {
           final b = key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-          final img = await b.toImage(pixelRatio: 2);
+          final img = await b.toImage(pixelRatio: dpr);
           final png = await img.toByteData(format: ui.ImageByteFormat.png);
           Directory(out).createSync(recursive: true);
-          File('$out/$lang-$page.png').writeAsBytesSync(png!.buffer.asUint8List());
+          File('$out/$lang${phone ? '-phone' : ''}-$page.png').writeAsBytesSync(png!.buffer.asUint8List());
         });
       }
     });

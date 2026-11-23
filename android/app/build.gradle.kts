@@ -6,7 +6,7 @@ plugins {
     id("com.chaquo.python")
 }
 
-val ortVersion = "1.19.2"
+val ortVersion = "1.20.0"  // 1.20.0+: libonnxruntime.so aligned for 16 KB pages (Google Play, Android 15+ phones)
 // yt-dlp bundled in the APK. The app updates itself from PyPI at run time (src/main/python/im_update.py);
 // this is the floor it starts from.
 val ytDlpVersion = "2026.10.26"
@@ -40,13 +40,13 @@ val moveBuild = providers.gradleProperty("imMoveBuild").isPresent
 
 android {
     namespace = "org.waaiya.app"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "27.1.12297006"
 
     defaultConfig {
         applicationId = if (moveBuild) OLD_ID else NEW_ID
         minSdk = 29          // AudioPlaybackCapture
-        targetSdk = 35
+        targetSdk = 36       // Google Play: new apps and updates target Android 16 from 2026-08-31
         versionCode = 19
         versionName = "0.2.16"
         // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
@@ -61,7 +61,8 @@ android {
         manifestPlaceholders["oldId"] = OLD_ID
         manifestPlaceholders["linksEnabled"] = (!noLinks).toString()
         if (blurA11y) versionNameSuffix = "-a11y"
-        externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
+        externalNativeBuild { cmake { arguments += listOf("-DORT_DIR=${layout.buildDirectory.get().asFile}/ort",
+            "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON") } }  // 16 KB-aligned .so files (Google Play requires them)
         // Phones: 64- and 32-bit ARM (armeabi-v7a limits Chaquopy to Python <= 3.11). Chaquopy reads the ABIs here,
         // not per build type, so emulator builds add x86_64 with -PimX86.
         ndk { abiFilters += releaseAbis + (if (providers.gradleProperty("imX86").isPresent) listOf("x86_64") else emptyList()) }
@@ -211,6 +212,8 @@ androidComponents {
         if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/selfUpdate/AndroidManifest.xml")
         // The old app's last version (org.islamicmute.app): its launcher entry under the old name, and MoveProvider
         if (moveBuild) v.sources.manifests.addStaticManifestFile("src/move/AndroidManifest.xml")
+        // -PimNoLinks: the link screens and the export service are left out of the manifest, not only hidden.
+        if (noLinks) v.sources.manifests.addStaticManifestFile("src/noLinks/AndroidManifest.xml")
     }
 }
 
@@ -220,11 +223,14 @@ chaquopy {
     defaultConfig {
         version = "3.11"
         providers.gradleProperty("imBuildPython").orNull?.let { buildPython(it) }
-        pip {
+        // -PimNoLinks: no yt-dlp in the package at all (store builds: a bundled downloader is a rejection risk even
+        // when nothing can reach it). Python itself stays: Links.kt compiles against it.
+        if (!noLinks) pip {
             install("yt-dlp==$ytDlpVersion")
             install("yt-dlp-ejs==$ytDlpEjsVersion")
         }
     }
+    if (noLinks) sourceSets { getByName("main") { setSrcDirs(listOf("src/noLinks/python")) } }
 }
 val qjsLibs = layout.buildDirectory.dir("qjsLibs")
 val buildQjs by tasks.registering(Exec::class) {
@@ -236,8 +242,10 @@ val buildQjs by tasks.registering(Exec::class) {
     args(listOf(file("../tools/build_qjs.sh").path, android.sdkDirectory.path, android.ndkDirectory.path,
         layout.buildDirectory.dir("qjs").get().asFile.path, qjsLibs.get().asFile.path) + abis)
 }
-android.sourceSets["main"].jniLibs.srcDir(qjsLibs)
-tasks.named("preBuild") { dependsOn(buildQjs) }
+if (!noLinks) {  // QuickJS runs yt-dlp's YouTube scripts: links only
+    android.sourceSets["main"].jniLibs.srcDir(qjsLibs)
+    tasks.named("preBuild") { dependsOn(buildQjs) }
+}
 android.packaging.jniLibs.useLegacyPackaging = true
 android.androidResources.noCompress += listOf("onnx", "bin")
 tasks.named("preBuild") { dependsOn(copyModel) }
@@ -246,12 +254,12 @@ tasks.named("preBuild") { dependsOn(copyModel) }
 // app always shows the current NOTICE / THIRD_PARTY_LICENSES.md. android/app/licences/ holds the licence texts
 // that exist nowhere else in the repository (Shizuku-API, DeepFilterNet).
 // ONNX Runtime's LICENSE and ThirdPartyNotices.txt are not in the AAR: they are taken from the ONNX Runtime
-// release unpacked in third_party/onnxruntime/ (or -PimOrtDir=...), which must be the same version as the AAR.
+// same version's files in third_party/onnxruntime-android/ (scripts/fetch_deps.sh ort-android, or -PimOrtDir=...).
 // A release build fails without them; a debug build gets a placeholder pointing to the upstream file.
 val licenceAssets = layout.buildDirectory.dir("licenceAssets")
 val copyLicences by tasks.registering(Sync::class) {
     val repo = rootProject.file("..")
-    val ortDir = file(providers.gradleProperty("imOrtDir").getOrElse(repo.resolve("third_party/onnxruntime").path))
+    val ortDir = file(providers.gradleProperty("imOrtDir").getOrElse(repo.resolve("third_party/onnxruntime-android").path))
     val rootTexts = mapOf(
         "NOTICE" to "NOTICE.txt",
         "LICENSE" to "LICENSE-AGPL-3.0.txt",
@@ -271,7 +279,7 @@ val copyLicences by tasks.registering(Sync::class) {
         if (missing.isNotEmpty()) throw GradleException("Licence texts missing: $missing")
         if (!ortOk) {
             val msg = "ONNX Runtime $ortVersion LICENSE / ThirdPartyNotices.txt not found in $ortDir " +
-                "(unpack onnxruntime-linux-x64-$ortVersion.tgz there, or pass -PimOrtDir=...)"
+                "(scripts/fetch_deps.sh ort-android, or pass -PimOrtDir=...)"
             if (gradle.taskGraph.allTasks.any { it.name.contains("Release") }) throw GradleException(msg)
             logger.warn("warning: $msg; using a placeholder (debug only)")
         }

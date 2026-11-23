@@ -100,3 +100,4 @@ models/vision/*.log
 third_party/links-win/
 third_party/ffmpeg-win/
 third_party/llvm-mingw-win/
+third_party/onnxruntime-android/
