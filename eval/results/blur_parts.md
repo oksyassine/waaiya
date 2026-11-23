@@ -51,3 +51,27 @@ Command: `python models/vision/blur_parts.py photo|portrait`.
   also becomes more confident on whole people.
 - Dropping nested boxes by geometry was already rejected (`blur_tiles.md`: `nest`) because part boxes cannot be
   told apart from a child in front of an adult. This measurement does not change that.
+
+## Outlines (the app's path) do not change this
+
+`eval_blur.py --half report` (2000 images, photo), rectangles vs `--seg models/vision/seg.onnx` (strips + bridges,
+the app default). "women covered" (>= 90% of the box) undercounts outlines by design (see `blur_silhouette.md`).
+
+| male_clear | rectangles: men clear | outlines: men clear |
+|---|---|---|
+| 0.999 | 8.9% | 9.9% |
+| 0.98 | 21.5% | 23.2% |
+
+## The classifier alone vs end to end (photo, matched people, IsGroupOf = 0)
+
+| | own box p(male) >= 0.98 | >= 0.999 |
+|---|---|---|
+| men | 53.3% | 21.5% |
+| boys | 37.9% | 7.3% |
+| women | 1.02% | 0.06% |
+| girls | 0.58% | 0.17% |
+
+Women whose own box scores high are spread evenly over sizes (0.6% to 2% at 0.98 in every size bucket), so a
+size-dependent male_clear has nothing to gain. At 0.98, 53% of men's own boxes clear them but only 21% of men end
+up clear. The rest are blocked by other boxes: part/duplicate boxes, neighbours' covers, or people without a
+detection. That cap is why classifier-only gains (gender_v2b: +5 pt on the holdout) do not show up end to end.
