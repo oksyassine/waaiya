@@ -286,11 +286,8 @@
       r.classList.toggle("on", mine);
       if (mine) list.insertBefore(r, list.firstChild);
     });
-    if (plat === "windows") {
-      go.removeAttribute("href"); go.setAttribute("aria-disabled", "true"); go.classList.add("soon"); go.textContent = T.dl_soon;
-    } else {
-      go.href = plat === "android" ? T.apk : T.linux; go.textContent = T.dl_btn;
-    }
+    go.href = plat === "android" ? T.apk : plat === "windows" ? T.store : T.linux;
+    go.textContent = plat === "windows" ? T.dl_store : T.dl_btn;
   }
 
   // ---------- the introduction video (in the hero) plays muted while in view; its controls give the sound (voice only) ----------

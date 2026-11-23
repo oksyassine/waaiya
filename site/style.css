@@ -269,7 +269,6 @@ html:not(.js) .qq, html:not(.js) .qa { grid-row: auto; grid-column: 1; }
 .dl-head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; }
 .dl-line { font-size: var(--s2); line-height: 1.2; }
 .dl-go { min-height: 56px; padding: 0 32px; }
-.dl-go.soon { background: var(--step2); color: var(--ink); pointer-events: none; }
 html:not(.js) .dl-go { display: none; }
 .js .no-js, html:not(.js) .js-only { display: none; }
 html:not(.js) .sw { display: none; }
