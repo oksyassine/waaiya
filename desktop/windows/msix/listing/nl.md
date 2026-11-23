@@ -17,6 +17,7 @@ Koranrecitatie. Het werkt met elke app (browsers, videospelers, games), live, op
 - Apps die je ongefilterd hoort: kies apps die hun oorspronkelijke geluid houden; ze worden niet gefilterd en niet gedempt.
 - Bescherming voor zwakke momenten: stoppen kan eerst wachten (bijvoorbeeld 30 minuten) en het daarna opnieuw vragen, en een ouder kan een pincode instellen.
 - Een fout noteren: markeer muziek die doorkwam of een stem die per vergissing verdween; notities blijven op je computer.
+- Een pictogram naast de klok: open Waaiya, of start en stop het filteren, zonder de app te zoeken.
 - Starten bij inloggen, als je wilt.
 - Alles draait op je computer. Er wordt niets verstuurd: geen account, geen analyse, geen advertenties.
 - Gratis en open source (AGPL-3.0)
@@ -30,16 +31,9 @@ Waaiya vanzelf over naar mono.
 
 ## What's new in this version
 
-Eerste versie in de Microsoft Store.
-- Nieuwe pagina Links: bekijk een link van YouTube, TikTok of Instagram met het filter aan.
-- Zang van vrouwen dempen (vroege versie), nu ook op Windows.
-- Apps die je ongefilterd hoort
-- Bescherming voor zwakke momenten
-- Een fout noteren
-- 18 talen (nieuw: Spaans, Nederlands, Duits, Italiaans, Russisch, Oezbeeks, Swahili, Hausa, Somalisch).
-- Vloeiender ontwerp: knoppen reageren meteen, rustige animaties (geen als Windows om minder beweging vraagt).
-- Oplossingen: een ouder Waaiya-filter dat niet meer reageerde, blokkeert het nieuwe niet langer; foutdetails zijn
-  makkelijker te lezen.
+- Een pictogram naast de klok: open Waaiya, of start en stop het filteren via het menu. Als je het venster sluit, blijft Waaiya daar.
+- Starten bij inloggen: Waaiya start naast de klok, en Windows vraagt zo nodig je toestemming.
+- Nieuw logo: de ع van واعية getekend als een oor, ook duidelijk in kleine pictogrammen.
 
 ## Product features (one per line, at most 20)
 
@@ -53,6 +47,7 @@ Eerste versie in de Microsoft Store.
 - Bescherming voor zwakke momenten
 - Een fout noteren
 - Starten bij inloggen
+- Pictogram naast de klok: filteren starten en stoppen
 - 18 talen
 - Gratis en open source
 

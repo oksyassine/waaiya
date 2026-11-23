@@ -17,6 +17,7 @@ Koranrezitation. Es funktioniert mit jeder App (Browser, Videoplayer, Spiele), l
 - Apps, die ungefiltert zu hören sind: wählen Sie Apps, die ihren Originalton behalten; sie werden weder gefiltert noch stummgeschaltet.
 - Schutz für schwache Momente: Stoppen kann warten (zum Beispiel 30 Minuten) und dann erneut fragen, und Eltern können eine PIN festlegen.
 - Einen Fehler notieren: markieren Sie Musik, die durchkam, oder eine versehentlich entfernte Stimme; Notizen bleiben auf Ihrem Computer.
+- Ein Symbol neben der Uhr: Waaiya öffnen oder das Filtern starten und stoppen, ohne die App zu suchen.
 - Bei der Anmeldung starten, wenn Sie möchten.
 - Alles läuft auf Ihrem Computer. Nichts wird irgendwohin gesendet: kein Konto, keine Analyse, keine Werbung.
 - Kostenlos und Open Source (AGPL-3.0)
@@ -30,16 +31,9 @@ wechselt Waaiya von selbst zu Mono.
 
 ## What's new in this version
 
-Erste Version im Microsoft Store.
-- Neue Seite Links: einen YouTube-, TikTok- oder Instagram-Link mit eingeschaltetem Filter ansehen.
-- Frauengesang stummschalten (frühe Version), jetzt auch unter Windows.
-- Apps, die ungefiltert zu hören sind
-- Schutz für schwache Momente
-- Einen Fehler notieren
-- 18 Sprachen (neu: Spanisch, Niederländisch, Deutsch, Italienisch, Russisch, Usbekisch, Swahili, Hausa, Somali).
-- Flüssigeres Design: Knöpfe reagieren sofort, sanfte Animationen (keine, wenn Windows weniger Bewegung verlangt).
-- Korrekturen: Ein älterer Waaiya-Filter, der nicht mehr reagierte, blockiert den neuen nicht mehr; Fehlerdetails sind
-  leichter zu lesen.
+- Ein Symbol neben der Uhr: Waaiya öffnen oder das Filtern über sein Menü starten und stoppen. Wenn Sie das Fenster schließen, bleibt Waaiya dort.
+- Bei der Anmeldung starten: Waaiya startet neben der Uhr, und Windows fragt Sie bei Bedarf um Erlaubnis.
+- Neues Logo: das ع von واعية als Ohr gezeichnet, jetzt auch in kleinen Symbolen deutlich.
 
 ## Product features (one per line, at most 20)
 
@@ -53,6 +47,7 @@ Erste Version im Microsoft Store.
 - Schutz für schwache Momente
 - Einen Fehler notieren
 - Bei der Anmeldung starten
+- Symbol neben der Uhr: Filtern starten und stoppen
 - 18 Sprachen
 - Kostenlos und Open Source
 

@@ -15,6 +15,7 @@ Quran recitation. It works with every app (browsers, video players, games), live
 - Apps heard unfiltered: choose apps that keep their original sound; they are neither filtered nor silenced.
 - Protection for weak moments: Stop can be set to wait (for example 30 minutes) and then ask you again, and a parent can set a PIN.
 - Note a mistake: mark music that got through, or a voice removed by mistake; notes stay on your computer.
+- An icon next to the clock: open Waaiya, or start and stop filtering, without searching for the app.
 - Start at login, if you want.
 - Everything runs on your computer. Nothing is sent anywhere: no account, no analytics, no ads.
 - Free and open source (AGPL-3.0)
@@ -28,15 +29,9 @@ mono by itself.
 
 ## What's new in this version
 
-First version in the Microsoft Store.
-- New Links page: watch a YouTube, TikTok or Instagram link with the filter on.
-- Mute women's singing (early version), now on Windows too.
-- Apps heard unfiltered
-- Protection for weak moments
-- Note a mistake
-- 18 languages (new: Spanish, Dutch, German, Italian, Russian, Uzbek, Swahili, Hausa, Somali).
-- Smoother design: buttons answer at once, gentle animations (none when Windows asks for less motion).
-- Fixes: an older Waaiya filter that stopped answering no longer blocks the new one; error details are easier to read.
+- An icon next to the clock: open Waaiya, or start and stop filtering from its menu. Closing the window keeps Waaiya there.
+- Start at login: Waaiya starts next to the clock, and Windows asks your permission when it is needed.
+- New logo: the ع of واعية drawn as an ear, clear in small icons too.
 
 ## Product features (one per line, at most 20)
 
@@ -50,6 +45,7 @@ First version in the Microsoft Store.
 - Protection for weak moments
 - Note a mistake
 - Start at login
+- Icon next to the clock: start and stop filtering
 - 18 languages
 - Free and open source
 

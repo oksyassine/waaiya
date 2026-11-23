@@ -17,6 +17,7 @@ kwamfutarku.
 - Manhajojin da ake ji ba tare da tacewa ba: zaɓi manhajojin da za a ji da sautinsu na asali; ba a tace su, kuma ba a yi musu shiru.
 - Kariya don lokutan rauni: ana iya sa tsayawa ta jira (misali minti 30) sannan ta sake tambayar ku, kuma iyaye za su iya saka PIN.
 - Rubuta kuskure: yi alama kan kiɗan da ya wuce ko muryar da aka cire bisa kuskure; bayanan suna nan a kwamfutarka.
+- Alama kusa da agogo: buɗe Waaiya, ko kunna da kashe tacewa, ba tare da neman manhajar ba.
 - Fara lokacin shiga kwamfuta, idan kuna so.
 - Komai yana aiki a kwamfutarku. Ba a tura komai zuwa ko'ina ba: babu asusu, babu ƙididdiga, babu talla.
 - Kyauta ne kuma buɗaɗɗen tushe (AGPL-3.0)
@@ -30,16 +31,9 @@ Waaiya yana komawa mono da kansa.
 
 ## What's new in this version
 
-Sigar farko a Microsoft Store.
-- Sabon shafin Mahaɗai: kalla mahaɗar YouTube, TikTok ko Instagram da tacewa a kunne.
-- Kashe waƙar mata (sigar farko), yanzu a Windows ma.
-- Manhajojin da ake ji ba tare da tacewa ba
-- Kariya don lokutan rauni
-- Rubuta kuskure
-- Harsuna 18 (sababbi: Sifaniyanci, Holanci, Jamusanci, Italiyanci, Rashanci, Uzbek, Swahili, Hausa, Somaliyanci).
-- Zane mai santsi: maɓallai suna amsawa nan take, motsi a hankali (babu motsi idan Windows ta nemi a rage motsi).
-- Gyare-gyare: tsohuwar tacewar Waaiya da ta daina amsawa ba ta hana sabuwar kuma; bayanan kurakurai sun fi sauƙin
-  karantawa.
+- Alama kusa da agogo: buɗe Waaiya, ko kunna da kashe tacewa daga menu ɗinta. Rufe taga yana barin Waaiya a can.
+- Fara lokacin shiga kwamfuta: Waaiya tana farawa kusa da agogo, kuma Windows tana neman izininku idan ana buƙata.
+- Sabon tambari: harafin ع na واعية an zana shi kamar kunne, a bayyane har a ƙananan alamomi.
 
 ## Product features (one per line, at most 20)
 
@@ -53,6 +47,7 @@ Sigar farko a Microsoft Store.
 - Kariya don lokutan rauni
 - Rubuta kuskure
 - Fara lokacin shiga kwamfuta
+- Alama kusa da agogo: kunna da kashe tacewa
 - Harsuna 18
 - Kyauta ne kuma buɗaɗɗen tushe
 
