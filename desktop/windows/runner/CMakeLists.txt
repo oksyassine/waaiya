@@ -38,6 +38,9 @@ target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
 target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
 # the Store package's startup task (startup.cpp, C++/WinRT)
 target_link_libraries(${BINARY_NAME} PRIVATE "windowsapp.lib")
+# C++/WinRT needs C++20 for its coroutines: under C++17 it falls back to <experimental/coroutine>, which newer MSVC
+# (Visual Studio 18, on CI) refuses
+target_compile_features(${BINARY_NAME} PRIVATE cxx_std_20)
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
 
 # Run the Flutter tool portions of the build. This must not be removed.
