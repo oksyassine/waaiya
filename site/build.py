@@ -34,6 +34,7 @@ WIN_ZIP = DL + f"waaiya-desktop-windows-x64-v{VERSION}.zip"
 LINUX_DESKTOP = DL + f"waaiya-desktop-linux-x64-v{VERSION}.tar.gz"
 LINUX_CLI = DL + f"waaiya-linux-x64-v{VERSION}.tar.gz"
 SUMS = DL + "SHA256SUMS"
+STORE = "https://apps.microsoft.com/detail/9NBB296FSRJP"  # Microsoft Store listing (Store ID 9NBB296FSRJP)
 RELEASES = REPO + "/releases/latest"
 GSAP = "js/gsap-3.15.0.min.js"
 # "Try it on your sound" (site/try/, site/link/): the servers asked for a link, in order; empty hides the link box.
@@ -140,7 +141,7 @@ T = {
         phone_h="على هاتفك",
         phones=[("on", "التصفية", "زر واحد لكل التطبيقات"), ("screen", "الشاشة", "تمويه النساء والصور غير المحتشمة"),
                 ("settings2", "أوقات الصلاة", "صمت، ورسالة لمن يتصل"), ("settings3", "الحماية", "الانتظار قبل الإيقاف، والرمز")],
-        phone_meta="أندرويد [[15]] · واعية [[0.2.13]]",
+        phone_meta="أندرويد [[15]]",
         how_h="كيف تبدأ",
         how=[
             ("أولًا، ثبّت واعية.", "ملف [[waaiya.apk]] لأندرويد [[10]] أو أحدث، أو نسخة ويندوز أو لينكس."),
@@ -162,17 +163,17 @@ T = {
             ("كم التأخير؟", "نحو [[30]] ملّي ثانية، أي أقل من عُشر ثانية، بين الصوت الأصلي وما تسمعه."),
             ("هل يستهلك البطارية؟", "الصوت الأحادي، وهو الافتراضي، يستهلك نحو نصف ما يستهلكه الستيريو. وفي واعية، يعرض «تقرير التشخيص» الاستهلاك في الساعة على هاتفك."),
             ("هل يمكن منعي من إيقافه في لحظة ضعف؟", "اختر مدة انتظار قبل أي إيقاف، ورمزًا إن شئت. لكن لا شيء يمنع حذف التطبيق أو إيقافه الإجباري من إعدادات أندرويد، وواعية تقول ذلك بوضوح."),
-            ("وويندوز ولينكس؟", "ويندوز [[10 (2004)]] أو أحدث: قريبًا في متجر مايكروسوفت، والطلب قيد المراجعة. وحتى ذلك الحين يوجد ملف [[zip]] في أسفل هذه الصفحة وعلى [[GitHub]]، لكنه غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز. لينكس: تطبيق سطح المكتب، أو سطر الأوامر وحده."),
+            ("وويندوز ولينكس؟", "ويندوز [[10 (2004)]] أو أحدث: واعية في متجر مايكروسوفت، مجانًا، ويتحدّث المتجر بنفسه. ويبقى ملف [[zip]] في أسفل هذه الصفحة وعلى [[GitHub]]، لكنه غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز. لينكس: تطبيق سطح المكتب، أو سطر الأوامر وحده."),
             ("من يقف وراءه؟", "مشروع مفتوح المصدر برخصة [[AGPL]]، شيفرته كاملة على [[GitHub]]. يستطيع أي أحد أن يبني التطبيق منها بنفسه ويقارنه بما ننشر."),
         ],
-        dl_btn="حمّل", dl_soon="قريبًا في متجر مايكروسوفت",
+        dl_btn="حمّل", dl_store="من متجر مايكروسوفت",
         dl_for={"android": "حمّل واعية لأندرويد", "windows": "حمّل واعية لويندوز", "linux": "حمّل واعية للينكس"},
         dl_rows=[
-            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.13]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[108 MB]]",
+            ("android", "أندرويد: [[waaiya.apk]]", APK, f"الإصدار [[{VERSION}]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[108 MB]]",
              [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
               ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
-            ("windows", "ويندوز: قريبًا في متجر مايكروسوفت", None, "الطلب قيد المراجعة. ويندوز [[10 (2004)]] أو أحدث.",
-             [("ملف [[zip]]: فُكَّ ضغطه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
+            ("windows", "ويندوز: واعية في متجر مايكروسوفت", STORE, "مجانًا، وموقَّع من مايكروسوفت، ويتحدّث تلقائيًا. ويندوز [[10 (2004)]] أو أحدث.",
+             [("ملف [[zip]]: فُكَّ ضغطه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
             ("linux", "لينكس: تطبيق سطح المكتب", LINUX_DESKTOP, "لينكس [[x64]] · [[58 MB]]",
              [("سطر الأوامر وحده، بلا واجهة", LINUX_CLI, "[[9 MB]]")]),
         ],
@@ -270,7 +271,7 @@ T = {
         phone_h="On your phone",
         phones=[("on", "Filter", "One button for every app"), ("screen", "Screen", "Blur for women and immodest images"),
                 ("settings2", "Prayer times", "Silence, and a text to callers"), ("settings3", "Protection", "Wait before turning off, and a PIN")],
-        phone_meta="Android 15 · Waaiya 0.2.13",
+        phone_meta="Android 15",
         how_h="How to start",
         how=[
             ("First, install Waaiya.", "waaiya.apk for Android 10 or newer. Or the Windows and Linux apps."),
@@ -292,17 +293,17 @@ T = {
             ("How much delay?", "About 30 milliseconds, less than a tenth of a second, between the original sound and what you hear."),
             ("Does it drain the battery?", "Mono sound, the default, uses about half of what stereo uses. The Diagnostics report in Waaiya shows the use per hour on your phone."),
             ("Can I be stopped from turning it off in a weak moment?", "Choose a wait before turning off, and a PIN if you like. But nothing can prevent uninstalling or a force stop from Android's settings, and Waaiya says so plainly."),
-            ("Windows and Linux?", "Windows 10 (2004) or newer: soon in the Microsoft Store, where it is under review. Until then there is a zip at the bottom of this page and on GitHub. It is not signed yet, so Windows Smart App Control may block it. Linux: the desktop app, or the command line alone."),
+            ("Windows and Linux?", "Windows 10 (2004) or newer: Waaiya is in the Microsoft Store, free, and the Store keeps it up to date. The zip at the bottom of this page and on GitHub is still there, but it is not signed, so Windows Smart App Control may block it. Linux: the desktop app, or the command line alone."),
             ("Who is behind it?", "An open-source project under the AGPL, with all its code on GitHub. Anyone can build the app from it and compare it with what we publish."),
         ],
-        dl_btn="Download", dl_soon="Soon in the Microsoft Store",
+        dl_btn="Download", dl_store="Get it from the Microsoft Store",
         dl_for={"android": "Get Waaiya for Android", "windows": "Get Waaiya for Windows", "linux": "Get Waaiya for Linux"},
         dl_rows=[
-            ("android", "Android: waaiya.apk", APK, "Version 0.2.13, for every kind of phone with Android 10 or newer · 108 MB",
+            ("android", "Android: waaiya.apk", APK, f"Version {VERSION}, for every kind of phone with Android 10 or newer · 108 MB",
              [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
               ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
-            ("windows", "Windows: soon in the Microsoft Store", None, "Under review. Windows 10 (2004) or newer.",
-             [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed yet, so Windows Smart App Control may block it.")]),
+            ("windows", "Windows: Waaiya in the Microsoft Store", STORE, "Free, signed by Microsoft, updates itself. Windows 10 (2004) or newer.",
+             [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed, so Windows Smart App Control may block it.")]),
             ("linux", "Linux: the desktop app", LINUX_DESKTOP, "Linux x64 · 58 MB",
              [("Command line only, no window", LINUX_CLI, "9 MB")]),
         ],
@@ -383,7 +384,7 @@ def jsonld(lang, t, root_url):
         "operatingSystem": "Android 10+, Windows 10 (2004)+, Linux",
         "softwareVersion": VERSION, "downloadUrl": APK,
         "license": "https://www.gnu.org/licenses/agpl-3.0.html",
-        "isAccessibleForFree": True, "sameAs": [REPO],
+        "isAccessibleForFree": True, "sameAs": [REPO, STORE],
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
         "image": SITE + "assets/og.jpg",
         "screenshot": SITE + f"assets/{lang}-on.webp",
@@ -433,7 +434,7 @@ def page(lang, root):
         for i, (q, ans) in enumerate(t["faq"]))
     rows = ""
     for k, main, href, note, more in t["dl_rows"]:
-        main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>' if href else f'<span class="dl-main soon">{e(main)}</span>'
+        main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>'
         more_html = "".join(f'<li><a href="{h}">{e(n)}</a> <span>{e(x)}</span></li>' for n, h, x in more)
         rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p><ul class="dl-more">{more_html}</ul></li>'
     sums = f'<p class="dl-sums"><a href="{SUMS}">{e(t["dl_sums"][0])}</a> · <a href="{RELEASES}">{e(t["dl_sums"][1])}</a></p>'
@@ -441,12 +442,13 @@ def page(lang, root):
 
     i18n = {k: plain(t[k]) for k in ("r_off", "r_off_h", "r_on", "r_on_h", "compact_off", "compact_on", "spec_cap_off", "spec_cap_on",
                                      "play", "pause", "cover_clear", "cover_hint", "card_on", "card_off", "card_stop", "card_start", "card_wait",
-                                     "card_left", "card_ready", "card_done", "card_hint", "card_kept", "lang_cap", "lang_alt", "dl_btn", "dl_soon")}
+                                     "card_left", "card_ready", "card_done", "card_hint", "card_kept", "lang_cap", "lang_alt", "dl_btn", "dl_store")}
     i18n["dl_for"] = t["dl_for"]
     i18n["names"] = lname
     i18n["apk"] = APK
     i18n["releases"] = RELEASES
     i18n["linux"] = LINUX_DESKTOP
+    i18n["store"] = STORE
     def plain_tree(v):
         return {k: plain_tree(x) for k, x in v.items()} if isinstance(v, dict) else plain(v)
     i18n["try"] = plain_tree(t["try_js"])
@@ -889,7 +891,8 @@ LLMS = f"""# Waaiya (واعية)
 ## Downloads and source
 
 - [Android: waaiya.apk {VERSION}]({APK})
-- [Windows and Linux releases]({RELEASES}): the Windows zip is not signed yet; a Microsoft Store listing is under review
+- [Windows: Waaiya in the Microsoft Store]({STORE}): free, signed by Microsoft
+- [Windows and Linux releases]({RELEASES}): the Windows zip (not signed) and the Linux apps
 - [Source code]({REPO})
 """
 
