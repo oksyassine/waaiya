@@ -11,6 +11,14 @@ owner's are marked **Owner**, with the recommended answer.
     # Google Play (app bundle) and the other stores (universal APK + one per ABI), in one run
     ./gradlew bundleRelease assembleRelease -PimPlay -PimNoLinks -PimAbiSplit -PimBuildPython=<python3.11>
 
+`lintDebug` with `-PimNoLinks` reports 4 false "ForegroundServiceType" errors (lint then reads the services from
+the extra manifest only; the merged manifest has every type). Plain `lintDebug`, as CI runs it: 0 errors.
+
+Checked on 2026-11-23 on an Android 16 emulator with 16 KB pages (AVD im_play36): emu_check passes with the setup
+missing and done, the screen blur passes (debug store build: covers, taps, still screen), the ARM store APK runs
+(through ARM translation: filter and blur work, too slow there as expected), no Links tab, no App updates, Back
+works. JVM tests: 142 pass, 1 skipped.
+
 Outputs: `app/build/outputs/bundle/release/app-release.aab` (Play) and `app/build/outputs/apk/release/` (the
 others). Store pictures and texts: `store/` (`store/make_graphics.py` for the icon and feature graphics;
 `ui/tool/store_shots_test.dart --dart-define=FORM=phone` for the phone screenshots).
@@ -32,13 +40,22 @@ targeting Android 15+): ONNX Runtime 1.20.0, and the NDK's flexible page sizes f
 
 **Owner**: links stay out of store builds (recommended, and the documented default since the Play switch was made).
 
+## Before any release from this branch
+
+Every build changed here, the website APK included: target Android 16, ONNX Runtime 1.20.0, re-linked native
+libraries. Only the store build was built and tested (Android 16 emulator with 16 KB pages; the seven models give
+bit-identical output under ONNX Runtime 1.19.2 and 1.20.0). Build and test the full website APK (links, updater,
+SMS reply) before merging or tagging. The current website release (0.2.16) shows "This app isn't 16 KB compatible"
+on 16 KB-page phones and runs in compatibility mode; this branch fixes that for every build.
+
 ## One signing key everywhere
 
 The website, GitHub, Galaxy Store and the other APK stores all ship APKs signed with Waaiya's release key, so a
 user can move between them and keep updating. Google Play re-signs apps: at the first upload, Play Console asks
 which app signing key to use.
 
-**Owner**: choose "Use a key from Java keystore" (upload the existing release key, encrypted with Google's PEPK
+Not checked against Play Console's current screens (as of 2026-11-23); confirm the option exists before the first
+upload. **Owner**: choose "Use a key from Java keystore" (upload the existing release key, encrypted with Google's PEPK
 tool, which Play Console provides). Recommended: yes. With a key Google generates instead, the Play app and the
 website app cannot update each other: users would have to uninstall (and lose their settings) to switch. This
 choice cannot be changed after the first upload. Claude can prepare the encrypted key file once the owner sends
@@ -64,17 +81,23 @@ the encryption public key that Play Console shows on that page.
 - **Foreground service declarations** (Play Console, App content):
   - `mediaProjection` (FilterService): captures the sound other apps play so Waaiya can remove the music and
     play the filtered sound, while the user has filtering on; the screen blur reads the screen through the same
-    capture. Needs a short video of it in use (record: start filtering, play a video with music, show the
-    notification, stop).
+    capture. Needs a short video of it in use: start filtering, play a video with music, show the notification,
+    stop. A draft from the emulator is in the store folder (filtering on, the notification, Stop; no other app
+    playing and no capture prompt because the setup was done): record the final one on a real phone with YouTube.
   - `dataSync` (WirelessSetupService): the one-time setup, which pairs with the phone's own Wireless debugging
     and keeps the connection open while the user follows the steps. A reviewer may question the type; the
     alternative is `specialUse` with this explanation.
+- **Moving from the old app**: `REQUEST_DELETE_PACKAGES` and `org.waaiya.permission.MOVE` stay in the store
+  build: they let Waaiya take over the settings of the old app (org.islamicmute.app, before 0.2.15) and offer to
+  remove it. Play lists `REQUEST_DELETE_PACKAGES` as a normal permission with no form. **Owner**: keep them
+  (recommended: people who installed the old app from the website may install from a store) or remove them from
+  store builds.
 - **Sensitive permissions**: no SMS, call log, accessibility or install-packages permission in the store build.
   `SCHEDULE_EXACT_ALARM` (prayer start and end) and `ACCESS_COARSE_LOCATION` (optional "Use my location", in the
   foreground) need no form. `DUMP` and `WRITE_SECURE_SETTINGS` are granted only by the user's own setup over
   Wireless debugging; Play accepts them in the manifest, but a reviewer may ask why.
 - **Testing**: a new personal developer account must run a closed test with at least 12 testers for 14 days
-  before production. Organization accounts are reported to be exempt.
+  before production (Google's help). Organization accounts are reported to be exempt (third-party guides only).
 - **Trader status** (EU): non-trader while Waaiya is free, without ads or purchases, under a personal account.
 
 Store listing texts for the store build (no links, no update check): `store/listing/<lang>/` (en-US, ar, fr-FR).
@@ -87,7 +110,8 @@ Graphics Play asks for, all in `store/`: the icon (`graphics/icon-512.png`), the
 ## The other stores
 
 All of them take the store APKs (`-PimAbiSplit` gives a universal APK and one per ABI). None needs Google services,
-and Waaiya uses none.
+and Waaiya uses none. The account and signing notes below are from general knowledge, not checked against each
+store's current rules: confirm on each portal.
 
 | Store | Account | Notes |
 |---|---|---|
