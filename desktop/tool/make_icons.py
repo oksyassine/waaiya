@@ -7,6 +7,7 @@ so that the gap between the arc and the letter stays at least a pixel wide (with
 16-32 px and only the letter was seen). Every size of the .ico is drawn at its own size, not scaled down from 256.
 
     uvx --with resvg-py --with pillow python desktop/tool/make_icons.py desktop/windows/msix/Assets
+    uvx --with resvg-py --with pillow python desktop/tool/make_icons.py --site   (the website's tab icons, favicon.svg)
     (or --with cairosvg, where the cairo library is installed)
 """
 import io
@@ -65,7 +66,20 @@ def ico_frames():
             for t in ICO_SIZES]
 
 
+def site_icons(root):
+    """The website's tab icons (site/build.py icons()) and docs/brand/favicon.svg, in the small form that keeps the ear."""
+    for t in (16, 32, 48):
+        png(os.path.join(root, "site", "assets", f"favicon-{t}.png"), t, t, glyph_frac=.72, radius_frac=.22)
+    fav = svg(120, 120, glyph_frac=.72, radius_frac=.2).replace("<svg ", '<svg role="img" ', 1)
+    fav = fav.replace(' width="120" height="120"', "", 1).replace(">", "><title>واعية</title>", 1)
+    with open(os.path.join(root, "docs", "brand", "favicon.svg"), "w", encoding="utf-8") as f:
+        f.write(fav + "\n")
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "--site":
+        site_icons(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+        sys.exit()
     out = sys.argv[1]
     os.makedirs(out, exist_ok=True)
     # MSIX tiles: plate colour fills the tile; glyph about 60 % (Windows guidance: 66 % safe area)

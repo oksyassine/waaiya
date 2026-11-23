@@ -364,6 +364,15 @@ def visible_len(s):
 POWER_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2v8.2"/><path d="M6.3 6.4a8.1 8.1 0 1 0 11.4 0"/></svg>'
 
 
+def icons(a):
+    """The tab icon: drawn at 16, 32 and 48 px (desktop/tool/make_icons.py --site), where the ear's arc stays apart from
+    the letter; scaled down from the 192 px logo, only a plain ع was seen."""
+    return (f'<link rel="icon" type="image/png" sizes="16x16" href="{a}favicon-16.png">'
+            f'<link rel="icon" type="image/png" sizes="32x32" href="{a}favicon-32.png">'
+            f'<link rel="icon" type="image/png" sizes="48x48" href="{a}favicon-48.png">'
+            f'<link rel="icon" type="image/png" sizes="192x192" href="{a}logo.png">')
+
+
 def mark(cls, draw=False):
     """The logo: the ع of واعية drawn as an ear («أذنٌ واعية»); the small arc in its bowl is the sound it keeps.
     Source: /srv/build/waaiya-logo (ain-ear), 120-unit grid. With draw=True the strokes draw on once."""
@@ -483,7 +492,7 @@ def page(lang, root):
 <meta name="twitter:description" content="{html.escape(t['desc'])}">
 <meta name="twitter:image" content="{SITE}assets/og.jpg">
 <meta name="theme-color" content="#053D35">
-<link rel="icon" href="{a}logo.png">
+{icons(a)}
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(d){{d.classList.add("js");var s=null;try{{s=localStorage.getItem("waaiya.filter")}}catch(x){{}}var q=/[?&]filter=(on|off)/.exec(location.search);if(q)s=q[1];d.setAttribute("data-filter",s==="on"?"on":"off")}})(document.documentElement)</script>
@@ -695,7 +704,7 @@ def privacy(lang, root):
 <title>Waaiya: {e(T['en']['privacy_title'])} · {e(T['ar']['privacy_title'])}</title>{robots}
 <meta name="description" content="What Waaiya does with your data: the filter and the screen blur work on your device and send nothing. سياسة الخصوصية لتطبيق واعية.">
 <link rel="canonical" href="{SITE}privacy.html">
-<link rel="icon" href="{root}assets/logo.png">
+{icons(root + 'assets/')}
 <style>{fonts(root + 'assets/')}
 {CSS}</style></head>
 <body class="doc"><a class="doc-home" href="{root}{'en/' if lang == 'en' else ''}">Waaiya</a><main class="prose">{body}</main></body></html>
@@ -852,7 +861,7 @@ def usb_page(lang, root):
 <meta name="description" content="{e(u['desc'])}">
 <link rel="canonical" href="{SITE}{'en/' if lang == 'en' else ''}usb/">
 <link rel="alternate" hreflang="ar" href="{SITE}usb/"><link rel="alternate" hreflang="en" href="{SITE}en/usb/">
-<link rel="icon" href="{root}assets/logo.png">
+{icons(root + 'assets/')}
 <style>{fonts(root + 'assets/')}
 {CSS}</style></head>
 <body class="doc"><a class="doc-home" href="{home}">{e(u['home'])}</a>
