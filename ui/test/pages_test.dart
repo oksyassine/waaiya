@@ -70,7 +70,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('power')), findsOneWidget);
     expect(find.text(ar.filterOptionsTitle), findsOneWidget);
-    expect(find.text(ar.blurTitle), findsNothing);
+    expect(find.byKey(const Key('blur_power')), findsNothing);
     // the setup is missing: the Filter page says so and leads to the Setup page
     await tester.ensureVisible(find.text(ar.setupGo));
     await tester.pumpAndSettle();
@@ -79,7 +79,8 @@ void main() {
     expect(find.text(ar.wsetupRouteTitle), findsOneWidget);
     expect(find.byKey(const Key('power')), findsNothing);
     await goTo(tester, 'screen');
-    expect(find.text(ar.blurTitle), findsOneWidget);
+    expect(find.byKey(const Key('blur_power')), findsOneWidget);
+    expect(find.text(ar.blurWhatTitle), findsOneWidget);
     await goTo(tester, 'settings');
     expect(find.text(ar.settingGenderTitle, findRichText: true), findsNothing); // inside "label: value"
     expect(find.textContaining(ar.settingGenderTitle), findsOneWidget);
@@ -394,7 +395,7 @@ void main() {
     expect(b.calls, ['wirelessStart']);
     b.emit(b.state.copyWith(
         blur: const BlurInfo(
-            layerSupported: true, overlayAllowed: true, helperRunning: true, shizukuLayer: true, touchPassThrough: true)));
+            layerSupported: true, overlayAllowed: true, helperRunning: true, shellLayer: true, touchPassThrough: true)));
     await tester.pumpAndSettle();
     expect(find.text(ar.helperOn), findsOneWidget);
     expect(find.text(ar.helperStart), findsNothing);

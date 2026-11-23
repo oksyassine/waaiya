@@ -796,6 +796,42 @@ abstract class AppLocalizations {
   /// **'يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.'**
   String get blurBody;
 
+  /// Android string blur_on_title
+  ///
+  /// In ar, this message translates to:
+  /// **'التمويه يعمل'**
+  String get blurOnTitle;
+
+  /// Android string blur_off_title
+  ///
+  /// In ar, this message translates to:
+  /// **'التمويه متوقف'**
+  String get blurOffTitle;
+
+  /// Android string blur_start_cd
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل التمويه'**
+  String get blurStartCd;
+
+  /// Android string blur_stop_cd
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف التمويه'**
+  String get blurStopCd;
+
+  /// Android string blur_off_detail
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط الزر للتشغيل. تبدأ التصفية معه.'**
+  String get blurOffDetail;
+
+  /// Android string blur_what_title
+  ///
+  /// In ar, this message translates to:
+  /// **'ما الذي يُموَّه'**
+  String get blurWhatTitle;
+
   /// Android string blur_women_title
   ///
   /// In ar, this message translates to:
@@ -832,12 +868,6 @@ abstract class AppLocalizations {
   /// **'مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailBody;
 
-  /// Android string blur_setup_shizuku
-  ///
-  /// In ar, this message translates to:
-  /// **'السماح عبر Shizuku'**
-  String get blurSetupShizuku;
-
   /// Android string blur_setup_manual
   ///
   /// In ar, this message translates to:
@@ -847,25 +877,25 @@ abstract class AppLocalizations {
   /// Android string blur_status_needs_setup
   ///
   /// In ar, this message translates to:
-  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsSetup;
 
   /// Android string blur_status_needs_overlay
   ///
   /// In ar, this message translates to:
-  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsOverlay;
 
   /// Android string blur_fail_unavailable
   ///
   /// In ar, this message translates to:
-  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailUnavailable;
 
   /// Android string blur_fail_needs_a11y
   ///
   /// In ar, this message translates to:
-  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» من إعدادات أندرويد فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailNeedsA11y;
 
   /// Android string language_title
@@ -940,12 +970,6 @@ abstract class AppLocalizations {
   /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
   String blurStatusNoCapture(String details);
 
-  /// Android string blur_setup_failed
-  ///
-  /// In ar, this message translates to:
-  /// **'تعذّر السماح عبر Shizuku:\n{details}'**
-  String blurSetupFailed(String details);
-
   /// Android string step2_guide
   ///
   /// In ar, this message translates to:
@@ -955,7 +979,7 @@ abstract class AppLocalizations {
   /// Android string blur_fail_old_android
   ///
   /// In ar, this message translates to:
-  /// **'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (الأغطية التي يمرّ منها اللمس تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailOldAndroid;
 
   /// Android string guide_title

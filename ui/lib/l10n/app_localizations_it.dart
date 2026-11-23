@@ -395,6 +395,25 @@ class AppLocalizationsIt extends AppLocalizations {
       'Copre le persone e le immagini sullo schermo, in tutte le app, mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.';
 
   @override
+  String get blurOnTitle => 'La sfocatura è attiva';
+
+  @override
+  String get blurOffTitle => 'La sfocatura è spenta';
+
+  @override
+  String get blurStartCd => 'Avvia la sfocatura';
+
+  @override
+  String get blurStopCd => 'Ferma la sfocatura';
+
+  @override
+  String get blurOffDetail =>
+      'Tocca il pulsante per avviare. Il filtraggio parte insieme.';
+
+  @override
+  String get blurWhatTitle => 'Cosa sfocare';
+
+  @override
   String get blurWomenTitle => 'Sfoca le donne';
 
   @override
@@ -417,26 +436,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Attivato: tutto lo schermo viene coperto quando il telefono è troppo lento o la sfocatura non funziona. Disattivato: lo schermo resta visibile con un avviso.';
 
   @override
-  String get blurSetupShizuku => 'Consenti con Shizuku';
-
-  @override
   String get blurSetupManual => 'Consenti nelle impostazioni di Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: «Consenti con Shizuku», così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure «Consenti nelle impostazioni di Android», ma allora un tocco su un\'area sfocata non fa nulla.';
+      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: «Vai alla configurazione», così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure «Consenti nelle impostazioni di Android», ma allora un tocco su un\'area sfocata non fa nulla.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: avvia Shizuku e consenti Waaiya al suo interno, così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure consenti «Mostra sopra altre app» nelle impostazioni di Android, ma allora un tocco su un\'area sfocata non fa nulla.';
+      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: fai la configurazione una tantum, così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure consenti «Mostra sopra altre app» nelle impostazioni di Android, ma allora un tocco su un\'area sfocata non fa nulla.';
 
   @override
   String get blurFailUnavailable =>
-      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya o Shizuku (Android 12 o versioni successive) e l\'opzione si attiva: le coperture vengono allora disegnate in modo che i tocchi le attraversino. Fino ad allora, quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
+      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya (Android 12 o versioni successive) e l\'opzione si attiva: le coperture vengono allora disegnate in modo che i tocchi le attraversino. Fino ad allora, quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia Shizuku (Android 12 o versioni successive) o attiva il servizio di accessibilità Sfocatura Waaiya (Consenti con Shizuku, qui sopra) e l\'opzione si attiva. Fino ad allora, lo schermo resta visibile con un avviso.';
+      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya (Android 12 o versioni successive) o attiva il servizio di accessibilità Sfocatura Waaiya nelle impostazioni di Android e l\'opzione si attiva. Fino ad allora, lo schermo resta visibile con un avviso.';
 
   @override
   String get languageTitle => 'Lingua';
@@ -484,16 +500,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku non è riuscito a consentirlo:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Come avviare Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Non disponibile: su questa versione di Android una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato (le coperture di Shizuku richiedono Android 12 o versioni successive). Quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
+      'Non disponibile: su questa versione di Android una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato (le coperture attraversate dai tocchi richiedono Android 12 o versioni successive). Quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
 
   @override
   String get guideTitle => 'Avviare Shizuku, passo dopo passo';

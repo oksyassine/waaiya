@@ -396,7 +396,7 @@ class CoverHelperCard extends StatelessWidget {
     final String body;
     if (b.helperRunning) {
       body = l.helperOn;
-    } else if (b.shizukuLayer) {
+    } else if (b.shellLayer) {
       body = l.helperShizukuOn;
     } else {
       body = l.helperBodyOff;

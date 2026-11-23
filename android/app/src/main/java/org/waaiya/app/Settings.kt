@@ -21,6 +21,12 @@ class Settings(context: Context) {
         get() = p.getBoolean("silence_unfilterable", true)
         set(v) = p.edit().putBoolean("silence_unfilterable", v).apply()
 
+    /** Screen blur on or off (the Screen page's power button). What it covers is [blurWomen] and [blurNudity]; off
+     *  keeps that choice. Default on: before this switch existed those two alone turned the blur on. */
+    var blurEnabled: Boolean
+        get() = p.getBoolean("blur_on", true)
+        set(v) = p.edit().putBoolean("blur_on", v).apply()
+
     /** Screen blur: cover women (whole body; people the model cannot tell apart are covered too). */
     var blurWomen: Boolean
         get() = p.getBoolean("blur_women", false)
@@ -47,7 +53,7 @@ class Settings(context: Context) {
     /** The classifier threshold for [blurStrictness]. */
     val blurMaleClear: Float get() = MALE_CLEAR[blurStrictness]
 
-    val blurOn: Boolean get() = blurWomen || blurNudity
+    val blurOn: Boolean get() = blurEnabled && (blurWomen || blurNudity)
 
     /**
      * Live filter in stereo (left and right kept apart). Off by default (owner's decision, 0.2.10): mono runs the model

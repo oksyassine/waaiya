@@ -91,8 +91,6 @@ object ShizukuSetup {
         run(ctx.applicationContext, "Shizuku setup", slow, done) { it.grantSetup() }
 
     /** Screen blur: overlay permission + the covers' accessibility service, through the same UserService. */
-    fun grantBlur(ctx: Context, slow: () -> Unit = {}, done: (String) -> Unit) =
-        run(ctx.applicationContext, "Shizuku blur setup", slow, done) { it.grantBlur() }
 
     private fun run(ctx: Context, route: String, slow: () -> Unit, done: (String) -> Unit, call: (ISetupService) -> String) {
         val started = SystemClock.elapsedRealtime()
@@ -158,25 +156,6 @@ class SetupService : ISetupService.Stub() {
         log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "PROJECT_MEDIA", "allow"))
         // Optional: lets the notification-text tile turn Android 15's screen-share protection off while filtering.
         log.appendLine(run("/system/bin/cmd", "package", "grant", pkg, "android.permission.WRITE_SECURE_SETTINGS"))
-        return log.toString()
-    }
-
-    override fun grantBlur(): String {
-        val pkg = BuildConfig.APPLICATION_ID
-        val service = "$pkg/${BlurAccessibilityService::class.java.name}"
-        val log = StringBuilder()
-        log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "SYSTEM_ALERT_WINDOW", "allow"))
-        if (!BuildConfig.BLUR_A11Y) return log.toString() // this build has no accessibility service
-        // Android 13+: sideloaded apps cannot have accessibility turned on until this app-op allows it.
-        log.appendLine(run("/system/bin/cmd", "appops", "set", pkg, "ACCESS_RESTRICTED_SETTINGS", "allow"))
-        val current = output("/system/bin/settings", "get", "secure", "enabled_accessibility_services")
-            .takeUnless { it == "null" }.orEmpty()
-        val list = current.split(':').filter { it.isNotBlank() }
-        if (list.none { it.equals(service, ignoreCase = true) }) {
-            log.appendLine(run("/system/bin/settings", "put", "secure", "enabled_accessibility_services",
-                (list + service).joinToString(":")))
-        }
-        log.appendLine(run("/system/bin/settings", "put", "secure", "accessibility_enabled", "1"))
         return log.toString()
     }
 

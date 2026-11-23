@@ -399,6 +399,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Couvre les personnes et les images à l\'écran, dans toutes les applications, tant que le filtrage est activé. Tout se fait sur le téléphone ; rien n\'est envoyé nulle part.';
 
   @override
+  String get blurOnTitle => 'Le flou est activé';
+
+  @override
+  String get blurOffTitle => 'Le flou est désactivé';
+
+  @override
+  String get blurStartCd => 'Activer le flou';
+
+  @override
+  String get blurStopCd => 'Désactiver le flou';
+
+  @override
+  String get blurOffDetail =>
+      'Appuyez sur le bouton pour démarrer. Le filtrage démarre avec lui.';
+
+  @override
+  String get blurWhatTitle => 'Ce qui est flouté';
+
+  @override
   String get blurWomenTitle => 'Flouter les femmes';
 
   @override
@@ -420,26 +439,23 @@ class AppLocalizationsFr extends AppLocalizations {
       'Activé : tout l\'écran est couvert quand le téléphone est trop lent ou que le flou échoue. Désactivé : l\'écran reste visible avec un avertissement.';
 
   @override
-  String get blurSetupShizuku => 'Autoriser avec Shizuku';
-
-  @override
   String get blurSetupManual => 'Autoriser dans les paramètres Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : « Autoriser avec Shizuku », pour que vos appuis atteignent toujours l\'appli sous le flou. Ou « Autoriser dans les paramètres Android », mais alors un appui sur une zone floutée ne fait rien.';
+      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : « Aller à la configuration », pour que vos appuis atteignent toujours l\'appli sous le flou. Ou « Autoriser dans les paramètres Android », mais alors un appui sur une zone floutée ne fait rien.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : démarrez Shizuku et autorisez-y Waaiya, pour que vos appuis atteignent toujours l\'appli sous le flou. Ou autorisez « Superposition sur d\'autres applis » dans les paramètres Android, mais alors un appui sur une zone floutée ne fait rien.';
+      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : faites la configuration unique, pour que vos appuis atteignent toujours l\'appli sous le flou. Ou autorisez « Superposition sur d\'autres applis » dans les paramètres Android, mais alors un appui sur une zone floutée ne fait rien.';
 
   @override
   String get blurFailUnavailable =>
-      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya ou Shizuku (Android 12 ou plus récent) et l\'option s\'active : les caches sont alors dessinés pour que les appuis les traversent. D\'ici là, quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
+      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya (Android 12 ou plus récent) et l\'option s\'active : les caches sont alors dessinés pour que les appuis les traversent. D\'ici là, quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez Shizuku (Android 12 ou plus récent) ou activez le service d\'accessibilité Flou Waaiya (Autoriser avec Shizuku, ci-dessus) et l\'option s\'active. D\'ici là, l\'écran reste visible avec un avertissement.';
+      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya (Android 12 ou plus récent) ou activez le service d\'accessibilité Flou Waaiya dans les paramètres Android et l\'option s\'active. D\'ici là, l\'écran reste visible avec un avertissement.';
 
   @override
   String get languageTitle => 'Langue';
@@ -487,16 +503,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku n\'a pas pu l\'autoriser :\n$details';
-  }
-
-  @override
   String get step2Guide => 'Comment démarrer Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Grisé : sur cette version d\'Android, un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé (les caches de Shizuku nécessitent Android 12 ou plus récent). Quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
+      'Grisé : sur cette version d\'Android, un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé (les caches que les appuis traversent nécessitent Android 12 ou plus récent). Quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
 
   @override
   String get guideTitle => 'Démarrer Shizuku, étape par étape';

@@ -8,8 +8,12 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 class BlurConfig {
   const BlurConfig({required this.women, required this.nudity, required this.strictness, required this.failCover});
 
-  factory BlurConfig.of(WaaiyaSettings s) =>
-      BlurConfig(women: s.blurWomen, nudity: s.blurNudity, strictness: s.blurStrictness, failCover: s.blurFailCover);
+  /// Switched off with the power button: nothing to cover (policy 0), the choices are kept in the settings.
+  factory BlurConfig.of(WaaiyaSettings s) => BlurConfig(
+      women: s.blurOn && s.blurWomen,
+      nudity: s.blurOn && s.blurNudity,
+      strictness: s.blurStrictness,
+      failCover: s.blurFailCover);
 
   final bool women;
   final bool nudity;

@@ -151,33 +151,31 @@ void main() {
       blur: const BlurInfo(overlayAllowed: true, state: BlurState.failing),
     );
     expect(blurStatus(l, running), (l.blurStatusFailing, true));
-    // Shizuku layer (Android 12+): nothing to allow; not applied yet = starting.
+    // shell layer (Waaiya's helper, Android 12+): nothing to allow; not applied yet = starting.
     final layer = needsOverlay.copyWith(
       filter: const FilterInfo(state: FilterState.filtering),
-      blur: const BlurInfo(shizukuLayer: true),
+      blur: const BlurInfo(shellLayer: true),
     );
     expect(blurStatus(l, layer), (l.blurStatusStarting, false));
-    final failed = running.copyWith(blur: const BlurInfo(message: BackendMessage('setup_failed', 'log')));
-    expect(blurStatus(l, failed), (l.blurSetupFailed('log'), true));
+    // switched off with the power button: the choices stay, the blur does not run
+    final switchedOff = layer.copyWith(settings: const WaaiyaSettings(blurEnabled: false, blurWomen: true));
+    expect(blurStatus(l, switchedOff), isNull);
   });
 
-  test('greyed-out cover switch: note and next Shizuku step (MainActivity 0.2.4)', () async {
-    final l = await AppLocalizations.delegate.load(const Locale('en'));
-    AppState with_(ShizukuState? s, {bool layer = true, bool pass = false}) => AppState(
-          setup: SetupInfo(shizuku: s),
-          blur: BlurInfo(layerSupported: layer, touchPassThrough: pass),
-        );
-    expect(blurFailFix(l, with_(ShizukuState.notInstalled)), l.step1Action);
-    expect(blurFailFix(l, with_(ShizukuState.tooOld)), l.step2Update);
-    expect(blurFailFix(l, with_(ShizukuState.notRunning)), l.step2Guide);
-    expect(blurFailFix(l, with_(ShizukuState.needsPermission)), l.step3Action);
-    expect(blurFailFix(l, with_(ShizukuState.deniedPermanently)), l.step2Action);
-    expect(blurFailFix(l, with_(ShizukuState.ready)), isNull);
-    expect(blurFailFix(l, with_(ShizukuState.notRunning, pass: true)), isNull); // taps already pass through
-    expect(blurFailFix(l, with_(ShizukuState.notRunning, layer: false)), isNull); // Android < 12
+  test('blur runs when switched on, with something to cover, and (Android) while filtering', () {
+    const choices = WaaiyaSettings(blurWomen: true);
+    const filtering = FilterInfo(state: FilterState.filtering);
+    expect(blurActive(const AppState(settings: choices, filter: filtering)), isTrue);
+    expect(blurActive(const AppState(settings: choices)), isFalse); // filtering is off
+    expect(blurActive(const AppState(settings: WaaiyaSettings(blurEnabled: false, blurWomen: true), filter: filtering)),
+        isFalse);
+    expect(blurActive(const AppState(filter: filtering)), isFalse); // nothing chosen
+    // desktop: the blur runs on its own
+    expect(blurActive(const AppState(settings: choices, capabilities: Capabilities(screenBlur: true, blurStandalone: true))),
+        isTrue);
   });
 
-  testWidgets('blur card: greyed-out switch shows the note and opens the guide', (tester) async {
+  testWidgets('blur card: greyed-out switch shows the note and leads to the setup', (tester) async {
     final backend = MemoryBackend(
       initial: const AppState(
         settings: WaaiyaSettings(gender: 'man', blurWomen: true),
@@ -195,7 +193,37 @@ void main() {
     expect(find.textContaining('معطّل مؤقتًا'), findsOneWidget); // blur_fail_unavailable note
     await tester.tap(fix);
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('shizuku_guide')), findsOneWidget);
+    expect(find.byKey(const Key('blur_fail_fix')), findsNothing); // left the Screen page
+    expect(find.byKey(const Key('blur_power')), findsNothing);
+  });
+
+  testWidgets('blur power button: on starts filtering with everything chosen, off keeps the choices', (tester) async {
+    final backend = MemoryBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(originalsMuted: true, consentSkipped: true, shizuku: ShizukuState.ready),
+        blur: BlurInfo(layerSupported: true, overlayAllowed: true, shellLayer: true, touchPassThrough: true),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    await goTo(tester, 'screen');
+    final l = await AppLocalizations.delegate.load(const Locale('ar'));
+    expect(find.text(l.blurOffTitle), findsOneWidget);
+    expect(find.text(l.blurOffDetail), findsOneWidget);
+    await tester.tap(find.byKey(const Key('blur_power')));
+    await tester.pumpAndSettle();
+    expect(backend.state.settings.blurWomen, isTrue);
+    expect(backend.state.settings.blurNudity, isTrue);
+    expect(backend.state.filter.running, isTrue); // filtering started with it
+    expect(find.text(l.blurOnTitle), findsOneWidget);
+    await tester.tap(find.byKey(const Key('blur_power')));
+    await tester.pumpAndSettle();
+    expect(backend.state.settings.blurEnabled, isFalse);
+    expect(backend.state.settings.blurWomen, isTrue); // the choice is kept
+    expect(backend.state.filter.running, isTrue); // the sound filter goes on
+    expect(find.text(l.blurOffTitle), findsOneWidget);
   });
 
   testWidgets('blur card: "who is left uncovered" row and dialog', (tester) async {

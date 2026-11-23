@@ -396,6 +396,25 @@ class AppLocalizationsUz extends AppLocalizations {
       'Filtrlash yoqilganda barcha ilovalarda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.';
 
   @override
+  String get blurOnTitle => 'Xiralashtirish yoqilgan';
+
+  @override
+  String get blurOffTitle => 'Xiralashtirish oʻchirilgan';
+
+  @override
+  String get blurStartCd => 'Xiralashtirishni boshlash';
+
+  @override
+  String get blurStopCd => 'Xiralashtirishni toʻxtatish';
+
+  @override
+  String get blurOffDetail =>
+      'Boshlash uchun tugmani bosing. Filtrlash ham u bilan birga boshlanadi.';
+
+  @override
+  String get blurWhatTitle => 'Nimani xiralashtirish';
+
+  @override
   String get blurWomenTitle => 'Ayollarni xiralashtirish';
 
   @override
@@ -417,26 +436,23 @@ class AppLocalizationsUz extends AppLocalizations {
       'Yoqilgan: telefon juda sekin boʻlsa yoki xiralashtirish ishlamay qolsa, butun ekran yopiladi. Oʻchirilgan: ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
-  String get blurSetupShizuku => 'Shizuku orqali ruxsat berish';
-
-  @override
   String get blurSetupManual => 'Android sozlamalarida ruxsat berish';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: “Shizuku orqali ruxsat berish”, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki “Android sozlamalarida ruxsat berish”, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
+      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: “Sozlashga oʻtish”, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki “Android sozlamalarida ruxsat berish”, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku ilovasini ishga tushiring va unda Waaiyaga ruxsat bering, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
+      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: bir martalik sozlashni bajaring, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
 
   @override
   String get blurFailUnavailable =>
-      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini yoki Shizuku ilovasini ishga tushiring (Android 12 yoki yangiroq) va bu sozlama yoqiladi: shunda qoplamalar bosishlar ulardan oʻtib ketadigan qilib chiziladi. Ungacha xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
+      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini ishga tushiring (Android 12 yoki yangiroq) va bu sozlama yoqiladi: shunda qoplamalar bosishlar ulardan oʻtib ketadigan qilib chiziladi. Ungacha xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Shizuku ilovasini ishga tushiring (Android 12 yoki yangiroq) yoki “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqing (yuqoridagi “Shizuku orqali ruxsat berish”) va bu sozlama yoqiladi. Ungacha ekran ogohlantirish bilan koʻrinib turadi.';
+      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini ishga tushiring (Android 12 yoki yangiroq) yoki Android sozlamalarida “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqing va bu sozlama yoqiladi. Ungacha ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
   String get languageTitle => 'Til';
@@ -483,16 +499,11 @@ class AppLocalizationsUz extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku ruxsat bera olmadi:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Shizuku qanday ishga tushiriladi';
 
   @override
   String get blurFailOldAndroid =>
-      'Nofaol: Androidning bu versiyasida butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin (Shizuku qoplamalari uchun Android 12 yoki yangiroq kerak). Xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
+      'Nofaol: Androidning bu versiyasida butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin (bosishlar oʻtib ketadigan qoplamalar uchun Android 12 yoki yangiroq kerak). Xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
   String get guideTitle => 'Shizuku ilovasini qadamma-qadam ishga tushirish';

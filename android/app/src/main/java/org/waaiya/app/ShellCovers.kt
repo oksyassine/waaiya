@@ -1,8 +1,6 @@
 package org.waaiya.app
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.ServiceConnection
 import android.graphics.Rect
 import android.os.Binder
 import android.os.Handler
@@ -13,12 +11,10 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.SurfaceControl
 import android.annotation.TargetApi
-import rikka.shizuku.Shizuku
 import kotlin.concurrent.thread
-import kotlin.system.exitProcess
 
 /**
- * Screen-blur covers drawn by the shell instead of an app window (Android 12+, Shizuku running).
+ * Screen-blur covers drawn by the shell instead of an app window (Android 12+, Waaiya's helper [CoverHelper] running).
  *
  * Why: an app overlay that hides content also swallows the touches under it (Android 12+), and an accessibility
  * overlay (which does not) makes Google Play Protect block the sideloaded app. A shell-uid process may instead
@@ -29,19 +25,13 @@ import kotlin.system.exitProcess
  * Safety: the covers are plain colour layers with no input of their own. They are removed when the app dies
  * (linkToDeath), hidden when no update came for 2.5 s, and removed when the service stops.
  *
- * This file holds both sides: [ShizukuCovers] (in the app) and [CoverService] (in the Shizuku process).
+ * This file holds both sides: [ShellCovers] (in the app) and [CoverService] (in the helper's process).
  */
 @TargetApi(31)
-class ShizukuCovers(private val ctx: Context) {
+class ShellCovers(private val ctx: Context) {
     private val main = Handler(Looper.getMainLooper())
     private val token = Binder()
     @Volatile private var svc: ICoverService? = null
-    private var conn: ServiceConnection? = null
-    private val args = Shizuku.UserServiceArgs(ComponentName(ctx.packageName, CoverService::class.java.name))
-        .daemon(false)  // removed with the app process; the layer then goes with it
-        .processNameSuffix("covers")
-        .debuggable(BuildConfig.DEBUG)
-        .version(BuildConfig.VERSION_CODE)
 
     val alive: Boolean get() = svc?.asBinder()?.isBinderAlive == true
 
@@ -51,41 +41,19 @@ class ShizukuCovers(private val ctx: Context) {
         private set
     @Volatile private var checking = false
 
-    /** Who hosts the layer: Waaiya's own helper ([CoverHelper]) when it runs, else Shizuku. */
-    var via = ""
-        private set
+    /** Who hosts the layer (diagnostics). */
+    val via = "Waaiya helper"
 
-    /** Binds the service and creates the layer. [done] runs on the main thread: true = covers can be drawn. */
+    /** Starts the layer in Waaiya's helper. [done] runs on the main thread: true = covers can be drawn; false at once
+     *  when the helper is not running (the caller then draws in windows). */
     fun connect(done: (Boolean) -> Unit) {
-        var finished = false
-        fun finish(ok: Boolean) = main.post { if (!finished) { finished = true; done(ok) } }
-        CoverHelper.service?.let { s ->
-            via = "Waaiya helper"
-            thread(name = "im-covers-start") {
-                val ok = runCatching { s.start(token) }.onFailure { Log.w(TAG, "covers: helper start failed", it) }
-                    .getOrDefault(false)
-                if (ok) svc = s
-                finish(ok)
-            }
-            return
+        val s = CoverHelper.service ?: run { main.post { done(false) }; return }
+        thread(name = "im-covers-start") {
+            val ok = runCatching { s.start(token) }.onFailure { Log.w(TAG, "covers: helper start failed", it) }
+                .getOrDefault(false)
+            if (ok) svc = s
+            main.post { done(ok) }
         }
-        via = "Shizuku"
-        val c = object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
-                if (binder == null || !binder.pingBinder()) { finish(false); return }
-                thread(name = "im-covers-start") {
-                    val s = ICoverService.Stub.asInterface(binder)
-                    val ok = runCatching { s.start(token) }.onFailure { Log.w(TAG, "covers: start failed", it) }
-                        .getOrDefault(false)
-                    if (ok) svc = s
-                    finish(ok)
-                }
-            }
-            override fun onServiceDisconnected(name: ComponentName?) { svc = null }
-        }
-        conn = c
-        try { Shizuku.bindUserService(args, c) } catch (t: Throwable) { Log.w(TAG, "covers: bind failed", t); finish(false); return }
-        main.postDelayed({ finish(false) }, 8000)
     }
 
     /** rects: count records of 8 floats (x0, y0, x1, y1 in display pixels, kind, r, g, b). One-way: never blocks. */
@@ -112,9 +80,7 @@ class ShizukuCovers(private val ctx: Context) {
         val s = svc
         svc = null
         thread(name = "im-covers-stop") {
-            runCatching { s?.stop() }
-            // the helper stays for the next blur; a Shizuku UserService is removed with the binding
-            if (via == "Shizuku") runCatching { conn?.let { Shizuku.unbindUserService(args, it, true) } }
+            runCatching { s?.stop() }  // the helper stays for the next blur
         }
     }
 
@@ -129,14 +95,11 @@ class ShizukuCovers(private val ctx: Context) {
 }
 
 /**
- * Shizuku UserService (shell uid, own process, not started by Android: not in the manifest). Hidden SurfaceControl
- * methods are called by reflection; hidden-API checks do not apply to app_process processes.
+ * The layer's side in Waaiya's helper ([CoverHelper]: shell uid, own app_process, not in the manifest). Hidden
+ * SurfaceControl methods are called by reflection; hidden-API checks do not apply to app_process processes.
+ * Only [allowedUid] (the app) may call it, and destroy() does not end the helper.
  */
-/**
- * [allowedUid] >= 0 when hosted by Waaiya's own helper ([CoverHelper]): only that uid may call it, and destroy() does
- * not end the helper. Under Shizuku (-1) Shizuku hands the binder to this app only.
- */
-class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
+class CoverService(private val allowedUid: Int) : ICoverService.Stub() {
     private companion object {
         /** Colour layers at most: the app's rects (Vision.MAX_RECTS, outlines as strips) plus badge and test square. */
         const val MAX_LAYERS = Vision.MAX_RECTS + 2
@@ -162,10 +125,10 @@ class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
     }
 
     private fun checkCaller() {
-        if (allowedUid >= 0 && Binder.getCallingUid() != allowedUid) throw SecurityException("not Waaiya")
+        if (Binder.getCallingUid() != allowedUid) throw SecurityException("not Waaiya")
     }
 
-    override fun destroy() { checkCaller(); clear(); if (allowedUid < 0) exitProcess(0) }
+    override fun destroy() { checkCaller(); clear() }
 
     override fun start(app: IBinder): Boolean = synchronized(lock) {
         checkCaller()
@@ -206,20 +169,20 @@ class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
         if (allowedUid >= 0 && Binder.getCallingUid() != allowedUid) return@synchronized  // one-way: drop, no throw
         val r = root ?: return@synchronized
         last = SystemClock.uptimeMillis()
-        val n = count.coerceIn(0, rects.size / ShizukuCovers.RECORD).coerceAtMost(MAX_LAYERS)
+        val n = count.coerceIn(0, rects.size / ShellCovers.RECORD).coerceAtMost(MAX_LAYERS)
         val t = SurfaceControl.Transaction()
         try {
             while (covers.size < n) covers += newCover(r)
             for ((i, c) in covers.withIndex()) {
                 if (i >= n) { t.setVisibility(c, false); continue }
-                val o = i * ShizukuCovers.RECORD
+                val o = i * ShellCovers.RECORD
                 val x0 = rects[o].toInt(); val y0 = rects[o + 1].toInt()
                 val w = (rects[o + 2] - rects[o]).toInt().coerceAtLeast(1)
                 val h = (rects[o + 3] - rects[o + 1]).toInt().coerceAtLeast(1)
                 val kind = rects[o + 4].toInt()
                 val rgb = when (kind) {
-                    ShizukuCovers.KIND_TEST -> floatArrayOf(1f, 0f, 1f)
-                    ShizukuCovers.KIND_BADGE -> floatArrayOf(0.8f, 0.15f, 0.15f)
+                    ShellCovers.KIND_TEST -> floatArrayOf(1f, 0f, 1f)
+                    ShellCovers.KIND_BADGE -> floatArrayOf(0.8f, 0.15f, 0.15f)
                     else -> floatArrayOf(rects[o + 5], rects[o + 6], rects[o + 7])
                 }
                 configure(t, c, x0, y0, w, h, kind, rgb)
@@ -255,10 +218,10 @@ class CoverService(private val allowedUid: Int = -1) : ICoverService.Stub() {
         call(t, "setColor", c, rgb)
         t.setAlpha(c, 1f)                         // opaque: nothing of what is under shows through
         // square corners for the whole screen and for strips of an outline (they stack into one shape)
-        val square = kind == Vision.KIND_FULL || kind == ShizukuCovers.KIND_FAIL_COVER ||
-            (kind < ShizukuCovers.KIND_FAIL_COVER && (kind and Vision.KIND_PART) != 0)
+        val square = kind == Vision.KIND_FULL || kind == ShellCovers.KIND_FAIL_COVER ||
+            (kind < ShellCovers.KIND_FAIL_COVER && (kind and Vision.KIND_PART) != 0)
         runCatching { call(t, "setCornerRadius", c, if (square) 0f else 24f) }
-        t.setLayer(c, if (kind == ShizukuCovers.KIND_BADGE || kind == ShizukuCovers.KIND_TEST) 10 else 1)
+        t.setLayer(c, if (kind == ShellCovers.KIND_BADGE || kind == ShellCovers.KIND_TEST) 10 else 1)
     }
 
     override fun stop() { checkCaller(); clear() }

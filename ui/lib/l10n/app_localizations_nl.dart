@@ -394,6 +394,25 @@ class AppLocalizationsNl extends AppLocalizations {
       'Bedekt mensen en afbeeldingen op het scherm, in elke app, terwijl het filteren aan staat. Het werkt op de telefoon zelf; er wordt niets verstuurd.';
 
   @override
+  String get blurOnTitle => 'De vervaging staat aan';
+
+  @override
+  String get blurOffTitle => 'De vervaging staat uit';
+
+  @override
+  String get blurStartCd => 'Vervaging starten';
+
+  @override
+  String get blurStopCd => 'Vervaging stoppen';
+
+  @override
+  String get blurOffDetail =>
+      'Tik op de knop om te starten. Het filteren start mee.';
+
+  @override
+  String get blurWhatTitle => 'Wat wordt vervaagd';
+
+  @override
   String get blurWomenTitle => 'Vrouwen vervagen';
 
   @override
@@ -416,26 +435,23 @@ class AppLocalizationsNl extends AppLocalizations {
       'Aan: het hele scherm wordt bedekt als de telefoon te traag is of de vervaging mislukt. Uit: het scherm blijft zichtbaar met een waarschuwing.';
 
   @override
-  String get blurSetupShizuku => 'Toestaan met Shizuku';
-
-  @override
   String get blurSetupManual => 'Toestaan in Android-instellingen';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: “Toestaan met Shizuku”, dan komen je tikken nog steeds bij de app onder de vervaging. Of “Toestaan in Android-instellingen”, maar dan doet een tik op een vervaagd gebied niets.';
+      'Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: “Naar de installatie”, dan komen je tikken nog steeds bij de app onder de vervaging. Of “Toestaan in Android-instellingen”, maar dan doet een tik op een vervaagd gebied niets.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: start Shizuku en sta Waaiya daarin toe, dan komen je tikken nog steeds bij de app onder de vervaging. Of sta “Weergeven over andere apps” toe in de Android-instellingen, maar dan doet een tik op een vervaagd gebied niets.';
+      'Om te vervagen moet Waaiya over andere apps heen tekenen. Het beste: doe de eenmalige installatie, dan komen je tikken nog steeds bij de app onder de vervaging. Of sta “Weergeven over andere apps” toe in de Android-instellingen, maar dan doet een tik op een vervaagd gebied niets.';
 
   @override
   String get blurFailUnavailable =>
-      'Voorlopig grijs: een afdekking over het hele scherm zou elke tik blokkeren en je zou vast kunnen komen te zitten. Start de helper van Waaiya of Shizuku (Android 12 of nieuwer) en deze optie wordt beschikbaar: de afdekkingen worden dan zo getekend dat tikken erdoorheen gaan. Tot die tijd blijft het scherm zichtbaar met een waarschuwing als de vervaging het niet bijhoudt.';
+      'Voorlopig grijs: een afdekking over het hele scherm zou elke tik blokkeren en je zou vast kunnen komen te zitten. Start de helper van Waaiya (Android 12 of nieuwer) en deze optie wordt beschikbaar: de afdekkingen worden dan zo getekend dat tikken erdoorheen gaan. Tot die tijd blijft het scherm zichtbaar met een waarschuwing als de vervaging het niet bijhoudt.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Voorlopig grijs: een afdekking over het hele scherm zou elke tik blokkeren en je zou vast kunnen komen te zitten. Start Shizuku (Android 12 of nieuwer) of zet de toegankelijkheidsservice Waaiya-vervaging aan (Toestaan met Shizuku, hierboven), en deze optie wordt beschikbaar. Tot die tijd blijft het scherm zichtbaar met een waarschuwing.';
+      'Voorlopig grijs: een afdekking over het hele scherm zou elke tik blokkeren en je zou vast kunnen komen te zitten. Start de helper van Waaiya (Android 12 of nieuwer) of zet de toegankelijkheidsservice Waaiya-vervaging aan in de Android-instellingen, en deze optie wordt beschikbaar. Tot die tijd blijft het scherm zichtbaar met een waarschuwing.';
 
   @override
   String get languageTitle => 'Taal';
@@ -482,16 +498,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku kon het niet toestaan:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Zo start je Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Grijs: op deze Android-versie zou een afdekking over het hele scherm elke tik blokkeren en je zou vast kunnen komen te zitten (afdekkingen via Shizuku hebben Android 12 of nieuwer nodig). Als de vervaging het niet bijhoudt, blijft het scherm zichtbaar met een waarschuwing.';
+      'Grijs: op deze Android-versie zou een afdekking over het hele scherm elke tik blokkeren en je zou vast kunnen komen te zitten (afdekkingen waar tikken doorheen gaan hebben Android 12 of nieuwer nodig). Als de vervaging het niet bijhoudt, blijft het scherm zichtbaar met een waarschuwing.';
 
   @override
   String get guideTitle => 'Shizuku starten, stap voor stap';

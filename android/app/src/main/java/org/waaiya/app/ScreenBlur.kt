@@ -171,7 +171,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         if (turningOn) {
             publish(State.STARTING)
             if (overlay.attach()) overlay.show(FloatArray(0), 0, null, 0, true) // self-test square
-            testedHost = overlay.host // null while the Shizuku layer connects: the watchdog tests it once it draws
+            testedHost = overlay.host // null while the shell layer connects: the watchdog tests it once it draws
         }
         worker.post {
             if (policy != p) return@post // changed again meanwhile
@@ -368,7 +368,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         val failing = failStreak >= 3 || (busy != 0L && now - busy > STALL_MS)
         // a full-screen cover only where touches pass through it (accessibility overlay): otherwise the phone is stuck
         val canCover = settings.blurFailCover &&
-            (overlay.host == BlurOverlay.Host.ACCESSIBILITY || overlay.host == BlurOverlay.Host.SHIZUKU)
+            (overlay.host == BlurOverlay.Host.ACCESSIBILITY || overlay.host == BlurOverlay.Host.SHELL)
         return if (!failing) 0 else if (canCover) 1 else 2
     }
 
@@ -381,13 +381,13 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
             if (mc != maleClear) { maleClear = mc; worker.post { vision?.setMaleClear(mc) } }
             if (policy <= 0) { main.postDelayed(this, 500); return }
             if (overlay.host == null && !overlay.connecting && overlay.attach())
-                Log.i(TAG, "blur overlay attached late (${overlay.host ?: "Shizuku layer connecting"})")
+                Log.i(TAG, "blur overlay attached late (${overlay.host ?: "shell layer connecting"})")
             val fm = failMode()
             overlay.setFailMode(fm)
             overlay.heartbeat()           // may replace a host that stopped drawing
-            // A new host (attached late, the Shizuku layer confirmed, or a fallback from it to a window, or from a
+            // A new host (attached late, the shell layer confirmed, or a fallback from it to a window, or from a
             // switched-off accessibility service): whether its covers show in the capture is not known, so the
-            // self-test runs again. Without this a window that replaced the Shizuku layer on Android 10/11-like
+            // self-test runs again. Without this a window that replaced the shell layer on Android 10/11-like
             // behaviour kept "covers not visible", and the tracker uncovered whatever its own covers hid.
             val h = overlay.host
             if (h != testedHost) {
@@ -398,7 +398,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
                     worker.post { testDone = false; coversVisible = false; testUntil = SystemClock.uptimeMillis() + SELF_TEST_MS }
                 }
             }
-            // Shizuku layer: "drawing" only means its calls did not fail (the layer is left out of the capture, so
+            // shell layer: "drawing" only means its calls did not fail (the layer is left out of the capture, so
             // the app cannot see it on screen)
             coverInfo = "Covers drawn by: ${overlay.hostName ?: if (overlay.connecting) "shell layer (connecting)" else "nothing"}" +
                 ", skip-screenshot flag ${if (overlay.skipApplied) "on" else "off"}, covers in the capture " +

@@ -227,7 +227,7 @@ pass through. Shizuku was the only such process; `CoverHelper.kt` is Waaiya's ow
   is gone; the version is also checked). The Screen page then shows the button again: one tap (Wi-Fi and Wireless
   debugging on, already paired) starts a new one.
 - **Choice of host** (`BlurOverlay.attach`): the helper when it runs, else Shizuku, else app overlay windows.
-  `blur.shizukuLayer` and the diagnostics line ("Covers drawn by: shell layer (Waaiya helper)") say which.
+  `blur.shellLayer` and the diagnostics line ("Covers drawn by: shell layer (Waaiya helper)") say which.
 - **Start race.** adbd ends the session as soon as the shell exits, and a background child that has not reached
   `setsid` yet goes with it (seen once in two runs). The start line therefore waits until `pidof waaiya_covers`
   sees the helper (up to 5 s) and prints `helper=started` or `helper=missing` into the setup log.

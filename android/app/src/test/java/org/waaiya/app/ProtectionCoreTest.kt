@@ -41,7 +41,7 @@ class ProtectionCoreTest {
 
     @Test fun weakeningTable() {
         val w = ProtectionRules::isWeakening
-        for (k in listOf("blur_women", "blur_nudity", "blur_fail_cover", "silence_unfilterable", "hold_silence", "mute_women_singing")) {
+        for (k in listOf("blur_on", "blur_women", "blur_nudity", "blur_fail_cover", "silence_unfilterable", "hold_silence", "mute_women_singing")) {
             assertTrue(k, w(k, true, false))
             assertFalse(k, w(k, false, true))
             assertFalse(k, w(k, true, true))

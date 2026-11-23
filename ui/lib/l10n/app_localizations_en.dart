@@ -392,6 +392,25 @@ class AppLocalizationsEn extends AppLocalizations {
       'Covers people and images on screen, in every app, while filtering is on. It runs on the phone; nothing is sent anywhere.';
 
   @override
+  String get blurOnTitle => 'The blur is on';
+
+  @override
+  String get blurOffTitle => 'The blur is off';
+
+  @override
+  String get blurStartCd => 'Start the blur';
+
+  @override
+  String get blurStopCd => 'Stop the blur';
+
+  @override
+  String get blurOffDetail =>
+      'Tap the button to start. Filtering starts with it.';
+
+  @override
+  String get blurWhatTitle => 'What to blur';
+
+  @override
   String get blurWomenTitle => 'Blur women';
 
   @override
@@ -413,26 +432,23 @@ class AppLocalizationsEn extends AppLocalizations {
       'On: the whole screen is covered when the phone is too slow or the blur fails. Off: the screen stays visible with a warning.';
 
   @override
-  String get blurSetupShizuku => 'Allow with Shizuku';
-
-  @override
   String get blurSetupManual => 'Allow in Android settings';
 
   @override
   String get blurStatusNeedsSetup =>
-      'To blur, Waaiya has to draw over other apps. Best: “Allow with Shizuku”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.';
+      'To blur, Waaiya has to draw over other apps. Best: “Go to the setup”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'To blur, Waaiya has to draw over other apps. Best: start Shizuku and allow Waaiya in it, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.';
+      'To blur, Waaiya has to draw over other apps. Best: do the one-time setup, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.';
 
   @override
   String get blurFailUnavailable =>
-      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper or Shizuku (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.';
+      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) or turn on the Waaiya Blur accessibility service (Allow with Shizuku above) and it turns on. Until then, the screen stays visible with a warning.';
+      'Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper (Android 12 or newer) or turn on the Waaiya Blur accessibility service in Android settings and it turns on. Until then, the screen stays visible with a warning.';
 
   @override
   String get languageTitle => 'Language';
@@ -479,16 +495,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku could not allow it:\n$details';
-  }
-
-  @override
   String get step2Guide => 'How to start Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Greyed out: on this Android version a full-screen cover would block every tap and you could get stuck (Shizuku covers need Android 12 or newer). When the blur cannot keep up, the screen stays visible with a warning.';
+      'Greyed out: on this Android version a full-screen cover would block every tap and you could get stuck (covers that let taps through need Android 12 or newer). When the blur cannot keep up, the screen stays visible with a warning.';
 
   @override
   String get guideTitle => 'Start Shizuku, step by step';

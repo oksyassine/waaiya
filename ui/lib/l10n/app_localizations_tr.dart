@@ -397,6 +397,25 @@ class AppLocalizationsTr extends AppLocalizations {
       'Filtreleme açıkken her uygulamada ekrandaki insanları ve görüntüleri örter. Telefonda çalışır; hiçbir yere bir şey gönderilmez.';
 
   @override
+  String get blurOnTitle => 'Bulanıklaştırma açık';
+
+  @override
+  String get blurOffTitle => 'Bulanıklaştırma kapalı';
+
+  @override
+  String get blurStartCd => 'Bulanıklaştırmayı başlat';
+
+  @override
+  String get blurStopCd => 'Bulanıklaştırmayı durdur';
+
+  @override
+  String get blurOffDetail =>
+      'Başlatmak için düğmeye dokunun. Filtreleme de onunla başlar.';
+
+  @override
+  String get blurWhatTitle => 'Neyin bulanıklaştırılacağı';
+
+  @override
   String get blurWomenTitle => 'Kadınları bulanıklaştır';
 
   @override
@@ -418,26 +437,23 @@ class AppLocalizationsTr extends AppLocalizations {
       'Açık: telefon çok yavaş kaldığında veya bulanıklaştırma başarısız olduğunda tüm ekran örtülür. Kapalı: ekran bir uyarıyla görünür kalır.';
 
   @override
-  String get blurSetupShizuku => 'Shizuku ile izin ver';
-
-  @override
   String get blurSetupManual => 'Android ayarlarında izin ver';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: “Shizuku ile izin ver”; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da “Android ayarlarında izin ver”; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
+      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: “Kuruluma git”; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da “Android ayarlarında izin ver”; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: Shizuku\'yu başlatın ve içinde Waaiya\'ya izin verin; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
+      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: tek seferlik kurulumu yapın; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
 
   @override
   String get blurFailUnavailable =>
-      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını veya Shizuku\'yu (Android 12 veya daha yeni) başlatın, seçenek kullanılabilir olur: örtüler o zaman dokunuşlar içinden geçecek şekilde çizilir. O zamana kadar, bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
+      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını (Android 12 veya daha yeni) başlatın, seçenek kullanılabilir olur: örtüler o zaman dokunuşlar içinden geçecek şekilde çizilir. O zamana kadar, bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Shizuku\'yu başlatın (Android 12 veya daha yeni) ya da Waaiya Bulanıklaştırma erişilebilirlik hizmetini açın (yukarıdaki “Shizuku ile izin ver”), seçenek kullanılabilir olur. O zamana kadar ekran bir uyarıyla görünür kalır.';
+      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını başlatın (Android 12 veya daha yeni) ya da Android ayarlarında Waaiya Bulanıklaştırma erişilebilirlik hizmetini açın, seçenek kullanılabilir olur. O zamana kadar ekran bir uyarıyla görünür kalır.';
 
   @override
   String get languageTitle => 'Dil';
@@ -484,16 +500,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku izin veremedi:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Shizuku nasıl başlatılır';
 
   @override
   String get blurFailOldAndroid =>
-      'Kullanılamıyor: bu Android sürümünde tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz (Shizuku örtüleri Android 12 veya daha yenisini gerektirir). Bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
+      'Kullanılamıyor: bu Android sürümünde tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz (dokunuşların içinden geçtiği örtüler Android 12 veya daha yenisini gerektirir). Bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
 
   @override
   String get guideTitle => 'Shizuku\'yu adım adım başlatın';

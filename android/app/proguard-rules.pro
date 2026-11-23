@@ -26,7 +26,8 @@
     native <methods>;
 }
 
-# Screen-blur covers drawn by the shell: Shizuku instantiates CoverService by class name in its own process.
+# Screen-blur covers drawn by the shell: CoverService runs in Waaiya's helper (CoverHelper, its own app_process),
+# and its AIDL Stub and Proxy live on both sides of that binder.
 -keep class org.waaiya.app.CoverService {
     <init>(...);
     public *;

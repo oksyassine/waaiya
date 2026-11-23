@@ -396,6 +396,25 @@ class AppLocalizationsHa extends AppLocalizations {
       'Yana rufe mutane da hotuna a allo, a kowace manhaja, yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.';
 
   @override
+  String get blurOnTitle => 'Dusashewa tana aiki';
+
+  @override
+  String get blurOffTitle => 'Dusashewa a kashe take';
+
+  @override
+  String get blurStartCd => 'Kunna dusashewa';
+
+  @override
+  String get blurStopCd => 'Kashe dusashewa';
+
+  @override
+  String get blurOffDetail =>
+      'Ku taɓa maɓallin don farawa. Tacewa ma tana farawa tare da ita.';
+
+  @override
+  String get blurWhatTitle => 'Abin da za a dusashe';
+
+  @override
   String get blurWomenTitle => 'Dusashe mata';
 
   @override
@@ -417,26 +436,23 @@ class AppLocalizationsHa extends AppLocalizations {
       'A kunne: ana rufe dukkan allo idan wayar ta yi jinkiri sosai ko dusashewa ta kasa. A kashe: allon yana bayyana tare da gargaɗi.';
 
   @override
-  String get blurSetupShizuku => 'Ba da izini da Shizuku';
-
-  @override
   String get blurSetupManual => 'Ba da izini a saitunan Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: “Ba da izini da Shizuku”, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma “Ba da izini a saitunan Android”, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
+      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: “Je zuwa saitin”, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma “Ba da izini a saitunan Android”, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku kunna Shizuku ku kuma ba Waaiya izini a ciki, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma ku ba da izinin “Display over other apps” a saitunan Android, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
+      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku yi saitin na lokaci ɗaya, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma ku ba da izinin “Display over other apps” a saitunan Android, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
 
   @override
   String get blurFailUnavailable =>
-      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya ko Shizuku (Android 12 ko sabo) sai ya kunnu: daga nan ana zana murfin ta yadda taɓawa ke ratsa su. Kafin nan, idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
+      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya (Android 12 ko sabo) sai ya kunnu: daga nan ana zana murfin ta yadda taɓawa ke ratsa su. Kafin nan, idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna Shizuku (Android 12 ko sabo) ko ku kunna sabis ɗin sauƙaƙa amfani “Dusashewar Waaiya” (“Ba da izini da Shizuku” a sama) sai ya kunnu. Kafin nan, allon yana bayyana tare da gargaɗi.';
+      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya (Android 12 ko sabo) ko ku kunna sabis ɗin sauƙaƙa amfani “Dusashewar Waaiya” a saitunan Android sai ya kunnu. Kafin nan, allon yana bayyana tare da gargaɗi.';
 
   @override
   String get languageTitle => 'Harshe';
@@ -483,16 +499,11 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku bai iya ba da izinin ba:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Yadda ake kunna Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Ba ya aiki: a wannan sigar Android, murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa (murfin Shizuku yana buƙatar Android 12 ko sabo). Idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
+      'Ba ya aiki: a wannan sigar Android, murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa (murfin da taɓawa ke ratsa su yana buƙatar Android 12 ko sabo). Idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
 
   @override
   String get guideTitle => 'Kunna Shizuku, mataki-mataki';

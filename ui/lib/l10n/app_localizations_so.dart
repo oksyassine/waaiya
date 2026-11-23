@@ -398,6 +398,25 @@ class AppLocalizationsSo extends AppLocalizations {
       'Waxay daboolaysaa dadka iyo sawirrada shaashadda, barnaamij kasta, inta shaandhayntu daaran tahay. Taleefanka ayay ka shaqaysaa; meelna waxba looma diro.';
 
   @override
+  String get blurOnTitle => 'Qarintu way shaqaynaysaa';
+
+  @override
+  String get blurOffTitle => 'Qarintu way dansan tahay';
+
+  @override
+  String get blurStartCd => 'Bilow qarinta';
+
+  @override
+  String get blurStopCd => 'Jooji qarinta';
+
+  @override
+  String get blurOffDetail =>
+      'Taabo badhanka si aad u bilowdo. Shaandhayntu way la bilaabantaa.';
+
+  @override
+  String get blurWhatTitle => 'Waxa la qarinayo';
+
+  @override
   String get blurWomenTitle => 'Qari haweenka';
 
   @override
@@ -420,26 +439,23 @@ class AppLocalizationsSo extends AppLocalizations {
       'Daaran: shaashadda oo dhan waa la daboolaa marka taleefanku aad u gaabis yahay ama qarintu fashilanto. Damsan: shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
-  String get blurSetupShizuku => 'Ku ogolow Shizuku';
-
-  @override
   String get blurSetupManual => 'Ku ogolow dejinta Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: “Ku ogolow Shizuku”, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama “Ku ogolow dejinta Android”, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
+      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: “U gudub habaynta”, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama “Ku ogolow dejinta Android”, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: bilow Shizuku oo Waaiya ku ogolow gudaheeda, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama ka ogolow “Display over other apps” dejinta Android, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
+      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: samee habaynta hal mar ah, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama ka ogolow “Display over other apps” dejinta Android, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
 
   @override
   String get blurFailUnavailable =>
-      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya ama Shizuku (Android 12 ama ka cusub), doorashadanina way furmaysaa: daboollada markaas waxaa loo sawiraa si taabashadu uga gudubto. Ilaa markaas, marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
+      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya (Android 12 ama ka cusub), doorashadanina way furmaysaa: daboollada markaas waxaa loo sawiraa si taabashadu uga gudubto. Ilaa markaas, marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow Shizuku (Android 12 ama ka cusub) ama daar adeegga helitaanka (accessibility) ee “Qarinta Waaiya” (Ku ogolow Shizuku, kor), doorashadanina way furmaysaa. Ilaa markaas, shaashaddu way muuqanaysaa iyadoo digniin leh.';
+      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya (Android 12 ama ka cusub) ama ka daar dejinta Android adeegga helitaanka (accessibility) ee “Qarinta Waaiya”, doorashadanina way furmaysaa. Ilaa markaas, shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
   String get languageTitle => 'Luqadda';
@@ -486,16 +502,11 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku ma ogolaan karin:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Sida loo bilaabo Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Lama isticmaali karo: noocan Android, dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa (daboollada Shizuku waxay u baahan yihiin Android 12 ama ka cusub). Marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
+      'Lama isticmaali karo: noocan Android, dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa (daboollada ay taabashadu ka gudubto waxay u baahan yihiin Android 12 ama ka cusub). Marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
   String get guideTitle => 'Bilow Shizuku, tallaabo tallaabo';
