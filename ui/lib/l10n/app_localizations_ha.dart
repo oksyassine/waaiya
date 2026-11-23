@@ -1914,4 +1914,18 @@ class AppLocalizationsHa extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Lokutan hukuma na Ma\'aikatar Habous da Harkokin Musulunci na $city.';
   }
+
+  @override
+  String get trayOpen => 'Buɗe Waaiya';
+
+  @override
+  String get trayQuit => 'Fita';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows ba ya barin Waaiya ta fara lokacin shiga. Kunna Waaiya a Settings › Apps › Startup, sannan ka sake kunna wannan.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga.';
 }

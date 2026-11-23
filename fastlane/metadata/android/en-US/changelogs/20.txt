@@ -1,0 +1,1 @@
+Windows: Waaiya now has an icon next to the clock. Click it to open the app; its menu turns filtering on and off. Closing the window keeps Waaiya there, and with "Start at login" it starts there. The new logo's ear is now visible in small icons. No visible change on Android.

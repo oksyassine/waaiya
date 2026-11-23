@@ -690,5 +690,7 @@ String engineErrorText(AppLocalizations l, BackendMessage e) => switch (e.code) 
       'start_failed' => l.engineErrorStartFailed(e.detail),
       'service_failed' => l.engineErrorServiceFailed(e.detail),
       'model_failed' => l.stateModelFailed,
+      'autostart_blocked' => l.engineErrorAutostartBlocked,
+      'autostart_policy' => l.engineErrorAutostartPolicy,
       _ => l.actionFailed(e.detail.isEmpty ? e.code : e.detail),
     };

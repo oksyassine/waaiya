@@ -3309,6 +3309,30 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.'**
   String worshipHabousNote(Object city);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح واعية'**
+  String get trayOpen;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'خروج'**
+  String get trayQuit;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ويندوز لا يسمح لواعية بالبدء عند تسجيل الدخول. فعّل واعية في الإعدادات › التطبيقات › بدء التشغيل، ثم فعّل هذا الخيار من جديد.'**
+  String get engineErrorAutostartBlocked;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.'**
+  String get engineErrorAutostartPolicy;
 }
 
 class _AppLocalizationsDelegate

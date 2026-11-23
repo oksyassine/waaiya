@@ -1,0 +1,1 @@
+Windows : Waaiya a maintenant une icône près de l’horloge. Cliquez dessus pour ouvrir l’application ; son menu active et arrête le filtrage. Fermer la fenêtre garde Waaiya là, et avec « Démarrer à l'ouverture de session » il y démarre. L’oreille du nouveau logo se voit dans les petites icônes. Aucun changement visible sur Android.

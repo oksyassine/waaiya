@@ -2,8 +2,9 @@
 
 The ع of واعية drawn as an ear: «وَتَعِيَهَا أُذُنٌ وَاعِيَةٌ» (Al-Haqqah 69:12). The bowl of the letter is the vessel (وعى: to
 hold, to keep) and the small arc inside it is the sound the ear keeps. One colour, no musical symbol, no sacred text
-in the mark. 120-unit grid, monoline (stroke 12, inner arc 8); below about 40 px the small form `mark-mini.svg` is
-used (no inner arc, stroke 16).
+in the mark. 120-unit grid, monoline (stroke 12, inner arc 8). Below about 40 px: on Windows (taskbar, the icon next
+to the clock) the ear is kept, drawn larger with thinner strokes (desktop/tool/make_icons.py: without the arc only a
+plain ع was seen); the Android status bar uses the small form `mark-mini.svg` (no inner arc, stroke 16).
 
 - `mark.svg`, `mark-white.svg`, `mark-mini.svg`: the symbol (layered: `wy-letter`, `wy-kept`).
 - `mark-animated.svg`: the letter draws, three waves arrive and fade, the kept arc pulses; still under

@@ -1889,4 +1889,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة $city.';
   }
+
+  @override
+  String get trayOpen => 'افتح واعية';
+
+  @override
+  String get trayQuit => 'خروج';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'ويندوز لا يسمح لواعية بالبدء عند تسجيل الدخول. فعّل واعية في الإعدادات › التطبيقات › بدء التشغيل، ثم فعّل هذا الخيار من جديد.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.';
 }

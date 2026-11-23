@@ -1923,4 +1923,18 @@ class AppLocalizationsSo extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee $city.';
   }
+
+  @override
+  String get trayOpen => 'Fur Waaiya';
+
+  @override
+  String get trayQuit => 'Ka bax';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows uma oggolaanayso Waaiya inay bilaabato marka la galo. Ka shid Waaiya Settings › Apps › Startup, kadibna mar kale shid tan.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Dejinta kombiyuutarkan, oo uu doortay maamulahiisu, uma oggolaanayso Waaiya inay bilaabato marka la galo.';
 }

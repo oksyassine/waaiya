@@ -549,6 +549,7 @@ class Capabilities {
     this.blurStandalone = false,
     this.linkPage = false,
     this.linkSave = false,
+    this.tray = false,
   });
 
   factory Capabilities.fromMap(Map<Object?, Object?> m) => Capabilities(
@@ -562,6 +563,7 @@ class Capabilities {
         blurStandalone: _bool(m['blurStandalone'], false),
         linkPage: _bool(m['linkPage'], false),
         linkSave: _bool(m['linkSave'], false),
+        tray: _bool(m['tray'], false),
       );
 
   static const android = Capabilities(
@@ -589,6 +591,10 @@ class Capabilities {
   /// the Microsoft Store package, whose rules forbid saving from sites that do not allow it).
   final bool linkSave;
 
+  /// An icon next to the clock (Windows' notification area) with Open, Start / Stop filtering and Quit: closing the
+  /// window hides it there (desktop/windows/runner/tray.cpp, ui/lib/src/tray.dart).
+  final bool tray;
+
   Map<String, bool> toMap() => {
         'shizukuSetup': shizukuSetup,
         'adbSetup': adbSetup,
@@ -600,6 +606,7 @@ class Capabilities {
         'blurStandalone': blurStandalone,
         'linkPage': linkPage,
         'linkSave': linkSave,
+        'tray': tray,
       };
 }
 

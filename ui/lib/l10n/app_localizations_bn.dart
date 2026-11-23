@@ -1905,4 +1905,18 @@ class AppLocalizationsBn extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return '$city-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সরকারি সময়।';
   }
+
+  @override
+  String get trayOpen => 'Waaiya খুলুন';
+
+  @override
+  String get trayQuit => 'প্রস্থান';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows লগইনের সময় Waaiya চালু হতে দিচ্ছে না। Settings › Apps › Startup-এ Waaiya চালু করুন, তারপর এটি আবার চালু করুন।';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'এই কম্পিউটারের সেটিংস, যা এর প্রশাসক বেছে নিয়েছেন, লগইনের সময় Waaiya চালু হতে দেয় না।';
 }

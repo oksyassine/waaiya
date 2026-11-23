@@ -162,6 +162,7 @@ class DesktopBackend extends MemoryBackend {
         links: engine != null && (windows || linkTools != null),
         linkPage: true,
         linkSave: engine != null && linkTools != null,
+        tray: windows,
       ),
       // the covers let every click through (empty input region), so the full-screen fail cover is safe here
       blur: blur != null ? const BlurInfo(overlayAllowed: true, touchPassThrough: true) : const BlurInfo(),

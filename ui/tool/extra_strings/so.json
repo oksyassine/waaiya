@@ -217,5 +217,9 @@
   "worship_location_settings": "Dejinta goobta",
   "worship_location_failed": "Goobtaada lama helin. Isku day mar kale wax yar kadib, ama raadi magaaladaada.",
   "worship_place_near": "u dhow {city}",
-  "worship_habous_note": "Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee {city}."
+  "worship_habous_note": "Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee {city}.",
+  "tray_open": "Fur Waaiya",
+  "tray_quit": "Ka bax",
+  "engine_error_autostart_blocked": "Windows uma oggolaanayso Waaiya inay bilaabato marka la galo. Ka shid Waaiya Settings › Apps › Startup, kadibna mar kale shid tan.",
+  "engine_error_autostart_policy": "Dejinta kombiyuutarkan, oo uu doortay maamulahiisu, uma oggolaanayso Waaiya inay bilaabato marka la galo."
 }

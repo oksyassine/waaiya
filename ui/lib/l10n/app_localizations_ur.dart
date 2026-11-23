@@ -1904,4 +1904,18 @@ class AppLocalizationsUr extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return '$city کے لیے وزارتِ اوقاف و امورِ اسلامیہ (مراکش) کے سرکاری اوقات۔';
   }
+
+  @override
+  String get trayOpen => 'واعية کھولیں';
+
+  @override
+  String get trayQuit => 'باہر نکلیں';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'ونڈوز لاگ اِن پر واعية کو شروع ہونے نہیں دے رہا۔ ترتیبات › ایپس › اسٹارٹ اپ میں واعية کو آن کریں، پھر اسے دوبارہ آن کریں۔';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'اس کمپیوٹر کی ترتیبات، جو اس کے منتظم نے منتخب کی ہیں، لاگ اِن پر واعية کو شروع ہونے نہیں دیتیں۔';
 }

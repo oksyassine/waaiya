@@ -1907,4 +1907,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Habous ve İslami İşler Bakanlığı\'nın $city için resmî vakitleri.';
   }
+
+  @override
+  String get trayOpen => 'Waaiya uygulamasını aç';
+
+  @override
+  String get trayQuit => 'Çık';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows, Waaiya\'nın oturum açılırken başlamasına izin vermiyor. Ayarlar › Uygulamalar › Başlangıç bölümünde Waaiya\'yı açın, ardından bu seçeneği yeniden açın.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya\'nın oturum açılırken başlamasına izin vermiyor.';
 }

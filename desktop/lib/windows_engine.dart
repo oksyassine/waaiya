@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:waaiya_ui/waaiya_ui.dart';
 // ignore: implementation_imports
 import 'package:waaiya_ui/src/protection_core.dart' show ProtectionClock, ProcessClock;
@@ -21,9 +22,39 @@ import 'filter_host.dart';
 /// How it filters: every other app is turned down to -80 dB, their mix is read by process loopback, brought back up,
 /// filtered and played. When it dies, Windows keeps the apps turned down (silent) until Start or Stop.
 class WindowsEngine implements FilterHost {
-  WindowsEngine(this.dir, {Map<String, String>? environment, bool? packaged})
+  WindowsEngine(this.dir,
+      {Map<String, String>? environment,
+      bool? packaged,
+      Future<String> Function(String method)? startupTask,
+      Future<void> Function(String uri)? openSettings})
       : env = environment ?? Platform.environment,
-        packaged = packaged ?? (isPackagedPath(dir.path) || isPackagedProcess());
+        packaged = packaged ?? (isPackagedPath(dir.path) || isPackagedProcess()),
+        startupTask = startupTask ?? _startupChannel,
+        openSettings = openSettings ?? _openUri;
+
+  /// The package's startup task as Windows has it (desktop/windows/runner/startup.cpp): `state`, or `request`
+  /// (Windows asks the user when it is off). Answers enabled, disabled, disabledByUser, disabledByPolicy,
+  /// enabledByPolicy, or none (no package, or no runner side: the autostart file alone decides).
+  final Future<String> Function(String method) startupTask;
+
+  /// Opens a Settings page (ms-settings:startupapps).
+  final Future<void> Function(String uri) openSettings;
+
+  static Future<String> _startupChannel(String method) async {
+    try {
+      return await const MethodChannel('waaiya/startup').invokeMethod<String>(method) ?? 'none';
+    } on MissingPluginException {
+      return 'none';
+    } on PlatformException {
+      return 'none';
+    }
+  }
+
+  static Future<void> _openUri(String uri) => Process.run('explorer.exe', [uri]);
+
+  /// Windows lets the startup task run.
+  static bool startupAllowed(String state) =>
+      !const {'disabled', 'disabledByUser', 'disabledByPolicy'}.contains(state);
 
   /// `<bundle>\engine`.
   final Directory dir;
@@ -56,6 +87,7 @@ class WindowsEngine implements FilterHost {
   }
 
   static const runValue = 'WaaiyaFilter';
+  static const appRunValue = 'Waaiya';
   static const _runKey = r'HKCU\Software\Microsoft\Windows\CurrentVersion\Run';
 
   /// The filter next to the app, or null (a development run, or a bundle without it: start/stop are simulated).
@@ -198,10 +230,18 @@ class WindowsEngine implements FilterHost {
         } else if (await f.exists()) {
           await f.delete();
         }
-        return null;
       } on IOException catch (e) {
         return BackendMessage('start_failed', '$e');
       }
+      _startup = null;
+      if (!on) return null;
+      // Windows must let the startup task run: it asks the user when the task is off; one the user turned off in
+      // Settings > Apps > Startup can only be turned on there (that page opens)
+      final state = await startupTask('request');
+      if (startupAllowed(state)) return null;
+      if (state == 'disabledByPolicy') return const BackendMessage('autostart_policy');
+      if (state == 'disabledByUser') await openSettings('ms-settings:startupapps');
+      return const BackendMessage('autostart_blocked');
     }
     final r = await _run('reg', [
       if (on) 'add' else 'delete',
@@ -211,14 +251,37 @@ class WindowsEngine implements FilterHost {
       if (on) ...['/t', 'REG_SZ', '/d', '"${exe.path}" run'],
       '/f',
     ]);
+    // the app too, hidden at login: only its icon next to the clock (the Store package: the filter starts it)
+    final app = File('${dir.parent.path}\\waaiya_desktop.exe');
+    if (!on || (r.exitCode == 0 && app.existsSync())) {
+      await _run('reg', [
+        if (on) 'add' else 'delete',
+        _runKey,
+        '/v',
+        appRunValue,
+        if (on) ...['/t', 'REG_SZ', '/d', '"${app.path}" --tray'],
+        '/f',
+      ]);
+    }
     // deleting a value that is not there is fine
     if (r.exitCode == 0 || (!on && !await _autostart())) return null;
     return BackendMessage('start_failed', _detail(r));
   }
 
   Future<bool> _autostart() async => packaged
-      ? File('$stateDir\\autostart').exists()
+      ? await File('$stateDir\\autostart').exists() && startupAllowed(await _startupState())
       : (await _run('reg', ['query', _runKey, '/v', runValue])).exitCode == 0;
+
+  // read again at most every 10 s (the status is polled), and after a change
+  String? _startup;
+  DateTime _startupAt = DateTime(0);
+  Future<String> _startupState() async {
+    if (_startup == null || DateTime.now().difference(_startupAt) > const Duration(seconds: 10)) {
+      _startup = await startupTask('state');
+      _startupAt = DateTime.now();
+    }
+    return _startup!;
+  }
 
   /// Read from state.json directly (the filter rewrites it at least every 2 s; older than 5 s, it is not running or
   /// stuck), not from `waaiya-filter status`: no process per poll, and no reliance on a GUI program's console output.

@@ -529,5 +529,9 @@
   "worshipLocationSettings": "Mipangilio ya mahali",
   "worshipLocationFailed": "Mahali ulipo hapakupatikana. Jaribu tena baada ya muda mfupi, au utafute mji wako.",
   "worshipPlaceNear": "karibu na {city}",
-  "worshipHabousNote": "Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa {city}."
+  "worshipHabousNote": "Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa {city}.",
+  "trayOpen": "Fungua Waaiya",
+  "trayQuit": "Ondoka",
+  "engineErrorAutostartBlocked": "Windows hairuhusu Waaiya kuanza unapoingia. Washa Waaiya katika Mipangilio › Programu › Kuanzisha, kisha uwashe chaguo hili tena.",
+  "engineErrorAutostartPolicy": "Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia."
 }

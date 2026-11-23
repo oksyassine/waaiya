@@ -1920,4 +1920,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Les horaires officiels du ministère des Habous et des Affaires islamiques pour $city.';
   }
+
+  @override
+  String get trayOpen => 'Ouvrir Waaiya';
+
+  @override
+  String get trayQuit => 'Quitter';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows ne laisse pas Waaiya démarrer à l\'ouverture de session. Activez Waaiya dans Paramètres › Applications › Démarrage, puis réactivez cette option.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Les paramètres de cet ordinateur, choisis par son administrateur, ne permettent pas à Waaiya de démarrer à l\'ouverture de session.';
 }
