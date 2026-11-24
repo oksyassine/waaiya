@@ -334,6 +334,10 @@ a.dl-main { color: var(--accent); text-decoration: underline; text-decoration-th
 .tst .tst-lead { font-size: var(--s3); line-height: 1.45; margin-top: 20px; }
 .tst .tst-steps { list-style: decimal; padding-inline-start: 1.6em; margin-top: 16px; display: grid; gap: 12px; }
 .tst .tst-steps li::marker { color: var(--accent); font-weight: 700; }
+.tst .tst-steps li p { margin-top: 0; }
+.tst .tst-steps li p + p { margin-top: 10px; }
+a.cbtn { display: inline-block; line-height: 48px; text-decoration: none; }
+.tst .tst-steps { gap: 24px; }
 .tst-form { margin-top: 40px; display: grid; gap: 20px; padding: 24px; border-radius: 14px; background: var(--step); }
 .tst .tst-form p { margin-top: 0; }
 .tst-field { display: grid; gap: 8px; min-width: 0; }

@@ -64,7 +64,7 @@ T = {
         try_nav="جرّب",
         try_hero="أو جرّبها على ملف أو رابط",
         notice="واعية في طريقها إلى [[Google Play]]: كن من أوائل من يختبرها على هاتفه.",
-        notice_mail="سجّل عنوان [[Gmail]]، وتصلك رسالة على بريدك حين نضيفك إلى المختبرين.",
+        notice_mail="انضمّ بخطوتين ودون انتظار: مجموعة على [[Google]]، ثم رابط الاختبار.",
         notice_cta="سجّل للاختبار",
         try_h="جرّبها بنفسك",
         try_p="اختر ملفًا من جهازك أو ألصق رابطًا. تعمل تصفية واعية الحقيقية هنا في متصفحك، ثم تنتقل بين «قبل» و«بعد» عند الموضع نفسه من المقطع.",
@@ -197,7 +197,7 @@ T = {
         try_nav="Try it",
         try_hero="Or try it on a file or a link",
         notice="Waaiya is coming to Google Play: be one of the first to test it on your phone.",
-        notice_mail="Leave your Gmail address: we email you when you are added as a tester.",
+        notice_mail="Join in two steps, no waiting: a Google group, then the test link.",
         notice_cta="Sign up to test",
         try_h="Try it yourself",
         try_p="Pick a file from your device or paste a link. Waaiya's real filter runs here in your browser. Then switch between before and after at the same point in the clip.",
@@ -895,33 +895,42 @@ def usb_page(lang, root):
 # ---------- /test/: sign up for the Google Play test (site/test/) ----------
 # The form posts to {root}api/test-signup.php (site/test/signup.php, copied by main()): on the live site /api/, on the
 # preview /preview/api/. The endpoint keeps the list outside the docroot and tells the owner on Telegram.
+GROUP_URL = "https://groups.google.com/g/waaiya-testers"
+OPTIN_URL = "https://play.google.com/apps/testing/org.waaiya.app"
+PLAY_URL = "https://play.google.com/store/apps/details?id=org.waaiya.app"
 TEST = {
     "ar": dict(
         dir="rtl", home="واعية", home_href="", privacy_href="privacy.html",
         title="انضمّ إلى اختبار واعية على [[Google Play]]",
-        desc="واعية في طريقها إلى [[Google Play]]. سجّل عنوان [[Gmail]] لتُدعى إلى اختبارها على هاتفك قبل نشرها للجميع.",
+        desc="واعية في طريقها إلى [[Google Play]]. انضمّ إلى اختبارها على هاتفك بخطوتين ودون انتظار، قبل نشرها للجميع.",
         lead="واعية في طريقها إلى متجر [[Google Play]]. وقبل أن تُنشر للجميع، يطلب [[Google]] أن يجرّبها مختبرون مدة "
-             "أسبوعين. اكتب عنوان [[Gmail]]، أو عنوان حساب [[Google]] الذي تستعمله في [[Google Play]] على هاتفك، "
-             "فنضيفك إلى قائمة المختبرين.",
-        steps_h="ما معنى الاختبار؟",
-        steps=["نضيف عنوانك إلى قائمة المختبرين في [[Google Play]]، ثم نخبرك برسالة على بريدك ومعها رابط الانضمام إلى الاختبار.",
-               "افتح الرابط على هاتفك الأندرويد بحساب [[Google]] نفسه، ووافق على الانضمام، ثم ثبّت واعية من "
-               "[[Google Play]] كأي تطبيق.",
-               "أبقِها مثبّتة [[14]] يومًا على الأقل: هذا ما يطلبه [[Google]] قبل نشر التطبيق للجميع. واستعملها كما تشاء."],
+             "أسبوعين. الانضمام خطوتان، ولا حاجة إلى انتظارنا.",
+        steps_h="كيف تنضمّ",
+        steps=[("انضمّ إلى مجموعة «[[Waaiya testers]]» بحساب [[Google]] الذي تستعمله في [[Google Play]] على هاتفك.",
+                "انضمّ إلى المجموعة", GROUP_URL),
+               ("ثم افتح هذا الرابط على هاتفك الأندرويد بالحساب نفسه، واضغط «أصبح مختبِرًا».",
+                "أصبح مختبِرًا", OPTIN_URL),
+               ("ثبّت واعية من [[Google Play]] كأي تطبيق، وأبقِها مثبّتة [[14]] يومًا على الأقل: هذا ما يطلبه [[Google]] "
+                "قبل نشر التطبيق للجميع. واستعملها كما تشاء.", "افتح واعية في [[Google Play]]", PLAY_URL)],
+        steps_note="إن قال الرابط الثاني إن التطبيق غير متاح، فانتظر بضع دقائق بعد الانضمام إلى المجموعة ثم أعد المحاولة.",
+        form_h="أرسل لي هذه الخطوات بالبريد (اختياري)",
+        form_p="اكتب عنوانك فنرسل إليك هذه الخطوات وروابطها، لتفتحها لاحقًا على هاتفك.",
         email_label="عنوان [[Gmail]]، أو عنوان حسابك في [[Google]]",
-        email_note="العنوان الذي تستعمله في [[Google Play]] على هاتفك.",
+        email_note="يُفضَّل العنوان الذي تستعمله في [[Google Play]] على هاتفك.",
         name_label="اسمك (اختياري)",
-        submit="أضفني إلى الاختبار",
-        use_note="لا نستعمل عنوانك إلا لدعوتك إلى هذا الاختبار: لا يُنشر، ولا يُعطى لأحد، ولا نستعمله لغير ذلك. يُحفظ "
-                 "في قائمة على خادم موقعنا، ويصل إلى المطوّر عبر [[Telegram]] ليضيفه في [[Google Play Console]].",
+        submit="أرسل لي الخطوات",
+        use_note="لا نستعمل عنوانك إلا لإرسال هذه الخطوات إليك ولمساعدتك في هذا الاختبار: لا يُنشر، ولا يُعطى لأحد. "
+                 "يُحفظ في قائمة على خادم موقعنا، ويصل إلى المطوّر عبر [[Telegram]]. أما المجموعة فتديرها [[Google]]، "
+                 "ولا يرى عناوينَ أعضائها إلا المطوّر.",
         privacy="سياسة الخصوصية",
-        remove_h="أزل عنواني من الاختبار",
-        remove_p="اكتب العنوان نفسه، فنحذفه من القائمة ومن الاختبار في [[Google Play]].",
-        remove_btn="أزل عنواني",
+        remove_h="الخروج من الاختبار",
+        remove_p="للخروج: غادر المجموعة من صفحتها («مغادرة المجموعة»)، واخرج من البرنامج في [[Google Play]]. "
+                 "ولحذف عنوانك من قائمتنا أيضًا، اكتبه هنا.",
+        remove_btn="احذف عنواني",
         js=dict(
             sending="جارٍ الإرسال…",
-            done="شكرًا! وصلنا عنوانك. سنضيفه إلى قائمة المختبرين، ونخبرك برسالة على بريدك حين نضيفه، ومعها رابط الانضمام إلى الاختبار.",
-            removed="تمّ. إن كان هذا العنوان في القائمة فقد حُذف منها، وسنحذفه من الاختبار في [[Google Play]].",
+            done="شكرًا! ستصلك الخطوات على بريدك خلال دقائق. ويمكنك أن تبدأ بها الآن من هذه الصفحة.",
+            removed="تمّ. إن كان هذا العنوان في قائمتنا فقد حُذف منها.",
             invalid_email="هذا لا يبدو عنوان بريد صحيحًا. تحقّق منه ثم أعد المحاولة.",
             rate="محاولات كثيرة من هذا الاتصال. أعد المحاولة بعد ساعة.",
             failed="تعذّر الإرسال الآن. أعد المحاولة بعد دقائق.",
@@ -929,34 +938,39 @@ TEST = {
     "en": dict(
         dir="ltr", home="Waaiya", home_href="en/", privacy_href="en/privacy.html",
         title="Join the Waaiya test on Google Play",
-        desc="Waaiya is coming to Google Play. Sign up with your Gmail address to be invited to test it on your phone "
-             "before it is published for everyone.",
+        desc="Waaiya is coming to Google Play. Join its test on your phone in two steps, no waiting, before it is "
+             "published for everyone.",
         lead="Waaiya is on its way to Google Play. Before it can be published for everyone, Google asks for testers to "
-             "try it for two weeks. Enter your Gmail address, or the address of the Google account you use for Google "
-             "Play on your phone, and we will add you to the testers.",
-        steps_h="What testing means",
-        steps=["We add your address to the testers list in Google Play, then email you with the link to join the test.",
-               "Open the link on your Android phone, with the same Google account, accept to become a tester, then "
-               "install Waaiya from Google Play like any app.",
-               "Keep it installed for at least 14 days: Google asks for this before an app is published for everyone. "
-               "Use it as you like."],
+             "try it for two weeks. Joining takes two steps, and you do not have to wait for us.",
+        steps_h="How to join",
+        steps=[("Join the “Waaiya testers” group with the Google account you use for Google Play on your phone.",
+                "Join the group", GROUP_URL),
+               ("Then open this link on your Android phone, with the same account, and tap “Become a tester”.",
+                "Become a tester", OPTIN_URL),
+               ("Install Waaiya from Google Play like any app, and keep it installed for at least 14 days: Google asks "
+                "for this before an app is published for everyone. Use it as you like.", "Open Waaiya in Google Play",
+                PLAY_URL)],
+        steps_note="If the second link says the app is not available, wait a few minutes after joining the group and "
+                   "try again.",
+        form_h="Email me these steps (optional)",
+        form_p="Leave your address and we send you these steps and links, to open later on your phone.",
         email_label="Gmail address, or the address of your Google account",
-        email_note="The one you use for Google Play on your phone.",
+        email_note="Best: the one you use for Google Play on your phone.",
         name_label="Your name (optional)",
-        submit="Invite me to the test",
-        use_note="Your address is used only to invite you to this test: it is not published, not given to anyone and "
-                 "not used for anything else. It is kept in a list on our website's server and sent to the developer "
-                 "over Telegram, to be added in Google Play Console.",
+        submit="Email me the steps",
+        use_note="Your address is used only to send you these steps and to help you with this test: it is not "
+                 "published and not given to anyone. It is kept in a list on our website's server and sent to the "
+                 "developer over Telegram. The group is run by Google; only the developer sees its members' addresses.",
         privacy="Privacy policy",
-        remove_h="Remove my address",
-        remove_p="Enter the same address: we delete it from the list and from the test in Google Play.",
-        remove_btn="Remove my address",
+        remove_h="Leave the test",
+        remove_p="To leave: leave the group on its page (“Leave group”), and leave the program in Google Play. "
+                 "To delete your address from our list too, enter it here.",
+        remove_btn="Delete my address",
         js=dict(
             sending="Sending…",
-            done="Thank you! Your address has arrived. We will email you as soon as it is on the testers list, with the link "
-                 "to join the test.",
-            removed="Done. If this address was on the list it has been deleted, and we will remove it from the test "
-                    "in Google Play.",
+            done="Thank you! The steps will be in your inbox within a few minutes. You can also start them now from "
+                 "this page.",
+            removed="Done. If this address was on our list, it has been deleted.",
             invalid_email="This does not look like an email address. Check it and try again.",
             rate="Too many tries from this connection. Try again in an hour.",
             failed="It could not be sent just now. Try again in a few minutes.",
@@ -964,35 +978,41 @@ TEST = {
     "fr": dict(
         dir="ltr", home="Waaiya", home_href="en/", privacy_href="en/privacy.html",
         title="Testez Waaiya sur Google Play",
-        desc="Waaiya arrive sur Google Play. Inscrivez votre adresse Gmail pour être invité à la tester sur votre "
-             "téléphone avant sa publication pour tous.",
+        desc="Waaiya arrive sur Google Play. Rejoignez son test sur votre téléphone en deux étapes, sans attendre, "
+             "avant sa publication pour tous.",
         lead="Waaiya arrive sur Google Play. Avant de la publier pour tous, Google demande qu'elle soit testée pendant "
-             "deux semaines. Indiquez votre adresse Gmail, ou celle du compte Google que vous utilisez pour Google Play "
-             "sur votre téléphone, et nous vous ajouterons aux testeurs.",
-        steps_h="En quoi consiste le test",
-        steps=["Nous ajoutons votre adresse à la liste des testeurs dans Google Play, puis nous vous écrivons par e-mail avec le lien pour "
-               "rejoindre le test.",
-               "Ouvrez le lien sur votre téléphone Android, avec le même compte Google, acceptez de devenir testeur, "
-               "puis installez Waaiya depuis Google Play comme n'importe quelle application.",
-               "Gardez-la installée au moins 14 jours : Google le demande avant de publier une application pour tous. "
-               "Utilisez-la comme vous voulez."],
+             "deux semaines. Rejoindre le test prend deux étapes, sans attendre notre réponse.",
+        steps_h="Comment rejoindre le test",
+        steps=[("Rejoignez le groupe « Waaiya testers » avec le compte Google que vous utilisez pour Google "
+                "Play sur votre téléphone.", "Rejoindre le groupe", GROUP_URL),
+               ("Ouvrez ensuite ce lien sur votre téléphone Android, avec le même compte, et touchez « Devenir "
+                "testeur ».", "Devenir testeur", OPTIN_URL),
+               ("Installez Waaiya depuis Google Play comme n'importe quelle application, et gardez-la installée au moins "
+                "14 jours : Google le demande avant de publier une application pour tous. Utilisez-la comme vous "
+                "voulez.", "Ouvrir Waaiya dans Google Play", PLAY_URL)],
+        steps_note="Si le deuxième lien indique que l'application n'est pas disponible, attendez quelques minutes après "
+                   "avoir rejoint le groupe, puis réessayez.",
+        form_h="Recevoir ces étapes par e-mail (facultatif)",
+        form_p="Indiquez votre adresse et nous vous envoyons ces étapes et leurs liens, à ouvrir plus tard sur votre "
+               "téléphone.",
         email_label="Adresse Gmail, ou adresse de votre compte Google",
-        email_note="Celle que vous utilisez pour Google Play sur votre téléphone.",
+        email_note="De préférence celle que vous utilisez pour Google Play sur votre téléphone.",
         name_label="Votre nom (facultatif)",
-        submit="M'inviter au test",
-        use_note="Votre adresse sert uniquement à vous inviter à ce test : elle n'est ni publiée, ni transmise à "
-                 "quiconque, ni utilisée pour autre chose. Elle est conservée dans une liste sur le serveur de notre "
-                 "site et envoyée au développeur par Telegram, pour être ajoutée dans la Google Play Console.",
+        submit="M'envoyer les étapes",
+        use_note="Votre adresse sert uniquement à vous envoyer ces étapes et à vous aider pour ce test : elle n'est "
+                 "ni publiée, ni transmise à quiconque. Elle est conservée dans une liste sur le serveur de notre site "
+                 "et envoyée au développeur par Telegram. Le groupe est géré par Google ; seul le développeur voit "
+                 "les adresses de ses membres.",
         privacy="Politique de confidentialité (en anglais et en arabe)",
-        remove_h="Retirer mon adresse",
-        remove_p="Indiquez la même adresse : nous la supprimons de la liste et du test dans Google Play.",
-        remove_btn="Retirer mon adresse",
+        remove_h="Quitter le test",
+        remove_p="Pour quitter le test : quittez le groupe depuis sa page (« Quitter le groupe »), puis "
+                 "le programme dans Google Play. Pour supprimer aussi votre adresse de notre liste, indiquez-la ici.",
+        remove_btn="Supprimer mon adresse",
         js=dict(
             sending="Envoi…",
-            done="Merci ! Votre adresse est bien arrivée. Nous vous écrirons par e-mail dès qu'elle sera sur la liste des testeurs, "
-                 "avec le lien pour rejoindre le test.",
-            removed="C'est fait. Si cette adresse était dans la liste, elle en a été supprimée, et nous la retirerons "
-                    "du test dans Google Play.",
+            done="Merci ! Les étapes arrivent dans votre boîte de réception d'ici quelques minutes. Vous pouvez "
+                 "aussi les suivre dès maintenant sur cette page.",
+            removed="C'est fait. Si cette adresse était dans notre liste, elle en a été supprimée.",
             invalid_email="Cette adresse ne semble pas valide. Vérifiez-la et réessayez.",
             rate="Trop d'essais depuis cette connexion. Réessayez dans une heure.",
             failed="L'envoi a échoué. Réessayez dans quelques minutes.",
@@ -1010,7 +1030,8 @@ def test_page(lang, root):
     path = dict((c, p) for c, _, p in TEST_LANGS)
     alts = "".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{p}">' for c, _, p in TEST_LANGS)
     others = " · ".join(f'<a href="{root}{p}" lang="{c}" hreflang="{c}">{n}</a>' for c, n, p in TEST_LANGS if c != lang)
-    steps = "".join(f"<li>{e(s)}</li>" for s in u["steps"])
+    steps = "".join(f'<li><p>{e(t)}</p><p><a class="cbtn tst-go" href="{url}" rel="noopener" target="_blank">'
+                    f'{e(btn)}</a></p></li>' for t, btn, url in u["steps"])
     text = json.dumps({k: plain(v) for k, v in u["js"].items()}, ensure_ascii=False).replace("</", "<\\/")
     action = f"{root}api/test-signup.php"
     trap = ('<div class="vh" aria-hidden="true"><label for="tst-web-{n}">Website</label>'
@@ -1033,6 +1054,9 @@ def test_page(lang, root):
 <p class="tst-lead">{e(u['lead'])}</p>
 <h2>{e(u['steps_h'])}</h2>
 <ol class="tst-steps">{steps}</ol>
+<p class="tst-hint">{e(u['steps_note'])}</p>
+<h2>{e(u['form_h'])}</h2>
+<p>{e(u['form_p'])}</p>
 <form class="tst-form" action="{action}" method="post">{hidden}<input type="hidden" name="mode" value="join">
 <div class="tst-field"><label for="tst-email">{e(u['email_label'])}</label>
 <input id="tst-email" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" dir="ltr" spellcheck="false" autocapitalize="off" aria-describedby="tst-email-note">
