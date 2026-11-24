@@ -101,12 +101,18 @@ if ($changed) {
           . "Remove it from the testers list in Play Console. {$n} on the list now$where."
         : "Waaiya Play test: new tester, n° {$n}\n<code>{$e($email)}</code>\n\n"
           . ($name !== '' ? "Name: {$e($name)} · " : '') . "Page: $lang$where\n"
-          . "Add it to the testers list in Play Console (Test and release › Testing).";
-    notify($text);
+          . "Add it to the testers list in Play Console (Test and release › Testing), then tap the button to email "
+          . "the invitation from support@waaiya.mssid.org.";
+    $cb = "inv|$lang|$email";  // Telegram allows 64 bytes of callback data
+    $markup = !$remove && strlen($cb) <= 64
+        ? ['inline_keyboard' => [[['text' => 'Added in Play: send the invitation', 'callback_data' => $cb]]]]
+        : null;
+    if (!$remove && $markup === null) $text .= "\nAddress too long for the button: send /invite {$e($email)} $lang";
+    notify($text, $markup);
 }
 answer($remove ? 'removed' : 'ok');
 
-function notify(string $text): void {
+function notify(string $text, ?array $markup = null): void {
     global $home, $state;
     $conf = [];
     foreach (@file("$home/.config/waaiya-test/tg.env", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $l)
@@ -117,7 +123,8 @@ function notify(string $text): void {
         curl_setopt_array($ch, [
             CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_CONNECTTIMEOUT => 5, CURLOPT_TIMEOUT => 10,
             CURLOPT_POSTFIELDS => http_build_query(['chat_id' => $conf['TG_CHAT'], 'text' => $text,
-                                                   'parse_mode' => 'HTML', 'disable_web_page_preview' => 'true']),
+                                                   'parse_mode' => 'HTML', 'disable_web_page_preview' => 'true']
+                                                  + ($markup ? ['reply_markup' => json_encode($markup)] : [])),
         ]);
         $body = curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
