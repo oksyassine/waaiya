@@ -1,14 +1,12 @@
 Waaiya removes musical instruments from everything your phone plays and keeps the voice: speech, lectures and Quran recitation. It works with every app (YouTube, Instagram, TikTok, browsers, games), live, on the phone.
 
-<ul>
-<li>One button: Waaiya filters the sound of all your other apps until you stop it.</li>
-<li>Fails closed: when the filter cannot run, apps stay silent instead of playing music.</li>
-<li>Prayer times: silence during prayer, with your city's times.</li>
-<li>A wait before turning off, and a PIN if you like, for weak moments.</li>
-<li>Screen blur (preview): covers women, or immodest images, over every app.</li>
-<li>Optional: also mute women's singing.</li>
-<li>18 languages, including Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay.</li>
-</ul>
+• One button: Waaiya filters the sound of all your other apps until you stop it.
+• Fails closed: when the filter cannot run, apps stay silent instead of playing music.
+• Prayer times: silence during prayer, with your city's times.
+• A wait before turning off, and a PIN if you like, for weak moments.
+• Screen blur (preview): covers women, or immodest images, over every app.
+• Optional: also mute women's singing.
+• 18 languages, including Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian and Malay.
 
 Private by design: the filter and the blur run on the phone. Waaiya makes no internet connection: no account, no analytics, no ads, nothing sent anywhere.
 

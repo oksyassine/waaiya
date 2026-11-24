@@ -1,5 +1,7 @@
 package org.waaiya.app.adb
 
+import android.os.Build
+import org.conscrypt.Conscrypt
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.security.Principal
@@ -19,7 +21,10 @@ import javax.net.ssl.X509ExtendedTrustManager
  */
 class AdbTls(private val key: AdbKey) {
     private val context: SSLContext by lazy {
-        SSLContext.getInstance("TLSv1.3").apply { init(arrayOf(KeyManager(key)), arrayOf(TrustAll), null) }
+        // Android 11: the bundled Conscrypt, so that pairing can read the TLS exporter through its public API
+        // (Conscrypt.exportKeyingMaterial needs a Conscrypt socket). Android 12+: the platform's own TLS.
+        (if (Build.VERSION.SDK_INT < 31) SSLContext.getInstance("TLSv1.3", Conscrypt.newProvider())
+         else SSLContext.getInstance("TLSv1.3")).apply { init(arrayOf(KeyManager(key)), arrayOf(TrustAll), null) }
     }
 
     /** Opens [host]:[port] and runs the TLS handshake (plain socket first, for the adb transport's STLS step). */

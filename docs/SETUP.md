@@ -48,9 +48,10 @@ app updates; they are lost only on uninstall (or `pm revoke`).
 The key pair (RSA-2048, PKCS#8 + a self-signed X.509 certificate written by `AdbKey`) lives in
 `noBackupFilesDir/adb`; backup is off for the whole app. Nothing leaves the phone: every connection is to 127.0.0.1.
 
-TLS exporter: Android 12+ has `android.net.ssl.SSLSockets.exportKeyingMaterial`. Android 11 has the same function in
-the platform's Conscrypt (`com.android.org.conscrypt.Conscrypt`), not in the SDK, so it is called by reflection
-with the HiddenApiBypass exemption already used by the screen blur.
+TLS exporter: Android 12+ has `android.net.ssl.SSLSockets.exportKeyingMaterial`. Android 11 has it only in the
+platform's hidden Conscrypt, so there the adb TLS sockets come from the bundled Conscrypt library
+(`org.conscrypt:conscrypt-android`), whose `Conscrypt.exportKeyingMaterial` is public API. No hidden-API calls:
+Google Play refuses apps that make them.
 
 ## Why this route (and not a library)
 

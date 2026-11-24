@@ -47,7 +47,7 @@ android {
         applicationId = if (moveBuild) OLD_ID else NEW_ID
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 36       // Google Play: new apps and updates target Android 16 from 2026-08-31
-        versionCode = 19
+        versionCode = 20
         versionName = "0.2.16"
         // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
         providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
@@ -123,8 +123,10 @@ dependencies {
     val shizukuVersion = "13.1.5"
     implementation("dev.rikka.shizuku:api:$shizukuVersion")
     implementation("dev.rikka.shizuku:provider:$shizukuVersion")
-    // Screen blur: sets the hidden "skip screenshot" flag on our overlay so the screen capture shows what is under it.
-    implementation("org.lsposed.hiddenapibypass:hiddenapibypass:4.3")
+    // Wireless debugging setup on Android 11: the pairing password needs the TLS exporter, public in the SDK only from
+    // Android 12 (android.net.ssl.SSLSockets). On Android 11 the adb TLS sockets come from this bundled Conscrypt,
+    // whose Conscrypt.exportKeyingMaterial is public API. (No hidden-API calls anywhere: Google Play refuses them.)
+    implementation("org.conscrypt:conscrypt-android:2.9.0")
     // Shared Flutter screens: ../ui_module (add-to-app, from source; included in settings.gradle.kts).
     implementation(project(":flutter"))
     // JVM tests of the parts with no Android classes (LoadMonitor, AudioDump): ./gradlew testDebugUnitTest

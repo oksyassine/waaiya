@@ -158,31 +158,13 @@ object WirelessSetup {
     }
 
     /**
-     * TLS keying material for the pairing password. Android 12+: the public SSLSockets API. Android 11 has the same
-     * function in the platform's Conscrypt (com.android.org.conscrypt.Conscrypt.exportKeyingMaterial, what SSLSockets
-     * calls on 12+) but not in the SDK yet, so it is called through reflection (with the hidden-API exemption the
-     * screen blur already uses). Fallback: the socket's own package-private method.
+     * TLS keying material for the pairing password. Android 12+: the public SSLSockets API. Android 11: the socket
+     * comes from the bundled Conscrypt (AdbTls), whose Conscrypt.exportKeyingMaterial is public API.
      */
-    @android.annotation.SuppressLint("PrivateApi")  // Android 11 only; Android 12+ uses the public API
-    internal fun exportKeyingMaterial(socket: SSLSocket, label: String, length: Int): ByteArray {
-        if (Build.VERSION.SDK_INT >= 31) return android.net.ssl.SSLSockets.exportKeyingMaterial(socket, label, null, length)
+    internal fun exportKeyingMaterial(socket: SSLSocket, label: String, length: Int): ByteArray =
+        (if (Build.VERSION.SDK_INT >= 31) android.net.ssl.SSLSockets.exportKeyingMaterial(socket, label, null, length)
+         else org.conscrypt.Conscrypt.exportKeyingMaterial(socket, label, null, length))
             ?: throw javax.net.ssl.SSLException("no keying material")
-        org.lsposed.hiddenapibypass.HiddenApiBypass.addHiddenApiExemptions("Lcom/android/org/conscrypt/")
-        val viaConscrypt = runCatching {
-            Class.forName("com.android.org.conscrypt.Conscrypt").getMethod("exportKeyingMaterial",
-                SSLSocket::class.java, String::class.java, ByteArray::class.java, Int::class.javaPrimitiveType)
-                .invoke(null, socket, label, null, length) as ByteArray
-        }
-        viaConscrypt.getOrNull()?.let { return it }
-        var c: Class<*>? = socket.javaClass
-        while (c != null) {
-            val m = runCatching { c.getDeclaredMethod("exportKeyingMaterial", String::class.java, ByteArray::class.java,
-                Int::class.javaPrimitiveType) }.getOrNull()
-            if (m != null) { m.isAccessible = true; return m.invoke(socket, label, null, length) as ByteArray }
-            c = c.superclass
-        }
-        throw javax.net.ssl.SSLException("TLS exporter not available", viaConscrypt.exceptionOrNull())
-    }
 
     /**
      * The shell line run as the shell user. Each result is echoed so that the log says which step failed.
@@ -496,6 +478,9 @@ class WirelessSetupService : Service() {
         return WirelessSetupTexts.title(this, f.phase, f.note) to WirelessSetupTexts.body(this, f.phase, f.note, detail)
     }
 
+    /** The code step the notification last popped up for (see [notification]); null outside the code steps. */
+    private var alertedFor: SetupFlow.Note? = null
+
     private fun notification(): Notification {
         val nm = getSystemService(NotificationManager::class.java)
         // The helper's automatic restart: one quiet line, no code to type, nothing that pops up over the app.
@@ -516,9 +501,16 @@ class WirelessSetupService : Service() {
         val b = Notification.Builder(this, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification).setColor(getColor(R.color.primary))
             .setContentTitle(title).setContentText(body).setStyle(Notification.BigTextStyle().bigText(body))
-            .setContentIntent(open).setOnlyAlertOnce(true).setOngoing(true)
+            .setContentIntent(open).setOngoing(true)
             .setCategory(Notification.CATEGORY_STATUS)
         val f = flow
+        // Pop up again (like Shizuku) when the code is wanted: the moment "Pair device with pairing code" is opened in
+        // Settings (pairing port found), and after a wrong code. A pop-up hides after a few seconds, and the first one
+        // came when the setup started, before the user went to Settings. Other updates stay silent.
+        val codeStep = f?.takeIf { it.phase == SetupFlow.Phase.WAITING }?.note
+            ?.takeIf { it == SetupFlow.Note.ENTER_CODE || it == SetupFlow.Note.WRONG_CODE }
+        b.setOnlyAlertOnce(codeStep == null || codeStep == alertedFor)
+        alertedFor = codeStep
         if (f != null && f.phase == SetupFlow.Phase.WAITING && f.note != SetupFlow.Note.WAITING_FOR_CONNECT_PORT) {
             val reply = PendingIntent.getService(this, 1, Intent(this, WirelessSetupService::class.java).setAction(ACTION_CODE),
                 PendingIntent.FLAG_UPDATE_CURRENT or (if (Build.VERSION.SDK_INT >= 31) PendingIntent.FLAG_MUTABLE else 0))
