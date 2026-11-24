@@ -7,7 +7,8 @@ template, plus privacy.html / en/privacy.html from docs/PRIVACY.md.
     site/deploy.sh [--preview]         # build and rsync to the host
 
 The page asks nothing of any other server: the typeface (IBM Plex Sans Arabic, OFL) and GSAP are in assets/.
-The one exception is "try a link" (site/link/), and only when the visitor submits a link.
+The exceptions are "try a link" (site/link/), only when the visitor submits a link, and the Google Play test sign-up
+(/test/, site/test/), which posts to our own host only when the visitor sends the form.
 Generated pictures and the filtered sound come from real material: see make_assets.py.
 """
 import datetime
@@ -62,6 +63,9 @@ T = {
         nav_cta="حمّل",
         try_nav="جرّب",
         try_hero="أو جرّبها على ملف أو رابط",
+        notice="واعية في طريقها إلى [[Google Play]]: كن من أوائل من يختبرها على هاتفه.",
+        notice_mail="سجّل عنوان [[Gmail]]، وتصلك رسالة على بريدك حين نضيفك إلى المختبرين.",
+        notice_cta="سجّل للاختبار",
         try_h="جرّبها بنفسك",
         try_p="اختر ملفًا من جهازك أو ألصق رابطًا. تعمل تصفية واعية الحقيقية هنا في متصفحك، ثم تنتقل بين «قبل» و«بعد» عند الموضع نفسه من المقطع.",
         try_file="اختر ملفًا من جهازك",
@@ -192,6 +196,9 @@ T = {
         nav_cta="Download",
         try_nav="Try it",
         try_hero="Or try it on a file or a link",
+        notice="Waaiya is coming to Google Play: be one of the first to test it on your phone.",
+        notice_mail="Leave your Gmail address: we email you when you are added as a tester.",
+        notice_cta="Sign up to test",
         try_h="Try it yourself",
         try_p="Pick a file from your device or paste a link. Waaiya's real filter runs here in your browser. Then switch between before and after at the same point in the clip.",
         try_file="Pick a file from your device",
@@ -445,7 +452,9 @@ def page(lang, root):
     for k, main, href, note, more in t["dl_rows"]:
         main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>'
         more_html = "".join(f'<li><a href="{h}">{e(n)}</a> <span>{e(x)}</span></li>' for n, h, x in more)
-        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p><ul class="dl-more">{more_html}</ul></li>'
+        test_html = (f'<a class="dl-test" href="test/"><strong>{e(t["notice"])}</strong><small>{e(t["notice_mail"])}</small>'
+                     f'<span>{e(t["notice_cta"])}<i aria-hidden="true">{"←" if t["dir"] == "rtl" else "→"}</i></span></a>') if k == "android" else ""
+        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p>{test_html}<ul class="dl-more">{more_html}</ul></li>'
     sums = f'<p class="dl-sums"><a href="{SUMS}">{e(t["dl_sums"][0])}</a> · <a href="{RELEASES}">{e(t["dl_sums"][1])}</a></p>'
     foot_links = "".join(f'<a href="{html.escape(h)}">{e(n)}</a>' for n, h in t["foot_links"])
 
@@ -883,6 +892,177 @@ def usb_page(lang, root):
 """
 
 
+# ---------- /test/: sign up for the Google Play test (site/test/) ----------
+# The form posts to {root}api/test-signup.php (site/test/signup.php, copied by main()): on the live site /api/, on the
+# preview /preview/api/. The endpoint keeps the list outside the docroot and tells the owner on Telegram.
+TEST = {
+    "ar": dict(
+        dir="rtl", home="واعية", home_href="", privacy_href="privacy.html",
+        title="انضمّ إلى اختبار واعية على [[Google Play]]",
+        desc="واعية في طريقها إلى [[Google Play]]. سجّل عنوان [[Gmail]] لتُدعى إلى اختبارها على هاتفك قبل نشرها للجميع.",
+        lead="واعية في طريقها إلى متجر [[Google Play]]. وقبل أن تُنشر للجميع، يطلب [[Google]] أن يجرّبها مختبرون مدة "
+             "أسبوعين. اكتب عنوان [[Gmail]]، أو عنوان حساب [[Google]] الذي تستعمله في [[Google Play]] على هاتفك، "
+             "فنضيفك إلى قائمة المختبرين.",
+        steps_h="ما معنى الاختبار؟",
+        steps=["نضيف عنوانك إلى قائمة المختبرين في [[Google Play]]، ثم نخبرك برسالة على بريدك ومعها رابط الانضمام إلى الاختبار.",
+               "افتح الرابط على هاتفك الأندرويد بحساب [[Google]] نفسه، ووافق على الانضمام، ثم ثبّت واعية من "
+               "[[Google Play]] كأي تطبيق.",
+               "أبقِها مثبّتة [[14]] يومًا على الأقل: هذا ما يطلبه [[Google]] قبل نشر التطبيق للجميع. واستعملها كما تشاء."],
+        email_label="عنوان [[Gmail]]، أو عنوان حسابك في [[Google]]",
+        email_note="العنوان الذي تستعمله في [[Google Play]] على هاتفك.",
+        name_label="اسمك (اختياري)",
+        submit="أضفني إلى الاختبار",
+        use_note="لا نستعمل عنوانك إلا لدعوتك إلى هذا الاختبار: لا يُنشر، ولا يُعطى لأحد، ولا نستعمله لغير ذلك. يُحفظ "
+                 "في قائمة على خادم موقعنا، ويصل إلى المطوّر عبر [[Telegram]] ليضيفه في [[Google Play Console]].",
+        privacy="سياسة الخصوصية",
+        remove_h="أزل عنواني من الاختبار",
+        remove_p="اكتب العنوان نفسه، فنحذفه من القائمة ومن الاختبار في [[Google Play]].",
+        remove_btn="أزل عنواني",
+        js=dict(
+            sending="جارٍ الإرسال…",
+            done="شكرًا! وصلنا عنوانك. سنضيفه إلى قائمة المختبرين، ونخبرك برسالة على بريدك حين نضيفه، ومعها رابط الانضمام إلى الاختبار.",
+            removed="تمّ. إن كان هذا العنوان في القائمة فقد حُذف منها، وسنحذفه من الاختبار في [[Google Play]].",
+            invalid_email="هذا لا يبدو عنوان بريد صحيحًا. تحقّق منه ثم أعد المحاولة.",
+            rate="محاولات كثيرة من هذا الاتصال. أعد المحاولة بعد ساعة.",
+            failed="تعذّر الإرسال الآن. أعد المحاولة بعد دقائق.",
+            oops="لم يُرسَل شيء: تحقّق من العنوان ثم أعد المحاولة، أو أعدها بعد قليل.")),
+    "en": dict(
+        dir="ltr", home="Waaiya", home_href="en/", privacy_href="en/privacy.html",
+        title="Join the Waaiya test on Google Play",
+        desc="Waaiya is coming to Google Play. Sign up with your Gmail address to be invited to test it on your phone "
+             "before it is published for everyone.",
+        lead="Waaiya is on its way to Google Play. Before it can be published for everyone, Google asks for testers to "
+             "try it for two weeks. Enter your Gmail address, or the address of the Google account you use for Google "
+             "Play on your phone, and we will add you to the testers.",
+        steps_h="What testing means",
+        steps=["We add your address to the testers list in Google Play, then email you with the link to join the test.",
+               "Open the link on your Android phone, with the same Google account, accept to become a tester, then "
+               "install Waaiya from Google Play like any app.",
+               "Keep it installed for at least 14 days: Google asks for this before an app is published for everyone. "
+               "Use it as you like."],
+        email_label="Gmail address, or the address of your Google account",
+        email_note="The one you use for Google Play on your phone.",
+        name_label="Your name (optional)",
+        submit="Invite me to the test",
+        use_note="Your address is used only to invite you to this test: it is not published, not given to anyone and "
+                 "not used for anything else. It is kept in a list on our website's server and sent to the developer "
+                 "over Telegram, to be added in Google Play Console.",
+        privacy="Privacy policy",
+        remove_h="Remove my address",
+        remove_p="Enter the same address: we delete it from the list and from the test in Google Play.",
+        remove_btn="Remove my address",
+        js=dict(
+            sending="Sending…",
+            done="Thank you! Your address has arrived. We will email you as soon as it is on the testers list, with the link "
+                 "to join the test.",
+            removed="Done. If this address was on the list it has been deleted, and we will remove it from the test "
+                    "in Google Play.",
+            invalid_email="This does not look like an email address. Check it and try again.",
+            rate="Too many tries from this connection. Try again in an hour.",
+            failed="It could not be sent just now. Try again in a few minutes.",
+            oops="Nothing was sent: check the address and try again, or try again a little later.")),
+    "fr": dict(
+        dir="ltr", home="Waaiya", home_href="en/", privacy_href="en/privacy.html",
+        title="Testez Waaiya sur Google Play",
+        desc="Waaiya arrive sur Google Play. Inscrivez votre adresse Gmail pour être invité à la tester sur votre "
+             "téléphone avant sa publication pour tous.",
+        lead="Waaiya arrive sur Google Play. Avant de la publier pour tous, Google demande qu'elle soit testée pendant "
+             "deux semaines. Indiquez votre adresse Gmail, ou celle du compte Google que vous utilisez pour Google Play "
+             "sur votre téléphone, et nous vous ajouterons aux testeurs.",
+        steps_h="En quoi consiste le test",
+        steps=["Nous ajoutons votre adresse à la liste des testeurs dans Google Play, puis nous vous écrivons par e-mail avec le lien pour "
+               "rejoindre le test.",
+               "Ouvrez le lien sur votre téléphone Android, avec le même compte Google, acceptez de devenir testeur, "
+               "puis installez Waaiya depuis Google Play comme n'importe quelle application.",
+               "Gardez-la installée au moins 14 jours : Google le demande avant de publier une application pour tous. "
+               "Utilisez-la comme vous voulez."],
+        email_label="Adresse Gmail, ou adresse de votre compte Google",
+        email_note="Celle que vous utilisez pour Google Play sur votre téléphone.",
+        name_label="Votre nom (facultatif)",
+        submit="M'inviter au test",
+        use_note="Votre adresse sert uniquement à vous inviter à ce test : elle n'est ni publiée, ni transmise à "
+                 "quiconque, ni utilisée pour autre chose. Elle est conservée dans une liste sur le serveur de notre "
+                 "site et envoyée au développeur par Telegram, pour être ajoutée dans la Google Play Console.",
+        privacy="Politique de confidentialité (en anglais et en arabe)",
+        remove_h="Retirer mon adresse",
+        remove_p="Indiquez la même adresse : nous la supprimons de la liste et du test dans Google Play.",
+        remove_btn="Retirer mon adresse",
+        js=dict(
+            sending="Envoi…",
+            done="Merci ! Votre adresse est bien arrivée. Nous vous écrirons par e-mail dès qu'elle sera sur la liste des testeurs, "
+                 "avec le lien pour rejoindre le test.",
+            removed="C'est fait. Si cette adresse était dans la liste, elle en a été supprimée, et nous la retirerons "
+                    "du test dans Google Play.",
+            invalid_email="Cette adresse ne semble pas valide. Vérifiez-la et réessayez.",
+            rate="Trop d'essais depuis cette connexion. Réessayez dans une heure.",
+            failed="L'envoi a échoué. Réessayez dans quelques minutes.",
+            oops="Rien n'a été envoyé : vérifiez l'adresse et réessayez, ou réessayez un peu plus tard.")),
+}
+TEST_LANGS = (("ar", "العربية", "test/"), ("en", "English", "en/test/"), ("fr", "Français", "fr/test/"))
+
+
+def test_page(lang, root):
+    u = TEST[lang]
+    for k, lim in (("title", 60), ("desc", 160)):
+        n = visible_len(plain(u[k]))
+        assert n <= lim, f"test {lang} {k} is {n} characters (limit {lim})"
+    robots = '<meta name="robots" content="noindex">' if PREVIEW else ""
+    path = dict((c, p) for c, _, p in TEST_LANGS)
+    alts = "".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{p}">' for c, _, p in TEST_LANGS)
+    others = " · ".join(f'<a href="{root}{p}" lang="{c}" hreflang="{c}">{n}</a>' for c, n, p in TEST_LANGS if c != lang)
+    steps = "".join(f"<li>{e(s)}</li>" for s in u["steps"])
+    text = json.dumps({k: plain(v) for k, v in u["js"].items()}, ensure_ascii=False).replace("</", "<\\/")
+    action = f"{root}api/test-signup.php"
+    trap = ('<div class="vh" aria-hidden="true"><label for="tst-web-{n}">Website</label>'
+            '<input id="tst-web-{n}" name="website" type="text" tabindex="-1" autocomplete="off"></div>')
+    hidden = f'<input type="hidden" name="lang" value="{lang}">'
+    status = '<p class="tst-status" role="status" aria-live="polite" tabindex="-1" hidden></p>'
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{u['dir']}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(plain(u['title']))} · {'واعية' if lang == 'ar' else 'Waaiya'}</title>{robots}
+<meta name="description" content="{e(plain(u['desc']))}">
+<link rel="canonical" href="{SITE}{path[lang]}">
+{alts}<link rel="alternate" hreflang="x-default" href="{SITE}test/">
+<link rel="icon" href="{root}assets/logo.png">
+<style>{fonts(root + 'assets/')}
+{CSS}</style></head>
+<body class="doc"><a class="doc-home" href="{root}{u['home_href']}">{e(u['home'])}</a>
+<span class="doc-lang">{others}</span>
+<main class="prose tst">
+<h1>{e(u['title'])}</h1>
+<p class="tst-lead">{e(u['lead'])}</p>
+<h2>{e(u['steps_h'])}</h2>
+<ol class="tst-steps">{steps}</ol>
+<form class="tst-form" action="{action}" method="post">{hidden}<input type="hidden" name="mode" value="join">
+<div class="tst-field"><label for="tst-email">{e(u['email_label'])}</label>
+<input id="tst-email" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" dir="ltr" spellcheck="false" autocapitalize="off" aria-describedby="tst-email-note">
+<p class="tst-hint" id="tst-email-note">{e(u['email_note'])}</p></div>
+<div class="tst-field"><label for="tst-name">{e(u['name_label'])}</label>
+<input id="tst-name" name="name" type="text" maxlength="80" autocomplete="name" dir="auto"></div>
+{trap.format(n=1)}
+<p><button type="submit" class="cbtn">{e(u['submit'])}</button></p>
+{status}
+</form>
+<p class="tst-status ok tst-after" id="done" tabindex="-1">{e(u['js']['done'])}</p>
+<p class="tst-status ok tst-after" id="removed" tabindex="-1">{e(u['js']['removed'])}</p>
+<p class="tst-status bad tst-after" id="oops" tabindex="-1">{e(u['js']['oops'])}</p>
+<p class="tst-use">{e(u['use_note'])} <a href="{root}{u['privacy_href']}">{e(u['privacy'])}</a></p>
+<details class="tst-remove"><summary>{e(u['remove_h'])}</summary>
+<form class="tst-form" action="{action}" method="post">{hidden}<input type="hidden" name="mode" value="remove">
+<p>{e(u['remove_p'])}</p>
+<div class="tst-field"><label for="tst-email-rm" class="vh">{e(u['email_label'])}</label>
+<input id="tst-email-rm" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" dir="ltr" spellcheck="false" autocapitalize="off"></div>
+{trap.format(n=2)}
+<p><button type="submit" class="cbtn quiet">{e(u['remove_btn'])}</button></p>
+{status}
+</form></details>
+</main>
+<script type="application/json" id="test-text">{text}</script>
+<script src="{root}assets/test/signup.js" defer></script>
+</body></html>
+"""
+
+
 LLMS = f"""# Waaiya (واعية)
 
 > Waaiya is a free, open-source (AGPL) app for Android 10+, Windows 10 (2004)+ and Linux that removes musical
@@ -985,6 +1165,13 @@ def main():
     (OUT / "en/usb").mkdir()
     (OUT / "usb/index.html").write_text(usb_page("ar", "../"))
     (OUT / "en/usb/index.html").write_text(usb_page("en", "../../"))
+    (OUT / "assets/test").mkdir(parents=True)
+    shutil.copy(HERE / "test/signup.js", OUT / "assets/test/signup.js")
+    (OUT / "api").mkdir()
+    shutil.copy(HERE / "test/signup.php", OUT / "api/test-signup.php")
+    for c, _, p in TEST_LANGS:
+        (OUT / p).mkdir(parents=True)
+        (OUT / p / "index.html").write_text(test_page(c, "../" * p.count("/")))
     (OUT / "llms.txt").write_text(LLMS)
     if not PREVIEW:
         (OUT / "robots.txt").write_text(ROBOTS)

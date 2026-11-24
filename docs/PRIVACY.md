@@ -1,6 +1,6 @@
 # Waaiya privacy policy
 
-Last change: 2026-11-22. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
+Last change: 2026-11-24. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
 
 ## In short
 
@@ -73,6 +73,16 @@ are not reported to anyone.
   address for ten minutes (on o2switch as a hash that changes every day) and the total per day, nothing more. The
   hosts keep their usual access logs (address, time, page).
 
+## The website's Google Play test sign-up
+
+If you sign up on waaiya.mssid.org/test/ to test Waaiya on Google Play, the address you enter, and your name if you
+give it, is sent to our website (hosted by o2switch in France) and kept there in a list, outside the public site,
+with the time and the page's language. It is used only to invite you to the test: the developer is told of each
+address by a Telegram bot (so the message passes through Telegram) and adds it to the testers list in Google Play
+Console, where Google's own privacy policy applies. It is never published, given to anyone else or used for
+anything else. To limit abuse the form counts sends per address for an hour (as a hash that changes every day). To
+have your address deleted, use "Remove my address" on the same page: it is removed from the list and from the test.
+
 ## Changes and contact
 
 Changes to this policy are made in this file in the public repository, where their history is kept:
@@ -84,7 +94,7 @@ Changes to this policy are made in this file in the public repository, where the
 
 ## سياسة الخصوصية
 
-آخر تعديل: 2026-11-22. تنطبق على واعية في أندرويد ولينكس وويندوز.
+آخر تعديل: 2026-11-24. تنطبق على واعية في أندرويد ولينكس وويندوز.
 
 ### باختصار
 
@@ -143,6 +153,15 @@ Changes to this policy are made in this file in the public repository, where the
   المقطع، ويُحذف الملف المؤقت بعد إرساله. وللحدّ من إساءة الاستخدام يعدّ كل خادم الطلبات لكل عنوان مدة عشر دقائق (في
   o2switch بصيغة مشفّرة تتغير كل يوم) ومجموعها في اليوم، لا أكثر. وتحتفظ جهات الاستضافة بسجلاتها المعتادة (العنوان
   والوقت والصفحة).
+
+### التسجيل في اختبار Google Play على الموقع
+
+إن سجّلت في waaiya.mssid.org/test/ لتختبر واعية على Google Play، يُرسَل العنوان الذي تكتبه، واسمك إن ذكرته، إلى موقعنا
+(لدى o2switch في فرنسا)، ويُحفظ هناك في قائمة خارج الموقع العام، مع الوقت ولغة الصفحة. لا يُستعمل إلا لدعوتك إلى الاختبار:
+يُخبَر المطوّر بكل عنوان عبر بوت في Telegram (فتمرّ الرسالة بـ Telegram)، فيضيفه إلى قائمة المختبرين في Google Play Console،
+حيث تنطبق سياسة الخصوصية لـ Google. لا يُنشر العنوان، ولا يُعطى لأحد، ولا يُستعمل لغير ذلك. وللحدّ من إساءة الاستخدام يعدّ
+النموذج الإرسالات لكل عنوان مدة ساعة (بصيغة مشفّرة تتغير كل يوم). ولحذف عنوانك، استعمل «أزل عنواني من الاختبار» في الصفحة
+نفسها: يُحذف من القائمة ومن الاختبار.
 
 ### التواصل
 
