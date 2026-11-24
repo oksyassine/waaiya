@@ -63,6 +63,9 @@ T = {
         nav_cta="حمّل",
         try_nav="جرّب",
         try_hero="أو جرّبها على ملف أو رابط",
+        notice="واعية في طريقها إلى [[Google Play]]: كن من أوائل من يختبرها على هاتفه.",
+        notice_mail="سجّل عنوان [[Gmail]]، وتصلك رسالة على بريدك حين نضيفك إلى المختبرين.",
+        notice_cta="سجّل للاختبار",
         try_h="جرّبها بنفسك",
         try_p="اختر ملفًا من جهازك أو ألصق رابطًا. تعمل تصفية واعية الحقيقية هنا في متصفحك، ثم تنتقل بين «قبل» و«بعد» عند الموضع نفسه من المقطع.",
         try_file="اختر ملفًا من جهازك",
@@ -172,8 +175,7 @@ T = {
         dl_rows=[
             ("android", "أندرويد: [[waaiya.apk]]", APK, f"الإصدار [[{VERSION}]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[108 MB]]",
              [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
-              ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]"),
-              ("انضمّ إلى اختبار واعية على [[Google Play]]", "test/", "بعنوان [[Gmail]]")]),
+              ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
             ("windows", "ويندوز: واعية في متجر مايكروسوفت", STORE, "مجانًا، وموقَّع من مايكروسوفت، ويتحدّث تلقائيًا. ويندوز [[10 (2004)]] أو أحدث.",
              [("ملف [[zip]]: فُكَّ ضغطه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
             ("linux", "لينكس: تطبيق سطح المكتب", LINUX_DESKTOP, "لينكس [[x64]] · [[58 MB]]",
@@ -194,6 +196,9 @@ T = {
         nav_cta="Download",
         try_nav="Try it",
         try_hero="Or try it on a file or a link",
+        notice="Waaiya is coming to Google Play: be one of the first to test it on your phone.",
+        notice_mail="Leave your Gmail address: we email you when you are added as a tester.",
+        notice_cta="Sign up to test",
         try_h="Try it yourself",
         try_p="Pick a file from your device or paste a link. Waaiya's real filter runs here in your browser. Then switch between before and after at the same point in the clip.",
         try_file="Pick a file from your device",
@@ -303,8 +308,7 @@ T = {
         dl_rows=[
             ("android", "Android: waaiya.apk", APK, f"Version {VERSION}, for every kind of phone with Android 10 or newer · 108 MB",
              [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
-              ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB"),
-              ("Join the test on Google Play", "test/", "with your Gmail address")]),
+              ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
             ("windows", "Windows: Waaiya in the Microsoft Store", STORE, "Free, signed by Microsoft, updates itself. Windows 10 (2004) or newer.",
              [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed, so Windows Smart App Control may block it.")]),
             ("linux", "Linux: the desktop app", LINUX_DESKTOP, "Linux x64 · 58 MB",
@@ -448,7 +452,9 @@ def page(lang, root):
     for k, main, href, note, more in t["dl_rows"]:
         main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>'
         more_html = "".join(f'<li><a href="{h}">{e(n)}</a> <span>{e(x)}</span></li>' for n, h, x in more)
-        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p><ul class="dl-more">{more_html}</ul></li>'
+        test_html = (f'<a class="dl-test" href="test/"><strong>{e(t["notice"])}</strong><small>{e(t["notice_mail"])}</small>'
+                     f'<span>{e(t["notice_cta"])}<i aria-hidden="true">{"←" if t["dir"] == "rtl" else "→"}</i></span></a>') if k == "android" else ""
+        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p>{test_html}<ul class="dl-more">{more_html}</ul></li>'
     sums = f'<p class="dl-sums"><a href="{SUMS}">{e(t["dl_sums"][0])}</a> · <a href="{RELEASES}">{e(t["dl_sums"][1])}</a></p>'
     foot_links = "".join(f'<a href="{html.escape(h)}">{e(n)}</a>' for n, h in t["foot_links"])
 
@@ -898,7 +904,7 @@ TEST = {
              "أسبوعين. اكتب عنوان [[Gmail]]، أو عنوان حساب [[Google]] الذي تستعمله في [[Google Play]] على هاتفك، "
              "فنضيفك إلى قائمة المختبرين.",
         steps_h="ما معنى الاختبار؟",
-        steps=["نضيف عنوانك إلى قائمة المختبرين في [[Google Play]]، ثم يصلك رابط الانضمام إلى الاختبار.",
+        steps=["نضيف عنوانك إلى قائمة المختبرين في [[Google Play]]، ثم نخبرك برسالة على بريدك ومعها رابط الانضمام إلى الاختبار.",
                "افتح الرابط على هاتفك الأندرويد بحساب [[Google]] نفسه، ووافق على الانضمام، ثم ثبّت واعية من "
                "[[Google Play]] كأي تطبيق.",
                "أبقِها مثبّتة [[14]] يومًا على الأقل: هذا ما يطلبه [[Google]] قبل نشر التطبيق للجميع. واستعملها كما تشاء."],
@@ -914,7 +920,7 @@ TEST = {
         remove_btn="أزل عنواني",
         js=dict(
             sending="جارٍ الإرسال…",
-            done="شكرًا! وصلنا عنوانك. سنضيفه إلى قائمة المختبرين، ثم يصلك رابط الانضمام إلى الاختبار.",
+            done="شكرًا! وصلنا عنوانك. سنضيفه إلى قائمة المختبرين، ونخبرك برسالة على بريدك حين نضيفه، ومعها رابط الانضمام إلى الاختبار.",
             removed="تمّ. إن كان هذا العنوان في القائمة فقد حُذف منها، وسنحذفه من الاختبار في [[Google Play]].",
             invalid_email="هذا لا يبدو عنوان بريد صحيحًا. تحقّق منه ثم أعد المحاولة.",
             rate="محاولات كثيرة من هذا الاتصال. أعد المحاولة بعد ساعة.",
@@ -929,7 +935,7 @@ TEST = {
              "try it for two weeks. Enter your Gmail address, or the address of the Google account you use for Google "
              "Play on your phone, and we will add you to the testers.",
         steps_h="What testing means",
-        steps=["We add your address to the testers list in Google Play, and you get a link to join the test.",
+        steps=["We add your address to the testers list in Google Play, then email you with the link to join the test.",
                "Open the link on your Android phone, with the same Google account, accept to become a tester, then "
                "install Waaiya from Google Play like any app.",
                "Keep it installed for at least 14 days: Google asks for this before an app is published for everyone. "
@@ -947,7 +953,7 @@ TEST = {
         remove_btn="Remove my address",
         js=dict(
             sending="Sending…",
-            done="Thank you! Your address has arrived. We will add it to the testers list, then you will get the link "
+            done="Thank you! Your address has arrived. We will email you as soon as it is on the testers list, with the link "
                  "to join the test.",
             removed="Done. If this address was on the list it has been deleted, and we will remove it from the test "
                     "in Google Play.",
@@ -964,7 +970,7 @@ TEST = {
              "deux semaines. Indiquez votre adresse Gmail, ou celle du compte Google que vous utilisez pour Google Play "
              "sur votre téléphone, et nous vous ajouterons aux testeurs.",
         steps_h="En quoi consiste le test",
-        steps=["Nous ajoutons votre adresse à la liste des testeurs dans Google Play, puis vous recevez un lien pour "
+        steps=["Nous ajoutons votre adresse à la liste des testeurs dans Google Play, puis nous vous écrivons par e-mail avec le lien pour "
                "rejoindre le test.",
                "Ouvrez le lien sur votre téléphone Android, avec le même compte Google, acceptez de devenir testeur, "
                "puis installez Waaiya depuis Google Play comme n'importe quelle application.",
@@ -983,8 +989,8 @@ TEST = {
         remove_btn="Retirer mon adresse",
         js=dict(
             sending="Envoi…",
-            done="Merci ! Votre adresse est bien arrivée. Nous l'ajoutons à la liste des testeurs, puis vous recevrez "
-                 "le lien pour rejoindre le test.",
+            done="Merci ! Votre adresse est bien arrivée. Nous vous écrirons par e-mail dès qu'elle sera sur la liste des testeurs, "
+                 "avec le lien pour rejoindre le test.",
             removed="C'est fait. Si cette adresse était dans la liste, elle en a été supprimée, et nous la retirerons "
                     "du test dans Google Play.",
             invalid_email="Cette adresse ne semble pas valide. Vérifiez-la et réessayez.",
