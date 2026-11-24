@@ -75,13 +75,19 @@ are not reported to anyone.
 
 ## The website's Google Play test sign-up
 
-If you sign up on waaiya.mssid.org/test/ to test Waaiya on Google Play, the address you enter, and your name if you
-give it, is sent to our website (hosted by o2switch in France) and kept there in a list, outside the public site,
-with the time and the page's language. It is used only to invite you to the test: the developer is told of each
-address by a Telegram bot (so the message passes through Telegram) and adds it to the testers list in Google Play
-Console, where Google's own privacy policy applies. It is never published, given to anyone else or used for
-anything else. To limit abuse the form counts sends per address for an hour (as a hash that changes every day). To
-have your address deleted, use "Remove my address" on the same page: it is removed from the list and from the test.
+Joining the Google Play test uses a Google Group, waaiya-testers@googlegroups.com, run by Google under its own
+privacy policy: you join it with your Google account, and only the developer, as its manager, sees its members'
+addresses (members do not see each other, and nothing is posted to the group). Google Play then lets the group's
+members install the test.
+
+If you also leave your address on waaiya.mssid.org/test/ to receive the steps by email, the address, and your name
+if you give it, is sent to our website (hosted by o2switch in France) and kept there in a list, outside the public
+site, with the time and the page's language. It is used only to email you the steps (from support@waaiya.mssid.org,
+sent by the developer's own server, which reads the list) and to help you with this test; the developer is told of
+each address by a Telegram bot (so the message passes through Telegram). It is never published, given to anyone else
+or used for anything else. To limit abuse the form counts sends per address for an hour (as a hash that changes every
+day). To have your address deleted, use "Leave the test" on the same page; to leave the test itself, leave the group
+and the program in Google Play.
 
 ## Changes and contact
 

@@ -98,17 +98,12 @@ if ($changed) {
     $n = count($rows) - 1;
     $text = $remove
         ? "Waaiya Play test: remove this tester (asked on the site)\n<code>{$e($email)}</code>\n\n"
-          . "Remove it from the testers list in Play Console. {$n} on the list now$where."
+          . "Deleted from the site's list. If they are still in the Google Group, remove them there. {$n} on the list now$where."
         : "Waaiya Play test: new tester, n° {$n}\n<code>{$e($email)}</code>\n\n"
           . ($name !== '' ? "Name: {$e($name)} · " : '') . "Page: $lang$where\n"
-          . "Add it to the testers list in Play Console (Test and release › Testing), then tap the button to email "
-          . "the invitation from support@waaiya.mssid.org.";
-    $cb = "inv|$lang|$email";  // Telegram allows 64 bytes of callback data
-    $markup = !$remove && strlen($cb) <= 64
-        ? ['inline_keyboard' => [[['text' => 'Added in Play: send the invitation', 'callback_data' => $cb]]]]
-        : null;
-    if (!$remove && $markup === null) $text .= "\nAddress too long for the button: send /invite {$e($email)} $lang";
-    notify($text, $markup);
+          . "Nothing to do: testers join the waaiya-testers Google Group themselves, and the bot emails these "
+          . "steps from support@waaiya.mssid.org within a minute (it reads this list).";
+    notify($text);
 }
 answer($remove ? 'removed' : 'ok');
 
