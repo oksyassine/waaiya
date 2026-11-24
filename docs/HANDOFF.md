@@ -1,35 +1,36 @@
-# Handoff (2026-11-22)
+# Handoff (2026-11-24)
 
 ## Current phase and goal
-Blur side: improve the woman/man classifier, training on Kaggle instead of the local PC.
+Blur side: find what limits "men left clear"; Screen page on/off and the blur without Shizuku (PR #45).
 
 ## Done this session
-- 5ad0a21 `kaggle/run_blur.sh`, `.env.example`, `.gitignore` `!.env.example` (merged to main via #34)
-- 51b0ba0 merged origin/main into blur-feature
-- f07ddb5 `export_vision.py` `dynamo=False` (in main)
-- Two full Kaggle gender runs; end-to-end comparison vs shipped gender_v2
+- 1b32b30, 8ea7ea1 (blur-feature, NOT pushed): `blur_parts.py`, `eval/results/blur_parts.md`, notes.
+- 17f6c80 (branch `screen-page`, pushed, PR #45 open): Screen page power button (`blur_on`), blur without Shizuku.
+- Local `main` reset to origin/main; old one kept as `main-backup-20261123` (15 commits not on origin).
+- Phone: old 0.2.3 (org.islamicmute.app) removed by the user; debug build of 17f6c80 installed (org.waaiya.app).
 
 ## Exact state
-- WORKS (verified): Kaggle push/wait/download with `.env` creds; ONNX export on PyTorch 2.15; `make test-blur` 156/156.
-- RESULT (verified): 2x-data model better on holdout (51.6% vs 46.7%), not end to end; shipped gender_v2 kept.
-- UNVERIFIED: `KAGGLE_MACHINE=NvidiaTeslaP100` path (pushed once, deleted while queued); `run_blur.sh seg` never run.
-- Local only (gitignored): `kaggle/blur-gender/out/{run1,out}`, `models/vision/v2b/gender_v2b.onnx`, `eval/results/v2b/*.npz`.
-- Local `main` branch is stale vs origin/main (old rewritten history); use origin/main.
+- VERIFIED: `make test-blur` 156/156 (blur-feature); ui `flutter test` 211 passed + analyze clean (screen-page).
+- VERIFIED (2026-11-23): Android unit tests passed; desktop tests pass except linux_engine_test "no pactl" (fails on main too).
+- VERIFIED: cap on men clear is other boxes (parts, neighbours, misses), not the classifier (`blur_parts.md`).
+- UNVERIFIED: Screen page on the phone not looked at; `emu_check.py` not run.
+- Build tree for screen-page lives in the scratchpad worktree (temporary); the branch itself is in the repo.
 
 ## Next 3 steps
-1. Plan with the user: gender training on runtime-like crops (detector boxes on 640-px frames).
-2. Implement it in `prep_train_crops.py` / the blur-gender notebook; run on Kaggle.
-3. Compare with `blur_diag.py` (photo + portrait) against shipped gender_v2, same 4000 images.
+1. User checks Screen page on the phone (on/off, starts filtering, off keeps choices); fix findings; merge #45.
+2. Push blur-feature (`git push`), open a small PR for the blur_parts analysis.
+3. Plan engine-side handling of part/duplicate boxes in `engine/src/im_vision.c` (measure with `blur_parts.py` and `eval_blur.py --seg`); alternative: retrain segmenter.
 
 ## Open questions for the user
-- Pursue runtime-like crops, or move to the segmenter / other blur work?
-- Reset local `main` to origin/main (back it up first)?
+- Screen page OK on the phone? Merge #45?
+- Later: make the Android blur fully independent of sound filtering?
+- Next blur work: engine part boxes, or segmenter?
 
 ## Files to read first
-`docs/PROGRESS.md`, `docs/LESSONS.md`, `kaggle/run_blur.sh`, `kaggle/blur-gender/make_notebook.py`, `models/vision/blur_diag.py`, `eval/results/blur_gender_v2.md`
+`docs/PROGRESS.md`, `eval/results/blur_parts.md`, `docs/LESSONS.md`, PR #45 (`gh pr view 45`), `ui/lib/src/blur_card.dart`
 
-## Commands to check state
-- `git fetch && git status -sb && git log --oneline -5`
-- `bash -n kaggle/run_blur.sh && make test-blur`
-- `kaggle kernels list --mine` (with `.env` loaded: `set -a; . ./.env; set +a`)
-- `.venv/bin/python models/vision/blur_diag.py report eval/results/v2b/new_photo.npz`
+## Commands to check the state
+- `git fetch && git status -sb && git log --oneline -5` ; `gh pr view 45`
+- `make test-blur`
+- Android build: `JAVA_HOME=~/.jdks/temurin-21` + Flutter 3.41.5 on PATH, `cd android && ./gradlew assembleDebug -PimBuildPython=$HOME/.local/bin/python3.11`
+- `adb shell dumpsys package org.waaiya.app | grep versionName`

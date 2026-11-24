@@ -16,3 +16,17 @@
 
 ## 2026-11-22: ONNX export uses the TorchScript exporter (`dynamo=False`)
 - Why: PyTorch 2.9+ defaults to dynamo (needs onnxscript, different graph from shipped models).
+
+## 2026-11-23: Drop the "train gender on runtime-like crops" plan
+- Why: `blur_gender_v2.md` diagnostic b already shows annotator vs detector crops give the same result (54.0% vs 54.9%); `blur_parts.md` shows the cap is other boxes, not the classifier.
+- Rejected: retraining on detector crops (Kaggle time for a mismatch that does not exist).
+
+## 2026-11-23: Screen page gets its own on/off (`blur_on`), tied to filtering on Android
+- Why: user asked for a Filter-like on/off. `blur_on` defaults to true so existing users see no change; off keeps the women/nudity choices; protected like other blur switches.
+- Android: turning it on also starts filtering (one service owns the single MediaProjection, audio + blur).
+- Rejected (user chose, for now): a fully independent blur on Android (needs splitting FilterService and the muter; risk of leaving other apps muted).
+
+## 2026-11-23: The blur no longer uses Shizuku
+- Why: Waaiya's own helper (CoverHelper, Wireless debugging / USB setup) draws the same pass-through layer since 0.2.11. Shizuku kept only for the sound setup.
+- Done as: ShizukuCovers -> ShellCovers (helper only), CoverService always checks the caller uid, Shizuku blur grant and blur.busy/message removed, "Go to the setup" button.
+- Rejected: keeping Shizuku as a second cover route (two paths to maintain, one of them a third-party app).
