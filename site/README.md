@@ -33,6 +33,25 @@ browser". Tests:
     python3 site/build.py --preview && node site/usb/test/page_test.mjs    # the page with a simulated USB phone
     adb kill-server && node site/usb/test/adb_e2e.mjs 127.0.0.1:<emulator port + 1> --setup   # a real adbd
 
+## Google Play test sign-up (/test/)
+
+`build.py` writes `test/` (Arabic), `en/test/` and `fr/test/` (TEST), copies `test/signup.js` to `assets/test/` and
+the endpoint `test/signup.php` to `api/test-signup.php`: the form posts to `/api/test-signup.php` on the live site and
+`/preview/api/test-signup.php` on the preview. Both write the same files on o2, outside the docroot:
+
+- `~/waaiya-testers/signups.csv` (mode 600): `time_utc,email,name,lang`, one line per address (a second sign-up of
+  the same address changes nothing; "Remove my address" deletes its line);
+- `~/waaiya-testers/state/`: `caps.json` (8 sends per address per hour, 300 per day; addresses as a salted daily
+  hash) and `notify.log` (time and Telegram's verdict for each message, nothing else);
+- `~/.config/waaiya-test/tg.env` (mode 600): `TG_TOKEN=` and `TG_CHAT=`, the Telegram bot and the owner's chat. The
+  endpoint only calls `sendMessage` (the bot's own server long-polls). Put it there without the token touching a
+  command line:
+
+      { sed 's/^/TG_TOKEN=/' ~/.config/tg-inbox/token; sed 's/^/TG_CHAT=/' ~/.config/tg-inbox/allowed; } |
+        ssh o2 'umask 077; mkdir -p ~/.config/waaiya-test; cat > ~/.config/waaiya-test/tg.env'
+
+A field people never see (`website`) catches robots: they are thanked and nothing is kept.
+
 ## Automatic deploy
 
 The live site follows `main`: `site/auto_deploy.sh`, run every 5 minutes by a systemd user timer, fetches `main` into
