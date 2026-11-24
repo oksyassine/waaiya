@@ -908,11 +908,11 @@ TEST = {
         steps_h="كيف تنضمّ",
         steps=[("انضمّ إلى مجموعة «[[Waaiya testers]]» بحساب [[Google]] الذي تستعمله في [[Google Play]] على هاتفك.",
                 "انضمّ إلى المجموعة", GROUP_URL),
-               ("ثم افتح هذا الرابط على هاتفك الأندرويد بالحساب نفسه، واضغط «أصبح مختبِرًا».",
-                "أصبح مختبِرًا", OPTIN_URL),
-               ("ثبّت واعية من [[Google Play]] كأي تطبيق، وأبقِها مثبّتة [[14]] يومًا على الأقل: هذا ما يطلبه [[Google]] "
-                "قبل نشر التطبيق للجميع. واستعملها كما تشاء.", "افتح واعية في [[Google Play]]", PLAY_URL)],
-        steps_note="إن قال الرابط الثاني إن التطبيق غير متاح، فانتظر بضع دقائق بعد الانضمام إلى المجموعة ثم أعد المحاولة.",
+               ("ثم ثبّت واعية من [[Google Play]] على هاتفك الأندرويد بالحساب نفسه، وأبقِها مثبّتة [[14]] يومًا على "
+                "الأقل: هذا ما يطلبه [[Google]] قبل نشر التطبيق للجميع. واستعملها كما تشاء.",
+                "ثبّت واعية من [[Google Play]]", PLAY_URL)],
+        steps_note="إن لم تظهر لك واعية في [[Google Play]]، فانتظر بضع دقائق بعد الانضمام إلى المجموعة، أو افتح "
+                   "<<رابط الاختبار>> واضغط «أصبح مختبِرًا».",
         form_h="أرسل لي هذه الخطوات بالبريد (اختياري)",
         form_p="اكتب عنوانك فنرسل إليك هذه الخطوات وروابطها، لتفتحها لاحقًا على هاتفك.",
         email_label="عنوان [[Gmail]]، أو عنوان حسابك في [[Google]]",
@@ -945,13 +945,11 @@ TEST = {
         steps_h="How to join",
         steps=[("Join the “Waaiya testers” group with the Google account you use for Google Play on your phone.",
                 "Join the group", GROUP_URL),
-               ("Then open this link on your Android phone, with the same account, and tap “Become a tester”.",
-                "Become a tester", OPTIN_URL),
-               ("Install Waaiya from Google Play like any app, and keep it installed for at least 14 days: Google asks "
-                "for this before an app is published for everyone. Use it as you like.", "Open Waaiya in Google Play",
-                PLAY_URL)],
-        steps_note="If the second link says the app is not available, wait a few minutes after joining the group and "
-                   "try again.",
+               ("Then install Waaiya from Google Play on your Android phone, with the same account, and keep it "
+                "installed for at least 14 days: Google asks for this before an app is published for everyone. Use it "
+                "as you like.", "Install Waaiya from Google Play", PLAY_URL)],
+        steps_note="If Google Play does not show Waaiya yet, wait a few minutes after joining the group, or open "
+                   "<<the test link>> and tap \u201cBecome a tester\u201d.",
         form_h="Email me these steps (optional)",
         form_p="Leave your address and we send you these steps and links, to open later on your phone.",
         email_label="Gmail address, or the address of your Google account",
@@ -985,13 +983,11 @@ TEST = {
         steps_h="Comment rejoindre le test",
         steps=[("Rejoignez le groupe « Waaiya testers » avec le compte Google que vous utilisez pour Google "
                 "Play sur votre téléphone.", "Rejoindre le groupe", GROUP_URL),
-               ("Ouvrez ensuite ce lien sur votre téléphone Android, avec le même compte, et touchez « Devenir "
-                "testeur ».", "Devenir testeur", OPTIN_URL),
-               ("Installez Waaiya depuis Google Play comme n'importe quelle application, et gardez-la installée au moins "
-                "14 jours : Google le demande avant de publier une application pour tous. Utilisez-la comme vous "
-                "voulez.", "Ouvrir Waaiya dans Google Play", PLAY_URL)],
-        steps_note="Si le deuxième lien indique que l'application n'est pas disponible, attendez quelques minutes après "
-                   "avoir rejoint le groupe, puis réessayez.",
+               ("Installez ensuite Waaiya depuis Google Play sur votre téléphone Android, avec le même compte, et "
+                "gardez-la installée au moins 14 jours\u00a0: Google le demande avant de publier une application pour "
+                "tous. Utilisez-la comme vous voulez.", "Installer Waaiya depuis Google Play", PLAY_URL)],
+        steps_note="Si Google Play n'affiche pas encore Waaiya, attendez quelques minutes après avoir rejoint le groupe, "
+                   "ou ouvrez <<le lien du test>> et touchez «\u00a0Devenir testeur\u00a0».",
         form_h="Recevoir ces étapes par e-mail (facultatif)",
         form_p="Indiquez votre adresse et nous vous envoyons ces étapes et leurs liens, à ouvrir plus tard sur votre "
                "téléphone.",
@@ -1054,7 +1050,7 @@ def test_page(lang, root):
 <p class="tst-lead">{e(u['lead'])}</p>
 <h2>{e(u['steps_h'])}</h2>
 <ol class="tst-steps">{steps}</ol>
-<p class="tst-hint">{e(u['steps_note'])}</p>
+<p class="tst-hint">{re.sub(r'&lt;&lt;(.+?)&gt;&gt;', lambda m: f'<a href="{OPTIN_URL}" rel="noopener" target="_blank">{m.group(1)}</a>', e(u['steps_note']))}</p>
 <h2>{e(u['form_h'])}</h2>
 <p>{e(u['form_p'])}</p>
 <form class="tst-form" action="{action}" method="post">{hidden}<input type="hidden" name="mode" value="join">
