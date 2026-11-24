@@ -395,6 +395,25 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cubre personas e imágenes en la pantalla, en todas las aplicaciones, mientras el filtrado está activado. Funciona en el teléfono; no se envía nada a ningún sitio.';
 
   @override
+  String get blurOnTitle => 'El desenfoque está activado';
+
+  @override
+  String get blurOffTitle => 'El desenfoque está desactivado';
+
+  @override
+  String get blurStartCd => 'Activar el desenfoque';
+
+  @override
+  String get blurStopCd => 'Desactivar el desenfoque';
+
+  @override
+  String get blurOffDetail =>
+      'Toque el botón para empezar. El filtrado empieza con él.';
+
+  @override
+  String get blurWhatTitle => 'Qué desenfocar';
+
+  @override
   String get blurWomenTitle => 'Desenfocar a las mujeres';
 
   @override
@@ -417,26 +436,23 @@ class AppLocalizationsEs extends AppLocalizations {
       'Activado: se cubre toda la pantalla cuando el teléfono es demasiado lento o el desenfoque falla. Desactivado: la pantalla sigue visible con un aviso.';
 
   @override
-  String get blurSetupShizuku => 'Permitir con Shizuku';
-
-  @override
   String get blurSetupManual => 'Permitir en los ajustes de Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: «Permitir con Shizuku», para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O «Permitir en los ajustes de Android», pero entonces un toque en una zona desenfocada no hace nada.';
+      'Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: «Ir a la configuración», para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O «Permitir en los ajustes de Android», pero entonces un toque en una zona desenfocada no hace nada.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: inicie Shizuku y permita Waaiya en él, para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O permita «Mostrar sobre otras aplicaciones» en los ajustes de Android, pero entonces un toque en una zona desenfocada no hace nada.';
+      'Para desenfocar, Waaiya tiene que mostrarse sobre otras aplicaciones. Lo mejor: haga la configuración única, para que sus toques sigan llegando a la aplicación que está debajo del desenfoque. O permita «Mostrar sobre otras aplicaciones» en los ajustes de Android, pero entonces un toque en una zona desenfocada no hace nada.';
 
   @override
   String get blurFailUnavailable =>
-      'No disponible por ahora: una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado. Inicie el ayudante de Waaiya o Shizuku (Android 12 o posterior) y esta opción se habilita: así las cubiertas se dibujan de forma que los toques las atraviesan. Hasta entonces, cuando el desenfoque no da abasto, la pantalla sigue visible con un aviso.';
+      'No disponible por ahora: una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado. Inicie el ayudante de Waaiya (Android 12 o posterior) y esta opción se habilita: así las cubiertas se dibujan de forma que los toques las atraviesan. Hasta entonces, cuando el desenfoque no da abasto, la pantalla sigue visible con un aviso.';
 
   @override
   String get blurFailNeedsA11y =>
-      'No disponible por ahora: una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado. Inicie Shizuku (Android 12 o posterior) o active el servicio de accesibilidad Desenfoque Waaiya (Permitir con Shizuku, arriba) y esta opción se habilita. Hasta entonces, la pantalla sigue visible con un aviso.';
+      'No disponible por ahora: una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado. Inicie el ayudante de Waaiya (Android 12 o posterior) o active el servicio de accesibilidad Desenfoque Waaiya en los ajustes de Android y esta opción se habilita. Hasta entonces, la pantalla sigue visible con un aviso.';
 
   @override
   String get languageTitle => 'Idioma';
@@ -483,16 +499,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku no pudo permitirlo:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Cómo iniciar Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'No disponible: en esta versión de Android una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado (las cubiertas de Shizuku necesitan Android 12 o posterior). Cuando el desenfoque no da abasto, la pantalla sigue visible con un aviso.';
+      'No disponible: en esta versión de Android una cubierta de pantalla completa bloquearía todos los toques y podría quedarse atascado (las cubiertas que dejan pasar los toques necesitan Android 12 o posterior). Cuando el desenfoque no da abasto, la pantalla sigue visible con un aviso.';
 
   @override
   String get guideTitle => 'Iniciar Shizuku, paso a paso';

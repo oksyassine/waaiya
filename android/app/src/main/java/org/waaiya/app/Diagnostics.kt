@@ -130,7 +130,7 @@ object Diagnostics {
         appendLine()
 
         appendLine("[Screen blur]")
-        appendLine("Women ${yes(s.blurWomen)}, immodest images ${yes(s.blurNudity)}, strictness ${s.blurStrictness}, " +
+        appendLine("On ${yes(s.blurEnabled)}, women ${yes(s.blurWomen)}, immodest images ${yes(s.blurNudity)}, strictness ${s.blurStrictness}, " +
             "cover when failing ${yes(s.blurFailCover)}")
         appendLine("State: ${ScreenBlur.state ?: "off"}, draw over apps ${yes(android.provider.Settings.canDrawOverlays(ctx))}, " +
             "accessibility build ${yes(BuildConfig.BLUR_A11Y)}")

@@ -397,6 +397,25 @@ class AppLocalizationsDe extends AppLocalizations {
       'Verdeckt Menschen und Bilder auf dem Bildschirm, in jeder App, solange der Filter an ist. Das läuft auf dem Telefon; nichts wird irgendwohin gesendet.';
 
   @override
+  String get blurOnTitle => 'Die Unschärfe ist an';
+
+  @override
+  String get blurOffTitle => 'Die Unschärfe ist aus';
+
+  @override
+  String get blurStartCd => 'Unschärfe starten';
+
+  @override
+  String get blurStopCd => 'Unschärfe beenden';
+
+  @override
+  String get blurOffDetail =>
+      'Tippen Sie auf die Taste, um zu starten. Das Filtern startet mit.';
+
+  @override
+  String get blurWhatTitle => 'Was unscharf wird';
+
+  @override
   String get blurWomenTitle => 'Frauen unscharf machen';
 
   @override
@@ -419,26 +438,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'An: Der ganze Bildschirm wird verdeckt, wenn das Telefon zu langsam ist oder die Unschärfe ausfällt. Aus: Der Bildschirm bleibt mit einer Warnung sichtbar.';
 
   @override
-  String get blurSetupShizuku => 'Mit Shizuku erlauben';
-
-  @override
   String get blurSetupManual => 'In den Android-Einstellungen erlauben';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: „Mit Shizuku erlauben“, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder „In den Android-Einstellungen erlauben“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
+      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: „Zur Einrichtung“, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder „In den Android-Einstellungen erlauben“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: Starten Sie Shizuku und erlauben Sie dort Waaiya, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
+      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: Erledigen Sie die einmalige Einrichtung, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
 
   @override
   String get blurFailUnavailable =>
-      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer oder Shizuku (Android 12 oder neuer), dann wird diese Option verfügbar: Die Abdeckungen werden dann so gezeichnet, dass Berührungen hindurchgehen. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar, wenn die Unschärfe nicht mithält.';
+      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer (Android 12 oder neuer), dann wird diese Option verfügbar: Die Abdeckungen werden dann so gezeichnet, dass Berührungen hindurchgehen. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar, wenn die Unschärfe nicht mithält.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie Shizuku (Android 12 oder neuer) oder schalten Sie die Bedienungshilfe „Waaiya-Unschärfe“ ein (oben „Mit Shizuku erlauben“), dann wird diese Option verfügbar. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar.';
+      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer (Android 12 oder neuer) oder schalten Sie in den Android-Einstellungen die Bedienungshilfe „Waaiya-Unschärfe“ ein, dann wird diese Option verfügbar. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar.';
 
   @override
   String get languageTitle => 'Sprache';
@@ -485,16 +501,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku konnte es nicht erlauben:\n$details';
-  }
-
-  @override
   String get step2Guide => 'So starten Sie Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Ausgegraut: Auf dieser Android-Version würde eine Abdeckung über den ganzen Bildschirm jedes Tippen blockieren und Sie könnten feststecken (Abdeckungen mit Shizuku erfordern Android 12 oder neuer). Wenn die Unschärfe nicht mithält, bleibt der Bildschirm mit einer Warnung sichtbar.';
+      'Ausgegraut: Auf dieser Android-Version würde eine Abdeckung über den ganzen Bildschirm jedes Tippen blockieren und Sie könnten feststecken (Abdeckungen, durch die Berührungen hindurchgehen, erfordern Android 12 oder neuer). Wenn die Unschärfe nicht mithält, bleibt der Bildschirm mit einer Warnung sichtbar.';
 
   @override
   String get guideTitle => 'Shizuku Schritt für Schritt starten';

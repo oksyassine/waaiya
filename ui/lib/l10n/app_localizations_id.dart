@@ -394,6 +394,25 @@ class AppLocalizationsId extends AppLocalizations {
       'Menutupi orang dan gambar di layar, di semua aplikasi, selama filter aktif. Berjalan di ponsel; tidak ada yang dikirim ke mana pun.';
 
   @override
+  String get blurOnTitle => 'Buram aktif';
+
+  @override
+  String get blurOffTitle => 'Buram nonaktif';
+
+  @override
+  String get blurStartCd => 'Mulai buram';
+
+  @override
+  String get blurStopCd => 'Hentikan buram';
+
+  @override
+  String get blurOffDetail =>
+      'Ketuk tombol untuk memulai. Penyaringan ikut dimulai.';
+
+  @override
+  String get blurWhatTitle => 'Yang diburamkan';
+
+  @override
   String get blurWomenTitle => 'Buramkan perempuan';
 
   @override
@@ -415,26 +434,23 @@ class AppLocalizationsId extends AppLocalizations {
       'Aktif: seluruh layar ditutup saat ponsel terlalu lambat atau buram gagal. Nonaktif: layar tetap terlihat dengan peringatan.';
 
   @override
-  String get blurSetupShizuku => 'Izinkan dengan Shizuku';
-
-  @override
   String get blurSetupManual => 'Izinkan di setelan Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: “Izinkan dengan Shizuku”, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau “Izinkan di setelan Android”, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
+      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: “Ke penyiapan”, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau “Izinkan di setelan Android”, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: jalankan Shizuku dan izinkan Waaiya di dalamnya, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau izinkan “Tampilkan di atas aplikasi lain” di setelan Android, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
+      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: lakukan penyiapan satu kali, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau izinkan “Tampilkan di atas aplikasi lain” di setelan Android, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
 
   @override
   String get blurFailUnavailable =>
-      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan asisten Waaiya atau Shizuku (Android 12 atau yang lebih baru) dan opsi ini aktif: penutup lalu digambar sehingga ketukan bisa menembusnya. Sampai saat itu, jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
+      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan asisten Waaiya (Android 12 atau yang lebih baru) dan opsi ini aktif: penutup lalu digambar sehingga ketukan bisa menembusnya. Sampai saat itu, jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan Shizuku (Android 12 atau yang lebih baru) atau aktifkan layanan aksesibilitas Waaiya Blur (Izinkan dengan Shizuku di atas) dan opsi ini aktif. Sampai saat itu, layar tetap terlihat dengan peringatan.';
+      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan asisten Waaiya (Android 12 atau yang lebih baru) atau aktifkan layanan aksesibilitas Waaiya Blur di setelan Android dan opsi ini aktif. Sampai saat itu, layar tetap terlihat dengan peringatan.';
 
   @override
   String get languageTitle => 'Bahasa';
@@ -481,16 +497,11 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku tidak bisa mengizinkannya:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Cara menjalankan Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Tidak tersedia: di versi Android ini, penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak (penutup Shizuku memerlukan Android 12 atau yang lebih baru). Jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
+      'Tidak tersedia: di versi Android ini, penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak (penutup yang bisa ditembus ketukan memerlukan Android 12 atau yang lebih baru). Jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
 
   @override
   String get guideTitle => 'Jalankan Shizuku, langkah demi langkah';

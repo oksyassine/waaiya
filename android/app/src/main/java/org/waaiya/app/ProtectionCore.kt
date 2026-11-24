@@ -35,7 +35,7 @@ object ProtectionRules {
     const val LOCK_MS = 30_000L
     const val ITERATIONS = 120_000
 
-    private val ON_TO_OFF = setOf("blur_women", "blur_nudity", "blur_fail_cover", "silence_unfilterable", "hold_silence",
+    private val ON_TO_OFF = setOf("blur_on", "blur_women", "blur_nudity", "blur_fail_cover", "silence_unfilterable", "hold_silence",
         "mute_women_singing")
     private val APPS = setOf("filter_off_apps", "blur_off_apps")
 

@@ -396,6 +396,25 @@ class AppLocalizationsSw extends AppLocalizations {
       'Hufunika watu na picha kwenye skrini, katika kila programu, wakati uchujaji umewashwa. Hufanya kazi ndani ya simu; hakuna kinachotumwa popote.';
 
   @override
+  String get blurOnTitle => 'Ufifishaji umewashwa';
+
+  @override
+  String get blurOffTitle => 'Ufifishaji umezimwa';
+
+  @override
+  String get blurStartCd => 'Washa ufifishaji';
+
+  @override
+  String get blurStopCd => 'Zima ufifishaji';
+
+  @override
+  String get blurOffDetail =>
+      'Gusa kitufe ili kuanza. Uchujaji huanza pamoja nao.';
+
+  @override
+  String get blurWhatTitle => 'Kinachofifishwa';
+
+  @override
   String get blurWomenTitle => 'Fifisha wanawake';
 
   @override
@@ -418,26 +437,23 @@ class AppLocalizationsSw extends AppLocalizations {
       'Imewashwa: skrini nzima hufunikwa simu ikiwa ya polepole mno au ufifishaji ukishindwa. Imezimwa: skrini hubaki ikionekana pamoja na onyo.';
 
   @override
-  String get blurSetupShizuku => 'Ruhusu kwa Shizuku';
-
-  @override
   String get blurSetupManual => 'Ruhusu katika mipangilio ya Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: “Ruhusu kwa Shizuku”, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au “Ruhusu katika mipangilio ya Android”, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
+      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: “Nenda kwenye usanidi”, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au “Ruhusu katika mipangilio ya Android”, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: washa Shizuku na uiruhusu Waaiya ndani yake, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
+      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: fanya usanidi wa mara moja, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
 
   @override
   String get blurFailUnavailable =>
-      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa msaidizi wa Waaiya au Shizuku (Android 12 au mpya zaidi) na chaguo hili litawaka: vifuniko kisha huchorwa ili miguso ipite ndani yake. Hadi hapo, ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
+      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa msaidizi wa Waaiya (Android 12 au mpya zaidi) na chaguo hili litawaka: vifuniko kisha huchorwa ili miguso ipite ndani yake. Hadi hapo, ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa Shizuku (Android 12 au mpya zaidi) au washa huduma ya ufikivu ya Ufifishaji wa Waaiya (Ruhusu kwa Shizuku, hapo juu) na chaguo hili litawaka. Hadi hapo, skrini hubaki ikionekana pamoja na onyo.';
+      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa msaidizi wa Waaiya (Android 12 au mpya zaidi) au washa huduma ya ufikivu ya Ufifishaji wa Waaiya katika mipangilio ya Android na chaguo hili litawaka. Hadi hapo, skrini hubaki ikionekana pamoja na onyo.';
 
   @override
   String get languageTitle => 'Lugha';
@@ -485,16 +501,11 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku haikuweza kuuruhusu:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Jinsi ya kuwasha Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Halipatikani: kwenye toleo hili la Android kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama (vifuniko vya Shizuku vinahitaji Android 12 au mpya zaidi). Ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
+      'Halipatikani: kwenye toleo hili la Android kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama (vifuniko ambavyo miguso hupita ndani yake vinahitaji Android 12 au mpya zaidi). Ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
 
   @override
   String get guideTitle => 'Washa Shizuku, hatua kwa hatua';

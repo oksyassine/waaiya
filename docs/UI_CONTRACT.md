@@ -71,12 +71,10 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `blur.a11yBuild` | bool | This build declares the blur accessibility service (`BuildConfig.BLUR_A11Y`) |
 | `blur.a11yEnabled` | bool | That service is on |
 | `blur.touchPassThrough` | bool | Touches reach the app under a cover (so a full-screen fail cover is safe) |
-| `blur.layerSupported` | bool | The Shizuku cover layer is possible on this device (Android 12+) |
-| `blur.shizukuLayer` | bool | Android 12+ and a shell process draws the covers as a pass-through layer: Waaiya's own helper (`CoverHelper`) or Shizuku (name kept from 0.2.x). Nothing else to allow |
+| `blur.layerSupported` | bool | The shell cover layer is possible on this device (Android 12+), once the setup started Waaiya's helper |
+| `blur.shellLayer` | bool | Android 12+ and Waaiya's own helper (`CoverHelper`) draws the covers as a pass-through layer. Nothing else to allow |
 | `blur.helperRunning` | bool | Waaiya's own cover helper runs for this app version (`CoverHelper.available`) |
 | `blur.helperStartable` | bool | The helper can be started from the Screen page: Android 12+ with the on-phone setup (it is started by the same Wireless debugging run, `wirelessStart`, when a blur option is on) |
-| `blur.busy` | bool | A Shizuku blur grant is running |
-| `blur.message` | Map? | `{code: "setup_failed", detail}` |
 | `blur.uncovered` | int | Desktop: monitors the blur does not cover (Wayland: not shared in the screen-sharing dialog, or plugged in later); the card says so in the error colour. 0 otherwise |
 | `blur.error` | Map? | Desktop: `{code, detail}` from the blur helper. `no_capture`, `no_overlay`, `models_missing`, `failing` (detail = the helper's reason, English, shown under the translated status), `share_dialog` (Wayland: the screen-sharing dialog waits for the user; no detail), `exited` (the helper stopped by itself; detail = exit code and its last lines). Null otherwise |
 | `models.detector` | bool | The women's-singing detector is bundled |
@@ -109,6 +107,7 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `gender` | String `""`/`man`/`woman` | `""` (not asked yet: show onboarding) | live |
 | `mute_women_singing` | bool | false | live |
 | `silence_unfilterable` | bool | true | live |
+| `blur_on` | bool | true | live; the Screen page's power button. The blur runs when this is on and `blur_women` or `blur_nudity` is (Android: while filtering is on). Off keeps those two |
 | `blur_women` | bool | false | live |
 | `blur_nudity` | bool | false | live |
 | `blur_fail_cover` | bool | true | live; ignored unless `blur.touchPassThrough` (desktop: always true, clicks pass through the covers) |
@@ -127,7 +126,6 @@ and blur re-read the settings every 0.5 s (FilterService loop, ScreenBlur watchd
 | `startFilter` | none | `started`, `mic_denied`, `consent_denied`, `already_running`, `failed` (see `filter.error`) | Asks RECORD_AUDIO (+ POST_NOTIFICATIONS once), then the MediaProjection consent (whole screen on 14+), then starts `FilterService`. The result arrives when the dialogs are done; the state then follows through events. | Linux: checks (`pactl`, sound server, `systemd --user`, a real output), installs or updates the bundled engine (`engine/VERSION`), sets `women-singing`, then `waaiya start`. Windows: TODO(engine), simulated |
 | `stopFilter` | none | null | `FilterService.ACTION_STOP` | Linux: `waaiya stop` (normal audio back, virtual output removed). Windows: TODO(engine) |
 | `runSetupStep` | `{step: 0,1,2}` | null | The checklist button: 0 = get Shizuku (store), 1 = update (TOO_OLD) or open Shizuku, 2 = grant through Shizuku (asks Shizuku's permission first if needed). Outcome in `setup.*` events. When Shizuku is installed but not running, Flutter shows the start guide for step 1 instead of calling this. | `unsupported` |
-| `blurSetup` | none | null | "Allow with Shizuku" and the button under the greyed-out "cover the screen" switch: `ShizukuSetup.grantBlur`, or the store / Shizuku's permission dialog / Shizuku first. Outcome in `blur.*` events. For NOT_RUNNING Flutter shows the guide instead. | `unsupported` |
 | `openShizuku` | none | null | Opens Shizuku (its store page when not installed). From the guide. | `unsupported` |
 | `setAutostart` | `{on}` | null | `unsupported` | Linux: `systemctl --user enable\|disable islamic-mute.service` (installs first; does not start or stop the filter now) |
 | `openDeveloperOptions` | none | null | `ACTION_APPLICATION_DEVELOPMENT_SETTINGS` when Developer options are on, else `ACTION_DEVICE_INFO_SETTINGS` (About phone, to turn them on). From the guide. | `unsupported` |
@@ -166,8 +164,8 @@ the setup card, "Start anyway" starts); a "Problem? Diagnostics report" button a
 `diagnosticsReport` with Copy (nothing is sent).
 
 Reading: there is no per-key getter. Every setting and the language are in the snapshot (`getState`, and every
-event), which is the getter; `setSetting` and `setLanguage` are the setters. The Shizuku start guide (wireless debugging, `guide_*` texts) is a Flutter dialog, shown from setup step 2 and from
-the blur card's Shizuku button while Shizuku is installed but not running. Clipboard (the adb commands) uses
+event), which is the getter; `setSetting` and `setLanguage` are the setters. The Shizuku start guide (wireless debugging, `guide_*` texts) is a Flutter dialog, shown from setup step 2 while
+Shizuku is installed but not running. Clipboard (the adb commands) uses
 Flutter's own `Clipboard`; it needs no backend method.
 
 ## Where the desktop backend differs
@@ -190,7 +188,7 @@ Flutter's own `Clipboard`; it needs no backend method.
   screen says so (`TODO(engine)`: load the engine library with `dart:ffi` (`im_engine.h`), or talk to a host
   service). A development run without the bundled engine is simulated too.
 - Linux screen blur: `desktop/lib/linux_blur.dart` runs the bundled helper `engine/build/im-blur` (C,
-  `linux/blur/`, models in `engine/models/vision/`) as a child of the app while `blur_women` or `blur_nudity` is
+  `linux/blur/`, models in `engine/models/vision/`) as a child of the app while `blur_on` and `blur_women` or `blur_nudity` are
   on, whether filtering runs or not (capability `blurStandalone`). Being a child, it gets the session as it is
   (`DISPLAY`, `WAYLAND_DISPLAY`, `DBUS_SESSION_BUS_ADDRESS`, `XDG_RUNTIME_DIR`, `XAUTHORITY`); a systemd user unit
   would only have them if the desktop imported them. Closing the app stops the blur (the card says so). Protocol:

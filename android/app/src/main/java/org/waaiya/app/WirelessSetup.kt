@@ -111,7 +111,7 @@ object WirelessSetup {
     /** Start the helper during the setup: Android 12+ and a screen-blur option on (covers), or helper mode. */
     fun helperWanted(ctx: Context): Boolean {
         val s = Settings(ctx)
-        return (Build.VERSION.SDK_INT >= 31 && (s.blurWomen || s.blurNudity)) || HelperDumps.helperMode(ctx)
+        return (Build.VERSION.SDK_INT >= 31 && s.blurOn) || HelperDumps.helperMode(ctx)
     }
 
     fun start(ctx: Context) {

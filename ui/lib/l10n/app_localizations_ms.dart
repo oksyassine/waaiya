@@ -395,6 +395,25 @@ class AppLocalizationsMs extends AppLocalizations {
       'Menutup orang dan imej pada skrin, dalam setiap apl, semasa penapisan dihidupkan. Ia berjalan pada telefon; tiada apa-apa dihantar ke mana-mana.';
 
   @override
+  String get blurOnTitle => 'Pengaburan dihidupkan';
+
+  @override
+  String get blurOffTitle => 'Pengaburan dimatikan';
+
+  @override
+  String get blurStartCd => 'Mulakan pengaburan';
+
+  @override
+  String get blurStopCd => 'Hentikan pengaburan';
+
+  @override
+  String get blurOffDetail =>
+      'Ketik butang untuk bermula. Penapisan bermula bersamanya.';
+
+  @override
+  String get blurWhatTitle => 'Apa yang dikaburkan';
+
+  @override
   String get blurWomenTitle => 'Kaburkan wanita';
 
   @override
@@ -416,26 +435,23 @@ class AppLocalizationsMs extends AppLocalizations {
       'Hidup: seluruh skrin ditutup apabila telefon terlalu perlahan atau pengaburan gagal. Mati: skrin kekal kelihatan dengan amaran.';
 
   @override
-  String get blurSetupShizuku => 'Benarkan dengan Shizuku';
-
-  @override
   String get blurSetupManual => 'Benarkan dalam tetapan Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: “Benarkan dengan Shizuku”, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau “Benarkan dalam tetapan Android”, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
+      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: “Pergi ke persediaan”, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau “Benarkan dalam tetapan Android”, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: mulakan Shizuku dan benarkan Waaiya di dalamnya, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau benarkan “Paparkan di atas apl lain” dalam tetapan Android, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
+      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: lakukan persediaan sekali sahaja, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau benarkan “Paparkan di atas apl lain” dalam tetapan Android, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
 
   @override
   String get blurFailUnavailable =>
-      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan pembantu Waaiya atau Shizuku (Android 12 atau lebih baharu) dan ia akan dihidupkan: penutup kemudian dilukis supaya ketikan dapat melaluinya. Sehingga itu, apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
+      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan pembantu Waaiya (Android 12 atau lebih baharu) dan ia akan dihidupkan: penutup kemudian dilukis supaya ketikan dapat melaluinya. Sehingga itu, apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan Shizuku (Android 12 atau lebih baharu) atau hidupkan perkhidmatan kebolehaksesan Pengaburan Waaiya (Benarkan dengan Shizuku di atas) dan ia akan dihidupkan. Sehingga itu, skrin kekal kelihatan dengan amaran.';
+      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan pembantu Waaiya (Android 12 atau lebih baharu) atau hidupkan perkhidmatan kebolehaksesan Pengaburan Waaiya dalam tetapan Android dan ia akan dihidupkan. Sehingga itu, skrin kekal kelihatan dengan amaran.';
 
   @override
   String get languageTitle => 'Bahasa';
@@ -482,16 +498,11 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku tidak dapat membenarkannya:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Cara memulakan Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Dikelabukan: pada versi Android ini, penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat (penutup Shizuku memerlukan Android 12 atau lebih baharu). Apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
+      'Dikelabukan: pada versi Android ini, penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat (penutup yang boleh dilalui ketikan memerlukan Android 12 atau lebih baharu). Apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
 
   @override
   String get guideTitle => 'Mulakan Shizuku, langkah demi langkah';

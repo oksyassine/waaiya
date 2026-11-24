@@ -20,7 +20,7 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
 /**
  * The screen-blur covers, drawn over every app.
  *
- * Best host (Android 12+, Shizuku running): [ShizukuCovers], a layer owned by the shell, which touches pass through
+ * Best host (Android 12+, Waaiya's helper running): [ShellCovers], a layer owned by the shell, which touches pass through
  * and which is left out of the screen capture, with no accessibility service and no overlay permission.
  *
  * Otherwise windows: an accessibility overlay when [BlurAccessibilityService] runs (one, full screen; Android lets
@@ -37,54 +37,54 @@ import org.lsposed.hiddenapibypass.HiddenApiBypass
  * All calls on the main thread.
  */
 class BlurOverlay(private val context: Context) {
-    enum class Host { SHIZUKU, ACCESSIBILITY, APP_OVERLAY }
+    enum class Host { SHELL, ACCESSIBILITY, APP_OVERLAY }
 
     private var wm: WindowManager? = null
     /** One window, its layout and whether the skip-screenshot flag is on its current surface. */
     private class Win(val v: CoverView, val p: WindowManager.LayoutParams) { var skip = false }
     private val wins = ArrayList<Win>()
-    /** The host that is drawing now; null while nothing draws, including while the Shizuku layer is still being
+    /** The host that is drawing now; null while nothing draws, including while the shell layer is still being
      *  set up and checked (up to 8 s): the blur must not say "on" before covers can appear. Read by ScreenBlur's
      *  worker thread too. */
     @Volatile var host: Host? = null
         private set
     /** True once the skip-screenshot flag was applied without error on every window (the self-test still decides).
-     *  Shizuku layer: true once its start() and probe cover worked. */
+     *  Shell layer: true once its start() and probe cover worked. */
     val skipApplied: Boolean
         get() = when (host) {
             null -> false
-            Host.SHIZUKU -> true
+            Host.SHELL -> true
             else -> wins.isNotEmpty() && wins.all { it.skip }
         }
 
-    private var layer: ShizukuCovers? = null
-    /** A shell layer being connected while app-overlay windows still draw (Waaiya's helper or Shizuku became
+    private var layer: ShellCovers? = null
+    /** A shell layer being connected while app-overlay windows still draw (Waaiya's helper became
      *  available after the blur started, e.g. the helper hands its binder a few seconds after the app starts). */
-    private var upgrading: ShizukuCovers? = null
-    /** After the Shizuku layer failed, windows are used for a while instead of retrying every watchdog tick. */
+    private var upgrading: ShellCovers? = null
+    /** After the shell layer failed, windows are used for a while instead of retrying every watchdog tick. */
     private var layerFailedAt = -1_000_000L
 
     /** For the diagnostics report: the host, with who runs the shell layer. */
-    val hostName: String? get() = host?.let { if (it == Host.SHIZUKU) "shell layer (${layer?.via})" else it.name }
+    val hostName: String? get() = host?.let { if (it == Host.SHELL) "shell layer (${layer?.via})" else it.name }
 
-    /** The Shizuku layer is being bound and probed: nothing draws yet, and attach() must not start another. */
+    /** The shell layer is being started and probed: nothing draws yet, and attach() must not start another. */
     val connecting: Boolean get() = layer != null && host == null
 
-    /** Picks the host: the Shizuku layer when possible (decided asynchronously, falling back to windows), else
-     *  windows. Returns false when nothing can draw (no Shizuku, no accessibility service, no overlay permission). */
+    /** Picks the host: the shell layer when possible (decided asynchronously, falling back to windows), else
+     *  windows. Returns false when nothing can draw (no helper, no accessibility service, no overlay permission). */
     fun attach(): Boolean {
         if (wins.isNotEmpty() || layer != null) return true
         if (context.blurShellLayerAvailable() &&
             android.os.SystemClock.uptimeMillis() - layerFailedAt > 30_000) {
-            val l = ShizukuCovers(context)
+            val l = ShellCovers(context)
             layer = l
             l.connect { ok ->
                 if (layer !== l) return@connect                 // detached meanwhile
                 if (ok) {
-                    host = Host.SHIZUKU
+                    host = Host.SHELL
                     show(lastRects, lastCount, lastThumb, lastFail, lastTest)
                 } else {
-                    Log.w(TAG, "blur: Shizuku layer unavailable, using a window")
+                    Log.w(TAG, "blur: shell layer unavailable, using a window")
                     layerFailedAt = android.os.SystemClock.uptimeMillis()
                     layer = null
                     attachWindow()
@@ -166,8 +166,8 @@ class BlurOverlay(private val context: Context) {
     private var lastFail = 0
     private var lastTest = false
 
-    /** Called twice a second: keeps the Shizuku layer's covers alive (it hides them when the app goes quiet), asks
-     *  it whether they were drawn, and replaces a host that stopped working: a dead or failing Shizuku layer by
+    /** Called twice a second: keeps the shell layer's covers alive (it hides them when the app goes quiet), asks
+     *  it whether they were drawn, and replaces a host that stopped working: a dead or failing shell layer by
      *  windows, a switched-off accessibility service by an app overlay (or nothing, which ScreenBlur reports).
      *  ScreenBlur sees the host change and runs its "are covers in the capture" self-test again. */
     fun heartbeat() {
@@ -179,9 +179,9 @@ class BlurOverlay(private val context: Context) {
         }
         if (host == Host.APP_OVERLAY) upgrade()
         // FixMistakes: a reading that went stale (or a decision that changed between frames) is drawn now
-        if (FixMistakes.blurPaused() != drawnPaused && host != Host.SHIZUKU) refresh()
+        if (FixMistakes.blurPaused() != drawnPaused && host != Host.SHELL) refresh()
         val l = layer ?: return
-        if (host != Host.SHIZUKU) return               // still connecting
+        if (host != Host.SHELL) return               // still connecting
         if (!l.alive || l.failed) {
             Log.w(TAG, "blur: shell layer (${l.via}) ${if (l.failed) "cannot draw" else "died"}, using a window")
             layerFailedAt = android.os.SystemClock.uptimeMillis()
@@ -202,7 +202,7 @@ class BlurOverlay(private val context: Context) {
         if (layer != null || upgrading != null || !context.blurShellLayerAvailable() ||
             android.os.SystemClock.uptimeMillis() - layerFailedAt <= 30_000) return
         Log.i(TAG, "blur: a shell layer is available now, moving the covers to it")
-        val l = ShizukuCovers(context)
+        val l = ShellCovers(context)
         upgrading = l
         l.connect { ok ->
             if (upgrading !== l) return@connect           // detached meanwhile
@@ -213,7 +213,7 @@ class BlurOverlay(private val context: Context) {
                 return@connect
             }
             layer = l
-            host = Host.SHIZUKU
+            host = Host.SHELL
             show(lastRects, lastCount, lastThumb, lastFail, lastTest)
             wins.forEach { runCatching { wm?.removeViewImmediate(it.v) } }
             wins.clear()
@@ -263,7 +263,7 @@ class BlurOverlay(private val context: Context) {
 
     private fun draw(rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int, testSquare: Boolean) {
         val scr = screen()
-        if (host == Host.SHIZUKU) { layer?.let { showOnLayer(it, rects, count, thumb, failMode, testSquare, scr) }; return }
+        if (host == Host.SHELL) { layer?.let { showOnLayer(it, rects, count, thumb, failMode, testSquare, scr) }; return }
         if (wins.isEmpty()) return
         if (host != Host.APP_OVERLAY) {
             wins[0].v.set(rects, count, thumb, failMode, testSquare, scr)
@@ -307,20 +307,20 @@ class BlurOverlay(private val context: Context) {
     private var layerBuf = FloatArray(0)
 
     /** Covers as solid shell layers, each tinted with the mean colour of what it hides (from the thumbnail). */
-    private fun showOnLayer(l: ShizukuCovers, rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int,
+    private fun showOnLayer(l: ShellCovers, rects: FloatArray, count: Int, thumb: Bitmap?, failMode: Int,
                             testSquare: Boolean, scr: Rect) {
         val n = count + 2
-        if (layerBuf.size < n * ShizukuCovers.RECORD) layerBuf = FloatArray(n * ShizukuCovers.RECORD)
+        if (layerBuf.size < n * ShellCovers.RECORD) layerBuf = FloatArray(n * ShellCovers.RECORD)
         val b = layerBuf
         var k = 0
         fun put(x0: Float, y0: Float, x1: Float, y1: Float, kind: Int, rgb: Int) {
-            val o = k++ * ShizukuCovers.RECORD
+            val o = k++ * ShellCovers.RECORD
             b[o] = x0; b[o + 1] = y0; b[o + 2] = x1; b[o + 3] = y1; b[o + 4] = kind.toFloat()
             b[o + 5] = Color.red(rgb) / 255f; b[o + 6] = Color.green(rgb) / 255f; b[o + 7] = Color.blue(rgb) / 255f
         }
         val w = scr.width().toFloat(); val h = scr.height().toFloat()
         val fallback = context.getColor(R.color.surface)
-        if (failMode == 1) put(0f, 0f, w, h, ShizukuCovers.KIND_FAIL_COVER, fallback)
+        if (failMode == 1) put(0f, 0f, w, h, ShellCovers.KIND_FAIL_COVER, fallback)
         else for (i in 0 until count) {
             val x0 = rects[i * 5]; val y0 = rects[i * 5 + 1]; val x1 = rects[i * 5 + 2]; val y1 = rects[i * 5 + 3]
             val kind = rects[i * 5 + 4].toInt()
@@ -330,11 +330,11 @@ class BlurOverlay(private val context: Context) {
         }
         if (failMode == 2) {
             val d = context.resources.displayMetrics.density
-            put(0f, 0f, w, 6 * d, ShizukuCovers.KIND_BADGE, Color.RED) // thin red bar at the top: blur not working
+            put(0f, 0f, w, 6 * d, ShellCovers.KIND_BADGE, Color.RED) // thin red bar at the top: blur not working
         }
         if (testSquare) {
             val s = BlurOverlay.TEST_SQUARE_DP * context.resources.displayMetrics.density
-            put(0f, h / 2, s, h / 2 + s, ShizukuCovers.KIND_TEST, Color.MAGENTA)
+            put(0f, h / 2, s, h / 2 + s, ShellCovers.KIND_TEST, Color.MAGENTA)
         }
         l.update(b, k)
     }
@@ -553,14 +553,11 @@ class BlurAccessibilityService : AccessibilityService() {
  */
 fun Context.blurTouchPassThrough(): Boolean = blurShellLayerAvailable() || (BuildConfig.BLUR_A11Y && blurAccessibilityEnabled())
 
-/**
- * Android 12+ and a shell process to draw the covers as a pass-through layer: Waaiya's own helper ([CoverHelper]) or
- * Shizuku.
- */
-fun Context.blurShellLayerAvailable(): Boolean = Build.VERSION.SDK_INT >= 31 &&
-    (CoverHelper.available || ShizukuSetup.state(this) == ShizukuSetup.State.READY)
+/** Android 12+ and Waaiya's own helper ([CoverHelper]) running, to draw the covers as a pass-through layer. */
+@Suppress("UnusedReceiverParameter")
+fun Context.blurShellLayerAvailable(): Boolean = Build.VERSION.SDK_INT >= 31 && CoverHelper.available
 
-/** True when the user (or Shizuku) turned on [BlurAccessibilityService]. */
+/** True when the user turned on [BlurAccessibilityService]. */
 fun Context.blurAccessibilityEnabled(): Boolean {
     val me = android.content.ComponentName(this, BlurAccessibilityService::class.java)
     val list = android.provider.Settings.Secure.getString(contentResolver,

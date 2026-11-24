@@ -1,7 +1,7 @@
 package org.waaiya.app
 
 /**
- * App-overlay host of the screen blur (no Shizuku, no accessibility service): which windows to draw the covers in.
+ * App-overlay host of the screen blur (no shell layer, no accessibility service): which windows to draw the covers in.
  *
  * App-overlay covers must take the touches that land on them to stay opaque (BlurOverlay), and a window takes them
  * everywhere inside its bounds, transparent parts included. One window spanning all covers would therefore make the

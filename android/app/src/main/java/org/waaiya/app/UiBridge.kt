@@ -36,10 +36,6 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
 
     private var shizukuBusy = false
     private var shizukuMessage: Pair<String, String>? = null
-    private var blurBusy = false
-    private var blurMessage: Pair<String, String>? = null
-    /** Shizuku's permission dialog was opened from the blur card: grant the blur (not the setup) when it returns. */
-    private var blurAfterPermission = false
     /** startFilter is waiting for the permission or capture-consent dialogs. */
     private var pendingStart: MethodChannel.Result? = null
     /** Notifications are asked at most once per screen: a refusal must not block or loop Start. */
@@ -55,9 +51,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     private val shizukuPermission = Shizuku.OnRequestPermissionResultListener { code, result ->
         if (code != ShizukuSetup.REQUEST_CODE) return@OnRequestPermissionResultListener
         activity.runOnUiThread {
-            if (result == PackageManager.PERMISSION_GRANTED) { if (blurAfterPermission) grantBlur() else grantWithShizuku() }
+            if (result == PackageManager.PERMISSION_GRANTED) grantWithShizuku()
             else { shizukuMessage = "refused" to ""; refresh() }
-            blurAfterPermission = false
         }
     }
 
@@ -86,8 +81,6 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
     /** A Shizuku grant ended, perhaps after the screen stopped waiting: show the real state. */
     private val shizukuGrantEnded: () -> Unit = {
         if (activity.hasDumpPermission() && !shizukuBusy) shizukuMessage = null
-        if (!blurBusy && (activity.blurAccessibilityEnabled() || android.provider.Settings.canDrawOverlays(activity)))
-            blurMessage = null
         refresh()
     }
 
@@ -212,7 +205,6 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     result.success(null)
                 }
                 "runSetupStep" -> { runSetupStep(call.argument<Int>("step") ?: throw BadArgs("step")); result.success(null) }
-                "blurSetup" -> { blurSetup(); result.success(null) }
                 "openShizuku" -> { openShizuku(); result.success(null) }
                 // --- setup on the phone itself (Wireless debugging), as MainActivity.startWireless / askPairingCode
                 "wirelessStart" -> result.success(wirelessStart(askedNotifications = false))
@@ -297,6 +289,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "gender" to settings.gender,
             "mute_women_singing" to settings.muteWomenSinging,
             "silence_unfilterable" to settings.silenceUnfilterable,
+            "blur_on" to settings.blurEnabled,
             "blur_women" to settings.blurWomen,
             "blur_nudity" to settings.blurNudity,
             "blur_fail_cover" to settings.blurFailCover,
@@ -374,15 +367,12 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "a11yBuild" to BuildConfig.BLUR_A11Y,
             "a11yEnabled" to activity.blurAccessibilityEnabled(),
             "touchPassThrough" to activity.blurTouchPassThrough(),
-            // Shizuku running (Android 12+): the covers are a shell layer (ShizukuCovers), nothing else to allow
-            // a shell process draws the covers (touches pass through): Waaiya's helper or Shizuku (name kept)
-            "shizukuLayer" to activity.blurShellLayerAvailable(),
+            // Waaiya's helper runs (Android 12+): the covers are a shell layer (ShellCovers), touches pass through
+            "shellLayer" to activity.blurShellLayerAvailable(),
             // Waaiya's own cover helper (CoverHelper): running, or startable through the on-phone setup (12+)
             "helperRunning" to CoverHelper.available,
             "helperStartable" to (Build.VERSION.SDK_INT >= 31 && WirelessSetup.supported),
             "layerSupported" to (Build.VERSION.SDK_INT >= 31),  // Shizuku covers need Android 12+
-            "busy" to blurBusy,
-            "message" to blurMessage?.let { (code, detail) -> mapOf("code" to code, "detail" to detail) },
         ),
         "models" to mapOf("detector" to ModelStore.hasDetector(activity)),
         "features" to Features.ALL.associate { it.name to it.snapshot(featureHost) },
@@ -403,6 +393,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 ?: throw BadArgs("gender is \"\", \"man\" or \"woman\"")
             "mute_women_singing" -> settings.muteWomenSinging = bool()
             "silence_unfilterable" -> settings.silenceUnfilterable = bool()
+            "blur_on" -> settings.blurEnabled = bool()
             "blur_women" -> settings.blurWomen = bool()
             "blur_nudity" -> settings.blurNudity = bool()
             "blur_fail_cover" -> settings.blurFailCover = bool()
@@ -433,7 +424,6 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             else -> throw BadArgs("unknown setting $key")
         }
         // No restart: the running filter and blur re-read Settings every 0.5 s.
-        if (key.startsWith("blur_")) blurMessage = null  // as MainActivity.blurChanged
         refresh()
     }
 
@@ -537,38 +527,6 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         SetupHelp.refused(log) && SetupHelp.brand == SetupHelp.Brand.XIAOMI -> "refused_xiaomi" to log
         SetupHelp.refused(log) && SetupHelp.brand == SetupHelp.Brand.COLOROS -> "refused_coloros" to log
         else -> generic to log
-    }
-
-    // --- Screen blur permission (as MainActivity.onBlurSetup / grantBlur) ---
-
-    private fun blurSetup() {
-        blurMessage = null
-        when (ShizukuSetup.state(activity)) {
-            ShizukuSetup.State.READY -> grantBlur()
-            ShizukuSetup.State.NEEDS_PERMISSION -> {
-                blurAfterPermission = true
-                runCatching { ShizukuSetup.requestPermission() }.onFailure { blurAfterPermission = false }
-            }
-            ShizukuSetup.State.NOT_INSTALLED, ShizukuSetup.State.TOO_OLD -> openStore()
-            else -> openShizuku()  // DENIED_PERMANENTLY; for NOT_RUNNING Flutter shows the guide instead of calling this
-        }
-        refresh()
-    }
-
-    private fun grantBlur() {
-        blurAfterPermission = false
-        if (blurBusy) return
-        blurBusy = true
-        refresh()
-        ShizukuSetup.grantBlur(activity, slow = {
-            if (!disposed && blurBusy) { blurMessage = "slow" to ""; refresh() }
-        }) { log ->
-            if (disposed) return@grantBlur
-            blurBusy = false
-            blurMessage = failure(log, activity.blurAccessibilityEnabled() ||
-                android.provider.Settings.canDrawOverlays(activity), "setup_failed")
-            refresh()
-        }
     }
 
     private fun openStore() {

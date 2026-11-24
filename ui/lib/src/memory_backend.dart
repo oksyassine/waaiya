@@ -67,7 +67,6 @@ class MemoryBackend implements WaaiyaBackend {
   Future<void> runSetupStep(int step) async => throw const BackendException('unsupported', 'runSetupStep');
 
   @override
-  Future<void> blurSetup() async => throw const BackendException('unsupported', 'blurSetup');
 
   @override
   Future<void> openOverlaySettings() async => throw const BackendException('unsupported', 'openOverlaySettings');

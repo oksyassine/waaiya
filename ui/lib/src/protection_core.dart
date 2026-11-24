@@ -38,6 +38,7 @@ abstract final class ProtectionRules {
   static const iterations = 120000;
 
   static const _onToOff = {
+    SettingKeys.blurEnabled,
     SettingKeys.blurWomen,
     SettingKeys.blurNudity,
     SettingKeys.blurFailCover,

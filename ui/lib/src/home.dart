@@ -151,6 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
       'screen' => PageColumn(
           children: [
             PageTitle(l.navScreen),
+            const BlurPowerSection(),
+            const SizedBox(height: 16),
             BlurCard(onChanged: set),
             const BlurAppsCard(),
             const CoverHelperCard(),
@@ -352,7 +354,7 @@ Future<void> showDiagnostics(BuildContext context) async {
 
 /// Start was tapped (MainActivity.startFilter): without the one-time setup the original sound cannot be silenced,
 /// so say so before starting, not only in the setup card.
-Future<void> _start(BuildContext context) async {
+Future<void> startFiltering(BuildContext context) async {
   final l = AppLocalizations.of(context);
   final s = WaaiyaScope.of(context).state;
   if (s.capabilities.shizukuSetup && !s.setup.originalsMuted) {
@@ -487,12 +489,12 @@ class PowerSection extends StatelessWidget {
           identifier: 'power',
           label: on ? l.powerStopCd : l.powerStartCd,
           excludeSemantics: true,
-          child: _PowerButton(
+          child: PowerButton(
             on: on,
             starting: f.state == FilterState.starting,
             onTap: () {
               HapticFeedback.mediumImpact();
-              on ? runAction(context, (b) => b.stopFilter()) : _start(context);
+              on ? runAction(context, (b) => b.stopFilter()) : startFiltering(context);
             },
           ),
         ),
@@ -579,19 +581,19 @@ class _PageIn extends StatelessWidget {
 }
 
 /// The on/off control: its fill, ring and icon blend between off, starting (half) and on; it shrinks a little under
-/// the finger; a soft halo breathes twice when filtering begins, then stays (never an endless animation).
-class _PowerButton extends StatefulWidget {
-  const _PowerButton({required this.on, required this.starting, required this.onTap});
+/// the finger; a soft halo breathes twice when it turns on, then stays (never an endless animation).
+class PowerButton extends StatefulWidget {
+  const PowerButton({super.key, required this.on, required this.starting, required this.onTap});
 
   final bool on;
   final bool starting;
   final VoidCallback onTap;
 
   @override
-  State<_PowerButton> createState() => _PowerButtonState();
+  State<PowerButton> createState() => _PowerButtonState();
 }
 
-class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderStateMixin {
+class _PowerButtonState extends State<PowerButton> with SingleTickerProviderStateMixin {
   late final AnimationController _glow = AnimationController(vsync: this, duration: const Duration(milliseconds: 1300));
 
   @override
@@ -601,7 +603,7 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
   }
 
   @override
-  void didUpdateWidget(_PowerButton old) {
+  void didUpdateWidget(PowerButton old) {
     super.didUpdateWidget(old);
     final filtering = widget.on && !widget.starting, was = old.on && !old.starting;
     if (filtering && !was) _breathe();

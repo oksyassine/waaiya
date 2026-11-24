@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
 import 'app.dart';
-import 'backend.dart';
 
 /// Wireless-debugging steps to start Shizuku, with shortcuts to Developer options and Shizuku
 /// (MainActivity.showShizukuGuide).
@@ -34,11 +33,4 @@ Future<void> showShizukuGuide(BuildContext context) {
       ],
     ),
   );
-}
-
-/// The blur's Shizuku action (MainActivity.onBlurSetup): installed but not running -> the guide; otherwise the
-/// backend does the next step (store, update, Shizuku's permission dialog then the grant, or open Shizuku).
-Future<void> blurShizukuStep(BuildContext context) async {
-  if (WaaiyaScope.of(context).state.setup.shizuku == ShizukuState.notRunning) return showShizukuGuide(context);
-  await runAction(context, (b) => b.blurSetup());
 }

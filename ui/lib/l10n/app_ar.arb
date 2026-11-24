@@ -467,6 +467,30 @@
   "@blurBody": {
     "description": "Android string blur_body"
   },
+  "blurOnTitle": "التمويه يعمل",
+  "@blurOnTitle": {
+    "description": "Android string blur_on_title"
+  },
+  "blurOffTitle": "التمويه متوقف",
+  "@blurOffTitle": {
+    "description": "Android string blur_off_title"
+  },
+  "blurStartCd": "تشغيل التمويه",
+  "@blurStartCd": {
+    "description": "Android string blur_start_cd"
+  },
+  "blurStopCd": "إيقاف التمويه",
+  "@blurStopCd": {
+    "description": "Android string blur_stop_cd"
+  },
+  "blurOffDetail": "اضغط الزر للتشغيل. تبدأ التصفية معه.",
+  "@blurOffDetail": {
+    "description": "Android string blur_off_detail"
+  },
+  "blurWhatTitle": "ما الذي يُموَّه",
+  "@blurWhatTitle": {
+    "description": "Android string blur_what_title"
+  },
   "blurWomenTitle": "تمويه النساء",
   "@blurWomenTitle": {
     "description": "Android string blur_women_title"
@@ -491,27 +515,23 @@
   "@blurFailBody": {
     "description": "Android string blur_fail_body"
   },
-  "blurSetupShizuku": "السماح عبر Shizuku",
-  "@blurSetupShizuku": {
-    "description": "Android string blur_setup_shizuku"
-  },
   "blurSetupManual": "السماح من إعدادات أندرويد",
   "@blurSetupManual": {
     "description": "Android string blur_setup_manual"
   },
-  "blurStatusNeedsSetup": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
+  "blurStatusNeedsSetup": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
   "@blurStatusNeedsSetup": {
     "description": "Android string blur_status_needs_setup"
   },
-  "blurStatusNeedsOverlay": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
+  "blurStatusNeedsOverlay": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
   "@blurStatusNeedsOverlay": {
     "description": "Android string blur_status_needs_overlay"
   },
-  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailUnavailable": {
     "description": "Android string blur_fail_unavailable"
   },
-  "blurFailNeedsA11y": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailNeedsA11y": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» من إعدادات أندرويد فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailNeedsA11y": {
     "description": "Android string blur_fail_needs_a11y"
   },
@@ -573,20 +593,11 @@
       }
     }
   },
-  "blurSetupFailed": "تعذّر السماح عبر Shizuku:\n{details}",
-  "@blurSetupFailed": {
-    "description": "Android string blur_setup_failed",
-    "placeholders": {
-      "details": {
-        "type": "String"
-      }
-    }
-  },
   "step2Guide": "كيف أشغّل Shizuku؟",
   "@step2Guide": {
     "description": "Android string step2_guide"
   },
-  "blurFailOldAndroid": "معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailOldAndroid": "معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (الأغطية التي يمرّ منها اللمس تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailOldAndroid": {
     "description": "Android string blur_fail_old_android"
   },

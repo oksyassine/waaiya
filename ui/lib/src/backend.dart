@@ -8,6 +8,8 @@ abstract final class SettingKeys {
   static const gender = 'gender';
   static const muteWomenSinging = 'mute_women_singing';
   static const silenceUnfilterable = 'silence_unfilterable';
+  /// Screen blur on or off (the Screen page's power button); what it covers is [blurWomen] and [blurNudity].
+  static const blurEnabled = 'blur_on';
   static const blurWomen = 'blur_women';
   static const blurNudity = 'blur_nudity';
   static const blurFailCover = 'blur_fail_cover';
@@ -79,6 +81,7 @@ abstract final class SettingKeys {
     gender: '',
     muteWomenSinging: false,
     silenceUnfilterable: true,
+    blurEnabled: true,
     blurWomen: false,
     blurNudity: false,
     blurFailCover: true,
@@ -130,6 +133,7 @@ class WaaiyaSettings {
     this.gender = '',
     this.muteWomenSinging = false,
     this.silenceUnfilterable = true,
+    this.blurEnabled = true,
     this.blurWomen = false,
     this.blurNudity = false,
     this.blurFailCover = true,
@@ -158,6 +162,7 @@ class WaaiyaSettings {
         gender: _str(m[SettingKeys.gender]) ?? '',
         muteWomenSinging: _bool(m[SettingKeys.muteWomenSinging], false),
         silenceUnfilterable: _bool(m[SettingKeys.silenceUnfilterable], true),
+        blurEnabled: _bool(m[SettingKeys.blurEnabled], true),
         blurWomen: _bool(m[SettingKeys.blurWomen], false),
         blurNudity: _bool(m[SettingKeys.blurNudity], false),
         blurFailCover: _bool(m[SettingKeys.blurFailCover], true),
@@ -186,6 +191,9 @@ class WaaiyaSettings {
   final String gender;
   final bool muteWomenSinging;
   final bool silenceUnfilterable;
+
+  /// The Screen page's power button. Default on: before it existed, the two choices alone turned the blur on.
+  final bool blurEnabled;
   final bool blurWomen;
   final bool blurNudity;
   final bool blurFailCover;
@@ -214,12 +222,14 @@ class WaaiyaSettings {
   final int protectDelayMinutes;
 
   bool get isMan => gender == 'man';
-  bool get blurOn => blurWomen || blurNudity;
+  /// The blur runs (Android: while filtering is on): switched on, with something to cover.
+  bool get blurOn => blurEnabled && (blurWomen || blurNudity);
 
   Map<String, Object> toMap() => {
         SettingKeys.gender: gender,
         SettingKeys.muteWomenSinging: muteWomenSinging,
         SettingKeys.silenceUnfilterable: silenceUnfilterable,
+        SettingKeys.blurEnabled: blurEnabled,
         SettingKeys.blurWomen: blurWomen,
         SettingKeys.blurNudity: blurNudity,
         SettingKeys.blurFailCover: blurFailCover,
@@ -461,12 +471,10 @@ class BlurInfo {
     this.a11yBuild = false,
     this.a11yEnabled = false,
     this.touchPassThrough = false,
-    this.shizukuLayer = false,
+    this.shellLayer = false,
     this.helperRunning = false,
     this.helperStartable = false,
     this.layerSupported = false,
-    this.busy = false,
-    this.message,
     this.error,
     this.uncovered = 0,
   });
@@ -477,12 +485,10 @@ class BlurInfo {
         a11yBuild: _bool(m['a11yBuild'], false),
         a11yEnabled: _bool(m['a11yEnabled'], false),
         touchPassThrough: _bool(m['touchPassThrough'], false),
-        shizukuLayer: _bool(m['shizukuLayer'], false),
+        shellLayer: _bool(m['shellLayer'], false),
         helperRunning: _bool(m['helperRunning'], false),
         helperStartable: _bool(m['helperStartable'], false),
         layerSupported: _bool(m['layerSupported'], false),
-        busy: _bool(m['busy'], false),
-        message: BackendMessage.fromMap(m['message']),
         error: BackendMessage.fromMap(m['error']),
         uncovered: _int(m['uncovered']),
       );
@@ -494,8 +500,8 @@ class BlurInfo {
   final bool a11yEnabled;
   final bool touchPassThrough;
 
-  /// Shizuku is ready on Android 12+: the covers are a Shizuku shell layer, nothing else to allow.
-  final bool shizukuLayer;
+  /// Waaiya's helper runs on Android 12+: the covers are a shell layer, nothing else to allow.
+  final bool shellLayer;
 
   /// Waaiya's own cover helper runs (Android 12+): it draws the covers and touches pass through them.
   final bool helperRunning;
@@ -503,12 +509,8 @@ class BlurInfo {
   /// The helper can be started from here (Android 12+, through the on-phone setup).
   final bool helperStartable;
 
-  /// The Shizuku cover layer is possible on this device (Android 12+), once Shizuku runs and allows Waaiya.
+  /// The shell cover layer is possible on this device (Android 12+), once the setup started Waaiya's helper.
   final bool layerSupported;
-  final bool busy;
-
-  /// `setup_failed` (detail = log).
-  final BackendMessage? message;
 
   /// Desktop blur helper: why it is not covering, or what it waits for. Codes: `no_capture`, `no_overlay`,
   /// `models_missing`, `failing` (detail = the helper's reason, untranslated), `share_dialog` (Wayland: the
@@ -525,12 +527,10 @@ class BlurInfo {
         'a11yBuild': a11yBuild,
         'a11yEnabled': a11yEnabled,
         'touchPassThrough': touchPassThrough,
-        'shizukuLayer': shizukuLayer,
+        'shellLayer': shellLayer,
         'helperRunning': helperRunning,
         'helperStartable': helperStartable,
         'layerSupported': layerSupported,
-        'busy': busy,
-        'message': message?.toMap(),
         'error': error?.toMap(),
         'uncovered': uncovered,
       };
@@ -997,10 +997,7 @@ abstract interface class WaaiyaBackend {
   /// Step 1 when Shizuku is installed but not running shows the guide in Flutter instead (showShizukuGuide).
   Future<void> runSetupStep(int step);
 
-  /// Screen blur: "Allow with Shizuku".
-  Future<void> blurSetup();
-
-  /// Screen blur: "Allow in Android settings".
+  /// Screen blur: "Allow in Android settings" (draw over other apps).
   Future<void> openOverlaySettings();
 
   /// Opens the Shizuku app (its store page when it is not installed). Capability `shizukuSetup`.

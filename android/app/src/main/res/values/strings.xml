@@ -125,18 +125,23 @@
     <!-- Screen blur -->
     <string name="blur_title">Screen blur</string>
     <string name="blur_body">Covers people and images on screen, in every app, while filtering is on. It runs on the phone; nothing is sent anywhere.</string>
+    <string name="blur_on_title">The blur is on</string>
+    <string name="blur_off_title">The blur is off</string>
+    <string name="blur_start_cd">Start the blur</string>
+    <string name="blur_stop_cd">Stop the blur</string>
+    <string name="blur_off_detail">Tap the button to start. Filtering starts with it.</string>
+    <string name="blur_what_title">What to blur</string>
     <string name="blur_women_title">Blur women</string>
     <string name="blur_women_body">Covers the whole body. If the app is not sure that a person is a man, it covers them too.</string>
     <string name="blur_nudity_title">Blur immodest images</string>
     <string name="blur_nudity_body">Nudity or revealing clothes, on anyone: the whole screen is covered.</string>
     <string name="blur_fail_title">Cover the screen if the blur cannot keep up</string>
     <string name="blur_fail_body">On: the whole screen is covered when the phone is too slow or the blur fails. Off: the screen stays visible with a warning.</string>
-    <string name="blur_setup_shizuku">Allow with Shizuku</string>
     <string name="blur_setup_manual">Allow in Android settings</string>
-    <string name="blur_status_needs_setup">To blur, Waaiya has to draw over other apps. Best: “Allow with Shizuku”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.</string>
-    <string name="blur_status_needs_overlay">To blur, Waaiya has to draw over other apps. Best: start Shizuku and allow Waaiya in it, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.</string>
-    <string name="blur_fail_unavailable">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper or Shizuku (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.</string>
-    <string name="blur_fail_needs_a11y">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Shizuku (Android 12 or newer) or turn on the Waaiya Blur accessibility service (Allow with Shizuku above) and it turns on. Until then, the screen stays visible with a warning.</string>
+    <string name="blur_status_needs_setup">To blur, Waaiya has to draw over other apps. Best: “Go to the setup”, so your taps still reach the app under the blur. Or “Allow in Android settings”, but then a tap on a blurred area does nothing.</string>
+    <string name="blur_status_needs_overlay">To blur, Waaiya has to draw over other apps. Best: do the one-time setup, so your taps still reach the app under the blur. Or allow “Display over other apps” in Android settings, but then a tap on a blurred area does nothing.</string>
+    <string name="blur_fail_unavailable">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper (Android 12 or newer) and it turns on: the covers are then drawn so that taps go through them. Until then, when the blur cannot keep up, the screen stays visible with a warning.</string>
+    <string name="blur_fail_needs_a11y">Greyed out for now: a full-screen cover would block every tap and you could get stuck. Start Waaiya\'s helper (Android 12 or newer) or turn on the Waaiya Blur accessibility service in Android settings and it turns on. Until then, the screen stays visible with a warning.</string>
     <string name="language_title">Language</string>
     <string name="setting_language_title">Language: %1$s</string>
     <string name="language_ar" translatable="false">العربية</string>
@@ -149,14 +154,13 @@
     <string name="blur_status_failing">The blur cannot keep up right now.</string>
     <string name="blur_status_no_overlay">The blur cannot draw over other apps: allow it above.</string>
     <string name="blur_status_no_capture">Android did not let the blur see the screen, so nothing is blurred. Stop and start filtering to try again.</string>
-    <string name="blur_setup_failed">Shizuku could not allow it:\n%1$s</string>
     <string name="blur_cover_slow">Waaiya: blur paused (cannot keep up)</string>
     <string name="blur_cover_full">Covered by Waaiya</string>
     <string name="blur_not_working">Blur not working</string>
     <string name="blur_a11y_label">Waaiya Blur</string>
     <string name="blur_a11y_description">Draws Waaiya\'s screen blur over other apps. It does not read the screen, your actions or any app content; it only lets touches pass through the blurred areas.</string>
     <string name="step2_guide">How to start Shizuku</string>
-    <string name="blur_fail_old_android">Greyed out: on this Android version a full-screen cover would block every tap and you could get stuck (Shizuku covers need Android 12 or newer). When the blur cannot keep up, the screen stays visible with a warning.</string>
+    <string name="blur_fail_old_android">Greyed out: on this Android version a full-screen cover would block every tap and you could get stuck (covers that let taps through need Android 12 or newer). When the blur cannot keep up, the screen stays visible with a warning.</string>
     <string name="guide_title">Start Shizuku, step by step</string>
     <string name="guide_open_dev">Developer options</string>
     <string name="guide_open_shizuku">Open Shizuku</string>

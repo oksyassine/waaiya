@@ -72,6 +72,7 @@ object Protection : Feature {
     }
 
     private fun current(s: Settings, key: String): Any? = when (key) {
+        "blur_on" -> s.blurEnabled
         "blur_women" -> s.blurWomen
         "blur_nudity" -> s.blurNudity
         "blur_fail_cover" -> s.blurFailCover
@@ -95,6 +96,7 @@ object Protection : Feature {
         when (a.what) {
             ProtectionCore.STOP -> if (FilterService.running || FilterService.state == FilterService.State.SILENCED)
                 ctx.startService(Intent(ctx, FilterService::class.java).setAction(FilterService.ACTION_STOP))
+            "blur_on" -> s.blurEnabled = v as Boolean
             "blur_women" -> s.blurWomen = v as Boolean
             "blur_nudity" -> s.blurNudity = v as Boolean
             "blur_fail_cover" -> s.blurFailCover = v as Boolean
