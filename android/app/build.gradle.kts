@@ -48,7 +48,7 @@ android {
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 36       // Google Play: new apps and updates target Android 16 from 2026-08-31
         versionCode = 21
-        versionName = "0.2.16"
+        versionName = "0.2.17"
         // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
         providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")

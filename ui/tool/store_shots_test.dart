@@ -62,7 +62,7 @@ void main() {
             backend: MemoryBackend(
               initial: phone
                   ? AppState(
-                      version: '0.2.16',
+                      version: '0.2.17',
                       language: lang,
                       settings: const WaaiyaSettings(gender: 'man', prayerSilent: true),
                       filter: const FilterInfo(state: FilterState.filtering, delayMs: 30),

@@ -1,0 +1,5 @@
+- Le filtrage ne s'arrête plus tout seul au verrouillage du téléphone.
+- Les notifications gardent leur texte pendant le filtrage.
+- Android 16 sans la configuration : quand Android demande quoi partager, choisissez « Partager une appli », puis Waaiya. Pour que tout marche (floutage compris), associez Waaiya une fois avec le débogage sans fil.
+- Un bouton « Reprendre » quand Waaiya reste silencieux.
+- Le rapport de diagnostic indique pourquoi le filtre s'est arrêté.
