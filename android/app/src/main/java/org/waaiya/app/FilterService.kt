@@ -97,6 +97,33 @@ class FilterService : Service() {
         /** The running service, for [refreshNotification]. */
         @Volatile private var instance: java.lang.ref.WeakReference<FilterService>? = null
 
+        /** A new capture is on its way ([restartForNotificationText]): TileStartActivity asks for it although the
+         *  state says STARTING. */
+        @Volatile var restartPending = false
+            private set
+        private const val RESTART_TIMEOUT_MS = 6000L
+
+        /**
+         * Notification text ([ScreenShareProtection]): Android reads its switch only when a capture starts, so a
+         * change made while filtering used to wait for the next start. This starts a new capture now instead: the
+         * capture, the filter and the blur end while the muter keeps the other apps silent (no music in between, as
+         * in SILENCED), then [TileStartActivity] gets a new capture, which Android grants without asking after the
+         * setup (PROJECT_MEDIA), and the switch is applied to it. Main thread. Returns the intent the caller must
+         * start (the tile, or the app's screen: a service may not open activities from the background), or null
+         * when the running capture already matches, or when a new one could not come without Android asking (no
+         * PROJECT_MEDIA: there Waaiya lifts the protection while filtering anyway) or without the music coming back.
+         * No new capture within RESTART_TIMEOUT_MS: the other apps stay muted (SILENCED) until the user starts.
+         */
+        fun restartForNotificationText(ctx: Context): Intent? {
+            val s = instance?.get() ?: return null
+            val shown = ScreenShareProtection.shownInCapture ?: return null
+            if (!running || restartPending || !ScreenShareProtection.supported || !ctx.hasProjectMediaAppOp()) return null
+            val after = ScreenShareProtection.protectionOff(ctx) ||
+                (ScreenShareProtection.wanted(ctx) && ScreenShareProtection.canWrite(ctx))
+            if (after == shown || !s.holdForRestart()) return null
+            return Intent(ctx, TileStartActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
         /** Builds the notification again (its fix actions changed: FixMistakes). Any thread; nothing once stopped. */
         fun refreshNotification() { main.post { instance?.get()?.updateNotification() } }
 
@@ -156,7 +183,8 @@ class FilterService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_STOP) { stopSelf(); return START_NOT_STICKY }
-        if (running) return START_NOT_STICKY
+        if (running && !holding) return START_NOT_STICKY
+        restartPending = false
         // Starting again from SILENCED: the muter keeps running throughout, so the originals never come back.
         val wasHolding = holding
         holding = false
@@ -269,6 +297,33 @@ class FilterService : Service() {
         ScreenShareProtection.captureEnded(this)  // no capture any more
         publish(State.SILENCED)
         updateNotification()
+    }
+
+    /** [restartForNotificationText]: the capture ends, the other apps stay muted, a new capture is awaited. */
+    private fun holdForRestart(): Boolean {
+        if (stop || holding) return false
+        val m = muter
+        if (!SimpleMode.active && (m == null || m.status == SessionMuter.Status.NO_PERMISSION)) return false
+        Log.i(TAG, "filter: a new capture for the notification-text choice; other apps stay muted meanwhile")
+        restartPending = true
+        stop = true
+        worker?.join(500); worker = null
+        blur?.stop(); blur = null
+        projection?.stop(); projection = null
+        health = null
+        holding = true
+        silencedShown = true  // no "stopped" pop-up: it starts again at once
+        ScreenShareProtection.captureEnded(this)
+        publish(State.STARTING)
+        main.postDelayed({
+            if (holding && restartPending) {
+                Log.w(TAG, "filter: no new capture came; other apps stay muted")
+                restartPending = false
+                publish(State.SILENCED)
+                updateNotification()
+            }
+        }, RESTART_TIMEOUT_MS)
+        return true
     }
 
     private fun loop(mp: MediaProjection) {

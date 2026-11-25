@@ -432,12 +432,14 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "filter_off_apps" -> settings.filterOffApps = apps()
             "blur_off_apps" -> settings.blurOffApps = apps()
             "keep_singing" -> settings.keepSinging = bool()
-            // as the Quick Settings tile: on applies at the next start, off puts Android's switch back at once
+            // as the Quick Settings tile: off puts Android's switch back at once; while filtering, a new capture
+            // starts at once so the choice applies now (FilterService.restartForNotificationText)
             "show_notification_text" -> {
                 val on = bool()
                 settings.showNotificationText = on
                 settings.notificationTextExplained = true
                 if (!on) ScreenShareProtection.restore(activity)
+                FilterService.restartForNotificationText(activity)?.let { runCatching { activity.startActivity(it) } }
             }
             "prayer_silent" -> settings.prayerSilent = bool()
             "prayer_silent_minutes" -> settings.prayerSilentMinutes = int(5, 90)
