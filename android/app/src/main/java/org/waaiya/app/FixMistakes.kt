@@ -67,6 +67,7 @@ object FixMistakes : Feature {
      */
     @Synchronized
     fun filterOffUids(ctx: Context, settings: Settings): Set<Int> {
+        if (settings.simpleMode) return emptySet()  // everything is muted there: a left-out app would be silent
         val apps = settings.filterOffApps
         val key = apps.sorted().joinToString(",")
         val now = SystemClock.uptimeMillis()
@@ -288,7 +289,9 @@ object FixMistakes : Feature {
         val s = Settings(ctx)
         val reason = blurAppsReason(ctx)
         return mapOf(
-            "filterApps" to true,
+            // simple mode mutes all media and plays the filtered copy: an app left out of the capture would be
+            // silent, not heard as it is, so the list is not offered there
+            "filterApps" to !s.simpleMode,
             "blurApps" to (reason == null),
             "blurAppsReason" to reason,
             "handCover" to true,

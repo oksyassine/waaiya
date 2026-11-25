@@ -163,6 +163,10 @@ class FilterService : Service() {
     private var muter: SessionMuter? = null
     private var blur: ScreenBlur? = null
     @Volatile private var stop = false
+    /** The capture session now running: a restart (notification text) or a new start makes a new one, and a late
+     *  callback of the old projection or the old filter thread (a blocked read outlives the 500 ms join) only acts
+     *  on its own session, never on the next. */
+    @Volatile private var session = 0
     @Volatile private var stoppedBySystem = false
     /** Set by the audio thread when it gives up: the state to show after the service has stopped. */
     @Volatile private var failState: State? = null
@@ -224,12 +228,13 @@ class FilterService : Service() {
         val mp = runCatching { mpm.getMediaProjection(code, data) }
             .onFailure { Log.e(TAG, "no screen-capture token", it) }.getOrNull()
             ?: run { noCapture(wasHolding); return START_NOT_STICKY }
+        val my = ++session
         mp.registerCallback(object : MediaProjection.Callback() {
             override fun onStop() {
-                if (stop) return  // our own stop: the user's, or entering SILENCED
+                if (stop || my != session) return  // our own stop (the user's, SILENCED), or an older session's
                 Log.i(TAG, "projection stopped by the system")
                 StopLog.record(this@FilterService, "screen capture stopped by Android")
-                endedBySystem(null)
+                endedBySystem(null, my)
             }
         }, null)
         projection = mp
@@ -255,7 +260,7 @@ class FilterService : Service() {
         oneAppSession = CaptureChoice.offerOneApp(this)
         blur = if (oneAppSession) null else runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
             .onFailure { Log.e(TAG, "screen blur did not start", it) }.getOrNull()
-        worker = Thread({ loop(mp) }, "im-filter").apply { start() }
+        worker = Thread({ loop(mp, my) }, "im-filter").apply { start() }
         return START_NOT_STICKY
     }
 
@@ -299,8 +304,8 @@ class FilterService : Service() {
      * stays foreground with the projection gone. dataSync and shortService would bring a time limit, and
      * mediaPlayback would claim playback this service does not do.
      */
-    private fun endedBySystem(fail: State?) = main.post {
-        if (stop || holding) return@post
+    private fun endedBySystem(fail: State?, from: Int) = main.post {
+        if (stop || holding || from != session) return@post
         val m = muter
         val canHold = SimpleMode.active || (m != null && m.status != SessionMuter.Status.NO_PERMISSION)
         if (!Settings(this).holdSilence || !canHold) {
@@ -310,9 +315,9 @@ class FilterService : Service() {
         }
         Log.i(TAG, "filtering ended by Android (${fail ?: State.STOPPED_BY_SYSTEM}): other apps stay muted")
         stop = true
-        worker?.join(500); worker = null
         blur?.stop(); blur = null
-        projection?.stop(); projection = null
+        projection?.stop(); projection = null  // first: a read blocked on a quiet capture returns
+        worker?.join(500); worker = null
         health = null
         holding = true
         silencedShown = false  // a new hold: pop up again
@@ -329,9 +334,9 @@ class FilterService : Service() {
         Log.i(TAG, "filter: a new capture for the notification-text choice; other apps stay muted meanwhile")
         restartPending = true
         stop = true
-        worker?.join(500); worker = null
         blur?.stop(); blur = null
-        projection?.stop(); projection = null
+        projection?.stop(); projection = null  // first: a read blocked on a quiet capture returns
+        worker?.join(500); worker = null
         health = null
         holding = true
         silencedShown = true  // no "stopped" pop-up: it starts again at once
@@ -348,7 +353,7 @@ class FilterService : Service() {
         return true
     }
 
-    private fun loop(mp: MediaProjection) {
+    private fun loop(mp: MediaProjection, my: Int) {
         Process.setThreadPriority(Process.THREAD_PRIORITY_URGENT_AUDIO)
         val ch = 2
         val hop = 480  // 10 ms at 48 kHz
@@ -381,7 +386,7 @@ class FilterService : Service() {
             StopLog.record(this, "capture did not open: ${e.javaClass.simpleName}")
             // Android before 16 (or a phone like it): no sound from a one-app share. Ask for the entire screen next time.
             if (oneAppSession && e is UnsupportedOperationException) Settings(this).oneAppRefused = true
-            endedBySystem(State.CAPTURE_FAILED); return
+            endedBySystem(State.CAPTURE_FAILED, my); return
         }
         val outFmt = AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
             .setSampleRate(Engine.SAMPLE_RATE).setChannelMask(AudioFormat.CHANNEL_OUT_STEREO).build()
@@ -405,7 +410,7 @@ class FilterService : Service() {
             Log.e(TAG, "output did not open", e)
             StopLog.record(this, "output did not open: ${e.javaClass.simpleName}")
             runCatching { record.release() }
-            endedBySystem(State.CAPTURE_FAILED); return
+            endedBySystem(State.CAPTURE_FAILED, my); return
         }
         var trackRebuilds = 0      // the output died and was made again (audio server restart, route change)
         var lastRebuild = 0L
@@ -420,7 +425,7 @@ class FilterService : Service() {
             Log.e(TAG, "engine did not open", e)
             StopLog.record(this, "engine did not open: ${e.javaClass.simpleName}")
             runCatching { track.release() }; runCatching { record.release() }
-            endedBySystem(State.MODEL_FAILED); return
+            endedBySystem(State.MODEL_FAILED, my); return
         }
         val swapLock = Object()
         var loaded: Pair<Engine, Boolean>? = null  // swapLock: the engine the helper thread made, and its model choice
@@ -489,7 +494,7 @@ class FilterService : Service() {
         try {
             record.startRecording()
             track.play()
-            while (!stop) {
+            while (!stop && my == session) {
                 if (SimpleMode.active) {  // simple mode: the volume keys set this track's gain
                     val g = SimpleMode.gain
                     if (g != simpleGain) { track.setVolume(g); simpleGain = g }
@@ -497,16 +502,17 @@ class FilterService : Service() {
                 // collect exactly one hop so the engine can return it at once (hop-aligned: one hop less delay)
                 var got = 0
                 val waitFrom = android.os.SystemClock.elapsedRealtime()
-                while (got < inBuf.size && !stop) {
+                while (got < inBuf.size && !stop && my == session) {
                     val n = record.read(inBuf, got, inBuf.size - got, AudioRecord.READ_BLOCKING)
                     if (n < 0) {
+                        if (stop || my != session) break  // our own stop ended this capture: not a fault
                         // the capture is gone (projection revoked, audio server restarted): say so instead of
                         // staying "on" with no sound
                         readErrors++
                         Log.w(TAG, "capture read failed: $n")
                         if (n == AudioRecord.ERROR_DEAD_OBJECT || ++readErrorsInARow >= 20) {
                             StopLog.record(this, "capture read failed $n")
-                            endedBySystem(State.CAPTURE_FAILED); return
+                            endedBySystem(State.CAPTURE_FAILED, my); return
                         }
                         Thread.sleep(10)
                         continue
@@ -614,7 +620,7 @@ class FilterService : Service() {
                         Log.w(TAG, "output write failed: $w, making the output again")
                         if (now - lastRebuild < 10_000 && ++trackRebuilds >= 3) {
                             StopLog.record(this, "output failed $w")
-                            endedBySystem(State.CAPTURE_FAILED); return
+                            endedBySystem(State.CAPTURE_FAILED, my); return
                         }
                         if (now - lastRebuild >= 10_000) trackRebuilds = 0
                         lastRebuild = now
@@ -671,8 +677,9 @@ class FilterService : Service() {
         } catch (e: Exception) {
             Log.e(TAG, "filter loop failed", e)
             StopLog.record(this, "filter loop failed: ${e.javaClass.simpleName}")
-            endedBySystem(State.CAPTURE_FAILED)
+            endedBySystem(State.CAPTURE_FAILED, my)
         } finally {
+            if (my == session) { captureExcluded = null; captureExcludeFailed = null }
             if (Build.VERSION.SDK_INT >= 31) runCatching { hint?.close() }
             runCatching { record.stop() }; record.release()
             runCatching { track.stop() }; track.release()
