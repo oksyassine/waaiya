@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Material icon "chat" (Apache-2.0): message text -->
+<!-- Quick Settings tile "notification text": Waaiya's mark (the ع-ear of ic_notification, the launcher's mark) with a
+     small message badge (Material "chat", Apache-2.0), so the tile reads as Waaiya's among the phone's own tiles. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="24dp" android:height="24dp"
-    android:viewportWidth="24" android:viewportHeight="24" android:tint="#FFFFFFFF">
-    <path android:fillColor="#FFFFFFFF" android:pathData="M20,2H4C2.9,2 2,2.9 2,4v18l4,-4h14c1.1,0 2,-0.9 2,-2V4C22,2.9 21.1,2 20,2zM18,14H6v-2h12V14zM18,11H6V9h12V11zM18,8H6V6h12V8z" />
+    android:viewportWidth="24" android:viewportHeight="24" android:tint="#FFFFFFFF" android:autoMirrored="false">
+    <group android:scaleX="0.19" android:scaleY="0.19" android:translateX="-4.6" android:translateY="0.1">
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="12" android:strokeLineCap="round"
+            android:strokeLineJoin="round" android:pathData="M80.2 22.15 A14.5 14.5 0 1 0 74.67 44.33 A31 31 0 1 0 89.43 86.01" />
+        <path android:strokeColor="#FFFFFFFF" android:strokeWidth="8" android:strokeLineCap="round"
+            android:strokeLineJoin="round" android:pathData="M66.01 60.2 A13 13 0 1 0 66.01 84.64" />
+    </group>
+    <group android:scaleX="0.5" android:scaleY="0.5" android:translateX="13.3" android:translateY="12.6">
+        <path android:fillColor="#FFFFFFFF" android:pathData="M20,2H4C2.9,2 2,2.9 2,4v18l4,-4h14c1.1,0 2,-0.9 2,-2V4C22,2.9 21.1,2 20,2zM18,14H6v-2h12V14zM18,11H6V9h12V11zM18,8H6V6h12V8z" />
+    </group>
 </vector>

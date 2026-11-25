@@ -286,7 +286,7 @@
     <string name="tile_silenced">Arrêté, applis muettes</string>
     <string name="tile_on_not_muted">Activé, à configurer</string>
     <string name="tile_open_app">Ouvrir Waaiya</string>
-    <string name="tile_text_label">Texte des notifications</string>
+    <string name="tile_text_label">Waaiya : texte des notifications</string>
     <string name="tile_text_shown">Affiché pendant le filtrage</string>
     <string name="tile_text_hidden">Masqué pendant le filtrage</string>
     <string name="tile_text_refused">Refusé par ce téléphone</string>

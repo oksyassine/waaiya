@@ -286,7 +286,7 @@
     <string name="tile_silenced">বন্ধ, অ্যাপ নীরব</string>
     <string name="tile_on_not_muted">চালু, সেটআপ দরকার</string>
     <string name="tile_open_app">Waaiya খুলুন</string>
-    <string name="tile_text_label">বিজ্ঞপ্তির লেখা</string>
+    <string name="tile_text_label">Waaiya: বিজ্ঞপ্তির লেখা</string>
     <string name="tile_text_shown">ফিল্টারিংয়ের সময় দেখায়</string>
     <string name="tile_text_hidden">ফিল্টারিংয়ের সময় লুকানো</string>
     <string name="tile_text_refused">এই ফোন দেয় না</string>

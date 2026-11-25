@@ -286,7 +286,7 @@
     <string name="tile_silenced">Imesimama, programu kimya</string>
     <string name="tile_on_not_muted">Imewashwa, usanidi unahitajika</string>
     <string name="tile_open_app">Fungua Waaiya</string>
-    <string name="tile_text_label">Maandishi ya arifa</string>
+    <string name="tile_text_label">Waaiya: maandishi ya arifa</string>
     <string name="tile_text_shown">Yanaonyeshwa wakati wa kuchuja</string>
     <string name="tile_text_hidden">Yamefichwa wakati wa kuchuja</string>
     <string name="tile_text_refused">Simu hii inakataa</string>

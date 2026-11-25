@@ -286,7 +286,7 @@
     <string name="tile_silenced">متوقف، برنامه‌ها بی‌صدا</string>
     <string name="tile_on_not_muted">روشن، راه‌اندازی لازم است</string>
     <string name="tile_open_app">باز کردن واعية</string>
-    <string name="tile_text_label">متن اعلان‌ها</string>
+    <string name="tile_text_label">واعية: متن اعلان‌ها</string>
     <string name="tile_text_shown">نمایان هنگام پالایش</string>
     <string name="tile_text_hidden">پنهان هنگام پالایش</string>
     <string name="tile_text_refused">این تلفن اجازه نمی‌دهد</string>

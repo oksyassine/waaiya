@@ -286,7 +286,7 @@
     <string name="tile_silenced">رکا ہوا، ایپس خاموش</string>
     <string name="tile_on_not_muted">آن، سیٹ اپ درکار</string>
     <string name="tile_open_app">واعية کھولیں</string>
-    <string name="tile_text_label">اطلاع کا متن</string>
+    <string name="tile_text_label">واعية: اطلاع کا متن</string>
     <string name="tile_text_shown">فلٹرنگ کے دوران دکھایا جاتا ہے</string>
     <string name="tile_text_hidden">فلٹرنگ کے دوران چھپا ہوا</string>
     <string name="tile_text_refused">یہ فون اسے مسترد کرتا ہے</string>

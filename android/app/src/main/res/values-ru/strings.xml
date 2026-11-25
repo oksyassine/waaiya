@@ -286,7 +286,7 @@
     <string name="tile_silenced">Стоп, звук выключен</string>
     <string name="tile_on_not_muted">Вкл., нужна настройка</string>
     <string name="tile_open_app">Открыть Waaiya</string>
-    <string name="tile_text_label">Текст уведомлений</string>
+    <string name="tile_text_label">Waaiya: текст уведомлений</string>
     <string name="tile_text_shown">Виден при фильтре</string>
     <string name="tile_text_hidden">Скрыт при фильтре</string>
     <string name="tile_text_refused">Телефон не разрешает</string>

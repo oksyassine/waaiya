@@ -286,7 +286,7 @@
     <string name="tile_silenced">Toʻxtagan, ilovalar ovozsiz</string>
     <string name="tile_on_not_muted">Yoqilgan, sozlash kerak</string>
     <string name="tile_open_app">Waaiyani ochish</string>
-    <string name="tile_text_label">Bildirishnoma matni</string>
+    <string name="tile_text_label">Waaiya: bildirishnoma matni</string>
     <string name="tile_text_shown">Filtrlashda koʻrsatiladi</string>
     <string name="tile_text_hidden">Filtrlashda yashiriladi</string>
     <string name="tile_text_refused">Bu telefon ruxsat bermaydi</string>

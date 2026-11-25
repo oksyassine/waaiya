@@ -286,7 +286,7 @@
     <string name="tile_silenced">Durdu, uygulamalar sessiz</string>
     <string name="tile_on_not_muted">Açık, kurulum gerekli</string>
     <string name="tile_open_app">Waaiya\'yı aç</string>
-    <string name="tile_text_label">Bildirim metni</string>
+    <string name="tile_text_label">Waaiya: bildirim metni</string>
     <string name="tile_text_shown">Filtrelerken gösterilir</string>
     <string name="tile_text_hidden">Filtrelerken gizlenir</string>
     <string name="tile_text_refused">Bu telefon reddediyor</string>

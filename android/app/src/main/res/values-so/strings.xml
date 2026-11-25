@@ -286,7 +286,7 @@
     <string name="tile_silenced">Joogsaday, barnaamijyadu waa aamusan yihiin</string>
     <string name="tile_on_not_muted">Daaran, habayn ayaa loo baahan yahay</string>
     <string name="tile_open_app">Fur Waaiya</string>
-    <string name="tile_text_label">Qoraalka ogeysiisyada</string>
+    <string name="tile_text_label">Waaiya: qoraalka ogeysiisyada</string>
     <string name="tile_text_shown">Wuu muuqdaa inta la shaandheynayo</string>
     <string name="tile_text_hidden">Wuu qarsoon yahay inta la shaandheynayo</string>
     <string name="tile_text_refused">Taleefankani wuu diiday</string>

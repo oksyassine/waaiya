@@ -287,7 +287,7 @@
     <string name="tile_silenced">Stopped, apps silenced</string>
     <string name="tile_on_not_muted">On, setup needed</string>
     <string name="tile_open_app">Open Waaiya</string>
-    <string name="tile_text_label">Notification text</string>
+    <string name="tile_text_label">Waaiya: notification text</string>
     <string name="tile_text_shown">Shown while filtering</string>
     <string name="tile_text_hidden">Hidden while filtering</string>
     <string name="tile_text_refused">This phone refuses it</string>

@@ -286,7 +286,7 @@
     <string name="tile_silenced">Gestopt, apps gedempt</string>
     <string name="tile_on_not_muted">Aan, installatie nodig</string>
     <string name="tile_open_app">Waaiya openen</string>
-    <string name="tile_text_label">Meldingstekst</string>
+    <string name="tile_text_label">Waaiya: meldingstekst</string>
     <string name="tile_text_shown">Zichtbaar tijdens filteren</string>
     <string name="tile_text_hidden">Verborgen tijdens filteren</string>
     <string name="tile_text_refused">Deze telefoon weigert het</string>

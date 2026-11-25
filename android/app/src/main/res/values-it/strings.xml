@@ -286,7 +286,7 @@
     <string name="tile_silenced">Fermo, app silenziate</string>
     <string name="tile_on_not_muted">Attivo, da configurare</string>
     <string name="tile_open_app">Apri Waaiya</string>
-    <string name="tile_text_label">Testo delle notifiche</string>
+    <string name="tile_text_label">Waaiya: testo delle notifiche</string>
     <string name="tile_text_shown">Mostrato durante il filtro</string>
     <string name="tile_text_hidden">Nascosto durante il filtro</string>
     <string name="tile_text_refused">Questo telefono lo rifiuta</string>

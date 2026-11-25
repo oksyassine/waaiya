@@ -286,7 +286,7 @@
     <string name="tile_silenced">Berhenti, aplikasi bisu</string>
     <string name="tile_on_not_muted">Aktif, perlu penyiapan</string>
     <string name="tile_open_app">Buka Waaiya</string>
-    <string name="tile_text_label">Teks notifikasi</string>
+    <string name="tile_text_label">Waaiya: teks notifikasi</string>
     <string name="tile_text_shown">Tampil saat memfilter</string>
     <string name="tile_text_hidden">Tersembunyi saat memfilter</string>
     <string name="tile_text_refused">Ditolak ponsel ini</string>

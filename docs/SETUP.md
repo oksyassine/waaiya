@@ -5,7 +5,7 @@ Waaiya needs two things that Android only gives to the shell user (ADB):
     cmd package grant org.waaiya.app android.permission.DUMP     # list other apps' sessions, mute the originals
     cmd appops set org.waaiya.app PROJECT_MEDIA allow            # no screen-sharing question at every start
 
-and, optionally, one more for the "Notification text" Quick Settings tile (Android 15+):
+and, optionally, one more for the "Waaiya: notification text" Quick Settings tile (Android 15+):
 
     cmd package grant org.waaiya.app android.permission.WRITE_SECURE_SETTINGS
 
@@ -146,7 +146,7 @@ prompt on a real adbd (the emulators here do not ask: `ro.adb.secure=0`).
   `TileStartActivity` (Android hands out the screen-capture token only to an activity); after the setup Android
   answers without asking, so nothing shows. Without the DUMP grant or the microphone permission the tile opens the
   app instead, which explains.
-- **Notification text** (`ScreenShareTileService`, Android 15+ only: `values-v35/bools.xml`): Android 15 hides the
+- **Waaiya: notification text** (`ScreenShareTileService`, Android 15+ only: `values-v35/bools.xml`): Android 15 hides the
   text of notifications during a whole-screen capture, and filtering is one. When this tile is on, `FilterService`
   sets the global setting `disable_screen_share_protections_for_apps_and_notifications` (Developer options
   "Disable screen share protections") to 1 just before the capture starts and puts it back when filtering ends

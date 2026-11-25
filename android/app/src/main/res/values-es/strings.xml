@@ -286,7 +286,7 @@
     <string name="tile_silenced">Detenido, apps en silencio</string>
     <string name="tile_on_not_muted">Activado, falta configurar</string>
     <string name="tile_open_app">Abrir Waaiya</string>
-    <string name="tile_text_label">Texto de notificaciones</string>
+    <string name="tile_text_label">Waaiya: texto de notificaciones</string>
     <string name="tile_text_shown">Visible al filtrar</string>
     <string name="tile_text_hidden">Oculto al filtrar</string>
     <string name="tile_text_refused">Este teléfono no lo permite</string>

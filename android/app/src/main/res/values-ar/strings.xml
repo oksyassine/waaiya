@@ -285,7 +285,7 @@
     <string name="tile_silenced">متوقفة، التطبيقات مكتومة</string>
     <string name="tile_on_not_muted">تعمل، الإعداد ناقص</string>
     <string name="tile_open_app">فتح واعية</string>
-    <string name="tile_text_label">نص الإشعارات</string>
+    <string name="tile_text_label">واعية: نص الإشعارات</string>
     <string name="tile_text_shown">ظاهر أثناء التصفية</string>
     <string name="tile_text_hidden">مخفي أثناء التصفية</string>
     <string name="tile_text_refused">يرفضه هذا الهاتف</string>

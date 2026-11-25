@@ -286,7 +286,7 @@
     <string name="tile_silenced">Berhenti, apl disenyapkan</string>
     <string name="tile_on_not_muted">Hidup, perlu persediaan</string>
     <string name="tile_open_app">Buka Waaiya</string>
-    <string name="tile_text_label">Teks pemberitahuan</string>
+    <string name="tile_text_label">Waaiya: teks pemberitahuan</string>
     <string name="tile_text_shown">Ditunjukkan semasa menapis</string>
     <string name="tile_text_hidden">Disembunyikan semasa menapis</string>
     <string name="tile_text_refused">Telefon ini menolaknya</string>
