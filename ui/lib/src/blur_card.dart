@@ -81,15 +81,22 @@ class BlurPowerSection extends StatelessWidget {
   Future<void> _turnOn(BuildContext context) async {
     final s = WaaiyaScope.of(context).state;
     final st = s.settings;
-    await runAction(context, (b) async {
-      if (!st.blurEnabled) await b.setSetting(SettingKeys.blurEnabled, true);
+    final b = s.blur;
+    // Android, without Waaiya's helper layer nor the accessibility build: the covers are app overlays, which need
+    // "Display over other apps". Asked for now, before anything starts: the blur cannot draw without it.
+    final needsOverlay =
+        !s.capabilities.blurStandalone && !b.shellLayer && !b.a11yBuild && !b.overlayAllowed;
+    await runAction(context, (be) async {
+      if (!st.blurEnabled) await be.setSetting(SettingKeys.blurEnabled, true);
       if (!st.blurWomen && !st.blurNudity) {
         // nothing chosen yet: everything the blur can cover (the choices are below)
-        await b.setSetting(SettingKeys.blurWomen, true);
-        await b.setSetting(SettingKeys.blurNudity, true);
+        await be.setSetting(SettingKeys.blurWomen, true);
+        await be.setSetting(SettingKeys.blurNudity, true);
       }
+      if (needsOverlay) await be.openOverlaySettings();
     });
-    if (!context.mounted || s.capabilities.blurStandalone || s.filter.running) return;
+    // back from Android's page, the status line says what is still missing; the next tap starts the blur
+    if (needsOverlay || !context.mounted || s.capabilities.blurStandalone || s.filter.running) return;
     await startFiltering(context);
   }
 

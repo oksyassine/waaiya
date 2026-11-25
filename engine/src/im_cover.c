@@ -58,6 +58,10 @@ struct im_cover {
      * looks like one. */
     double full_end;
     int full_level;
+    /* covers visible, scene not judgeable (blind_hold_ms): since when, when the last lift was, its doubling level */
+    int blind;
+    double blind_since, blind_end;
+    int blind_level;
     double t_last;
 };
 
@@ -65,7 +69,8 @@ im_cover *im_cover_create(int covers_visible) {
     im_cover *c = calloc(1, sizeof *c);
     if (!c) return NULL;
     c->covers_visible = covers_visible;
-    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.10f, 0.30f, 0.80f, 0.08f, 0.15f, 0.03f, 60000.0f};
+    c->p = (im_cover_params){0.20f, 0.015f, 120.0f, 500.0f, 1500.0f, 0.12f, 0.30f, 0.10f, 0.30f, 0.80f, 0.08f, 0.15f, 0.03f, 60000.0f,
+                          3000.0f, 24000.0f};
     return c;
 }
 
@@ -293,6 +298,24 @@ int im_cover_update_shapes(im_cover *c, double t_ms, const uint8_t *rgba, int w,
             mark(c->mask, c->out_last, c->n_last); /* the overlay may lag a frame behind: both outputs */
             mark(c->mask, c->out_prev, c->n_prev);
             float still = change(c, 0, 0);
+            if (still < 0 && c->nt > 0 && p->blind_hold_ms > 0) {
+                /* the covers hide too much to tell whether the scene changed (blind_hold_ms) */
+                if (!c->blind) {
+                    double prev = ldexp(p->blind_hold_ms, c->blind_level);
+                    if (p->blind_max_hold_ms > p->blind_hold_ms && prev > p->blind_max_hold_ms) prev = p->blind_max_hold_ms;
+                    if (c->blind_end > 0 && t_ms - c->blind_end < 2 * prev) { if (c->blind_level < 16) c->blind_level++; }
+                    else c->blind_level = 0;
+                    c->blind = 1;
+                    c->blind_since = t_ms;
+                }
+                double hold = ldexp(p->blind_hold_ms, c->blind_level);
+                if (p->blind_max_hold_ms > p->blind_hold_ms && hold > p->blind_max_hold_ms) hold = p->blind_max_hold_ms;
+                if (t_ms - c->blind_since >= hold) {
+                    c->nt = 0; /* lift, and look again */
+                    c->blind = 0;
+                    c->blind_end = t_ms;
+                }
+            } else if (still >= 0) c->blind = 0;
             if (still >= 0) {
                 float best = still;
                 int bx = 0, by = 0;

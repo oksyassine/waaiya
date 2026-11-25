@@ -178,7 +178,7 @@ class BlurOverlay(private val context: Context) {
         }
         if (host == Host.APP_OVERLAY) upgrade()
         // FixMistakes: a reading that went stale (or a decision that changed between frames) is drawn now
-        if (FixMistakes.blurPaused() != drawnPaused && host != Host.SHELL) refresh()
+        if (coversOff() != drawnPaused && host != Host.SHELL) refresh()
         val l = layer ?: return
         if (host != Host.SHELL) return               // still connecting
         if (!l.alive || l.failed) {
@@ -236,8 +236,13 @@ class BlurOverlay(private val context: Context) {
     /** Redraws the last covers (FixMistakes: a chosen app came on screen or left it, hand covers changed). */
     fun refresh() = show(lastRects, lastCount, lastThumb, lastFail, lastTest)
 
-    /** What [FixMistakes] decided at the last draw: covers left off for a chosen app on screen. */
+    /** What was decided at the last draw: covers left off ([coversOff]). */
     private var drawnPaused = false
+
+    /** No covers now: Waaiya's own screen is in use (so its switch can always be reached, even when the covers took
+     *  most of the screen and, as app overlays on Android 12+, the touches under them), or [FixMistakes] says a
+     *  chosen app is alone on screen. */
+    private fun coversOff() = UiActivity.inUse || FixMistakes.blurPaused()
 
     /**
      * Fix mistakes on the spot ([FixMistakes]): hand covers are added first (so that a layer limit drops detections,
@@ -245,9 +250,10 @@ class BlurOverlay(private val context: Context) {
      * failure display are left out. [FixMistakes.blurPaused] is false whenever it is not sure (fail-closed).
      */
     private inline fun withFixes(rects: FloatArray, count: Int, failMode: Int, then: (FloatArray, Int, Int) -> Unit) {
-        val paused = FixMistakes.blurPaused()
+        val own = UiActivity.inUse
+        val paused = own || FixMistakes.blurPaused()
         drawnPaused = paused
-        val hand = FixMistakes.handCovers()
+        val hand = if (own) FloatArray(0) else FixMistakes.handCovers()
         if (!paused && hand.isEmpty()) return then(rects, count, failMode)
         val nh = hand.size / 4
         val keep = if (paused) 0 else count

@@ -52,6 +52,10 @@ BLUR_HDR = $(wildcard linux/blur/*.h) engine/include/im_vision.h
 $(BUILD)/im-blur: $(BLUR_SRC) $(VISION_SRC) $(BLUR_HDR) | $(BUILD)
 	$(CC) $(CFLAGS) -pthread -Ilinux/blur $(BLUR_SRC) $(VISION_SRC) -o $@ $(LDLIBS) -ldl -Wl,-rpath,'$$ORIGIN'
 
+# make build/test-cover && build/test-cover   (the blur tracker; no model needed)
+$(BUILD)/test-cover: engine/test/test_cover.c engine/src/im_cover.c engine/include/im_vision.h | $(BUILD)
+	$(CC) $(CFLAGS) -Iengine/include engine/test/test_cover.c engine/src/im_cover.c -o $@ -lm
+
 $(BUILD)/test-blur-core: linux/blur/test_blur_core.c linux/blur/blur_core.c $(BLUR_HDR) | $(BUILD)
 	$(CC) $(CFLAGS) -Ilinux/blur linux/blur/test_blur_core.c linux/blur/blur_core.c -o $@ -lm
 

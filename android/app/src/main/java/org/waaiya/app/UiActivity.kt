@@ -35,6 +35,12 @@ class UiActivity : FlutterActivity() {
         /** The launcher entry (the ".MainActivity" alias of this activity), for notifications. */
         fun main(ctx: android.content.Context): Intent = Intent().setClassName(ctx, "${ctx.packageName}.MainActivity")
 
+        /** Waaiya's own screen is the one in use (focused, not in split screen): the blur draws no covers then, so
+         *  its switch can always be reached however much of the screen the covers took (BlurOverlay). These screens
+         *  show no pictures of people; the link player (PlayerActivity) stays covered. */
+        @Volatile var inUse = false
+            private set
+
         /** Page to show: `setup`, `filter`, `screen` (docs/UI_CONTRACT.md `navigate`). */
         const val EXTRA_PAGE = "org.waaiya.app.PAGE"
 
@@ -54,12 +60,20 @@ class UiActivity : FlutterActivity() {
     /** Permissions can change in another app (Shizuku, Android settings) without a callback. */
     override fun onResume() {
         super.onResume()
+        inUse = !isInMultiWindowMode
         bridge?.onResume()
     }
 
     override fun onPause() {
+        inUse = false
         bridge?.onPause()
         super.onPause()
+    }
+
+    /** Split screen: both apps are resumed, only the focused one is "top". */
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+        inUse = isTopResumedActivity && !isInMultiWindowMode
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
