@@ -417,4 +417,30 @@
     <string name="move_new_body">La Waaiya antigua (anterior a la versión 0.2.15) sigue en este teléfono. Desinstálela para que nunca filtren las dos a la vez.</string>
     <string name="move_new_imported">Sus ajustes se trajeron de ella.</string>
     <string name="move_remove_old">Desinstalar la Waaiya antigua</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: comprobar si hay música</string>
+    <string name="mc_title">Comprobar si hay música</string>
+    <string name="mc_unnamed">Archivo compartido</string>
+    <string name="mc_listening">Escuchando… %1$d %%</string>
+    <string name="mc_private">Waaiya escucha en este teléfono. No se envía ni se guarda nada.</string>
+    <string name="mc_music">Waaiya oyó música</string>
+    <string name="mc_music_detail">Instrumentos en %1$s (cerca del %2$s %% del clip).</string>
+    <string name="mc_percussion">Waaiya solo oyó percusión</string>
+    <string name="mc_percussion_detail">Tambores o palmas rítmicas, sin otros instrumentos, en %1$s. Usted decide.</string>
+    <string name="mc_none">No se oyeron instrumentos</string>
+    <string name="mc_none_detail">Waaiya escuchó todo el clip y no oyó instrumentos musicales.</string>
+    <string name="mc_note_quiet">La música suave bajo la voz puede pasar desapercibida.</string>
+    <string name="mc_failed">No se pudo comprobar este archivo</string>
+    <string name="mc_failed_no_model">Esta versión de Waaiya no puede comprobar si hay música.</string>
+    <string name="mc_failed_no_sound">No tiene sonido.</string>
+    <string name="mc_failed_too_long">Dura más de 30 minutos.</string>
+    <string name="mc_failed_unreadable">Waaiya no puede leer este archivo.</string>
+    <string name="mc_share_clean">Compartir sin música</string>
+    <string name="mc_share_anyway">Compartir igualmente</string>
+    <string name="mc_listen">Escuchar aquí</string>
+    <string name="mc_copying">Creando una copia sin música… %1$d %%</string>
+    <string name="mc_copy_failed">No se pudo crear la copia sin música.</string>
+    <string name="mc_copy_name">%1$s (sin música)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

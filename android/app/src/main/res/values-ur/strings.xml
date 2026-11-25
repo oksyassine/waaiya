@@ -418,4 +418,30 @@
     <string name="move_new_body">‏پرانی واعیہ (ورژن 0.2.15 سے پہلے کی) ابھی تک اس فون پر ہے۔ اسے ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔</string>
     <string name="move_new_imported">‏آپ کی سیٹنگز اس سے لے آئی گئی ہیں۔</string>
     <string name="move_remove_old">‏پرانی واعیہ ہٹائیں</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">واعية: موسیقی کی جانچ</string>
+    <string name="mc_title">موسیقی کی جانچ</string>
+    <string name="mc_unnamed">شیئر کی گئی فائل</string>
+    <string name="mc_listening">سن رہی ہے… %1$d %%</string>
+    <string name="mc_private">واعية اسی فون پر سنتی ہے۔ کچھ بھیجا یا رکھا نہیں جاتا۔</string>
+    <string name="mc_music">واعية نے موسیقی سنی</string>
+    <string name="mc_music_detail">%1$s میں ساز (کلپ کا تقریباً %2$s %%)۔</string>
+    <string name="mc_percussion">واعية نے صرف تال سنی</string>
+    <string name="mc_percussion_detail">دوسرے سازوں کے بغیر ڈھول یا تال پر تالیاں، %1$s میں۔ فیصلہ آپ کا ہے۔</string>
+    <string name="mc_none">کوئی ساز نہیں سنا گیا</string>
+    <string name="mc_none_detail">واعية نے پوری کلپ سنی اور کوئی موسیقی کا ساز نہیں سنا۔</string>
+    <string name="mc_note_quiet">بات چیت کے نیچے دھیمی موسیقی چھوٹ سکتی ہے۔</string>
+    <string name="mc_failed">اس فائل کی جانچ نہیں ہو سکی</string>
+    <string name="mc_failed_no_model">واعية کا یہ ورژن موسیقی کی جانچ نہیں کر سکتا۔</string>
+    <string name="mc_failed_no_sound">اس میں آواز نہیں ہے۔</string>
+    <string name="mc_failed_too_long">یہ 30 منٹ سے لمبی ہے۔</string>
+    <string name="mc_failed_unreadable">واعية یہ فائل نہیں پڑھ سکتی۔</string>
+    <string name="mc_share_clean">بغیر موسیقی کے شیئر کریں</string>
+    <string name="mc_share_anyway">پھر بھی شیئر کریں</string>
+    <string name="mc_listen">یہاں سنیں</string>
+    <string name="mc_copying">بغیر موسیقی کی کاپی بن رہی ہے… %1$d %%</string>
+    <string name="mc_copy_failed">بغیر موسیقی کی کاپی نہیں بن سکی۔</string>
+    <string name="mc_copy_name">%1$s (بغیر موسیقی)</string>
+    <string name="mc_list_sep">"، "</string>
 </resources>

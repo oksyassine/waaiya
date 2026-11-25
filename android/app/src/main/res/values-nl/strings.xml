@@ -417,4 +417,30 @@
     <string name="move_new_body">De oude Waaiya (van vóór versie 0.2.15) staat nog op deze telefoon. Verwijder hem, zodat ze nooit allebei tegelijk filteren.</string>
     <string name="move_new_imported">Uw instellingen zijn eruit overgenomen.</string>
     <string name="move_remove_old">Oude Waaiya verwijderen</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: controleren op muziek</string>
+    <string name="mc_title">Controleren op muziek</string>
+    <string name="mc_unnamed">Gedeeld bestand</string>
+    <string name="mc_listening">Luistert… %1$d %%</string>
+    <string name="mc_private">Waaiya luistert op deze telefoon. Er wordt niets verstuurd of bewaard.</string>
+    <string name="mc_music">Waaiya hoorde muziek</string>
+    <string name="mc_music_detail">Instrumenten in %1$s (ongeveer %2$s %% van de clip).</string>
+    <string name="mc_percussion">Waaiya hoorde alleen slagwerk</string>
+    <string name="mc_percussion_detail">Trommels of ritmisch klappen, zonder andere instrumenten, in %1$s. U beslist.</string>
+    <string name="mc_none">Geen instrumenten gehoord</string>
+    <string name="mc_none_detail">Waaiya heeft de hele clip beluisterd en geen muziekinstrumenten gehoord.</string>
+    <string name="mc_note_quiet">Zachte muziek onder spraak kan gemist worden.</string>
+    <string name="mc_failed">Dit bestand kon niet worden gecontroleerd</string>
+    <string name="mc_failed_no_model">Deze versie van Waaiya kan niet op muziek controleren.</string>
+    <string name="mc_failed_no_sound">Het heeft geen geluid.</string>
+    <string name="mc_failed_too_long">Het duurt langer dan 30 minuten.</string>
+    <string name="mc_failed_unreadable">Waaiya kan dit bestand niet lezen.</string>
+    <string name="mc_share_clean">Delen zonder muziek</string>
+    <string name="mc_share_anyway">Toch delen</string>
+    <string name="mc_listen">Hier luisteren</string>
+    <string name="mc_copying">Kopie zonder muziek maken… %1$d %%</string>
+    <string name="mc_copy_failed">De kopie zonder muziek kon niet worden gemaakt.</string>
+    <string name="mc_copy_name">%1$s (zonder muziek)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

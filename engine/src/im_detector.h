@@ -26,7 +26,8 @@ void im_detector_reset(im_detector *d);
  * -1 if the classifier failed to run. */
 int im_detector_push(im_detector *d, const float *x, int n);
 
-const float *im_detector_probs(const im_detector *d); /* [IM_DET_NOUT] latest probabilities */
+const float *im_detector_probs(const im_detector *d); /* [im_detector_nout] latest probabilities (at least IM_DET_NOUT) */
+int im_detector_nout(const im_detector *d);           /* outputs of the model (4 for the singing detector) */
 float im_detector_threshold(const im_detector *d);    /* im.det_threshold */
 float im_detector_release_s(const im_detector *d);    /* im.det_release_s */
 int im_detector_hop(const im_detector *d);            /* samples per front-end frame */

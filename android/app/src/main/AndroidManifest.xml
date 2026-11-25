@@ -110,6 +110,20 @@
         <!-- The same player for a resolved web link (stream URLs and the headers they need). Not exported: the
              exported player above ignores a stream list, so no other app can make Waaiya fetch URLs with chosen
              headers. -->
+        <!-- "Waaiya: check for music" in the share sheet (docs/MUSIC_CHECK.md). Its own entry next to the player. -->
+        <activity android:name=".MusicCheckActivity" android:exported="true" android:label="@string/music_check_label"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize">
+            <intent-filter android:label="@string/music_check_label">
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
+            </intent-filter>
+        </activity>
+        <!-- The copies without music made there, shared read-only one URI at a time. -->
+        <provider android:name=".CleanCopyProvider" android:authorities="${applicationId}.clean"
+            android:exported="false" android:grantUriPermissions="true" />
+
         <activity android:name=".LinkPlayerActivity" android:exported="false" android:theme="@style/Theme.IslamicMute.Player"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
 

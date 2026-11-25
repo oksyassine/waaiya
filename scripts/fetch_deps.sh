@@ -211,6 +211,8 @@ SINGING_FILES=(voice_v1_fp16.onnx voice_v1_fp16.state_init.bin)
 models() {
     release_files "$MODELS_TAG" models/dfn3 dfn3_stream_int8.onnx dfn3_stream_int8.state_init.bin
     release_files "$MODELS_TAG" models/voice/v3 "${SINGING_FILES[@]}"
+    # "Check for music" (Android): the AudioSet tagger, made by models/music/export_tagger.py (in models-v1 since 0.2.18)
+    release_files "$MODELS_TAG" models/music tagger_mn04.onnx
 }
 
 vision() { release_files "$VISION_TAG" models/vision "${VISION_FILES[@]}"; }

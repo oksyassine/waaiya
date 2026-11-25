@@ -418,4 +418,30 @@
     <string name="move_new_body">L\'ancienne Waaiya (d\'avant la version 0.2.15) est encore sur ce téléphone. Supprimez-la pour que les deux ne filtrent jamais en même temps.</string>
     <string name="move_new_imported">Vos réglages ont été repris d\'elle.</string>
     <string name="move_remove_old">Supprimer l\'ancienne Waaiya</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya : vérifier la musique</string>
+    <string name="mc_title">Vérifier la musique</string>
+    <string name="mc_unnamed">Fichier partagé</string>
+    <string name="mc_listening">Écoute… %1$d %%</string>
+    <string name="mc_private">Waaiya écoute sur ce téléphone. Rien n’est envoyé ni gardé.</string>
+    <string name="mc_music">Waaiya a entendu de la musique</string>
+    <string name="mc_music_detail">Instruments dans %1$s (environ %2$s %% du clip).</string>
+    <string name="mc_percussion">Waaiya n’a entendu que des percussions</string>
+    <string name="mc_percussion_detail">Tambours ou claquements rythmés, sans autres instruments, dans %1$s. À vous de décider.</string>
+    <string name="mc_none">Aucun instrument entendu</string>
+    <string name="mc_none_detail">Waaiya a écouté tout le clip et n’a entendu aucun instrument de musique.</string>
+    <string name="mc_note_quiet">Une musique faible sous la voix peut passer inaperçue.</string>
+    <string name="mc_failed">Ce fichier n’a pas pu être vérifié</string>
+    <string name="mc_failed_no_model">Cette version de Waaiya ne peut pas vérifier la musique.</string>
+    <string name="mc_failed_no_sound">Il n’a pas de son.</string>
+    <string name="mc_failed_too_long">Il dure plus de 30 minutes.</string>
+    <string name="mc_failed_unreadable">Waaiya ne peut pas lire ce fichier.</string>
+    <string name="mc_share_clean">Partager sans musique</string>
+    <string name="mc_share_anyway">Partager quand même</string>
+    <string name="mc_listen">Écouter ici</string>
+    <string name="mc_copying">Création d’une copie sans musique… %1$d %%</string>
+    <string name="mc_copy_failed">La copie sans musique n’a pas pu être créée.</string>
+    <string name="mc_copy_name">%1$s (sans musique)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

@@ -417,4 +417,30 @@
     <string name="move_new_body">Waaiya ya zamani (ya kabla ya toleo 0.2.15) bado iko kwenye simu hii. Iondoe ili mbili zisichuje kwa wakati mmoja.</string>
     <string name="move_new_imported">Mipangilio yako imeletwa kutoka kwake.</string>
     <string name="move_remove_old">Ondoa Waaiya ya zamani</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: angalia muziki</string>
+    <string name="mc_title">Angalia muziki</string>
+    <string name="mc_unnamed">Faili lililoshirikiwa</string>
+    <string name="mc_listening">Inasikiliza… %1$d %%</string>
+    <string name="mc_private">Waaiya inasikiliza kwenye simu hii. Hakuna kinachotumwa wala kuhifadhiwa.</string>
+    <string name="mc_music">Waaiya imesikia muziki</string>
+    <string name="mc_music_detail">Ala za muziki katika %1$s (karibu %2$s %% ya klipu).</string>
+    <string name="mc_percussion">Waaiya imesikia midundo tu</string>
+    <string name="mc_percussion_detail">Ngoma au makofi ya mdundo, bila ala nyingine, katika %1$s. Uamuzi ni wako.</string>
+    <string name="mc_none">Hakuna ala za muziki zilizosikika</string>
+    <string name="mc_none_detail">Waaiya imesikiliza klipu nzima na haikusikia ala za muziki.</string>
+    <string name="mc_note_quiet">Muziki wa chini chini ya mazungumzo unaweza kupitwa.</string>
+    <string name="mc_failed">Faili hili halikuweza kuangaliwa</string>
+    <string name="mc_failed_no_model">Toleo hili la Waaiya haliwezi kuangalia muziki.</string>
+    <string name="mc_failed_no_sound">Halina sauti.</string>
+    <string name="mc_failed_too_long">Ni refu kuliko dakika 30.</string>
+    <string name="mc_failed_unreadable">Waaiya haiwezi kusoma faili hili.</string>
+    <string name="mc_share_clean">Shiriki bila muziki</string>
+    <string name="mc_share_anyway">Shiriki hata hivyo</string>
+    <string name="mc_listen">Sikiliza hapa</string>
+    <string name="mc_copying">Inatengeneza nakala bila muziki… %1$d %%</string>
+    <string name="mc_copy_failed">Nakala bila muziki haikuweza kutengenezwa.</string>
+    <string name="mc_copy_name">%1$s (bila muziki)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

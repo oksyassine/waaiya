@@ -418,4 +418,30 @@
     <string name="move_new_body">Waaiya lama (sebelum versi 0.2.15) masih ada di ponsel ini. Hapus agar keduanya tidak pernah memfilter bersamaan.</string>
     <string name="move_new_imported">Setelan Anda sudah dibawa dari sana.</string>
     <string name="move_remove_old">Hapus Waaiya lama</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: periksa musik</string>
+    <string name="mc_title">Periksa musik</string>
+    <string name="mc_unnamed">File yang dibagikan</string>
+    <string name="mc_listening">Mendengarkan… %1$d %%</string>
+    <string name="mc_private">Waaiya mendengarkan di ponsel ini. Tidak ada yang dikirim atau disimpan.</string>
+    <string name="mc_music">Waaiya mendengar musik</string>
+    <string name="mc_music_detail">Alat musik di %1$s (sekitar %2$s %% dari klip).</string>
+    <string name="mc_percussion">Waaiya hanya mendengar perkusi</string>
+    <string name="mc_percussion_detail">Gendang atau tepuk tangan berirama, tanpa alat musik lain, di %1$s. Anda yang memutuskan.</string>
+    <string name="mc_none">Tidak terdengar alat musik</string>
+    <string name="mc_none_detail">Waaiya mendengarkan seluruh klip dan tidak mendengar alat musik.</string>
+    <string name="mc_note_quiet">Musik pelan di bawah suara bicara bisa terlewat.</string>
+    <string name="mc_failed">File ini tidak dapat diperiksa</string>
+    <string name="mc_failed_no_model">Versi Waaiya ini tidak dapat memeriksa musik.</string>
+    <string name="mc_failed_no_sound">File ini tidak bersuara.</string>
+    <string name="mc_failed_too_long">Durasinya lebih dari 30 menit.</string>
+    <string name="mc_failed_unreadable">Waaiya tidak dapat membaca file ini.</string>
+    <string name="mc_share_clean">Bagikan tanpa musik</string>
+    <string name="mc_share_anyway">Tetap bagikan</string>
+    <string name="mc_listen">Dengarkan di sini</string>
+    <string name="mc_copying">Membuat salinan tanpa musik… %1$d %%</string>
+    <string name="mc_copy_failed">Salinan tanpa musik tidak dapat dibuat.</string>
+    <string name="mc_copy_name">%1$s (tanpa musik)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

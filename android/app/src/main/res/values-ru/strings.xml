@@ -418,4 +418,30 @@
     <string name="move_new_body">Старая Waaiya (до версии 0.2.15) всё ещё на этом телефоне. Удалите её, чтобы они никогда не фильтровали одновременно.</string>
     <string name="move_new_imported">Ваши настройки перенесены из неё.</string>
     <string name="move_remove_old">Удалить старую Waaiya</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: проверить на музыку</string>
+    <string name="mc_title">Проверить на музыку</string>
+    <string name="mc_unnamed">Общий файл</string>
+    <string name="mc_listening">Слушает… %1$d %%</string>
+    <string name="mc_private">Waaiya слушает на этом телефоне. Ничего не отправляется и не сохраняется.</string>
+    <string name="mc_music">Waaiya услышала музыку</string>
+    <string name="mc_music_detail">Инструменты в %1$s (около %2$s %% клипа).</string>
+    <string name="mc_percussion">Waaiya услышала только ударные</string>
+    <string name="mc_percussion_detail">Барабаны или ритмичные хлопки без других инструментов в %1$s. Решать вам.</string>
+    <string name="mc_none">Инструменты не услышаны</string>
+    <string name="mc_none_detail">Waaiya прослушала весь клип и не услышала музыкальных инструментов.</string>
+    <string name="mc_note_quiet">Тихую музыку под речью можно не заметить.</string>
+    <string name="mc_failed">Не удалось проверить этот файл</string>
+    <string name="mc_failed_no_model">Эта версия Waaiya не умеет проверять на музыку.</string>
+    <string name="mc_failed_no_sound">В нём нет звука.</string>
+    <string name="mc_failed_too_long">Он длиннее 30 минут.</string>
+    <string name="mc_failed_unreadable">Waaiya не может прочитать этот файл.</string>
+    <string name="mc_share_clean">Поделиться без музыки</string>
+    <string name="mc_share_anyway">Всё равно поделиться</string>
+    <string name="mc_listen">Слушать здесь</string>
+    <string name="mc_copying">Создаётся копия без музыки… %1$d %%</string>
+    <string name="mc_copy_failed">Не удалось создать копию без музыки.</string>
+    <string name="mc_copy_name">%1$s (без музыки)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>
