@@ -56,4 +56,30 @@ class MusicRuleTest {
         assertEquals(MusicRule.Verdict.MUSIC,
             MusicRule.decide(List(20) { chant }, FloatArray(20) { -20f }, 10.5, MusicRule.DEFAULT.copy(guardSpec = null)).verdict)
     }
+
+    /** The evaluation's own vectors (eval/music_rule_vectors.json on branch music-check: its tags, its Cg thresholds):
+     *  the same windows, parts and verdicts as eval/music_check_eval.py. */
+    @Test fun matchesTheEvaluationsOwnVectors() {
+        val root = org.json.JSONObject(javaClass.classLoader!!.getResourceAsStream("music_rule_vectors_eval.json")!!.bufferedReader().readText())
+        val th = MusicRule.DEFAULT.copy(vocal = 0.5f, guardSpec = 0.10f)
+        val clips = root.getJSONArray("clips")
+        assert(clips.length() >= 10)
+        for (i in 0 until clips.length()) {
+            val c = clips.getJSONObject(i)
+            val tags = c.getJSONArray("tags")
+            val probs = (0 until tags.length()).map { k ->
+                val d = tags.getJSONObject(k)
+                FloatArray(MusicRule.CLASSES).also { p -> d.keys().forEach { p[it.toInt()] = d.getDouble(it).toFloat() } }
+            }
+            val lv = c.getJSONArray("level_db").let { a -> FloatArray(a.length()) { a.getDouble(it).toFloat() } }
+            val want = c.getJSONObject("Cg")
+            val (mus, _) = MusicRule.evidence(probs, lv, th)
+            val wantMus = want.getJSONArray("music_windows").let { a -> (0 until a.length()).map { a.getInt(it) == 1 } }
+            assertEquals(c.getString("id"), wantMus, mus.toList())
+            val r = MusicRule.decide(probs, lv, 1e9, th)
+            assertEquals(c.getString("id"), want.getString("verdict"), r.verdict.name.lowercase())
+            val wp = want.getJSONArray("parts").let { a -> (0 until a.length()).map { a.getJSONArray(it).let { p -> p.getDouble(0) to p.getDouble(1) } } }
+            assertEquals(c.getString("id"), wp, r.parts.map { it.start to it.end })
+        }
+    }
 }
