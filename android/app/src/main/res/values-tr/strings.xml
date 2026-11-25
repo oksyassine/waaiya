@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Her uygulamadan müzik aletlerini kaldırır; konuşmayı ve tilaveti korur.</string>
+    <string name="tagline">Uygulamalarınızın sesinden müzik aletlerini kaldırır; konuşmayı ve tilaveti korur.</string>
 
     <string name="onboard_title">Hoş geldiniz</string>
-    <string name="onboard_body">Waaiya, bu telefondaki her uygulamanın sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şimdilik şarkı söyleyen sesler de kaldırılır.</string>
+    <string name="onboard_body">Waaiya, bu telefondaki uygulamaların sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şarkı söyleyen sesler de kaldırılır.</string>
     <string name="onboard_question">Cinsiyetiniz</string>
     <string name="gender_man">Erkek</string>
     <string name="gender_woman">Kadın</string>
@@ -14,13 +14,13 @@
     <string name="state_on_title">Filtreleme açık</string>
     <string name="state_off_title">Filtreleme kapalı</string>
     <string name="state_starting">Başlatılıyor…</string>
-    <string name="state_on_detail">Tüm uygulamalardan müzik aletleri kaldırılıyor. Ses yaklaşık %1$d ms geç gelir (1000 ms bir saniyedir).</string>
-    <string name="state_off_detail">Başlatmak için düğmeye dokunun.</string>
-    <string name="state_model_failed">Ses modeli yüklenemedi, bu yüzden güvenlik için ses kapatıldı.</string>
+    <string name="state_on_detail">Uygulamalarınızın sesi filtreleniyor. Ses yaklaşık %1$d ms geç gelir (1000 ms bir saniyedir).</string>
+    <string name="state_off_detail">Başlatmak için düğmeye basın.</string>
+    <string name="state_model_failed">Filtre yüklenemedi, bu yüzden ses filtresiz çalmak yerine kapatıldı.</string>
     <string name="state_capture_denied">Diğer uygulamaların sesini almak için mikrofon izni gerekiyor.</string>
-    <string name="state_stopped_by_system">Android filtrelemeyi durdurdu. Yeniden başlatmak için düğmeye dokunun.</string>
+    <string name="state_stopped_by_system">Android filtrelemeyi durdurdu. Yeniden başlatmak için düğmeye basın.</string>
     <string name="state_silenced_title">Filtreleme durdu</string>
-    <string name="state_silenced">Filtreleme durdu: diğer uygulamalar susturuldu. Yeniden başlatmak için düğmeye dokunun ya da onları filtresiz duymak için Durdur\'a dokunun.</string>
+    <string name="state_silenced">Filtreleme durdu: diğer uygulamalar susturuldu. Yeniden başlatmak için düğmeye basın ya da onları filtresiz duymak için Durdur\'a basın.</string>
     <string name="release_silence">Durdur: uygulamaları filtresiz duy</string>
     <string name="power_start_cd">Filtrelemeyi başlat</string>
     <string name="power_stop_cd">Filtrelemeyi durdur</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Cinsiyetiniz</string>
     <string name="change">Değiştir</string>
 
-    <string name="player_title">Tam eşzamanlı videolar</string>
-    <string name="player_body">Bir videoyu hiç gecikme olmadan filtrelenmiş izlemek için Waaiya ile paylaşın (veya “Şununla aç”ı kullanın).</string>
+    <string name="player_title">Sesi ve görüntüsü eşzamanlı videolar</string>
+    <string name="player_body">Bir videoyu filtrelenmiş, sesi ve görüntüsü eşzamanlı olarak ve canlı filtrenin gecikmesi olmadan izlemek için Waaiya ile paylaşın (veya “Şununla aç”ı kullanın).</string>
     <string name="licences">Açık kaynak lisansları</string>
     <string name="licences_intro">Waaiya, GNU Affero Genel Kamu Lisansı v3 veya sonraki sürümleri kapsamında özgür bir yazılımdır. Kaynak kodu: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Atıf 4.0 (eğitim verileri): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,7 +83,7 @@
 
     <string name="notif_channel">Filtre</string>
     <string name="notif_title">Waaiya açık</string>
-    <string name="notif_text">Tüm uygulamalardan müzik aletleri kaldırılıyor</string>
+    <string name="notif_text">Uygulamalarınızın sesi filtreleniyor</string>
     <string name="notif_stop">Durdur</string>
     <string name="notif_resume">Sürdür</string>
     <!-- Link feature -->
@@ -126,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Ekran bulanıklaştırma</string>
-    <string name="blur_body">Filtreleme açıkken her uygulamada ekrandaki insanları ve görüntüleri örter. Telefonda çalışır; hiçbir yere bir şey gönderilmez.</string>
+    <string name="blur_body">Filtreleme açıkken ekrandaki insanları ve görüntüleri örter. Telefonda çalışır; hiçbir yere bir şey gönderilmez.</string>
     <string name="blur_on_title">Bulanıklaştırma açık</string>
     <string name="blur_off_title">Bulanıklaştırma kapalı</string>
     <string name="blur_start_cd">Bulanıklaştırmayı başlat</string>
     <string name="blur_stop_cd">Bulanıklaştırmayı durdur</string>
-    <string name="blur_off_detail">Başlatmak için düğmeye dokunun. Filtreleme de onunla başlar.</string>
+    <string name="blur_off_detail">Başlatmak için düğmeye basın. Filtreleme de onunla başlar.</string>
     <string name="blur_what_title">Neyin bulanıklaştırılacağı</string>
-    <string name="blur_women_title">Kadınları bulanıklaştır</string>
+    <string name="blur_women_title">Kadın görüntülerini bulanıklaştır</string>
     <string name="blur_women_body">Tüm vücudu örter. Uygulama bir kişinin erkek olduğundan emin değilse, onu da örter.</string>
     <string name="blur_nudity_title">Uygunsuz görüntüleri bulanıklaştır</string>
     <string name="blur_nudity_body">Kim olursa olsun çıplaklık veya açık giyim: tüm ekran örtülür.</string>
@@ -247,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Eşleme kodu</string>
     <string name="wsetup_code_dialog_body">Yalnızca bölünmüş ekranla (bir yarıda Ayarlar, diğerinde Waaiya): Ayarlardan çıkmak eşleme ekranını kapatır ve kodu artık çalışmaz. “Eşleme kodu ile cihaz eşle” altında gösterilen 6 haneli kodu yazın.</string>
     <string name="wsetup_code_ok">Eşle</string>
-    <string name="blur_strict_title">Kimler örtülmez</string>
-    <string name="blur_strict_value">Kimler örtülmez: %1$s</string>
+    <string name="blur_strict_title">Bir erkeği göstermek için gereken kesinlik</string>
+    <string name="blur_strict_value">Bir erkeği göstermek için gereken kesinlik: %1$s</string>
     <string name="blur_strict_0">Sıkı: yalnızca uygulamanın neredeyse kesin erkek dediği kişiler</string>
     <string name="blur_strict_1">Dengeli: yaklaşık iki kat daha fazla erkek örtülmez</string>
     <string name="blur_strict_2">Rahat: dengeliden birkaç erkek daha fazla</string>
     <string name="blur_strict_0_short">sıkı</string>
     <string name="blur_strict_1_short">dengeli</string>
     <string name="blur_strict_2_short">rahat</string>
-    <string name="blur_strict_help">Uygulamanın erkek olduğundan emin olmadığı herkes örtülür. Sıkı ayar 100 erkekten yaklaşık 7\'sini örtmeden bırakır; dengeli yaklaşık 14\'ünü, rahat yaklaşık 16\'sını. Daha gevşek her adım, 100 kadından yaklaşık 1 kadını daha örtmeden bırakır.</string>
+    <string name="blur_strict_help">Bir kişi yalnızca uygulama onun erkek olduğundan emin olduğunda gösterilir; diğer herkes bulanıklaştırılır. Sıkı ayar 100 erkekten yaklaşık 7\'sini gösterir, dengeli yaklaşık 14\'ünü, rahat yaklaşık 16\'sını. Bazı kadınlar yine de gözden kaçar; daha gevşek her adım 100\'de yaklaşık 1 tane daha kaçırır.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Orijinal ses henüz susturulmadı, bu yüzden müziği filtrelenmiş sesle birlikte duyarsınız. Aşağıdaki tek seferlik kurulumu tamamlayın.</string>
+    <string name="state_on_not_muted">Orijinal ses henüz susturulmadı, bu yüzden müziği filtrelenmiş sesle birlikte duyarsınız. “Kurulum” sayfasındaki tek seferlik kurulumu tamamlayın.</string>
     <string name="state_on_mute_failing">Waaiya şu anda çalan uygulamanın orijinal sesini susturamıyor, bu yüzden müzik hâlâ duyulabilir. Filtrelemeyi durdurup başlatın. Sorun sürerse tanılama raporunu gönderin (Ayarlar).</string>
-    <string name="state_too_slow">Bu telefon canlı sesi filtrelemek için çok yavaş, bu yüzden ses kesiliyor. Aşağıdaki “Bağlantı aç” yine çalışır: videoyu oynatmadan önce filtreler.</string>
+    <string name="state_too_slow">Bu telefon canlı sesi filtrelemek için çok yavaş, bu yüzden ses kesiliyor. “Bağlantılar” sayfasındaki “Bağlantı aç” yine çalışır: videoyu oynatmadan önce filtreler.</string>
     <string name="state_mono_note">Bu telefon yetişebilsin diye ses mono.</string>
-    <string name="state_blocked_silenced">Filtrelemeye izin vermediği için susturuldu: %1$s.</string>
-    <string name="state_blocked_unfiltered">Filtrelemeye izin vermediği için filtresiz çalıyor: %1$s.</string>
+    <string name="state_blocked_silenced">Susturuldu, çünkü şunlar filtrelemeye izin vermiyor: %1$s.</string>
+    <string name="state_blocked_unfiltered">Filtresiz çalıyor, çünkü şunlar filtrelemeye izin vermiyor: %1$s.</string>
     <string name="state_capture_failed">Android, diğer uygulamaların sesini Waaiya\'ya vermedi. Yeniden başlatmak için düğmeye dokunun.</string>
     <string name="state_capture_cancelled">Başlatma, Android\'in ekran paylaşımı sorusunda iptal edildi. Waaiya\'nın sesi alabilmesi için orada “Başlat” seçilmelidir. Hiçbir şey kaydedilmez veya gönderilmez.</string>
     <string name="start_no_setup_title">Müzik yine duyulacak</string>
@@ -274,7 +274,7 @@
     <string name="notif_too_slow">Bu telefon canlı filtreleme için çok yavaş: ses kesiliyor</string>
     <string name="diag_button">Sorun mu var? Tanılama raporu</string>
     <string name="diag_title">Tanılama raporu</string>
-    <string name="diag_note">Waaiya\'nın bu telefonda gördükleri. Kopyalayın veya size yardım eden kişiyle paylaşın. Uygulamanın kendisi hiçbir şey göndermez.</string>
+    <string name="diag_note">Waaiya\'nın bu telefonda gördükleri. Kopyalayın veya size yardım eden kişiyle paylaşın. Waaiya bunu kendiliğinden göndermez: kimin alacağını siz seçersiniz.</string>
     <string name="notif_stopped_title">Waaiya durdu</string>
     <string name="notif_stopped_text">Ses artık filtrelenmiyor. Yeniden başlatmak için dokunun.</string>
     <string name="notif_silenced_title">Filtreleme durdu: diğer uygulamalar susturuldu</string>
@@ -329,10 +329,10 @@
     <string name="setup_redo">Kurulumu yeniden göster</string>
     <string name="setup_go">Kuruluma git</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Örtülerden geçen dokunuşlar</string>
+    <string name="helper_title">Bulanık alanlardan geçen dokunuşlar</string>
     <string name="helper_body_off">Yardım olmadan bir örtü, altındaki dokunuşları engeller. Waaiya yardımcısı örtüleri dokunuşlar içinden geçecek şekilde çizer. Kablosuz hata ayıklamayı açın (Wi-Fi gerekir) ve düğmeye dokunun; ilk seferde kurulumdaki gibi bir kez eşleyin. Telefon yeniden başladıktan sonra düğmeye yeniden dokunun.</string>
     <string name="helper_start">Waaiya yardımcısını başlat</string>
-    <string name="helper_on">Waaiya yardımcısı örtüleri çiziyor: dokunuşlar içlerinden geçer. Telefon yeniden başladığında veya USB hata ayıklaması kapatıldığında durur; o zaman düğmeye yeniden dokunun.</string>
+    <string name="helper_on">Waaiya yardımcısı bulanıklığı çiziyor: dokunuşlar içinden geçer. Telefon yeniden başladığında veya “USB hata ayıklaması” (Geliştirici seçeneklerinde ayrı bir anahtar) kapatıldığında durur; o zaman düğmeye yeniden dokunun.</string>
     <string name="helper_shizuku_on">Örtüleri Shizuku çiziyor: dokunuşlar içlerinden geçer.</string>
     <string name="helper_or_shizuku">Ya da Shizuku ile:</string>
     <string name="guide_w_helper_note">Ekran bulanıklaştırma açıkken kurulum, dokunuşlar örtülerden geçsin diye Waaiya yardımcısını da başlatır. Bunun için “USB hata ayıklaması”nı açık tutun (Kablosuz hata ayıklama kapalı olabilir). Telefon yeniden başladıktan sonra yardımcıyı Ekran sayfasından yeniden başlatın.</string>
@@ -348,7 +348,7 @@
     <string name="notif_fix_remove_covers">Elle konan örtüleri kaldır</string>
     <string name="notif_fix_note_missed">Bir şey kaçtı</string>
     <string name="notif_fix_note_wrong">Yanlışlıkla gizlendi</string>
-    <string name="notif_fix_noted">Not edildi (bu telefonda %1$d not)</string>
+    <string name="notif_fix_noted">Not edildi. Bu telefondaki notlar: %1$d</string>
     <string name="notif_fix_picker_hint">Örtülecek alanın üzerinde parmağınızı sürükleyin.</string>
     <string name="notif_fix_picker_cover">Ört</string>
     <string name="notif_fix_picker_cancel">İptal</string>
@@ -425,13 +425,13 @@
     <string name="mc_title">Müzik kontrolü</string>
     <string name="mc_unnamed">Paylaşılan dosya</string>
     <string name="mc_listening">Dinleniyor… %%%1$d</string>
-    <string name="mc_private">Waaiya bu telefonda dinler. Hiçbir şey gönderilmez ya da saklanmaz.</string>
+    <string name="mc_private">Waaiya bu telefonda dinler. Ses kaydı hiçbir yere gönderilmez.</string>
     <string name="mc_music">Waaiya müzik duydu</string>
     <string name="mc_music_detail">%1$s içinde çalgılar (klibin yaklaşık %%%2$s kadarı).</string>
     <string name="mc_percussion">Waaiya yalnızca ritim duydu</string>
     <string name="mc_percussion_detail">Başka çalgı olmadan davul ya da ritimli el çırpma, %1$s içinde. Karar sizin.</string>
     <string name="mc_none">Çalgı duyulmadı</string>
-    <string name="mc_none_detail">Waaiya klibin tamamını dinledi ve müzik aleti duymadı.</string>
+    <string name="mc_none_detail">Waaiya klibin tamamını dinledi ve müzik aleti duymadı. Bazı müzikler gözden kaçabilir, çoğunlukla konuşmanın altındaki hafif müzik.</string>
     <string name="mc_note_quiet">Konuşmanın altındaki hafif müzik gözden kaçabilir.</string>
     <string name="mc_failed">Bu dosya kontrol edilemedi</string>
     <string name="mc_failed_no_model">Waaiya\'nın bu sürümü müzik kontrolü yapamaz.</string>
@@ -445,4 +445,13 @@
     <string name="mc_copy_failed">Müziksiz kopya hazırlanamadı.</string>
     <string name="mc_copy_name">%1$s (müziksiz)</string>
     <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Basit mod (deneme): Geliştirici seçenekleri olmadan</string>
+    <string name="simple_body">Aşağıdaki kurulumun çok zor olduğu telefonlar için. Waaiya filtrelerken telefonun medya sesini kapatır ve filtrelenmiş sesi başka bir ses kanalında çalar. Ses düğmeleriniz Waaiya\'nın ses düzeyini ayarlar. Android her başlatmada ekranı paylaşmak için sorar. Filtreleme durduğunda medya sesi geri gelir.</string>
+    <string name="simple_switch">Basit modu kullan</string>
+    <string name="simple_channel_title">Ses kanalı: %1$s</string>
+    <string name="simple_channel_alarm">Alarm</string>
+    <string name="simple_channel_notification">Bildirim</string>
+    <string name="simple_channel_help">Hiçbir şey duymazsanız ya da kulaklık takılıyken ses telefonun hoparlöründen gelirse diğer kanalı deneyin. Telefon titreşimdeyken veya Rahatsız Etmeyin açıkken Bildirim sessizdir.</string>
+    <string name="simple_test_note">Bu bir denemedir. Denedikten sonra (hoparlör, kulaklık, Bluetooth) lütfen Ayarlar\'dan tanılama raporunu gönderin.</string>
+    <string name="simple_on_detail">Basit mod (deneme): Waaiya filtrelerken medya sesi kapalıdır.</string>
 </resources>

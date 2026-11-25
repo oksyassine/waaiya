@@ -13,14 +13,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Membuang alat muzik daripada setiap apl dan mengekalkan percakapan serta bacaan.';
+      'Membuang alat muzik daripada bunyi apl anda dan mengekalkan percakapan serta bacaan.';
 
   @override
   String get onboardTitle => 'Selamat datang';
 
   @override
   String get onboardBody =>
-      'Waaiya membuang alat muzik daripada bunyi setiap apl pada telefon ini. Percakapan dan bacaan al-Quran dikekalkan. Buat masa ini, suara nyanyian turut dibuang.';
+      'Waaiya membuang alat muzik daripada bunyi apl pada telefon ini. Percakapan dan bacaan al-Quran dikekalkan. Suara nyanyian turut dibuang.';
 
   @override
   String get onboardQuestion => 'Saya seorang';
@@ -46,15 +46,15 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Alat muzik dibuang daripada semua apl. Bunyi sampai lewat kira-kira $delayMs ms (1000 ms ialah satu saat).';
+    return 'Menapis bunyi apl anda. Bunyi sampai lewat kira-kira $delayMs ms (1000 ms ialah satu saat).';
   }
 
   @override
-  String get stateOffDetail => 'Ketik butang untuk bermula.';
+  String get stateOffDetail => 'Tekan butang untuk bermula.';
 
   @override
   String get stateModelFailed =>
-      'Model bunyi tidak dapat dimuatkan, jadi bunyi disenyapkan demi keselamatan.';
+      'Penapis tidak dapat dimuatkan, jadi bunyi disenyapkan dan bukannya dimainkan tanpa penapisan.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android menghentikan penapisan. Ketik butang untuk bermula semula.';
+      'Android menghentikan penapisan. Tekan butang untuk bermula semula.';
 
   @override
   String get stateSilencedTitle => 'Penapisan berhenti';
 
   @override
   String get stateSilenced =>
-      'Penapisan berhenti: apl lain disenyapkan. Ketik butang untuk bermula semula, atau Henti untuk mendengarnya tanpa penapisan.';
+      'Penapisan berhenti: apl lain disenyapkan. Tekan butang untuk bermula semula, atau Henti untuk mendengarnya tanpa penapisan.';
 
   @override
   String get releaseSilence => 'Henti: dengar apl tanpa penapisan';
@@ -82,48 +82,11 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android akan meminta untuk berkongsi skrin anda. Hanya bunyi yang digunakan: tiada apa-apa dirakam atau dihantar.';
+      'Android akan meminta untuk berkongsi skrin anda. Tiada apa-apa dirakam atau dihantar.';
 
   @override
   String get needRecordAudio =>
       'Waaiya memerlukan kebenaran mikrofon untuk menerima bunyi apl lain. Ia tidak sekali-kali merakam anda.';
-
-  @override
-  String get micOpenSettings =>
-      'Buka tetapan Waaiya untuk membenarkan mikrofon';
-
-  @override
-  String get keepRunningTitle => 'Biarkan Waaiya terus berjalan';
-
-  @override
-  String get keepRunningBattery =>
-      'Telefon ini mungkin menutup Waaiya selepas beberapa ketika untuk menjimatkan bateri, lalu penapisan berhenti. Dalam tetapan Waaiya, di bawah Bateri, pilih “Tanpa had”. Pada Xiaomi, Redmi dan POCO: “Tiada sekatan”, dan hidupkan juga Mula automatik.';
-
-  @override
-  String get keepRunningNotifications =>
-      'Pemberitahuan Waaiya dimatikan, jadi ia tidak dapat memberitahu anda apabila penapisan berhenti. Hidupkannya dalam tetapan Waaiya.';
-
-  @override
-  String get keepRunningOpen => 'Buka tetapan Waaiya';
-
-  @override
-  String get lockAskTitle => 'Teruskan menapis apabila skrin dikunci?';
-
-  @override
-  String get lockTitle => 'Teruskan menapis apabila skrin dikunci';
-
-  @override
-  String get lockBody =>
-      'Pada telefon ini Android bertanya sebelum setiap permulaan, kemudian menghentikan penapisan setiap kali skrin dikunci. Waaiya boleh mengelakkannya dengan menarik balik perlindungan perkongsian skrin Android semasa menapis, dan memulihkannya apabila penapisan berhenti. Selagi ia ditarik balik, perkongsian skrin lain pada masa yang sama (panggilan video, misalnya) juga boleh menunjukkan pemberitahuan anda. Perubahan berkuat kuasa pada permulaan seterusnya.';
-
-  @override
-  String get lockYes => 'Teruskan menapis';
-
-  @override
-  String get lockNo => 'Henti setiap kali dikunci';
-
-  @override
-  String get sendToSupport => 'Hantar kepada Waaiya';
 
   @override
   String get setupBannerTitle => 'Satu langkah lagi';
@@ -283,11 +246,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get change => 'Tukar';
 
   @override
-  String get playerTitle => 'Video dalam penyegerakan sempurna';
+  String get playerTitle => 'Video dengan bunyi dan gambar yang segerak';
 
   @override
   String get playerBody =>
-      'Kongsi video kepada Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan penapisan tanpa kelewatan.';
+      'Kongsi video kepada Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan penapisan, dengan bunyi dan gambar yang segerak, tanpa kelewatan penapis langsung.';
 
   @override
   String get licences => 'Lesen sumber terbuka';
@@ -429,7 +392,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Menutup orang dan imej pada skrin, dalam setiap apl, semasa penapisan dihidupkan. Ia berjalan pada telefon; tiada apa-apa dihantar ke mana-mana.';
+      'Menutup orang dan imej pada skrin semasa penapisan dihidupkan. Ia berjalan pada telefon; tiada apa-apa dihantar ke mana-mana.';
 
   @override
   String get blurOnTitle => 'Pengaburan dihidupkan';
@@ -445,13 +408,13 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'Ketik butang untuk bermula. Penapisan bermula bersamanya.';
+      'Tekan butang untuk bermula. Penapisan bermula bersamanya.';
 
   @override
   String get blurWhatTitle => 'Apa yang dikaburkan';
 
   @override
-  String get blurWomenTitle => 'Kaburkan wanita';
+  String get blurWomenTitle => 'Kaburkan imej wanita';
 
   @override
   String get blurWomenBody =>
@@ -838,11 +801,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get wsetupCodeOk => 'Gandingkan';
 
   @override
-  String get blurStrictTitle => 'Siapa yang dibiarkan tidak ditutup';
+  String get blurStrictTitle => 'Sejauh mana pasti sebelum lelaki ditunjukkan';
 
   @override
   String blurStrictValue(String level) {
-    return 'Siapa yang dibiarkan tidak ditutup: $level';
+    return 'Sejauh mana pasti sebelum lelaki ditunjukkan: $level';
   }
 
   @override
@@ -850,7 +813,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get blurStrict1 =>
-      'Seimbang: kira-kira dua kali ganda lelaki dibiarkan tidak ditutup';
+      'Seimbang: kira-kira dua kali ganda lelaki ditunjukkan';
 
   @override
   String get blurStrict2 =>
@@ -867,11 +830,11 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Sesiapa yang apl tidak pasti lelaki akan ditutup. Ketat membiarkan kira-kira 7 daripada 100 lelaki tidak ditutup; seimbang kira-kira 14, longgar kira-kira 16. Setiap langkah yang kurang ketat juga membiarkan kira-kira 1 lagi daripada 100 wanita tidak ditutup.';
+      'Seseorang hanya ditunjukkan apabila apl pasti dia lelaki; orang lain semuanya dikaburkan. Ketat menunjukkan kira-kira 7 daripada 100 lelaki, seimbang kira-kira 14, longgar kira-kira 16. Sesetengah wanita masih terlepas; setiap langkah yang kurang ketat melepaskan kira-kira 1 lagi daripada 100.';
 
   @override
   String get stateOnNotMuted =>
-      'Bunyi asal belum disenyapkan, jadi anda mendengar muzik bersama bunyi yang ditapis. Selesaikan persediaan sekali sahaja di bawah.';
+      'Bunyi asal belum disenyapkan, jadi anda mendengar muzik bersama bunyi yang ditapis. Selesaikan persediaan sekali sahaja di halaman “Persediaan”.';
 
   @override
   String get stateOnMuteFailing =>
@@ -879,11 +842,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get stateTooSlow =>
-      'Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus. “Buka pautan” di bawah masih berfungsi: ia menapis video sebelum memainkannya.';
-
-  @override
-  String get stateTooSlowNoLinks =>
-      'Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus.';
+      'Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus. “Buka pautan” di halaman “Pautan” masih berfungsi: ia menapis video sebelum memainkannya.';
 
   @override
   String get stateMonoNote =>
@@ -891,12 +850,12 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'Disenyapkan, kerana ia tidak membenarkan penapisan: $apps.';
+    return 'Disenyapkan kerana penapisan tidak dibenarkan oleh: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'Dimainkan tanpa penapisan, kerana ia tidak membenarkan penapisan: $apps.';
+    return 'Dimainkan tanpa penapisan kerana penapisan tidak dibenarkan oleh: $apps.';
   }
 
   @override
@@ -915,10 +874,6 @@ class AppLocalizationsMs extends AppLocalizations {
       'Persediaan sekali sahaja belum dibuat. Tanpanya Waaiya tidak dapat menyenyapkan bunyi asal: anda akan mendengar muzik dan bunyi yang ditapis serentak.\n\n“Buka pautan” berfungsi tanpa sebarang persediaan.';
 
   @override
-  String get startNoSetupBodyNoLinks =>
-      'Persediaan sekali sahaja belum dibuat. Tanpanya Waaiya tidak dapat menyenyapkan bunyi asal: anda akan mendengar muzik dan bunyi yang ditapis serentak.';
-
-  @override
   String get startNoSetupSetup => 'Buat persediaan';
 
   @override
@@ -932,7 +887,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Apa yang Waaiya lihat pada telefon ini. Salin atau kongsikannya dengan sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+      'Apa yang Waaiya lihat pada telefon ini. Salin atau kongsikannya dengan sesiapa yang membantu anda. Waaiya tidak menghantarnya dengan sendiri: anda yang memilih siapa yang menerimanya.';
 
   @override
   String get notifStoppedTitle => 'Waaiya berhenti';
@@ -973,7 +928,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get setupGo => 'Pergi ke persediaan';
 
   @override
-  String get helperTitle => 'Sentuhan melalui penutup';
+  String get helperTitle => 'Ketik melalui kawasan kabur';
 
   @override
   String get helperBodyOff =>
@@ -984,7 +939,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'Pembantu Waaiya melukis penutup: sentuhan dapat melaluinya. Ia berhenti apabila telefon dimulakan semula atau apabila Penyahpepijatan USB dimatikan; ketik butang sekali lagi pada masa itu.';
+      'Pembantu Waaiya melukis kawasan kabur: ketikan dapat melaluinya. Ia berhenti apabila telefon dimulakan semula atau apabila “Penyahpepijatan USB” (suis berasingan dalam Pilihan pembangun) dimatikan; ketik butang sekali lagi pada masa itu.';
 
   @override
   String get helperShizukuOn =>
@@ -1000,37 +955,37 @@ class AppLocalizationsMs extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle => 'Mod mudah (percubaan): tanpa Pilihan pembangun';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Untuk telefon yang persediaan di bawah terlalu sukar dibuat. Semasa Waaiya menapis, ia menyenyapkan bunyi media telefon dan memainkan bunyi yang ditapis pada saluran bunyi lain. Butang kelantangan anda menetapkan kelantangan Waaiya. Android meminta untuk berkongsi skrin pada setiap permulaan. Bunyi media kembali apabila penapisan berhenti.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Gunakan mod mudah';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Saluran bunyi: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'Penggera';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Pemberitahuan';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Jika anda tidak mendengar apa-apa, atau bunyi keluar dari pembesar suara telefon semasa fon telinga dipakai, cuba saluran yang satu lagi. Pemberitahuan senyap semasa telefon dalam mod getar atau Jangan Ganggu.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Ini ialah percubaan. Selepas mencubanya (pembesar suara, fon telinga, Bluetooth), sila hantar laporan diagnostik dari Tetapan.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Mod mudah (percubaan): bunyi media disenyapkan semasa Waaiya menapis.';
 
   @override
   String get worshipPrayerFajr => 'Subuh';
@@ -1173,7 +1128,7 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay => 'Alat muzik dibuang daripada semua apl.';
+  String get stateOnDetailNoDelay => 'Menapis bunyi apl anda.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1252,7 +1207,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.';
+      'Apa yang Waaiya lihat pada komputer ini. Salin dan berikannya kepada sesiapa yang membantu anda. Waaiya tidak menghantarnya dengan sendiri: anda yang memilih siapa yang menerimanya.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1388,7 +1343,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'Dicatat ($count catatan pada peranti ini).';
+    return 'Dicatat. Catatan pada peranti ini: $count.';
   }
 
   @override
@@ -1474,7 +1429,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get worshipAsrTitle => 'Waktu Asar';
 
   @override
-  String get worshipAsrStandard => 'Standard (Syafie, Maliki, Hanbali)';
+  String get worshipAsrStandard => 'Jumhur (Syafie, Maliki, Hanbali)';
 
   @override
   String get worshipAsrHanafi => 'Hanafi';
@@ -1739,11 +1694,6 @@ class AppLocalizationsMs extends AppLocalizations {
   String get protectDelayTitle => 'Tunggu sebelum mematikan';
 
   @override
-  String protectDelayLongAsk(Object value) {
-    return 'Pilih masa menunggu $value? Mulai sekarang, mematikan penapis atau sebarang perlindungan menunggu $value, begitu juga memendekkan masa menunggu ini.';
-  }
-
-  @override
   String get protectDelayBody =>
       'Contohnya dengan 30 minit: anda menekan butang untuk berhenti, tetapi penapis terus berfungsi. Selepas 30 minit, halaman ini bertanya sama ada anda masih mahu berhenti. Tekan “Sahkan” dalam masa 15 minit dan ia berhenti; jika tidak, tiada apa yang berubah. Begitu juga untuk mematikan penutup atau perlindungan lain. Menghidupkan sesuatu sentiasa berlaku serta-merta.';
 
@@ -1790,7 +1740,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Dengan PIN, menghentikan penapis atau mematikan mana-mana perlindungan akan meminta PIN dahulu. Contohnya, ibu bapa menetapkan PIN supaya anak tidak boleh mematikan penapis. Menukar masa menunggu atau PIN juga memintanya.';
+      'Dengan PIN, menghentikan penapis atau mematikan mana-mana perlindungan akan meminta PIN dahulu. Contohnya, ibu bapa menetapkan PIN supaya anak tidak boleh mematikan penapis dalam Waaiya (apa yang tidak dapat dihalangnya disenaraikan di bawah). Menukar masa menunggu atau PIN juga memintanya.';
 
   @override
   String get protectPinForgot =>
@@ -1822,7 +1772,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'PIN salah. Tinggal $count cubaan sebelum rehat.';
+    return 'PIN salah. Cubaan yang tinggal sebelum rehat: $count.';
   }
 
   @override
@@ -1884,7 +1834,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Apa yang tidak dapat dihalang: henti paksa, nyahpasang, mengosongkan data Waaiya dan tetapan Android sendiri. Menyekatnya memerlukan kebenaran khas Android yang tidak digunakan oleh Waaiya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
+      'Apa yang tidak dapat dihalang: memulakan semula telefon (penapisan tidak bermula semula dengan sendiri), henti paksa, nyahpasang, mengosongkan data Waaiya dan tetapan Android sendiri. Menyekatnya memerlukan kebenaran khas Android yang tidak digunakan oleh Waaiya. Ini melindungi daripada saat lemah, bukan daripada orang yang berazam.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1934,7 +1884,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya membuang alat muzik daripada bunyi setiap apl pada komputer ini. Percakapan dan bacaan al-Quran dikekalkan. Buat masa ini, suara nyanyian turut dibuang.';
+      'Waaiya membuang alat muzik daripada bunyi apl pada komputer ini. Percakapan dan bacaan al-Quran dikekalkan. Suara nyanyian turut dibuang.';
 
   @override
   String get worshipUseLocation => 'Guna lokasi saya';
@@ -1968,7 +1918,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'Waktu rasmi Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi $city.';
+    return 'Waktu yang dikira agar sepadan dengan jadual Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi $city.';
   }
 
   @override
@@ -1990,7 +1940,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi.';
+      'Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Semasa ia diangkat, perkongsian skrin lain pada masa yang sama juga boleh menunjukkan pemberitahuan dan kod anda kepada orang lain.';
 
   @override
   String get notifTextNextStart =>
@@ -2021,14 +1971,14 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get notifTextForced =>
-      'Hidup: pada telefon ini Android bertanya sebelum setiap permulaan, lalu akan menghentikan penapisan setiap kali skrin dikunci. Waaiya mengangkat perlindungan ini semasa menapis, jadi teks pemberitahuan juga ditunjukkan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi.';
+      'Hidup: pada telefon ini Android bertanya sebelum setiap permulaan, lalu akan menghentikan penapisan setiap kali skrin dikunci. Waaiya mengangkat perlindungan ini semasa menapis, jadi teks pemberitahuan juga ditunjukkan. Semasa ia diangkat, perkongsian skrin lain pada masa yang sama juga boleh menunjukkan pemberitahuan dan kod anda kepada orang lain.';
 
   @override
   String get oneAppTitle => 'Semasa mula: “Kongsi satu apl”, kemudian Waaiya';
 
   @override
   String get oneAppBody =>
-      'Apabila Android bertanya apa yang hendak dikongsi, pilih “Kongsi satu apl”, kemudian Waaiya. Semua apl masih ditapis, pemberitahuan kekal boleh dibaca, dan penapisan terus berjalan apabila skrin dikunci. Dengan seluruh skrin, Android menyembunyikan teks pemberitahuan dan menghentikan penapisan setiap kali skrin dikunci.';
+      'Apabila Android bertanya apa yang hendak dikongsi, pilih “Kongsi satu apl”, kemudian Waaiya. Apl lain masih ditapis, pemberitahuan kekal boleh dibaca, dan penapisan terus berjalan apabila skrin dikunci. Dengan seluruh skrin, Android menyembunyikan teks pemberitahuan dan menghentikan penapisan setiap kali skrin dikunci.';
 
   @override
   String get oneAppPair =>
@@ -2041,4 +1991,58 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get blurNeedsRestart =>
       'Hentikan dan mulakan semula penapisan untuk menggunakan kabur: ia memerlukan seluruh skrin, dan penapisan ini bermula dengan pilihan “Kongsi satu apl”.';
+
+  @override
+  String get micOpenSettings =>
+      'Buka tetapan Waaiya untuk membenarkan mikrofon';
+
+  @override
+  String get keepRunningTitle => 'Biarkan Waaiya terus berjalan';
+
+  @override
+  String get keepRunningBattery =>
+      'Telefon ini mungkin menutup Waaiya selepas beberapa ketika untuk menjimatkan bateri, lalu penapisan berhenti. Dalam tetapan Waaiya, di bawah Bateri, pilih “Tanpa had”. Pada Xiaomi, Redmi dan POCO: “Tiada sekatan”, dan hidupkan juga Mula automatik.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Pemberitahuan Waaiya dimatikan, jadi ia tidak dapat memberitahu anda apabila penapisan berhenti. Hidupkannya dalam tetapan Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Buka tetapan Waaiya';
+
+  @override
+  String get lockAskTitle => 'Teruskan menapis apabila skrin dikunci?';
+
+  @override
+  String get lockTitle => 'Teruskan menapis apabila skrin dikunci';
+
+  @override
+  String get lockBody =>
+      'Pada telefon ini Android bertanya sebelum setiap permulaan, kemudian menghentikan penapisan setiap kali skrin dikunci. Waaiya boleh mengelakkannya dengan menarik balik perlindungan perkongsian skrin Android semasa menapis, dan memulihkannya apabila penapisan berhenti. Selagi ia ditarik balik, perkongsian skrin lain pada masa yang sama (panggilan video, misalnya) juga boleh menunjukkan pemberitahuan anda. Perubahan berkuat kuasa pada permulaan seterusnya.';
+
+  @override
+  String get lockYes => 'Teruskan menapis';
+
+  @override
+  String get lockNo => 'Henti setiap kali dikunci';
+
+  @override
+  String get sendToSupport => 'Hantar kepada Waaiya';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Persediaan sekali sahaja belum dibuat. Tanpanya Waaiya tidak dapat menyenyapkan bunyi asal: anda akan mendengar muzik dan bunyi yang ditapis serentak.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'Pilih masa menunggu $value? Mulai sekarang, mematikan penapis atau sebarang perlindungan menunggu $value, begitu juga memendekkan masa menunggu ini.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android menutup Waaiya semasa ia menapis, jadi bunyi tidak lagi ditapis.';
 }

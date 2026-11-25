@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">واعية</string>
-    <string name="tagline">يزيل الآلات الموسيقية من صوت كل التطبيقات، ويُبقي الكلام والتلاوة.</string>
+    <string name="tagline">تزيل الآلات الموسيقية من صوت تطبيقاتك، وتُبقي الكلام والتلاوة.</string>
 
     <string name="onboard_title">أهلًا بك</string>
-    <string name="onboard_body">تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.</string>
+    <string name="onboard_body">تزيل واعية الآلات الموسيقية من صوت التطبيقات على هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا.</string>
     <string name="onboard_question">أنا</string>
     <string name="gender_man">رجل</string>
     <string name="gender_woman">امرأة</string>
@@ -13,9 +13,9 @@
     <string name="state_on_title">التصفية تعمل</string>
     <string name="state_off_title">التصفية متوقفة</string>
     <string name="state_starting">جارٍ التشغيل…</string>
-    <string name="state_on_detail">تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو %1$d ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).</string>
+    <string name="state_on_detail">تُصفّى أصوات تطبيقاتك. يتأخّر الصوت نحو %1$d ميلي ثانية (1000 ميلي ثانية = ثانية واحدة).</string>
     <string name="state_off_detail">اضغط الزر للتشغيل.</string>
-    <string name="state_model_failed">تعذّر تحميل نموذج الصوت، فكُتم الصوت احتياطًا.</string>
+    <string name="state_model_failed">تعذّر تحميل المرشِّح، فكُتم الصوت بدل أن يُسمع دون تصفية.</string>
     <string name="state_capture_denied">يلزم إذن الميكروفون لاستقبال صوت التطبيقات الأخرى.</string>
     <string name="state_stopped_by_system">أوقف أندرويد التصفية. اضغط الزر للتشغيل من جديد.</string>
     <string name="state_silenced_title">توقفت التصفية</string>
@@ -24,7 +24,7 @@
     <string name="power_start_cd">تشغيل التصفية</string>
     <string name="power_stop_cd">إيقاف التصفية</string>
     <string name="capture_hint">سيطلب أندرويد مشاركة الشاشة. لا يُسجَّل شيء ولا يُرسَل.</string>
-    <string name="need_record_audio">تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.</string>
+    <string name="need_record_audio">تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا تسجّل صوتك أبدًا.</string>
 
     <string name="setup_banner_title">بقيت خطوة واحدة</string>
     <string name="setup_banner_body">بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.</string>
@@ -72,8 +72,8 @@
     <string name="setting_gender_title">أنا</string>
     <string name="change">تغيير</string>
 
-    <string name="player_title">فيديو بتزامن تام</string>
-    <string name="player_body">شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.</string>
+    <string name="player_title">فيديو بصوت وصورة متزامنين</string>
+    <string name="player_body">شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى، بصوت وصورة متزامنين، دون تأخير التصفية المباشرة.</string>
     <string name="licences">تراخيص المصادر المفتوحة</string>
     <string name="licences_intro">واعية برنامج حر بموجب رخصة جنو أفيرو العمومية (AGPL) الإصدار 3 أو أحدث. الشيفرة المصدرية: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">رخصة المشاع الإبداعي - النسبة 4.0 (بيانات التدريب): https://creativecommons.org/licenses/by/4.0/</string>
@@ -82,7 +82,7 @@
 
     <string name="notif_channel">التصفية</string>
     <string name="notif_title">التصفية تعمل</string>
-    <string name="notif_text">تُزال الآلات من صوت كل التطبيقات</string>
+    <string name="notif_text">تُصفّى أصوات تطبيقاتك</string>
     <string name="notif_stop">إيقاف</string>
     <string name="notif_resume">استئناف</string>
     <!-- Link feature -->
@@ -125,22 +125,22 @@
 
     <!-- Screen blur -->
     <string name="blur_title">تمويه الشاشة</string>
-    <string name="blur_body">يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.</string>
+    <string name="blur_body">يغطّي الأشخاص والصور على الشاشة ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.</string>
     <string name="blur_on_title">التمويه يعمل</string>
     <string name="blur_off_title">التمويه متوقف</string>
     <string name="blur_start_cd">تشغيل التمويه</string>
     <string name="blur_stop_cd">إيقاف التمويه</string>
     <string name="blur_off_detail">اضغط الزر للتشغيل. تبدأ التصفية معه.</string>
     <string name="blur_what_title">ما الذي يُموَّه</string>
-    <string name="blur_women_title">تمويه النساء</string>
+    <string name="blur_women_title">تمويه صور النساء</string>
     <string name="blur_women_body">يغطّي الجسم كله. وإن لم يتأكّد التطبيق أن الشخص رجل، غطّاه أيضًا.</string>
     <string name="blur_nudity_title">تمويه الصور غير المحتشمة</string>
     <string name="blur_nudity_body">العُري أو اللباس الكاشف، على أيّ أحد: تُغطّى الشاشة كلها.</string>
     <string name="blur_fail_title">تغطية الشاشة إذا عجز التمويه عن المتابعة</string>
     <string name="blur_fail_body">مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="blur_setup_manual">السماح من إعدادات أندرويد</string>
-    <string name="blur_status_needs_setup">ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.</string>
-    <string name="blur_status_needs_overlay">ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.</string>
+    <string name="blur_status_needs_setup">ليعمل التمويه، يجب أن تظهر واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.</string>
+    <string name="blur_status_needs_overlay">ليعمل التمويه، يجب أن تظهر واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.</string>
     <string name="blur_fail_unavailable">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="blur_fail_needs_a11y">معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» من إعدادات أندرويد فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.</string>
     <string name="language_title">اللغة</string>
@@ -246,22 +246,22 @@
     <string name="wsetup_code_dialog_title">رمز الإقران</string>
     <string name="wsetup_code_dialog_body">مع تقسيم الشاشة فقط (الإعدادات في نصف وواعية في النصف الآخر): الخروج من الإعدادات يُغلق شاشة الإقران فيتوقف رمزها عن العمل. اكتب الرمز المكوّن من 6 أرقام الظاهر تحت ‏«إقران الجهاز باستخدام رمز الإقران»‏.</string>
     <string name="wsetup_code_ok">إقران</string>
-    <string name="blur_strict_title">مَن يبقى دون تغطية</string>
-    <string name="blur_strict_value">مَن يبقى دون تغطية: %1$s</string>
+    <string name="blur_strict_title">مدى التأكد قبل إظهار رجل</string>
+    <string name="blur_strict_value">مدى التأكد قبل إظهار رجل: %1$s</string>
     <string name="blur_strict_0">صارم: فقط من يكاد التطبيق يجزم أنه رجل</string>
     <string name="blur_strict_1">متوازن: نحو ضعف عدد الرجال دون تغطية</string>
     <string name="blur_strict_2">متساهل: رجال أكثر قليلًا من المتوازن</string>
     <string name="blur_strict_0_short">صارم</string>
     <string name="blur_strict_1_short">متوازن</string>
     <string name="blur_strict_2_short">متساهل</string>
-    <string name="blur_strict_help">كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.</string>
+    <string name="blur_strict_help">لا يظهر الشخص إلا إذا تأكد التطبيق أنه رجل، ويُموَّه كل من سواه. في الوضع الصارم يظهر نحو 7 رجال من كل 100، وفي المتوازن نحو 14، وفي المتساهل نحو 16. ومع ذلك تفوت بعض النساء، وكل درجة أقل صرامة تُفوّت نحو امرأة إضافية من كل 100.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.</string>
+    <string name="state_on_not_muted">الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة في صفحة «الإعداد».</string>
     <string name="state_on_mute_failing">لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (الإعدادات).</string>
-    <string name="state_too_slow">هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.</string>
+    <string name="state_too_slow">هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» في صفحة «الروابط» يعمل: فهو يصفّي الفيديو قبل تشغيله.</string>
     <string name="state_mono_note">الصوت أحادي (مونو) ليتمكن هذا الهاتف من المتابعة.</string>
-    <string name="state_blocked_silenced">كُتم صوته لأنه لا يسمح بالتصفية: %1$s.</string>
-    <string name="state_blocked_unfiltered">يُسمع دون تصفية لأنه لا يسمح بها: %1$s.</string>
+    <string name="state_blocked_silenced">كُتم لعدم السماح بالتصفية: %1$s.</string>
+    <string name="state_blocked_unfiltered">يُسمع دون تصفية لعدم السماح بها: %1$s.</string>
     <string name="state_capture_failed">لم يُعطِ أندرويد واعية صوت التطبيقات الأخرى. اضغط الزر للتشغيل من جديد.</string>
     <string name="state_capture_cancelled">أُلغي التشغيل عند سؤال أندرويد عن مشاركة الشاشة. تحتاج واعية أن تختار «بدء» هناك لاستقبال الصوت. لا يُسجَّل شيء ولا يُرسَل.</string>
     <string name="start_no_setup_title">ستبقى الموسيقى مسموعة</string>
@@ -273,7 +273,7 @@
     <string name="notif_too_slow">هذا الهاتف أبطأ من التصفية المباشرة: الصوت يتقطّع</string>
     <string name="diag_button">مشكلة؟ تقرير التشخيص</string>
     <string name="diag_title">تقرير التشخيص</string>
-    <string name="diag_note">ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.</string>
+    <string name="diag_note">ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. لا ترسله واعية من تلقاء نفسها: أنت تختار من يستلمه.</string>
     <string name="notif_stopped_title">توقفت واعية</string>
     <string name="notif_stopped_text">الصوت لم يعد يُصفّى. اضغط للتشغيل من جديد.</string>
     <string name="notif_silenced_title">توقفت التصفية: التطبيقات الأخرى مكتومة</string>
@@ -328,10 +328,10 @@
     <string name="setup_redo">إظهار الإعداد من جديد</string>
     <string name="setup_go">الذهاب إلى الإعداد</string>
     <!-- مساعد واعية للأغطية (CoverHelper) -->
-    <string name="helper_title">مرور اللمس عبر الأغطية</string>
+    <string name="helper_title">اللمس عبر المناطق المموّهة</string>
     <string name="helper_body_off">دون مساعدة، يمنع الغطاء اللمس تحته. يرسم مساعد واعية الأغطية بحيث يمرّ اللمس من خلالها. فعّل ‏«تصحيح الأخطاء اللاسلكي»‏ (يلزم Wi‑Fi) واضغط الزر؛ في المرة الأولى تُقرن الهاتف مرة واحدة كما في الإعداد. بعد إعادة تشغيل الهاتف اضغطه من جديد.</string>
     <string name="helper_start">تشغيل مساعد واعية</string>
-    <string name="helper_on">مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.</string>
+    <string name="helper_on">مساعد واعية يرسم التمويه: تمرّ اللمسات من خلاله. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف «تصحيح أخطاء USB» (وهو مفتاح منفصل في خيارات المطور)؛ اضغط الزر من جديد حينها.</string>
     <string name="helper_shizuku_on">Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.</string>
     <string name="helper_or_shizuku">أو باستخدام Shizuku:</string>
     <string name="guide_w_helper_note">إذا كان تمويه الشاشة مفعّلًا، يشغّل الإعداد أيضًا مساعد واعية ليمرّ اللمس عبر الأغطية. أبقِ ‏«تصحيح أخطاء USB»‏ مفعّلًا لأجله (يمكن إيقاف ‏«تصحيح الأخطاء اللاسلكي»‏). بعد إعادة تشغيل الهاتف، شغّل المساعد من جديد من صفحة ‏«الشاشة»‏.</string>
@@ -347,7 +347,7 @@
     <string name="notif_fix_remove_covers">إزالة التغطية اليدوية</string>
     <string name="notif_fix_note_missed">فاته شيء</string>
     <string name="notif_fix_note_wrong">حُجب خطأً</string>
-    <string name="notif_fix_noted">سُجّلت الملاحظة (عدد الملاحظات على هذا الهاتف: %1$d)</string>
+    <string name="notif_fix_noted">سُجّلت الملاحظة. عدد الملاحظات على هذا الهاتف: %1$d</string>
     <string name="notif_fix_picker_hint">اسحب إصبعك على الجزء الذي تريد تغطيته.</string>
     <string name="notif_fix_picker_cover">غطِّه</string>
     <string name="notif_fix_picker_cancel">إلغاء</string>
@@ -424,13 +424,13 @@
     <string name="mc_title">فحص الموسيقى</string>
     <string name="mc_unnamed">ملف مُشارَك</string>
     <string name="mc_listening">جارٍ الاستماع… %1$d %%</string>
-    <string name="mc_private">تستمع واعية على هذا الهاتف. لا يُرسَل شيء ولا يُحفَظ.</string>
+    <string name="mc_private">تستمع واعية على هذا الهاتف. لا يُرسَل المقطع إلى أي مكان.</string>
     <string name="mc_music">سمعت واعية موسيقى</string>
     <string name="mc_music_detail">آلات موسيقية في %1$s (نحو %2$s %% من المقطع).</string>
     <string name="mc_percussion">سمعت واعية إيقاعًا فقط</string>
     <string name="mc_percussion_detail">طبول أو تصفيق إيقاعي، بلا آلات أخرى، في %1$s. القرار لك.</string>
     <string name="mc_none">لم تُسمَع آلات موسيقية</string>
-    <string name="mc_none_detail">استمعت واعية إلى المقطع كله ولم تسمع آلات موسيقية.</string>
+    <string name="mc_none_detail">استمعت واعية إلى المقطع كله ولم تسمع آلات موسيقية. وقد تفوتها بعض الموسيقى، ولا سيما الموسيقى الهادئة تحت الكلام.</string>
     <string name="mc_note_quiet">قد تفوتها الموسيقى الخافتة تحت الكلام.</string>
     <string name="mc_failed">تعذّر فحص هذا الملف</string>
     <string name="mc_failed_no_model">هذا الإصدار من واعية لا يفحص الموسيقى.</string>
@@ -444,4 +444,13 @@
     <string name="mc_copy_failed">تعذّر إعداد النسخة بلا موسيقى.</string>
     <string name="mc_copy_name">%1$s (بلا موسيقى)</string>
     <string name="mc_list_sep">"، "</string>
+    <string name="simple_title">الوضع البسيط (تجريبي): دون خيارات المطور</string>
+    <string name="simple_body">للهواتف التي يصعب فيها الإعداد أدناه. أثناء التصفية تكتم واعية صوت الوسائط في الهاتف، وتُشغّل الصوت المُصفّى على قناة صوت أخرى. أزرار الصوت تضبط صوت واعية. يسأل أندرويد عن مشاركة الشاشة عند كل تشغيل. ويعود صوت الوسائط عند إيقاف التصفية.</string>
+    <string name="simple_switch">استخدام الوضع البسيط</string>
+    <string name="simple_channel_title">قناة الصوت: %1$s</string>
+    <string name="simple_channel_alarm">المنبّه</string>
+    <string name="simple_channel_notification">الإشعارات</string>
+    <string name="simple_channel_help">إن لم تسمع شيئًا، أو خرج الصوت من سمّاعة الهاتف والسمّاعات موصولة، فجرّب القناة الأخرى. قناة الإشعارات صامتة ما دام الهاتف على الاهتزاز أو «عدم الإزعاج».</string>
+    <string name="simple_test_note">هذا وضع تجريبي. بعد تجربته (السمّاعة، سمّاعات الأذن، البلوتوث)، أرسل من فضلك تقرير التشخيص من «الإعدادات».</string>
+    <string name="simple_on_detail">الوضع البسيط (تجريبي): صوت الوسائط مكتوم أثناء التصفية.</string>
 </resources>

@@ -267,14 +267,14 @@ void main() {
     final row = find.byKey(const Key('blur_strict'));
     await tester.ensureVisible(row);
     await tester.pumpAndSettle();
-    expect(find.text('مَن يبقى دون تغطية: صارم'), findsOneWidget);
+    expect(find.text('مدى التأكد قبل إظهار رجل: صارم'), findsOneWidget);
     await tester.tap(find.descendant(of: row, matching: find.text('تغيير')));
     await tester.pumpAndSettle();
-    expect(find.text('مَن يبقى دون تغطية'), findsOneWidget); // dialog title
-    await tester.tap(find.text('متوازن: نحو ضعف عدد الرجال دون تغطية'));
+    expect(find.text('مدى التأكد قبل إظهار رجل'), findsOneWidget); // dialog title
+    await tester.tap(find.text('متوازن: يظهر نحو ضعف عدد الرجال'));
     await tester.pumpAndSettle();
     expect(backend.state.settings.blurStrictness, 1);
-    expect(find.text('مَن يبقى دون تغطية: متوازن'), findsOneWidget);
+    expect(find.text('مدى التأكد قبل إظهار رجل: متوازن'), findsOneWidget);
   });
 
   testWidgets('desktop engine: error text in Arabic, no delay figure, start-at-login switch', (tester) async {
@@ -291,7 +291,7 @@ void main() {
     expect(find.textContaining('Text file busy'), findsOneWidget);
     backend.emit(backend.state.copyWith(filter: const FilterInfo(state: FilterState.filtering)));
     await tester.pumpAndSettle();
-    expect(find.text('تُزال الآلات من كل التطبيقات.'), findsOneWidget); // delay unknown: no "0 ms"
+    expect(find.text('تُصفّى أصوات تطبيقاتك.'), findsOneWidget); // delay unknown: no "0 ms"
     await goTo(tester, 'settings');
     final sw = find.byKey(const Key('autostart'));
     await tester.ensureVisible(sw);

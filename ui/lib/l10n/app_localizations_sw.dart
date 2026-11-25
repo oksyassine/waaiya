@@ -13,14 +13,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Huondoa ala za muziki kwenye kila programu na kubakiza mazungumzo na kisomo.';
+      'Huondoa ala za muziki kwenye sauti ya programu zako na kubakiza mazungumzo na kisomo.';
 
   @override
   String get onboardTitle => 'Karibu';
 
   @override
   String get onboardBody =>
-      'Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika simu hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.';
+      'Waaiya huondoa ala za muziki kwenye sauti ya programu zilizo katika simu hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Sauti za uimbaji huondolewa pia.';
 
   @override
   String get onboardQuestion => 'Mimi ni';
@@ -46,15 +46,15 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Ala za muziki zinaondolewa kwenye programu zote. Sauti inachelewa takriban ms $delayMs (ms 1000 ni sekunde moja).';
+    return 'Sauti ya programu zako inachujwa. Inachelewa takriban ms $delayMs (ms 1000 ni sekunde moja).';
   }
 
   @override
-  String get stateOffDetail => 'Gusa kitufe ili kuanza.';
+  String get stateOffDetail => 'Bonyeza kitufe ili kuanza.';
 
   @override
   String get stateModelFailed =>
-      'Modeli ya sauti haikuweza kupakiwa, kwa hiyo sauti imenyamazishwa kwa usalama.';
+      'Kichujio hakikuweza kupakiwa, kwa hiyo sauti imenyamazishwa badala ya kucheza bila kuchujwa.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android imesimamisha uchujaji. Gusa kitufe ili kuanza tena.';
+      'Android imesimamisha uchujaji. Bonyeza kitufe ili kuanza tena.';
 
   @override
   String get stateSilencedTitle => 'Uchujaji umesimama';
 
   @override
   String get stateSilenced =>
-      'Uchujaji umesimama: programu nyingine zimenyamazishwa. Gusa kitufe ili kuanza tena, au Simamisha ili kuzisikia bila kuchujwa.';
+      'Uchujaji umesimama: programu nyingine zimenyamazishwa. Bonyeza kitufe ili kuanza tena, au Simamisha ili kuzisikia bila kuchujwa.';
 
   @override
   String get releaseSilence => 'Simamisha: sikia programu bila kuchujwa';
@@ -82,48 +82,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android itakuuliza ushiriki skrini yako. Sauti pekee ndiyo hutumika: hakuna kinachorekodiwa wala kutumwa.';
+      'Android itakuuliza ushiriki skrini yako. Hakuna kinachorekodiwa wala kutumwa.';
 
   @override
   String get needRecordAudio =>
       'Waaiya inahitaji ruhusa ya maikrofoni ili kupokea sauti ya programu nyingine. Haikurekodi kamwe.';
-
-  @override
-  String get micOpenSettings =>
-      'Fungua mipangilio ya Waaiya ili kuruhusu maikrofoni';
-
-  @override
-  String get keepRunningTitle => 'Weka Waaiya ikiendelea';
-
-  @override
-  String get keepRunningBattery =>
-      'Simu hii inaweza kufunga Waaiya baada ya muda ili kuokoa betri, kisha uchujaji husimama. Katika mipangilio ya Waaiya, chini ya Betri, chagua “Bila vikwazo”. Kwenye Xiaomi, Redmi na POCO: “Hakuna vikwazo”, na uwashe pia Kuanza kiotomatiki.';
-
-  @override
-  String get keepRunningNotifications =>
-      'Arifa za Waaiya zimezimwa, kwa hiyo haiwezi kukujulisha uchujaji unaposimama. Ziwashe katika mipangilio ya Waaiya.';
-
-  @override
-  String get keepRunningOpen => 'Fungua mipangilio ya Waaiya';
-
-  @override
-  String get lockAskTitle => 'Uendelee kuchuja skrini ikifungwa?';
-
-  @override
-  String get lockTitle => 'Endelea kuchuja skrini ikifungwa';
-
-  @override
-  String get lockBody =>
-      'Kwenye simu hii Android huuliza kabla ya kila kuanza, kisha husimamisha uchujaji kila skrini inapofungwa. Waaiya inaweza kuzuia hilo kwa kuondoa ulinzi wa kushiriki skrini wa Android wakati wa kuchuja, na huurudisha uchujaji unaposimama. Ukiwa umeondolewa, ushiriki mwingine wa skrini wakati huo huo (simu ya video, kwa mfano) unaweza pia kuonyesha arifa zako. Mabadiliko yanatumika utakapoanzisha tena.';
-
-  @override
-  String get lockYes => 'Endelea kuchuja';
-
-  @override
-  String get lockNo => 'Simama kila inapofungwa';
-
-  @override
-  String get sendToSupport => 'Tuma kwa Waaiya';
 
   @override
   String get setupBannerTitle => 'Hatua moja zaidi';
@@ -283,11 +246,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get change => 'Badilisha';
 
   @override
-  String get playerTitle => 'Video zenye sauti inayolingana kikamilifu';
+  String get playerTitle => 'Video zenye sauti na picha zinazolingana';
 
   @override
   String get playerBody =>
-      'Shiriki video kwa Waaiya (au tumia “Fungua ukitumia”) ili uitazame ikiwa imechujwa bila kuchelewa.';
+      'Shiriki video kwa Waaiya (au tumia “Fungua ukitumia”) ili uitazame ikiwa imechujwa, sauti na picha zikilingana, bila kuchelewa kwa kichujio cha moja kwa moja.';
 
   @override
   String get licences => 'Leseni za programu huria';
@@ -430,7 +393,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Hufunika watu na picha kwenye skrini, katika kila programu, wakati uchujaji umewashwa. Hufanya kazi ndani ya simu; hakuna kinachotumwa popote.';
+      'Hufunika watu na picha kwenye skrini wakati uchujaji umewashwa. Hufanya kazi ndani ya simu; hakuna kinachotumwa popote.';
 
   @override
   String get blurOnTitle => 'Ufifishaji umewashwa';
@@ -446,13 +409,13 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'Gusa kitufe ili kuanza. Uchujaji huanza pamoja nao.';
+      'Bonyeza kitufe ili kuanza. Uchujaji huanza pamoja nao.';
 
   @override
   String get blurWhatTitle => 'Kinachofifishwa';
 
   @override
-  String get blurWomenTitle => 'Fifisha wanawake';
+  String get blurWomenTitle => 'Fifisha picha za wanawake';
 
   @override
   String get blurWomenBody =>
@@ -844,11 +807,12 @@ class AppLocalizationsSw extends AppLocalizations {
   String get wsetupCodeOk => 'Oanisha';
 
   @override
-  String get blurStrictTitle => 'Nani anaachwa bila kufunikwa';
+  String get blurStrictTitle =>
+      'Uhakika unaohitajika kabla mwanamume hajaonyeshwa';
 
   @override
   String blurStrictValue(String level) {
-    return 'Nani anaachwa bila kufunikwa: $level';
+    return 'Uhakika unaohitajika kabla mwanamume hajaonyeshwa: $level';
   }
 
   @override
@@ -857,7 +821,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurStrict1 =>
-      'Wastani: takriban mara mbili ya wanaume wanaachwa bila kufunikwa';
+      'Wastani: takriban mara mbili ya wanaume wanaonyeshwa';
 
   @override
   String get blurStrict2 => 'Legevu: wanaume wachache zaidi kuliko wastani';
@@ -873,11 +837,11 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Mtu yeyote ambaye programu haina uhakika kuwa ni mwanamume hufunikwa. Kali huacha takriban wanaume 7 kati ya 100 bila kufunikwa; wastani takriban 14, legevu takriban 16. Kila hatua ya ukali mdogo pia huacha takriban mwanamke 1 zaidi kati ya 100 bila kufunikwa.';
+      'Mtu huonyeshwa tu programu inapokuwa na uhakika kuwa ni mwanamume; wengine wote hufifishwa. Kali huonyesha takriban wanaume 7 kati ya 100, wastani takriban 14, legevu takriban 16. Baadhi ya wanawake bado hukoswa; kila hatua ya ukali mdogo hukosa takriban 1 zaidi kati ya 100.';
 
   @override
   String get stateOnNotMuted =>
-      'Sauti asili bado haijanyamazishwa, kwa hiyo unasikia muziki pamoja na sauti iliyochujwa. Kamilisha usanidi wa mara moja hapa chini.';
+      'Sauti asili bado haijanyamazishwa, kwa hiyo unasikia muziki pamoja na sauti iliyochujwa. Kamilisha usanidi wa mara moja kwenye ukurasa wa “Usanidi”.';
 
   @override
   String get stateOnMuteFailing =>
@@ -885,11 +849,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get stateTooSlow =>
-      'Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika. “Fungua kiungo” hapa chini bado hufanya kazi: huchuja video kabla ya kuicheza.';
-
-  @override
-  String get stateTooSlowNoLinks =>
-      'Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika.';
+      'Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika. “Fungua kiungo” kwenye ukurasa wa “Viungo” bado hufanya kazi: huchuja video kabla ya kuicheza.';
 
   @override
   String get stateMonoNote =>
@@ -897,12 +857,12 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'Imenyamazishwa, kwa sababu hairuhusu uchujaji: $apps.';
+    return 'Imenyamazishwa kwa sababu uchujaji hauruhusiwi na: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'Inacheza bila kuchujwa, kwa sababu hairuhusu uchujaji: $apps.';
+    return 'Inacheza bila kuchujwa kwa sababu uchujaji hauruhusiwi na: $apps.';
   }
 
   @override
@@ -921,10 +881,6 @@ class AppLocalizationsSw extends AppLocalizations {
       'Usanidi wa mara moja bado haujafanywa. Bila huo Waaiya haiwezi kunyamazisha sauti asili: utasikia muziki na sauti iliyochujwa kwa pamoja.\n\n“Fungua kiungo” hufanya kazi bila usanidi wowote.';
 
   @override
-  String get startNoSetupBodyNoLinks =>
-      'Usanidi wa mara moja bado haujafanywa. Bila huo Waaiya haiwezi kunyamazisha sauti asili: utasikia muziki na sauti iliyochujwa kwa pamoja.';
-
-  @override
   String get startNoSetupSetup => 'Fanya usanidi';
 
   @override
@@ -938,7 +894,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Kile ambacho Waaiya inaona kwenye simu hii. Kinakili au ukishiriki na yeyote anayekusaidia. Programu yenyewe haitumi chochote.';
+      'Kile ambacho Waaiya inaona kwenye simu hii. Kinakili au ukishiriki na yeyote anayekusaidia. Waaiya haikitumi yenyewe: wewe ndiye unayechagua nani akipate.';
 
   @override
   String get notifStoppedTitle => 'Waaiya imesimama';
@@ -978,7 +934,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get setupGo => 'Nenda kwenye usanidi';
 
   @override
-  String get helperTitle => 'Miguso kupitia vifuniko';
+  String get helperTitle => 'Miguso kupitia maeneo yaliyofifishwa';
 
   @override
   String get helperBodyOff =>
@@ -989,7 +945,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'Msaidizi wa Waaiya anachora vifuniko: miguso hupita ndani yake. Husimama simu ikiwashwa upya au Utatuzi wa USB ukizimwa; hapo gusa kitufe tena.';
+      'Msaidizi wa Waaiya anachora ufifishaji: miguso hupita ndani yake. Husimama simu ikiwashwa upya au “Utatuzi wa USB” (swichi tofauti katika Chaguo za wasanidi programu) ukizimwa; hapo gusa kitufe tena.';
 
   @override
   String get helperShizukuOn =>
@@ -1005,37 +961,38 @@ class AppLocalizationsSw extends AppLocalizations {
   String get settingsGeneralTitle => 'Jumla';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle =>
+      'Hali rahisi (jaribio): bila Chaguo za wasanidi programu';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Kwa simu ambazo usanidi ulio hapa chini ni mgumu sana. Waaiya inapochuja, hunyamazisha sauti ya media ya simu na kucheza sauti iliyochujwa kwenye chaneli nyingine ya sauti. Vitufe vyako vya sauti hurekebisha sauti ya Waaiya. Android huomba kushiriki skrini kila unapoanza. Sauti ya media hurudi uchujaji unaposimama.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Tumia hali rahisi';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Chaneli ya sauti: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'Kengele';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Arifa';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Usiposikia chochote, au sauti ikitoka kwenye spika ya simu wakati vifaa vya masikioni vimechomekwa, jaribu chaneli nyingine. Arifa haitoi sauti simu ikiwa kwenye mtetemo au Usisumbue.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Hili ni jaribio. Baada ya kulijaribu (spika, vifaa vya masikioni, Bluetooth), tafadhali tuma ripoti ya uchunguzi kutoka kwenye Mipangilio.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Hali rahisi (jaribio): sauti ya media imenyamazishwa wakati Waaiya inachuja.';
 
   @override
   String get worshipPrayerFajr => 'Alfajiri';
@@ -1178,8 +1135,7 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Ala za muziki zinaondolewa kwenye programu zote.';
+  String get stateOnDetailNoDelay => 'Sauti ya programu zako inachujwa.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1258,7 +1214,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Kile ambacho Waaiya inaona kwenye kompyuta hii. Kinakili na umpe yeyote anayekusaidia. Programu yenyewe haitumi chochote.';
+      'Kile ambacho Waaiya inaona kwenye kompyuta hii. Kinakili na umpe yeyote anayekusaidia. Waaiya haikitumi yenyewe: wewe ndiye unayechagua nani akipate.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1342,7 +1298,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get fixCancel => 'Ghairi';
 
   @override
-  String get fixBlurAppsTitle => 'Programu zisizofunikwa';
+  String get fixBlurAppsTitle => 'Programu zisizofifishwa';
 
   @override
   String get fixBlurAppsBody =>
@@ -1396,7 +1352,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'Imeandikwa (madokezo $count kwenye kifaa hiki).';
+    return 'Imeandikwa. Madokezo kwenye kifaa hiki: $count.';
   }
 
   @override
@@ -1482,7 +1438,7 @@ class AppLocalizationsSw extends AppLocalizations {
   String get worshipAsrTitle => 'Wakati wa Alasiri';
 
   @override
-  String get worshipAsrStandard => 'Kawaida (Shafi\'i, Maliki, Hanbali)';
+  String get worshipAsrStandard => 'Wengi (Shafi\'i, Maliki, Hanbali)';
 
   @override
   String get worshipAsrHanafi => 'Hanafi';
@@ -1753,11 +1709,6 @@ class AppLocalizationsSw extends AppLocalizations {
   String get protectDelayTitle => 'Kusubiri kabla ya kuzima';
 
   @override
-  String protectDelayLongAsk(Object value) {
-    return 'Uchague kusubiri $value? Kuanzia sasa, kuzima kichujio au ulinzi wowote kutasubiri $value, na pia kufupisha muda huu wa kusubiri.';
-  }
-
-  @override
   String get protectDelayBody =>
       'Kwa mfano, kwa dakika 30: unabonyeza kitufe cha kusimamisha, lakini kichujio kinaendelea kufanya kazi. Baada ya dakika 30, ukurasa huu unakuuliza kama bado unataka kusimamisha. Bonyeza “Thibitisha” ndani ya dakika 15 nacho kinasimama; la sivyo hakuna kinachobadilika. Ndivyo ilivyo pia kwa kuzima kifuniko au ulinzi mwingine wowote. Kuwasha vitu hufanya kazi mara moja kila wakati.';
 
@@ -1804,7 +1755,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Ukiwa na PIN, kusimamisha kichujio au kuzima ulinzi wowote huomba PIN kwanza. Kwa mfano, mzazi huweka PIN ili mtoto asiweze kuzima kichujio. Kubadilisha muda wa kusubiri au PIN huiomba pia.';
+      'Ukiwa na PIN, kusimamisha kichujio au kuzima ulinzi wowote huomba PIN kwanza. Kwa mfano, mzazi huweka PIN ili mtoto asiweze kuzima kichujio ndani ya Waaiya (kile ambacho haiwezi kuzuia kimeorodheshwa hapa chini). Kubadilisha muda wa kusubiri au PIN huiomba pia.';
 
   @override
   String get protectPinForgot =>
@@ -1836,7 +1787,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'PIN si sahihi. Majaribio $count yamebaki kabla ya kusubiri.';
+    return 'PIN si sahihi. Majaribio yaliyobaki kabla ya kusubiri: $count.';
   }
 
   @override
@@ -1898,7 +1849,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Kile ambacho hiki hakiwezi kuzuia: kulazimisha kusimama, kuondoa programu, kufuta data ya Waaiya na mipangilio ya Android yenyewe. Kuzuia hayo kungehitaji ruhusa maalum za Android ambazo Waaiya haitumii. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
+      'Kile ambacho hiki hakiwezi kuzuia: kuwasha upya simu (uchujaji hauanzi tena wenyewe), kulazimisha kusimama, kuondoa programu, kufuta data ya Waaiya na mipangilio ya Android yenyewe. Kuzuia hayo kungehitaji ruhusa maalum za Android ambazo Waaiya haitumii. Hiki hulinda dhidi ya wakati wa udhaifu, si dhidi ya mtu aliyedhamiria.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1948,7 +1899,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.';
+      'Waaiya huondoa ala za muziki kwenye sauti ya programu zilizo katika kompyuta hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Sauti za uimbaji huondolewa pia.';
 
   @override
   String get worshipUseLocation => 'Tumia mahali nilipo';
@@ -1982,7 +1933,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa $city.';
+    return 'Nyakati zilizohesabiwa ili zilingane na jedwali za Wizara ya Habous na Mambo ya Kiislamu kwa $city.';
   }
 
   @override
@@ -2004,7 +1955,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.';
+      'Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ulinzi ukiwa umeondolewa, ushiriki mwingine wa skrini unaofanywa wakati huo huo unaweza pia kuonyesha arifa na misimbo yako kwa wengine.';
 
   @override
   String get notifTextNextStart =>
@@ -2035,14 +1986,14 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get notifTextForced =>
-      'Imewashwa: kwenye simu hii Android huuliza kabla ya kila kuanza, na ingesimamisha kuchuja kila skrini inapofungwa. Waaiya huondoa ulinzi huu wakati wa kuchuja, kwa hiyo maandishi ya arifa pia huonekana. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.';
+      'Imewashwa: kwenye simu hii Android huuliza kabla ya kila kuanza, na ingesimamisha kuchuja kila skrini inapofungwa. Waaiya huondoa ulinzi huu wakati wa kuchuja, kwa hiyo maandishi ya arifa pia huonekana. Ulinzi ukiwa umeondolewa, ushiriki mwingine wa skrini unaofanywa wakati huo huo unaweza pia kuonyesha arifa na misimbo yako kwa wengine.';
 
   @override
   String get oneAppTitle => 'Unapoanza: “Shiriki programu moja”, kisha Waaiya';
 
   @override
   String get oneAppBody =>
-      'Android inapouliza cha kushiriki, chagua “Shiriki programu moja”, kisha Waaiya. Programu zote bado zinachujwa, arifa zinasomeka, na kuchuja kunaendelea skrini inapofungwa. Ukichagua skrini nzima, Android huficha maandishi ya arifa na husimamisha kuchuja kila skrini inapofungwa.';
+      'Android inapouliza cha kushiriki, chagua “Shiriki programu moja”, kisha Waaiya. Programu nyingine bado zinachujwa, arifa zinasomeka, na kuchuja kunaendelea skrini inapofungwa. Ukichagua skrini nzima, Android huficha maandishi ya arifa na husimamisha kuchuja kila skrini inapofungwa.';
 
   @override
   String get oneAppPair =>
@@ -2055,4 +2006,58 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get blurNeedsRestart =>
       'Simamisha kisha anzisha kuchuja tena ili kutumia ukungu: unahitaji skrini nzima, na kuchuja huku kulianza kukiwa na chaguo la “Shiriki programu moja”.';
+
+  @override
+  String get micOpenSettings =>
+      'Fungua mipangilio ya Waaiya ili kuruhusu maikrofoni';
+
+  @override
+  String get keepRunningTitle => 'Weka Waaiya ikiendelea';
+
+  @override
+  String get keepRunningBattery =>
+      'Simu hii inaweza kufunga Waaiya baada ya muda ili kuokoa betri, kisha uchujaji husimama. Katika mipangilio ya Waaiya, chini ya Betri, chagua “Bila vikwazo”. Kwenye Xiaomi, Redmi na POCO: “Hakuna vikwazo”, na uwashe pia Kuanza kiotomatiki.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Arifa za Waaiya zimezimwa, kwa hiyo haiwezi kukujulisha uchujaji unaposimama. Ziwashe katika mipangilio ya Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Fungua mipangilio ya Waaiya';
+
+  @override
+  String get lockAskTitle => 'Uendelee kuchuja skrini ikifungwa?';
+
+  @override
+  String get lockTitle => 'Endelea kuchuja skrini ikifungwa';
+
+  @override
+  String get lockBody =>
+      'Kwenye simu hii Android huuliza kabla ya kila kuanza, kisha husimamisha uchujaji kila skrini inapofungwa. Waaiya inaweza kuzuia hilo kwa kuondoa ulinzi wa kushiriki skrini wa Android wakati wa kuchuja, na huurudisha uchujaji unaposimama. Ukiwa umeondolewa, ushiriki mwingine wa skrini wakati huo huo (simu ya video, kwa mfano) unaweza pia kuonyesha arifa zako. Mabadiliko yanatumika utakapoanzisha tena.';
+
+  @override
+  String get lockYes => 'Endelea kuchuja';
+
+  @override
+  String get lockNo => 'Simama kila inapofungwa';
+
+  @override
+  String get sendToSupport => 'Tuma kwa Waaiya';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Usanidi wa mara moja bado haujafanywa. Bila huo Waaiya haiwezi kunyamazisha sauti asili: utasikia muziki na sauti iliyochujwa kwa pamoja.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'Uchague kusubiri $value? Kuanzia sasa, kuzima kichujio au ulinzi wowote kutasubiri $value, na pia kufupisha muda huu wa kusubiri.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android ilifunga Waaiya ilipokuwa ikichuja, kwa hiyo sauti haikuchujwa tena.';
 }
