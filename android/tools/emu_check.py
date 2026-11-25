@@ -423,7 +423,9 @@ def main():
     if silenced:
         ok_line = ar["state_on_detail"].split("%1$d")[0]
         slow_line = ar["state_too_slow"]
-        c.check(detail.startswith(ok_line) or detail == slow_line, "state line: delay, or the too-slow message",
+        # the Play build (no links) says only the first sentence of the too-slow message
+        c.check(detail.startswith(ok_line) or detail == slow_line or (detail and slow_line.startswith(detail)),
+                "state line: delay, or the too-slow message",
                 repr(detail))
         if a.stereo and a.expect_slow and stats and stats[-1][5] == "true" and stats[-1][6] == "false":
             c.check(ar["state_mono_note"] in detail, "stereo chosen, too slow: the state line says it went mono", detail)
