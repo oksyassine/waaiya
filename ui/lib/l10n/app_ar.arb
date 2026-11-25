@@ -2272,18 +2272,63 @@
     "description": "Flutter only. Not reviewed yet except in English."
   },
   "notifTextTitle": "إظهار نص الإشعارات أثناء التصفية",
+  "@notifTextTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextBody": "يُخفي أندرويد محتوى الإشعارات ما دام أي تطبيق يسجّل الشاشة كلها، والتصفية تُعدّ من ذلك. عند التفعيل: ترفع واعية هذه الحماية أثناء التصفية فقط، فتقرأ إشعاراتك. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا. يسري ذلك عند التشغيل التالي.",
+  "@notifTextBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextNextStart": "أوقف التصفية ثم شغّلها من جديد ليسري هذا التغيير.",
+  "@notifTextNextStart": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextRefused": "رفض هذا الهاتف التغيير. فعّل بنفسك «إيقاف ميزات الحماية أثناء مشاركة الشاشة» في خيارات المطور.",
+  "@notifTextRefused": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextByHand": "النص ظاهر: حماية أندرويد متوقفة في خيارات المطور («إيقاف ميزات الحماية أثناء مشاركة الشاشة»). وتبقى متوقفة لكل مشاركة شاشة حتى تعيد تفعيلها هناك.",
+  "@notifTextByHand": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextHowTo": "يُخفي أندرويد محتوى الإشعارات أثناء تصفية واعية. بعد الإعداد لمرة واحدة تُظهرها واعية: ترفع هذه الحماية أثناء التصفية فقط.",
+  "@notifTextHowTo": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextOpenDev": "فتح خيارات المطور",
+  "@notifTextOpenDev": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextLockNote": "على هذا الهاتف يوقف أندرويد التصفية أيضًا عند قفل الشاشة، فتبقى التطبيقات الأخرى صامتة حتى تضغط «استئناف». والإعداد يمنع ذلك أيضًا.",
+  "@notifTextLockNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextHandOptional": "اختياري، دون إعداد: فعّل «إيقاف ميزات الحماية أثناء مشاركة الشاشة» في خيارات المطور. ستبقى الحماية متوقفة حينها لكل مشاركة شاشة، وبعض الهواتف ليس فيها هذا المفتاح.",
+  "@notifTextHandOptional": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextForced": "مفعّل: على هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف التصفية عند كل قفل للشاشة. لذلك ترفع واعية هذه الحماية أثناء التصفية، فيظهر نص الإشعارات أيضًا. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا.",
+  "@notifTextForced": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "oneAppTitle": "عند التشغيل: «مشاركة تطبيق واحد» ثم واعية",
+  "@oneAppTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "oneAppBody": "عندما يسألك أندرويد عمّا تشاركه، اختر «مشاركة تطبيق واحد» ثم واعية. تبقى كل التطبيقات مُصفّاة، ويبقى نص الإشعارات مقروءًا، وتستمر التصفية عند قفل الشاشة. أما مع الشاشة كلها فيُخفي أندرويد نص الإشعارات ويوقف التصفية عند كل قفل للشاشة.",
+  "@oneAppBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "oneAppPair": "ليعمل واعية كاملًا، اقرنه مرة واحدة عبر «تصحيح الأخطاء اللاسلكي» في صفحة الإعداد: عندها تُكتم الموسيقى الأصلية أيضًا، ويكفّ أندرويد عن السؤال عند كل تشغيل.",
+  "@oneAppPair": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
   "notifTextOneApp": "يظهر النص عندما تختار «مشاركة تطبيق واحد» ثم واعية عند التشغيل. أما مع الشاشة كلها فيُخفيه أندرويد، وبعد الإعداد لمرة واحدة ترفع واعية ذلك أثناء التصفية.",
-  "blurNeedsRestart": "أوقف التصفية ثم شغّلها من جديد لاستعمال التمويه: فهو يحتاج إلى الشاشة كلها، وقد بدأت هذه التصفية مع عرض «مشاركة تطبيق واحد»."
+  "@notifTextOneApp": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "blurNeedsRestart": "أوقف التصفية ثم شغّلها من جديد لاستعمال التمويه: فهو يحتاج إلى الشاشة كلها، وقد بدأت هذه التصفية مع عرض «مشاركة تطبيق واحد».",
+  "@blurNeedsRestart": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  }
 }

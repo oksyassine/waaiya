@@ -221,5 +221,20 @@
   "tray_open": "Waaiya openen",
   "tray_quit": "Afsluiten",
   "engine_error_autostart_blocked": "Windows laat Waaiya niet starten bij het aanmelden. Zet Waaiya aan in Instellingen › Apps › Opstarten en zet deze optie daarna weer aan.",
-  "engine_error_autostart_policy": "De instellingen van deze computer, gekozen door de beheerder, laten Waaiya niet starten bij het aanmelden."
+  "engine_error_autostart_policy": "De instellingen van deze computer, gekozen door de beheerder, laten Waaiya niet starten bij het aanmelden.",
+  "notif_text_title": "Meldingstekst tonen tijdens filteren",
+  "notif_text_body": "Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd. Werkt vanaf de volgende start.",
+  "notif_text_next_start": "Stop het filteren en start het opnieuw om deze wijziging toe te passen.",
+  "notif_text_refused": "Deze telefoon weigerde de wijziging. Zet zelf ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties.",
+  "notif_text_by_hand": "Zichtbaar: de bescherming van Android staat uit in de ontwikkelaarsopties (‘Beveiliging voor scherm delen uitzetten’). Ze blijft uit voor elke schermdeling tot je haar daar weer aanzet.",
+  "notif_text_how_to": "Android verbergt de inhoud van meldingen terwijl Waaiya filtert. Na de eenmalige installatie toont Waaiya ze: het heft deze bescherming alleen tijdens het filteren op.",
+  "notif_text_open_dev": "Ontwikkelaarsopties openen",
+  "notif_text_lock_note": "Op deze telefoon stopt Android het filteren ook als het scherm vergrendelt, en andere apps blijven dan stil tot je op Hervatten tikt. De installatie voorkomt dat ook.",
+  "notif_text_hand_optional": "Optioneel, zonder installatie: zet ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties. Ze blijft dan uit voor elke schermdeling, en sommige telefoons hebben haar niet.",
+  "notif_text_forced": "Aan: op deze telefoon vraagt Android voor elke start en zou het filteren dan bij elke schermvergrendeling stoppen. Waaiya heft deze bescherming tijdens het filteren op, waardoor ook de meldingstekst zichtbaar is. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd.",
+  "one_app_title": "Bij het starten: ‘Eén app delen’, dan Waaiya",
+  "one_app_body": "Als Android vraagt wat je wilt delen, kies ‘Eén app delen’ en dan Waaiya. Alle apps worden nog steeds gefilterd, meldingen blijven leesbaar en het filteren gaat door als het scherm vergrendelt. Met het hele scherm verbergt Android meldingstekst en stopt het filteren bij elke vergrendeling.",
+  "one_app_pair": "Koppel Waaiya één keer met draadloze foutopsporing op de pagina Installatie zodat het volledig werkt: dan wordt ook de originele muziek gedempt en vraagt Android niet meer bij elke start.",
+  "notif_text_one_app": "Zichtbaar als je bij het starten ‘Eén app delen’ en dan Waaiya kiest. Met het hele scherm verbergt Android het; na de eenmalige installatie heft Waaiya dat tijdens het filteren op.",
+  "blur_needs_restart": "Stop het filteren en start het opnieuw om de vervaging te gebruiken: die heeft het hele scherm nodig, en dit filteren begon met ‘Eén app delen’ aangeboden."
 }

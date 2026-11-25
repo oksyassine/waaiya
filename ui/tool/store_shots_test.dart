@@ -68,7 +68,7 @@ void main() {
                       filter: const FilterInfo(state: FilterState.filtering, delayMs: 30),
                       setup: const SetupInfo(originalsMuted: true, consentSkipped: true),
                       blur: const BlurInfo(
-                          overlayAllowed: true, touchPassThrough: true, shizukuLayer: true, layerSupported: true),
+                          overlayAllowed: true, touchPassThrough: true, shellLayer: true, layerSupported: true),
                       features: {
                         'worship': {
                           'supported': true, 'placeSet': true, 'placeValid': true, 'placeLabel': lang == 'ar' ? 'الدار البيضاء' : 'Casablanca',

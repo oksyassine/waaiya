@@ -221,5 +221,20 @@
   "tray_open": "Waaiya uygulamasını aç",
   "tray_quit": "Çık",
   "engine_error_autostart_blocked": "Windows, Waaiya'nın oturum açılırken başlamasına izin vermiyor. Ayarlar › Uygulamalar › Başlangıç bölümünde Waaiya'yı açın, ardından bu seçeneği yeniden açın.",
-  "engine_error_autostart_policy": "Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya'nın oturum açılırken başlamasına izin vermiyor."
+  "engine_error_autostart_policy": "Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya'nın oturum açılırken başlamasına izin vermiyor.",
+  "notif_text_title": "Filtrelerken bildirim metnini göster",
+  "notif_text_body": "Android, bir uygulama tüm ekranı kaydederken bildirimlerin içeriğini gizler ve filtreleme de buna girer. Açık: Waaiya bu korumayı yalnızca filtrelerken kaldırır, böylece bildirimlerinizi okuyabilirsiniz. Aynı anda yapılan diğer ekran paylaşımları da korunmaz. Bir sonraki başlatmada geçerli olur.",
+  "notif_text_next_start": "Bu değişikliğin geçerli olması için filtrelemeyi durdurup yeniden başlatın.",
+  "notif_text_refused": "Bu telefon değişikliği reddetti. Geliştirici seçeneklerinde “Ekran paylaşımı korumalarını devre dışı bırak” ayarını kendiniz açın.",
+  "notif_text_by_hand": "Gösteriliyor: Android'in koruması Geliştirici seçeneklerinde kapalı (“Ekran paylaşımı korumalarını devre dışı bırak”). Siz orada yeniden açana kadar her ekran paylaşımında kapalı kalır.",
+  "notif_text_how_to": "Android, Waaiya filtrelerken bildirimlerin içeriğini gizler. Tek seferlik kurulumdan sonra Waaiya bunları gösterir: bu korumayı yalnızca filtrelerken kaldırır.",
+  "notif_text_open_dev": "Geliştirici seçeneklerini aç",
+  "notif_text_lock_note": "Bu telefonda Android ekran kilitlendiğinde filtrelemeyi de durdurur ve diğer uygulamalar siz Sürdür'e dokunana kadar sessiz kalır. Kurulum bunu da önler.",
+  "notif_text_hand_optional": "İsteğe bağlı, kurulumsuz: Geliştirici seçeneklerinde “Ekran paylaşımı korumalarını devre dışı bırak” ayarını açın. Bu durumda her ekran paylaşımında kapalı kalır ve bazı telefonlarda yoktur.",
+  "notif_text_forced": "Açık: bu telefonda Android her başlatmadan önce sorar ve ardından her ekran kilidinde filtrelemeyi durdururdu. Waaiya filtrelerken bu korumayı kaldırır, böylece bildirim metni de görünür. Aynı anda yapılan diğer ekran paylaşımları da korunmaz.",
+  "one_app_title": "Başlatırken: “Tek uygulama paylaş”, sonra Waaiya",
+  "one_app_body": "Android neyi paylaşacağınızı sorduğunda “Tek uygulama paylaş”ı, sonra Waaiya'yı seçin. Tüm uygulamalar filtrelenmeye devam eder, bildirimler okunabilir kalır ve ekran kilitlendiğinde filtreleme sürer. Tüm ekranla Android bildirim metnini gizler ve her kilitlemede filtrelemeyi durdurur.",
+  "one_app_pair": "Waaiya'nın tam çalışması için Kurulum sayfasında Kablosuz hata ayıklama ile bir kez eşleştirin: o zaman özgün müzik de susturulur ve Android her başlatmada sormayı bırakır.",
+  "notif_text_one_app": "Başlatırken “Tek uygulama paylaş”ı, sonra Waaiya'yı seçtiğinizde gösterilir. Tüm ekranla Android bunu gizler; tek seferlik kurulumdan sonra Waaiya bunu filtrelerken kaldırır.",
+  "blur_needs_restart": "Bulanıklaştırmayı kullanmak için filtrelemeyi durdurup yeniden başlatın: tüm ekrana ihtiyaç duyar ve bu filtreleme “Tek uygulama paylaş” sunularak başladı."
 }

@@ -221,5 +221,20 @@
   "tray_open": "Open Waaiya",
   "tray_quit": "Quit",
   "engine_error_autostart_blocked": "Windows is not letting Waaiya start at login. Turn Waaiya on in Settings › Apps › Startup, then turn this on again.",
-  "engine_error_autostart_policy": "This computer's settings, chosen by its administrator, do not let Waaiya start at login."
+  "engine_error_autostart_policy": "This computer's settings, chosen by its administrator, do not let Waaiya start at login.",
+  "notif_text_title": "Show notification text while filtering",
+  "notif_text_body": "Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either. Takes effect at the next start.",
+  "notif_text_next_start": "Stop and start filtering again for this change to take effect.",
+  "notif_text_refused": "This phone refused the change. Turn on “Disable screen share protections” in Developer options yourself.",
+  "notif_text_by_hand": "Shown: Android's protection is off in Developer options (“Disable screen share protections”). It stays off for every screen share until you turn it back on there.",
+  "notif_text_how_to": "Android hides what notifications say while Waaiya filters. After the one-time setup, Waaiya shows them: it lifts this protection only while it filters.",
+  "notif_text_open_dev": "Open Developer options",
+  "notif_text_lock_note": "On this phone Android also stops filtering when the screen locks, and other apps then stay silent until you tap Resume. The setup prevents that too.",
+  "notif_text_hand_optional": "Optional, without the setup: turn on “Disable screen share protections” in Developer options. It then stays off for every screen share, and some phones do not have it.",
+  "notif_text_forced": "On: on this phone Android asks before each start, and would then stop filtering at every screen lock. Waaiya lifts this protection while it filters, which also shows notification text. Other screen shares made at the same time are not protected either.",
+  "one_app_title": "At the start: “Share one app”, then Waaiya",
+  "one_app_body": "When Android asks what to share, choose “Share one app”, then Waaiya. Every app is still filtered, notifications stay readable, and filtering keeps running when the screen locks. With the entire screen, Android hides notification text and stops filtering at each screen lock.",
+  "one_app_pair": "For Waaiya to work fully, pair it once with Wireless debugging on the Setup page: the original music is then silenced too, and Android stops asking at each start.",
+  "notif_text_one_app": "Shown when you choose “Share one app”, then Waaiya, at the start. With the entire screen Android hides it; after the one-time setup Waaiya lifts that while filtering.",
+  "blur_needs_restart": "Stop and start filtering again to use the blur: it needs the entire screen, and this filtering started with “Share one app” offered."
 }
