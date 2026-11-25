@@ -215,6 +215,9 @@ def main():
     ap.add_argument("--stereo", action="store_true", help="choose stereo in the settings first (mono is the default)")
     ap.add_argument("--end-capture", action="store_true",
                     help="debug APK: end the capture as Android does and check the other apps stay silent")
+    ap.add_argument("--stuck", action="store_true",
+                    help="debug APK, setup done: make the sound stuck in each way (ACTION_DEBUG_FAULT) and check the "
+                         "watchdog finds it, tries the right step and the report keeps the minute around it")
     ap.add_argument("--blur-fail", action="store_true",
                     help="debug APK: make the blur's capture fail and check the screen says so")
     a = ap.parse_args()
@@ -375,6 +378,49 @@ def main():
             c.check(slow == "false", "fast build: not flagged too slow")
             c.check(float(avg) < 7.5, "fast build: hops finish in time", f"avg {avg} ms")
 
+    # --- stuck sound (debug hook): each fault found and acted on while the other app plays
+    if a.stuck and silenced:
+        def fault(kind, wait_for, seconds=15):
+            e.adb("logcat", "-c")
+            e.broadcast("DEBUG_FAULT", f"--es kind {kind}")
+            end, got = time.time() + seconds, ""
+            while time.time() < end:
+                got = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+                if all(w in got for w in wait_for):
+                    break
+                time.sleep(1)
+            e.broadcast("DEBUG_FAULT", "--es kind clear")
+            for w in wait_for:
+                c.check(w in got, f"stuck ({kind}): {w}", got[-500:])
+            time.sleep(3)
+        fault("zeros_until_capture", ["watch: no sound from the capture for 5 s", "event: capture rebuilt",
+                                      "sound from the capture again"])
+        fault("writeblock", ["watch: the output does not play", "event: output made again", "the output plays again"])
+        fault("nan", ["event: the model gave a hop that is not a number"])
+        fault("readblock", ["watch: no sound came from the capture", "event: capture rebuilt"])
+        time.sleep(3)
+        log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check("watch:" not in log.split("event: capture rebuilt")[-1] or "again" in log.split("event: capture rebuilt")[-1],
+                "after the faults: no new stuck sound found", log[-400:])
+        # a player that plays pure silence (a feed video autoplaying muted): harmless, so at most one capture rebuild,
+        # filtering goes on, and the stuck minute kept above is not pushed out of the report
+        with tempfile.TemporaryDirectory() as d:
+            quiet = os.path.join(d, "silence.wav")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-t", "90",
+                            quiet], check=True)
+            e.adb("push", quiet, "/sdcard/Music/emu_silence.wav", check=True)
+        e.adb("logcat", "-c")
+        e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
+             "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_silence.wav")
+        time.sleep(70)
+        log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check(log.count("watch: no sound from the capture") <= 1, "silent player: at most one capture rebuild",
+                log[-500:])
+        c.check("event: STOP" not in log and "the output does not play" not in log, "silent player: filtering goes on")
+        e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
+             "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
+        time.sleep(5)
+
     if a.simple:
         uid = re.search(r"(?:appId|userId)=(\d+)", e.sh(f"dumpsys package {PKG}")).group(1)
         c.check(music_muted(), "simple mode: media is muted while filtering")
@@ -395,7 +441,9 @@ def main():
     if silenced:
         ok_line = ar["state_on_detail"].split("%1$d")[0]
         slow_line = ar["state_too_slow"]
-        c.check(detail.startswith(ok_line) or detail == slow_line, "state line: delay, or the too-slow message",
+        # the Play build (no links) says only the first sentence of the too-slow message
+        c.check(detail.startswith(ok_line) or detail == slow_line or (detail and slow_line.startswith(detail)),
+                "state line: delay, or the too-slow message",
                 repr(detail))
         if a.stereo and a.expect_slow and stats and stats[-1][5] == "true" and stats[-1][6] == "false":
             c.check(ar["state_mono_note"] in detail, "stereo chosen, too slow: the state line says it went mono", detail)
@@ -525,6 +573,13 @@ def main():
         c.check(p is not None and int(p.group(1)) > 0, "the last frame of a still screen was analysed again",
                 report[-300:])
     shot("5_diagnostics")
+    c.check("[Last minutes]" in report and "Last minute, one line per second:" in report,
+            "report: the per-second log", report[-600:])
+    c.check(re.search(r"\n  \d\d:\d\d:\d\d h\d+ in-?\d+ out-?\d+ ", report) is not None, "report: per-second lines")
+    c.check("installed from" in report and "Numbers from" in report, "report: when, from where, how old")
+    if a.stuck and silenced:
+        c.check("capture rebuilt" in report and "output made again" in report, "report: the stuck events", report[-1500:])
+        c.check("Around stuck sound" in report, "report: the minute around the stuck sound")
     if a.shots:
         with open(os.path.join(a.shots, "report.txt"), "w") as f:
             f.write(report)
@@ -587,6 +642,33 @@ def main():
         e.page("filter")
         e.tap(rid="power")   # running again for the steps below
         e.wait(text=re.escape(ar["state_on_title"]), seconds=30)
+
+    # --- the output never plays (debug hook): two rebuilds, then filtering ends with the other apps kept silent
+    if a.stuck and silenced:
+        e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
+             "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
+        time.sleep(4)
+        e.adb("logcat", "-c")
+        e.broadcast("DEBUG_FAULT", "--es kind writeblock_always")
+        notif = ""
+        for _ in range(25):
+            time.sleep(1)
+            notif = e.sh("dumpsys notification --noredact")
+            if ar["notif_silenced_title"] in notif:
+                break
+        e.broadcast("DEBUG_FAULT", "--es kind clear")
+        log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check(log.count("event: output made again") >= 2, "output never plays: made again twice", log[-600:])
+        c.check("event: STOP sound stuck: the output does not play" in log, "then filtering ends (stop log)", log[-400:])
+        c.check(ar["notif_silenced_title"] in notif, "output never plays: other apps kept silent, Resume offered")
+        e.sh(f"am start -n {PKG}/.MainActivity")
+        time.sleep(2)
+        e.page("filter")
+        e.scroll_to("power", down=False)
+        e.page("filter")
+        e.tap(rid="power")
+        c.check(e.wait(text=re.escape(ar["state_on_title"]), seconds=30) is not None, "start again after the stuck output")
+        e.sh("am force-stop com.google.android.apps.youtube.music")
 
     # --- the blur's capture fails (debug hook): the blur line says so instead of "starting" for ever
     if a.blur_fail:

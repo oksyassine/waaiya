@@ -75,6 +75,11 @@ class SessionMuter(private val context: Context, private val settings: Settings)
     @Volatile private var pollFailures = 0
     @Volatile private var polls = 0
     private var failedInARow = 0
+    /**
+     * The sessions of Waaiya's own output (FilterService): never muted, whatever uid the system's lists give them.
+     * Muting the filtered copy would silence everything until filtering is started again.
+     */
+    @Volatile var ownSessions: Set<Int> = emptySet()
     /** Called (on the muter thread) when [status] or [blockedUids] changes. */
     var onChange: (() -> Unit)? = null
 
@@ -175,7 +180,11 @@ class SessionMuter(private val context: Context, private val settings: Settings)
         // on and an app just added is still filtered, so its original stays muted (not heard twice)
         val off = FilterService.captureExcluded ?: FixMistakes.filterOffUids(context, settings)
         val offIds = list.filter { it.uid in off }.map { it.id }.toSet()
-        list = list.filter { it.uid != me && it.id > 0 && it.uid !in off }
+        val own = ownSessions
+        list.firstOrNull { it.id in own && it.uid != me }?.let {
+            Log.w("IslamicMute", "muter: Waaiya's output session ${it.id} is listed under uid ${it.uid}: left alone")
+        }
+        list = list.filter { it.uid != me && it.id > 0 && it.uid !in off && it.id !in own }
         sessions = list
         val seen = HashSet<Int>()
         var failedNow = 0
@@ -211,6 +220,11 @@ class SessionMuter(private val context: Context, private val settings: Settings)
         synchronized(effects) {
             for (id in effects.keys.toList()) {
                 if (id in offIds) { effects.remove(id)?.release(); missed.remove(id); continue }
+                if (id in own) {
+                    effects.remove(id)?.release(); missed.remove(id)
+                    Recent.event(context, "the muter had muted Waaiya's own output (session $id): released")
+                    continue
+                }
                 if (id in seen) { missed.remove(id); continue }
                 val m = (missed[id] ?: 0) + 1
                 if (m >= 6) { effects.remove(id)?.release(); missed.remove(id) } else missed[id] = m

@@ -35,10 +35,13 @@ object StopLog {
             val time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ROOT).format(Date())
             val lines = (p.getString("lines", "")!!.split('\n').filter { it.isNotBlank() } + "$time $line").takeLast(KEEP)
             p.edit().putString("lines", lines.joinToString("\n")).apply()
+            android.util.Log.i("IslamicMute", "event: $line")
+            Recent.of(ctx).event("$time $line")  // with the per-second log's other events, in order
         }
     }
 
-    private fun phone(ctx: Context): String {
+    /** The phone's state now, for a log line: screen, lock, blur, battery settings. */
+    fun phone(ctx: Context): String {
         val pm = ctx.getSystemService(PowerManager::class.java)
         val km = ctx.getSystemService(KeyguardManager::class.java)
         val yes = { b: Boolean -> if (b) "yes" else "no" }
