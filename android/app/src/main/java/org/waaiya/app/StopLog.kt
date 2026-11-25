@@ -18,13 +18,16 @@ import java.util.Locale
  */
 object StopLog {
     private const val PREFS = "stop_log"
-    private const val KEEP = 8
+    private const val KEEP = 16
 
     /** Filtering ended by itself because of [why]. Any thread. */
     fun record(ctx: Context, why: String) = add(ctx, "STOP $why (${phone(ctx)})")
 
     /** Something worth knowing that did not end filtering (the output made again). */
     fun event(ctx: Context, what: String) = add(ctx, what)
+
+    /** As [event], with the phone's state (screen, lock, battery) at that moment. */
+    fun eventWithState(ctx: Context, what: String) = add(ctx, "$what (${phone(ctx)})")
 
     @Synchronized private fun add(ctx: Context, line: String) {
         runCatching {
@@ -40,7 +43,10 @@ object StopLog {
         val km = ctx.getSystemService(KeyguardManager::class.java)
         val yes = { b: Boolean -> if (b) "yes" else "no" }
         return "screen on ${yes(pm.isInteractive)}, locked ${yes(km.isKeyguardLocked)}, blur on ${yes(ScreenBlur.state != null)}, " +
-            "question skipped ${yes(ctx.hasProjectMediaAppOp())}, power saver ${yes(pm.isPowerSaveMode)}"
+            "question skipped ${yes(ctx.hasProjectMediaAppOp())}, power saver ${yes(pm.isPowerSaveMode)}, " +
+            "battery unrestricted ${yes(pm.isIgnoringBatteryOptimizations(ctx.packageName))}" +
+            (if (Build.VERSION.SDK_INT >= 28) ", background restricted " +
+                yes(ctx.getSystemService(android.app.ActivityManager::class.java).isBackgroundRestricted) else "")
     }
 
     /** The diagnostics report's lines: the last stops, and the last times Android ended Waaiya's process. */

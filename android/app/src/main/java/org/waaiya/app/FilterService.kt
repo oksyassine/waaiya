@@ -55,6 +55,11 @@ class FilterService : Service() {
         val muter: SessionMuter.Info?,
         /** The running engine is the keep-singing model (voice_v1, setting keep_singing). */
         val keepSinging: Boolean = false,
+        /** Android gives the capture zeros now (AudioRecordingConfiguration.isClientSilenced), how often, how long. */
+        val captureSilenced: Boolean = false, val silencedTimes: Int = 0, val silencedSec: Long = 0,
+        /** Seconds since the capture started, and the longest wait for one hop of captured sound (ms), with the count
+         *  of waits over [GAP_MS]: a capture that stops delivering (not silenced, just nothing) shows here. */
+        val runningSec: Long = 0, val longestGapMs: Long = 0, val gaps: Int = 0,
     )
 
     companion object {
@@ -97,11 +102,20 @@ class FilterService : Service() {
         /** The running service, for [refreshNotification]. */
         @Volatile private var instance: java.lang.ref.WeakReference<FilterService>? = null
 
+        /** Diagnostics: the uids the running capture leaves out (apps heard unfiltered), and a list whose capture
+         *  did not open (the old capture goes on: those apps stay filtered). Null when not capturing. */
+        @Volatile var captureExcluded: Set<Int>? = null
+            private set
+        @Volatile var captureExcludeFailed: Set<Int>? = null
+            private set
+
         /** A new capture is on its way ([restartForNotificationText]): TileStartActivity asks for it although the
          *  state says STARTING. */
         @Volatile var restartPending = false
             private set
         private const val RESTART_TIMEOUT_MS = 6000L
+        /** A wait this long for one hop of captured sound is recorded (StopLog, Health.gaps). */
+        private const val GAP_MS = 3000L
 
         /**
          * Notification text ([ScreenShareProtection]): Android reads its switch only when a capture starts, so a
@@ -349,6 +363,7 @@ class FilterService : Service() {
         }
         var excluded = FixMistakes.filterOffUids(this, Settings(this))
         var excludeFailed: Set<Int>? = null
+        captureExcluded = excluded; captureExcludeFailed = null
         var record = try {
             openRecord(excluded)
         } catch (e: SecurityException) { publish(State.NO_CAPTURE_PERMISSION); stopSelf(); return
@@ -409,6 +424,11 @@ class FilterService : Service() {
         var readErrorsInARow = 0
         var gateOn = 0; var gateSamples = 0
         var lastReport = android.os.SystemClock.elapsedRealtime()
+        val loopStart = lastReport
+        // Android may keep the capture running but give it zeros (a silenced client), for example when a phone limits
+        // an app at screen lock: the originals are muted and the filtered copy is silence. Watched every 0.5 s.
+        var silenced = false; var silencedTimes = 0; var silencedMs = 0L; var silencedAt = 0L
+        var longestGapMs = 0L; var gaps = 0
         var lastLog = lastReport
         var peak = 0f             // capture level over the report interval
         var captureDb = -120
@@ -427,6 +447,10 @@ class FilterService : Service() {
                 bufferedMs = (buffered * 1000 / Engine.SAMPLE_RATE).toInt(),
                 bufferFrames = track.bufferSizeInFrames, bufferCapacityFrames = track.bufferCapacityInFrames,
                 minBufferFrames = minOutFrames, readErrors = readErrors, captureDb = captureDb,
+                captureSilenced = silenced, silencedTimes = silencedTimes,
+                silencedSec = (silencedMs + if (silenced) android.os.SystemClock.elapsedRealtime() - silencedAt else 0) / 1000,
+                runningSec = (android.os.SystemClock.elapsedRealtime() - loopStart) / 1000,
+                longestGapMs = longestGapMs, gaps = gaps,
                 engineErrors = engine.runErrors,
                 gateShare = if (policy == 0) -1.0 else if (gateSamples == 0) 0.0 else gateOn.toDouble() / gateSamples,
                 muter = muter?.info(), keepSinging = singing)
@@ -445,6 +469,7 @@ class FilterService : Service() {
                 }
                 // collect exactly one hop so the engine can return it at once (hop-aligned: one hop less delay)
                 var got = 0
+                val waitFrom = android.os.SystemClock.elapsedRealtime()
                 while (got < inBuf.size && !stop) {
                     val n = record.read(inBuf, got, inBuf.size - got, AudioRecord.READ_BLOCKING)
                     if (n < 0) {
@@ -463,7 +488,26 @@ class FilterService : Service() {
                     got += n
                 }
                 if (got < inBuf.size) continue
+                val waited = android.os.SystemClock.elapsedRealtime() - waitFrom
+                if (waited > longestGapMs) longestGapMs = waited
+                if (waited >= GAP_MS) {
+                    gaps++
+                    // counted only: on some phones the capture simply waits while nothing plays (not a fault), and
+                    // the stop log keeps few lines
+                    Log.i(TAG, "capture: no sound came for $waited ms")
+                }
                 if (++hops % 50 == 0) {  // every 0.5 s: settings changed in the app apply live
+                    val sil = Build.VERSION.SDK_INT >= 29 &&
+                        runCatching { record.activeRecordingConfiguration?.isClientSilenced }.getOrNull() == true
+                    if (sil != silenced) {
+                        val now = android.os.SystemClock.elapsedRealtime()
+                        silenced = sil
+                        if (sil) { silencedTimes++; silencedAt = now } else silencedMs += now - silencedAt
+                        Log.w(TAG, "capture: ${if (sil) "silenced by Android" else "heard again"}")
+                        if (silencedTimes <= 20) StopLog.eventWithState(this,
+                            if (sil) "Android silenced the capture (filtering gives silence)" else "capture heard again")
+                        report(); notifyListeners()
+                    }
                     val p = Engine.policy(settings)
                     if (p != policy) { policy = p; engine.setPolicy(p); gateOn = 0; gateSamples = 0 }
                     val st = settings.audioStereo
@@ -504,9 +548,10 @@ class FilterService : Service() {
                             .onSuccess { r ->
                                 runCatching { record.stop() }; record.release()
                                 record = r; excluded = ex; excludeFailed = null
+                                captureExcluded = ex; captureExcludeFailed = null
                                 Log.i(TAG, "filter: capture rebuilt, ${ex.size} app(s) left unfiltered")
                             }
-                            .onFailure { excludeFailed = ex; Log.w(TAG, "filter: capture with the new app list did not open", it) }
+                            .onFailure { excludeFailed = ex; captureExcludeFailed = ex; Log.w(TAG, "filter: capture with the new app list did not open", it) }
                     }
                 }
                 if (loading) synchronized(swapLock) { loaded.also { loaded = null } }?.let { (e, ks) ->
