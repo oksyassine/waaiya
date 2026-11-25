@@ -205,6 +205,11 @@ jobs:
             Write-Host "$f : $($s.Status) $($s.SignerCertificate.Subject)"
             if ($s.Status -ne "Valid") { throw "$f is not validly signed ($($s.Status))" }
           }
+      # the Visual C++ runtime next to the programs that need it (Windows does not include it): in the zip and, as
+      # make_msix.ps1 packs this folder, in the Store package; Microsoft's own signed files, after the signing
+      - name: Visual C++ runtime into the app (app-local)
+        shell: pwsh
+        run: desktop/tool/vc_runtime_windows.ps1 -App desktop/build/windows/x64/runner/Release
       # the Microsoft Store package (unsigned: the Store signs it), uploaded in Partner Center by the owner;
       # tested installed and running by windows.yml's msix job
       - name: Microsoft Store package
