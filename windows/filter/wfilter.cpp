@@ -18,9 +18,10 @@
 // capture, so the volume keys work as before.
 //
 // Fail-closed: the lowered levels are kept by Windows, also when this process dies: then apps are silent until
-// the filter runs again or is stopped (the app's Stop gives the levels back). A sound that reaches the capture
-// louder than a lowered app can (an app not lowered yet) is never played amplified: the output is silent while it
-// lasts and the sessions are looked at again ("leaks" in the state).
+// the filter runs again or is stopped (the app's Stop gives the levels back; with hold_silence off the app gives
+// them back when it opens). Signing out or shutting down gives them back unless the filter starts again at login
+// (closing_proc). A sound that reaches the capture louder than a lowered app can (an app not lowered yet) is never
+// played amplified: the output is silent while it lasts and the sessions are looked at again ("leaks" in the state).
 //
 // Settings: the app's settings.json (%APPDATA%\Waaiya), read again when it changes: audio_stereo, hold_silence,
 // mute_women_singing, keep_singing (the voice_v1 model, swapped in while running with no gap) and filter_off_apps
@@ -467,18 +468,28 @@ bool g_test_hang = false;                 // tests: the main loop stops once the
 // for good, nothing being left to give the levels back). So the filter has a hidden window: on that message the main
 // loop gives the levels back before Windows ends the process. After an update, Windows starts the filter again
 // with the same arguments (RegisterApplicationRestart, measured: about when the new version is in place), and it
-// lowers the apps again. Signing out or shutting down (no ENDSESSION_CLOSEAPP) changes nothing: the levels stay
-// stored, given back or filtered again at the next login.
+// lowers the apps again. Signing out or shutting down (no ENDSESSION_CLOSEAPP): when the filter starts again at
+// login ("Start at login": the Run value or the package's autostart file) the levels stay lowered, so apps stay
+// silent until it filters again (no unfiltered sound at login); otherwise nothing would ever lower them again or
+// give them back (apps silent after the restart, with no filter), so they are given back the same way.
 HANDLE g_closing = CreateEventW(nullptr, TRUE, FALSE, nullptr); // set by the window: give the levels back now
 HANDLE g_closed = CreateEventW(nullptr, TRUE, FALSE, nullptr);  // set by the main loop: done
 std::atomic<bool> g_lowering{false};                            // the main loop holds levels lowered
+std::wstring g_autostart_file; // <dir>\autostart: "Start at login" in the Store package
+
+// "Start at login" is on: the Run value the app writes (zip), or the package's autostart file
+bool autostart_on() {
+    if (!g_autostart_file.empty() && exists(g_autostart_file)) return true;
+    return RegGetValueW(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run", L"WaaiyaFilter",
+                        RRF_RT_ANY, nullptr, nullptr, nullptr) == ERROR_SUCCESS;
+}
 
 LRESULT CALLBACK closing_proc(HWND h, UINT m, WPARAM w, LPARAM l) {
     switch (m) {
     case WM_QUERYENDSESSION:
         return TRUE;
     case WM_ENDSESSION:
-        if (w && (l & ENDSESSION_CLOSEAPP) && g_lowering.load()) {
+        if (w && g_lowering.load() && ((l & ENDSESSION_CLOSEAPP) || !autostart_on())) {
             SetEvent(g_closing);
             WaitForSingleObject(g_closed, 5000); // Windows ends the process once this returns
         }
@@ -819,6 +830,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     open_log(p.dir);
     if (w == WAIT_ABANDONED) logf("run: the previous filter ended without stopping; taking over");
     tick();
+    g_autostart_file = p.dir + L"\\autostart";
     CloseHandle(CreateThread(nullptr, 0, watchdog, nullptr, 0, nullptr));
     CloseHandle(CreateThread(nullptr, 0, closing_window, nullptr, 0, nullptr));
 
@@ -855,6 +867,8 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     st.bypass = bypass;
     if (!eng) {
         logf("engine: out of memory");
+        ses.restore_all(); // the sessions were lowered above: never left so with no filter
+        ReleaseMutex(mtx);
         return 1;
     }
     std::string load_err = err; // why the model did not load
@@ -1006,7 +1020,8 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
             break;
         }
         if (w == WAIT_OBJECT_0 + (DWORD)i_close) {
-            logf("Windows is closing the filter (the app is being updated or removed): giving the levels back");
+            logf("Windows is closing the filter (the app is being updated or removed, or the session ends): giving the "
+                 "levels back");
             closing = true;
             break;
         }
