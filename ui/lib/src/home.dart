@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (s.platform == 'android' && s.setup.notificationText.oneAppOffered) const OneAppNotice(),
             // once the setup is done: what still makes filtering stop on its own (battery cleaners, no notices)
             if (s.platform == 'android' && s.setup.originalsMuted &&
-                (s.setup.batteryRestricted || s.setup.notificationsOff))
+                (s.setup.batteryRestricted || s.setup.notificationsOff || s.setup.killedWhileFiltering))
               const KeepRunningCard(),
             const FilterOptionsCard(),
             const FilterAppsCard(),
@@ -290,7 +290,8 @@ class KeepRunningCard extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final s = WaaiyaScope.of(context).state;
     final body = [
-      if (s.setup.batteryRestricted) l.keepRunningBattery,
+      if (s.setup.killedWhileFiltering) l.keepRunningKilled,
+      if (s.setup.batteryRestricted || s.setup.killedWhileFiltering) l.keepRunningBattery,
       if (s.setup.notificationsOff) l.keepRunningNotifications,
     ].join('\n\n');
     return SectionCard(

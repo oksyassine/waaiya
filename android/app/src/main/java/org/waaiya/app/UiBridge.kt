@@ -375,6 +375,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     (Build.VERSION.SDK_INT >= 28 &&
                         activity.getSystemService(android.app.ActivityManager::class.java).isBackgroundRestricted)
             }.getOrDefault(false),
+            // Android ended Waaiya while it was filtering (StopLog): the same card says so
+            "killedWhileFiltering" to (StopLog.killedAt(activity) > 0 && !FilterService.running),
             "notificationsOff" to runCatching {
                 !activity.getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled()
             }.getOrDefault(false),

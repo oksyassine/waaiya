@@ -109,6 +109,21 @@ void main() {
     expect(b.appSettings, 1);
   });
 
+  testWidgets('Android ended Waaiya while filtering: the card says so, with the battery advice', (tester) async {
+    await _open(
+        tester,
+        const AppState(
+          language: 'en',
+          platform: 'android',
+          settings: WaaiyaSettings(gender: 'man'),
+          capabilities: Capabilities.android,
+          setup: SetupInfo(originalsMuted: true, consentSkipped: true, killedWhileFiltering: true),
+        ));
+    await tester.ensureVisible(find.byKey(const Key('keep_running')));
+    expect(find.textContaining('closed Waaiya while it was filtering'), findsOneWidget);
+    expect(find.textContaining('Unrestricted'), findsOneWidget);
+  });
+
   testWidgets('no card when nothing restricts Waaiya, or before the setup', (tester) async {
     await _open(
         tester,

@@ -407,6 +407,7 @@ class SetupInfo {
     this.message,
     this.adbCommands,
     this.batteryRestricted = false,
+    this.killedWhileFiltering = false,
     this.notificationsOff = false,
   });
 
@@ -426,6 +427,7 @@ class SetupInfo {
         message: BackendMessage.fromMap(m['message']),
         adbCommands: _str(m['adbCommands']),
         batteryRestricted: _bool(m['batteryRestricted'], false),
+        killedWhileFiltering: _bool(m['killedWhileFiltering'], false),
         notificationsOff: _bool(m['notificationsOff'], false),
       );
 
@@ -472,6 +474,9 @@ class SetupInfo {
   /// the phone may close it after a while and filtering stops.
   final bool batteryRestricted;
 
+  /// Android ended Waaiya while it was filtering (not a force stop or an update): the music then played unfiltered.
+  final bool killedWhileFiltering;
+
   /// Android: Waaiya's notifications are off, so it cannot say when Android stopped filtering.
   final bool notificationsOff;
 
@@ -491,6 +496,7 @@ class SetupInfo {
         'message': message?.toMap(),
         'adbCommands': adbCommands,
         'batteryRestricted': batteryRestricted,
+        'killedWhileFiltering': killedWhileFiltering,
         'notificationsOff': notificationsOff,
       };
 }

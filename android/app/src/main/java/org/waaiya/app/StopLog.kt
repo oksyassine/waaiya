@@ -49,6 +49,36 @@ object StopLog {
                 yes(ctx.getSystemService(android.app.ActivityManager::class.java).isBackgroundRestricted) else "")
     }
 
+    /** Filtering runs ([on]) or ended in an orderly way: a mark left set means the process died while filtering. */
+    fun markFiltering(ctx: Context, on: Boolean) {
+        val p = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+        if (on) p.putLong("filtering_since", System.currentTimeMillis()).remove("killed_at") else p.remove("filtering_since")
+        p.apply()
+    }
+
+    /**
+     * A new process (WaaiyaApp): if the last one died while filtering and it was not the user (force stop) or an
+     * update, remember when, for the Filter page's "Keep Waaiya running" card (the music then played unfiltered).
+     */
+    fun checkKilled(ctx: Context) {
+        val prefs = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val since = prefs.getLong("filtering_since", 0)
+        if (since == 0L) return
+        var at: Long = 0
+        if (Build.VERSION.SDK_INT >= 30) runCatching {
+            val e = ctx.getSystemService(ActivityManager::class.java)
+                .getHistoricalProcessExitReasons(ctx.packageName, 0, 1).firstOrNull()
+            if (e != null && e.timestamp >= since && e.reason !in setOf(10, 11, 15, 16))  // user stop, update
+                at = e.timestamp
+        }
+        val p = prefs.edit().remove("filtering_since")
+        if (at > 0) { p.putLong("killed_at", at); add(ctx, "Android ended Waaiya's process while it was filtering") }
+        p.apply()
+    }
+
+    /** When Android last ended Waaiya while it was filtering, or 0 (cleared when filtering starts again). */
+    fun killedAt(ctx: Context): Long = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getLong("killed_at", 0)
+
     /** The diagnostics report's lines: the last stops, and the last times Android ended Waaiya's process. */
     fun report(ctx: Context): String = buildString {
         val lines = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString("lines", "")!!
