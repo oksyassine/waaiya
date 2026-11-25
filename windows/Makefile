@@ -41,7 +41,7 @@ $(OUT)/%.o: engine/src/%.c $(wildcard engine/src/*.h) $(wildcard engine/include/
 	$(CC) $(CFLAGS) -c $< -o $@
 
 FILTER_SRC = windows/filter/wfilter.cpp windows/filter/sessions.cpp windows/common/wasapi.cpp
-WIN_LIBS   = -lole32 -loleaut32 -luuid -lmmdevapi -lavrt -lshell32 -lpropsys -lversion
+WIN_LIBS   = -lole32 -loleaut32 -luuid -lmmdevapi -lavrt -lshell32 -lpropsys -lversion -ladvapi32
 
 # GUI subsystem (-mwindows): started by the desktop app with pipes, never with a console window of its own
 $(OUT)/waaiya-filter.exe: $(FILTER_SRC) $(wildcard windows/filter/*.h windows/common/*.h) $(ENGINE_OBJ) $(OUT)/version-filter.o

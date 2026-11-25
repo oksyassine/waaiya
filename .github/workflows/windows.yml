@@ -146,6 +146,9 @@ jobs:
         run: bash desktop/tool/bundle_windows.sh desktop/build/windows/x64/runner/Release build-win
         env:
           REQUIRE_LINKS: "1"
+      - name: Visual C++ runtime into the app (app-local, as release.yml)
+        shell: pwsh
+        run: desktop/tool/vc_runtime_windows.ps1 -App desktop/build/windows/x64/runner/Release
       - name: Links, saved without music with the real tools (a clip served from the runner; no YouTube)
         working-directory: desktop
         shell: bash

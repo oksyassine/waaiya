@@ -40,8 +40,9 @@ installation and no admin rights. While filtering is on it changes, for your use
 
 - **every other app's volume** in the Volume Mixer, turned down to -80 dB (that is how the original sound is
   silenced; the filtered copy is what you hear). Your own level of each app is kept in
-  `%LOCALAPPDATA%\Waaiya\filter\levels.txt` and given back when you press Stop, also to apps that were closed
-  meanwhile (the next time they play);
+  `%LOCALAPPDATA%\Waaiya\filter\levels.txt` and given back when you press Stop, and when you sign out or shut down
+  with "Start at login" off, also to apps that were closed meanwhile (the next time they play, while Waaiya's
+  restorer runs: after Stop, and again when you open the app);
 - with "Start at login" on, a value `WaaiyaFilter` under `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`.
 
 To remove it: open the app, press Stop and turn "Start at login" off (or run `engine\waaiya-filter.exe stop` and

@@ -34,6 +34,24 @@ void main() {
     expect(s.sinkUp, isFalse);
   });
 
+  test('levels left lowered are given back when the app opens: after a clean end, or a death with hold_silence off',
+      () {
+    bool r(String active, {bool stored = true, bool autostart = false, bool hold = true}) =>
+        WindowsEngine.restoreAtOpen(active: active, levelsStored: stored, autostart: autostart, holdSilence: hold);
+    // stopped, the session ended or an update closed it: apps not running then still hold their -80 dB
+    expect(r('inactive'), isTrue);
+    expect(r('inactive', stored: false), isFalse);
+    // it died while filtering: silent until Start or Stop (fail-closed), unless the user chose normal sound back
+    expect(r('failed'), isFalse);
+    expect(r('failed', hold: false), isTrue);
+    // running, or starting: never
+    expect(r('active', hold: false), isFalse);
+    expect(r('activating', hold: false), isFalse);
+    // it starts at login: it lowers them again at once; a restorer racing it would let music through
+    expect(r('inactive', autostart: true), isFalse);
+    expect(r('failed', autostart: true, hold: false), isFalse);
+  });
+
   test('giving levels back, or stopped: stopped', () {
     expect(WindowsEngine.parseStatus(out('running', 'restoring'), autostart: false, now: now).filter, 'stopped');
     expect(WindowsEngine.parseStatus(out('none', 'stopped'), autostart: false, now: now).filter, 'stopped');

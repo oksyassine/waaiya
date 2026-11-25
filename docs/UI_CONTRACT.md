@@ -50,7 +50,7 @@ callback: Shizuku, Android settings). Each event is a full snapshot (below), not
 | `filter.captureCancelled` | bool | Android's screen-sharing question was cancelled at the last start (until the next start) |
 | `filter.delayMs` | int | Engine delay of the running filter; 0 = not measured (the screen then leaves the figure out) |
 | `filter.micDenied` | bool | The microphone permission was refused at the last start (until the next start) |
-| `filter.simulated` | bool | Desktop preview: start/stop are not connected to an engine yet (the screen says so) |
+| `filter.simulated` | bool | Desktop preview: start/stop are not connected to an engine yet (the screen says so). Debug and profile builds only: a release build on Linux or Windows without its engine says `filter.error` `start_failed` instead, and Start fails |
 | `filter.error` | Map? | `{code, detail}`: why the filter could not start or stopped (desktop engine host). Codes: `no_pactl`, `no_sound_server`, `no_systemd`, `no_output`, `install_failed`, `start_failed`, `service_failed` (detail = log lines). Kept until the next start; cleared once filtering |
 | `filter.autostart` | bool | The filter starts at login (capability `autostart`) |
 | `setup.originalsMuted` | bool | The originals can be silenced (Android: `DUMP` granted, or helper mode: see `setup.helperMode`) |

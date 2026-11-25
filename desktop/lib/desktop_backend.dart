@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/widgets.dart' show Locale;
 
 import 'package:waaiya_ui/waaiya_ui.dart';
@@ -26,7 +27,9 @@ import 'windows_engine.dart';
 /// `waaiya status` and systemd. Windows ([WindowsEngine]): Start runs `waaiya-filter.exe` from the bundle, detached;
 /// Stop gives every app its level back; the state is polled from `waaiya-filter status`. Without the engine (a
 /// development run) start/stop only change the reported state, and the screen says it is a preview
-/// (`filter.simulated`).
+/// (`filter.simulated`). A release build without its engine on Linux or Windows (an antivirus removed
+/// waaiya-filter.exe, a broken install) never pretends: `filter.error` start_failed says the filter is missing and
+/// Start fails ([_engineMissing]).
 ///
 /// Screen blur ([LinuxBlur]: `im-blur` on Linux, `waaiya-blur.exe` on Windows, when the bundle has it): runs while the
 /// app is open and a blur option is on, whether the sound filter runs or not (capability `blurStandalone`); its
@@ -50,8 +53,12 @@ class DesktopBackend extends MemoryBackend {
   /// Licence texts shipped next to the app (desktop/tool/bundle_engine.sh copies them there).
   final Directory licencesDir;
 
-  /// The sound filter host (Linux or Windows); null: simulated.
+  /// The sound filter host (Linux or Windows); null: simulated, or missing ([_engineMissing]).
   final FilterHost? engine;
+
+  /// A release build on Linux or Windows whose bundle has no filter: Start fails with this (`start_failed`), never
+  /// a simulated "on". Null otherwise.
+  BackendMessage? _engineMissing;
 
   /// The screen blur; null: no blur here (capability `screenBlur` false).
   final LinuxBlur? blur;
@@ -88,7 +95,9 @@ class DesktopBackend extends MemoryBackend {
 
   /// [engine]: filter host; by default the one next to the app on Linux and Windows. [blur]: screen blur; by
   /// default the helper next to the app on Linux and Windows. [platform]: `linux`, `windows`, ... (tests; default: this
-  /// system). [poll]: state refresh period (null: only after actions and [refresh] calls).
+  /// system). [poll]: state refresh period (null: only after actions and [refresh] calls). [simulateWithoutEngine]:
+  /// with no filter on Linux or Windows, simulate Start and Stop (the default in debug and profile builds: a
+  /// development run) instead of reporting the filter missing (the default in release builds).
   static Future<DesktopBackend> open({
     File? file,
     Directory? licencesDir,
@@ -108,6 +117,7 @@ class DesktopBackend extends MemoryBackend {
     Future<bool> Function(String url)? openUrl,
     ProtectionClock? protectionClock,
     int protectionIterations = ProtectionRules.iterations,
+    bool simulateWithoutEngine = !kReleaseMode,
   }) async {
     // "Fix mistakes" notes: next to a given settings file (tests), else in the state folder
     final notes = FixNotes(file != null ? File('${file.parent.path}${Platform.pathSeparator}fix_notes.txt') : defaultNotesFile());
@@ -130,6 +140,13 @@ class DesktopBackend extends MemoryBackend {
       blur = LinuxBlur.find(tokenFile: File('${file.parent.path}/screencast-restore-token'));
     }
     if (blur == null && findBlur && windows) blur = LinuxBlur.findWindows();
+    final missing = engine == null && (linux || windows) && !simulateWithoutEngine
+        ? BackendMessage(
+            'start_failed',
+            'The sound filter is missing from this installation (${windows ? r'engine\waaiya-filter.exe' : 'engine'} next to '
+                'the app: ${File(Platform.resolvedExecutable).parent.path}). Install Waaiya again; an antivirus '
+                'program may have removed it.')
+        : null;
     var saved = <String, Object?>{};
     try {
       saved = (jsonDecode(await file.readAsString()) as Map).cast<String, Object?>();
@@ -154,7 +171,7 @@ class DesktopBackend extends MemoryBackend {
       language: appLanguageOf(saved[_langKey] as String?) ??
           (saved.isEmpty ? systemLocales.map(appLanguageOf).whereType<String>().firstOrNull ?? 'ar' : 'ar'),
       settings: WaaiyaSettings.fromMap(settings),
-      filter: FilterInfo(simulated: engine == null),
+      filter: FilterInfo(simulated: engine == null && missing == null, error: missing),
       detectorModel: detector,
       // Women's singing only with a bundled detector: without one the engine mutes all voice while it is on.
       capabilities: Capabilities(
@@ -177,6 +194,8 @@ class DesktopBackend extends MemoryBackend {
     );
     final b = DesktopBackend._(file, licencesDir, engine, blur, startTimeout, initial, poll,
         windows: windows, openUrl: openUrl);
+    b._engineMissing = missing;
+    b._error = missing;
     if (linkTools != null && engine != null) {
       final env = Platform.environment;
       final work = linkWorkDir ??
@@ -195,8 +214,22 @@ class DesktopBackend extends MemoryBackend {
     b._initFix(notes);
     b._initProtect(protectFile, protectionClock ?? (linux ? LinuxBootClock() : (windows ? WindowsTickClock() : ProcessClock())), protectionIterations);
     await b.refresh(); // a filter already running (started at login) shows at once
+    await b._restoreLeftLevels();
     await b._applyBlur();
     return b;
+  }
+
+  /// Windows: levels a filter left lowered (Windows keeps them) are given back when the app opens, when
+  /// [WindowsEngine.restoreAtOpen] says so; then the state is read again.
+  Future<void> _restoreLeftLevels() async {
+    final e = engine, st = _lastStatus;
+    if (e is! WindowsEngine || st == null) return;
+    if (!WindowsEngine.restoreAtOpen(
+        active: st.active, levelsStored: e.levelsStored, autostart: st.autostart, holdSilence: state.settings.holdSilence)) {
+      return;
+    }
+    await e.restoreLevels();
+    await refresh();
   }
 
   /// %APPDATA%\Waaiya\settings.json, ~/Library/Application Support/Waaiya/settings.json,
@@ -497,6 +530,11 @@ class DesktopBackend extends MemoryBackend {
   @override
   Future<StartResult> startFilter() async {
     final e = engine;
+    if (e == null && _engineMissing != null) {
+      _error = _engineMissing;
+      _emitFilter(FilterState.stopped);
+      return StartResult.failed;
+    }
     if (e == null) return super.startFilter();
     if (state.filter.running) return StartResult.alreadyRunning;
     _error = null;
