@@ -295,6 +295,7 @@ class WorshipReceiver : BroadcastReceiver() {
             WorshipAlarms.ACTION_UNMUTE -> runCatching { WorshipAlarms.unmuteNow(context) }
             WorshipAlarms.ACTION_END_SILENT -> runCatching { WorshipAlarms.endSilentNow(context) }
             WorshipSms.ACTION_CHECK -> runCatching { WorshipSms.check(context) }
+            WorshipSms.ACTION_SENT -> runCatching { WorshipSms.sentResult(context, intent, resultCode) }
         }
     }
 }
