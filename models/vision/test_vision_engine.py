@@ -14,6 +14,7 @@ import numpy as np
 import onnxruntime as ort
 from PIL import Image
 
+from export_vision import ANIMALS
 from imvision import WOMEN, Vision, load_rgba
 
 
@@ -37,6 +38,7 @@ def reference(sess, rgb, thr=0.3, nms=0.5):
     xy = (out[:, :2] + g) * st
     wh = np.exp(out[:, 2:4]) * st
     score = out[:, 4] * out[:, 5]
+    score[out[:, 5] < out[:, 5 + ANIMALS[0]:5 + ANIMALS[1]].max(1)] = 0  # an animal class wins (export_vision.py)
     boxes = np.concatenate([xy - wh / 2, xy + wh / 2], 1) / r
     boxes = np.clip(boxes, 0, [w, h, w, h])  # the C side clips to the frame before NMS
     keep = []

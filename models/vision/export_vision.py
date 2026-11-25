@@ -19,6 +19,9 @@ Usage:
   python models/vision/export_vision.py marqo  --src downloads/marqo --out nsfw_marqo.onnx
   python models/vision/export_vision.py gender --src gender.pt --arch mobilenetv3_small_100 --out gender.onnx
   python models/vision/export_vision.py int8   --src nsfw_marqo.onnx --out nsfw_marqo_int8.onnx
+  python models/vision/export_vision.py qdq    --src gender_v2.onnx --out gender_v2_qdq.onnx   (any detector,
+                                               classifier or segmenter: int8 convolutions, calibrated on the
+                                               tune half; rejected, see eval/results/blur_speed.md)
   python models/vision/export_vision.py seg    --src seg_s192.pt --out seg.onnx   (train_seg.py output, or the
                                                torchvision COCO lraspp_mobilenet_v3_large .pth with --size H W)
 """
@@ -31,6 +34,7 @@ import onnx
 from onnx import TensorProto, compose, helper, numpy_helper
 
 OPSET = 17
+ANIMALS = (14, 24)  # COCO classes bird, cat, dog, horse, sheep, cow, elephant, bear, zebra, giraffe
 
 
 def set_meta(model, **kv):
@@ -59,7 +63,9 @@ def export_yolox(src, out, person_class=0):
         [numpy_helper.from_array(np.array(255.0, np.float32), "k255"),
          numpy_helper.from_array(np.array([2, 1, 0], np.int64), "bgr")])
 
-    # post: decode grid (demo_postprocess in the YOLOX repo), person score = obj * cls[person]
+    # post: decode grid (demo_postprocess in the YOLOX repo), person score = obj * cls[person], set to 0 where an
+    # animal class (COCO bird..giraffe) scores higher than person: the low person threshold (recall first) otherwise
+    # covers pets and wildlife (eval/results/blur_animals.md)
     grids, strides = [], []
     for s in (8, 16, 32):
         n = size // s
@@ -80,12 +86,19 @@ def export_yolox(src, out, person_class=0):
         helper.make_node("Mul", ["bwh", "half"], ["hwh"]),
         helper.make_node("Sub", ["cxy", "hwh"], ["p0"]),
         helper.make_node("Add", ["cxy", "hwh"], ["p1"]),
-        helper.make_node("Mul", ["obj", "cls"], ["score"]),
+        helper.make_node("Slice", [out_name, "a0", "a1", "ax"], ["animal_cls"]),
+        helper.make_node("ReduceMax", ["animal_cls"], ["animal_max"], axes=[2], keepdims=1),
+        helper.make_node("Less", ["cls", "animal_max"], ["animal_wins"]),
+        helper.make_node("Not", ["animal_wins"], ["person_wins"]),
+        helper.make_node("Cast", ["person_wins"], ["person_gate"], to=TensorProto.FLOAT),
+        helper.make_node("Mul", ["obj", "cls"], ["score_raw"]),
+        helper.make_node("Mul", ["score_raw", "person_gate"], ["score"]),
         helper.make_node("Concat", ["p0", "p1", "score"], ["dets"], axis=2),
     ]
     c = 5 + person_class
     inits = [numpy_helper.from_array(np.array(v, np.int64), k) for k, v in
-             dict(s0=[0], s2=[2], s4=[4], s5=[5], c0=[c], c1=[c + 1], ax=[2]).items()]
+             dict(s0=[0], s2=[2], s4=[4], s5=[5], c0=[c], c1=[c + 1], a0=[5 + ANIMALS[0]], a1=[5 + ANIMALS[1]],
+                  ax=[2]).items()]
     inits += [numpy_helper.from_array(grid, "grid"), numpy_helper.from_array(stride, "stride"),
               numpy_helper.from_array(np.array(0.5, np.float32), "half")]
     n_anchor = grid.shape[1]
@@ -100,10 +113,12 @@ def export_yolox(src, out, person_class=0):
     m.opset_import[0].version = ops[0].version
     full = compose.merge_models(pre_m, m, io_map=[(in_name, in_name)])
     full = compose.merge_models(full, post_m, io_map=[(out_name, out_name)])
+    del full.opset_import[:]  # merge_models keeps one copy per merged model; tools such as the quantizer want one
+    full.opset_import.extend(ops)
     onnx.checker.check_model(full)
     set_meta(full, **{"im.kind": "detector", "im.input_w": size, "im.input_h": size, "im.pad": 114 / 255,
                       "im.model_name": os.path.basename(src).removesuffix(".onnx"),
-                      "im.source": "YOLOX (Megvii), Apache-2.0, COCO person class"})
+                      "im.source": "YOLOX (Megvii), Apache-2.0, COCO person class (0 where an animal class wins)"})
     onnx.save(full, out)
 
 
@@ -209,9 +224,69 @@ def export_int8(src, out):
     onnx.save(q, out)
 
 
+def export_qdq(src, out, n_calib=200):
+    """Static int8 (QDQ) of the convolutions, run by ONNX Runtime's int8 kernels; 3-4x smaller files. Not used by
+    the app: only 15-35% faster on a phone and less accurate (eval/results/blur_speed.md). Everything else (pre/post-processing in the graph, the
+    detector's decode and score) stays float. Calibration inputs are built like the runtime builds them: the
+    detector gets whole images letterboxed at the top-left with im.pad, the others get person crops stretched to
+    their input. Only tune-half images (blur_diag.half) are used, so eval_blur.py --half report stays clean."""
+    import tempfile
+
+    from onnxruntime.quantization import (CalibrationDataReader, CalibrationMethod, QuantFormat, QuantType,
+                                          quantize_static)
+    from onnxruntime.quantization.shape_inference import quant_pre_process
+    from PIL import Image
+
+    from blur_diag import half
+
+    m = onnx.load(src)
+    meta = {p.key: p.value for p in m.metadata_props}
+    w, h = int(meta["im.input_w"]), int(meta["im.input_h"])
+    in_name = m.graph.input[0].name
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data/openimages/crops/validation")
+    if meta["im.kind"] == "detector":
+        folders = [os.path.join(root, "full")]
+    else:
+        folders = [os.path.join(root, k) for k in ("woman", "man", "girl", "boy")]
+    files = sorted(os.path.join(d, f) for d in folders for f in os.listdir(d)
+                   if f.endswith(".jpg") and half(f.split("_")[0].removesuffix(".jpg")) == "tune")
+    files = files[:: max(1, len(files) // n_calib)][:n_calib]
+
+    def prep(path):
+        im = Image.open(path).convert("RGB")
+        if meta["im.kind"] == "detector":
+            s = min(w / im.size[0], h / im.size[1])
+            im = im.resize((max(1, round(im.size[0] * s)), max(1, round(im.size[1] * s))), Image.BILINEAR)
+            a = np.full((h, w, 3), float(meta["im.pad"]), np.float32)
+            a[:im.size[1], :im.size[0]] = np.asarray(im, np.float32) / 255
+        else:
+            a = np.asarray(im.resize((w, h), Image.BILINEAR), np.float32) / 255
+        return {in_name: a.transpose(2, 0, 1)[None].copy()}
+
+    class Reader(CalibrationDataReader):
+        def __init__(self):
+            self.it = iter(files)
+
+        def get_next(self):
+            f = next(self.it, None)
+            return prep(f) if f else None
+
+    with tempfile.TemporaryDirectory() as tmp:
+        pre = os.path.join(tmp, "pre.onnx")
+        quant_pre_process(src, pre, skip_symbolic_shape=True)
+        quantize_static(pre, out, Reader(), quant_format=QuantFormat.QDQ, op_types_to_quantize=["Conv"],
+                        per_channel=True, activation_type=QuantType.QUInt8, weight_type=QuantType.QInt8,
+                        calibrate_method=CalibrationMethod.Percentile,
+                        extra_options={"CalibPercentile": 99.99})
+    q = onnx.load(out)
+    meta["im.model_name"] = meta.get("im.model_name", "model") + "_qdq"
+    set_meta(q, **meta)
+    onnx.save(q, out)
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("kind", choices=["yolox", "marqo", "gender", "int8", "seg"])
+    ap.add_argument("kind", choices=["yolox", "marqo", "gender", "int8", "qdq", "seg"])
     ap.add_argument("--src", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--arch", default="mobilenetv3_small_100")
@@ -219,6 +294,7 @@ def main():
     a = ap.parse_args()
     {"yolox": lambda: export_yolox(a.src, a.out), "marqo": lambda: export_marqo(a.src, a.out),
      "gender": lambda: export_gender(a.src, a.arch, a.out), "int8": lambda: export_int8(a.src, a.out),
+     "qdq": lambda: export_qdq(a.src, a.out),
      "seg": lambda: export_seg(a.src, a.out, a.size)}[a.kind]()
     print("wrote", a.out)
 
