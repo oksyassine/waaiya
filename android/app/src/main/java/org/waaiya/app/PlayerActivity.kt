@@ -75,7 +75,11 @@ open class PlayerActivity : Activity() {
                     .setAudioProcessorChain(chain).build()
             }
         }
-        val p = ExoPlayer.Builder(this, renderers).build()
+        // audio focus: another app's music pauses while a video plays here (it would be heard unfiltered over it)
+        val p = ExoPlayer.Builder(this, renderers)
+            .setAudioAttributes(androidx.media3.common.AudioAttributes.Builder().setUsage(C.USAGE_MEDIA)
+                .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE).build(), true)
+            .build()
         player = p
         setContentView(PlayerView(this).apply { this.player = p })
         // A link that cannot be played (expired, blocked, unsupported audio): say so instead of a black screen.
