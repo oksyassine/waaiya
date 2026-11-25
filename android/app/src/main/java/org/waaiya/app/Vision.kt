@@ -21,6 +21,7 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
         @JvmStatic private external fun nativeError(h: Long): String
         @JvmStatic private external fun nativeSetCoversVisible(h: Long, visible: Boolean)
         @JvmStatic private external fun nativeSetTilesPerFrame(h: Long, n: Int)
+        @JvmStatic private external fun nativeSetOutlines(h: Long, on: Boolean)
         @JvmStatic private external fun nativeSetMaleClear(h: Long, t: Float)
         @JvmStatic private external fun nativeFrame(h: Long, buf: ByteBuffer, w: Int, hh: Int, stride: Int, tMs: Double,
                                                     models: Boolean, nsfw: Boolean, out: FloatArray, thumb: IntArray?,
@@ -59,6 +60,9 @@ class Vision private constructor(private var handle: Long) : AutoCloseable {
 
     /** Portrait frames: person-detector tiles per frame (0 = all every frame, 1 = one, taking turns). */
     fun setTilesPerFrame(n: Int) { if (handle != 0L) nativeSetTilesPerFrame(handle, n) }
+
+    /** Person outlines (when the segmenter is bundled); false = whole rectangles, skipping the segmenter. */
+    fun setOutlines(on: Boolean) { if (handle != 0L) nativeSetOutlines(handle, on) }
 
     /** Result of one frame: rects as x0,y0,x1,y1 (0..1), kind (maybe | [KIND_PART]); [failed] = the models failed
      *  (covers were held). */

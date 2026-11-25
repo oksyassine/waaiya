@@ -44,6 +44,10 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         // Portrait screens: the person detector also runs on 3 tiles (small people). When a frame takes longer than
         // this on average with all of them, they take turns, one per frame (the tracker holds people in between).
         private const val SLOW_FRAME_MS = 60.0
+        // Still slower than this on average once tiles take turns: person outlines are dropped for the session
+        // (whole rectangles; the segmenter costs ~250 ms a frame on a Helio G85-class phone, eval/results/blur_speed.md)
+        private const val SLOW_OUTLINE_MS = 150.0
+        private const val SPEED_FRAMES = 10         // frames measured after a speed step before the next one
         private const val TILES = 3                 // im_vision_params.tiles: passes for all tiles to have run once
         @Volatile var state: State? = null
             private set
@@ -85,6 +89,8 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
     private var failStreak = 0
     private var frameMs = 0.0          // moving average of the model time per frame
     private var tilesTakeTurns = false
+    private var outlinesOff = false
+    private var framesSinceStep = 0    // frames timed since the last speed step (the average restarts there)
     private var maleClear = 0f         // main thread: the strictness last sent to the worker
     private var thumbW = THUMB_W
     private var thumbH = THUMB_W * 2
@@ -181,6 +187,7 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
                 modelsBad = it.status != 0
                 if (modelsBad) Log.e(TAG, "blur models: ${it.error}")
                 if (tilesTakeTurns) it.setTilesPerFrame(1)
+                if (outlinesOff) it.setOutlines(false)
                 it.setMaleClear(settings.blurMaleClear)
             }
             failStreak = 0
@@ -304,14 +311,24 @@ class ScreenBlur(private val context: Context, private val projection: MediaProj
         v.frame(buf, capW, capH, stride, t, true, runNsfw, frame, thumbPx, thumbW, thumbH)
         val ms = (SystemClock.elapsedRealtimeNanos() - t0) / 1e6
         frameMs = if (frameMs == 0.0) ms else frameMs * 0.9 + ms * 0.1
+        framesSinceStep++
+        // Speed steps, each for the rest of this session; the average restarts after a step so the next one is
+        // judged on frames with the cheaper setting only
         if (!tilesTakeTurns && frameMs > SLOW_FRAME_MS) {
-            tilesTakeTurns = true // for the rest of this session
+            tilesTakeTurns = true
             v.setTilesPerFrame(1)
             Log.i(TAG, "blur: frames take ${frameMs.toInt()} ms, detector tiles now take turns")
+            frameMs = 0.0; framesSinceStep = 0
+        } else if (tilesTakeTurns && !outlinesOff && framesSinceStep >= SPEED_FRAMES && frameMs > SLOW_OUTLINE_MS) {
+            outlinesOff = true
+            v.setOutlines(false)
+            Log.i(TAG, "blur: frames still take ${frameMs.toInt()} ms, person outlines off (rectangles)")
+            frameMs = 0.0; framesSinceStep = 0
         }
         if (still) stillPasses++
-        stats = "Frames: %.0f ms each on average (last %.0f ms), tiles take turns %s, capture %dx%d, still-screen passes %d"
-            .format(java.util.Locale.ROOT, frameMs, ms, if (tilesTakeTurns) "yes" else "no", capW, capH, stillPasses)
+        stats = ("Frames: %.0f ms each on average (last %.0f ms), tiles take turns %s, outlines %s, capture %dx%d, " +
+            "still-screen passes %d").format(java.util.Locale.ROOT, frameMs, ms, if (tilesTakeTurns) "yes" else "no",
+            if (outlinesOff) "off (slow)" else "on", capW, capH, stillPasses)
         failStreak = if (frame.failed) failStreak + 1 else 0
         if (!frame.failed) lastOk = SystemClock.uptimeMillis()
         val bm = Bitmap.createBitmap(thumbPx, thumbW, thumbH, Bitmap.Config.ARGB_8888)

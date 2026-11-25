@@ -84,6 +84,17 @@ JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetTilesPerFrame(JNIEnv 
     im_vision_set_params(b->v, &p);
 }
 
+/* Person outlines (segmenter): 0 = rectangles only, skipping the segmenter (slow phones). */
+JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetOutlines(JNIEnv *env, jclass cls, jlong h, jboolean on) {
+    (void)env; (void)cls;
+    blur *b = (blur *)(intptr_t)h;
+    if (!b || !b->v) return;
+    im_vision_params p;
+    im_vision_get_params(b->v, &p);
+    p.seg = on ? 1 : 0;
+    im_vision_set_params(b->v, &p);
+}
+
 /* Classifier threshold: a person is left uncovered only when p(man or boy) >= this (the user's strictness). */
 JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetMaleClear(JNIEnv *env, jclass cls, jlong h,
                                                                            jfloat t) {
