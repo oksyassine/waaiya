@@ -210,8 +210,22 @@ class DesktopBackend extends MemoryBackend {
     b._initFix(notes);
     b._initProtect(protectFile, protectionClock ?? (linux ? LinuxBootClock() : (windows ? WindowsTickClock() : ProcessClock())), protectionIterations);
     await b.refresh(); // a filter already running (started at login) shows at once
+    await b._restoreLeftLevels();
     await b._applyBlur();
     return b;
+  }
+
+  /// Windows: levels a filter left lowered (Windows keeps them) are given back when the app opens, when
+  /// [WindowsEngine.restoreAtOpen] says so; then the state is read again.
+  Future<void> _restoreLeftLevels() async {
+    final e = engine, st = _lastStatus;
+    if (e is! WindowsEngine || st == null) return;
+    if (!WindowsEngine.restoreAtOpen(
+        active: st.active, levelsStored: e.levelsStored, autostart: st.autostart, holdSilence: state.settings.holdSilence)) {
+      return;
+    }
+    await e.restoreLevels();
+    await refresh();
   }
 
   /// %APPDATA%\Waaiya\settings.json, ~/Library/Application Support/Waaiya/settings.json,

@@ -219,6 +219,37 @@ class WindowsEngine implements FilterHost {
     return r.exitCode == 0 ? null : BackendMessage('service_failed', _detail(r));
   }
 
+  /// Levels the filter could not give back yet are stored (levels.txt not empty).
+  bool get levelsStored {
+    try {
+      return File('$stateDir\\levels.txt').lengthSync() > 0;
+    } on IOException {
+      return false;
+    }
+  }
+
+  /// When the app opens with no filter running: give back the levels left lowered? [active] is [EngineStatus.active]
+  /// ('failed': the filter died while apps were lowered). Never when the filter starts at login ([autostart]): it
+  /// lowers them again at once, and a restorer racing it would let unfiltered sound through at every login. Levels
+  /// left by a clean end (Stop, the session ending, an update) are always given back; those of a filter that died
+  /// only with [holdSilence] off (on: apps stay silent until Start or Stop, the owner's fail-closed choice).
+  static bool restoreAtOpen(
+          {required String active, required bool levelsStored, required bool autostart, required bool holdSilence}) =>
+      levelsStored &&
+      !autostart &&
+      const {'inactive', 'failed'}.contains(active) &&
+      (active != 'failed' || !holdSilence);
+
+  /// `waaiya-filter restore`, detached: gives stored levels back as their apps show up, then ends. It leaves at once
+  /// when a filter or another restorer runs, and a Start makes it quit.
+  Future<void> restoreLevels() async {
+    try {
+      await Process.start(exe.path, ['restore'], mode: ProcessStartMode.detached, environment: env, includeParentEnvironment: false);
+    } on ProcessException {
+      // the next Stop gives them back
+    }
+  }
+
   @override
   Future<BackendMessage?> setAutostart(bool on) async {
     if (packaged) {

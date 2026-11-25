@@ -18,9 +18,9 @@
 // capture, so the volume keys work as before.
 //
 // Fail-closed: the lowered levels are kept by Windows, also when this process dies: then apps are silent until
-// the filter runs again or is stopped (the app's Stop gives the levels back; with hold_silence off the app gives
-// them back when it opens). Signing out or shutting down gives them back unless the filter starts again at login
-// (closing_proc). A sound that reaches the capture louder than a lowered app can (an app not lowered yet) is never
+// the filter runs again or is stopped (the app's Stop gives the levels back; with hold_silence off and "Start at
+// login" off, so does opening the app: WindowsEngine.restoreAtOpen). Signing out or shutting down gives them back
+// unless the filter starts again at login (closing_proc). A sound that reaches the capture louder than a lowered app can (an app not lowered yet) is never
 // played amplified: the output is silent while it lasts and the sessions are looked at again ("leaks" in the state).
 //
 // Settings: the app's settings.json (%APPDATA%\Waaiya), read again when it changes: audio_stereo, hold_silence,
