@@ -24,7 +24,7 @@
     <string name="release_silence">Toʻxtatish: ilovalarni filtrsiz eshitish</string>
     <string name="power_start_cd">Filtrlashni boshlash</string>
     <string name="power_stop_cd">Filtrlashni toʻxtatish</string>
-    <string name="capture_hint">Android ekraningizni ulashishni soʻraydi. Faqat ovoz ishlatiladi: hech narsa yozib olinmaydi va yuborilmaydi.</string>
+    <string name="capture_hint">Android ekraningizni ulashishni soʻraydi. Hech narsa yozib olinmaydi va yuborilmaydi.</string>
     <string name="need_record_audio">Boshqa ilovalarning ovozini qabul qilishi uchun Waaiyaga mikrofon ruxsati kerak. U hech qachon sizni yozib olmaydi.</string>
 
     <string name="setup_banner_title">Yana bir qadam</string>

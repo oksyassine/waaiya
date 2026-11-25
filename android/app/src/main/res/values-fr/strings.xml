@@ -24,7 +24,7 @@
     <string name="release_silence">Arrêter : entendre les applis sans filtre</string>
     <string name="power_start_cd">Démarrer le filtrage</string>
     <string name="power_stop_cd">Arrêter le filtrage</string>
-    <string name="capture_hint">Android va demander de partager votre écran. Seul le son est utilisé : rien n\'est enregistré ni envoyé.</string>
+    <string name="capture_hint">Android va demander de partager votre écran. Rien n\'est enregistré ni envoyé.</string>
     <string name="need_record_audio">Waaiya a besoin de l\'autorisation du micro pour recevoir le son des autres applications. Il ne vous enregistre jamais.</string>
 
     <string name="setup_banner_title">Encore une étape</string>

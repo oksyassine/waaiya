@@ -24,7 +24,7 @@
     <string name="release_silence">Стоп: слушать приложения без фильтра</string>
     <string name="power_start_cd">Включить фильтр</string>
     <string name="power_stop_cd">Выключить фильтр</string>
-    <string name="capture_hint">Android спросит разрешение на трансляцию экрана. Используется только звук: ничего не записывается и не отправляется.</string>
+    <string name="capture_hint">Android спросит разрешение на трансляцию экрана. Ничего не записывается и не отправляется.</string>
     <string name="need_record_audio">Waaiya нужно разрешение на микрофон, чтобы получать звук других приложений. Ваш голос никогда не записывается.</string>
 
     <string name="setup_banner_title">Ещё один шаг</string>

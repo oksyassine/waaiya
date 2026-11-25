@@ -171,8 +171,10 @@ prompt on a real adbd (the emulators here do not ask: `ro.adb.secure=0`).
   Waaiya is updated and when USB debugging is turned off. Waaiya starts it again by itself (a short silent run with
   the saved pairing) when the app is opened or filtering starts and Wireless debugging is on; otherwise a banner on
   the Filter and Setup pages has one button for it, and Start warns first. The switch is mentioned only as the
-  optional way to make the permissions permanent. **Not proven on a real phone yet**: Shizuku's server is known to
-  start on these phones without the switch, but that the restricted shell may still read the audio dumps is inferred.
+  optional way to make the permissions permanent. **Helper mode is not proven on a real phone yet**: Shizuku's server is known
+  to start on these phones without the switch, but that the restricted shell may still read the audio dumps is
+  inferred. (A tester's Redmi Note 15, HyperOS 3, Android 16, accepted the grants directly in November 2026, so it did
+  not need helper mode.)
 - vivo/iQOO (OriginOS) ignores `appops set PROJECT_MEDIA` without an error: the setup counts as done with DUMP alone
   and Android asks before each capture. Huawei says Wireless debugging is not available on its phones: the page
   points to the computer route there.

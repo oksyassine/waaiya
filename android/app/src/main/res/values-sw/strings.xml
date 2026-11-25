@@ -24,7 +24,7 @@
     <string name="release_silence">Simamisha: sikia programu bila kuchujwa</string>
     <string name="power_start_cd">Anza kuchuja</string>
     <string name="power_stop_cd">Simamisha uchujaji</string>
-    <string name="capture_hint">Android itakuuliza ushiriki skrini yako. Sauti pekee ndiyo hutumika: hakuna kinachorekodiwa wala kutumwa.</string>
+    <string name="capture_hint">Android itakuuliza ushiriki skrini yako. Hakuna kinachorekodiwa wala kutumwa.</string>
     <string name="need_record_audio">Waaiya inahitaji ruhusa ya maikrofoni ili kupokea sauti ya programu nyingine. Haikurekodi kamwe.</string>
 
     <string name="setup_banner_title">Hatua moja zaidi</string>

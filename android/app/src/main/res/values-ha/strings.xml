@@ -24,7 +24,7 @@
     <string name="release_silence">Dakatar: ji manhajoji ba tare da tacewa ba</string>
     <string name="power_start_cd">Fara tacewa</string>
     <string name="power_stop_cd">Dakatar da tacewa</string>
-    <string name="capture_hint">Android zai tambaya ko za a raba allonku. Sauti kaɗai ake amfani da shi: ba a naɗar komai, ba a tura komai.</string>
+    <string name="capture_hint">Android zai tambaya ko za a raba allonku. Ba a naɗar komai, ba a tura komai.</string>
     <string name="need_record_audio">Waaiya yana buƙatar izinin makirufo don karɓar sautin sauran manhajoji. Ba ya taɓa naɗar muryarku.</string>
 
     <string name="setup_banner_title">Saura mataki ɗaya</string>

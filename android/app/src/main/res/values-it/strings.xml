@@ -24,7 +24,7 @@
     <string name="release_silence">Interrompi: senti le app senza filtro</string>
     <string name="power_start_cd">Avvia il filtro</string>
     <string name="power_stop_cd">Interrompi il filtro</string>
-    <string name="capture_hint">Android chiederà di condividere lo schermo. Viene usato solo l\'audio: niente viene registrato o inviato.</string>
+    <string name="capture_hint">Android chiederà di condividere lo schermo. Niente viene registrato o inviato.</string>
     <string name="need_record_audio">Waaiya ha bisogno dell\'autorizzazione del microfono per ricevere l\'audio delle altre app. Non ti registra mai.</string>
 
     <string name="setup_banner_title">Ancora un passaggio</string>

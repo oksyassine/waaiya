@@ -1,1 +1,1 @@
-Removes music from every app, keeps the voice and Quran recitation. Offline.
+Removes music from every app, keeps voice and Quran recitation. Filters offline.

@@ -24,7 +24,7 @@
     <string name="release_silence">Stoppen: apps ongefilterd horen</string>
     <string name="power_start_cd">Filteren starten</string>
     <string name="power_stop_cd">Filteren stoppen</string>
-    <string name="capture_hint">Android vraagt of je je scherm wilt delen. Alleen het geluid wordt gebruikt: er wordt niets opgenomen of verstuurd.</string>
+    <string name="capture_hint">Android vraagt of je je scherm wilt delen. Er wordt niets opgenomen of verstuurd.</string>
     <string name="need_record_audio">Waaiya heeft de toestemming voor de microfoon nodig om het geluid van andere apps te ontvangen. Het neemt jou nooit op.</string>
 
     <string name="setup_banner_title">Nog één stap</string>

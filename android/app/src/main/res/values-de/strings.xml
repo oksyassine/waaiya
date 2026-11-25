@@ -24,7 +24,7 @@
     <string name="release_silence">Stopp: Apps ungefiltert hören</string>
     <string name="power_start_cd">Filter starten</string>
     <string name="power_stop_cd">Filter stoppen</string>
-    <string name="capture_hint">Android fragt, ob Sie Ihren Bildschirm teilen möchten. Nur der Ton wird verwendet: Nichts wird aufgenommen oder gesendet.</string>
+    <string name="capture_hint">Android fragt, ob Sie Ihren Bildschirm teilen möchten. Nichts wird aufgenommen oder gesendet.</string>
     <string name="need_record_audio">Waaiya braucht die Mikrofonberechtigung, um den Ton anderer Apps zu empfangen. Es nimmt Sie nie auf.</string>
 
     <string name="setup_banner_title">Noch ein Schritt</string>

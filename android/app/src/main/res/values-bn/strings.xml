@@ -24,7 +24,7 @@
     <string name="release_silence">বন্ধ করুন: ফিল্টার ছাড়া অ্যাপ শুনুন</string>
     <string name="power_start_cd">ফিল্টারিং চালু করুন</string>
     <string name="power_stop_cd">ফিল্টারিং বন্ধ করুন</string>
-    <string name="capture_hint">Android আপনার স্ক্রিন শেয়ার করার অনুমতি চাইবে। শুধু শব্দ ব্যবহার করা হয়: কিছুই রেকর্ড বা পাঠানো হয় না।</string>
+    <string name="capture_hint">Android আপনার স্ক্রিন শেয়ার করার অনুমতি চাইবে। কিছুই রেকর্ড বা পাঠানো হয় না।</string>
     <string name="need_record_audio">অন্য অ্যাপের শব্দ পেতে Waaiya-র মাইক্রোফোনের অনুমতি দরকার। এটি কখনো আপনার কথা রেকর্ড করে না।</string>
 
     <string name="setup_banner_title">আর একটি ধাপ</string>

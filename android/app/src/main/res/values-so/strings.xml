@@ -24,7 +24,7 @@
     <string name="release_silence">Jooji: maqal barnaamijyada iyagoo aan la shaandheyn</string>
     <string name="power_start_cd">Bilow shaandhaynta</string>
     <string name="power_stop_cd">Jooji shaandhaynta</string>
-    <string name="capture_hint">Android waxay ku weydiin doontaa inaad wadaagto shaashaddaada. Codka oo kaliya ayaa la isticmaalaa: waxba lama duubo, waxna lama diro.</string>
+    <string name="capture_hint">Android waxay ku weydiin doontaa inaad wadaagto shaashaddaada. Waxba lama duubo, waxna lama diro.</string>
     <string name="need_record_audio">Waaiya waxay u baahan tahay ogolaanshaha makarafoonka si ay u hesho codka barnaamijyada kale. Marnaba ma duubto codkaaga.</string>
 
     <string name="setup_banner_title">Hal tallaabo oo kale</string>

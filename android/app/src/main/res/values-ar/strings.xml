@@ -23,7 +23,7 @@
     <string name="release_silence">إيقاف: سماع التطبيقات دون تصفية</string>
     <string name="power_start_cd">تشغيل التصفية</string>
     <string name="power_stop_cd">إيقاف التصفية</string>
-    <string name="capture_hint">سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.</string>
+    <string name="capture_hint">سيطلب أندرويد مشاركة الشاشة. لا يُسجَّل شيء ولا يُرسَل.</string>
     <string name="need_record_audio">تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.</string>
 
     <string name="setup_banner_title">بقيت خطوة واحدة</string>

@@ -1,1 +1,1 @@
-Removes music from every app, keeps the voice. Optional screen blur. Offline.
+Removes music from every app, keeps the voice. Optional blur. Filters offline.

@@ -20,7 +20,8 @@ notification says the sound is no longer filtered.)
 | **iOS / iPadOS** | Limited by Apple | No app may change other apps' sound. Planned: in-app player for links, Safari extension. |
 | **Browsers** | Planned | Extension filtering the tab's media (desktop Chrome, Firefox, Edge, Safari). |
 
-The Android app is Arabic first, with English in its settings (Android 13+ also lists both in the system's
+The Android app is in 18 languages. It follows the phone's languages, in the order set there (Arabic when none of
+them is available), and the language can be changed in its settings (Android 13+ also lists them in the system's
 per-app language settings).
 
 Download the Android app from the [releases](https://github.com/oksyassine/waaiya/releases). How each platform

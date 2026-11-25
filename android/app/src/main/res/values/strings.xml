@@ -23,7 +23,7 @@
     <string name="release_silence">Stop: hear apps unfiltered</string>
     <string name="power_start_cd">Start filtering</string>
     <string name="power_stop_cd">Stop filtering</string>
-    <string name="capture_hint">Android will ask to share your screen. Only the sound is used: nothing is recorded or sent.</string>
+    <string name="capture_hint">Android will ask to share your screen. Nothing is recorded or sent.</string>
     <string name="need_record_audio">Waaiya needs the microphone permission to receive other apps\' sound. It never records you.</string>
 
     <string name="setup_banner_title">One more step</string>

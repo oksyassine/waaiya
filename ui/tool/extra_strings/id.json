@@ -217,7 +217,7 @@
   "worship_location_settings": "Setelan lokasi",
   "worship_location_failed": "Lokasi Anda tidak dapat ditemukan. Coba lagi sebentar lagi, atau cari kota Anda.",
   "worship_place_near": "dekat {city}",
-  "worship_habous_note": "Waktu resmi Kementerian Wakaf dan Urusan Islam (Habous) untuk {city}.",
+  "worship_habous_note": "Waktu yang dihitung agar sesuai dengan tabel Kementerian Wakaf dan Urusan Islam (Habous) untuk {city}.",
   "tray_open": "Buka Waaiya",
   "tray_quit": "Keluar",
   "engine_error_autostart_blocked": "Windows tidak mengizinkan Waaiya berjalan saat masuk. Aktifkan Waaiya di Pengaturan › Aplikasi › Startup, lalu aktifkan opsi ini lagi.",

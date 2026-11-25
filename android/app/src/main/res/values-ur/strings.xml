@@ -24,7 +24,7 @@
     <string name="release_silence">روکیں: ایپس کو بغیر فلٹر سنیں</string>
     <string name="power_start_cd">فلٹرنگ شروع کریں</string>
     <string name="power_stop_cd">فلٹرنگ روکیں</string>
-    <string name="capture_hint">Android آپ کی اسکرین کا اشتراک کرنے کو کہے گا۔ صرف آواز استعمال ہوتی ہے: نہ کچھ ریکارڈ ہوتا ہے نہ کہیں بھیجا جاتا ہے۔</string>
+    <string name="capture_hint">Android آپ کی اسکرین کا اشتراک کرنے کو کہے گا۔ نہ کچھ ریکارڈ ہوتا ہے نہ کہیں بھیجا جاتا ہے۔</string>
     <string name="need_record_audio">دوسری ایپس کی آواز وصول کرنے کے لیے واعية کو مائیکروفون کی اجازت درکار ہے۔ یہ کبھی آپ کی آواز ریکارڈ نہیں کرتی۔</string>
 
     <string name="setup_banner_title">ایک اور قدم</string>

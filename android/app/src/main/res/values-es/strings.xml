@@ -24,7 +24,7 @@
     <string name="release_silence">Detener: oír las aplicaciones sin filtrar</string>
     <string name="power_start_cd">Iniciar el filtrado</string>
     <string name="power_stop_cd">Detener el filtrado</string>
-    <string name="capture_hint">Android le pedirá compartir su pantalla. Solo se usa el sonido: no se graba ni se envía nada.</string>
+    <string name="capture_hint">Android le pedirá compartir su pantalla. No se graba ni se envía nada.</string>
     <string name="need_record_audio">Waaiya necesita el permiso del micrófono para recibir el sonido de otras aplicaciones. Nunca graba su voz.</string>
 
     <string name="setup_banner_title">Un paso más</string>

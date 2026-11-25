@@ -24,7 +24,7 @@
     <string name="release_silence">Durdur: uygulamaları filtresiz duy</string>
     <string name="power_start_cd">Filtrelemeyi başlat</string>
     <string name="power_stop_cd">Filtrelemeyi durdur</string>
-    <string name="capture_hint">Android, ekranınızı paylaşmak için izin isteyecek. Yalnızca ses kullanılır: hiçbir şey kaydedilmez veya gönderilmez.</string>
+    <string name="capture_hint">Android, ekranınızı paylaşmak için izin isteyecek. Hiçbir şey kaydedilmez veya gönderilmez.</string>
     <string name="need_record_audio">Waaiya\'nın diğer uygulamaların sesini alabilmesi için mikrofon izni gerekir. Sizi asla kaydetmez.</string>
 
     <string name="setup_banner_title">Bir adım daha</string>

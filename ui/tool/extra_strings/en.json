@@ -217,7 +217,7 @@
   "worship_location_settings": "Location settings",
   "worship_location_failed": "Your location could not be found. Try again in a moment, or search for your city.",
   "worship_place_near": "near {city}",
-  "worship_habous_note": "The official times of the Ministry of Habous and Islamic Affairs for {city}.",
+  "worship_habous_note": "Times calculated to match the Ministry of Habous and Islamic Affairs tables for {city}.",
   "tray_open": "Open Waaiya",
   "tray_quit": "Quit",
   "engine_error_autostart_blocked": "Windows is not letting Waaiya start at login. Turn Waaiya on in Settings › Apps › Startup, then turn this on again.",

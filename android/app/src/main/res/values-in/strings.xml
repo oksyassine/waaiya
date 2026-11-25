@@ -24,7 +24,7 @@
     <string name="release_silence">Berhenti: dengar aplikasi tanpa filter</string>
     <string name="power_start_cd">Mulai filter</string>
     <string name="power_stop_cd">Hentikan filter</string>
-    <string name="capture_hint">Android akan meminta untuk membagikan layar Anda. Hanya suaranya yang dipakai: tidak ada yang direkam atau dikirim.</string>
+    <string name="capture_hint">Android akan meminta untuk membagikan layar Anda. Tidak ada yang direkam atau dikirim.</string>
     <string name="need_record_audio">Waaiya memerlukan izin mikrofon untuk menerima suara aplikasi lain. Waaiya tidak pernah merekam Anda.</string>
 
     <string name="setup_banner_title">Satu langkah lagi</string>

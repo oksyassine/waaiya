@@ -89,7 +89,7 @@
   "@powerStopCd": {
     "description": "Android string power_stop_cd"
   },
-  "captureHint": "سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.",
+  "captureHint": "سيطلب أندرويد مشاركة الشاشة. لا يُسجَّل شيء ولا يُرسَل.",
   "@captureHint": {
     "description": "Android string capture_hint"
   },
@@ -2251,7 +2251,7 @@
   "@worshipPlaceNear": {
     "description": "Flutter only. Not reviewed yet except in English."
   },
-  "worshipHabousNote": "الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.",
+  "worshipHabousNote": "أوقات محسوبة لتطابق جداول وزارة الأوقاف والشؤون الإسلامية لمدينة {city}.",
   "@worshipHabousNote": {
     "description": "Flutter only. Not reviewed yet except in English."
   },

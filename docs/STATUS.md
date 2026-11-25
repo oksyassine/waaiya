@@ -27,7 +27,9 @@ What comes next, and why: `docs/ROADMAP.md`.
 | Website, logo | live: waaiya.mssid.org (Arabic and English, downloads, privacy policy, try on your own sound); the logo since 0.2.13 | `site/`; a timer deploys every commit on main that changes the page |
 | macOS, iOS | not started | `docs/PLATFORMS.md`; macOS needs an Apple Developer ID (the capture permission is tied to the signature). iOS cannot filter or silence other apps, so simple mode cannot be ported (one volume for all app sound, no second channel); the routes left are a Safari web extension, an in-app player for shared files, and AirPlay or Bluetooth to a desktop running Waaiya |
 
-Baseline DeepFilterNet3: speech kept (-2.6 dB) with 21-24 dB instrument suppression; recitation (-13 dB) and singing (-25 dB) are lost, hence the own voice model.
+Baseline DeepFilterNet3: speech kept (-2.6 dB) with 21-24 dB instrument suppression; recitation (-13 dB) and singing (-25 dB) are lost, hence the own voice model. The model Waaiya ships now keeps
+recitation (-0.8 dB in a studio, -4.6 dB in a hall, median of 92 and 40 clips); the adhan heard from afar is still
+muted in 32 of 46 clips (reports/adhan_filter.md), a known limit.
 
 ## Not verified on a real phone or PC yet
 - The move to org.waaiya.app on a real phone, and the setup page waaiya.mssid.org/usb with a real phone and cable.
