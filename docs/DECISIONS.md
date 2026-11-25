@@ -30,3 +30,12 @@
 - Why: Waaiya's own helper (CoverHelper, Wireless debugging / USB setup) draws the same pass-through layer since 0.2.11. Shizuku kept only for the sound setup.
 - Done as: ShizukuCovers -> ShellCovers (helper only), CoverService always checks the caller uid, Shizuku blur grant and blur.busy/message removed, "Go to the setup" button.
 - Rejected: keeping Shizuku as a second cover route (two paths to maintain, one of them a third-party app).
+
+## 2026-11-25: Detector ignores boxes where a COCO animal class beats person
+- Why: user reported animals covered. Free in the graph (`export_vision.py yolox`); animal photos with a cover 16.5% -> 15.3%, women covered unchanged (95.9% -> 95.8%).
+- Rejected: raising person_score (0.15: animal covers 11.8% but small women covered 93.6% -> 86.7%).
+
+## 2026-11-25: Slow phones switch to rectangles (no outlines) instead of faster models
+- Why: on an MT6769 the app runs ~700 ms/frame with tiles taking turns; the segmenter is ~250 ms of it. Rectangles cover the same women.
+- Rejected: XNNPACK EP (-7%), pinning to big cores (no change), static int8 QDQ (15-35% faster; int8 detector women covered 95.3% -> 93.0%, int8 gender men clear 7.5% -> 4.0%), detector input shaped like the screen (only the whole-frame pass has padding: ~7% of a frame).
+

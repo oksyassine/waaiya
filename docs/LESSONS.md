@@ -13,3 +13,9 @@
 - Xiaomi phones refuse `adb install` (INSTALL_FAILED_USER_RESTRICTED) until "Install via USB" is on and the prompt is tapped.
 - Strings: `android/app/src/main/res/values*/strings.xml` is the source; every language must have every key (`ui/tool/arb_from_android.py --check`), then `flutter gen-l10n` in ui/.
 - `desktop/test/linux_engine_test.dart` "no pactl" fails on main too on this PC (pactl is installed); not caused by our changes.
+- Phone speed is ~5x worse than this PC per model (YOLOX-Nano 416: 24 ms x86 1 thread, ~125 ms on MT6769). Measure on the phone with `models/vision/bench_vision.c` (adb, `/data/local/tmp`), never infer from PC timings.
+- Static int8 (QDQ) breaks the blur's extreme thresholds: male_clear 0.999 needs confidence that int8 rounding loses; the detector loses small people. ONNX Runtime's dynamic int8 skips Conv entirely, so it does nothing for these CNNs.
+- `onnx.compose.merge_models` keeps one opset_import entry per merged model; the ORT quantizer then fails with "Failed to find proper ai.onnx domain". Reset opset_import after merging.
+- After merging main into a branch, new JNI functions keep the old package name in their symbol (`Java_org_islamicmute_app_...`) while main renamed the rest: grep `Java_` names after any package rename; the build does not catch it (crash only at first call).
+- Both Flutter installs here (`~/flutter`, `~/development/flutter`) are 3.47.9. For 3.41.5: `git -C ~/flutter worktree add --detach <dir> 3.41.5`, then `flutter pub get` in ui_module with it, and build with `ANDROID_HOME=~/Android/Sdk` set (no android/local.properties).
+

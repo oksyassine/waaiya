@@ -16,25 +16,24 @@ Updated 2026-11-25. Project-wide status lives in `docs/STATUS.md`; this file tra
 - Animals covered (`eval/results/blur_animals.md`): detector score 0 where a COCO animal class beats person;
   animal photos with a cover 16.5% -> 15.3%, women covered 95.9% -> 95.8% (report half). Higher person_score
   rejected (0.15: small women 93.6% -> 86.7%). New detector is local only; `models-vision-v1` still has the old one.
-- Slow phones drop person outlines (ScreenBlur: tiles already taking turns and still > 150 ms a frame over 10
-  frames; rectangles for the session). Builds, Android unit tests 135 passed; not yet run on the phone.
 - Phone speed (`eval/results/blur_speed.md`, `bench_vision.c`, MT6769): app default ~950 ms/frame, ~700 with
   tiles taking turns. XNNPACK (-7%) and int8 QDQ (15-35% faster, loses women/men) rejected.
 - Runtime-like crop retrain dropped: `blur_gender_v2.md` diagnostic b shows no crop mismatch.
-- Screen page + blur without Shizuku (17f6c80, branch `screen-page`, PR #45 open, mergeable):
-  ui tests 211 passed, `flutter analyze` clean, Android unit tests passed, debug APK built and installed.
+- Screen page + blur without Shizuku: PR #45 merged into main (2026-11-24), merged into blur-feature (67a6753).
 
 ## Implemented, not verified
-- PR #45 on a real phone: installed (debug, org.waaiya.app 0.2.17) but the Screen page was not looked at
-  (screenshot attempt hit another app). `android/tools/emu_check.py` not run.
+- Slow phones drop person outlines (69295d4, JNI name fix 9585ac0): ScreenBlur, tiles already taking turns and
+  still > 150 ms a frame over 10 frames -> rectangles for the session. Debug APK builds, Android unit tests 142
+  passed (before the C-only fix 9585ac0), installed on the MT6769 phone; never run there (no blur log yet).
+- Screen page (PR #45) on a real phone: still not looked at.
 
 ## In progress
 - Nothing running. Local only (gitignored): `kaggle/blur-gender/out/`, `models/vision/v2b/`, `eval/results/v2b/`.
 
 ## Next
-- User checks the Screen page on the phone; merge PR #45.
-- Push blur-feature (2 commits ahead of origin).
-- Check on the phone: diagnostics line says "outlines off (slow)" on the MT6769 and frames drop to ~450 ms.
+- On the phone: start blur, scroll photos 30 s; logcat should show "tiles now take turns" then "person outlines
+  off"; frames ~450 ms (expected, not measured).
+- Push blur-feature (28 commits ahead of origin/blur-feature, includes main).
 - Publish the animal-gated detector (new release `models-vision-v2`, needs the user's OK).
 - `test_vision_engine.py` fails on main's detector too (worst IoU 0.63 on 20 images): predates tiles/nest.
 - Engine-side handling of extra/part detection boxes (the main cap on men clear), or retrain the segmenter.
