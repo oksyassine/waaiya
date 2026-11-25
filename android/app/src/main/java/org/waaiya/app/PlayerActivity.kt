@@ -57,7 +57,8 @@ open class PlayerActivity : Activity() {
             Intent.ACTION_SEND -> if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
                                   else @Suppress("DEPRECATION") intent.getParcelableExtra(Intent.EXTRA_STREAM)
             else -> intent?.data
-        }
+        }?.takeIf { it.scheme == "content" || it.scheme == "file" }  // a file, never a web address (explicit intents
+                                                                       // skip the manifest's filters)
         if (streams == null && uri == null) { finish(); return }
 
         val renderers = object : DefaultRenderersFactory(this) {

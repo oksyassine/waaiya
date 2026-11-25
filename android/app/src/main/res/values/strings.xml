@@ -282,6 +282,7 @@
     <string name="notif_silenced_text">Tap to start again, or Stop to hear them unfiltered.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">On</string>
+    <string name="tile_model_failed">On, but muted: model error</string>
     <string name="tile_off">Off</string>
     <string name="tile_starting">Starting…</string>
     <string name="tile_silenced">Stopped, apps silenced</string>

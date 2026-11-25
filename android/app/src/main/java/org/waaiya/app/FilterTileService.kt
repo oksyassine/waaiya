@@ -53,6 +53,7 @@ class FilterTileService : TileService() {
             state == FilterService.State.STARTING -> R.string.tile_starting
             state == FilterService.State.SILENCED -> R.string.tile_silenced
             !FilterService.running -> R.string.tile_off
+            state == FilterService.State.MODEL_FAILED -> R.string.tile_model_failed
             FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION -> R.string.tile_on_not_muted
             else -> R.string.tile_on
         })

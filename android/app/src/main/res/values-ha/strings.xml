@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Taɓa don sake farawa, ko Dakatar don jin su ba tare da tacewa ba.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">A kunne</string>
+    <string name="tile_model_failed">Yana aiki, amma shiru: kuskuren samfuri</string>
     <string name="tile_off">A kashe</string>
     <string name="tile_starting">Ana farawa…</string>
     <string name="tile_silenced">Ya tsaya, manhajoji shiru</string>

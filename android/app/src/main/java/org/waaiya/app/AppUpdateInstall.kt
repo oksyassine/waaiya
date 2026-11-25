@@ -26,12 +26,29 @@ object AppUpdateInstall {
         if (info.packageName != pkg) return "another app: ${info.packageName}"
         if (info.longVersionCode != versionCode || (pkg == c.packageName && versionCode <= BuildConfig.VERSION_CODE))
             return "version ${info.longVersionCode}"
+        // Android 10 (API 29): an archive's signingInfo is always null with GET_SIGNING_CERTIFICATES (fixed in 11), so
+        // every update would end "unsigned". There the older GET_SIGNATURES still reads an archive's certificates.
+        if (Build.VERSION.SDK_INT < 30 && info.signingInfo == null) return verifyOld(c, apk)
         val mine = pm.getPackageInfo(c.packageName, flags).signingInfo ?: return "no own certificate"
         val theirs = info.signingInfo ?: return "unsigned"
         val a = (if (mine.hasMultipleSigners()) mine.apkContentsSigners else mine.signingCertificateHistory).map { it.toByteArray().toList() }.toSet()
         val b = (if (theirs.hasMultipleSigners()) theirs.apkContentsSigners else theirs.signingCertificateHistory).map { it.toByteArray().toList() }.toSet()
         if (a.intersect(b).isEmpty()) return "signed by another certificate"
         return null
+    }
+
+    @Suppress("DEPRECATION")
+    @android.annotation.SuppressLint("PackageManagerGetSignatures")  // compared with our own certificate, not trusted alone
+    private fun verifyOld(c: Context, apk: File): String? {
+        val pm = c.packageManager
+        val theirs = pm.getPackageArchiveInfo(apk.path, PackageManager.GET_SIGNATURES)?.signatures
+            ?.map { it.toByteArray().toList() }?.toSet().orEmpty()
+        if (theirs.isEmpty()) return "unsigned"
+        val mine = pm.getPackageInfo(c.packageName, PackageManager.GET_SIGNATURES).signatures
+            ?.map { it.toByteArray().toList() }?.toSet().orEmpty()
+        if (mine.isEmpty()) return "no own certificate"
+        // the same set: an APK with an extra or a different signer is refused
+        return if (theirs == mine) null else "signed by another certificate"
     }
 
     /** Opens an install session and commits [apk]; the answer comes to [AppUpdateInstallReceiver]. null = committed. */

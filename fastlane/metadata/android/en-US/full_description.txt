@@ -6,7 +6,7 @@ Waaiya removes musical instruments from everything your phone plays and keeps th
 <li>Optional screen blur: covers women, or immodest images, over every app.</li>
 <li>Optional: also mute women's singing.</li>
 <li>Open a link: watch or save a video without its music.</li>
-<li>Nine languages: Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay.</li>
+<li>Eighteen languages: Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay, Spanish, Dutch, German, Italian, Russian, Uzbek, Swahili, Hausa, Somali.</li>
 </ul>
 
 Private by design: the filter and the blur run on the phone and send nothing. No account, no analytics, no ads. Online only for "Open a link" (the site of the link) and a daily check for a new version, which you can turn off.

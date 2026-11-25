@@ -94,6 +94,7 @@
     "description": "Android string capture_hint"
   },
   "needRecordAudio": "تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.",
+  "micOpenSettings": "افتح إعدادات واعية واسمح بالميكروفون",
   "@needRecordAudio": {
     "description": "Android string need_record_audio"
   },
@@ -987,11 +988,12 @@
   "@stateOnNotMuted": {
     "description": "Android string state_on_not_muted"
   },
-  "stateOnMuteFailing": "لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).",
+  "stateOnMuteFailing": "لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (الإعدادات).",
   "@stateOnMuteFailing": {
     "description": "Android string state_on_mute_failing"
   },
   "stateTooSlow": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.",
+  "stateTooSlowNoLinks": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت.",
   "@stateTooSlow": {
     "description": "Android string state_too_slow"
   },
@@ -1030,6 +1032,7 @@
     "description": "Android string start_no_setup_title"
   },
   "startNoSetupBody": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.",
+  "startNoSetupBodyNoLinks": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.",
   "@startNoSetupBody": {
     "description": "Android string start_no_setup_body"
   },

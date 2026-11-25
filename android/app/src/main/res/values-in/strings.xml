@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Ketuk untuk memulai lagi, atau Berhenti untuk mendengarnya tanpa filter.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Aktif</string>
+    <string name="tile_model_failed">Aktif, tetapi senyap: model galat</string>
     <string name="tile_off">Nonaktif</string>
     <string name="tile_starting">Memulai…</string>
     <string name="tile_silenced">Berhenti, aplikasi bisu</string>

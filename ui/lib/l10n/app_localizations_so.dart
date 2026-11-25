@@ -90,6 +90,10 @@ class AppLocalizationsSo extends AppLocalizations {
       'Waaiya waxay u baahan tahay ogolaanshaha makarafoonka si ay u hesho codka barnaamijyada kale. Marnaba ma duubto codkaaga.';
 
   @override
+  String get micOpenSettings =>
+      'Fur dejinta Waaiya si aad u oggolaato makarafoonka';
+
+  @override
   String get setupBannerTitle => 'Hal tallaabo oo kale';
 
   @override
@@ -848,11 +852,15 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya ma aamusiin karto codka asalka ah ee barnaamijka hadda shaqaynaya, sidaas darteed muusigga weli waa la maqli karaa. Jooji oo dib u bilow shaandhaynta. Haddii ay sii jirto, dir warbixinta baaritaanka (hoosta shaashaddan).';
+      'Waaiya ma aamusiin karto codka asalka ah ee barnaamijka hadda shaqaynaya, sidaas darteed muusigga weli waa la maqli karaa. Jooji oo dib u bilow shaandhaynta. Haddii ay sii jirto, dir warbixinta baaritaanka (Dejinta).';
 
   @override
   String get stateTooSlow =>
       'Taleefankani aad buu ugu gaabis yahay inuu shaandheeyo codka tooska ah, sidaas darteed codku wuu go\'aa. “Fur link” ee hoose weli wuu shaqeeyaa: wuxuu shaandheeyaa muuqaalka ka hor inta aan la daarin.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Taleefankani aad buu ugu gaabis yahay inuu shaandheeyo codka tooska ah, sidaas darteed codku wuu go\'aa.';
 
   @override
   String get stateMonoNote => 'Codku waa mono si taleefankani ula jaanqaado.';
@@ -881,6 +889,10 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Habaynta hal mar ah weli lama samayn. La\'aanteed Waaiya ma aamusiin karto codka asalka ah: waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.\n\n“Fur link” wuu shaqeeyaa habayn la\'aan.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Habaynta hal mar ah weli lama samayn. La\'aanteed Waaiya ma aamusiin karto codka asalka ah: waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.';
 
   @override
   String get startNoSetupSetup => 'Samee habaynta';

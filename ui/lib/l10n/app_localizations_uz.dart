@@ -89,6 +89,10 @@ class AppLocalizationsUz extends AppLocalizations {
       'Boshqa ilovalarning ovozini qabul qilishi uchun Waaiyaga mikrofon ruxsati kerak. U hech qachon sizni yozib olmaydi.';
 
   @override
+  String get micOpenSettings =>
+      'Mikrofonga ruxsat berish uchun Waaiya sozlamalarini ochish';
+
+  @override
   String get setupBannerTitle => 'Yana bir qadam';
 
   @override
@@ -840,11 +844,15 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya hozir ijro etayotgan ilovaning asl ovozini oʻchira olmayapti, shuning uchun musiqa hali ham eshitilishi mumkin. Filtrlashni toʻxtatib, qayta boshlang. Agar shunday qolsa, diagnostika hisobotini yuboring (bu ekranning pastida).';
+      'Waaiya hozir ijro etayotgan ilovaning asl ovozini oʻchira olmayapti, shuning uchun musiqa hali ham eshitilishi mumkin. Filtrlashni toʻxtatib, qayta boshlang. Agar shunday qolsa, diagnostika hisobotini yuboring (Sozlamalar).';
 
   @override
   String get stateTooSlow =>
       'Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi. Quyidagi “Havolani ochish” baribir ishlaydi: u videoni ijro etishdan oldin filtrlaydi.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi.';
 
   @override
   String get stateMonoNote => 'Bu telefon ulgurishi uchun ovoz mono rejimda.';
@@ -873,6 +881,10 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Bir martalik sozlash hali bajarilmagan. Usiz Waaiya asl ovozni oʻchira olmaydi: musiqa va filtrlangan ovozni birga eshitasiz.\n\n“Havolani ochish” hech qanday sozlashsiz ishlaydi.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Bir martalik sozlash hali bajarilmagan. Usiz Waaiya asl ovozni oʻchira olmaydi: musiqa va filtrlangan ovozni birga eshitasiz.';
 
   @override
   String get startNoSetupSetup => 'Sozlashni bajarish';

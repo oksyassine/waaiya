@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Нажмите, чтобы включить снова, или «Стоп», чтобы слышать их без фильтра.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Вкл.</string>
+    <string name="tile_model_failed">Включено, но без звука: ошибка модели</string>
     <string name="tile_off">Выкл.</string>
     <string name="tile_starting">Запуск…</string>
     <string name="tile_silenced">Стоп, звук выключен</string>

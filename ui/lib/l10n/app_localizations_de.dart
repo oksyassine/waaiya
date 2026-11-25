@@ -89,6 +89,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Waaiya braucht die Mikrofonberechtigung, um den Ton anderer Apps zu empfangen. Es nimmt Sie nie auf.';
 
   @override
+  String get micOpenSettings =>
+      'Waaiyas Einstellungen öffnen und das Mikrofon erlauben';
+
+  @override
   String get setupBannerTitle => 'Noch ein Schritt';
 
   @override
@@ -844,11 +848,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (unten auf diesem Bildschirm).';
+      'Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (Einstellungen).';
 
   @override
   String get stateTooSlow =>
       'Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus. „Link öffnen“ unten funktioniert trotzdem: Es filtert das Video, bevor es abgespielt wird.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus.';
 
   @override
   String get stateMonoNote =>
@@ -878,6 +886,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Die einmalige Einrichtung ist noch nicht erledigt. Ohne sie kann Waaiya den Originalton nicht stummschalten: Sie hören die Musik und den gefilterten Ton zusammen.\n\n„Link öffnen“ funktioniert ohne Einrichtung.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Die einmalige Einrichtung ist noch nicht erledigt. Ohne sie kann Waaiya den Originalton nicht stummschalten: Sie hören die Musik und den gefilterten Ton zusammen.';
 
   @override
   String get startNoSetupSetup => 'Einrichtung durchführen';

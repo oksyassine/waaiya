@@ -89,6 +89,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Waaiya needs the microphone permission to receive other apps\' sound. It never records you.';
 
   @override
+  String get micOpenSettings =>
+      'Open Waaiya\'s settings to allow the microphone';
+
+  @override
   String get setupBannerTitle => 'One more step';
 
   @override
@@ -834,11 +838,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (at the bottom of this screen).';
+      'Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (Settings).';
 
   @override
   String get stateTooSlow =>
       'This phone is too slow to filter live sound, so the sound cuts. \"Open a link\" below still works: it filters the video before playing it.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'This phone is too slow to filter live sound, so the sound cuts.';
 
   @override
   String get stateMonoNote =>
@@ -868,6 +876,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'The one-time setup is not done yet. Without it Waaiya cannot silence the original sound: you will hear the music and the filtered sound together.\n\n\"Open a link\" works without any setup.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'The one-time setup is not done yet. Without it Waaiya cannot silence the original sound: you will hear the music and the filtered sound together.';
 
   @override
   String get startNoSetupSetup => 'Do the setup';

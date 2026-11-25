@@ -403,7 +403,7 @@ int main(int argc, char **argv) {
     }
     if (!model || !sink || ch < 1 || ch > 8 || rate < 8000 || target_ms <= 0 || minreq_ms <= 0) { usage(); return 2; }
     A.t0 = now_s();
-    char err[512];
+    char err[512] = "";
     if (load_libpulse(err, sizeof err) != 0) { logf_("%s", err); return 3; }
 
     im_config cfg = {model, ch, rate, threads, mono, detector};
@@ -413,7 +413,8 @@ int main(int argc, char **argv) {
     if (detector && A.e && im_engine_detector_status(A.e, NULL) < 0)
         logf_("%s%s", im_engine_detector_error(A.e),
               (policy & IM_POLICY_FAIL_CLOSED) ? " -> voice muted while the policy is on (fail-closed)" : "");
-    if (!A.e) write_status(status_file, "model_failed", err);
+    /* the engine is made even when its model fails (it stays silent): that is "model_failed", not "ok" */
+    if (!A.e || im_engine_failed(A.e)) write_status(status_file, "model_failed", err);
     else if (detector && im_engine_detector_status(A.e, NULL) < 0)
         write_status(status_file, "detector_failed", im_engine_detector_error(A.e));
     else write_status(status_file, "ok", NULL);

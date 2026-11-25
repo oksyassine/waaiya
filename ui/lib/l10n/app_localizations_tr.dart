@@ -89,6 +89,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Waaiya\'nın diğer uygulamaların sesini alabilmesi için mikrofon izni gerekir. Sizi asla kaydetmez.';
 
   @override
+  String get micOpenSettings =>
+      'Mikrofona izin vermek için Waaiya ayarlarını aç';
+
+  @override
   String get setupBannerTitle => 'Bir adım daha';
 
   @override
@@ -839,11 +843,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya şu anda çalan uygulamanın orijinal sesini susturamıyor, bu yüzden müzik hâlâ duyulabilir. Filtrelemeyi durdurup başlatın. Sorun sürerse tanılama raporunu gönderin (bu ekranın en altında).';
+      'Waaiya şu anda çalan uygulamanın orijinal sesini susturamıyor, bu yüzden müzik hâlâ duyulabilir. Filtrelemeyi durdurup başlatın. Sorun sürerse tanılama raporunu gönderin (Ayarlar).';
 
   @override
   String get stateTooSlow =>
       'Bu telefon canlı sesi filtrelemek için çok yavaş, bu yüzden ses kesiliyor. Aşağıdaki “Bağlantı aç” yine çalışır: videoyu oynatmadan önce filtreler.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Bu telefon canlı sesi filtrelemek için çok yavaş, bu yüzden ses kesiliyor.';
 
   @override
   String get stateMonoNote => 'Bu telefon yetişebilsin diye ses mono.';
@@ -872,6 +880,10 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Tek seferlik kurulum henüz yapılmadı. Kurulum olmadan Waaiya orijinal sesi susturamaz: müziği ve filtrelenmiş sesi birlikte duyarsınız.\n\n“Bağlantı aç” hiçbir kurulum olmadan çalışır.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Tek seferlik kurulum henüz yapılmadı. Kurulum olmadan Waaiya orijinal sesi susturamaz: müziği ve filtrelenmiş sesi birlikte duyarsınız.';
 
   @override
   String get startNoSetupSetup => 'Kurulumu yap';

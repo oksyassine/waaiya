@@ -1092,6 +1092,9 @@ abstract interface class WaaiyaBackend {
   /// Screen blur: "Allow in Android settings" (draw over other apps).
   Future<void> openOverlaySettings();
 
+  /// Android: Waaiya's page in Android's settings (App info), where a refused permission can be allowed.
+  Future<void> openAppSettings();
+
   /// Opens the Shizuku app (its store page when it is not installed). Capability `shizukuSetup`.
   Future<void> openShizuku();
 

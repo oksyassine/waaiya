@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Tocca per avviare di nuovo, oppure Interrompi per sentirle senza filtro.</string>
     <!-- Riquadri delle Impostazioni rapide (FilterTileService, ScreenShareTileService). I sottotitoli sono brevi: devono stare sotto un riquadro. -->
     <string name="tile_on">Attivo</string>
+    <string name="tile_model_failed">Attivo, ma muto: errore del modello</string>
     <string name="tile_off">Disattivato</string>
     <string name="tile_starting">Avvio…</string>
     <string name="tile_silenced">Fermo, app silenziate</string>

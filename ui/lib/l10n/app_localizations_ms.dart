@@ -89,6 +89,10 @@ class AppLocalizationsMs extends AppLocalizations {
       'Waaiya memerlukan kebenaran mikrofon untuk menerima bunyi apl lain. Ia tidak sekali-kali merakam anda.';
 
   @override
+  String get micOpenSettings =>
+      'Buka tetapan Waaiya untuk membenarkan mikrofon';
+
+  @override
   String get setupBannerTitle => 'Satu langkah lagi';
 
   @override
@@ -838,11 +842,15 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya tidak dapat menyenyapkan bunyi asal apl yang sedang dimainkan, jadi muzik mungkin masih kedengaran. Hentikan dan mulakan penapisan. Jika masih berlaku, hantar laporan diagnostik (di bahagian bawah skrin ini).';
+      'Waaiya tidak dapat menyenyapkan bunyi asal apl yang sedang dimainkan, jadi muzik mungkin masih kedengaran. Hentikan dan mulakan penapisan. Jika masih berlaku, hantar laporan diagnostik (Tetapan).';
 
   @override
   String get stateTooSlow =>
       'Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus. “Buka pautan” di bawah masih berfungsi: ia menapis video sebelum memainkannya.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus.';
 
   @override
   String get stateMonoNote =>
@@ -872,6 +880,10 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Persediaan sekali sahaja belum dibuat. Tanpanya Waaiya tidak dapat menyenyapkan bunyi asal: anda akan mendengar muzik dan bunyi yang ditapis serentak.\n\n“Buka pautan” berfungsi tanpa sebarang persediaan.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Persediaan sekali sahaja belum dibuat. Tanpanya Waaiya tidak dapat menyenyapkan bunyi asal: anda akan mendengar muzik dan bunyi yang ditapis serentak.';
 
   @override
   String get startNoSetupSetup => 'Buat persediaan';

@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Tippen Sie, um wieder zu starten, oder auf Stopp, um sie ungefiltert zu hören.</string>
     <!-- Kacheln der Schnelleinstellungen (FilterTileService, ScreenShareTileService). Untertitel sind kurz: Sie passen unter eine Kachel. -->
     <string name="tile_on">An</string>
+    <string name="tile_model_failed">An, aber stumm: Modellfehler</string>
     <string name="tile_off">Aus</string>
     <string name="tile_starting">Wird gestartet…</string>
     <string name="tile_silenced">Gestoppt, Apps stumm</string>

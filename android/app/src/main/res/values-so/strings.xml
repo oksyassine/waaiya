@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Taabo si aad dib ugu bilowdo, ama Jooji si aad u maqasho iyagoo aan la shaandheyn.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Daaran</string>
+    <string name="tile_model_failed">Shidan, laakiin aamusan: khalad model</string>
     <string name="tile_off">Damsan</string>
     <string name="tile_starting">Waa la bilaabayaa…</string>
     <string name="tile_silenced">Joogsaday, barnaamijyadu waa aamusan yihiin</string>

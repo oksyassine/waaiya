@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">دوبارہ شروع کرنے کے لیے تھپتھپائیں، یا انہیں بغیر فلٹر کے سننے کے لیے “روکیں”۔</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">آن</string>
+    <string name="tile_model_failed">آن، لیکن خاموش: ماڈل میں خرابی</string>
     <string name="tile_off">آف</string>
     <string name="tile_starting">شروع ہو رہا ہے…</string>
     <string name="tile_silenced">رکا ہوا، ایپس خاموش</string>

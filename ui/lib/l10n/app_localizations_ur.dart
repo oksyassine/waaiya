@@ -89,6 +89,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'دوسری ایپس کی آواز وصول کرنے کے لیے واعية کو مائیکروفون کی اجازت درکار ہے۔ یہ کبھی آپ کی آواز ریکارڈ نہیں کرتی۔';
 
   @override
+  String get micOpenSettings =>
+      'مائیکروفون کی اجازت کے لیے واعية کی ترتیبات کھولیں';
+
+  @override
   String get setupBannerTitle => 'ایک اور قدم';
 
   @override
@@ -838,11 +842,15 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'واعية اس وقت چلنے والی ایپ کی اصل آواز خاموش نہیں کر پا رہی، اس لیے موسیقی اب بھی سنائی دے سکتی ہے۔ فلٹرنگ روک کر دوبارہ شروع کریں۔ اگر مسئلہ برقرار رہے تو تشخیصی رپورٹ بھیجیں (اس اسکرین کے نیچے)۔';
+      'واعية اس وقت چلنے والی ایپ کی اصل آواز خاموش نہیں کر پا رہی، اس لیے موسیقی اب بھی سنائی دے سکتی ہے۔ فلٹرنگ روک کر دوبارہ شروع کریں۔ اگر مسئلہ برقرار رہے تو تشخیصی رپورٹ بھیجیں (ترتیبات)۔';
 
   @override
   String get stateTooSlow =>
       'یہ فون براہ راست آواز فلٹر کرنے کے لیے بہت سست ہے، اس لیے آواز ٹوٹتی ہے۔ نیچے “لنک کھولیں” پھر بھی کام کرتا ہے: یہ ویڈیو کو چلانے سے پہلے فلٹر کر دیتا ہے۔';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'یہ فون براہ راست آواز فلٹر کرنے کے لیے بہت سست ہے، اس لیے آواز ٹوٹتی ہے۔';
 
   @override
   String get stateMonoNote => 'آواز مونو میں ہے تاکہ یہ فون ساتھ چل سکے۔';
@@ -871,6 +879,10 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'ایک بار کا سیٹ اپ ابھی نہیں ہوا۔ اس کے بغیر واعية اصل آواز خاموش نہیں کر سکتی: آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔\n\n“لنک کھولیں” کسی سیٹ اپ کے بغیر کام کرتا ہے۔';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'ایک بار کا سیٹ اپ ابھی نہیں ہوا۔ اس کے بغیر واعية اصل آواز خاموش نہیں کر سکتی: آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔';
 
   @override
   String get startNoSetupSetup => 'سیٹ اپ کریں';

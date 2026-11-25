@@ -70,6 +70,8 @@ class MemoryBackend implements WaaiyaBackend {
 
   @override
   Future<void> openOverlaySettings() async => throw const BackendException('unsupported', 'openOverlaySettings');
+  @override
+  Future<void> openAppSettings() async => throw const BackendException('unsupported', 'openAppSettings');
 
   @override
   Future<void> openShizuku() async => throw const BackendException('unsupported', 'openShizuku');

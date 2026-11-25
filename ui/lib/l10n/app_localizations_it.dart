@@ -89,6 +89,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Waaiya ha bisogno dell\'autorizzazione del microfono per ricevere l\'audio delle altre app. Non ti registra mai.';
 
   @override
+  String get micOpenSettings =>
+      'Apri le impostazioni di Waaiya per consentire il microfono';
+
+  @override
   String get setupBannerTitle => 'Ancora un passaggio';
 
   @override
@@ -844,11 +848,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (in fondo a questa schermata).';
+      'Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (Impostazioni).';
 
   @override
   String get stateTooSlow =>
       'Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe. “Apri un link” qui sotto funziona comunque: filtra il video prima di riprodurlo.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe.';
 
   @override
   String get stateMonoNote =>
@@ -878,6 +886,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'La configurazione iniziale non è ancora stata fatta. Senza di essa Waaiya non può silenziare l\'audio originale: sentirai la musica e l\'audio filtrato insieme.\n\n“Apri un link” funziona senza alcuna configurazione.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'La configurazione iniziale non è ancora stata fatta. Senza di essa Waaiya non può silenziare l\'audio originale: sentirai la musica e l\'audio filtrato insieme.';
 
   @override
   String get startNoSetupSetup => 'Fai la configurazione';

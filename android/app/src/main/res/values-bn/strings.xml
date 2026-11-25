@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">আবার চালু করতে ট্যাপ করুন, অথবা ফিল্টার ছাড়া শুনতে “বন্ধ করুন”।</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">চালু</string>
+    <string name="tile_model_failed">চালু, কিন্তু নিঃশব্দ: মডেলে ত্রুটি</string>
     <string name="tile_off">বন্ধ</string>
     <string name="tile_starting">চালু হচ্ছে…</string>
     <string name="tile_silenced">বন্ধ, অ্যাপ নীরব</string>

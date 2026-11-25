@@ -89,6 +89,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.';
 
   @override
+  String get micOpenSettings => 'افتح إعدادات واعية واسمح بالميكروفون';
+
+  @override
   String get setupBannerTitle => 'بقيت خطوة واحدة';
 
   @override
@@ -825,11 +828,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).';
+      'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (الإعدادات).';
 
   @override
   String get stateTooSlow =>
       'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت.';
 
   @override
   String get stateMonoNote =>
@@ -859,6 +866,10 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.';
 
   @override
   String get startNoSetupSetup => 'أكمل الإعداد';

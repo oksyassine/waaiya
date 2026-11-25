@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Toque para empezar de nuevo, o Detener para oírlas sin filtrar.</string>
     <!-- Botones de Ajustes rápidos (FilterTileService, ScreenShareTileService). Los subtítulos son cortos: caben debajo de un botón. -->
     <string name="tile_on">Activado</string>
+    <string name="tile_model_failed">Activado, pero en silencio: error del modelo</string>
     <string name="tile_off">Desactivado</string>
     <string name="tile_starting">Iniciando…</string>
     <string name="tile_silenced">Detenido, apps en silencio</string>

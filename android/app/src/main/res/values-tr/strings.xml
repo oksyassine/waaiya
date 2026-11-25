@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Yeniden başlatmak için dokunun ya da filtresiz duymak için Durdur\'a dokunun.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Açık</string>
+    <string name="tile_model_failed">Açık ama sessiz: model hatası</string>
     <string name="tile_off">Kapalı</string>
     <string name="tile_starting">Başlatılıyor…</string>
     <string name="tile_silenced">Durdu, uygulamalar sessiz</string>

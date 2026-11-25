@@ -79,12 +79,20 @@ object WorshipAlarms {
             val st = Settings(ctx)
             val fp = fingerprint(st)
             val p = prefs(ctx)
-            if (p.getString("fingerprint", null) == fp) return
+            if (p.getString("fingerprint", null) == fp) {
+                // A force stop (or a battery cleaner) cancels this app's alarms and no broadcast says so: the first
+                // refresh in a new process plans them again, so "Next: ..." on the screen is also what will happen.
+                if (!plannedInProcess) { plannedInProcess = true; tick(ctx) }
+                return
+            }
+            plannedInProcess = true
             p.edit().putString("fingerprint", fp).apply()
             save(ctx, WorshipSchedule.onSettingsChanged(System.currentTimeMillis(), load(ctx)))
             tick(ctx)
         }.onFailure { Log.w(TAG, "sync", it) }
     }
+
+    @Volatile private var plannedInProcess = false
 
     /** After boot, a clock change or an app update: plan again (open windows are restored if they are over). */
     fun reschedule(ctx: Context) {

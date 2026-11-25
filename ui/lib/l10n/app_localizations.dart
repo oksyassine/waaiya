@@ -268,6 +268,12 @@ abstract class AppLocalizations {
   /// **'تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.'**
   String get needRecordAudio;
 
+  /// No description provided for @micOpenSettings.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح إعدادات واعية واسمح بالميكروفون'**
+  String get micOpenSettings;
+
   /// Android string setup_banner_title
   ///
   /// In ar, this message translates to:
@@ -1549,7 +1555,7 @@ abstract class AppLocalizations {
   /// Android string state_on_mute_failing
   ///
   /// In ar, this message translates to:
-  /// **'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).'**
+  /// **'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (الإعدادات).'**
   String get stateOnMuteFailing;
 
   /// Android string state_too_slow
@@ -1557,6 +1563,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.'**
   String get stateTooSlow;
+
+  /// No description provided for @stateTooSlowNoLinks.
+  ///
+  /// In ar, this message translates to:
+  /// **'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت.'**
+  String get stateTooSlowNoLinks;
 
   /// Android string state_mono_note
   ///
@@ -1599,6 +1611,12 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.'**
   String get startNoSetupBody;
+
+  /// No description provided for @startNoSetupBodyNoLinks.
+  ///
+  /// In ar, this message translates to:
+  /// **'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.'**
+  String get startNoSetupBodyNoLinks;
 
   /// Android string start_no_setup_setup
   ///

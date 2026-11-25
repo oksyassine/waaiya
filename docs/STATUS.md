@@ -1,4 +1,4 @@
-# Status (2026-11-23, 0.2.17: Windows icon next to the clock, "Start at login" asks Windows, the ear kept in small icons)
+# Status (2026-11-25, 0.2.18: "Check for music" from the share menu; 0.2.19 being prepared: blur never stuck, sound drift after an hour, clearer notification-text tile)
 
 What comes next, and why: `docs/ROADMAP.md`.
 

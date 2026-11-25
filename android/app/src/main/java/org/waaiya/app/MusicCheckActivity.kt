@@ -56,7 +56,8 @@ class MusicCheckActivity : Activity() {
             if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
             else @Suppress("DEPRECATION") intent.getParcelableExtra(Intent.EXTRA_STREAM)
         } else null
-        if (u == null) { finish(); return }
+        // a shared file only: another app's explicit intent could otherwise hand it a web address to fetch
+        if (u == null || (u.scheme != "content" && u.scheme != "file")) { finish(); return }
         uri = u
         mime = intent.type?.takeIf { it.startsWith("video/") || it.startsWith("audio/") }
             ?: runCatching { contentResolver.getType(u) }.getOrNull() ?: "video/*"

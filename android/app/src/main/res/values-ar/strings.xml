@@ -280,6 +280,7 @@
     <string name="notif_silenced_text">اضغط للتشغيل من جديد، أو «إيقاف» لسماعها دون تصفية.</string>
     <!-- مربعات الإعدادات السريعة -->
     <string name="tile_on">تعمل</string>
+    <string name="tile_model_failed">تعمل، لكن الصوت مكتوم: خطأ في النموذج</string>
     <string name="tile_off">متوقفة</string>
     <string name="tile_starting">جارٍ التشغيل…</string>
     <string name="tile_silenced">متوقفة، التطبيقات مكتومة</string>

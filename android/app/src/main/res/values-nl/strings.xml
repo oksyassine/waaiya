@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Tik om opnieuw te starten, of op Stoppen om ze ongefilterd te horen.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Aan</string>
+    <string name="tile_model_failed">Aan, maar stil: modelfout</string>
     <string name="tile_off">Uit</string>
     <string name="tile_starting">Starten…</string>
     <string name="tile_silenced">Gestopt, apps gedempt</string>

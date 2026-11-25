@@ -89,6 +89,10 @@ class AppLocalizationsSw extends AppLocalizations {
       'Waaiya inahitaji ruhusa ya maikrofoni ili kupokea sauti ya programu nyingine. Haikurekodi kamwe.';
 
   @override
+  String get micOpenSettings =>
+      'Fungua mipangilio ya Waaiya ili kuruhusu maikrofoni';
+
+  @override
   String get setupBannerTitle => 'Hatua moja zaidi';
 
   @override
@@ -844,11 +848,15 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya haiwezi kunyamazisha sauti asili ya programu inayocheza sasa, kwa hiyo huenda muziki bado ukasikika. Simamisha kisha uanze uchujaji tena. Tatizo likiendelea, tuma ripoti ya uchunguzi (chini kabisa ya skrini hii).';
+      'Waaiya haiwezi kunyamazisha sauti asili ya programu inayocheza sasa, kwa hiyo huenda muziki bado ukasikika. Simamisha kisha uanze uchujaji tena. Tatizo likiendelea, tuma ripoti ya uchunguzi (Mipangilio).';
 
   @override
   String get stateTooSlow =>
       'Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika. “Fungua kiungo” hapa chini bado hufanya kazi: huchuja video kabla ya kuicheza.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika.';
 
   @override
   String get stateMonoNote =>
@@ -878,6 +886,10 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Usanidi wa mara moja bado haujafanywa. Bila huo Waaiya haiwezi kunyamazisha sauti asili: utasikia muziki na sauti iliyochujwa kwa pamoja.\n\n“Fungua kiungo” hufanya kazi bila usanidi wowote.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Usanidi wa mara moja bado haujafanywa. Bila huo Waaiya haiwezi kunyamazisha sauti asili: utasikia muziki na sauti iliyochujwa kwa pamoja.';
 
   @override
   String get startNoSetupSetup => 'Fanya usanidi';

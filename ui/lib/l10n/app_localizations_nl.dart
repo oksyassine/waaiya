@@ -89,6 +89,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Waaiya heeft de toestemming voor de microfoon nodig om het geluid van andere apps te ontvangen. Het neemt jou nooit op.';
 
   @override
+  String get micOpenSettings =>
+      'Open de instellingen van Waaiya om de microfoon toe te staan';
+
+  @override
   String get setupBannerTitle => 'Nog één stap';
 
   @override
@@ -838,11 +842,15 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (onderaan dit scherm).';
+      'Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (Instellingen).';
 
   @override
   String get stateTooSlow =>
       'Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg. “Een link openen” hieronder werkt nog wel: het filtert de video voordat die wordt afgespeeld.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg.';
 
   @override
   String get stateMonoNote =>
@@ -872,6 +880,10 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'De eenmalige installatie is nog niet gedaan. Zonder die installatie kan Waaiya het originele geluid niet dempen: je hoort de muziek en het gefilterde geluid tegelijk.\n\n“Een link openen” werkt zonder installatie.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'De eenmalige installatie is nog niet gedaan. Zonder die installatie kan Waaiya het originele geluid niet dempen: je hoort de muziek en het gefilterde geluid tegelijk.';
 
   @override
   String get startNoSetupSetup => 'Installatie doen';

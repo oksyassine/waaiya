@@ -89,6 +89,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Waaiya necesita el permiso del micrófono para recibir el sonido de otras aplicaciones. Nunca graba su voz.';
 
   @override
+  String get micOpenSettings =>
+      'Abrir los ajustes de Waaiya y permitir el micrófono';
+
+  @override
   String get setupBannerTitle => 'Un paso más';
 
   @override
@@ -841,11 +845,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya no puede silenciar el sonido original de la aplicación que suena ahora, así que puede que aún se oiga la música. Detenga e inicie el filtrado. Si sigue igual, envíe el informe de diagnóstico (al final de esta pantalla).';
+      'Waaiya no puede silenciar el sonido original de la aplicación que suena ahora, así que puede que aún se oiga la música. Detenga e inicie el filtrado. Si sigue igual, envíe el informe de diagnóstico (Ajustes).';
 
   @override
   String get stateTooSlow =>
       'Este teléfono es demasiado lento para filtrar el sonido en directo, así que el sonido se corta. «Abrir un enlace», más abajo, sigue funcionando: filtra el vídeo antes de reproducirlo.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Este teléfono es demasiado lento para filtrar el sonido en directo, así que el sonido se corta.';
 
   @override
   String get stateMonoNote =>
@@ -875,6 +883,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'La configuración inicial aún no está hecha. Sin ella, Waaiya no puede silenciar el sonido original: oirá la música y el sonido filtrado a la vez.\n\n«Abrir un enlace» funciona sin ninguna configuración.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'La configuración inicial aún no está hecha. Sin ella, Waaiya no puede silenciar el sonido original: oirá la música y el sonido filtrado a la vez.';
 
   @override
   String get startNoSetupSetup => 'Hacer la configuración';

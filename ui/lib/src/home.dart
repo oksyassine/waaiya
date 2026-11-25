@@ -471,7 +471,8 @@ Future<void> startFiltering(BuildContext context) async {
       builder: (ctx) => AlertDialog(
         scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.startNoSetupTitle),
-        content: Text(l.startNoSetupBody),
+        // the Play build has no "Open a link": its sentence is left out there
+        content: Text(s.capabilities.links ? l.startNoSetupBody : l.startNoSetupBodyNoLinks),
         actions: [
           TextButton(key: const Key('start_anyway'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.startNoSetupAnyway)),
           FilledButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.startNoSetupSetup)),
@@ -512,7 +513,7 @@ Future<void> startFiltering(BuildContext context) async {
 (String, bool) filteringDetail(AppLocalizations l, AppState s) {
   final f = s.filter;
   final problem = switch (f.problem) {
-    FilterProblem.tooSlow => l.stateTooSlow,
+    FilterProblem.tooSlow => s.capabilities.links ? l.stateTooSlow : l.stateTooSlowNoLinks,
     FilterProblem.notMuted => l.stateOnNotMuted,
     FilterProblem.helperMissing => l.stateOnHelperMissing,
     FilterProblem.muteFailing => l.stateOnMuteFailing,
@@ -636,6 +637,18 @@ class PowerSection extends StatelessWidget {
               child: SingleChildScrollView(
                 child: SelectableText(technical, style: text.bodySmall?.copyWith(fontFamily: 'monospace', color: c.error)),
               ),
+            ),
+          ),
+        ],
+        // the microphone was refused: Android may not ask again, so its page in Android's settings is the way on
+        if (!on && f.micDenied) ...[
+          const SizedBox(height: 12),
+          TestId(
+            'mic_settings',
+            child: OutlinedButton(
+              key: const Key('mic_settings'),
+              onPressed: () => runAction(context, (b) => b.openAppSettings()),
+              child: Text(l.micOpenSettings, textAlign: TextAlign.center),
             ),
           ),
         ],

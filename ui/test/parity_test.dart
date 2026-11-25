@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waaiya_ui/waaiya_ui.dart';
 
-AppState _filtering({String? problem, bool mono = false, List<String> blocked = const [], bool silence = true}) =>
+AppState _filtering(
+        {String? problem, bool mono = false, List<String> blocked = const [], bool silence = true,
+        Capabilities caps = const Capabilities()}) =>
     AppState(
+      capabilities: caps,
       settings: WaaiyaSettings(gender: 'man', silenceUnfilterable: silence),
       filter: FilterInfo(
           state: FilterState.filtering, delayMs: 40, problem: problem, mono: mono, blockedApps: blocked),
@@ -21,7 +24,10 @@ class _ReportBackend extends MemoryBackend {
 void main() {
   test('while filtering: a problem first, else the delay, mono and blocked apps (MainActivity.refresh)', () async {
     final l = await AppLocalizations.delegate.load(const Locale('en'));
-    expect(filteringDetail(l, _filtering(problem: FilterProblem.tooSlow)), (l.stateTooSlow, true));
+    // "Open a link" is suggested only where it exists (not in the Play build)
+    expect(filteringDetail(l, _filtering(problem: FilterProblem.tooSlow)), (l.stateTooSlowNoLinks, true));
+    expect(filteringDetail(l, _filtering(problem: FilterProblem.tooSlow, caps: Capabilities.android)),
+        (l.stateTooSlow, true));
     expect(filteringDetail(l, _filtering(problem: FilterProblem.notMuted)), (l.stateOnNotMuted, true));
     expect(filteringDetail(l, _filtering(problem: FilterProblem.muteFailing)), (l.stateOnMuteFailing, true));
     expect(filteringDetail(l, _filtering(problem: FilterProblem.detectorFailed)), (l.engineDetectorFailed, true));

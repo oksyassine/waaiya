@@ -245,6 +245,11 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     else activity.startActivity(about)
                     result.success(null)
                 }
+                "openAppSettings" -> {
+                    activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:${activity.packageName}")))
+                    result.success(null)
+                }
                 "openOverlaySettings" -> {
                     activity.startActivity(Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:${activity.packageName}")))

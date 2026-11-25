@@ -89,6 +89,9 @@ class AppLocalizationsBn extends AppLocalizations {
       'অন্য অ্যাপের শব্দ পেতে Waaiya-র মাইক্রোফোনের অনুমতি দরকার। এটি কখনো আপনার কথা রেকর্ড করে না।';
 
   @override
+  String get micOpenSettings => 'Waaiya-র সেটিংস খুলে মাইক্রোফোন অনুমতি দিন';
+
+  @override
   String get setupBannerTitle => 'আর একটি ধাপ';
 
   @override
@@ -837,11 +840,15 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'এখন যে অ্যাপ বাজছে, Waaiya তার আসল শব্দ নীরব করতে পারছে না, তাই মিউজিক এখনো শোনা যেতে পারে। ফিল্টারিং বন্ধ করে আবার চালু করুন। তবুও থাকলে ডায়াগনস্টিক রিপোর্ট পাঠান (এই স্ক্রিনের নিচে)।';
+      'এখন যে অ্যাপ বাজছে, Waaiya তার আসল শব্দ নীরব করতে পারছে না, তাই মিউজিক এখনো শোনা যেতে পারে। ফিল্টারিং বন্ধ করে আবার চালু করুন। তবুও থাকলে ডায়াগনস্টিক রিপোর্ট পাঠান (সেটিংস)।';
 
   @override
   String get stateTooSlow =>
       'এই ফোন লাইভ শব্দ ফিল্টার করার জন্য বেশি ধীর, তাই শব্দ কেটে যায়। নিচের “লিংক খুলুন” তবুও কাজ করে: এটি চালানোর আগে ভিডিও ফিল্টার করে।';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'এই ফোন লাইভ শব্দ ফিল্টার করার জন্য বেশি ধীর, তাই শব্দ কেটে যায়।';
 
   @override
   String get stateMonoNote =>
@@ -871,6 +878,10 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'এককালীন সেটআপ এখনো হয়নি। এটি ছাড়া Waaiya আসল শব্দ নীরব করতে পারে না: আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।\n\n“লিংক খুলুন” কোনো সেটআপ ছাড়াই কাজ করে।';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'এককালীন সেটআপ এখনো হয়নি। এটি ছাড়া Waaiya আসল শব্দ নীরব করতে পারে না: আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।';
 
   @override
   String get startNoSetupSetup => 'সেটআপ করুন';

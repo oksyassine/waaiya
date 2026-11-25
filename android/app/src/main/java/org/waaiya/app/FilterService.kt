@@ -399,7 +399,14 @@ class FilterService : Service() {
             .setBufferSizeInBytes(minOut + LoadMonitor.MAX_EXTRA_HOPS * hop * frameBytes)
             .build()
             .also { t -> runCatching { t.setBufferSizeInFrames(minOutFrames) } }
-        var track = makeTrack()
+        // Before the loop's own try: a failure here (no output, no room to copy the model) must end filtering with
+        // the reason, the other apps kept silent, never end the app (and so give the music back) with it
+        var track = try { makeTrack() } catch (e: Exception) {
+            Log.e(TAG, "output did not open", e)
+            StopLog.record(this, "output did not open: ${e.javaClass.simpleName}")
+            runCatching { record.release() }
+            endedBySystem(State.CAPTURE_FAILED); return
+        }
         var trackRebuilds = 0      // the output died and was made again (audio server restart, route change)
         var lastRebuild = 0L
         val settings = Settings(this)
@@ -409,7 +416,12 @@ class FilterService : Service() {
         // filtering loads the other model on a helper thread while this one keeps filtering, then swaps (no gap
         // beyond the new model's own delay). A model that does not load runs silent (MODEL_FAILED), never unfiltered.
         var singing = settings.keepSinging
-        var engine = Engine.open(this, ch, singing = singing)
+        var engine = try { Engine.open(this, ch, singing = singing) } catch (e: Exception) {
+            Log.e(TAG, "engine did not open", e)
+            StopLog.record(this, "engine did not open: ${e.javaClass.simpleName}")
+            runCatching { track.release() }; runCatching { record.release() }
+            endedBySystem(State.MODEL_FAILED); return
+        }
         val swapLock = Object()
         var loaded: Pair<Engine, Boolean>? = null  // swapLock: the engine the helper thread made, and its model choice
         var loopDone = false                       // swapLock: the loop has ended, a late engine closes itself
@@ -420,7 +432,7 @@ class FilterService : Service() {
             hopFrames = hop)
         if (monitor.mono) engine.setMono(true)
         delayMs = engine.alignedLatency * 1000 / Engine.SAMPLE_RATE  // the loop uses the hop-aligned path
-        publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING)
+        publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING); if (engine.failed) updateNotification()
         // Android 12+: tells the scheduler this thread has 10 ms deadlines, so it gets a fast core at a high clock
         val hint = if (Build.VERSION.SDK_INT >= 31) runCatching {
             getSystemService(android.os.PerformanceHintManager::class.java)
@@ -581,7 +593,7 @@ class FilterService : Service() {
                     delayMs = engine.alignedLatency * 1000 / Engine.SAMPLE_RATE
                     Log.i(TAG, "filter: model reloaded: ${engine.modelName}, keep singing $ks, failed ${engine.failed}")
                     report()  // before publish: the screen reads the new health when it hears of the change
-                    publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING)
+                    publish(if (engine.failed) State.MODEL_FAILED else State.FILTERING); if (engine.failed) updateNotification()
                 }
                 for (x in inBuf) { val a = if (x < 0) -x else x; if (a > peak) peak = a }
                 val t0 = System.nanoTime()
@@ -747,6 +759,8 @@ class FilterService : Service() {
         val b = Notification.Builder(this, CHANNEL)
             .setContentTitle(getString(R.string.notif_title))
             .setContentText(getString(when {
+                // the model did not load: the sound is muted for safety, not filtered (the notification said "on")
+                state == State.MODEL_FAILED -> R.string.state_model_failed
                 health?.tooSlow == true -> R.string.notif_too_slow
                 muter != null && muterStatus == SessionMuter.Status.NO_PERMISSION ->
                     if (helperMissing()) R.string.notif_helper_missing else R.string.notif_not_muted

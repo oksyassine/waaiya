@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">Appuyez pour relancer, ou sur Arrêter pour les entendre sans filtre.</string>
     <!-- Blocs des Réglages rapides (FilterTileService, ScreenShareTileService). Les sous-titres sont courts : ils tiennent sous un bloc. -->
     <string name="tile_on">Activé</string>
+    <string name="tile_model_failed">Activé, mais muet : erreur du modèle</string>
     <string name="tile_off">Désactivé</string>
     <string name="tile_starting">Démarrage…</string>
     <string name="tile_silenced">Arrêté, applis muettes</string>

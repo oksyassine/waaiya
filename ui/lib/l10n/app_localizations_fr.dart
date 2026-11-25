@@ -89,6 +89,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Waaiya a besoin de l\'autorisation du micro pour recevoir le son des autres applications. Il ne vous enregistre jamais.';
 
   @override
+  String get micOpenSettings =>
+      'Ouvrir les paramètres de Waaiya pour autoriser le micro';
+
+  @override
   String get setupBannerTitle => 'Encore une étape';
 
   @override
@@ -845,11 +849,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya ne peut pas couper le son d\'origine de l\'appli en cours de lecture, donc la musique peut encore s\'entendre. Arrêtez puis relancez le filtrage. Si cela continue, envoyez le rapport de diagnostic (en bas de cet écran).';
+      'Waaiya ne peut pas couper le son d\'origine de l\'appli en cours de lecture, donc la musique peut encore s\'entendre. Arrêtez puis relancez le filtrage. Si cela continue, envoyez le rapport de diagnostic (Paramètres).';
 
   @override
   String get stateTooSlow =>
       'Ce téléphone est trop lent pour filtrer le son en direct, donc le son se coupe. « Ouvrir un lien » ci-dessous fonctionne quand même : il filtre la vidéo avant de la lire.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Ce téléphone est trop lent pour filtrer le son en direct, donc le son se coupe.';
 
   @override
   String get stateMonoNote => 'Le son est en mono pour que ce téléphone suive.';
@@ -878,6 +886,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'La configuration initiale n\'est pas encore faite. Sans elle, Waaiya ne peut pas couper le son d\'origine : vous entendrez la musique et le son filtré en même temps.\n\n« Ouvrir un lien » fonctionne sans aucune configuration.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'La configuration initiale n\'est pas encore faite. Sans elle, Waaiya ne peut pas couper le son d\'origine : vous entendrez la musique et le son filtré en même temps.';
 
   @override
   String get startNoSetupSetup => 'Faire la configuration';

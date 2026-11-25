@@ -281,6 +281,7 @@
     <string name="notif_silenced_text">برای شروع دوباره ضربه بزنید، یا «توقف» را بزنید تا آن‌ها را بدون پالایش بشنوید.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">روشن</string>
+    <string name="tile_model_failed">روشن، اما بی‌صدا: خطای مدل</string>
     <string name="tile_off">خاموش</string>
     <string name="tile_starting">در حال شروع…</string>
     <string name="tile_silenced">متوقف، برنامه‌ها بی‌صدا</string>

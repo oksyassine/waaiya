@@ -6,7 +6,7 @@ Waaiya retire les instruments de musique de tout ce que joue votre téléphone e
 <li>Floutage de l'écran en option : couvre les femmes, ou les images indécentes, au-dessus de toutes les applications.</li>
 <li>En option : couper aussi le chant des femmes.</li>
 <li>Ouvrir un lien : regarder ou enregistrer une vidéo sans sa musique.</li>
-<li>Neuf langues : arabe, anglais, français, ourdou, indonésien, turc, bengali, persan, malais.</li>
+<li>Dix-huit langues : arabe, anglais, français, ourdou, indonésien, turc, bengali, persan, malais, espagnol, néerlandais, allemand, italien, russe, ouzbek, swahili, haoussa, somali.</li>
 </ul>
 
 Confidentialité : le filtre et le floutage tournent sur le téléphone et n'envoient rien. Pas de compte, pas de statistiques, pas de publicité. En ligne seulement pour « Ouvrir un lien » (le site du lien) et la recherche quotidienne d'une nouvelle version, que vous pouvez désactiver.

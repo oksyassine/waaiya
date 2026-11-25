@@ -48,6 +48,8 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<void> openOverlaySettings() => _call<void>('openOverlaySettings');
+  @override
+  Future<void> openAppSettings() => _call<void>('openAppSettings');
 
   @override
   Future<void> openShizuku() => _call<void>('openShizuku');

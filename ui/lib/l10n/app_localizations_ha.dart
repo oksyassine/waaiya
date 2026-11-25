@@ -89,6 +89,10 @@ class AppLocalizationsHa extends AppLocalizations {
       'Waaiya yana buƙatar izinin makirufo don karɓar sautin sauran manhajoji. Ba ya taɓa naɗar muryarku.';
 
   @override
+  String get micOpenSettings =>
+      'Buɗe saitunan Waaiya don ba da izinin makirufo';
+
+  @override
   String get setupBannerTitle => 'Saura mataki ɗaya';
 
   @override
@@ -838,11 +842,15 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (a ƙasan wannan shafi).';
+      'Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (Saituna).';
 
   @override
   String get stateTooSlow =>
       'Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa. “Buɗe mahaɗa” da ke ƙasa yana aiki duk da haka: yana tace bidiyon kafin ya kunna shi.';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa.';
 
   @override
   String get stateMonoNote =>
@@ -872,6 +880,10 @@ class AppLocalizationsHa extends AppLocalizations {
   @override
   String get startNoSetupBody =>
       'Ba a yi saitin sau ɗaya ba tukuna. Ba tare da shi ba Waaiya ba zai iya yi wa ainihin sauti shiru ba: za ku ji kiɗan da sautin da aka tace tare.\n\n“Buɗe mahaɗa” yana aiki ba tare da wani saiti ba.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Ba a yi saitin sau ɗaya ba tukuna. Ba tare da shi ba Waaiya ba zai iya yi wa ainihin sauti shiru ba: za ku ji kiɗan da sautin da aka tace tare.';
 
   @override
   String get startNoSetupSetup => 'Yi saitin';
