@@ -1945,7 +1945,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android tana ɓoye abin da sanarwa ke faɗi yayin da wata manhaja ke ɗaukar dukan allo, kuma tacewa tana cikin haka. A kunne: Waaiya tana cire wannan kariya ne kawai yayin tacewa, don ka karanta sanarwarka. Sauran raba allo a lokaci guda ma ba za su sami kariya ba. Zai fara aiki a farawa ta gaba.';
+      'Android tana ɓoye abin da sanarwa ke faɗi yayin da wata manhaja ke ɗaukar dukan allo, kuma tacewa tana cikin haka. A kunne: Waaiya tana cire wannan kariya ne kawai yayin tacewa, don ka karanta sanarwarka. Sauran raba allo a lokaci guda ma ba za su sami kariya ba.';
 
   @override
   String get notifTextNextStart =>

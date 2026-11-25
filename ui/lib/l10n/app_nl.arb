@@ -539,7 +539,7 @@
   "engineErrorAutostartBlocked": "Windows laat Waaiya niet starten bij het aanmelden. Zet Waaiya aan in Instellingen › Apps › Opstarten en zet deze optie daarna weer aan.",
   "engineErrorAutostartPolicy": "De instellingen van deze computer, gekozen door de beheerder, laten Waaiya niet starten bij het aanmelden.",
   "notifTextTitle": "Meldingstekst tonen tijdens filteren",
-  "notifTextBody": "Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd. Werkt vanaf de volgende start.",
+  "notifTextBody": "Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd.",
   "notifTextNextStart": "Stop het filteren en start het opnieuw om deze wijziging toe te passen.",
   "notifTextRefused": "Deze telefoon weigerde de wijziging. Zet zelf ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties.",
   "notifTextByHand": "Zichtbaar: de bescherming van Android staat uit in de ontwikkelaarsopties (‘Beveiliging voor scherm delen uitzetten’). Ze blijft uit voor elke schermdeling tot je haar daar weer aanzet.",

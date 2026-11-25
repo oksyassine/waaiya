@@ -1940,7 +1940,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi. Berkuat kuasa pada permulaan seterusnya.';
+      'Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi.';
 
   @override
   String get notifTextNextStart =>

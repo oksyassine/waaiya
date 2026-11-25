@@ -1938,7 +1938,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android, bir uygulama tüm ekranı kaydederken bildirimlerin içeriğini gizler ve filtreleme de buna girer. Açık: Waaiya bu korumayı yalnızca filtrelerken kaldırır, böylece bildirimlerinizi okuyabilirsiniz. Aynı anda yapılan diğer ekran paylaşımları da korunmaz. Bir sonraki başlatmada geçerli olur.';
+      'Android, bir uygulama tüm ekranı kaydederken bildirimlerin içeriğini gizler ve filtreleme de buna girer. Açık: Waaiya bu korumayı yalnızca filtrelerken kaldırır, böylece bildirimlerinizi okuyabilirsiniz. Aynı anda yapılan diğer ekran paylaşımları da korunmaz.';
 
   @override
   String get notifTextNextStart =>

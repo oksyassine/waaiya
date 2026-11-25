@@ -1945,7 +1945,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd. Werkt vanaf de volgende start.';
+      'Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd.';
 
   @override
   String get notifTextNextStart =>

@@ -1954,7 +1954,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa. Itatumika utakapoanzisha tena.';
+      'Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.';
 
   @override
   String get notifTextNextStart =>

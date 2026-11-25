@@ -1945,7 +1945,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi. Keyingi ishga tushirishda kuchga kiradi.';
+      'Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi.';
 
   @override
   String get notifTextNextStart =>

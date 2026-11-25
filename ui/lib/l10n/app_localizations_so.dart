@@ -1954,7 +1954,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta app kasta duubayso shaashadda oo dhan, sifeyntuna waa sidaas oo kale. Shidan: Waaiya waxay ilaalintan ka qaadaa oo keliya inta ay sifeyneyso, si aad u akhrido ogeysiisyadaada. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo. Waxay dhaqan galaysaa bilowga xiga.';
+      'Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta app kasta duubayso shaashadda oo dhan, sifeyntuna waa sidaas oo kale. Shidan: Waaiya waxay ilaalintan ka qaadaa oo keliya inta ay sifeyneyso, si aad u akhrido ogeysiisyadaada. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo.';
 
   @override
   String get notifTextNextStart =>

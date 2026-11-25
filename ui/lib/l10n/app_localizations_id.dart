@@ -1939,7 +1939,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Berbagi layar lain pada saat yang sama juga tidak terlindungi. Berlaku saat mulai berikutnya.';
+      'Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Berbagi layar lain pada saat yang sama juga tidak terlindungi.';
 
   @override
   String get notifTextNextStart =>

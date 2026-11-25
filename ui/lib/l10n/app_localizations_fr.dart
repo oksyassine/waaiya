@@ -1952,7 +1952,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android masque le contenu des notifications tant qu’une application enregistre tout l’écran, et le filtrage en fait partie. Activé : Waaiya lève cette protection seulement pendant qu’il filtre, pour que vous puissiez lire vos notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus. Prend effet au prochain démarrage.';
+      'Android masque le contenu des notifications tant qu’une application enregistre tout l’écran, et le filtrage en fait partie. Activé : Waaiya lève cette protection seulement pendant qu’il filtre, pour que vous puissiez lire vos notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus.';
 
   @override
   String get notifTextNextStart =>

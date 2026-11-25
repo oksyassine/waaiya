@@ -539,7 +539,7 @@
   "engineErrorAutostartBlocked": "Windows, Waaiya'nın oturum açılırken başlamasına izin vermiyor. Ayarlar › Uygulamalar › Başlangıç bölümünde Waaiya'yı açın, ardından bu seçeneği yeniden açın.",
   "engineErrorAutostartPolicy": "Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya'nın oturum açılırken başlamasına izin vermiyor.",
   "notifTextTitle": "Filtrelerken bildirim metnini göster",
-  "notifTextBody": "Android, bir uygulama tüm ekranı kaydederken bildirimlerin içeriğini gizler ve filtreleme de buna girer. Açık: Waaiya bu korumayı yalnızca filtrelerken kaldırır, böylece bildirimlerinizi okuyabilirsiniz. Aynı anda yapılan diğer ekran paylaşımları da korunmaz. Bir sonraki başlatmada geçerli olur.",
+  "notifTextBody": "Android, bir uygulama tüm ekranı kaydederken bildirimlerin içeriğini gizler ve filtreleme de buna girer. Açık: Waaiya bu korumayı yalnızca filtrelerken kaldırır, böylece bildirimlerinizi okuyabilirsiniz. Aynı anda yapılan diğer ekran paylaşımları da korunmaz.",
   "notifTextNextStart": "Bu değişikliğin geçerli olması için filtrelemeyi durdurup yeniden başlatın.",
   "notifTextRefused": "Bu telefon değişikliği reddetti. Geliştirici seçeneklerinde “Ekran paylaşımı korumalarını devre dışı bırak” ayarını kendiniz açın.",
   "notifTextByHand": "Gösteriliyor: Android'in koruması Geliştirici seçeneklerinde kapalı (“Ekran paylaşımı korumalarını devre dışı bırak”). Siz orada yeniden açana kadar her ekran paylaşımında kapalı kalır.",

@@ -319,7 +319,8 @@ class NotificationTextSwitch extends StatelessWidget {
     } else if (nt.forced) {
       body = l.notifTextForced;
     } else if (nt.canWrite) {
-      // Android reads its switch when a capture starts: a change made while filtering waits for the next start
+      // Android reads its switch when a capture starts: a change made while filtering starts a new capture by
+      // itself (FilterService.restartForNotificationText); this note shows only when that could not happen
       final waits = s.filter.running && nt.shownNow != null && nt.shownNow != nt.shown;
       body = waits ? '${l.notifTextBody}\n\n${l.notifTextNextStart}' : l.notifTextBody;
     } else if (nt.oneAppOffered) {

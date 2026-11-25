@@ -1950,7 +1950,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android nasconde il contenuto delle notifiche mentre un’app registra tutto lo schermo, e il filtro conta come tale. Attivo: Waaiya toglie questa protezione solo mentre filtra, così puoi leggere le notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette. Vale dal prossimo avvio.';
+      'Android nasconde il contenuto delle notifiche mentre un’app registra tutto lo schermo, e il filtro conta come tale. Attivo: Waaiya toglie questa protezione solo mentre filtra, così puoi leggere le notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette.';
 
   @override
   String get notifTextNextStart =>

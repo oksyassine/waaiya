@@ -539,7 +539,7 @@
   "engineErrorAutostartBlocked": "Windows tidak mengizinkan Waaiya berjalan saat masuk. Aktifkan Waaiya di Pengaturan › Aplikasi › Startup, lalu aktifkan opsi ini lagi.",
   "engineErrorAutostartPolicy": "Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk.",
   "notifTextTitle": "Tampilkan teks notifikasi saat memfilter",
-  "notifTextBody": "Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Berbagi layar lain pada saat yang sama juga tidak terlindungi. Berlaku saat mulai berikutnya.",
+  "notifTextBody": "Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Berbagi layar lain pada saat yang sama juga tidak terlindungi.",
   "notifTextNextStart": "Hentikan lalu mulai lagi pemfilteran agar perubahan ini berlaku.",
   "notifTextRefused": "Ponsel ini menolak perubahan. Aktifkan sendiri “Nonaktifkan perlindungan berbagi layar” di Opsi developer.",
   "notifTextByHand": "Ditampilkan: perlindungan Android nonaktif di Opsi developer (“Nonaktifkan perlindungan berbagi layar”). Tetap nonaktif untuk setiap berbagi layar sampai Anda mengaktifkannya lagi di sana.",

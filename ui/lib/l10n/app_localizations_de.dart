@@ -1953,7 +1953,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android blendet den Inhalt von Benachrichtigungen aus, solange eine App den ganzen Bildschirm aufnimmt, und das Filtern zählt dazu. An: Waaiya hebt diesen Schutz nur während des Filterns auf, damit du deine Benachrichtigungen lesen kannst. Andere gleichzeitige Bildschirmfreigaben sind dann ebenfalls nicht geschützt. Gilt ab dem nächsten Start.';
+      'Android blendet den Inhalt von Benachrichtigungen aus, solange eine App den ganzen Bildschirm aufnimmt, und das Filtern zählt dazu. An: Waaiya hebt diesen Schutz nur während des Filterns auf, damit du deine Benachrichtigungen lesen kannst. Andere gleichzeitige Bildschirmfreigaben sind dann ebenfalls nicht geschützt.';
 
   @override
   String get notifTextNextStart =>

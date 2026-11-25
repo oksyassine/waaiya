@@ -539,7 +539,7 @@
   "engineErrorAutostartBlocked": "Windows ba ya barin Waaiya ta fara lokacin shiga. Kunna Waaiya a Settings › Apps › Startup, sannan ka sake kunna wannan.",
   "engineErrorAutostartPolicy": "Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga.",
   "notifTextTitle": "Nuna rubutun sanarwa yayin tacewa",
-  "notifTextBody": "Android tana ɓoye abin da sanarwa ke faɗi yayin da wata manhaja ke ɗaukar dukan allo, kuma tacewa tana cikin haka. A kunne: Waaiya tana cire wannan kariya ne kawai yayin tacewa, don ka karanta sanarwarka. Sauran raba allo a lokaci guda ma ba za su sami kariya ba. Zai fara aiki a farawa ta gaba.",
+  "notifTextBody": "Android tana ɓoye abin da sanarwa ke faɗi yayin da wata manhaja ke ɗaukar dukan allo, kuma tacewa tana cikin haka. A kunne: Waaiya tana cire wannan kariya ne kawai yayin tacewa, don ka karanta sanarwarka. Sauran raba allo a lokaci guda ma ba za su sami kariya ba.",
   "notifTextNextStart": "Dakatar da tacewa ka sake farawa domin wannan canji ya yi aiki.",
   "notifTextRefused": "Wannan waya ta ƙi canjin. Kunna “Kashe kariyar raba allo” da kanka a cikin Zaɓuɓɓukan masu haɓakawa.",
   "notifTextByHand": "Ana nunawa: kariyar Android a kashe take a cikin Zaɓuɓɓukan masu haɓakawa (“Kashe kariyar raba allo”). Za ta kasance a kashe ga kowane raba allo har sai ka sake kunna ta a can.",

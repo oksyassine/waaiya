@@ -539,7 +539,7 @@
   "engineErrorAutostartBlocked": "Windows hairuhusu Waaiya kuanza unapoingia. Washa Waaiya katika Mipangilio › Programu › Kuanzisha, kisha uwashe chaguo hili tena.",
   "engineErrorAutostartPolicy": "Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia.",
   "notifTextTitle": "Onyesha maandishi ya arifa wakati wa kuchuja",
-  "notifTextBody": "Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa. Itatumika utakapoanzisha tena.",
+  "notifTextBody": "Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.",
   "notifTextNextStart": "Simamisha kisha anzisha kuchuja tena ili badiliko hili litumike.",
   "notifTextRefused": "Simu hii imekataa badiliko. Washa mwenyewe “Zima ulinzi wa kushiriki skrini” katika Chaguo za wasanidi programu.",
   "notifTextByHand": "Inaonyeshwa: ulinzi wa Android umezimwa katika Chaguo za wasanidi programu (“Zima ulinzi wa kushiriki skrini”). Unabaki umezimwa kwa kila ushiriki wa skrini hadi uuwashe tena hapo.",

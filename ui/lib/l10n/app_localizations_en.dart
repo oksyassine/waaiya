@@ -1934,7 +1934,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either. Takes effect at the next start.';
+      'Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either.';
 
   @override
   String get notifTextNextStart =>
