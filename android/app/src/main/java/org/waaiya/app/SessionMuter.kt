@@ -104,7 +104,13 @@ class SessionMuter(private val context: Context, private val settings: Settings)
             while (running) {
                 val before = status to blockedUids
                 if (!context.canListSessions()) {
-                    // the helper went away (helper mode): what is muted stays muted, new players are not
+                    // the helper went away (helper mode): what is muted stays muted, new players are not. An app
+                    // the user adds to "heard unfiltered" meanwhile is let go from the last list read, so it is not
+                    // left silent (the capture now leaves it out)
+                    val off = FilterService.captureExcluded ?: FixMistakes.filterOffUids(context, settings)
+                    synchronized(effects) {
+                        for (ss in sessions) if (ss.uid in off) { effects.remove(ss.id)?.release(); missed.remove(ss.id) }
+                    }
                     status = Status.NO_PERMISSION
                     lastError = "Waaiya's helper stopped"
                     if (before != status to blockedUids) onChange?.invoke()
