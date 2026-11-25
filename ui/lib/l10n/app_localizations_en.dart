@@ -107,6 +107,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get keepRunningOpen => 'Open Waaiya\'s settings';
 
   @override
+  String get lockAskTitle => 'Keep filtering when the screen locks?';
+
+  @override
+  String get lockTitle => 'Keep filtering when the screen locks';
+
+  @override
+  String get lockBody =>
+      'On this phone Android asks before each start, and then stops filtering at every screen lock. Waaiya can prevent that by lifting Android\'s screen-share protection while it filters, and puts it back when filtering stops. While it is lifted, another screen share made at the same time (a video call, for example) can also show your notifications. A change applies at the next start.';
+
+  @override
+  String get lockYes => 'Keep filtering';
+
+  @override
+  String get lockNo => 'Stop at each lock';
+
+  @override
   String get setupBannerTitle => 'One more step';
 
   @override

@@ -106,6 +106,22 @@ class AppLocalizationsFa extends AppLocalizations {
   String get keepRunningOpen => 'باز کردن تنظیمات واعية';
 
   @override
+  String get lockAskTitle => 'هنگام قفل صفحه پالایش ادامه یابد؟';
+
+  @override
+  String get lockTitle => 'ادامهٔ پالایش هنگام قفل صفحه';
+
+  @override
+  String get lockBody =>
+      'در این تلفن اندروید پیش از هر شروع می‌پرسد و سپس با هر قفل صفحه پالایش را متوقف می‌کند. واعية می‌تواند با برداشتن محافظت اشتراک صفحهٔ اندروید هنگام پالایش جلوی این را بگیرد و پس از توقف پالایش آن را برمی‌گرداند. تا وقتی برداشته است، اشتراک صفحهٔ دیگری در همان زمان (مثلاً تماس تصویری) هم می‌تواند اعلان‌های شما را نشان دهد. تغییر از شروع بعدی اعمال می‌شود.';
+
+  @override
+  String get lockYes => 'ادامهٔ پالایش';
+
+  @override
+  String get lockNo => 'توقف با هر قفل';
+
+  @override
   String get setupBannerTitle => 'یک قدم دیگر';
 
   @override

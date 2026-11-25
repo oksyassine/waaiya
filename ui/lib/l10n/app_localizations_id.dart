@@ -107,6 +107,22 @@ class AppLocalizationsId extends AppLocalizations {
   String get keepRunningOpen => 'Buka setelan Waaiya';
 
   @override
+  String get lockAskTitle => 'Tetap memfilter saat layar terkunci?';
+
+  @override
+  String get lockTitle => 'Tetap memfilter saat layar terkunci';
+
+  @override
+  String get lockBody =>
+      'Di ponsel ini Android bertanya sebelum setiap mulai, lalu menghentikan pemfilteran setiap kali layar terkunci. Waaiya dapat mencegahnya dengan mencabut perlindungan berbagi layar Android selama memfilter, dan memasangnya kembali saat pemfilteran berhenti. Selama dicabut, berbagi layar lain pada saat yang sama (misalnya panggilan video) juga bisa menampilkan notifikasi Anda. Perubahan berlaku saat mulai berikutnya.';
+
+  @override
+  String get lockYes => 'Tetap memfilter';
+
+  @override
+  String get lockNo => 'Berhenti tiap terkunci';
+
+  @override
   String get setupBannerTitle => 'Satu langkah lagi';
 
   @override

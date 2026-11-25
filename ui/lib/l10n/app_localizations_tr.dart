@@ -107,6 +107,22 @@ class AppLocalizationsTr extends AppLocalizations {
   String get keepRunningOpen => 'Waaiya ayarlarını aç';
 
   @override
+  String get lockAskTitle => 'Ekran kilitlendiğinde filtreleme sürsün mü?';
+
+  @override
+  String get lockTitle => 'Ekran kilitlendiğinde filtrelemeye devam et';
+
+  @override
+  String get lockBody =>
+      'Bu telefonda Android her başlatmadan önce sorar ve ardından her ekran kilidinde filtrelemeyi durdurur. Waaiya, filtreleme sırasında Android\'in ekran paylaşımı korumasını kaldırarak bunu önleyebilir ve filtreleme durunca korumayı geri koyar. Koruma kaldırıldığı sürece aynı anda yapılan başka bir ekran paylaşımı (örneğin görüntülü arama) da bildirimlerinizi gösterebilir. Değişiklik bir sonraki başlatmada geçerli olur.';
+
+  @override
+  String get lockYes => 'Filtrelemeye devam et';
+
+  @override
+  String get lockNo => 'Her kilitte durdur';
+
+  @override
   String get setupBannerTitle => 'Bir adım daha';
 
   @override

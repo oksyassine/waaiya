@@ -107,6 +107,23 @@ class AppLocalizationsIt extends AppLocalizations {
   String get keepRunningOpen => 'Apri le impostazioni di Waaiya';
 
   @override
+  String get lockAskTitle =>
+      'Continuare a filtrare quando lo schermo si blocca?';
+
+  @override
+  String get lockTitle => 'Continua a filtrare quando lo schermo si blocca';
+
+  @override
+  String get lockBody =>
+      'Su questo telefono Android chiede prima di ogni avvio e poi interrompe il filtro a ogni blocco dello schermo. Waaiya può evitarlo togliendo la protezione di condivisione schermo di Android mentre filtra, e la ripristina quando il filtro si ferma. Finché è tolta, un\'altra condivisione dello schermo nello stesso momento (una videochiamata, per esempio) può mostrare anche le tue notifiche. Una modifica vale dal prossimo avvio.';
+
+  @override
+  String get lockYes => 'Continua a filtrare';
+
+  @override
+  String get lockNo => 'Ferma a ogni blocco';
+
+  @override
   String get setupBannerTitle => 'Ancora un passaggio';
 
   @override

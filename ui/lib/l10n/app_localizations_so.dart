@@ -108,6 +108,23 @@ class AppLocalizationsSo extends AppLocalizations {
   String get keepRunningOpen => 'Fur dejinta Waaiya';
 
   @override
+  String get lockAskTitle =>
+      'Ma la sii wadaa shaandhaynta marka shaashadda la quflo?';
+
+  @override
+  String get lockTitle => 'Sii wad shaandhaynta marka shaashadda la quflo';
+
+  @override
+  String get lockBody =>
+      'Taleefankan Android wuxuu weydiiyaa ka hor bilow kasta, kadibna wuxuu joojiyaa shaandhaynta mar kasta oo shaashadda la quflo. Waaiya way ka hortagi kartaa iyadoo qaadaysa ilaalinta wadaagista shaashadda ee Android inta ay shaandhaynayso, waxayna soo celisaa marka shaandhayntu joogsato. Inta ay qaadan tahay, wadaagis shaashadeed kale oo isla waqtigaas ah (wicitaan muuqaal ah, tusaale) ayaa sidoo kale tusi kara ogeysiisyadaada. Isbeddel wuxuu dhaqan galayaa bilowga xiga.';
+
+  @override
+  String get lockYes => 'Sii wad shaandhaynta';
+
+  @override
+  String get lockNo => 'Jooji quful kasta';
+
+  @override
   String get setupBannerTitle => 'Hal tallaabo oo kale';
 
   @override

@@ -6,6 +6,13 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 class _Recording extends MemoryBackend {
   _Recording({super.initial});
   int appSettings = 0;
+  final written = <String, Object>{};
+
+  @override
+  Future<void> setSetting(String key, Object value) async {
+    written[key] = value;
+    if (key != 'keep_at_lock') await super.setSetting(key, value);
+  }
 
   @override
   Future<void> openAppSettings() async => appSettings++;
@@ -109,5 +116,46 @@ void main() {
           setup: SetupInfo(originalsMuted: true, consentSkipped: true),
         ));
     expect(find.byKey(const Key('keep_running')), findsNothing);
+  });
+
+  group('screen lock on a phone where Android asks before each start', () {
+    AppState state(int keep) => AppState(
+          language: 'en',
+          platform: 'android',
+          settings: const WaaiyaSettings(gender: 'man'),
+          capabilities: Capabilities.android,
+          setup: SetupInfo(
+              originalsMuted: true,
+              consentSkipped: false,
+              notificationText: NotificationTextInfo(supported: true, canWrite: true, lockApplies: true, keepAtLock: keep)),
+        );
+
+    testWidgets('not answered yet: Start asks first, and the answer is saved before starting', (tester) async {
+      final b = await _open(tester, state(-1));
+      await tester.tap(find.byKey(const Key('power')));
+      await tester.pumpAndSettle();
+      expect(find.text('Keep filtering when the screen locks?'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('lock_yes')));
+      await tester.pumpAndSettle();
+      expect(b.written['keep_at_lock'], 1);
+      expect(b.state.filter.running, isTrue);
+    });
+
+    testWidgets('"Stop at each lock" is saved as 0 and filtering still starts', (tester) async {
+      final b = await _open(tester, state(-1));
+      await tester.tap(find.byKey(const Key('power')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('lock_no')));
+      await tester.pumpAndSettle();
+      expect(b.written['keep_at_lock'], 0);
+    });
+
+    testWidgets('answered: no question, and a switch to change it', (tester) async {
+      await _open(tester, state(0));
+      expect(find.text('Keep filtering when the screen locks'), findsOneWidget);
+      await tester.tap(find.byKey(const Key('power')));
+      await tester.pumpAndSettle();
+      expect(find.text('Keep filtering when the screen locks?'), findsNothing);
+    });
   });
 }

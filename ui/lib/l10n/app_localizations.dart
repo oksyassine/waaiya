@@ -298,6 +298,36 @@ abstract class AppLocalizations {
   /// **'افتح إعدادات واعية'**
   String get keepRunningOpen;
 
+  /// No description provided for @lockAskTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل يستمر الترشيح عند قفل الشاشة؟'**
+  String get lockAskTitle;
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'استمرار الترشيح عند قفل الشاشة'**
+  String get lockTitle;
+
+  /// No description provided for @lockBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'في هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف الترشيح عند كل قفل للشاشة. تستطيع واعية منع ذلك برفع «حماية مشاركة الشاشة» في أندرويد أثناء الترشيح، وتعيدها حين يتوقف. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. يسري التغيير عند التشغيل التالي.'**
+  String get lockBody;
+
+  /// No description provided for @lockYes.
+  ///
+  /// In ar, this message translates to:
+  /// **'استمر في الترشيح'**
+  String get lockYes;
+
+  /// No description provided for @lockNo.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقفه عند كل قفل'**
+  String get lockNo;
+
   /// Android string setup_banner_title
   ///
   /// In ar, this message translates to:

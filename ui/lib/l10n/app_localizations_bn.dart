@@ -106,6 +106,22 @@ class AppLocalizationsBn extends AppLocalizations {
   String get keepRunningOpen => 'Waaiya-র সেটিংস খুলুন';
 
   @override
+  String get lockAskTitle => 'স্ক্রিন লক হলেও ফিল্টারিং চালু থাকবে?';
+
+  @override
+  String get lockTitle => 'স্ক্রিন লক হলেও ফিল্টারিং চালু রাখুন';
+
+  @override
+  String get lockBody =>
+      'এই ফোনে Android প্রতিবার শুরুর আগে জিজ্ঞাসা করে, তারপর প্রতিবার স্ক্রিন লক হলে ফিল্টারিং থামিয়ে দেয়। ফিল্টার করার সময় Android-এর স্ক্রিন শেয়ার সুরক্ষা তুলে নিয়ে Waaiya তা আটকাতে পারে, আর ফিল্টারিং থামলে আবার চালু করে। এটি তোলা থাকা অবস্থায় একই সময়ে অন্য কোনো স্ক্রিন শেয়ার (যেমন ভিডিও কল) আপনার বিজ্ঞপ্তিও দেখাতে পারে। পরিবর্তন পরের বার শুরু করলে কার্যকর হবে।';
+
+  @override
+  String get lockYes => 'ফিল্টারিং চালু রাখুন';
+
+  @override
+  String get lockNo => 'প্রতিবার লক হলে থামান';
+
+  @override
   String get setupBannerTitle => 'আর একটি ধাপ';
 
   @override

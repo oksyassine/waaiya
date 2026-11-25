@@ -65,7 +65,7 @@ two folders when you uninstall the app, and you can delete them yourself.
 | Display over other apps | To draw the covers of the screen blur |
 | `DUMP`, `WRITE_SECURE_SETTINGS` (granted once with the setup, by you) | To find and silence the original sound of the app being filtered, and to skip the sharing question. `WRITE_SECURE_SETTINGS` also changes Android's "screen share protections" switch (below) |
 | The one-time setup: Android's Wireless debugging, or the separate Shizuku app if you use it | To give Waaiya the two permissions above. With Wireless debugging, Waaiya connects only to the phone itself (127.0.0.1). On phones that refuse those permissions to the setup, a small Waaiya helper started the same way does that work with the rights of Android's debugging shell, and talks only to Waaiya on the phone |
-| Android's "screen share protections" switch (Android 15 and later; Developer options, "Disable screen share protections") | Android hides the text of notifications while the screen is captured, and filtering counts as a capture. Waaiya lifts this protection only while it filters: when you turn on "Notification text", and on phones where Android asks before every start (for example Xiaomi and OPPO), where Android would otherwise stop filtering at every screen lock. It puts the switch back when filtering stops, or the next time Waaiya runs if it was stopped by force. While it is lifted, another screen share made at the same time (a video call, for example) can also show your notifications. A value you set by hand is never changed |
+| Android's "screen share protections" switch (Android 15 and later; Developer options, "Disable screen share protections") | Android hides the text of notifications while the screen is captured, and filtering counts as a capture. Waaiya lifts this protection only while it filters, and only if you choose it: when you turn on "Notification text", or, on phones where Android asks before every start (for example Xiaomi and OPPO) and would otherwise stop filtering at every screen lock, when you answer "Keep filtering" to the question Waaiya asks once at Start (a switch in the Filter options changes it later). It puts the switch back when filtering stops, or the next time Waaiya runs if it was stopped by force. While it is lifted, another screen share made at the same time (a video call, for example) can also show your notifications. A value you set by hand is never changed |
 | Modify audio settings | To silence the original sound of the apps being filtered (an audio effect on their sound, removed when filtering stops) |
 | The list of installed apps that have a launcher icon | To name the app whose sound cannot be filtered, and to let you pick apps in "Apps heard unfiltered" and "Apps without blur". The list stays on the phone |
 | Start at boot (`RECEIVE_BOOT_COMPLETED`) | To set the prayer-time alarms and a Protection waiting period again after the phone restarts |
@@ -196,8 +196,9 @@ Changes to this policy are made in this file in that public repository, where th
 مساعد صغير لواعية يُشغَّل بالطريقة نفسها بصلاحيات واجهة التصحيح في أندرويد، ولا يتحدث إلا مع واعية على الهاتف.
 
 مفتاح «حماية مشاركة الشاشة» في أندرويد (أندرويد 15 وما بعده، في خيارات المطوّرين): يخفي أندرويد نص الإشعارات أثناء
-التقاط الشاشة، والترشيح يُعدّ التقاطًا. ترفع واعية هذه الحماية أثناء الترشيح فقط: حين تفعّل «نص الإشعارات»، وفي الهواتف
-التي يسأل فيها أندرويد قبل كل تشغيل (مثل شاومي وأوبو)، وإلا أوقف أندرويد الترشيح عند كل قفل للشاشة. وتعيدها حين يتوقف
+التقاط الشاشة، والترشيح يُعدّ التقاطًا. ترفع واعية هذه الحماية أثناء الترشيح فقط، وباختيارك وحده: حين تفعّل «نص الإشعارات»، أو في الهواتف
+التي يسأل فيها أندرويد قبل كل تشغيل (مثل شاومي وأوبو) فيوقف الترشيح عند كل قفل للشاشة، حين تجيب «استمر في الترشيح»
+عن السؤال الذي تطرحه واعية مرة واحدة عند التشغيل (ويغيّره مفتاح في خيارات الترشيح لاحقًا). وتعيدها حين يتوقف
 الترشيح، أو في المرة التالية التي تعمل فيها واعية إن أُوقفت بالقوة. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت
 نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. والقيمة التي ضبطتها بيدك لا تُغيَّر أبدًا.
 

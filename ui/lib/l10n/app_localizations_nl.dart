@@ -107,6 +107,22 @@ class AppLocalizationsNl extends AppLocalizations {
   String get keepRunningOpen => 'Instellingen van Waaiya openen';
 
   @override
+  String get lockAskTitle => 'Blijven filteren als het scherm vergrendelt?';
+
+  @override
+  String get lockTitle => 'Blijven filteren als het scherm vergrendelt';
+
+  @override
+  String get lockBody =>
+      'Op deze telefoon vraagt Android voor elke start en stopt het filteren dan bij elke schermvergrendeling. Waaiya kan dat voorkomen door tijdens het filteren de bescherming voor scherm delen van Android op te heffen, en zet die terug als het filteren stopt. Zolang die is opgeheven, kan een ander scherm delen op hetzelfde moment (een videogesprek bijvoorbeeld) ook je meldingen tonen. Een wijziging geldt vanaf de volgende start.';
+
+  @override
+  String get lockYes => 'Blijven filteren';
+
+  @override
+  String get lockNo => 'Stoppen bij elke vergrendeling';
+
+  @override
   String get setupBannerTitle => 'Nog één stap';
 
   @override

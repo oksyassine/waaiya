@@ -107,6 +107,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get keepRunningOpen => 'Ouvrir les paramètres de Waaiya';
 
   @override
+  String get lockAskTitle =>
+      'Continuer à filtrer quand l’écran se verrouille ?';
+
+  @override
+  String get lockTitle => 'Continuer à filtrer quand l’écran se verrouille';
+
+  @override
+  String get lockBody =>
+      'Sur ce téléphone, Android demande avant chaque démarrage, puis arrête le filtrage à chaque verrouillage de l’écran. Waaiya peut l’éviter en levant la protection de partage d’écran d’Android pendant le filtrage, et la remet quand le filtrage s’arrête. Tant qu’elle est levée, un autre partage d’écran au même moment (un appel vidéo, par exemple) peut aussi montrer vos notifications. Un changement s’applique au prochain démarrage.';
+
+  @override
+  String get lockYes => 'Continuer à filtrer';
+
+  @override
+  String get lockNo => 'Arrêter à chaque verrouillage';
+
+  @override
   String get setupBannerTitle => 'Encore une étape';
 
   @override

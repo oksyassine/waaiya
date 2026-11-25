@@ -262,6 +262,15 @@ class FilterOptionsCard extends StatelessWidget {
           ),
         const SingingOptionSwitch(),
         if (android && s.setup.notificationText.supported) const NotificationTextSwitch(),
+        // the answer to the screen-lock question, to change it later (applies at the next start)
+        if (android && s.setup.notificationText.lockApplies && s.setup.notificationText.keepAtLock != -1)
+          SettingSwitch(
+            id: 'switch_keep_at_lock',
+            title: l.lockTitle,
+            body: l.lockBody,
+            value: s.setup.notificationText.keepAtLock == 1,
+            onChanged: (v) => set(SettingKeys.keepAtLock, v ? 1 : 0),
+          ),
       ],
     );
   }
@@ -520,6 +529,25 @@ Future<void> startFiltering(BuildContext context) async {
       HomeNav.maybeOf(context)?.go('setup');
       return;
     }
+  }
+  // a phone where Android would stop filtering at every screen lock: ask once whether Waaiya may lift the
+  // screen-share protection while it filters (ScreenShareProtection.neededForLock); nothing is lifted before
+  if (s.platform == 'android' && s.setup.notificationText.lockAsk) {
+    final keep = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        scrollable: true,
+        title: Text(l.lockAskTitle),
+        content: Text(l.lockBody),
+        actions: [
+          TextButton(key: const Key('lock_no'), onPressed: () => Navigator.pop(ctx, false), child: Text(l.lockNo)),
+          FilledButton(key: const Key('lock_yes'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.lockYes)),
+        ],
+      ),
+    );
+    if (!context.mounted || keep == null) return;
+    await runAction(context, (b) => b.setSetting(SettingKeys.keepAtLock, keep ? 1 : 0));
+    if (!context.mounted) return;
   }
   // helper mode, the helper stopped and not coming back by itself (Wireless debugging off): say so before starting
   if (s.setup.helperMissing && !s.setup.helperRestarting) {

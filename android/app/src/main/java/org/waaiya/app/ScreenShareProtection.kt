@@ -49,7 +49,13 @@ object ScreenShareProtection {
      * protection off the lock does not stop it. So on such a phone Waaiya lifts the protection while filtering
      * whatever the notification-text choice, when it can.
      */
-    fun neededForLock(ctx: Context) = supported && !ctx.hasProjectMediaAppOp()
+    fun lockApplies(ctx: Context) = supported && !ctx.hasProjectMediaAppOp() && setUp(ctx)
+
+    /** Lifted for the lock only after the user said yes ([Settings.keepAtLock]): it also unprotects other shares. */
+    fun neededForLock(ctx: Context) = lockApplies(ctx) && Settings(ctx).keepAtLock == 1
+
+    /** The question has not been answered yet: Start asks it first (the tile opens Waaiya for it). */
+    fun lockAsk(ctx: Context) = lockApplies(ctx) && Settings(ctx).keepAtLock == -1
 
     /** Lift the protection at the next capture start: the user's notification-text choice, or [neededForLock]. */
     fun wanted(ctx: Context) = Settings(ctx).showNotificationText || neededForLock(ctx)

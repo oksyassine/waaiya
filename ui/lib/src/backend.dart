@@ -45,6 +45,7 @@ abstract final class SettingKeys {
 
   /// Android 15+: lift Android's notification-text protection while filtering (needs the one-time setup).
   static const showNotificationText = 'show_notification_text';
+  static const keepAtLock = 'keep_at_lock';
 
   /// Phone silent for [prayerSilentMinutes] from each prayer time; media muted [prayerAdhanMinutes] at the adhan.
   static const prayerSilent = 'prayer_silent';
@@ -759,6 +760,8 @@ class NotificationTextInfo {
     this.pairAdvised = false,
     this.shownNow,
     this.refused = false,
+    this.lockApplies = false,
+    this.keepAtLock = -1,
   });
 
   factory NotificationTextInfo.fromMap(Map<Object?, Object?> m) => NotificationTextInfo(
@@ -771,6 +774,8 @@ class NotificationTextInfo {
         pairAdvised: _bool(m['pairAdvised'], false),
         shownNow: m['shownNow'] is bool ? m['shownNow'] as bool : null,
         refused: _bool(m['refused'], false),
+        lockApplies: _bool(m['lockApplies'], false),
+        keepAtLock: m['keepAtLock'] is int ? m['keepAtLock'] as int : -1,
       );
 
   /// Android 15 or newer: the text is hidden during the capture.
@@ -788,6 +793,14 @@ class NotificationTextInfo {
   /// Android asks before each start on this phone, and then stops filtering at every screen lock unless the
   /// protection is off: Waaiya lifts it while filtering whatever [wanted] says, when it can ([canWrite]).
   final bool forcedForLock;
+
+  /// Android asks before each start on this phone and would stop filtering at every screen lock unless Waaiya lifts
+  /// the protection while filtering: the user decides ([keepAtLock]: -1 not asked, 0 stop at each lock, 1 keep).
+  final bool lockApplies;
+  final int keepAtLock;
+
+  /// Start asks the lock question first.
+  bool get lockAsk => lockApplies && keepAtLock == -1;
 
   /// Android 16+: the start question also offers "Share one app"; sharing only Waaiya keeps every app filtered, shows
   /// notification text and survives screen lock, with no setup and no Developer options.
@@ -818,6 +831,8 @@ class NotificationTextInfo {
         'pairAdvised': pairAdvised,
         'shownNow': shownNow,
         'refused': refused,
+        'lockApplies': lockApplies,
+        'keepAtLock': keepAtLock,
       };
 }
 

@@ -107,6 +107,22 @@ class AppLocalizationsSw extends AppLocalizations {
   String get keepRunningOpen => 'Fungua mipangilio ya Waaiya';
 
   @override
+  String get lockAskTitle => 'Uendelee kuchuja skrini ikifungwa?';
+
+  @override
+  String get lockTitle => 'Endelea kuchuja skrini ikifungwa';
+
+  @override
+  String get lockBody =>
+      'Kwenye simu hii Android huuliza kabla ya kila kuanza, kisha husimamisha uchujaji kila skrini inapofungwa. Waaiya inaweza kuzuia hilo kwa kuondoa ulinzi wa kushiriki skrini wa Android wakati wa kuchuja, na huurudisha uchujaji unaposimama. Ukiwa umeondolewa, ushiriki mwingine wa skrini wakati huo huo (simu ya video, kwa mfano) unaweza pia kuonyesha arifa zako. Mabadiliko yanatumika utakapoanzisha tena.';
+
+  @override
+  String get lockYes => 'Endelea kuchuja';
+
+  @override
+  String get lockNo => 'Simama kila inapofungwa';
+
+  @override
   String get setupBannerTitle => 'Hatua moja zaidi';
 
   @override

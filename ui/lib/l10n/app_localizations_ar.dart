@@ -106,6 +106,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get keepRunningOpen => 'افتح إعدادات واعية';
 
   @override
+  String get lockAskTitle => 'هل يستمر الترشيح عند قفل الشاشة؟';
+
+  @override
+  String get lockTitle => 'استمرار الترشيح عند قفل الشاشة';
+
+  @override
+  String get lockBody =>
+      'في هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف الترشيح عند كل قفل للشاشة. تستطيع واعية منع ذلك برفع «حماية مشاركة الشاشة» في أندرويد أثناء الترشيح، وتعيدها حين يتوقف. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. يسري التغيير عند التشغيل التالي.';
+
+  @override
+  String get lockYes => 'استمر في الترشيح';
+
+  @override
+  String get lockNo => 'أوقفه عند كل قفل';
+
+  @override
   String get setupBannerTitle => 'بقيت خطوة واحدة';
 
   @override

@@ -107,6 +107,22 @@ class AppLocalizationsMs extends AppLocalizations {
   String get keepRunningOpen => 'Buka tetapan Waaiya';
 
   @override
+  String get lockAskTitle => 'Teruskan menapis apabila skrin dikunci?';
+
+  @override
+  String get lockTitle => 'Teruskan menapis apabila skrin dikunci';
+
+  @override
+  String get lockBody =>
+      'Pada telefon ini Android bertanya sebelum setiap permulaan, kemudian menghentikan penapisan setiap kali skrin dikunci. Waaiya boleh mengelakkannya dengan menarik balik perlindungan perkongsian skrin Android semasa menapis, dan memulihkannya apabila penapisan berhenti. Selagi ia ditarik balik, perkongsian skrin lain pada masa yang sama (panggilan video, misalnya) juga boleh menunjukkan pemberitahuan anda. Perubahan berkuat kuasa pada permulaan seterusnya.';
+
+  @override
+  String get lockYes => 'Teruskan menapis';
+
+  @override
+  String get lockNo => 'Henti setiap kali dikunci';
+
+  @override
   String get setupBannerTitle => 'Satu langkah lagi';
 
   @override

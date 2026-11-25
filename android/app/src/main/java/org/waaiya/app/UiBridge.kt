@@ -375,6 +375,9 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wanted" to settings.showNotificationText,
                 // no PROJECT_MEDIA: Waaiya lifts it anyway while filtering, or Android stops filtering at each lock
                 "forcedForLock" to ScreenShareProtection.neededForLock(activity),
+                // the user's choice about the lock on such a phone (Settings.keepAtLock): asked once at Start
+                "lockApplies" to ScreenShareProtection.lockApplies(activity),
+                "keepAtLock" to settings.keepAtLock,
                 // Android 16+: the start question also offers "Share one app" (pick Waaiya: text shown, no lock stop)
                 "oneAppOffered" to CaptureChoice.offerOneApp(activity),
                 // the one-app notice advises the one-time pairing until it is done (simple mode included)
@@ -448,6 +451,7 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "keep_singing" -> settings.keepSinging = bool()
             // as the Quick Settings tile: off puts Android's switch back at once; while filtering, a new capture
             // starts at once so the choice applies now (FilterService.restartForNotificationText)
+            "keep_at_lock" -> settings.keepAtLock = int(0, 1)
             "show_notification_text" -> {
                 val on = bool()
                 settings.showNotificationText = on

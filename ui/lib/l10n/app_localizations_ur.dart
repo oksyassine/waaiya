@@ -107,6 +107,22 @@ class AppLocalizationsUr extends AppLocalizations {
   String get keepRunningOpen => 'واعية کی ترتیبات کھولیں';
 
   @override
+  String get lockAskTitle => 'کیا اسکرین لاک ہونے پر فلٹرنگ جاری رہے؟';
+
+  @override
+  String get lockTitle => 'اسکرین لاک ہونے پر فلٹرنگ جاری رکھیں';
+
+  @override
+  String get lockBody =>
+      'اس فون پر Android ہر بار شروع کرنے سے پہلے پوچھتا ہے، پھر ہر بار اسکرین لاک ہونے پر فلٹرنگ روک دیتا ہے۔ واعية فلٹرنگ کے دوران Android کی اسکرین شیئر حفاظت ہٹا کر اسے روک سکتا ہے، اور فلٹرنگ رکنے پر اسے واپس لگا دیتا ہے۔ جب تک یہ ہٹی رہے، اسی وقت کوئی دوسری اسکرین شیئرنگ (مثلاً ویڈیو کال) آپ کی اطلاعات بھی دکھا سکتی ہے۔ تبدیلی اگلی بار شروع کرنے پر نافذ ہوگی۔';
+
+  @override
+  String get lockYes => 'فلٹرنگ جاری رکھیں';
+
+  @override
+  String get lockNo => 'ہر لاک پر روک دیں';
+
+  @override
   String get setupBannerTitle => 'ایک اور قدم';
 
   @override

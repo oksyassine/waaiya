@@ -107,6 +107,22 @@ class AppLocalizationsUz extends AppLocalizations {
   String get keepRunningOpen => 'Waaiya sozlamalarini ochish';
 
   @override
+  String get lockAskTitle => 'Ekran qulflanganda filtrlash davom etsinmi?';
+
+  @override
+  String get lockTitle => 'Ekran qulflanganda filtrlashni davom ettirish';
+
+  @override
+  String get lockBody =>
+      'Bu telefonda Android har bir ishga tushirishdan oldin so‘raydi, so‘ng har safar ekran qulflanganda filtrlashni to‘xtatadi. Waaiya filtrlash paytida Androidning ekran ulashish himoyasini olib qo‘yib, buning oldini olishi mumkin va filtrlash to‘xtaganda uni qaytaradi. U olib qo‘yilgan paytda bir vaqtda bo‘lgan boshqa ekran ulashish (masalan, videoqo‘ng‘iroq) ham bildirishnomalaringizni ko‘rsatishi mumkin. O‘zgarish keyingi ishga tushirishda kuchga kiradi.';
+
+  @override
+  String get lockYes => 'Filtrlashni davom ettirish';
+
+  @override
+  String get lockNo => 'Har qulflashda to‘xtatish';
+
+  @override
   String get setupBannerTitle => 'Yana bir qadam';
 
   @override

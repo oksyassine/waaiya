@@ -106,6 +106,22 @@ class AppLocalizationsRu extends AppLocalizations {
   String get keepRunningOpen => 'Открыть настройки Waaiya';
 
   @override
+  String get lockAskTitle => 'Продолжать фильтрацию при блокировке экрана?';
+
+  @override
+  String get lockTitle => 'Продолжать фильтрацию при блокировке экрана';
+
+  @override
+  String get lockBody =>
+      'На этом телефоне Android спрашивает перед каждым запуском, а затем останавливает фильтрацию при каждой блокировке экрана. Waaiya может этого избежать, снимая защиту демонстрации экрана Android на время фильтрации, и возвращает её, когда фильтрация останавливается. Пока защита снята, другая демонстрация экрана в это же время (например, видеозвонок) тоже может показать ваши уведомления. Изменение действует со следующего запуска.';
+
+  @override
+  String get lockYes => 'Продолжать фильтрацию';
+
+  @override
+  String get lockNo => 'Останавливать при блокировке';
+
+  @override
   String get setupBannerTitle => 'Ещё один шаг';
 
   @override

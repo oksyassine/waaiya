@@ -107,6 +107,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get keepRunningOpen => 'Waaiyas Einstellungen öffnen';
 
   @override
+  String get lockAskTitle => 'Beim Sperren des Bildschirms weiter filtern?';
+
+  @override
+  String get lockTitle => 'Beim Sperren des Bildschirms weiter filtern';
+
+  @override
+  String get lockBody =>
+      'Auf diesem Telefon fragt Android vor jedem Start und beendet das Filtern dann bei jeder Bildschirmsperre. Waaiya kann das verhindern, indem es während des Filterns Androids Schutz für Bildschirmfreigaben aufhebt, und stellt ihn wieder her, wenn das Filtern endet. Solange er aufgehoben ist, kann eine gleichzeitige andere Bildschirmfreigabe (etwa ein Videoanruf) auch deine Benachrichtigungen zeigen. Eine Änderung gilt ab dem nächsten Start.';
+
+  @override
+  String get lockYes => 'Weiter filtern';
+
+  @override
+  String get lockNo => 'Bei jeder Sperre stoppen';
+
+  @override
   String get setupBannerTitle => 'Noch ein Schritt';
 
   @override

@@ -107,6 +107,22 @@ class AppLocalizationsHa extends AppLocalizations {
   String get keepRunningOpen => 'Buɗe saitunan Waaiya';
 
   @override
+  String get lockAskTitle => 'A ci gaba da tacewa idan an kulle allo?';
+
+  @override
+  String get lockTitle => 'A ci gaba da tacewa idan an kulle allo';
+
+  @override
+  String get lockBody =>
+      'A wannan waya Android tana tambaya kafin kowane farawa, sannan ta dakatar da tacewa a duk lokacin da aka kulle allo. Waaiya na iya hana hakan ta hanyar ɗage kariyar raba allo ta Android yayin tacewa, kuma ta mayar da ita idan tacewa ta tsaya. Muddin an ɗage ta, wani raba allo a lokaci guda (kiran bidiyo, misali) zai iya nuna sanarwarka. Canji zai fara aiki a farawa ta gaba.';
+
+  @override
+  String get lockYes => 'Ci gaba da tacewa';
+
+  @override
+  String get lockNo => 'Tsaya a kowane kulle';
+
+  @override
   String get setupBannerTitle => 'Saura mataki ɗaya';
 
   @override

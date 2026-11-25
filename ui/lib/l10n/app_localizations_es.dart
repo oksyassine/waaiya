@@ -107,6 +107,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get keepRunningOpen => 'Abrir los ajustes de Waaiya';
 
   @override
+  String get lockAskTitle => '¿Seguir filtrando al bloquear la pantalla?';
+
+  @override
+  String get lockTitle => 'Seguir filtrando al bloquear la pantalla';
+
+  @override
+  String get lockBody =>
+      'En este teléfono Android pregunta antes de cada inicio y luego detiene el filtrado cada vez que se bloquea la pantalla. Waaiya puede evitarlo levantando la protección de pantalla compartida de Android mientras filtra, y la restablece cuando el filtrado se detiene. Mientras está levantada, otra pantalla compartida al mismo tiempo (una videollamada, por ejemplo) también puede mostrar tus notificaciones. Un cambio se aplica en el próximo inicio.';
+
+  @override
+  String get lockYes => 'Seguir filtrando';
+
+  @override
+  String get lockNo => 'Detener en cada bloqueo';
+
+  @override
   String get setupBannerTitle => 'Un paso más';
 
   @override
