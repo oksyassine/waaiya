@@ -13,7 +13,7 @@ notification says the sound is no longer filtered.)
 
 | Platform | Status | How it works |
 |---|---|---|
-| **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. Optional screen blur (women, immodest images) over every app. |
+| **Android** 10+ | Works (phones: arm64, armv7) | Captures every app's sound, filters it, mutes the original. Also: open or share a YouTube/TikTok/… link to watch or save it without music. Optional screen blur (images of women, immodest images) over your apps. |
 | **Linux** (PulseAudio, PipeWire-Pulse) | Works | Virtual output + always-on user service (`waaiya install`, `waaiya start`). |
 | **macOS** 14.4+ | Planned | Core Audio process tap; see [docs/PLATFORMS.md](docs/PLATFORMS.md). |
 | **Windows** 10 (2004+) / 11 | Preview (desktop app) | Every other app turned down to −80 dB, their mix captured per process, brought back up, filtered and played; no driver, no admin rights. Optional screen blur with covers every click passes through. Tested on Windows Server 2022 and 2025 CI runners, not yet on a real PC: [docs/PLATFORMS.md](docs/PLATFORMS.md). |
@@ -177,9 +177,14 @@ the detector is missing or fails while the option is on, the voice is muted.
 
 ## Screen blur (optional, Android)
 
-While filtering runs, Waaiya can also cover, over every app, **women** (whole body; people the app cannot
+While filtering runs, Waaiya can also cover, over your apps, **images of women** (whole body; people the app cannot
 clearly tell are men are covered too) and **immodest images** (nudity, revealing clothing; the screen is
 covered). Both are off by default and chosen in the app. Everything runs on the phone.
+
+Known limits of the blur: while Waaiya's own screen is in front, it draws no covers (so its switch can always be
+reached), so a picture-in-picture or floating video over Waaiya is not blurred then. Without Waaiya's helper, a
+full-screen cover is lifted for about a frame now and then (every few seconds, less often over time) to look at
+the screen again; with the helper the covers are invisible to that look and stay on.
 
 How it works: the screen is captured small (long side 640 px, same screen-capture permission as the audio
 filter), a person detector (YOLOX-Nano, Apache-2.0) finds people, our own classifier (MobileNetV3-large,

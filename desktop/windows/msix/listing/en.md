@@ -3,14 +3,14 @@
 ## Description
 
 Waaiya removes musical instruments from everything your computer plays and keeps the voice: speech, lectures and
-Quran recitation. It works with every app (browsers, video players, games), live, on your computer.
+Quran recitation. It works with the apps you use (browsers, video players, games), live, on your computer.
 
 - One button: Waaiya filters the sound of all your other apps until you press it again.
 - Links: paste a YouTube, TikTok or Instagram link and watch it in your browser with the filter on. Waaiya starts the
   filter first and never opens the link without it.
 - Mute women's singing (optional, for men): an early version that does not catch every song yet; speech is kept.
 - Fails closed: if the filter stops by itself, other apps stay silent instead of playing music.
-- Optional screen blur: covers women, or immodest images, over every window; clicks still reach the windows
+- Optional screen blur: covers images of women, or immodest images, over every window; clicks still reach the windows
   underneath.
 - Apps heard unfiltered: choose apps that keep their original sound; they are neither filtered nor silenced.
 - Protection for weak moments: Stop can be set to wait (for example 30 minutes) and then ask you again, and a parent can set a PIN.
@@ -35,7 +35,7 @@ mono by itself.
 
 ## Product features (one per line, at most 20)
 
-- Removes music from every app, keeps speech and Quran recitation
+- Removes music from your apps, keeps speech and Quran recitation
 - Watch YouTube, TikTok and Instagram links with the filter on
 - Optional: mute women's singing (early version)
 - Live, on your computer: nothing is sent anywhere
@@ -55,7 +55,7 @@ music remover, halal, Quran, lectures, no music, vocal, filter
 
 ## Screenshot captions
 
-1. One button removes the music from every app.
+1. One button removes the music from your apps.
 2. Watch a link with the filter on.
 3. Optional screen blur over every window.
 4. Settings: language, start at login.

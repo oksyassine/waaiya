@@ -1,9 +1,9 @@
-Waaiya removes musical instruments from everything your phone plays and keeps the voice: speech, lectures and Quran recitation. It works with every app (YouTube, Instagram, TikTok, browsers, games), live, on the phone.
+Waaiya removes musical instruments from everything your phone plays and keeps the voice: speech, lectures and Quran recitation. It works with the apps you use (YouTube, Instagram, TikTok, browsers, games), live, on the phone.
 
 <ul>
 <li>One button: Waaiya filters the sound of all your other apps until you stop it.</li>
 <li>Fails closed: when the filter cannot run, apps stay silent instead of playing music.</li>
-<li>Optional screen blur: covers women, or immodest images, over every app.</li>
+<li>Optional screen blur: covers images of women, or immodest images, over your apps.</li>
 <li>Optional: also mute women's singing.</li>
 <li>Open a link: watch or save a video without its music.</li>
 <li>Eighteen languages: Arabic, English, French, Urdu, Indonesian, Turkish, Bengali, Persian, Malay, Spanish, Dutch, German, Italian, Russian, Uzbek, Swahili, Hausa, Somali.</li>
