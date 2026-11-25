@@ -1,6 +1,6 @@
 # Waaiya privacy policy
 
-Last change: 2026-11-24. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
+Last change: 2026-11-25. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
 
 ## In short
 
@@ -8,6 +8,10 @@ Waaiya sends nothing about you anywhere. There is no account, no analytics, no a
 The only server of ours the app contacts is its website, to see whether a newer version exists (below); the request
 carries nothing about you or your device. The sound filter, the screen blur and every other feature run on your device, and what they
 hear and see stays in memory on your device and is not saved.
+
+Two things leave the device only because you choose them: the optional reply to calls by SMS during prayer (website
+and GitHub app only) sends a text from your phone to the person calling you, and a diagnostics report or notes that
+you share go to whoever you share them with.
 
 ## What goes online
 
@@ -34,7 +38,17 @@ them tries one (`linux/test_no_network.sh`, the Linux blur's end-to-end test, an
   elsewhere the coordinates). It is never sent anywhere and never read again in the background; tap it again after
   travelling.
 - The diagnostics report and the "wrong detection" notes: plain text kept in the app's private storage. They leave
-  the device only if you share them yourself, to whoever you choose.
+  the device only if you share them yourself, to whoever you choose. The report lists the phone's maker and model,
+  its Android version, chip and memory, the app's language and who uses the device (man or woman, if chosen),
+  Waaiya's settings and state, the last times filtering or Waaiya stopped and why, and the names of the apps that
+  have a sound session or that you chose to hear unfiltered. Read it before you share it: it is shown to you in full.
+  A note keeps the time, the app on screen and the settings at that moment.
+- Android, the reply to calls by SMS during prayer (website and GitHub app only; off unless you turn it on): the
+  number of a call while it rings, the numbers already answered during the current prayer (so each gets one text),
+  and a list of the last 20 replies (time and number), which the prayer page shows you. Your call history is not
+  read, and nothing from it is kept.
+- Android, the one-time setup: the pairing key Waaiya made with Android's Wireless debugging (shown in Android's
+  list of paired devices as "waaiya@phone"), kept in storage that is never backed up.
 - Android: cloud backup and device-to-device transfer are switched off for Waaiya's data.
 
 Uninstalling Waaiya deletes all of it on Android and Linux (the app's own data). On Windows, the settings, the
@@ -49,7 +63,14 @@ two folders when you uninstall the app, and you can delete them yourself.
 | Record audio and the screen-sharing question (MediaProjection) | Android delivers other apps' sound to Waaiya only through these. The sound is filtered in memory and played back; nothing is recorded. The screen picture is used, in memory, only for the blur |
 | Notifications, foreground service | To show that filtering runs and to let you stop it |
 | Display over other apps | To draw the covers of the screen blur |
-| `DUMP`, `WRITE_SECURE_SETTINGS` (granted once with the setup, by you) | To find and silence the original sound of the app being filtered, and to skip the sharing question |
+| `DUMP`, `WRITE_SECURE_SETTINGS` (granted once with the setup, by you) | To find and silence the original sound of the app being filtered, and to skip the sharing question. `WRITE_SECURE_SETTINGS` also changes Android's "screen share protections" switch (below) |
+| The one-time setup: Android's Wireless debugging, or the separate Shizuku app if you use it | To give Waaiya the two permissions above. With Wireless debugging, Waaiya connects only to the phone itself (127.0.0.1). On phones that refuse those permissions to the setup, a small Waaiya helper started the same way does that work with the rights of Android's debugging shell, and talks only to Waaiya on the phone |
+| Android's "screen share protections" switch (Android 15 and later; Developer options, "Disable screen share protections") | Android hides the text of notifications while the screen is captured, and filtering counts as a capture. Waaiya lifts this protection only while it filters: when you turn on "Notification text", and on phones where Android asks before every start (for example Xiaomi and OPPO), where Android would otherwise stop filtering at every screen lock. It puts the switch back when filtering stops, or the next time Waaiya runs if it was stopped by force. While it is lifted, another screen share made at the same time (a video call, for example) can also show your notifications. A value you set by hand is never changed |
+| Modify audio settings | To silence the original sound of the apps being filtered (an audio effect on their sound, removed when filtering stops) |
+| The list of installed apps that have a launcher icon | To name the app whose sound cannot be filtered, and to let you pick apps in "Apps heard unfiltered" and "Apps without blur". The list stays on the phone |
+| Start at boot (`RECEIVE_BOOT_COMPLETED`) | To set the prayer-time alarms and a Protection waiting period again after the phone restarts |
+| Read phone state, read call log, send SMS (website and GitHub app only; asked one by one only when you turn on the reply to calls by SMS during prayer; not in the Google Play app) | Android gives the number of a ringing call only to apps with the call-log permission; Waaiya uses it to send one text to someone who calls during prayer. The call history is not read |
+| Move from the old app (`org.waaiya.permission.MOVE`, `REQUEST_DELETE_PACKAGES`) | To bring your settings from the old app (org.islamicmute.app, 0.2.14 and before) and to offer to uninstall it; Android asks you to confirm |
 | Internet | Only for "Open a link" and the check for new versions (above) |
 | Install unknown apps (`REQUEST_INSTALL_PACKAGES`; not in store builds) | To hand a downloaded update to Android's installer, which always asks you to confirm. Android asks you to allow it the first time |
 | Do Not Disturb access, alarms, system settings (only if you turn on the worship helpers) | To silence the phone at prayer times and to set a plain ringtone |
@@ -91,8 +112,9 @@ and the program in Google Play.
 
 ## Changes and contact
 
-Changes to this policy are made in this file in the public repository, where their history is kept:
-<https://github.com/oksyassine/waaiya>. Questions: open an issue there.
+Waaiya is made by its developer, who is responsible for this policy. Questions, or a request about data the website
+holds (the test sign-up list): support@waaiya.mssid.org, or open an issue at <https://github.com/oksyassine/waaiya>.
+Changes to this policy are made in this file in that public repository, where their history is kept.
 
 ---
 
@@ -100,13 +122,16 @@ Changes to this policy are made in this file in the public repository, where the
 
 ## سياسة الخصوصية
 
-آخر تعديل: 2026-11-24. تنطبق على واعية في أندرويد ولينكس وويندوز.
+آخر تعديل: 2026-11-25. تنطبق على واعية في أندرويد ولينكس وويندوز.
 
 ### باختصار
 
 لا ترسل واعية أي شيء عنك إلى أي جهة. لا حساب، ولا إحصاءات استخدام، ولا إعلانات، ولا تقارير أعطال. والخادم الوحيد لنا الذي
 يتصل به التطبيق هو موقعه، ليعرف هل صدر إصدار أحدث (أدناه)، ولا يحمل الطلب شيئًا عنك أو عن جهازك.
 مُرشِّح الصوت وتغطية الشاشة وسائر الميزات تعمل على جهازك، وما تسمعه وتراه يبقى في ذاكرة جهازك ولا يُحفظ.
+
+ولا يخرج من الجهاز شيء إلا باختيارك في حالتين: الرد على المكالمات برسالة SMS أثناء الصلاة (اختياري، في نسخة الموقع وGitHub
+فقط) يرسل من هاتفك رسالة إلى من يتصل بك، وتقرير التشخيص أو الملاحظات إن شاركتها بنفسك تذهب إلى من تختاره.
 
 ### ما يتصل بالإنترنت
 
@@ -134,7 +159,15 @@ Changes to this policy are made in this file in the public repository, where the
   (نحو كيلومترين، لا الموقع الدقيق أبدًا) مرة واحدة في تلك اللحظة، عن طريق أندرويد نفسه، ولا تحفظ إلا المكان الناتج (في
   المغرب أقرب مدينة من قائمة وزارة الأوقاف، وفي غيره الإحداثيات). لا يُرسل إلى أي جهة، ولا يُقرأ مرة أخرى في الخلفية؛ اضغطه
   من جديد بعد السفر.
-- تقرير التشخيص وملاحظات «اكتشاف خاطئ»: نص في مساحة التطبيق الخاصة، لا يخرج من الجهاز إلا إذا شاركته بنفسك.
+- تقرير التشخيص وملاحظات «اكتشاف خاطئ»: نص في مساحة التطبيق الخاصة، لا يخرج من الجهاز إلا إذا شاركته بنفسك. يذكر التقرير
+  صانع الهاتف وطرازه وإصدار أندرويد والمعالج والذاكرة، ولغة التطبيق ومستخدم الجهاز (رجل أو امرأة إن اخترت)، وإعدادات واعية
+  وحالتها، وآخر مرات توقف الترشيح أو واعية وسببها، وأسماء التطبيقات التي لها جلسة صوت أو التي اخترت سماعها دون ترشيح.
+  اقرأه قبل مشاركته، فهو يُعرض عليك كاملًا. والملاحظة تحفظ الوقت والتطبيق الظاهر والإعدادات في تلك اللحظة.
+- في أندرويد، الرد على المكالمات برسالة SMS أثناء الصلاة (نسخة الموقع وGitHub فقط، ولا يعمل إلا إن فعّلته): رقم المكالمة
+  أثناء رنينها، والأرقام التي رُدّ عليها في الصلاة الحالية (لتصلها رسالة واحدة)، وقائمة بآخر 20 ردًّا (الوقت والرقم) تعرضها
+  عليك صفحة الصلاة. لا يُقرأ سجل مكالماتك ولا يُحفظ منه شيء.
+- في أندرويد، الإعداد لمرة واحدة: مفتاح الاقتران الذي أنشأته واعية مع «تصحيح الأخطاء اللاسلكي» (يظهر في قائمة الأجهزة
+  المقترنة في أندرويد باسم "waaiya@phone")، في مساحة لا تُنسخ احتياطيًا أبدًا.
 - في أندرويد: النسخ الاحتياطي السحابي والنقل بين الأجهزة معطَّلان لبيانات واعية.
 
 حذف واعية يحذف ذلك كله في أندرويد ولينكس. أما في ويندوز فالإعدادات والملاحظات وملفات المرشّح الصغيرة (مستويات صوت
@@ -145,10 +178,28 @@ Changes to this policy are made in this file in the public repository, where the
 
 تسجيل الصوت وسؤال مشاركة الشاشة لأن أندرويد لا يعطي صوت التطبيقات الأخرى إلا بهما؛ يُرشَّح الصوت في الذاكرة ولا يُسجَّل.
 الإشعارات لإظهار أن الترشيح يعمل وإيقافه. الظهور فوق التطبيقات لرسم الأغطية. إذنا `DUMP` و`WRITE_SECURE_SETTINGS`
-تمنحهما أنت مرة واحدة في الإعداد لإسكات الصوت الأصلي. الإنترنت لفتح الروابط والبحث عن إصدار جديد فقط. إذن «تثبيت التطبيقات غير المعروفة» (ليس في نسخ المتاجر) لتسليم
+تمنحهما أنت مرة واحدة في الإعداد لإسكات الصوت الأصلي. الإنترنت لفتح الروابط والبحث عن إصدار جديد فقط. تعديل إعدادات الصوت لإسكات
+الصوت الأصلي للتطبيقات المرشَّحة (أثر صوتي يُزال عند توقف الترشيح). قائمة التطبيقات المثبتة ذات الأيقونة لتسمية التطبيق
+الذي لا يمكن ترشيح صوته، ولتختار التطبيقات في «تطبيقات تُسمع دون ترشيح» و«تطبيقات دون تغطية»، ولا تخرج القائمة من الهاتف.
+التشغيل عند الإقلاع لإعادة ضبط منبّهات الصلاة ومدة انتظار الحماية بعد إعادة تشغيل الهاتف. والانتقال من التطبيق القديم
+(org.islamicmute.app، الإصدار 0.2.14 وما قبله) لنقل إعداداتك منه وعرض إزالته، ويطلب أندرويد تأكيدك. إذن «تثبيت التطبيقات غير المعروفة» (ليس في نسخ المتاجر) لتسليم
 التحديث المنزَّل إلى مثبّت أندرويد، الذي يطلب تأكيدك دائمًا. إذن «عدم الإزعاج» والمنبّهات
 وإعدادات النظام فقط إن فعّلت أدوات الصلاة. الموقع التقريبي فقط إن ضغطت «استخدم موقعي» لأوقات الصلاة، لمعرفة المكان مرة
 واحدة في تلك اللحظة، لا الموقع الدقيق ولا في الخلفية.
+
+قراءة حالة الهاتف وسجل المكالمات وإرسال الرسائل (نسخة الموقع وGitHub فقط، لا نسخة Google Play، ويُطلب كل منها حين تفعّل الرد
+على المكالمات برسالة SMS أثناء الصلاة): لا يعطي أندرويد رقم المكالمة الواردة إلا لتطبيق له إذن سجل المكالمات، وتستعمله
+واعية لإرسال رسالة واحدة إلى من يتصل أثناء الصلاة. لا يُقرأ سجل المكالمات.
+
+الإعداد لمرة واحدة يمنح الإذنين `DUMP` و`WRITE_SECURE_SETTINGS` عبر «تصحيح الأخطاء اللاسلكي» في أندرويد (لا تتصل واعية
+إلا بالهاتف نفسه، 127.0.0.1) أو عبر تطبيق Shizuku المستقل إن استعملته. وفي الهواتف التي ترفض منح الإذنين، يقوم بعملهما
+مساعد صغير لواعية يُشغَّل بالطريقة نفسها بصلاحيات واجهة التصحيح في أندرويد، ولا يتحدث إلا مع واعية على الهاتف.
+
+مفتاح «حماية مشاركة الشاشة» في أندرويد (أندرويد 15 وما بعده، في خيارات المطوّرين): يخفي أندرويد نص الإشعارات أثناء
+التقاط الشاشة، والترشيح يُعدّ التقاطًا. ترفع واعية هذه الحماية أثناء الترشيح فقط: حين تفعّل «نص الإشعارات»، وفي الهواتف
+التي يسأل فيها أندرويد قبل كل تشغيل (مثل شاومي وأوبو)، وإلا أوقف أندرويد الترشيح عند كل قفل للشاشة. وتعيدها حين يتوقف
+الترشيح، أو في المرة التالية التي تعمل فيها واعية إن أُوقفت بالقوة. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت
+نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. والقيمة التي ضبطتها بيدك لا تُغيَّر أبدًا.
 
 ### «جرّبها على صوتك» في الموقع
 
@@ -160,17 +211,27 @@ Changes to this policy are made in this file in the public repository, where the
   o2switch بصيغة مشفّرة تتغير كل يوم) ومجموعها في اليوم، لا أكثر. وتحتفظ جهات الاستضافة بسجلاتها المعتادة (العنوان
   والوقت والصفحة).
 
+### الأطفال
+
+لا تجمع واعية شيئًا من أحد، والأطفال منهم. والرقم السري للوالدين ومدة الانتظار إعدادات محلية لا تُبلَّغ إلى أحد.
+
 ### التسجيل في اختبار Google Play على الموقع
 
-إن سجّلت في waaiya.mssid.org/test/ لتختبر واعية على Google Play، يُرسَل العنوان الذي تكتبه، واسمك إن ذكرته، إلى موقعنا
-(لدى o2switch في فرنسا)، ويُحفظ هناك في قائمة خارج الموقع العام، مع الوقت ولغة الصفحة. لا يُستعمل إلا لدعوتك إلى الاختبار:
-يُخبَر المطوّر بكل عنوان عبر بوت في Telegram (فتمرّ الرسالة بـ Telegram)، فيضيفه إلى قائمة المختبرين في Google Play Console،
-حيث تنطبق سياسة الخصوصية لـ Google. لا يُنشر العنوان، ولا يُعطى لأحد، ولا يُستعمل لغير ذلك. وللحدّ من إساءة الاستخدام يعدّ
-النموذج الإرسالات لكل عنوان مدة ساعة (بصيغة مشفّرة تتغير كل يوم). ولحذف عنوانك، استعمل «أزل عنواني من الاختبار» في الصفحة
-نفسها: يُحذف من القائمة ومن الاختبار.
+الانضمام إلى اختبار Google Play يكون عبر مجموعة Google باسم waaiya-testers@googlegroups.com، تديرها Google وفق سياسة
+الخصوصية الخاصة بها: تنضم إليها بحساب Google، ولا يرى عناوين أعضائها إلا المطوّر بصفته مديرها (لا يرى الأعضاء بعضهم، ولا
+يُنشر شيء في المجموعة). ثم يتيح Google Play لأعضاء المجموعة تثبيت النسخة التجريبية.
 
-### التواصل
+وإن تركت عنوانك أيضًا في waaiya.mssid.org/test/ لتصلك الخطوات بالبريد، يُرسَل العنوان، واسمك إن ذكرته، إلى موقعنا (لدى
+o2switch في فرنسا)، ويُحفظ هناك في قائمة خارج الموقع العام، مع الوقت ولغة الصفحة. لا يُستعمل إلا لإرسال الخطوات إليك (من
+support@waaiya.mssid.org، بخادم المطوّر نفسه الذي يقرأ القائمة) ولمساعدتك في هذا الاختبار، ويُخبَر المطوّر بكل عنوان عبر بوت
+في Telegram (فتمرّ الرسالة بـ Telegram). لا يُنشر العنوان، ولا يُعطى لأحد، ولا يُستعمل لغير ذلك. وللحدّ من إساءة الاستخدام
+يعدّ النموذج الإرسالات لكل عنوان مدة ساعة (بصيغة مشفّرة تتغير كل يوم). ولحذف عنوانك، استعمل «الخروج من الاختبار» في الصفحة
+نفسها؛ ولترك الاختبار نفسه، غادر المجموعة والبرنامج في Google Play.
 
-تُجرى التعديلات على هذه السياسة في هذا الملف في المستودع العام حيث يُحفظ تاريخها: <https://github.com/oksyassine/waaiya>.
+### التغييرات والتواصل
+
+يصنع واعية مطوّرها، وهو المسؤول عن هذه السياسة. للأسئلة، أو لطلب يخص بيانات يحفظها الموقع (قائمة التسجيل في الاختبار):
+support@waaiya.mssid.org، أو افتح مسألة (issue) في <https://github.com/oksyassine/waaiya>. تُجرى التعديلات على هذه السياسة
+في هذا الملف في ذلك المستودع العام حيث يُحفظ تاريخها.
 
 </div>

@@ -162,7 +162,7 @@ T = {
         faq=[
             ("هل يبقى الغناء والأناشيد؟", "لا، يُزال الغناء مع الآلات الموسيقية حاليًا، ويبقى الكلام والتلاوة. وللرجال خيار يكتم غناء النساء أيضًا، وهو ما زال في بدايته: يلتقط جزءًا من الغناء في الأغاني الحقيقية، لا كلّه."),
             ("هل يحتاج إلى الإنترنت؟", "لا. التصفية وتمويه الشاشة يعملان دون إنترنت. وحدها ميزة «فتح رابط» تتصل بموقع الرابط الذي تفتحه."),
-            ("ما الإعداد لمرة واحدة؟", "يتيح لواعية كتم الصوت الأصلي للتطبيقات أثناء التصفية. يجري على الهاتف نفسه عبر «تصحيح الأخطاء اللاسلكي» في أربع خطوات، تظهر علامة الإتمام على كل منها تلقائيًا حين تُنجزها. ودونه تعمل واعية، لكنها تسأل قبل كل تشغيل."),
+            ("ما الإعداد لمرة واحدة؟", "يتيح لواعية كتم الصوت الأصلي للتطبيقات أثناء التصفية. يجري على الهاتف نفسه عبر «تصحيح الأخطاء اللاسلكي» في أربع خطوات، تظهر علامة الإتمام على كل منها تلقائيًا حين تُنجزها. وهو ضروري: دونه تُسمع المعازف الأصلية مع الصوت المرشَّح، ويسأل أندرويد قبل كل تشغيل."),
             ("هل يعمل على هاتفي؟", "أندرويد [[10]] أو أحدث. هواتف شاومي وأوبو وريلمي وون بلس لا تسمح للتطبيقات بالاحتفاظ ببعض الأذونات، فيتولّى مساعد واعية المهمة، دون إعداد مخفي تبحث عنه."),
             ("كم التأخير؟", "نحو [[30]] ملّي ثانية، أي أقل من عُشر ثانية، بين الصوت الأصلي وما تسمعه."),
             ("هل يستهلك البطارية؟", "الصوت الأحادي، وهو الافتراضي، يستهلك نحو نصف ما يستهلكه الستيريو. وفي واعية، يعرض «تقرير التشخيص» الاستهلاك في الساعة على هاتفك."),
@@ -295,7 +295,7 @@ T = {
         faq=[
             ("Are singing and nasheeds kept?", "No. For now, singing is removed with the musical instruments, and speech and recitation stay. Men also have an option that mutes women's singing. It is still early: it catches part of the singing in real songs, not all of it."),
             ("Does it need the internet?", "No. Filtering and screen blur work offline. Only the “Open a link” feature contacts the site of the link you open."),
-            ("What is the one-time setup?", "It lets Waaiya silence the original sound of the apps while it filters. It runs on the phone itself through Wireless debugging, in four steps, each checked off automatically as you finish it. Without it Waaiya still works, but asks before each start."),
+            ("What is the one-time setup?", "It lets Waaiya silence the original sound of the apps while it filters. It runs on the phone itself through Wireless debugging, in four steps, each checked off automatically as you finish it. It is needed: without it the original music is heard along with the filtered sound, and Android asks before each start."),
             ("Will it work on my phone?", "Android 10 or newer. Xiaomi, OPPO, realme and OnePlus phones do not let apps keep some permissions, so Waaiya's helper takes over, with no hidden setting to find."),
             ("How much delay?", "About 30 milliseconds, less than a tenth of a second, between the original sound and what you hear."),
             ("Does it drain the battery?", "Mono sound, the default, uses about half of what stereo uses. The Diagnostics report in Waaiya shows the use per hour on your phone."),

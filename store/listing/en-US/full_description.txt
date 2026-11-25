@@ -10,6 +10,6 @@ Waaiya removes musical instruments from everything your phone plays and keeps th
 
 Private by design: the filter and the blur run on the phone. Waaiya makes no internet connection: no account, no analytics, no ads, nothing sent anywhere.
 
-A one-time setup (on the phone, with Android's Wireless debugging) lets Waaiya silence the original sound of the app being filtered. Without it, Waaiya still works but asks before each start.
+A one-time setup (on the phone, with Android's Wireless debugging) is needed: it lets Waaiya silence the original sound of the apps it filters. Without it you hear the original music along with the filtered sound, and Android asks before each start.
 
 Free and open source (AGPL-3.0-or-later): https://github.com/oksyassine/waaiya

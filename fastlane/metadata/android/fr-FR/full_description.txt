@@ -11,6 +11,6 @@ Waaiya retire les instruments de musique de tout ce que joue votre téléphone e
 
 Confidentialité : le filtre et le floutage tournent sur le téléphone et n'envoient rien. Pas de compte, pas de statistiques, pas de publicité. En ligne seulement pour « Ouvrir un lien » (le site du lien) et la recherche quotidienne d'une nouvelle version, que vous pouvez désactiver.
 
-Une configuration unique (sur le téléphone, avec le débogage sans fil d'Android) permet à Waaiya de couper le son d'origine de l'application filtrée. Sans elle, Waaiya fonctionne mais demande avant chaque démarrage.
+Une configuration unique (sur le téléphone, avec le débogage sans fil d'Android) est nécessaire : elle permet à Waaiya de couper le son d'origine des applications filtrées. Sans elle, vous entendez la musique d'origine en plus du son filtré, et Android demande avant chaque démarrage.
 
 Libre (AGPL-3.0-or-later) : https://github.com/oksyassine/waaiya
