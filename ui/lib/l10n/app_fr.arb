@@ -33,6 +33,7 @@
   "lockBody": "Sur ce téléphone, Android demande avant chaque démarrage, puis arrête le filtrage à chaque verrouillage de l’écran. Waaiya peut l’éviter en levant la protection de partage d’écran d’Android pendant le filtrage, et la remet quand le filtrage s’arrête. Tant qu’elle est levée, un autre partage d’écran au même moment (un appel vidéo, par exemple) peut aussi montrer vos notifications. Un changement s’applique au prochain démarrage.",
   "lockYes": "Continuer à filtrer",
   "lockNo": "Arrêter à chaque verrouillage",
+  "sendToSupport": "Envoyer à Waaiya",
   "setupBannerTitle": "Encore une étape",
   "setupBannerBody": "Sans la configuration initiale ci-dessous, vous entendrez la musique et le son filtré en même temps.",
   "step1Title": "Installez Shizuku",

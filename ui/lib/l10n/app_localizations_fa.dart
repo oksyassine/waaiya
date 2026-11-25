@@ -122,6 +122,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get lockNo => 'توقف با هر قفل';
 
   @override
+  String get sendToSupport => 'ارسال به واعية';
+
+  @override
   String get setupBannerTitle => 'یک قدم دیگر';
 
   @override

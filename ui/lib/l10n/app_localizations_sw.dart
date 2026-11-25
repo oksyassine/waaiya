@@ -123,6 +123,9 @@ class AppLocalizationsSw extends AppLocalizations {
   String get lockNo => 'Simama kila inapofungwa';
 
   @override
+  String get sendToSupport => 'Tuma kwa Waaiya';
+
+  @override
   String get setupBannerTitle => 'Hatua moja zaidi';
 
   @override

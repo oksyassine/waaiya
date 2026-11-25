@@ -33,6 +33,7 @@
   "lockBody": "En este teléfono Android pregunta antes de cada inicio y luego detiene el filtrado cada vez que se bloquea la pantalla. Waaiya puede evitarlo levantando la protección de pantalla compartida de Android mientras filtra, y la restablece cuando el filtrado se detiene. Mientras está levantada, otra pantalla compartida al mismo tiempo (una videollamada, por ejemplo) también puede mostrar tus notificaciones. Un cambio se aplica en el próximo inicio.",
   "lockYes": "Seguir filtrando",
   "lockNo": "Detener en cada bloqueo",
+  "sendToSupport": "Enviar a Waaiya",
   "setupBannerTitle": "Un paso más",
   "setupBannerBody": "Sin la configuración inicial de abajo, oirá la música y el sonido filtrado a la vez.",
   "step1Title": "Instale Shizuku",

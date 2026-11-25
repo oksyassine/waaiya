@@ -328,6 +328,12 @@ abstract class AppLocalizations {
   /// **'أوقفه عند كل قفل'**
   String get lockNo;
 
+  /// No description provided for @sendToSupport.
+  ///
+  /// In ar, this message translates to:
+  /// **'أرسل إلى واعية'**
+  String get sendToSupport;
+
   /// Android string setup_banner_title
   ///
   /// In ar, this message translates to:

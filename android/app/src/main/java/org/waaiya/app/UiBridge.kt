@@ -228,6 +228,19 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                         .putExtra(Intent.EXTRA_TEXT, call.argument<String>("text") ?: throw BadArgs("text")), null))
                     result.success(null)
                 }
+                "sendToSupport" -> {
+                    // an email the person sends themselves: nothing leaves the phone unless they do
+                    val text = call.argument<String>("text") ?: throw BadArgs("text")
+                    val subject = call.argument<String>("subject") ?: "Waaiya"
+                    val mail = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")).putExtra(Intent.EXTRA_EMAIL, arrayOf(SUPPORT_EMAIL))
+                        .putExtra(Intent.EXTRA_SUBJECT, subject).putExtra(Intent.EXTRA_TEXT, text)
+                    // no email app: the share sheet, with the address at the top of the text
+                    runCatching { activity.startActivity(mail) }.onFailure {
+                        activity.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain")
+                            .putExtra(Intent.EXTRA_SUBJECT, subject).putExtra(Intent.EXTRA_TEXT, "$SUPPORT_EMAIL\n\n$text"), null))
+                    }
+                    result.success(null)
+                }
                 "openDeveloperOptions" -> {
                     // Developer options, or About phone when they are not turned on yet (step 2 of the guide).
                     // Checked first: with them off, the Developer options page opens and closes at once (no exception).
@@ -598,3 +611,5 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         const val REQ_WSETUP_NOTIFICATIONS = 8
     }
 }
+
+private const val SUPPORT_EMAIL = "support@waaiya.mssid.org"

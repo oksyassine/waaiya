@@ -125,6 +125,9 @@ class AppLocalizationsSo extends AppLocalizations {
   String get lockNo => 'Jooji quful kasta';
 
   @override
+  String get sendToSupport => 'U dir Waaiya';
+
+  @override
   String get setupBannerTitle => 'Hal tallaabo oo kale';
 
   @override

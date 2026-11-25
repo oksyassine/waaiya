@@ -33,6 +33,7 @@
   "lockBody": "Di ponsel ini Android bertanya sebelum setiap mulai, lalu menghentikan pemfilteran setiap kali layar terkunci. Waaiya dapat mencegahnya dengan mencabut perlindungan berbagi layar Android selama memfilter, dan memasangnya kembali saat pemfilteran berhenti. Selama dicabut, berbagi layar lain pada saat yang sama (misalnya panggilan video) juga bisa menampilkan notifikasi Anda. Perubahan berlaku saat mulai berikutnya.",
   "lockYes": "Tetap memfilter",
   "lockNo": "Berhenti tiap terkunci",
+  "sendToSupport": "Kirim ke Waaiya",
   "setupBannerTitle": "Satu langkah lagi",
   "setupBannerBody": "Tanpa penyiapan satu kali di bawah, Anda akan mendengar musik dan suara yang difilter secara bersamaan.",
   "step1Title": "Instal Shizuku",

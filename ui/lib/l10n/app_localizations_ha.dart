@@ -123,6 +123,9 @@ class AppLocalizationsHa extends AppLocalizations {
   String get lockNo => 'Tsaya a kowane kulle';
 
   @override
+  String get sendToSupport => 'Aika wa Waaiya';
+
+  @override
   String get setupBannerTitle => 'Saura mataki ɗaya';
 
   @override

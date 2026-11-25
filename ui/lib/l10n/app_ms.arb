@@ -33,6 +33,7 @@
   "lockBody": "Pada telefon ini Android bertanya sebelum setiap permulaan, kemudian menghentikan penapisan setiap kali skrin dikunci. Waaiya boleh mengelakkannya dengan menarik balik perlindungan perkongsian skrin Android semasa menapis, dan memulihkannya apabila penapisan berhenti. Selagi ia ditarik balik, perkongsian skrin lain pada masa yang sama (panggilan video, misalnya) juga boleh menunjukkan pemberitahuan anda. Perubahan berkuat kuasa pada permulaan seterusnya.",
   "lockYes": "Teruskan menapis",
   "lockNo": "Henti setiap kali dikunci",
+  "sendToSupport": "Hantar kepada Waaiya",
   "setupBannerTitle": "Satu langkah lagi",
   "setupBannerBody": "Tanpa persediaan sekali sahaja di bawah, anda akan mendengar muzik dan bunyi yang ditapis serentak.",
   "step1Title": "Pasang Shizuku",

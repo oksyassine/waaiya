@@ -213,6 +213,9 @@ class MemoryBackend implements WaaiyaBackend {
 
   @override
   Future<void> shareText(String text) async => throw const BackendException('unsupported', 'shareText');
+  @override
+  Future<void> sendToSupport(String subject, String text) async =>
+      throw const BackendException('unsupported', 'sendToSupport');
 
   Future<void> close() => _controller.close();
 }

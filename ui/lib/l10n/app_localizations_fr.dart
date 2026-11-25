@@ -124,6 +124,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lockNo => 'Arrêter à chaque verrouillage';
 
   @override
+  String get sendToSupport => 'Envoyer à Waaiya';
+
+  @override
   String get setupBannerTitle => 'Encore une étape';
 
   @override

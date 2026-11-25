@@ -1196,6 +1196,9 @@ abstract interface class WaaiyaBackend {
   /// Android's share sheet with [text] (the diagnostics report).
   Future<void> shareText(String text);
 
+  /// Android: the person's email app, addressed to Waaiya's support with [subject] and [text] filled in; they send it.
+  Future<void> sendToSupport(String subject, String text);
+
   /// A 0.2.13 feature method, named `<feature>.<name>` (docs/FEATURES_CONTRACT.md), e.g. `worship.times`. Android:
   /// the same MethodChannel method name, routed by UiBridge to the feature's Kotlin object. Throws
   /// [BackendException] `unsupported` where the platform lacks it, `protected` when the waiting period or the PIN

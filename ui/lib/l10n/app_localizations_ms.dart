@@ -123,6 +123,9 @@ class AppLocalizationsMs extends AppLocalizations {
   String get lockNo => 'Henti setiap kali dikunci';
 
   @override
+  String get sendToSupport => 'Hantar kepada Waaiya';
+
+  @override
   String get setupBannerTitle => 'Satu langkah lagi';
 
   @override

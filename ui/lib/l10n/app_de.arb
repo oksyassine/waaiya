@@ -33,6 +33,7 @@
   "lockBody": "Auf diesem Telefon fragt Android vor jedem Start und beendet das Filtern dann bei jeder Bildschirmsperre. Waaiya kann das verhindern, indem es während des Filterns Androids Schutz für Bildschirmfreigaben aufhebt, und stellt ihn wieder her, wenn das Filtern endet. Solange er aufgehoben ist, kann eine gleichzeitige andere Bildschirmfreigabe (etwa ein Videoanruf) auch deine Benachrichtigungen zeigen. Eine Änderung gilt ab dem nächsten Start.",
   "lockYes": "Weiter filtern",
   "lockNo": "Bei jeder Sperre stoppen",
+  "sendToSupport": "An Waaiya senden",
   "setupBannerTitle": "Noch ein Schritt",
   "setupBannerBody": "Ohne die einmalige Einrichtung unten hören Sie die Musik und den gefilterten Ton zusammen.",
   "step1Title": "Shizuku installieren",

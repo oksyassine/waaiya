@@ -122,6 +122,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lockNo => 'Останавливать при блокировке';
 
   @override
+  String get sendToSupport => 'Отправить в Waaiya';
+
+  @override
   String get setupBannerTitle => 'Ещё один шаг';
 
   @override

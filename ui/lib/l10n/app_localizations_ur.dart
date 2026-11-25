@@ -123,6 +123,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get lockNo => 'ہر لاک پر روک دیں';
 
   @override
+  String get sendToSupport => 'واعية کو بھیجیں';
+
+  @override
   String get setupBannerTitle => 'ایک اور قدم';
 
   @override

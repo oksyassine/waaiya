@@ -122,6 +122,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get lockNo => 'প্রতিবার লক হলে থামান';
 
   @override
+  String get sendToSupport => 'Waaiya-কে পাঠান';
+
+  @override
   String get setupBannerTitle => 'আর একটি ধাপ';
 
   @override

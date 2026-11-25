@@ -123,6 +123,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get lockNo => 'Her kilitte durdur';
 
   @override
+  String get sendToSupport => 'Waaiya\'ya gönder';
+
+  @override
   String get setupBannerTitle => 'Bir adım daha';
 
   @override

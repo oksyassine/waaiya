@@ -123,6 +123,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lockNo => 'Stop at each lock';
 
   @override
+  String get sendToSupport => 'Send to Waaiya';
+
+  @override
   String get setupBannerTitle => 'One more step';
 
   @override

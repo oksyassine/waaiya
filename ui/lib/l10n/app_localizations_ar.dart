@@ -122,6 +122,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lockNo => 'أوقفه عند كل قفل';
 
   @override
+  String get sendToSupport => 'أرسل إلى واعية';
+
+  @override
   String get setupBannerTitle => 'بقيت خطوة واحدة';
 
   @override

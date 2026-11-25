@@ -123,6 +123,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get lockNo => 'Stoppen bij elke vergrendeling';
 
   @override
+  String get sendToSupport => 'Naar Waaiya sturen';
+
+  @override
   String get setupBannerTitle => 'Nog één stap';
 
   @override

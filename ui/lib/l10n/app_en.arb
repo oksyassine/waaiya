@@ -33,6 +33,7 @@
   "lockBody": "On this phone Android asks before each start, and then stops filtering at every screen lock. Waaiya can prevent that by lifting Android's screen-share protection while it filters, and puts it back when filtering stops. While it is lifted, another screen share made at the same time (a video call, for example) can also show your notifications. A change applies at the next start.",
   "lockYes": "Keep filtering",
   "lockNo": "Stop at each lock",
+  "sendToSupport": "Send to Waaiya",
   "setupBannerTitle": "One more step",
   "setupBannerBody": "Without the one-time setup below, you will hear the music and the filtered sound together.",
   "step1Title": "Install Shizuku",

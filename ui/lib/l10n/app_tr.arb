@@ -33,6 +33,7 @@
   "lockBody": "Bu telefonda Android her başlatmadan önce sorar ve ardından her ekran kilidinde filtrelemeyi durdurur. Waaiya, filtreleme sırasında Android'in ekran paylaşımı korumasını kaldırarak bunu önleyebilir ve filtreleme durunca korumayı geri koyar. Koruma kaldırıldığı sürece aynı anda yapılan başka bir ekran paylaşımı (örneğin görüntülü arama) da bildirimlerinizi gösterebilir. Değişiklik bir sonraki başlatmada geçerli olur.",
   "lockYes": "Filtrelemeye devam et",
   "lockNo": "Her kilitte durdur",
+  "sendToSupport": "Waaiya'ya gönder",
   "setupBannerTitle": "Bir adım daha",
   "setupBannerBody": "Aşağıdaki tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.",
   "step1Title": "Shizuku'yu yükleyin",

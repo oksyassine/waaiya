@@ -33,6 +33,7 @@
   "lockBody": "Op deze telefoon vraagt Android voor elke start en stopt het filteren dan bij elke schermvergrendeling. Waaiya kan dat voorkomen door tijdens het filteren de bescherming voor scherm delen van Android op te heffen, en zet die terug als het filteren stopt. Zolang die is opgeheven, kan een ander scherm delen op hetzelfde moment (een videogesprek bijvoorbeeld) ook je meldingen tonen. Een wijziging geldt vanaf de volgende start.",
   "lockYes": "Blijven filteren",
   "lockNo": "Stoppen bij elke vergrendeling",
+  "sendToSupport": "Naar Waaiya sturen",
   "setupBannerTitle": "Nog één stap",
   "setupBannerBody": "Zonder de eenmalige installatie hieronder hoor je de muziek en het gefilterde geluid tegelijk.",
   "step1Title": "Shizuku installeren",

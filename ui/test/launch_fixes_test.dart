@@ -6,6 +6,10 @@ import 'package:waaiya_ui/waaiya_ui.dart';
 class _Recording extends MemoryBackend {
   _Recording({super.initial});
   int appSettings = 0;
+  final sent = <String>[];
+
+  @override
+  Future<void> sendToSupport(String subject, String text) async => sent.add(subject);
   final written = <String, Object>{};
 
   @override
@@ -157,5 +161,27 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Keep filtering when the screen locks?'), findsNothing);
     });
+  });
+
+  testWidgets('diagnostics report: "Send to Waaiya" hands it to the email app', (tester) async {
+    final b = await _open(
+        tester,
+        const AppState(
+          language: 'en',
+          platform: 'android',
+          settings: WaaiyaSettings(gender: 'man'),
+          capabilities: Capabilities.android,
+          setup: SetupInfo(originalsMuted: true, consentSkipped: true),
+        ));
+    await tester.tap(find.byKey(const Key('nav_settings')));
+    await tester.pumpAndSettle();
+    final button = find.byKey(const Key('diagnostics'));
+    await tester.ensureVisible(button);
+    await tester.pumpAndSettle();
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('diag_send')));
+    await tester.pumpAndSettle();
+    expect(b.sent, ['Waaiya diagnostics report']);
   });
 }

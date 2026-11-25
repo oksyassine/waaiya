@@ -492,6 +492,15 @@ Future<void> showDiagnostics(BuildContext context) async {
             },
             child: Text(l.linkShare),
           ),
+        if (s.platform == 'android')
+          TextButton(
+            key: const Key('diag_send'),
+            onPressed: () {
+              Navigator.pop(ctx);
+              runAction(context, (b) => b.sendToSupport('Waaiya diagnostics report', report));
+            },
+            child: Text(l.sendToSupport),
+          ),
         FilledButton(
           onPressed: () async {
             await Clipboard.setData(ClipboardData(text: report));

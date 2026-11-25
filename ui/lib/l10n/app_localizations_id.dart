@@ -123,6 +123,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get lockNo => 'Berhenti tiap terkunci';
 
   @override
+  String get sendToSupport => 'Kirim ke Waaiya';
+
+  @override
   String get setupBannerTitle => 'Satu langkah lagi';
 
   @override

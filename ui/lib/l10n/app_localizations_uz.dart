@@ -123,6 +123,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get lockNo => 'Har qulflashda to‘xtatish';
 
   @override
+  String get sendToSupport => 'Waaiyaga yuborish';
+
+  @override
   String get setupBannerTitle => 'Yana bir qadam';
 
   @override

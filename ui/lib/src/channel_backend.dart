@@ -128,4 +128,7 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<void> shareText(String text) => _call<void>('shareText', {'text': text});
+  @override
+  Future<void> sendToSupport(String subject, String text) =>
+      _call<void>('sendToSupport', {'subject': subject, 'text': text});
 }

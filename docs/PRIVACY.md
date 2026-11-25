@@ -38,7 +38,8 @@ them tries one (`linux/test_no_network.sh`, the Linux blur's end-to-end test, an
   elsewhere the coordinates). It is never sent anywhere and never read again in the background; tap it again after
   travelling.
 - The diagnostics report and the "wrong detection" notes: plain text kept in the app's private storage. They leave
-  the device only if you share them yourself, to whoever you choose. The report lists the phone's maker and model,
+  the device only if you share them yourself, to whoever you choose ("Send to Waaiya" opens your email app with
+  the text addressed to support@waaiya.mssid.org; you send it, or not). The report lists the phone's maker and model,
   its Android version, chip and memory, the app's language and who uses the device (man or woman, if chosen),
   Waaiya's settings and state, the last times filtering or Waaiya stopped and why, and the names of the apps that
   have a sound session or that you chose to hear unfiltered. Read it before you share it: it is shown to you in full.
@@ -159,7 +160,8 @@ Changes to this policy are made in this file in that public repository, where th
   (نحو كيلومترين، لا الموقع الدقيق أبدًا) مرة واحدة في تلك اللحظة، عن طريق أندرويد نفسه، ولا تحفظ إلا المكان الناتج (في
   المغرب أقرب مدينة من قائمة وزارة الأوقاف، وفي غيره الإحداثيات). لا يُرسل إلى أي جهة، ولا يُقرأ مرة أخرى في الخلفية؛ اضغطه
   من جديد بعد السفر.
-- تقرير التشخيص وملاحظات «اكتشاف خاطئ»: نص في مساحة التطبيق الخاصة، لا يخرج من الجهاز إلا إذا شاركته بنفسك. يذكر التقرير
+- تقرير التشخيص وملاحظات «اكتشاف خاطئ»: نص في مساحة التطبيق الخاصة، لا يخرج من الجهاز إلا إذا شاركته بنفسك («أرسل إلى واعية» يفتح تطبيق البريد لديك والنص موجَّه إلى
+  support@waaiya.mssid.org، وأنت من يرسله أو لا). يذكر التقرير
   صانع الهاتف وطرازه وإصدار أندرويد والمعالج والذاكرة، ولغة التطبيق ومستخدم الجهاز (رجل أو امرأة إن اخترت)، وإعدادات واعية
   وحالتها، وآخر مرات توقف الترشيح أو واعية وسببها، وأسماء التطبيقات التي لها جلسة صوت أو التي اخترت سماعها دون ترشيح.
   اقرأه قبل مشاركته، فهو يُعرض عليك كاملًا. والملاحظة تحفظ الوقت والتطبيق الظاهر والإعدادات في تلك اللحظة.
