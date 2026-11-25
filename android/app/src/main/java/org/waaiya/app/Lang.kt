@@ -28,8 +28,12 @@ object Lang {
     /** [ALL]'s tag for a locale's language, or null when Waaiya does not have it. */
     fun tagOf(language: String?): String? = (if (language == "in") "id" else language)?.takeIf { it in ALL }
 
-    /** The phone's own language when Waaiya has it, else Arabic (the first launch). */
-    private fun phoneDefault(): String = tagOf(Resources.getSystem().configuration.locales[0].language) ?: AR
+    /** The first of the phone's languages (in the order the person set them) that Waaiya has, else Arabic. */
+    private fun phoneDefault(): String {
+        val list = Resources.getSystem().configuration.locales
+        for (i in 0 until list.size()) tagOf(list[i].language)?.let { return it }
+        return AR
+    }
 
     private fun prefs(ctx: Context) = ctx.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
