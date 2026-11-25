@@ -85,7 +85,7 @@ JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetTilesPerFrame(JNIEnv 
 }
 
 /* Person outlines (segmenter): 0 = rectangles only, skipping the segmenter (slow phones). */
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Vision_nativeSetOutlines(JNIEnv *env, jclass cls, jlong h, jboolean on) {
+JNIEXPORT void JNICALL Java_org_waaiya_app_Vision_nativeSetOutlines(JNIEnv *env, jclass cls, jlong h, jboolean on) {
     (void)env; (void)cls;
     blur *b = (blur *)(intptr_t)h;
     if (!b || !b->v) return;
