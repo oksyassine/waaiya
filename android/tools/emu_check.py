@@ -144,6 +144,23 @@ class Emu:
             f.write(subprocess.run(self.base + ["exec-out", "screencap", "-p"], capture_output=True).stdout)
 
 
+def android_consent(e):
+    """Android's own capture question: its positive button. Android 16 without PROJECT_MEDIA offers "Share one app"
+    (CaptureChoice) and then lists the apps: pick Waaiya, as a user is told to."""
+    e.tap(rid="android:id/button1", seconds=15)
+    if e.wait(text=r"^Choose app to share$", seconds=6) is None:
+        return
+    for _ in range(6):
+        hit = e.find(text=r"^Waaiya$")
+        if hit:
+            e.sh(f"input tap {hit[2][0]} {hit[2][1] - 50}")   # the app's icon, above its label
+            time.sleep(2)
+            return
+        e.sh("input swipe 540 1900 540 900 400")
+        time.sleep(1)
+    raise SystemExit("Waaiya not in Android's app list")
+
+
 def strings(lang):
     """name -> text of the app's strings in one language."""
     folder = "values" if lang == "en" else "values-" + ("in" if lang == "id" else lang)
@@ -292,12 +309,12 @@ def main():
         shot("2_start_dialog")
         e.tap(text=re.escape(ar["start_no_setup_anyway"]))
         # Android's own question, in the phone's language: its positive button
-        e.tap(rid="android:id/button1", seconds=15)
+        android_consent(e)
     else:
         c.check(e.wait(text=re.escape(ar["start_no_setup_title"]), seconds=3) is None, "setup done: no warning dialog")
         if a.setup != "done":
             # helper mode: the phone refused PROJECT_MEDIA too, so Android asks before each capture
-            e.tap(rid="android:id/button1", seconds=15)
+            android_consent(e)
         elif e.find(text=r"^(Start|Start now)$"):
             c.check(False, "setup done: Android should not ask to share the screen")
             e.tap(text=r"^(Start|Start now)$")
@@ -600,7 +617,7 @@ def main():
         c.check(not music_muted(), "simple mode: Stop gives the media sound back")
         # a killed process (crash, swiped away with "force stop"): the next start of the app gives it back
         e.tap(rid="power")
-        e.tap(rid="android:id/button1", seconds=15)
+        android_consent(e)
         c.check(e.wait(text=re.escape(ar["state_on_title"]), seconds=60) is not None and music_muted(),
                 "simple mode: filtering again, media muted")
         e.sh(f"am force-stop {PKG}")
