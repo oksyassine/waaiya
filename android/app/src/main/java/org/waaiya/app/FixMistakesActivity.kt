@@ -48,7 +48,10 @@ class FixMistakesActivity : Activity() {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
         if (Build.VERSION.SDK_INT >= 28) window.attributes = window.attributes.apply {
-            layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            // ALWAYS from Android 11 (SHORT_EDGES is deprecated in 15, where it acts as ALWAYS anyway), as BlurOverlay:
+            // the picker lies on the screenshot pixel for pixel, cutout included
+            layoutInDisplayCutoutMode = if (Build.VERSION.SDK_INT >= 30) WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
+                                        else WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
         val d = resources.displayMetrics.density
         val root = FrameLayout(this)
