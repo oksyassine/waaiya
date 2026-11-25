@@ -16,6 +16,8 @@ Updated 2026-11-25. Project-wide status lives in `docs/STATUS.md`; this file tra
 - Animals covered (`eval/results/blur_animals.md`): detector score 0 where a COCO animal class beats person;
   animal photos with a cover 16.5% -> 15.3%, women covered 95.9% -> 95.8% (report half). Higher person_score
   rejected (0.15: small women 93.6% -> 86.7%). New detector is local only; `models-vision-v1` still has the old one.
+- Slow phones drop person outlines (ScreenBlur: tiles already taking turns and still > 150 ms a frame over 10
+  frames; rectangles for the session). Builds, Android unit tests 135 passed; not yet run on the phone.
 - Phone speed (`eval/results/blur_speed.md`, `bench_vision.c`, MT6769): app default ~950 ms/frame, ~700 with
   tiles taking turns. XNNPACK (-7%) and int8 QDQ (15-35% faster, loses women/men) rejected.
 - Runtime-like crop retrain dropped: `blur_gender_v2.md` diagnostic b shows no crop mismatch.
@@ -32,8 +34,7 @@ Updated 2026-11-25. Project-wide status lives in `docs/STATUS.md`; this file tra
 ## Next
 - User checks the Screen page on the phone; merge PR #45.
 - Push blur-feature (2 commits ahead of origin).
-- Speed: drop outlines automatically on slow phones (~250 ms/frame); detector input shaped like the screen
-  (half of each pass is padding on an upright phone).
+- Check on the phone: diagnostics line says "outlines off (slow)" on the MT6769 and frames drop to ~450 ms.
 - Publish the animal-gated detector (new release `models-vision-v2`, needs the user's OK).
 - `test_vision_engine.py` fails on main's detector too (worst IoU 0.63 on 20 images): predates tiles/nest.
 - Engine-side handling of extra/part detection boxes (the main cap on men clear), or retrain the segmenter.
