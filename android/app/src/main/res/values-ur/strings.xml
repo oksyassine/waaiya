@@ -28,7 +28,7 @@
     <string name="need_record_audio">دوسری ایپس کی آواز وصول کرنے کے لیے واعية کو مائیکروفون کی اجازت درکار ہے۔ یہ کبھی آپ کی آواز ریکارڈ نہیں کرتی۔</string>
 
     <string name="setup_banner_title">ایک اور قدم</string>
-    <string name="setup_banner_body">نیچے دیے گئے ایک بار کے سیٹ اپ کے بغیر آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔</string>
+    <string name="setup_banner_body">ایک بار کے سیٹ اپ کے بغیر آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔</string>
     <string name="step1_title">Shizuku انسٹال کریں</string>
     <string name="step1_body">Play Store سے ایک مفت مددگار ایپ۔</string>
     <string name="step1_action">Shizuku حاصل کریں</string>

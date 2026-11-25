@@ -28,7 +28,7 @@
     <string name="need_record_audio">واعية برای دریافت صدای برنامه‌های دیگر به مجوز میکروفون نیاز دارد. هرگز صدای شما را ضبط نمی‌کند.</string>
 
     <string name="setup_banner_title">یک قدم دیگر</string>
-    <string name="setup_banner_body">بدون راه‌اندازی یک‌بارهٔ زیر، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.</string>
+    <string name="setup_banner_body">بدون راه‌اندازی یک‌باره، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.</string>
     <string name="step1_title">نصب Shizuku</string>
     <string name="step1_body">یک برنامهٔ کمکی رایگان از فروشگاه Play.</string>
     <string name="step1_action">دریافت Shizuku</string>

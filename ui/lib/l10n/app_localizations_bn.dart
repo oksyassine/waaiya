@@ -93,7 +93,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'নিচের এককালীন সেটআপ ছাড়া আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।';
+      'এককালীন সেটআপ ছাড়া আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।';
 
   @override
   String get step1Title => 'Shizuku ইনস্টল করুন';

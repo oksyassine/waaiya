@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya memerlukan izin mikrofon untuk menerima suara aplikasi lain. Waaiya tidak pernah merekam Anda.</string>
 
     <string name="setup_banner_title">Satu langkah lagi</string>
-    <string name="setup_banner_body">Tanpa penyiapan satu kali di bawah, Anda akan mendengar musik dan suara yang difilter secara bersamaan.</string>
+    <string name="setup_banner_body">Tanpa penyiapan satu kali, Anda akan mendengar musik dan suara yang difilter secara bersamaan.</string>
     <string name="step1_title">Instal Shizuku</string>
     <string name="step1_body">Aplikasi bantu gratis dari Play Store.</string>
     <string name="step1_action">Dapatkan Shizuku</string>

@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya waxay u baahan tahay ogolaanshaha makarafoonka si ay u hesho codka barnaamijyada kale. Marnaba ma duubto codkaaga.</string>
 
     <string name="setup_banner_title">Hal tallaabo oo kale</string>
-    <string name="setup_banner_body">Haddii aadan samayn habaynta hal mar ah ee hoose, waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.</string>
+    <string name="setup_banner_body">Haddii aadan samayn habaynta hal mar ah, waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.</string>
     <string name="step1_title">Rakib Shizuku</string>
     <string name="step1_body">Barnaamij caawiye ah oo bilaash ah, oo ku jira Play Store.</string>
     <string name="step1_action">Soo deji Shizuku</string>

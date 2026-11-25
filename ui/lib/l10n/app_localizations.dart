@@ -277,7 +277,7 @@ abstract class AppLocalizations {
   /// Android string setup_banner_body
   ///
   /// In ar, this message translates to:
-  /// **'بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.'**
+  /// **'دون الإعداد لمرة واحدة، ستسمع الموسيقى والصوت المُصفّى معًا.'**
   String get setupBannerBody;
 
   /// Android string step1_title

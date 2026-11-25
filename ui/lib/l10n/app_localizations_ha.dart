@@ -93,7 +93,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Ba tare da saitin sau ɗaya da ke ƙasa ba, za ku ji kiɗan da sautin da aka tace tare.';
+      'Ba tare da saitin sau ɗaya ba, za ku ji kiɗan da sautin da aka tace tare.';
 
   @override
   String get step1Title => 'Shigar da Shizuku';

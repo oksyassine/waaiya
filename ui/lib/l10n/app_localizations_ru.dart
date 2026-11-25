@@ -93,7 +93,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Без однократной настройки ниже вы будете слышать музыку и отфильтрованный звук одновременно.';
+      'Без однократной настройки вы будете слышать музыку и отфильтрованный звук одновременно.';
 
   @override
   String get step1Title => 'Установите Shizuku';

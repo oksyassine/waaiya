@@ -27,7 +27,7 @@
     <string name="need_record_audio">Waaiya needs the microphone permission to receive other apps\' sound. It never records you.</string>
 
     <string name="setup_banner_title">One more step</string>
-    <string name="setup_banner_body">Without the one-time setup below, you will hear the music and the filtered sound together.</string>
+    <string name="setup_banner_body">Without the one-time setup, you will hear the music and the filtered sound together.</string>
     <string name="step1_title">Install Shizuku</string>
     <string name="step1_body">A free helper app from the Play Store.</string>
     <string name="step1_action">Get Shizuku</string>

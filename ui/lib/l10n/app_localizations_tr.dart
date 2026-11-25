@@ -93,7 +93,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Aşağıdaki tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.';
+      'Tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.';
 
   @override
   String get step1Title => 'Shizuku\'yu yükleyin';

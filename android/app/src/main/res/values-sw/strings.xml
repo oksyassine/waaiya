@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya inahitaji ruhusa ya maikrofoni ili kupokea sauti ya programu nyingine. Haikurekodi kamwe.</string>
 
     <string name="setup_banner_title">Hatua moja zaidi</string>
-    <string name="setup_banner_body">Bila usanidi wa mara moja ulio hapa chini, utasikia muziki na sauti iliyochujwa kwa pamoja.</string>
+    <string name="setup_banner_body">Bila usanidi wa mara moja, utasikia muziki na sauti iliyochujwa kwa pamoja.</string>
     <string name="step1_title">Sakinisha Shizuku</string>
     <string name="step1_body">Programu saidizi ya bure kutoka Play Store.</string>
     <string name="step1_action">Pata Shizuku</string>

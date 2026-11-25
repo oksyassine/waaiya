@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya\'nın diğer uygulamaların sesini alabilmesi için mikrofon izni gerekir. Sizi asla kaydetmez.</string>
 
     <string name="setup_banner_title">Bir adım daha</string>
-    <string name="setup_banner_body">Aşağıdaki tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.</string>
+    <string name="setup_banner_body">Tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.</string>
     <string name="step1_title">Shizuku\'yu yükleyin</string>
     <string name="step1_body">Play Store\'dan ücretsiz bir yardımcı uygulama.</string>
     <string name="step1_action">Shizuku\'yu indir</string>

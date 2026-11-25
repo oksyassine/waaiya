@@ -101,7 +101,7 @@
   "@setupBannerTitle": {
     "description": "Android string setup_banner_title"
   },
-  "setupBannerBody": "بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.",
+  "setupBannerBody": "دون الإعداد لمرة واحدة، ستسمع الموسيقى والصوت المُصفّى معًا.",
   "@setupBannerBody": {
     "description": "Android string setup_banner_body"
   },

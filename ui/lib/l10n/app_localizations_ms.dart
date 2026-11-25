@@ -93,7 +93,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Tanpa persediaan sekali sahaja di bawah, anda akan mendengar muzik dan bunyi yang ditapis serentak.';
+      'Tanpa persediaan sekali sahaja, anda akan mendengar muzik dan bunyi yang ditapis serentak.';
 
   @override
   String get step1Title => 'Pasang Shizuku';

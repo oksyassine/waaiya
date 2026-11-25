@@ -94,7 +94,7 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Haddii aadan samayn habaynta hal mar ah ee hoose, waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.';
+      'Haddii aadan samayn habaynta hal mar ah, waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.';
 
   @override
   String get step1Title => 'Rakib Shizuku';

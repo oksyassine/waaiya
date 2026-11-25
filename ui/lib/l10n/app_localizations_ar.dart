@@ -93,7 +93,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.';
+      'دون الإعداد لمرة واحدة، ستسمع الموسيقى والصوت المُصفّى معًا.';
 
   @override
   String get step1Title => 'ثبّت Shizuku';

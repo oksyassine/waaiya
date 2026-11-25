@@ -28,7 +28,7 @@
     <string name="need_record_audio">Boshqa ilovalarning ovozini qabul qilishi uchun Waaiyaga mikrofon ruxsati kerak. U hech qachon sizni yozib olmaydi.</string>
 
     <string name="setup_banner_title">Yana bir qadam</string>
-    <string name="setup_banner_body">Quyidagi bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.</string>
+    <string name="setup_banner_body">Bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.</string>
     <string name="step1_title">Shizuku ilovasini oʻrnating</string>
     <string name="step1_body">Play Marketdagi bepul yordamchi ilova.</string>
     <string name="step1_action">Shizuku ilovasini olish</string>

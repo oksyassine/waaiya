@@ -93,7 +93,7 @@ class AppLocalizationsSw extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Bila usanidi wa mara moja ulio hapa chini, utasikia muziki na sauti iliyochujwa kwa pamoja.';
+      'Bila usanidi wa mara moja, utasikia muziki na sauti iliyochujwa kwa pamoja.';
 
   @override
   String get step1Title => 'Sakinisha Shizuku';

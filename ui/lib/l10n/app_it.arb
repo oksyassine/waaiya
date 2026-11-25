@@ -24,7 +24,7 @@
   "captureHint": "Android chiederà di condividere lo schermo. Niente viene registrato o inviato.",
   "needRecordAudio": "Waaiya ha bisogno dell'autorizzazione del microfono per ricevere l'audio delle altre app. Non ti registra mai.",
   "setupBannerTitle": "Ancora un passaggio",
-  "setupBannerBody": "Senza la configurazione iniziale qui sotto, sentirai la musica e l'audio filtrato insieme.",
+  "setupBannerBody": "Senza la configurazione iniziale, sentirai la musica e l'audio filtrato insieme.",
   "step1Title": "Installa Shizuku",
   "step1Body": "Un'app di supporto gratuita dal Play Store.",
   "step1Action": "Scarica Shizuku",

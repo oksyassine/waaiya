@@ -27,7 +27,7 @@
     <string name="need_record_audio">تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا تسجّل صوتك أبدًا.</string>
 
     <string name="setup_banner_title">بقيت خطوة واحدة</string>
-    <string name="setup_banner_body">بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.</string>
+    <string name="setup_banner_body">دون الإعداد لمرة واحدة، ستسمع الموسيقى والصوت المُصفّى معًا.</string>
     <string name="step1_title">ثبّت Shizuku</string>
     <string name="step1_body">تطبيق مساعد مجاني من متجر Play.</string>
     <string name="step1_action">تحميل Shizuku</string>

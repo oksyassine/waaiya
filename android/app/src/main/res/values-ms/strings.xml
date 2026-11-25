@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya memerlukan kebenaran mikrofon untuk menerima bunyi apl lain. Ia tidak sekali-kali merakam anda.</string>
 
     <string name="setup_banner_title">Satu langkah lagi</string>
-    <string name="setup_banner_body">Tanpa persediaan sekali sahaja di bawah, anda akan mendengar muzik dan bunyi yang ditapis serentak.</string>
+    <string name="setup_banner_body">Tanpa persediaan sekali sahaja, anda akan mendengar muzik dan bunyi yang ditapis serentak.</string>
     <string name="step1_title">Pasang Shizuku</string>
     <string name="step1_body">Apl pembantu percuma daripada Play Store.</string>
     <string name="step1_action">Dapatkan Shizuku</string>

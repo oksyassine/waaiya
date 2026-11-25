@@ -93,7 +93,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'بدون راه‌اندازی یک‌بارهٔ زیر، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.';
+      'بدون راه‌اندازی یک‌باره، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.';
 
   @override
   String get step1Title => 'نصب Shizuku';

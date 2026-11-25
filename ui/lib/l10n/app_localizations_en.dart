@@ -93,7 +93,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Without the one-time setup below, you will hear the music and the filtered sound together.';
+      'Without the one-time setup, you will hear the music and the filtered sound together.';
 
   @override
   String get step1Title => 'Install Shizuku';

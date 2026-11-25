@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya нужно разрешение на микрофон, чтобы получать звук других приложений. Ваш голос никогда не записывается.</string>
 
     <string name="setup_banner_title">Ещё один шаг</string>
-    <string name="setup_banner_body">Без однократной настройки ниже вы будете слышать музыку и отфильтрованный звук одновременно.</string>
+    <string name="setup_banner_body">Без однократной настройки вы будете слышать музыку и отфильтрованный звук одновременно.</string>
     <string name="step1_title">Установите Shizuku</string>
     <string name="step1_body">Бесплатное вспомогательное приложение из Google Play.</string>
     <string name="step1_action">Скачать Shizuku</string>

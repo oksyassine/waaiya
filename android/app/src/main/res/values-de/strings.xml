@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya braucht die Mikrofonberechtigung, um den Ton anderer Apps zu empfangen. Es nimmt Sie nie auf.</string>
 
     <string name="setup_banner_title">Noch ein Schritt</string>
-    <string name="setup_banner_body">Ohne die einmalige Einrichtung unten hören Sie die Musik und den gefilterten Ton zusammen.</string>
+    <string name="setup_banner_body">Ohne die einmalige Einrichtung hören Sie die Musik und den gefilterten Ton zusammen.</string>
     <string name="step1_title">Shizuku installieren</string>
     <string name="step1_body">Eine kostenlose Hilfs-App aus dem Play Store.</string>
     <string name="step1_action">Shizuku holen</string>

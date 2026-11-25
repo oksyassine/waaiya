@@ -28,7 +28,7 @@
     <string name="need_record_audio">অন্য অ্যাপের শব্দ পেতে Waaiya-র মাইক্রোফোনের অনুমতি দরকার। এটি কখনো আপনার কথা রেকর্ড করে না।</string>
 
     <string name="setup_banner_title">আর একটি ধাপ</string>
-    <string name="setup_banner_body">নিচের এককালীন সেটআপ ছাড়া আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।</string>
+    <string name="setup_banner_body">এককালীন সেটআপ ছাড়া আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।</string>
     <string name="step1_title">Shizuku ইনস্টল করুন</string>
     <string name="step1_body">Play Store-এর একটি ফ্রি সহায়ক অ্যাপ।</string>
     <string name="step1_action">Shizuku নিন</string>

@@ -24,7 +24,7 @@
   "captureHint": "Android, ekranınızı paylaşmak için izin isteyecek. Hiçbir şey kaydedilmez veya gönderilmez.",
   "needRecordAudio": "Waaiya'nın diğer uygulamaların sesini alabilmesi için mikrofon izni gerekir. Sizi asla kaydetmez.",
   "setupBannerTitle": "Bir adım daha",
-  "setupBannerBody": "Aşağıdaki tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.",
+  "setupBannerBody": "Tek seferlik kurulum yapılmazsa müziği ve filtrelenmiş sesi birlikte duyarsınız.",
   "step1Title": "Shizuku'yu yükleyin",
   "step1Body": "Play Store'dan ücretsiz bir yardımcı uygulama.",
   "step1Action": "Shizuku'yu indir",

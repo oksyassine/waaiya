@@ -93,7 +93,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Quyidagi bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.';
+      'Bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.';
 
   @override
   String get step1Title => 'Shizuku ilovasini oʻrnating';

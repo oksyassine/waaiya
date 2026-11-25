@@ -28,7 +28,7 @@
     <string name="need_record_audio">Waaiya heeft de toestemming voor de microfoon nodig om het geluid van andere apps te ontvangen. Het neemt jou nooit op.</string>
 
     <string name="setup_banner_title">Nog één stap</string>
-    <string name="setup_banner_body">Zonder de eenmalige installatie hieronder hoor je de muziek en het gefilterde geluid tegelijk.</string>
+    <string name="setup_banner_body">Zonder de eenmalige installatie hoor je de muziek en het gefilterde geluid tegelijk.</string>
     <string name="step1_title">Shizuku installeren</string>
     <string name="step1_body">Een gratis hulpapp uit de Play Store.</string>
     <string name="step1_action">Shizuku downloaden</string>
