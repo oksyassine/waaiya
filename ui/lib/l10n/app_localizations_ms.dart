@@ -1934,4 +1934,61 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk.';
+
+  @override
+  String get notifTextTitle => 'Tunjukkan teks pemberitahuan semasa menapis';
+
+  @override
+  String get notifTextBody =>
+      'Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi. Berkuat kuasa pada permulaan seterusnya.';
+
+  @override
+  String get notifTextNextStart =>
+      'Hentikan dan mulakan semula penapisan supaya perubahan ini berkuat kuasa.';
+
+  @override
+  String get notifTextRefused =>
+      'Telefon ini menolak perubahan. Hidupkan sendiri “Lumpuhkan perlindungan perkongsian skrin” dalam Pilihan pembangun.';
+
+  @override
+  String get notifTextByHand =>
+      'Ditunjukkan: perlindungan Android dimatikan dalam Pilihan pembangun (“Lumpuhkan perlindungan perkongsian skrin”). Ia kekal mati untuk setiap perkongsian skrin sehingga anda menghidupkannya semula di sana.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android menyembunyikan isi pemberitahuan semasa Waaiya menapis. Selepas persediaan sekali, Waaiya menunjukkannya: perlindungan ini diangkat hanya semasa menapis.';
+
+  @override
+  String get notifTextOpenDev => 'Buka Pilihan pembangun';
+
+  @override
+  String get notifTextLockNote =>
+      'Pada telefon ini Android juga menghentikan penapisan apabila skrin dikunci, dan apl lain kekal senyap sehingga anda mengetik Sambung. Persediaan juga menghalangnya.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Pilihan, tanpa persediaan: hidupkan “Lumpuhkan perlindungan perkongsian skrin” dalam Pilihan pembangun. Ia kemudian kekal mati untuk setiap perkongsian skrin, dan sesetengah telefon tiada suis ini.';
+
+  @override
+  String get notifTextForced =>
+      'Hidup: pada telefon ini Android bertanya sebelum setiap permulaan, lalu akan menghentikan penapisan setiap kali skrin dikunci. Waaiya mengangkat perlindungan ini semasa menapis, jadi teks pemberitahuan juga ditunjukkan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi.';
+
+  @override
+  String get oneAppTitle => 'Semasa mula: “Kongsi satu apl”, kemudian Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Apabila Android bertanya apa yang hendak dikongsi, pilih “Kongsi satu apl”, kemudian Waaiya. Semua apl masih ditapis, pemberitahuan kekal boleh dibaca, dan penapisan terus berjalan apabila skrin dikunci. Dengan seluruh skrin, Android menyembunyikan teks pemberitahuan dan menghentikan penapisan setiap kali skrin dikunci.';
+
+  @override
+  String get oneAppPair =>
+      'Supaya Waaiya berfungsi sepenuhnya, gandingkannya sekali dengan Penyahpepijatan wayarles di halaman Persediaan: muzik asal juga akan disenyapkan, dan Android berhenti bertanya pada setiap permulaan.';
+
+  @override
+  String get notifTextOneApp =>
+      'Ditunjukkan apabila anda memilih “Kongsi satu apl”, kemudian Waaiya, semasa mula. Dengan seluruh skrin Android menyembunyikannya; selepas persediaan sekali, Waaiya mengangkatnya semasa menapis.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Hentikan dan mulakan semula penapisan untuk menggunakan kabur: ia memerlukan seluruh skrin, dan penapisan ini bermula dengan pilihan “Kongsi satu apl”.';
 }

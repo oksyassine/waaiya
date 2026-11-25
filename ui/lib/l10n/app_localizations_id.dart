@@ -1933,4 +1933,61 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk.';
+
+  @override
+  String get notifTextTitle => 'Tampilkan teks notifikasi saat memfilter';
+
+  @override
+  String get notifTextBody =>
+      'Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Berbagi layar lain pada saat yang sama juga tidak terlindungi. Berlaku saat mulai berikutnya.';
+
+  @override
+  String get notifTextNextStart =>
+      'Hentikan lalu mulai lagi pemfilteran agar perubahan ini berlaku.';
+
+  @override
+  String get notifTextRefused =>
+      'Ponsel ini menolak perubahan. Aktifkan sendiri “Nonaktifkan perlindungan berbagi layar” di Opsi developer.';
+
+  @override
+  String get notifTextByHand =>
+      'Ditampilkan: perlindungan Android nonaktif di Opsi developer (“Nonaktifkan perlindungan berbagi layar”). Tetap nonaktif untuk setiap berbagi layar sampai Anda mengaktifkannya lagi di sana.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android menyembunyikan isi notifikasi selama Waaiya memfilter. Setelah penyiapan sekali, Waaiya menampilkannya: perlindungan ini dicabut hanya selama memfilter.';
+
+  @override
+  String get notifTextOpenDev => 'Buka Opsi developer';
+
+  @override
+  String get notifTextLockNote =>
+      'Di ponsel ini Android juga menghentikan pemfilteran saat layar terkunci, lalu aplikasi lain tetap senyap sampai Anda mengetuk Lanjutkan. Penyiapan juga mencegahnya.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Opsional, tanpa penyiapan: aktifkan “Nonaktifkan perlindungan berbagi layar” di Opsi developer. Perlindungan lalu tetap nonaktif untuk setiap berbagi layar, dan beberapa ponsel tidak memilikinya.';
+
+  @override
+  String get notifTextForced =>
+      'Aktif: di ponsel ini Android bertanya sebelum setiap mulai, lalu akan menghentikan pemfilteran setiap layar terkunci. Waaiya mencabut perlindungan ini selama memfilter, sehingga teks notifikasi juga tampil. Berbagi layar lain pada saat yang sama juga tidak terlindungi.';
+
+  @override
+  String get oneAppTitle => 'Saat mulai: “Bagikan satu aplikasi”, lalu Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Saat Android menanyakan apa yang dibagikan, pilih “Bagikan satu aplikasi”, lalu Waaiya. Semua aplikasi tetap difilter, notifikasi tetap terbaca, dan pemfilteran terus berjalan saat layar terkunci. Dengan seluruh layar, Android menyembunyikan teks notifikasi dan menghentikan pemfilteran setiap layar terkunci.';
+
+  @override
+  String get oneAppPair =>
+      'Agar Waaiya bekerja penuh, sambungkan sekali dengan Proses debug nirkabel di halaman Penyiapan: musik asli juga akan dibisukan, dan Android berhenti bertanya setiap kali mulai.';
+
+  @override
+  String get notifTextOneApp =>
+      'Tampil saat Anda memilih “Bagikan satu aplikasi”, lalu Waaiya, ketika mulai. Dengan seluruh layar Android menyembunyikannya; setelah penyiapan sekali, Waaiya mencabutnya selama memfilter.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Hentikan lalu mulai lagi pemfilteran untuk memakai blur: blur memerlukan seluruh layar, dan pemfilteran ini dimulai dengan pilihan “Bagikan satu aplikasi”.';
 }

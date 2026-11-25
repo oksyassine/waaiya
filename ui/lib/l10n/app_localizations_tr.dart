@@ -1932,4 +1932,61 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya\'nın oturum açılırken başlamasına izin vermiyor.';
+
+  @override
+  String get notifTextTitle => 'Filtrelerken bildirim metnini göster';
+
+  @override
+  String get notifTextBody =>
+      'Android, bir uygulama tüm ekranı kaydederken bildirimlerin içeriğini gizler ve filtreleme de buna girer. Açık: Waaiya bu korumayı yalnızca filtrelerken kaldırır, böylece bildirimlerinizi okuyabilirsiniz. Aynı anda yapılan diğer ekran paylaşımları da korunmaz. Bir sonraki başlatmada geçerli olur.';
+
+  @override
+  String get notifTextNextStart =>
+      'Bu değişikliğin geçerli olması için filtrelemeyi durdurup yeniden başlatın.';
+
+  @override
+  String get notifTextRefused =>
+      'Bu telefon değişikliği reddetti. Geliştirici seçeneklerinde “Ekran paylaşımı korumalarını devre dışı bırak” ayarını kendiniz açın.';
+
+  @override
+  String get notifTextByHand =>
+      'Gösteriliyor: Android\'in koruması Geliştirici seçeneklerinde kapalı (“Ekran paylaşımı korumalarını devre dışı bırak”). Siz orada yeniden açana kadar her ekran paylaşımında kapalı kalır.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android, Waaiya filtrelerken bildirimlerin içeriğini gizler. Tek seferlik kurulumdan sonra Waaiya bunları gösterir: bu korumayı yalnızca filtrelerken kaldırır.';
+
+  @override
+  String get notifTextOpenDev => 'Geliştirici seçeneklerini aç';
+
+  @override
+  String get notifTextLockNote =>
+      'Bu telefonda Android ekran kilitlendiğinde filtrelemeyi de durdurur ve diğer uygulamalar siz Sürdür\'e dokunana kadar sessiz kalır. Kurulum bunu da önler.';
+
+  @override
+  String get notifTextHandOptional =>
+      'İsteğe bağlı, kurulumsuz: Geliştirici seçeneklerinde “Ekran paylaşımı korumalarını devre dışı bırak” ayarını açın. Bu durumda her ekran paylaşımında kapalı kalır ve bazı telefonlarda yoktur.';
+
+  @override
+  String get notifTextForced =>
+      'Açık: bu telefonda Android her başlatmadan önce sorar ve ardından her ekran kilidinde filtrelemeyi durdururdu. Waaiya filtrelerken bu korumayı kaldırır, böylece bildirim metni de görünür. Aynı anda yapılan diğer ekran paylaşımları da korunmaz.';
+
+  @override
+  String get oneAppTitle => 'Başlatırken: “Tek uygulama paylaş”, sonra Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Android neyi paylaşacağınızı sorduğunda “Tek uygulama paylaş”ı, sonra Waaiya\'yı seçin. Tüm uygulamalar filtrelenmeye devam eder, bildirimler okunabilir kalır ve ekran kilitlendiğinde filtreleme sürer. Tüm ekranla Android bildirim metnini gizler ve her kilitlemede filtrelemeyi durdurur.';
+
+  @override
+  String get oneAppPair =>
+      'Waaiya\'nın tam çalışması için Kurulum sayfasında Kablosuz hata ayıklama ile bir kez eşleştirin: o zaman özgün müzik de susturulur ve Android her başlatmada sormayı bırakır.';
+
+  @override
+  String get notifTextOneApp =>
+      'Başlatırken “Tek uygulama paylaş”ı, sonra Waaiya\'yı seçtiğinizde gösterilir. Tüm ekranla Android bunu gizler; tek seferlik kurulumdan sonra Waaiya bunu filtrelerken kaldırır.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Bulanıklaştırmayı kullanmak için filtrelemeyi durdurup yeniden başlatın: tüm ekrana ihtiyaç duyar ve bu filtreleme “Tek uygulama paylaş” sunularak başladı.';
 }

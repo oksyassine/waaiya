@@ -3357,6 +3357,96 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.'**
   String get engineErrorAutostartPolicy;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار نص الإشعارات أثناء التصفية'**
+  String get notifTextTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُخفي أندرويد محتوى الإشعارات ما دام أي تطبيق يسجّل الشاشة كلها، والتصفية تُعدّ من ذلك. عند التفعيل: ترفع واعية هذه الحماية أثناء التصفية فقط، فتقرأ إشعاراتك. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا. يسري ذلك عند التشغيل التالي.'**
+  String get notifTextBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقف التصفية ثم شغّلها من جديد ليسري هذا التغيير.'**
+  String get notifTextNextStart;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'رفض هذا الهاتف التغيير. فعّل بنفسك «إيقاف ميزات الحماية أثناء مشاركة الشاشة» في خيارات المطور.'**
+  String get notifTextRefused;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'النص ظاهر: حماية أندرويد متوقفة في خيارات المطور («إيقاف ميزات الحماية أثناء مشاركة الشاشة»). وتبقى متوقفة لكل مشاركة شاشة حتى تعيد تفعيلها هناك.'**
+  String get notifTextByHand;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُخفي أندرويد محتوى الإشعارات أثناء تصفية واعية. بعد الإعداد لمرة واحدة تُظهرها واعية: ترفع هذه الحماية أثناء التصفية فقط.'**
+  String get notifTextHowTo;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'فتح خيارات المطور'**
+  String get notifTextOpenDev;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'على هذا الهاتف يوقف أندرويد التصفية أيضًا عند قفل الشاشة، فتبقى التطبيقات الأخرى صامتة حتى تضغط «استئناف». والإعداد يمنع ذلك أيضًا.'**
+  String get notifTextLockNote;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري، دون إعداد: فعّل «إيقاف ميزات الحماية أثناء مشاركة الشاشة» في خيارات المطور. ستبقى الحماية متوقفة حينها لكل مشاركة شاشة، وبعض الهواتف ليس فيها هذا المفتاح.'**
+  String get notifTextHandOptional;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفعّل: على هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف التصفية عند كل قفل للشاشة. لذلك ترفع واعية هذه الحماية أثناء التصفية، فيظهر نص الإشعارات أيضًا. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا.'**
+  String get notifTextForced;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند التشغيل: «مشاركة تطبيق واحد» ثم واعية'**
+  String get oneAppTitle;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'عندما يسألك أندرويد عمّا تشاركه، اختر «مشاركة تطبيق واحد» ثم واعية. تبقى كل التطبيقات مُصفّاة، ويبقى نص الإشعارات مقروءًا، وتستمر التصفية عند قفل الشاشة. أما مع الشاشة كلها فيُخفي أندرويد نص الإشعارات ويوقف التصفية عند كل قفل للشاشة.'**
+  String get oneAppBody;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليعمل واعية كاملًا، اقرنه مرة واحدة عبر «تصحيح الأخطاء اللاسلكي» في صفحة الإعداد: عندها تُكتم الموسيقى الأصلية أيضًا، ويكفّ أندرويد عن السؤال عند كل تشغيل.'**
+  String get oneAppPair;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'يظهر النص عندما تختار «مشاركة تطبيق واحد» ثم واعية عند التشغيل. أما مع الشاشة كلها فيُخفيه أندرويد، وبعد الإعداد لمرة واحدة ترفع واعية ذلك أثناء التصفية.'**
+  String get notifTextOneApp;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقف التصفية ثم شغّلها من جديد لاستعمال التمويه: فهو يحتاج إلى الشاشة كلها، وقد بدأت هذه التصفية مع عرض «مشاركة تطبيق واحد».'**
+  String get blurNeedsRestart;
 }
 
 class _AppLocalizationsDelegate

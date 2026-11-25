@@ -221,5 +221,20 @@
   "tray_open": "Buka Waaiya",
   "tray_quit": "Keluar",
   "engine_error_autostart_blocked": "Windows tidak mengizinkan Waaiya berjalan saat masuk. Aktifkan Waaiya di Pengaturan › Aplikasi › Startup, lalu aktifkan opsi ini lagi.",
-  "engine_error_autostart_policy": "Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk."
+  "engine_error_autostart_policy": "Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk.",
+  "notif_text_title": "Tampilkan teks notifikasi saat memfilter",
+  "notif_text_body": "Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Berbagi layar lain pada saat yang sama juga tidak terlindungi. Berlaku saat mulai berikutnya.",
+  "notif_text_next_start": "Hentikan lalu mulai lagi pemfilteran agar perubahan ini berlaku.",
+  "notif_text_refused": "Ponsel ini menolak perubahan. Aktifkan sendiri “Nonaktifkan perlindungan berbagi layar” di Opsi developer.",
+  "notif_text_by_hand": "Ditampilkan: perlindungan Android nonaktif di Opsi developer (“Nonaktifkan perlindungan berbagi layar”). Tetap nonaktif untuk setiap berbagi layar sampai Anda mengaktifkannya lagi di sana.",
+  "notif_text_how_to": "Android menyembunyikan isi notifikasi selama Waaiya memfilter. Setelah penyiapan sekali, Waaiya menampilkannya: perlindungan ini dicabut hanya selama memfilter.",
+  "notif_text_open_dev": "Buka Opsi developer",
+  "notif_text_lock_note": "Di ponsel ini Android juga menghentikan pemfilteran saat layar terkunci, lalu aplikasi lain tetap senyap sampai Anda mengetuk Lanjutkan. Penyiapan juga mencegahnya.",
+  "notif_text_hand_optional": "Opsional, tanpa penyiapan: aktifkan “Nonaktifkan perlindungan berbagi layar” di Opsi developer. Perlindungan lalu tetap nonaktif untuk setiap berbagi layar, dan beberapa ponsel tidak memilikinya.",
+  "notif_text_forced": "Aktif: di ponsel ini Android bertanya sebelum setiap mulai, lalu akan menghentikan pemfilteran setiap layar terkunci. Waaiya mencabut perlindungan ini selama memfilter, sehingga teks notifikasi juga tampil. Berbagi layar lain pada saat yang sama juga tidak terlindungi.",
+  "one_app_title": "Saat mulai: “Bagikan satu aplikasi”, lalu Waaiya",
+  "one_app_body": "Saat Android menanyakan apa yang dibagikan, pilih “Bagikan satu aplikasi”, lalu Waaiya. Semua aplikasi tetap difilter, notifikasi tetap terbaca, dan pemfilteran terus berjalan saat layar terkunci. Dengan seluruh layar, Android menyembunyikan teks notifikasi dan menghentikan pemfilteran setiap layar terkunci.",
+  "one_app_pair": "Agar Waaiya bekerja penuh, sambungkan sekali dengan Proses debug nirkabel di halaman Penyiapan: musik asli juga akan dibisukan, dan Android berhenti bertanya setiap kali mulai.",
+  "notif_text_one_app": "Tampil saat Anda memilih “Bagikan satu aplikasi”, lalu Waaiya, ketika mulai. Dengan seluruh layar Android menyembunyikannya; setelah penyiapan sekali, Waaiya mencabutnya selama memfilter.",
+  "blur_needs_restart": "Hentikan lalu mulai lagi pemfilteran untuk memakai blur: blur memerlukan seluruh layar, dan pemfilteran ini dimulai dengan pilihan “Bagikan satu aplikasi”."
 }

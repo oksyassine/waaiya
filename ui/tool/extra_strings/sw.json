@@ -221,5 +221,20 @@
   "tray_open": "Fungua Waaiya",
   "tray_quit": "Ondoka",
   "engine_error_autostart_blocked": "Windows hairuhusu Waaiya kuanza unapoingia. Washa Waaiya katika Mipangilio › Programu › Kuanzisha, kisha uwashe chaguo hili tena.",
-  "engine_error_autostart_policy": "Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia."
+  "engine_error_autostart_policy": "Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia.",
+  "notif_text_title": "Onyesha maandishi ya arifa wakati wa kuchuja",
+  "notif_text_body": "Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa. Itatumika utakapoanzisha tena.",
+  "notif_text_next_start": "Simamisha kisha anzisha kuchuja tena ili badiliko hili litumike.",
+  "notif_text_refused": "Simu hii imekataa badiliko. Washa mwenyewe “Zima ulinzi wa kushiriki skrini” katika Chaguo za wasanidi programu.",
+  "notif_text_by_hand": "Inaonyeshwa: ulinzi wa Android umezimwa katika Chaguo za wasanidi programu (“Zima ulinzi wa kushiriki skrini”). Unabaki umezimwa kwa kila ushiriki wa skrini hadi uuwashe tena hapo.",
+  "notif_text_how_to": "Android huficha maudhui ya arifa wakati Waaiya inachuja. Baada ya mpangilio wa mara moja, Waaiya huzionyesha: huondoa ulinzi huu wakati wa kuchuja tu.",
+  "notif_text_open_dev": "Fungua Chaguo za wasanidi programu",
+  "notif_text_lock_note": "Kwenye simu hii Android pia husimamisha kuchuja skrini inapofungwa, na programu nyingine hubaki kimya hadi uguse Endelea. Mpangilio huzuia hilo pia.",
+  "notif_text_hand_optional": "Si lazima, bila mpangilio: washa “Zima ulinzi wa kushiriki skrini” katika Chaguo za wasanidi programu. Kisha utabaki umezimwa kwa kila ushiriki wa skrini, na baadhi ya simu hazina hiki.",
+  "notif_text_forced": "Imewashwa: kwenye simu hii Android huuliza kabla ya kila kuanza, na ingesimamisha kuchuja kila skrini inapofungwa. Waaiya huondoa ulinzi huu wakati wa kuchuja, kwa hiyo maandishi ya arifa pia huonekana. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.",
+  "one_app_title": "Unapoanza: “Shiriki programu moja”, kisha Waaiya",
+  "one_app_body": "Android inapouliza cha kushiriki, chagua “Shiriki programu moja”, kisha Waaiya. Programu zote bado zinachujwa, arifa zinasomeka, na kuchuja kunaendelea skrini inapofungwa. Ukichagua skrini nzima, Android huficha maandishi ya arifa na husimamisha kuchuja kila skrini inapofungwa.",
+  "one_app_pair": "Ili Waaiya ifanye kazi kikamilifu, iunganishe mara moja kwa Utatuzi usiotumia waya kwenye ukurasa wa Mpangilio: muziki asilia pia utanyamazishwa, na Android itaacha kuuliza kila unapoanza.",
+  "notif_text_one_app": "Huonyeshwa unapochagua “Shiriki programu moja”, kisha Waaiya, unapoanza. Kwa skrini nzima Android huyaficha; baada ya mpangilio wa mara moja, Waaiya huondoa hilo wakati wa kuchuja.",
+  "blur_needs_restart": "Simamisha kisha anzisha kuchuja tena ili kutumia ukungu: unahitaji skrini nzima, na kuchuja huku kulianza kukiwa na chaguo la “Shiriki programu moja”."
 }

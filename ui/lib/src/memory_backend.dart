@@ -75,7 +75,8 @@ class MemoryBackend implements WaaiyaBackend {
   Future<void> openShizuku() async => throw const BackendException('unsupported', 'openShizuku');
 
   @override
-  Future<void> openDeveloperOptions() async => throw const BackendException('unsupported', 'openDeveloperOptions');
+  Future<void> openDeveloperOptions({String? highlight}) async =>
+      throw const BackendException('unsupported', 'openDeveloperOptions');
 
   @override
   Future<void> setLanguage(String tag) async {

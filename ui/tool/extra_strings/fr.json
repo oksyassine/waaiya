@@ -221,5 +221,20 @@
   "tray_open": "Ouvrir Waaiya",
   "tray_quit": "Quitter",
   "engine_error_autostart_blocked": "Windows ne laisse pas Waaiya démarrer à l'ouverture de session. Activez Waaiya dans Paramètres › Applications › Démarrage, puis réactivez cette option.",
-  "engine_error_autostart_policy": "Les paramètres de cet ordinateur, choisis par son administrateur, ne permettent pas à Waaiya de démarrer à l'ouverture de session."
+  "engine_error_autostart_policy": "Les paramètres de cet ordinateur, choisis par son administrateur, ne permettent pas à Waaiya de démarrer à l'ouverture de session.",
+  "notif_text_title": "Afficher le texte des notifications pendant le filtrage",
+  "notif_text_body": "Android masque le contenu des notifications tant qu’une application enregistre tout l’écran, et le filtrage en fait partie. Activé : Waaiya lève cette protection seulement pendant qu’il filtre, pour que vous puissiez lire vos notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus. Prend effet au prochain démarrage.",
+  "notif_text_next_start": "Arrêtez puis relancez le filtrage pour appliquer ce changement.",
+  "notif_text_refused": "Ce téléphone a refusé le changement. Activez vous-même « Désactiver les protections de partage d’écran » dans les options pour les développeurs.",
+  "notif_text_by_hand": "Affiché : la protection d’Android est désactivée dans les options pour les développeurs (« Désactiver les protections de partage d’écran »). Elle reste désactivée pour tout partage d’écran jusqu’à ce que vous la réactiviez.",
+  "notif_text_how_to": "Android masque le contenu des notifications pendant que Waaiya filtre. Après la configuration unique, Waaiya les affiche : il lève cette protection seulement pendant le filtrage.",
+  "notif_text_open_dev": "Ouvrir les options pour les développeurs",
+  "notif_text_lock_note": "Sur ce téléphone, Android arrête aussi le filtrage quand l’écran se verrouille, et les autres applications restent alors muettes jusqu’à ce que vous touchiez Reprendre. La configuration évite cela aussi.",
+  "notif_text_hand_optional": "Facultatif, sans configuration : activez « Désactiver les protections de partage d’écran » dans les options pour les développeurs. Elle reste alors désactivée pour tout partage d’écran, et certains téléphones ne l’ont pas.",
+  "notif_text_forced": "Activé : sur ce téléphone, Android demande avant chaque démarrage et arrêterait alors le filtrage à chaque verrouillage de l’écran. Waaiya lève cette protection pendant le filtrage, ce qui affiche aussi le texte des notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus.",
+  "one_app_title": "Au démarrage : « Partager une appli », puis Waaiya",
+  "one_app_body": "Quand Android demande quoi partager, choisissez « Partager une appli », puis Waaiya. Toutes les applications restent filtrées, les notifications restent lisibles et le filtrage continue quand l’écran se verrouille. Avec l’écran entier, Android masque le texte des notifications et arrête le filtrage à chaque verrouillage.",
+  "one_app_pair": "Pour que Waaiya fonctionne pleinement, associez-le une fois avec le débogage sans fil dans la page Configuration : la musique d’origine est alors aussi coupée, et Android ne demande plus à chaque démarrage.",
+  "notif_text_one_app": "Affiché quand vous choisissez « Partager une appli », puis Waaiya, au démarrage. Avec l’écran entier, Android le masque ; après la configuration unique, Waaiya lève cela pendant le filtrage.",
+  "blur_needs_restart": "Arrêtez puis relancez le filtrage pour utiliser le floutage : il a besoin de l’écran entier, et ce filtrage a démarré avec « Partager une appli » proposé."
 }

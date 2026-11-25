@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya imewashwa</string>
     <string name="notif_text">Ala za muziki zinaondolewa kwenye programu zote</string>
     <string name="notif_stop">Simamisha</string>
+    <string name="notif_resume">Endelea</string>
     <!-- Link feature -->
     <string name="link_entry_title">Fungua kiungo</string>
     <string name="link_entry_body">Bandika kiungo cha YouTube, TikTok au Instagram ili ukitazame au ukihifadhi bila muziki.</string>

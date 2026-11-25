@@ -30,6 +30,9 @@ class LicencesActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Android 13+ sends Back here, not to onBackPressed (always so for apps targeting Android 16)
+        if (Build.VERSION.SDK_INT >= 33) onBackInvokedDispatcher.registerOnBackInvokedCallback(
+            android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT) { goBack() }
         // Same edge-to-edge handling as the main screen: our own header, padded below the status bar.
         if (Build.VERSION.SDK_INT >= 30) window.setDecorFitsSystemWindows(false)
         val dp = resources.displayMetrics.density

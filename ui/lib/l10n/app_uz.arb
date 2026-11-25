@@ -537,5 +537,20 @@
   "trayOpen": "Waaiyani ochish",
   "trayQuit": "Chiqish",
   "engineErrorAutostartBlocked": "Windows tizimga kirishda Waaiya ishga tushishiga ruxsat bermayapti. Sozlamalar › Ilovalar › Ishga tushirish bo'limida Waaiya'ni yoqing, so'ng bu parametrni qayta yoqing.",
-  "engineErrorAutostartPolicy": "Bu kompyuterning administrator tanlagan sozlamalari tizimga kirishda Waaiya ishga tushishiga ruxsat bermaydi."
+  "engineErrorAutostartPolicy": "Bu kompyuterning administrator tanlagan sozlamalari tizimga kirishda Waaiya ishga tushishiga ruxsat bermaydi.",
+  "notifTextTitle": "Filtrlash paytida bildirishnoma matnini ko‘rsatish",
+  "notifTextBody": "Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi. Keyingi ishga tushirishda kuchga kiradi.",
+  "notifTextNextStart": "O‘zgarish kuchga kirishi uchun filtrlashni to‘xtatib, qayta ishga tushiring.",
+  "notifTextRefused": "Bu telefon o‘zgarishni rad etdi. Dasturchilar uchun parametrlarda “Ekran ulashish himoyasini o‘chirish”ni o‘zingiz yoqing.",
+  "notifTextByHand": "Ko‘rsatilmoqda: Android himoyasi dasturchilar uchun parametrlarda o‘chirilgan (“Ekran ulashish himoyasini o‘chirish”). U yerda qayta yoqmaguningizcha har qanday ekran ulashishda o‘chiq qoladi.",
+  "notifTextHowTo": "Waaiya filtrlayotganda Android bildirishnomalar matnini yashiradi. Bir martalik sozlashdan keyin Waaiya ularni ko‘rsatadi: bu himoyani faqat filtrlash paytida olib tashlaydi.",
+  "notifTextOpenDev": "Dasturchilar uchun parametrlarni ochish",
+  "notifTextLockNote": "Bu telefonda ekran qulflanganda Android filtrlashni ham to‘xtatadi va siz Davom ettirish tugmasini bosmaguningizcha boshqa ilovalar jim qoladi. Sozlash bunga ham yo‘l qo‘ymaydi.",
+  "notifTextHandOptional": "Ixtiyoriy, sozlashsiz: dasturchilar uchun parametrlarda “Ekran ulashish himoyasini o‘chirish”ni yoqing. Shunda u har qanday ekran ulashishda o‘chiq qoladi, ayrim telefonlarda esa bu yo‘q.",
+  "notifTextForced": "Yoqilgan: bu telefonda Android har bir ishga tushirishdan oldin so‘raydi va keyin har bir ekran qulfida filtrlashni to‘xtatardi. Waaiya filtrlash paytida bu himoyani olib tashlaydi, shuning uchun bildirishnoma matni ham ko‘rinadi. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi.",
+  "oneAppTitle": "Ishga tushirishda: “Bitta ilovani ulashish”, keyin Waaiya",
+  "oneAppBody": "Android nimani ulashishni so‘raganda “Bitta ilovani ulashish”ni, keyin Waaiya’ni tanlang. Barcha ilovalar filtrlanishda davom etadi, bildirishnomalar o‘qiladigan bo‘lib qoladi va ekran qulflanganda filtrlash davom etadi. Butun ekran bilan Android bildirishnoma matnini yashiradi va har bir qulfda filtrlashni to‘xtatadi.",
+  "oneAppPair": "Waaiya to‘liq ishlashi uchun Sozlash sahifasida simsiz nosozliklarni tuzatish orqali uni bir marta ulang: shunda asl musiqa ham o‘chiriladi va Android har safar so‘rashni to‘xtatadi.",
+  "notifTextOneApp": "Ishga tushirishda “Bitta ilovani ulashish”, keyin Waaiya tanlansa ko‘rsatiladi. Butun ekran bilan Android uni yashiradi; bir martalik sozlashdan keyin Waaiya buni filtrlash paytida olib tashlaydi.",
+  "blurNeedsRestart": "Xiralashtirishdan foydalanish uchun filtrlashni to‘xtatib, qayta ishga tushiring: unga butun ekran kerak, bu filtrlash esa “Bitta ilovani ulashish” taklifi bilan boshlangan."
 }

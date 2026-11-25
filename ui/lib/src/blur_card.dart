@@ -18,6 +18,7 @@ import 'widgets.dart';
   final needsSetup = blurNeedsSetup(s);
   final setupText = b.a11yBuild ? l.blurStatusNeedsSetup : l.blurStatusNeedsOverlay;
   if (!s.settings.blurOn) return null;
+  if (s.filter.blurNeedsRestart) return (l.blurNeedsRestart, true);
   if (needsSetup && !b.overlayAllowed) return (setupText, true);
   if (!on) return needsSetup ? (setupText, false) : null;
   return switch (b.state) {

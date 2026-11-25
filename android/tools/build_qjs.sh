@@ -23,7 +23,7 @@ for abi in "$@"; do
     B=$WORK/build-$abi
     "$CM/cmake" -S "$SRC" -B "$B" -G Ninja -DCMAKE_MAKE_PROGRAM="$CM/ninja" \
         -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake" -DANDROID_ABI="$abi" \
-        -DANDROID_PLATFORM=android-29 -DCMAKE_BUILD_TYPE=Release -DQJS_ENABLE_INSTALL=OFF > "$B.log" 2>&1
+        -DANDROID_PLATFORM=android-29 -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON -DCMAKE_BUILD_TYPE=Release -DQJS_ENABLE_INSTALL=OFF > "$B.log" 2>&1
     "$CM/ninja" -C "$B" qjs_exe >> "$B.log" 2>&1 || { tail -20 "$B.log" >&2; exit 1; }
     mkdir -p "$OUT/$abi"
     "$STRIP" -o "$OUT/$abi/libqjs.so" "$B/qjs"

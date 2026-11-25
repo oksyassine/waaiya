@@ -537,5 +537,20 @@
   "trayOpen": "Fur Waaiya",
   "trayQuit": "Ka bax",
   "engineErrorAutostartBlocked": "Windows uma oggolaanayso Waaiya inay bilaabato marka la galo. Ka shid Waaiya Settings › Apps › Startup, kadibna mar kale shid tan.",
-  "engineErrorAutostartPolicy": "Dejinta kombiyuutarkan, oo uu doortay maamulahiisu, uma oggolaanayso Waaiya inay bilaabato marka la galo."
+  "engineErrorAutostartPolicy": "Dejinta kombiyuutarkan, oo uu doortay maamulahiisu, uma oggolaanayso Waaiya inay bilaabato marka la galo.",
+  "notifTextTitle": "Muuji qoraalka ogeysiisyada inta la sifeynayo",
+  "notifTextBody": "Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta app kasta duubayso shaashadda oo dhan, sifeyntuna waa sidaas oo kale. Shidan: Waaiya waxay ilaalintan ka qaadaa oo keliya inta ay sifeyneyso, si aad u akhrido ogeysiisyadaada. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo. Waxay dhaqan galaysaa bilowga xiga.",
+  "notifTextNextStart": "Jooji oo dib u bilow sifeynta si isbeddelkani u dhaqan galo.",
+  "notifTextRefused": "Taleefankani wuu diiday isbeddelka. Adigu shid “Dami ilaalinta wadaagista shaashadda” ee Xulashooyinka horumariyaha.",
+  "notifTextByHand": "Waa la muujinayaa: ilaalinta Android waa ka dansan tahay Xulashooyinka horumariyaha (“Dami ilaalinta wadaagista shaashadda”). Way dansanaanaysaa wadaagis kasta oo shaashadda ilaa aad halkaas dib uga shido.",
+  "notifTextHowTo": "Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta Waaiya sifeyneyso. Diyaarinta hal mar ah kadib, Waaiya ayaa muujisa: ilaalintan waxay ka qaadaa oo keliya inta ay sifeyneyso.",
+  "notifTextOpenDev": "Fur Xulashooyinka horumariyaha",
+  "notifTextLockNote": "Taleefankan Android waxay sidoo kale joojisaa sifeynta marka shaashaddu xirmato, app-yada kalena way aamusnaanayaan ilaa aad taabato Sii wad. Diyaarintu taasna way ka hortagtaa.",
+  "notifTextHandOptional": "Ikhtiyaari, diyaarin la'aan: shid “Dami ilaalinta wadaagista shaashadda” ee Xulashooyinka horumariyaha. Markaas way dansanaanaysaa wadaagis kasta oo shaashadda, taleefannada qaarna ma laha.",
+  "notifTextForced": "Shidan: taleefankan Android waxay weydiisaa bilow kasta ka hor, markaas waxay joojin lahayd sifeynta mar kasta oo shaashaddu xirmato. Waaiya waxay ilaalintan ka qaadaa inta ay sifeyneyso, sidaas darteed qoraalka ogeysiisyaduna wuu muuqdaa. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo.",
+  "oneAppTitle": "Bilowga: “La wadaag hal app”, kadib Waaiya",
+  "oneAppBody": "Marka Android ay weydiiso waxa la wadaagayo, dooro “La wadaag hal app”, kadib Waaiya. App-yada oo dhan weli waa la sifeeyaa, ogeysiisyaduna way akhrinayaan, sifeyntuna way sii socotaa marka shaashaddu xirmato. Shaashadda oo dhan, Android waxay qarisaa qoraalka ogeysiisyada waxayna joojisaa sifeynta mar kasta oo la xiro.",
+  "oneAppPair": "Si Waaiya si buuxda ugu shaqeyso, hal mar ku xir Debugging-ka wireless-ka bogga Diyaarinta: markaas muusigga asalka ah sidoo kale waa la aamusiyaa, Android-na way joojisaa weydiinta bilow kasta.",
+  "notifTextOneApp": "Waa la muujiyaa marka aad dooratid “La wadaag hal app”, kadib Waaiya, bilowga. Shaashadda oo dhan Android way qarisaa; diyaarinta hal mar ah kadib Waaiya waxay ka qaadaa inta ay sifeyneyso.",
+  "blurNeedsRestart": "Jooji oo dib u bilow sifeynta si aad u isticmaasho qarinta: waxay u baahan tahay shaashadda oo dhan, sifeyntanna waxay ku bilaabatay iyadoo la soo bandhigay “La wadaag hal app”."
 }

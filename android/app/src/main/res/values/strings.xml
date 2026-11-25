@@ -84,6 +84,7 @@
     <string name="notif_title">Waaiya is on</string>
     <string name="notif_text">Instruments are removed from all apps</string>
     <string name="notif_stop">Stop</string>
+    <string name="notif_resume">Resume</string>
     <!-- Link feature -->
     <string name="link_entry_title">Open a link</string>
     <string name="link_entry_body">Paste a YouTube, TikTok or Instagram link to watch it or save it without music.</string>
