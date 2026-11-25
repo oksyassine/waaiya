@@ -184,12 +184,27 @@ class LoadMonitor(
      * it), which shortens the delay by one hop without cutting into sound.
      */
     fun takeTrim(silent: Boolean, quiet: Boolean = silent): Boolean {
-        if (trimPending == 0 || !fits(silent, quiet)) return false
+        lastTrimForced = false
+        if (trimPending == 0) return false
+        if (!fits(silent, quiet)) {
+            // continuous sound with no quiet hop (music under speech, a noise floor): after FORCE_AFTER_HOPS any hop is
+            // taken, so the capture never fills up; the caller splices the next hop in with a short crossfade
+            if (waitedHops < FORCE_AFTER_HOPS) return false
+            lastTrimForced = true
+            forcedTrims++
+        }
         trimPending--
         trimmedHops++
         waitedHops = 0
         return true
     }
+
+    /** The last [takeTrim] that returned true skipped a hop with sound in it: splice the next one in. */
+    var lastTrimForced = false
+        private set
+    /** Trims of a hop with sound, after [FORCE_AFTER_HOPS] without a quiet one. */
+    var forcedTrims = 0
+        private set
 
     /**
      * Call for every hop after writing it; [silent] / [quiet] as for [takeTrim]. True: write one more hop of silence
@@ -211,6 +226,8 @@ class LoadMonitor(
     companion object {
         const val MAX_EXTRA_HOPS = 4
         const val QUIET_AFTER_HOPS = 1000  // 10 s without a silent hop: a quiet one will do
+        const val FORCE_AFTER_HOPS = 3000  // 30 s without a quiet one either: any hop, crossfaded (clock drift of
+                                           // 60 ppm gathers under 2 ms in that time, the capture holds 200 ms)
         const val CALM_WINDOWS = 5       // 10 s without a gap
         const val JITTER_WINDOWS = 30    // the slowest hop is remembered for a minute
         const val KEEP_HOPS = 2          // sound always left waiting: at least 20 ms

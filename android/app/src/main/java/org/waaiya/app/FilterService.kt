@@ -71,6 +71,8 @@ class FilterService : Service() {
          *  or pad next to when no silent hop came for a while (LoadMonitor.QUIET_AFTER_HOPS). */
         const val SILENT_PEAK = 1e-4f
         const val QUIET_PEAK = 1e-3f
+        /** The crossfade after a forced trim: 5 ms. */
+        const val SPLICE_FRAMES = 240
         const val EXTRA_CODE = "code"
         const val EXTRA_DATA = "data"
         const val ACTION_STOP = "stop"
@@ -464,6 +466,8 @@ class FilterService : Service() {
         var captureDb = -120
         val inBuf = FloatArray(hop * ch)
         val outBuf = FloatArray(hop * ch)
+        val spliceFrom = FloatArray(hop * ch)  // a skipped hop with sound, faded out into the next (LoadMonitor)
+        var splice = false
         fun report() {
             if (SimpleMode.active) SimpleMode.routed = track.routedDevice
             val buffered = (written - (track.playbackHeadPosition.toLong() and 0xFFFFFFFFL)).coerceAtLeast(0)
@@ -611,7 +615,20 @@ class FilterService : Service() {
                 val outPeak = peakOf(outBuf)
                 val silent = outPeak <= SILENT_PEAK
                 val quiet = outPeak <= QUIET_PEAK
-                if (!monitor.takeTrim(silent, quiet)) {
+                val trimmed = monitor.takeTrim(silent, quiet)
+                if (trimmed && monitor.lastTrimForced) {
+                    // a hop with sound was skipped (no quiet one for 30 s): the next hop fades in from where this
+                    // one began, so the cut is a 5 ms crossfade, not a click
+                    System.arraycopy(outBuf, 0, spliceFrom, 0, outBuf.size); splice = true
+                }
+                if (!trimmed) {
+                    if (splice) {
+                        splice = false
+                        for (f in 0 until SPLICE_FRAMES) {
+                            val w = (f + 1).toFloat() / (SPLICE_FRAMES + 1)
+                            for (c in 0 until ch) { val i = f * ch + c; outBuf[i] = spliceFrom[i] * (1 - w) + outBuf[i] * w }
+                        }
+                    }
                     val w = track.write(outBuf, 0, outBuf.size, AudioTrack.WRITE_BLOCKING)
                     if (w < 0) {
                         // the output is gone (audio server restarted, the phone moved the stream): nothing would be
