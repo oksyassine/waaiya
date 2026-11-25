@@ -85,8 +85,10 @@ object Diagnostics {
                 .format(java.util.Locale.ROOT, h.overallAvgMs, h.peakHopMs, h.lateHops, h.busyHops, h.hops))
             appendLine("Output: dropouts ${h.underruns}, waiting ${h.bufferedMs} ms, buffer ${h.bufferFrames} of " +
                 "${h.bufferCapacityFrames} frames (minimum ${h.minBufferFrames}), grown ${h.extraBufferHops}, " +
-                "given back ${h.trimmedHops} hops, keeping ${h.keepHops * 10} ms")
-            appendLine("Capture: level ${h.captureDb} dB, read errors ${h.readErrors}, model errors ${h.engineErrors}")
+                "given back ${h.trimmedHops} hops, added ${h.paddedHops} hops, keeping ${h.keepHops * 10} ms")
+            appendLine("Capture: level ${h.captureDb} dB, waiting " +
+                (if (h.captureWaitingMs < 0) "unknown" else "${h.captureWaitingMs} ms") +
+                ", read errors ${h.readErrors}, model errors ${h.engineErrors}")
             appendLine("Capture silenced by Android: now ${yes(h.captureSilenced)}, ${h.silencedTimes} time(s), ${h.silencedSec} s in all; " +
                 "sound received ${h.hops / 100} s of ${h.runningSec} s, longest wait ${h.longestGapMs} ms, waits over 3 s: ${h.gaps}")
             appendLine("Women's singing filter: " + if (h.gateShare < 0) "off" else "on, muting %.0f%% of the time".format(java.util.Locale.ROOT, h.gateShare * 100))

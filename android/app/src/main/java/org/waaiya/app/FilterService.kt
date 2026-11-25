@@ -48,6 +48,8 @@ class FilterService : Service() {
         val avgHopMs: Double, val maxHopMs: Double, val overallAvgMs: Double, val peakHopMs: Double,
         val lateShare: Double, val lateHops: Long, val busyHops: Long, val hops: Long,
         val underruns: Int, val extraBufferHops: Int, val trimmedHops: Int, val keepHops: Int, val bufferedMs: Int,
+        /** Hops of silence added (LoadMonitor.takePad); sound waiting in the capture, ms (-1: Android does not say). */
+        val paddedHops: Int, val captureWaitingMs: Int,
         val bufferFrames: Int, val bufferCapacityFrames: Int, val minBufferFrames: Int,
         val readErrors: Int, val captureDb: Int, val engineErrors: Long,
         /** Share of the time the women's-singing filter muted the sound (0..1), -1 when it is off. */
@@ -63,6 +65,12 @@ class FilterService : Service() {
     )
 
     companion object {
+        /** Capture buffer, in hops: room for clock drift to gather before LoadMonitor gives it back. */
+        const val CAPTURE_HOPS = 20
+        /** An output hop under this peak holds no sound; under QUIET_PEAK (-60 dBFS) it is quiet enough to skip
+         *  or pad next to when no silent hop came for a while (LoadMonitor.QUIET_AFTER_HOPS). */
+        const val SILENT_PEAK = 1e-4f
+        const val QUIET_PEAK = 1e-3f
         const val EXTRA_CODE = "code"
         const val EXTRA_DATA = "data"
         const val ACTION_STOP = "stop"
@@ -359,7 +367,8 @@ class FilterService : Service() {
                 .apply { excluded.forEach { excludeUid(it) } }
                 .build()
             return AudioRecord.Builder().setAudioFormat(fmt).setAudioPlaybackCaptureConfig(cap)
-                .setBufferSizeInBytes(maxOf(minIn, hop * frameBytes * 4)).build()
+                // room for clock drift to gather while LoadMonitor gives it back (no delay unless it is used)
+                .setBufferSizeInBytes(maxOf(minIn, hop * frameBytes * CAPTURE_HOPS)).build()
         }
         var excluded = FixMistakes.filterOffUids(this, Settings(this))
         var excludeFailed: Set<Int>? = null
@@ -420,6 +429,10 @@ class FilterService : Service() {
         var policy = Engine.policy(settings)
         var hops = 0
         var written = 0L          // frames written to the track
+        var framesRead = 0L       // frames read from the capture since it started
+        var backlog = -1          // frames captured but not read yet (-1: unknown)
+        val stamp = android.media.AudioTimestamp()
+        val silence = FloatArray(hop * ch)
         var readErrors = 0
         var readErrorsInARow = 0
         var gateOn = 0; var gateSamples = 0
@@ -444,6 +457,8 @@ class FilterService : Service() {
                 peakHopMs = monitor.peakMs, lateShare = monitor.lateShare, lateHops = monitor.lateHops,
                 busyHops = monitor.busyHops, hops = monitor.hops, underruns = monitor.underruns,
                 extraBufferHops = monitor.extraHops, trimmedHops = monitor.trimmedHops, keepHops = monitor.keepHops,
+                paddedHops = monitor.paddedHops,
+                captureWaitingMs = if (backlog < 0) -1 else backlog * 1000 / Engine.SAMPLE_RATE,
                 bufferedMs = (buffered * 1000 / Engine.SAMPLE_RATE).toInt(),
                 bufferFrames = track.bufferSizeInFrames, bufferCapacityFrames = track.bufferCapacityInFrames,
                 minBufferFrames = minOutFrames, readErrors = readErrors, captureDb = captureDb,
@@ -496,6 +511,8 @@ class FilterService : Service() {
                     // the stop log keeps few lines
                     Log.i(TAG, "capture: no sound came for $waited ms")
                 }
+                framesRead += hop
+                backlog = captureBacklog(record, stamp, framesRead)
                 if (++hops % 50 == 0) {  // every 0.5 s: settings changed in the app apply live
                     val sil = Build.VERSION.SDK_INT >= 29 &&
                         runCatching { record.activeRecordingConfiguration?.isClientSilenced }.getOrNull() == true
@@ -547,7 +564,7 @@ class FilterService : Service() {
                         }
                             .onSuccess { r ->
                                 runCatching { record.stop() }; record.release()
-                                record = r; excluded = ex; excludeFailed = null
+                                record = r; excluded = ex; excludeFailed = null; framesRead = 0
                                 captureExcluded = ex; captureExcludeFailed = null
                                 Log.i(TAG, "filter: capture rebuilt, ${ex.size} app(s) left unfiltered")
                             }
@@ -573,7 +590,10 @@ class FilterService : Service() {
                 if (Build.VERSION.SDK_INT >= 31) hint?.let { h -> runCatching { h.reportActualWorkDuration(work.coerceAtLeast(1)) } }
                 muter?.gate?.let { engine.setGate(it) }
                 // delay that is no longer needed is given back by skipping one hop that holds no sound
-                if (!monitor.takeTrim(isSilent(outBuf))) {
+                val outPeak = peakOf(outBuf)
+                val silent = outPeak <= SILENT_PEAK
+                val quiet = outPeak <= QUIET_PEAK
+                if (!monitor.takeTrim(silent, quiet)) {
                     val w = track.write(outBuf, 0, outBuf.size, AudioTrack.WRITE_BLOCKING)
                     if (w < 0) {
                         // the output is gone (audio server restarted, the phone moved the stream): nothing would be
@@ -595,8 +615,13 @@ class FilterService : Service() {
                         continue
                     }
                     written += hop
+                    // too little sound waiting (the capture runs slower than the output): one hop of silence more
+                    if (monitor.takePad(silent, quiet) && track.write(silence, 0, silence.size, AudioTrack.WRITE_BLOCKING) > 0)
+                        written += hop
                 }
-                val fill = (written - (track.playbackHeadPosition.toLong() and 0xFFFFFFFFL)).toInt()
+                // all the sound waiting: in the output, and in the capture (clock drift gathers there)
+                val fill = (written - (track.playbackHeadPosition.toLong() and 0xFFFFFFFFL)).toInt() +
+                    (if (backlog > 0) backlog else 0)
                 when (monitor.hop(work, track.underrunCount, fill)) {
                     LoadMonitor.Action.GO_MONO -> {
                         engine.setMono(true)
@@ -624,8 +649,10 @@ class FilterService : Service() {
                     if (now - lastLog >= 10_000) health?.let { h ->  // for adb logcat and android/tools/emu_check.py
                         lastLog = now
                         Log.i(TAG, ("stats: hop avg %.1f max %.1f ms, late %.0f%%, underruns %d, buffered %d ms, " +
-                            "mono %b, slow %b, capture %d dB, muter %s").format(java.util.Locale.ROOT, h.avgHopMs, h.maxHopMs,
-                            h.lateShare * 100, h.underruns, h.bufferedMs, h.mono, h.tooSlow, h.captureDb, muterStatus))
+                            "capture waiting %d ms, trimmed %d, padded %d, mono %b, slow %b, capture %d dB, muter %s")
+                            .format(java.util.Locale.ROOT, h.avgHopMs, h.maxHopMs, h.lateShare * 100, h.underruns,
+                                h.bufferedMs, h.captureWaitingMs, h.trimmedHops, h.paddedHops, h.mono, h.tooSlow,
+                                h.captureDb, muterStatus))
                     }
                 }
             }
@@ -642,9 +669,20 @@ class FilterService : Service() {
         }
     }
 
-    private fun isSilent(buf: FloatArray): Boolean {
-        for (x in buf) if (x > 1e-4f || x < -1e-4f) return false
-        return true
+    private fun peakOf(buf: FloatArray): Float {
+        var p = 0f
+        for (x in buf) { val a = if (x < 0) -x else x; if (a > p) p = a }
+        return p
+    }
+
+    /** Frames the capture holds that were not read yet, from its timestamp; -1 if Android does not say or the
+     *  numbers make no sense. */
+    private fun captureBacklog(r: AudioRecord, ts: android.media.AudioTimestamp, read: Long): Int {
+        if (runCatching { r.getTimestamp(ts, android.media.AudioTimestamp.TIMEBASE_MONOTONIC) }.getOrNull() != AudioRecord.SUCCESS)
+            return -1
+        val captured = ts.framePosition + (System.nanoTime() - ts.nanoTime) * Engine.SAMPLE_RATE / 1_000_000_000L
+        val b = captured - read
+        return if (b < -Engine.SAMPLE_RATE / 50 || b > Engine.SAMPLE_RATE * 5L) -1 else b.coerceAtLeast(0).toInt()
     }
 
     override fun onDestroy() {

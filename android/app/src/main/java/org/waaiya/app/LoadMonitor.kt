@@ -14,6 +14,14 @@ package org.waaiya.app
  * while gaps keep coming, and after a calm stretch the part of the cushion that this phone's slowest recent hop
  * does not need is given back (silent hops are skipped), which keeps sound and picture together.
  *
+ * Clock drift: the capture runs on the system clock, the output on the audio chip's, and they differ by tens of
+ * parts per million. Paced by the output, the loop then gathers sound in the capture buffer (capture faster) or
+ * empties the output buffer (capture slower), a few milliseconds a minute; after about an hour the capture buffer
+ * overflows or the output runs dry over and over, and the sound cuts. So [hop] is given all the sound waiting (output
+ * buffer and capture backlog), and the delay is held between [keepHops] and one hop more: a silent hop is skipped
+ * when more waits (trim), one hop of silence is added when less does (pad). A trim or pad that found no silent hop
+ * for [QUIET_AFTER_HOPS] takes a merely quiet one.
+ *
  * No Android classes: tested on the JVM (LoadMonitorTest).
  */
 class LoadMonitor(
@@ -42,6 +50,9 @@ class LoadMonitor(
         private set
     /** Silent hops skipped to give back delay. */
     var trimmedHops = 0
+        private set
+    /** Silent hops added because too little sound was waiting (the output would have run dry). */
+    var paddedHops = 0
         private set
     /** Least sound waiting in the output buffer during the last window, in frames (-1: not measured). */
     var minFillFrames = -1
@@ -87,14 +98,16 @@ class LoadMonitor(
     private val calmFills = ArrayDeque<Int>()   // window minimums since the last gap
     private val recentMax = ArrayDeque<Double>() // slowest hop of each of the last windows
     private var trimPending = 0
+    private var padPending = 0
+    private var waitedHops = 0  // hops a pending trim or pad has waited for a silent hop
     /** Hops of sound kept waiting: enough for the slowest hop of the last minute, plus one. */
     var keepHops = KEEP_HOPS
         private set
 
     /**
      * Call once per hop from the audio thread. [workNs]: the time the engine took for this hop.
-     * [underrunCount]: the output track's running total. [fillFrames]: sound waiting in the output buffer right
-     * after this hop was written (-1 if unknown). Returns what to do now.
+     * [underrunCount]: the output track's running total. [fillFrames]: sound waiting right after this hop was
+     * written, in the output buffer and the capture backlog (-1 if unknown). Returns what to do now.
      */
     fun hop(workNs: Long, underrunCount: Int, fillFrames: Int = -1): Action {
         hops++
@@ -136,13 +149,18 @@ class LoadMonitor(
         recentMax.addLast(maxMs)
         if (recentMax.size > JITTER_WINDOWS) recentMax.removeFirst()
         keepHops = maxOf(KEEP_HOPS, Math.ceil(recentMax.max() / hopMs).toInt() + 1)
-        if (newUnderruns > 0 || overloaded || minFillFrames < 0) { calmFills.clear(); trimPending = 0 }
+        if (newUnderruns > 0 || overloaded || minFillFrames < 0) { calmFills.clear(); trimPending = 0; padPending = 0 }
         else {
             calmFills.addLast(minFillFrames)
             if (calmFills.size > CALM_WINDOWS) calmFills.removeFirst()
-            if (calmFills.size == CALM_WINDOWS) {
-                val spare = calmFills.min() / hopFrames - keepHops
-                if (spare > 0) { trimPending = spare; calmFills.clear() }
+            if (calmFills.size == CALM_WINDOWS && trimPending == 0 && padPending == 0) {
+                val least = calmFills.min()
+                val spare = least / hopFrames - keepHops
+                if (spare > 0) { trimPending = spare; waitedHops = 0; calmFills.clear() }
+                else if (least < keepHops * hopFrames) {
+                    padPending = (keepHops * hopFrames - least + hopFrames - 1) / hopFrames
+                    waitedHops = 0; calmFills.clear()
+                }
             }
         }
 
@@ -165,15 +183,34 @@ class LoadMonitor(
      * Call for every hop before writing it; [silent] = the hop holds no sound. True: skip this hop (do not write
      * it), which shortens the delay by one hop without cutting into sound.
      */
-    fun takeTrim(silent: Boolean): Boolean {
-        if (trimPending == 0 || !silent) return false
+    fun takeTrim(silent: Boolean, quiet: Boolean = silent): Boolean {
+        if (trimPending == 0 || !fits(silent, quiet)) return false
         trimPending--
         trimmedHops++
+        waitedHops = 0
         return true
+    }
+
+    /**
+     * Call for every hop after writing it; [silent] / [quiet] as for [takeTrim]. True: write one more hop of silence
+     * after it, which adds one hop of sound waiting.
+     */
+    fun takePad(silent: Boolean, quiet: Boolean = silent): Boolean {
+        if (padPending == 0 || !fits(silent, quiet)) return false
+        padPending--
+        paddedHops++
+        waitedHops = 0
+        return true
+    }
+
+    private fun fits(silent: Boolean, quiet: Boolean): Boolean {
+        waitedHops++
+        return silent || (quiet && waitedHops >= QUIET_AFTER_HOPS)
     }
 
     companion object {
         const val MAX_EXTRA_HOPS = 4
+        const val QUIET_AFTER_HOPS = 1000  // 10 s without a silent hop: a quiet one will do
         const val CALM_WINDOWS = 5       // 10 s without a gap
         const val JITTER_WINDOWS = 30    // the slowest hop is remembered for a minute
         const val KEEP_HOPS = 2          // sound always left waiting: at least 20 ms
