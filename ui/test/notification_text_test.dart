@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waaiya_ui/waaiya_ui.dart';
+import 'package:waaiya_ui/src/widgets.dart';
 
 /// Remembers the settings written, and the Developer options opened, so the test can check what a tap did.
 class _Recording extends MemoryBackend {
@@ -118,11 +119,13 @@ void main() {
   });
 
   testWidgets('Android 16 without the setup: share only Waaiya, and pairing is advised', (tester) async {
-    await _open(tester, const NotificationTextInfo(supported: true, oneAppOffered: true),
-        consentSkipped: false, originalsMuted: false);
+    // simple mode: the originals are muted, but the pairing is still advised
+    await _open(tester, const NotificationTextInfo(supported: true, oneAppOffered: true, pairAdvised: true),
+        consentSkipped: false, originalsMuted: true);
     expect(find.byKey(const Key('one_app_notice')), findsOneWidget);
     expect(find.textContaining('asks what to share'), findsOneWidget);
     expect(find.textContaining('pair it once with Wireless debugging'), findsOneWidget);
+    expect(find.byWidgetPredicate((w) => w is TestId && w.id == 'one_app_setup'), findsOneWidget);
     await tester.ensureVisible(find.byKey(const Key('notification_text')));
     await tester.pumpAndSettle();
     expect(find.textContaining('Shown when you choose “Share one app”'), findsOneWidget);
@@ -132,5 +135,12 @@ void main() {
   testWidgets('no one-app notice where Android does not offer it', (tester) async {
     await _open(tester, const NotificationTextInfo(supported: true), consentSkipped: false);
     expect(find.byKey(const Key('one_app_notice')), findsNothing);
+  });
+
+  testWidgets('paired but Android still asks (phone refused the grant): no pairing advice', (tester) async {
+    await _open(tester, const NotificationTextInfo(supported: true, oneAppOffered: true), consentSkipped: false);
+    expect(find.byKey(const Key('one_app_notice')), findsOneWidget);
+    expect(find.textContaining('pair it once with Wireless debugging'), findsNothing);
+    expect(find.byWidgetPredicate((w) => w is TestId && w.id == 'one_app_setup'), findsNothing);
   });
 }

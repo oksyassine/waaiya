@@ -275,9 +275,9 @@ class OneAppNotice extends StatelessWidget {
     return SectionCard(
       key: const Key('one_app_notice'),
       title: l.oneAppTitle,
-      body: s.setup.originalsMuted ? l.oneAppBody : '${l.oneAppBody}\n\n${l.oneAppPair}',
+      body: s.setup.notificationText.pairAdvised ? '${l.oneAppBody}\n\n${l.oneAppPair}' : l.oneAppBody,
       children: [
-        if (!s.setup.originalsMuted) ...[
+        if (s.setup.notificationText.pairAdvised) ...[
           const SizedBox(height: 12),
           TestId(
             'one_app_setup',

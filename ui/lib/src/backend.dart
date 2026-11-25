@@ -736,6 +736,7 @@ class NotificationTextInfo {
     this.protectionOff = false,
     this.forcedForLock = false,
     this.oneAppOffered = false,
+    this.pairAdvised = false,
     this.shownNow,
     this.refused = false,
   });
@@ -747,6 +748,7 @@ class NotificationTextInfo {
         protectionOff: _bool(m['protectionOff'], false),
         forcedForLock: _bool(m['forcedForLock'], false),
         oneAppOffered: _bool(m['oneAppOffered'], false),
+        pairAdvised: _bool(m['pairAdvised'], false),
         shownNow: m['shownNow'] is bool ? m['shownNow'] as bool : null,
         refused: _bool(m['refused'], false),
       );
@@ -771,6 +773,9 @@ class NotificationTextInfo {
   /// notification text and survives screen lock, with no setup and no Developer options.
   final bool oneAppOffered;
 
+  /// the one-time pairing is not done yet (simple mode included): the one-app notice advises it
+  final bool pairAdvised;
+
   /// Waaiya keeps it lifted while filtering on its own ([forcedForLock] with the right to change it).
   bool get forced => forcedForLock && canWrite && !refused;
 
@@ -790,6 +795,7 @@ class NotificationTextInfo {
         'protectionOff': protectionOff,
         'forcedForLock': forcedForLock,
         'oneAppOffered': oneAppOffered,
+        'pairAdvised': pairAdvised,
         'shownNow': shownNow,
         'refused': refused,
       };

@@ -370,6 +370,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "forcedForLock" to ScreenShareProtection.neededForLock(activity),
                 // Android 16+: the start question also offers "Share one app" (pick Waaiya: text shown, no lock stop)
                 "oneAppOffered" to CaptureChoice.offerOneApp(activity),
+                // the one-app notice advises the one-time pairing until it is done (simple mode included)
+                "pairAdvised" to !activity.setupDone(),
                 "protectionOff" to ScreenShareProtection.protectionOff(activity),
                 "shownNow" to ScreenShareProtection.shownInCapture,
                 "refused" to ScreenShareProtection.refusedByPhone,
