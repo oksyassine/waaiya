@@ -55,6 +55,8 @@ object Diagnostics {
         appendLine("Chip: ${chip()}, ${Runtime.getRuntime().availableProcessors()} cores, " +
             "ABI ${Build.SUPPORTED_ABIS.joinToString("/")}, RAM ${mem.totalMem / (1 shl 20)} MB (free ${mem.availMem / (1 shl 20)} MB)")
         appendLine("Language: ${Lang.current(ctx)}, user: ${s.gender.ifEmpty { "not chosen" }}")
+        appendLine("Report made ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ROOT).format(java.util.Date())}, " +
+            "installed from ${installer(ctx)}")
         appendLine()
 
         appendLine("[Setup]")
@@ -77,6 +79,8 @@ object Diagnostics {
         val h = FilterService.health
         if (h == null) appendLine("Not running: start filtering, play something for 20 seconds, then open this report again.")
         else {
+            appendLine("Numbers from ${(SystemClock.elapsedRealtime() - FilterService.healthAtMs) / 1000} s ago " +
+                "(the filter updates them every 2 s while it runs)")
             appendLine("Model: ${h.model}, delay ${FilterService.delayMs} ms, mono ${yes(h.mono)}" +
                 (if (h.monoForSpeed) " (stereo chosen, phone too slow for it)" else "") + ", too slow ${yes(h.tooSlow)}")
             appendLine("Speed (a hop must take under 10 ms): last 2 s avg %.1f ms, max %.1f ms, late %.0f%%"
@@ -155,6 +159,24 @@ object Diagnostics {
             "accessibility build ${yes(BuildConfig.BLUR_A11Y)}")
         ScreenBlur.coverInfo?.let { appendLine(it) }
         ScreenBlur.stats?.let { appendLine(it) }
+        appendLine()
+
+        // what happened second by second: the minute before a stop survives turning filtering off and on
+        appendLine("[Last minutes]")
+        append(Recent.of(ctx).report(live = FilterService.running))
+    }
+
+    /** Who installed Waaiya: Google Play, a browser or file manager (sideloaded), or "not known". */
+    private fun installer(ctx: Context): String {
+        val pkg = runCatching {
+            if (Build.VERSION.SDK_INT >= 30) ctx.packageManager.getInstallSourceInfo(ctx.packageName).installingPackageName
+            else @Suppress("DEPRECATION") ctx.packageManager.getInstallerPackageName(ctx.packageName)
+        }.getOrNull()
+        return when (pkg) {
+            null -> "not known"
+            "com.android.vending" -> "Google Play"
+            else -> pkg
+        }
     }
 
     /** The chip name where Android tells it (API 31+), else the board name. */
