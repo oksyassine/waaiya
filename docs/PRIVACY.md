@@ -112,7 +112,7 @@ and the program in Google Play.
 
 ## Changes and contact
 
-Waaiya is made by its developer, who is responsible for this policy. Questions, or a request about data the website
+Waaiya is made by Mssid, which is responsible for this app, the website and this policy. Questions, or a request about data the website
 holds (the test sign-up list): support@waaiya.mssid.org, or open an issue at <https://github.com/oksyassine/waaiya>.
 Changes to this policy are made in this file in that public repository, where their history is kept.
 
@@ -230,7 +230,7 @@ support@waaiya.mssid.org، بخادم المطوّر نفسه الذي يقرأ 
 
 ### التغييرات والتواصل
 
-يصنع واعية مطوّرها، وهو المسؤول عن هذه السياسة. للأسئلة، أو لطلب يخص بيانات يحفظها الموقع (قائمة التسجيل في الاختبار):
+واعية من صنع Mssid، وهي المسؤولة عن التطبيق والموقع وهذه السياسة. للأسئلة، أو لطلب يخص بيانات يحفظها الموقع (قائمة التسجيل في الاختبار):
 support@waaiya.mssid.org، أو افتح مسألة (issue) في <https://github.com/oksyassine/waaiya>. تُجرى التعديلات على هذه السياسة
 في هذا الملف في ذلك المستودع العام حيث يُحفظ تاريخها.
 
