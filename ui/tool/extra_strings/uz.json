@@ -223,7 +223,7 @@
   "engine_error_autostart_blocked": "Windows tizimga kirishda Waaiya ishga tushishiga ruxsat bermayapti. Sozlamalar › Ilovalar › Ishga tushirish bo'limida Waaiya'ni yoqing, so'ng bu parametrni qayta yoqing.",
   "engine_error_autostart_policy": "Bu kompyuterning administrator tanlagan sozlamalari tizimga kirishda Waaiya ishga tushishiga ruxsat bermaydi.",
   "notif_text_title": "Filtrlash paytida bildirishnoma matnini ko‘rsatish",
-  "notif_text_body": "Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi. Keyingi ishga tushirishda kuchga kiradi.",
+  "notif_text_body": "Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi.",
   "notif_text_next_start": "O‘zgarish kuchga kirishi uchun filtrlashni to‘xtatib, qayta ishga tushiring.",
   "notif_text_refused": "Bu telefon o‘zgarishni rad etdi. Dasturchilar uchun parametrlarda “Ekran ulashish himoyasini o‘chirish”ni o‘zingiz yoqing.",
   "notif_text_by_hand": "Ko‘rsatilmoqda: Android himoyasi dasturchilar uchun parametrlarda o‘chirilgan (“Ekran ulashish himoyasini o‘chirish”). U yerda qayta yoqmaguningizcha har qanday ekran ulashishda o‘chiq qoladi.",

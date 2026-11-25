@@ -223,7 +223,7 @@
   "engine_error_autostart_blocked": "Windows tidak membenarkan Waaiya bermula semasa log masuk. Hidupkan Waaiya dalam Tetapan › Aplikasi › Permulaan, kemudian hidupkan pilihan ini semula.",
   "engine_error_autostart_policy": "Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk.",
   "notif_text_title": "Tunjukkan teks pemberitahuan semasa menapis",
-  "notif_text_body": "Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi. Berkuat kuasa pada permulaan seterusnya.",
+  "notif_text_body": "Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi.",
   "notif_text_next_start": "Hentikan dan mulakan semula penapisan supaya perubahan ini berkuat kuasa.",
   "notif_text_refused": "Telefon ini menolak perubahan. Hidupkan sendiri “Lumpuhkan perlindungan perkongsian skrin” dalam Pilihan pembangun.",
   "notif_text_by_hand": "Ditunjukkan: perlindungan Android dimatikan dalam Pilihan pembangun (“Lumpuhkan perlindungan perkongsian skrin”). Ia kekal mati untuk setiap perkongsian skrin sehingga anda menghidupkannya semula di sana.",

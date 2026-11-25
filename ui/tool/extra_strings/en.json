@@ -223,7 +223,7 @@
   "engine_error_autostart_blocked": "Windows is not letting Waaiya start at login. Turn Waaiya on in Settings › Apps › Startup, then turn this on again.",
   "engine_error_autostart_policy": "This computer's settings, chosen by its administrator, do not let Waaiya start at login.",
   "notif_text_title": "Show notification text while filtering",
-  "notif_text_body": "Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either. Takes effect at the next start.",
+  "notif_text_body": "Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either.",
   "notif_text_next_start": "Stop and start filtering again for this change to take effect.",
   "notif_text_refused": "This phone refused the change. Turn on “Disable screen share protections” in Developer options yourself.",
   "notif_text_by_hand": "Shown: Android's protection is off in Developer options (“Disable screen share protections”). It stays off for every screen share until you turn it back on there.",

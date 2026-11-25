@@ -223,7 +223,7 @@
   "engine_error_autostart_blocked": "Windows ne laisse pas Waaiya démarrer à l'ouverture de session. Activez Waaiya dans Paramètres › Applications › Démarrage, puis réactivez cette option.",
   "engine_error_autostart_policy": "Les paramètres de cet ordinateur, choisis par son administrateur, ne permettent pas à Waaiya de démarrer à l'ouverture de session.",
   "notif_text_title": "Afficher le texte des notifications pendant le filtrage",
-  "notif_text_body": "Android masque le contenu des notifications tant qu’une application enregistre tout l’écran, et le filtrage en fait partie. Activé : Waaiya lève cette protection seulement pendant qu’il filtre, pour que vous puissiez lire vos notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus. Prend effet au prochain démarrage.",
+  "notif_text_body": "Android masque le contenu des notifications tant qu’une application enregistre tout l’écran, et le filtrage en fait partie. Activé : Waaiya lève cette protection seulement pendant qu’il filtre, pour que vous puissiez lire vos notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus.",
   "notif_text_next_start": "Arrêtez puis relancez le filtrage pour appliquer ce changement.",
   "notif_text_refused": "Ce téléphone a refusé le changement. Activez vous-même « Désactiver les protections de partage d’écran » dans les options pour les développeurs.",
   "notif_text_by_hand": "Affiché : la protection d’Android est désactivée dans les options pour les développeurs (« Désactiver les protections de partage d’écran »). Elle reste désactivée pour tout partage d’écran jusqu’à ce que vous la réactiviez.",
