@@ -1,6 +1,8 @@
 # Check for music before sharing
 
-Status: spec, approved in principle by the owner on 2026-11-25. Part 1 is built first; part 2 follows.
+Status: part 1 shipped in 0.2.18 as a modest check (owner, 2026-11-25: "ship the modest version"): it finds
+music that plays clearly and may miss quiet music under speech ("Shipped" below). A trained detector to reach the
+bar is planned in `docs/MUSIC_DETECTOR_PLAN.md`; part 2 follows.
 Evaluation: see "Results" below and `reports/music_check.md`.
 
 ## Why
@@ -135,6 +137,29 @@ and test vectors for the app's port: `eval/dm_weights.json`, `eval/music_rule_ve
 **Side finding (filter, not this feature):** the default dfn3 filter mutes adhan recorded at a distance (32 of 46
 clips lose more than 20 dB), speech recorded at a distance (21/66) and very quiet speech (25/147). Cause, fixes and
 numbers: `reports/adhan_filter.md`.
+
+## Shipped (0.2.18)
+
+- **Rule: Cg** (the AudioSet tagger on the file itself, no engine run, with the adhan guard). Its tags come from
+  `engine/src/im_music.c`: the file's sound mixed to mono, resampled to 32 kHz (windowed sinc), the singing detector's
+  C front end (`im_detector`, now with the model's own output size) and `models/music/tagger_mn04.onnx`
+  (`models/music/export_tagger.py`, EfficientAT mn04, MIT; in the models-v1 release, `scripts/fetch_deps.sh models`).
+  The decision is `MusicRule.kt`, the same rule as `eval/music_check_eval.py`.
+- **Tuned on what the phone computes:** `models/music/eval_scan.py` runs the same C code (`build/im-music-scan`) over
+  the test set; the thresholds were chosen again on its tune split (music 0.75, vocal 0.0, perc 0.1, tonal_max 0.3,
+  pshare 0.3, spec 0.12). Test split with these tags: **false alarms 0/272 on clean voice (adhan 0/25, recitation
+  0/96), 0/100 on noisy recordings; music found 108/160 = 67.5 %** (songs 38/41, instrumentals 62/74, background
+  8/45); percussion only labelled 21/56 (duff nasheeds are reported as music). Under the bar for music found, so the
+  screen says "Quiet music under speech can be missed".
+- **Tests:** `MusicRuleTest` checks the Kotlin rule against the evaluation (17 test clips with the phone's tags, and
+  the evaluation's own vectors `eval/music_rule_vectors.json`: same window flags, parts and verdicts). Emulators
+  (Android 16 and 11): a song, an adhan, percussion and a recitation file shared through MediaStore give the
+  evaluation's verdicts; "Share without music" makes and shares the copy; "Listen here" opens the player; Arabic
+  right to left checked.
+- **App:** `MusicCheckActivity` (share target "Waaiya: check for music", next to the player), `MusicScan.kt`
+  (MediaExtractor/MediaCodec decode), `MusicTimelineView`, `CleanCopyProvider` (copies in cache/clean, a day at most).
+  The check runs while the screen is open (the share's read access belongs to it); files over 30 minutes are not
+  checked. Works in the Google Play build (no link service needed).
 
 ## Build plan (part 1)
 
