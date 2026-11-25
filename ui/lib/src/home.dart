@@ -145,6 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
             if (s.setup.originalsMuted && s.setup.helperMissing) const HelperMissingBanner(),
             if (s.platform == 'android' && s.setup.notificationText.oneAppOffered) const OneAppNotice(),
+            // once the setup is done: what still makes filtering stop on its own (battery cleaners, no notices)
+            if (s.platform == 'android' && s.setup.originalsMuted &&
+                (s.setup.batteryRestricted || s.setup.notificationsOff))
+              const KeepRunningCard(),
             const FilterOptionsCard(),
             const FilterAppsCard(),
           ],
@@ -267,6 +271,38 @@ class FilterOptionsCard extends StatelessWidget {
 /// off: the question also offers "Share one app". Picking Waaiya keeps every app filtered, shows notification text
 /// and keeps filtering through a screen lock (CaptureChoice.kt). The one-time pairing over Wireless debugging is
 /// still advised for Waaiya to work fully (silencing the originals, no question at each start).
+/// The phone may close Waaiya after a while (battery restrictions, a cleaner such as Xiaomi's), and then filtering
+/// stops; with notifications off Waaiya cannot even say so. Both are lifted on Waaiya's page in Android's settings.
+class KeepRunningCard extends StatelessWidget {
+  const KeepRunningCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final s = WaaiyaScope.of(context).state;
+    final body = [
+      if (s.setup.batteryRestricted) l.keepRunningBattery,
+      if (s.setup.notificationsOff) l.keepRunningNotifications,
+    ].join('\n\n');
+    return SectionCard(
+      key: const Key('keep_running'),
+      title: l.keepRunningTitle,
+      body: body,
+      children: [
+        const SizedBox(height: 12),
+        TestId(
+          'keep_running_open',
+          child: FilledButton.tonal(
+            key: const Key('keep_running_open'),
+            onPressed: () => runAction(context, (b) => b.openAppSettings()),
+            child: Text(l.keepRunningOpen, textAlign: TextAlign.center),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class OneAppNotice extends StatelessWidget {
   const OneAppNotice({super.key});
 

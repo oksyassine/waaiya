@@ -77,4 +77,37 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('"Open a link" works without any setup'), findsOneWidget);
   });
+
+  testWidgets('battery restricted after the setup: a card asks to lift it and opens Waaiya\'s settings', (tester) async {
+    final b = await _open(
+        tester,
+        const AppState(
+          language: 'en',
+          platform: 'android',
+          settings: WaaiyaSettings(gender: 'man'),
+          capabilities: Capabilities.android,
+          setup: SetupInfo(originalsMuted: true, consentSkipped: true, batteryRestricted: true, notificationsOff: true),
+        ));
+    await tester.ensureVisible(find.byKey(const Key('keep_running')));
+    expect(find.textContaining('Unrestricted'), findsOneWidget);
+    expect(find.textContaining('notifications are off'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('keep_running_open')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('keep_running_open')));
+    await tester.pumpAndSettle();
+    expect(b.appSettings, 1);
+  });
+
+  testWidgets('no card when nothing restricts Waaiya, or before the setup', (tester) async {
+    await _open(
+        tester,
+        const AppState(
+          language: 'en',
+          platform: 'android',
+          settings: WaaiyaSettings(gender: 'man'),
+          capabilities: Capabilities.android,
+          setup: SetupInfo(originalsMuted: true, consentSkipped: true),
+        ));
+    expect(find.byKey(const Key('keep_running')), findsNothing);
+  });
 }

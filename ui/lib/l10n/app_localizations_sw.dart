@@ -93,6 +93,20 @@ class AppLocalizationsSw extends AppLocalizations {
       'Fungua mipangilio ya Waaiya ili kuruhusu maikrofoni';
 
   @override
+  String get keepRunningTitle => 'Weka Waaiya ikiendelea';
+
+  @override
+  String get keepRunningBattery =>
+      'Simu hii inaweza kufunga Waaiya baada ya muda ili kuokoa betri, kisha uchujaji husimama. Katika mipangilio ya Waaiya, chini ya Betri, chagua “Bila vikwazo”. Kwenye Xiaomi, Redmi na POCO: “Hakuna vikwazo”, na uwashe pia Kuanza kiotomatiki.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Arifa za Waaiya zimezimwa, kwa hiyo haiwezi kukujulisha uchujaji unaposimama. Ziwashe katika mipangilio ya Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Fungua mipangilio ya Waaiya';
+
+  @override
   String get setupBannerTitle => 'Hatua moja zaidi';
 
   @override

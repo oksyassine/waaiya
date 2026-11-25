@@ -93,6 +93,20 @@ class AppLocalizationsUr extends AppLocalizations {
       'مائیکروفون کی اجازت کے لیے واعية کی ترتیبات کھولیں';
 
   @override
+  String get keepRunningTitle => 'واعية کو چلتا رکھیں';
+
+  @override
+  String get keepRunningBattery =>
+      'یہ فون بیٹری بچانے کے لیے کچھ دیر بعد واعية کو بند کر سکتا ہے، پھر فلٹرنگ رک جاتی ہے۔ واعية کی ترتیبات میں بیٹری کے تحت «غیر محدود» منتخب کریں۔ Xiaomi، Redmi اور POCO پر: «کوئی پابندی نہیں»، اور آٹو اسٹارٹ بھی آن کریں۔';
+
+  @override
+  String get keepRunningNotifications =>
+      'واعية کی اطلاعات بند ہیں، اس لیے فلٹرنگ رکنے پر یہ آپ کو نہیں بتا سکتا۔ انہیں واعية کی ترتیبات میں آن کریں۔';
+
+  @override
+  String get keepRunningOpen => 'واعية کی ترتیبات کھولیں';
+
+  @override
   String get setupBannerTitle => 'ایک اور قدم';
 
   @override

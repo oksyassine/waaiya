@@ -93,6 +93,20 @@ class AppLocalizationsTr extends AppLocalizations {
       'Mikrofona izin vermek için Waaiya ayarlarını aç';
 
   @override
+  String get keepRunningTitle => 'Waaiya çalışmaya devam etsin';
+
+  @override
+  String get keepRunningBattery =>
+      'Bu telefon pil tasarrufu için Waaiya\'yı bir süre sonra kapatabilir ve filtreleme durur. Waaiya ayarlarında, Pil altında “Kısıtlanmamış”ı seçin. Xiaomi, Redmi ve POCO\'da: “Kısıtlama yok”, ayrıca Otomatik başlatmayı da açın.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Waaiya\'nın bildirimleri kapalı, bu yüzden filtreleme durduğunda size haber veremez. Bunları Waaiya ayarlarından açın.';
+
+  @override
+  String get keepRunningOpen => 'Waaiya ayarlarını aç';
+
+  @override
   String get setupBannerTitle => 'Bir adım daha';
 
   @override

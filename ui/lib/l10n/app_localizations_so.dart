@@ -94,6 +94,20 @@ class AppLocalizationsSo extends AppLocalizations {
       'Fur dejinta Waaiya si aad u oggolaato makarafoonka';
 
   @override
+  String get keepRunningTitle => 'Waaiya ha shaqeyso';
+
+  @override
+  String get keepRunningBattery =>
+      'Taleefankani wuxuu xiri karaa Waaiya muddo kadib si uu u keydiyo batariga, kadibna shaandhayntu way joogsataa. Dejinta Waaiya, hoosta Batariga, dooro “Xaddid la\'aan”. Xiaomi, Redmi iyo POCO: “Xaddid ma jiro”, oo sidoo kale shid Bilow-iskiis.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Ogeysiisyada Waaiya way dansan yihiin, markaa kuma ogeysiin karo marka shaandhayntu joogsato. Ka shid dejinta Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Fur dejinta Waaiya';
+
+  @override
   String get setupBannerTitle => 'Hal tallaabo oo kale';
 
   @override

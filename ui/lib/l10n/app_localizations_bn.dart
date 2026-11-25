@@ -92,6 +92,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String get micOpenSettings => 'Waaiya-র সেটিংস খুলে মাইক্রোফোন অনুমতি দিন';
 
   @override
+  String get keepRunningTitle => 'Waaiya চালু রাখুন';
+
+  @override
+  String get keepRunningBattery =>
+      'ব্যাটারি বাঁচাতে এই ফোন কিছুক্ষণ পর Waaiya বন্ধ করে দিতে পারে, তখন ফিল্টারিং থেমে যায়। Waaiya-র সেটিংসে ব্যাটারির অধীনে “সীমাবদ্ধতা নেই” বেছে নিন। Xiaomi, Redmi ও POCO-তে: “কোনো সীমাবদ্ধতা নেই”, আর অটোস্টার্টও চালু করুন।';
+
+  @override
+  String get keepRunningNotifications =>
+      'Waaiya-র বিজ্ঞপ্তি বন্ধ, তাই ফিল্টারিং থামলে এটি আপনাকে জানাতে পারে না। Waaiya-র সেটিংসে সেগুলো চালু করুন।';
+
+  @override
+  String get keepRunningOpen => 'Waaiya-র সেটিংস খুলুন';
+
+  @override
   String get setupBannerTitle => 'আর একটি ধাপ';
 
   @override

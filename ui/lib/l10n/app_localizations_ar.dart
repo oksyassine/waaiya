@@ -92,6 +92,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get micOpenSettings => 'افتح إعدادات واعية واسمح بالميكروفون';
 
   @override
+  String get keepRunningTitle => 'أبقِ واعية تعمل';
+
+  @override
+  String get keepRunningBattery =>
+      'قد يغلق هذا الهاتف واعية بعد مدة لتوفير البطارية، فيتوقف الترشيح. في إعدادات واعية، تحت «البطارية»، اختر «غير مقيَّد». وفي شاومي وريدمي وبوكو: «بلا قيود»، وفعّل «التشغيل التلقائي» أيضًا.';
+
+  @override
+  String get keepRunningNotifications =>
+      'إشعارات واعية متوقفة، فلا تستطيع إخبارك حين يتوقف الترشيح. فعّلها في إعدادات واعية.';
+
+  @override
+  String get keepRunningOpen => 'افتح إعدادات واعية';
+
+  @override
   String get setupBannerTitle => 'بقيت خطوة واحدة';
 
   @override

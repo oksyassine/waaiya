@@ -274,6 +274,30 @@ abstract class AppLocalizations {
   /// **'افتح إعدادات واعية واسمح بالميكروفون'**
   String get micOpenSettings;
 
+  /// No description provided for @keepRunningTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'أبقِ واعية تعمل'**
+  String get keepRunningTitle;
+
+  /// No description provided for @keepRunningBattery.
+  ///
+  /// In ar, this message translates to:
+  /// **'قد يغلق هذا الهاتف واعية بعد مدة لتوفير البطارية، فيتوقف الترشيح. في إعدادات واعية، تحت «البطارية»، اختر «غير مقيَّد». وفي شاومي وريدمي وبوكو: «بلا قيود»، وفعّل «التشغيل التلقائي» أيضًا.'**
+  String get keepRunningBattery;
+
+  /// No description provided for @keepRunningNotifications.
+  ///
+  /// In ar, this message translates to:
+  /// **'إشعارات واعية متوقفة، فلا تستطيع إخبارك حين يتوقف الترشيح. فعّلها في إعدادات واعية.'**
+  String get keepRunningNotifications;
+
+  /// No description provided for @keepRunningOpen.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح إعدادات واعية'**
+  String get keepRunningOpen;
+
   /// Android string setup_banner_title
   ///
   /// In ar, this message translates to:

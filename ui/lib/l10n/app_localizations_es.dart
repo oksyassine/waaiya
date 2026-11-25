@@ -93,6 +93,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'Abrir los ajustes de Waaiya y permitir el micrófono';
 
   @override
+  String get keepRunningTitle => 'Mantener Waaiya en marcha';
+
+  @override
+  String get keepRunningBattery =>
+      'Este teléfono puede cerrar Waaiya al cabo de un rato para ahorrar batería, y entonces el filtrado se detiene. En los ajustes de Waaiya, en Batería, elige «Sin restricciones». En Xiaomi, Redmi y POCO: «Sin restricciones», y activa también el Inicio automático.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Las notificaciones de Waaiya están desactivadas, así que no puede avisarte cuando el filtrado se detiene. Actívalas en los ajustes de Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Abrir los ajustes de Waaiya';
+
+  @override
   String get setupBannerTitle => 'Un paso más';
 
   @override

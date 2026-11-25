@@ -93,6 +93,20 @@ class AppLocalizationsNl extends AppLocalizations {
       'Open de instellingen van Waaiya om de microfoon toe te staan';
 
   @override
+  String get keepRunningTitle => 'Laat Waaiya draaien';
+
+  @override
+  String get keepRunningBattery =>
+      'Deze telefoon kan Waaiya na een tijdje sluiten om batterij te sparen, en dan stopt het filteren. Kies in de instellingen van Waaiya bij Batterij „Onbeperkt”. Op Xiaomi, Redmi en POCO: „Geen beperkingen”, en zet ook Autostart aan.';
+
+  @override
+  String get keepRunningNotifications =>
+      'De meldingen van Waaiya staan uit, dus het kan je niet laten weten wanneer het filteren stopt. Zet ze aan in de instellingen van Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Instellingen van Waaiya openen';
+
+  @override
   String get setupBannerTitle => 'Nog één stap';
 
   @override

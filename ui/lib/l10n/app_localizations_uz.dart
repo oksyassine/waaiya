@@ -93,6 +93,20 @@ class AppLocalizationsUz extends AppLocalizations {
       'Mikrofonga ruxsat berish uchun Waaiya sozlamalarini ochish';
 
   @override
+  String get keepRunningTitle => 'Waaiya ishlab tursin';
+
+  @override
+  String get keepRunningBattery =>
+      'Bu telefon batareyani tejash uchun bir muddatdan keyin Waaiyani yopishi mumkin, shunda filtrlash to‘xtaydi. Waaiya sozlamalarida, Batareya bo‘limida «Cheklanmagan»ni tanlang. Xiaomi, Redmi va POCO’da: «Cheklovlarsiz», hamda Avtoishga tushirishni ham yoqing.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Waaiya bildirishnomalari o‘chiq, shuning uchun filtrlash to‘xtaganda sizga xabar bera olmaydi. Ularni Waaiya sozlamalarida yoqing.';
+
+  @override
+  String get keepRunningOpen => 'Waaiya sozlamalarini ochish';
+
+  @override
   String get setupBannerTitle => 'Yana bir qadam';
 
   @override

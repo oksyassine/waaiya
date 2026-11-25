@@ -356,6 +356,15 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
             },
             "consentSkipped" to activity.hasProjectMediaAppOp(),
+            // the phone may close Waaiya after a while (battery saver, OEM cleaners): the Filter page asks to lift it
+            "batteryRestricted" to runCatching {
+                !activity.getSystemService(android.os.PowerManager::class.java).isIgnoringBatteryOptimizations(activity.packageName) ||
+                    (Build.VERSION.SDK_INT >= 28 &&
+                        activity.getSystemService(android.app.ActivityManager::class.java).isBackgroundRestricted)
+            }.getOrDefault(false),
+            "notificationsOff" to runCatching {
+                !activity.getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled()
+            }.getOrDefault(false),
             // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
             "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
             // Android 15+ hides notification text during any whole-screen capture, filtering included: the Filter

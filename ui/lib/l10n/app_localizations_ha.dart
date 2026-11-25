@@ -93,6 +93,20 @@ class AppLocalizationsHa extends AppLocalizations {
       'Buɗe saitunan Waaiya don ba da izinin makirufo';
 
   @override
+  String get keepRunningTitle => 'Bar Waaiya yana aiki';
+
+  @override
+  String get keepRunningBattery =>
+      'Wannan waya na iya rufe Waaiya bayan ɗan lokaci don adana baturi, sai tacewa ta tsaya. A saitunan Waaiya, ƙarƙashin Baturi, zaɓi “Babu iyaka”. A Xiaomi, Redmi da POCO: “Babu ƙuntatawa”, kuma kunna Farawa da kanta.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Sanarwar Waaiya a kashe take, don haka ba za ta iya gaya maka lokacin da tacewa ta tsaya ba. Kunna su a saitunan Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Buɗe saitunan Waaiya';
+
+  @override
   String get setupBannerTitle => 'Saura mataki ɗaya';
 
   @override

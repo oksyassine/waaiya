@@ -93,6 +93,20 @@ class AppLocalizationsMs extends AppLocalizations {
       'Buka tetapan Waaiya untuk membenarkan mikrofon';
 
   @override
+  String get keepRunningTitle => 'Biarkan Waaiya terus berjalan';
+
+  @override
+  String get keepRunningBattery =>
+      'Telefon ini mungkin menutup Waaiya selepas beberapa ketika untuk menjimatkan bateri, lalu penapisan berhenti. Dalam tetapan Waaiya, di bawah Bateri, pilih “Tanpa had”. Pada Xiaomi, Redmi dan POCO: “Tiada sekatan”, dan hidupkan juga Mula automatik.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Pemberitahuan Waaiya dimatikan, jadi ia tidak dapat memberitahu anda apabila penapisan berhenti. Hidupkannya dalam tetapan Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Buka tetapan Waaiya';
+
+  @override
   String get setupBannerTitle => 'Satu langkah lagi';
 
   @override

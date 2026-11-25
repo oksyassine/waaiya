@@ -92,6 +92,20 @@ class AppLocalizationsFa extends AppLocalizations {
   String get micOpenSettings => 'باز کردن تنظیمات واعية و اجازه به میکروفون';
 
   @override
+  String get keepRunningTitle => 'واعية را روشن نگه دارید';
+
+  @override
+  String get keepRunningBattery =>
+      'این تلفن ممکن است پس از مدتی برای صرفه‌جویی در باتری واعية را ببندد و پالایش متوقف شود. در تنظیمات واعية، زیر «باتری»، «نامحدود» را انتخاب کنید. در شیائومی، ردمی و پوکو: «بدون محدودیت»، و «شروع خودکار» را هم روشن کنید.';
+
+  @override
+  String get keepRunningNotifications =>
+      'اعلان‌های واعية خاموش است، پس نمی‌تواند وقتی پالایش متوقف شد به شما بگوید. آن‌ها را در تنظیمات واعية روشن کنید.';
+
+  @override
+  String get keepRunningOpen => 'باز کردن تنظیمات واعية';
+
+  @override
   String get setupBannerTitle => 'یک قدم دیگر';
 
   @override

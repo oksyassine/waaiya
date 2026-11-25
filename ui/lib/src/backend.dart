@@ -405,6 +405,8 @@ class SetupInfo {
     this.busy = false,
     this.message,
     this.adbCommands,
+    this.batteryRestricted = false,
+    this.notificationsOff = false,
   });
 
   factory SetupInfo.fromMap(Map<Object?, Object?> m) => SetupInfo(
@@ -422,6 +424,8 @@ class SetupInfo {
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
         adbCommands: _str(m['adbCommands']),
+        batteryRestricted: _bool(m['batteryRestricted'], false),
+        notificationsOff: _bool(m['notificationsOff'], false),
       );
 
   /// The original sound can be silenced (Android: DUMP granted, or helper mode).
@@ -463,6 +467,13 @@ class SetupInfo {
   final BackendMessage? message;
   final String? adbCommands;
 
+  /// Android: Waaiya is under the phone's battery restrictions (not "unrestricted", or background-restricted), so
+  /// the phone may close it after a while and filtering stops.
+  final bool batteryRestricted;
+
+  /// Android: Waaiya's notifications are off, so it cannot say when Android stopped filtering.
+  final bool notificationsOff;
+
   Map<String, Object?> toMap() => {
         'originalsMuted': originalsMuted,
         'consentSkipped': consentSkipped,
@@ -478,6 +489,8 @@ class SetupInfo {
         'busy': busy,
         'message': message?.toMap(),
         'adbCommands': adbCommands,
+        'batteryRestricted': batteryRestricted,
+        'notificationsOff': notificationsOff,
       };
 }
 
