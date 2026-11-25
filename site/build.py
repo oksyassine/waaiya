@@ -402,7 +402,7 @@ def jsonld(lang, t, root_url):
         "license": "https://www.gnu.org/licenses/agpl-3.0.html",
         "isAccessibleForFree": True, "sameAs": [REPO, STORE],
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
-        "image": SITE + "assets/og.jpg",
+        "image": SITE + ("assets/og.jpg" if lang == "ar" else "assets/og-en.jpg"),
         "screenshot": SITE + f"assets/{lang}-on.webp",
     }
     faq = {"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": lang,
@@ -492,7 +492,7 @@ def page(lang, root):
 <meta property="og:title" content="{html.escape(t['title'])}">
 <meta property="og:description" content="{html.escape(t['desc'])}">
 <meta property="og:site_name" content="{'واعية' if rtl else 'Waaiya'}">
-<meta property="og:image" content="{SITE}assets/og.jpg">
+<meta property="og:image" content="{SITE}assets/{'og.jpg' if lang == 'ar' else 'og-en.jpg'}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{html.escape(plain(t['cover_alt']))}">
@@ -501,7 +501,7 @@ def page(lang, root):
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{html.escape(t['title'])}">
 <meta name="twitter:description" content="{html.escape(t['desc'])}">
-<meta name="twitter:image" content="{SITE}assets/og.jpg">
+<meta name="twitter:image" content="{SITE}assets/{'og.jpg' if lang == 'ar' else 'og-en.jpg'}">
 <meta name="theme-color" content="#053D35">
 {icons(a)}
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-400-normal.woff2" as="font" type="font/woff2" crossorigin>
