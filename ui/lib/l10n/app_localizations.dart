@@ -3369,6 +3369,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'مفعّل: على هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف التصفية عند كل قفل للشاشة. لذلك ترفع واعية هذه الحماية أثناء التصفية، فيظهر نص الإشعارات أيضًا. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا.'**
   String get notifTextForced;
+
+  /// No description provided for @oneAppTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'عند التشغيل: «مشاركة تطبيق واحد» ثم واعية'**
+  String get oneAppTitle;
+
+  /// No description provided for @oneAppBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'عندما يسألك أندرويد عمّا تشاركه، اختر «مشاركة تطبيق واحد» ثم واعية. تبقى كل التطبيقات مُصفّاة، ويبقى نص الإشعارات مقروءًا، وتستمر التصفية عند قفل الشاشة. أما مع الشاشة كلها فيُخفي أندرويد نص الإشعارات ويوقف التصفية عند كل قفل للشاشة.'**
+  String get oneAppBody;
+
+  /// No description provided for @oneAppPair.
+  ///
+  /// In ar, this message translates to:
+  /// **'ليعمل واعية كاملًا، اقرنه مرة واحدة عبر «تصحيح الأخطاء اللاسلكي» في صفحة الإعداد: عندها تُكتم الموسيقى الأصلية أيضًا، ويكفّ أندرويد عن السؤال عند كل تشغيل.'**
+  String get oneAppPair;
+
+  /// No description provided for @notifTextOneApp.
+  ///
+  /// In ar, this message translates to:
+  /// **'يظهر النص عندما تختار «مشاركة تطبيق واحد» ثم واعية عند التشغيل. أما مع الشاشة كلها فيُخفيه أندرويد، وبعد الإعداد لمرة واحدة ترفع واعية ذلك أثناء التصفية.'**
+  String get notifTextOneApp;
+
+  /// No description provided for @blurNeedsRestart.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقف التصفية ثم شغّلها من جديد لاستعمال التمويه: فهو يحتاج إلى الشاشة كلها، وقد بدأت هذه التصفية مع عرض «مشاركة تطبيق واحد».'**
+  String get blurNeedsRestart;
 }
 
 class _AppLocalizationsDelegate

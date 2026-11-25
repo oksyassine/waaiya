@@ -1957,4 +1957,23 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get notifTextForced =>
       'Attivo: su questo telefono Android chiede prima di ogni avvio e fermerebbe il filtro a ogni blocco dello schermo. Waaiya toglie questa protezione mentre filtra, e così si vede anche il testo delle notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette.';
+
+  @override
+  String get oneAppTitle => 'All’avvio: «Condividi un’app», poi Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Quando Android chiede cosa condividere, scegli «Condividi un’app», poi Waaiya. Tutte le app restano filtrate, le notifiche restano leggibili e il filtro continua quando lo schermo si blocca. Con tutto lo schermo, Android nasconde il testo delle notifiche e ferma il filtro a ogni blocco.';
+
+  @override
+  String get oneAppPair =>
+      'Perché Waaiya funzioni del tutto, associalo una volta con il debug wireless nella pagina Configurazione: così anche la musica originale viene silenziata e Android smette di chiedere a ogni avvio.';
+
+  @override
+  String get notifTextOneApp =>
+      'Visibile quando all’avvio scegli «Condividi un’app», poi Waaiya. Con tutto lo schermo Android lo nasconde; dopo la configurazione una tantum Waaiya lo toglie durante il filtro.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Ferma e riavvia il filtro per usare la sfocatura: richiede tutto lo schermo, e questo filtro è partito offrendo «Condividi un’app».';
 }

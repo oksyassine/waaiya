@@ -1945,4 +1945,23 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get notifTextForced =>
       'Açık: bu telefonda Android her başlatmadan önce sorar ve ardından her ekran kilidinde filtrelemeyi durdururdu. Waaiya filtrelerken bu korumayı kaldırır, böylece bildirim metni de görünür. Aynı anda yapılan diğer ekran paylaşımları da korunmaz.';
+
+  @override
+  String get oneAppTitle => 'Başlatırken: “Tek uygulama paylaş”, sonra Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Android neyi paylaşacağınızı sorduğunda “Tek uygulama paylaş”ı, sonra Waaiya\'yı seçin. Tüm uygulamalar filtrelenmeye devam eder, bildirimler okunabilir kalır ve ekran kilitlendiğinde filtreleme sürer. Tüm ekranla Android bildirim metnini gizler ve her kilitlemede filtrelemeyi durdurur.';
+
+  @override
+  String get oneAppPair =>
+      'Waaiya\'nın tam çalışması için Kurulum sayfasında Kablosuz hata ayıklama ile bir kez eşleştirin: o zaman özgün müzik de susturulur ve Android her başlatmada sormayı bırakır.';
+
+  @override
+  String get notifTextOneApp =>
+      'Başlatırken “Tek uygulama paylaş”ı, sonra Waaiya\'yı seçtiğinizde gösterilir. Tüm ekranla Android bunu gizler; tek seferlik kurulumdan sonra Waaiya bunu filtrelerken kaldırır.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Bulanıklaştırmayı kullanmak için filtrelemeyi durdurup yeniden başlatın: tüm ekrana ihtiyaç duyar ve bu filtreleme “Tek uygulama paylaş” sunularak başladı.';
 }

@@ -563,5 +563,25 @@
     "description": "Under the notification-text switch when Android's capture question is not skipped (Android stops a capture at screen lock then; its protections switch prevents it)"
   },
   "notifTextHandOptional": "Optional, without the setup: turn on “Disable screen share protections” in Developer options. It then stays off for every screen share, and some phones do not have it.",
-  "notifTextForced": "On: on this phone Android asks before each start, and would then stop filtering at every screen lock. Waaiya lifts this protection while it filters, which also shows notification text. Other screen shares made at the same time are not protected either."
+  "notifTextForced": "On: on this phone Android asks before each start, and would then stop filtering at every screen lock. Waaiya lifts this protection while it filters, which also shows notification text. Other screen shares made at the same time are not protected either.",
+  "oneAppTitle": "At the start: “Share one app”, then Waaiya",
+  "@oneAppTitle": {
+    "description": "Android 16 'Share one app' start option (CaptureChoice): notice, switch text, blur restart"
+  },
+  "oneAppBody": "When Android asks what to share, choose “Share one app”, then Waaiya. Every app is still filtered, notifications stay readable, and filtering keeps running when the screen locks. With the entire screen, Android hides notification text and stops filtering at each screen lock.",
+  "@oneAppBody": {
+    "description": "Android 16 'Share one app' start option (CaptureChoice): notice, switch text, blur restart"
+  },
+  "oneAppPair": "For Waaiya to work fully, pair it once with Wireless debugging on the Setup page: the original music is then silenced too, and Android stops asking at each start.",
+  "@oneAppPair": {
+    "description": "Android 16 'Share one app' start option (CaptureChoice): notice, switch text, blur restart"
+  },
+  "notifTextOneApp": "Shown when you choose “Share one app”, then Waaiya, at the start. With the entire screen Android hides it; after the one-time setup Waaiya lifts that while filtering.",
+  "@notifTextOneApp": {
+    "description": "Android 16 'Share one app' start option (CaptureChoice): notice, switch text, blur restart"
+  },
+  "blurNeedsRestart": "Stop and start filtering again to use the blur: it needs the entire screen, and this filtering started with “Share one app” offered.",
+  "@blurNeedsRestart": {
+    "description": "Android 16 'Share one app' start option (CaptureChoice): notice, switch text, blur restart"
+  }
 }

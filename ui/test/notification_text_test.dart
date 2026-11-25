@@ -16,13 +16,13 @@ class _Recording extends MemoryBackend {
 }
 
 Future<_Recording> _open(WidgetTester tester, NotificationTextInfo nt,
-    {bool running = false, bool consentSkipped = true}) async {
+    {bool running = false, bool consentSkipped = true, bool originalsMuted = true}) async {
   final backend = _Recording(
     initial: AppState(
       language: 'en',
       settings: const WaaiyaSettings(gender: 'man'),
       capabilities: Capabilities.android,
-      setup: SetupInfo(notificationText: nt, consentSkipped: consentSkipped),
+      setup: SetupInfo(notificationText: nt, consentSkipped: consentSkipped, originalsMuted: originalsMuted),
       filter: running ? const FilterInfo(state: FilterState.filtering, delayMs: 40) : const FilterInfo(),
     ),
   );
@@ -115,5 +115,22 @@ void main() {
     await _open(tester, const NotificationTextInfo(supported: true, protectionOff: true), consentSkipped: false);
     await tester.ensureVisible(find.byKey(const Key('notification_text')));
     expect(find.textContaining('stops filtering when the screen locks'), findsNothing);
+  });
+
+  testWidgets('Android 16 without the setup: share only Waaiya, and pairing is advised', (tester) async {
+    await _open(tester, const NotificationTextInfo(supported: true, oneAppOffered: true),
+        consentSkipped: false, originalsMuted: false);
+    expect(find.byKey(const Key('one_app_notice')), findsOneWidget);
+    expect(find.textContaining('asks what to share'), findsOneWidget);
+    expect(find.textContaining('pair it once with Wireless debugging'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('notification_text')));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Shown when you choose “Share one app”'), findsOneWidget);
+    expect(find.text('Open Developer options'), findsNothing); // no hidden setting offered on this route
+  });
+
+  testWidgets('no one-app notice where Android does not offer it', (tester) async {
+    await _open(tester, const NotificationTextInfo(supported: true), consentSkipped: false);
+    expect(find.byKey(const Key('one_app_notice')), findsNothing);
   });
 }

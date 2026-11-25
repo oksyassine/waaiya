@@ -311,6 +311,7 @@ class FilterInfo {
     this.mono = false,
     this.blockedApps = const [],
     this.captureCancelled = false,
+    this.blurNeedsRestart = false,
   });
 
   factory FilterInfo.fromMap(Map<Object?, Object?> m) => FilterInfo(
@@ -324,7 +325,12 @@ class FilterInfo {
         mono: _bool(m['mono'], false),
         blockedApps: (m['blockedApps'] is List ? m['blockedApps'] as List : const []).whereType<String>().toList(),
         captureCancelled: _bool(m['captureCancelled'], false),
+        blurNeedsRestart: _bool(m['blurNeedsRestart'], false),
       );
+
+  /// Android: this filtering started with "Share one app" offered and the blur, which needs the entire screen, was
+  /// turned on since: it works from the next start.
+  final bool blurNeedsRestart;
 
   final FilterState state;
   final int delayMs;
@@ -369,6 +375,7 @@ class FilterInfo {
         'mono': mono,
         'blockedApps': blockedApps,
         'captureCancelled': captureCancelled,
+        'blurNeedsRestart': blurNeedsRestart,
       };
 }
 
@@ -728,6 +735,7 @@ class NotificationTextInfo {
     this.wanted = false,
     this.protectionOff = false,
     this.forcedForLock = false,
+    this.oneAppOffered = false,
     this.shownNow,
     this.refused = false,
   });
@@ -738,6 +746,7 @@ class NotificationTextInfo {
         wanted: _bool(m['wanted'], false),
         protectionOff: _bool(m['protectionOff'], false),
         forcedForLock: _bool(m['forcedForLock'], false),
+        oneAppOffered: _bool(m['oneAppOffered'], false),
         shownNow: m['shownNow'] is bool ? m['shownNow'] as bool : null,
         refused: _bool(m['refused'], false),
       );
@@ -758,6 +767,10 @@ class NotificationTextInfo {
   /// protection is off: Waaiya lifts it while filtering whatever [wanted] says, when it can ([canWrite]).
   final bool forcedForLock;
 
+  /// Android 16+: the start question also offers "Share one app"; sharing only Waaiya keeps every app filtered, shows
+  /// notification text and survives screen lock, with no setup and no Developer options.
+  final bool oneAppOffered;
+
   /// Waaiya keeps it lifted while filtering on its own ([forcedForLock] with the right to change it).
   bool get forced => forcedForLock && canWrite && !refused;
 
@@ -776,6 +789,7 @@ class NotificationTextInfo {
         'wanted': wanted,
         'protectionOff': protectionOff,
         'forcedForLock': forcedForLock,
+        'oneAppOffered': oneAppOffered,
         'shownNow': shownNow,
         'refused': refused,
       };

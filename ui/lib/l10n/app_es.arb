@@ -539,5 +539,10 @@
   "notifTextOpenDev": "Abrir opciones para desarrolladores",
   "notifTextLockNote": "En este teléfono Android también detiene el filtrado al bloquear la pantalla, y las demás apps quedan en silencio hasta que toques Reanudar. La configuración también lo evita.",
   "notifTextHandOptional": "Opcional, sin configuración: activa «Desactivar protecciones al compartir pantalla» en las opciones para desarrolladores. Quedará desactivada para cualquier pantalla compartida, y algunos teléfonos no la tienen.",
-  "notifTextForced": "Activado: en este teléfono Android pregunta antes de cada inicio y detendría el filtrado en cada bloqueo de pantalla. Waaiya quita esta protección mientras filtra, lo que también muestra el texto de las notificaciones. Otras pantallas compartidas al mismo tiempo tampoco quedan protegidas."
+  "notifTextForced": "Activado: en este teléfono Android pregunta antes de cada inicio y detendría el filtrado en cada bloqueo de pantalla. Waaiya quita esta protección mientras filtra, lo que también muestra el texto de las notificaciones. Otras pantallas compartidas al mismo tiempo tampoco quedan protegidas.",
+  "oneAppTitle": "Al iniciar: «Compartir una app» y luego Waaiya",
+  "oneAppBody": "Cuando Android pregunte qué compartir, elige «Compartir una app» y luego Waaiya. Todas las apps siguen filtradas, las notificaciones se pueden leer y el filtrado sigue al bloquear la pantalla. Con la pantalla completa, Android oculta el texto de las notificaciones y detiene el filtrado en cada bloqueo.",
+  "oneAppPair": "Para que Waaiya funcione por completo, emparéjalo una vez con la depuración inalámbrica en la página Configuración: así también se silencia la música original y Android deja de preguntar en cada inicio.",
+  "notifTextOneApp": "Visible cuando eliges «Compartir una app» y luego Waaiya al iniciar. Con la pantalla completa Android lo oculta; tras la configuración única, Waaiya quita eso mientras filtra.",
+  "blurNeedsRestart": "Detén el filtrado y vuelve a iniciarlo para usar el difuminado: necesita la pantalla completa, y este filtrado empezó ofreciendo «Compartir una app»."
 }

@@ -26,6 +26,7 @@ import 'widgets.dart';
     };
   }
   if (!s.settings.blurOn) return null;
+  if (s.filter.blurNeedsRestart) return (l.blurNeedsRestart, true);
   if (needsSetup && !b.overlayAllowed) return (setupText, true);
   if (!on) return needsSetup ? (setupText, false) : null;
   return switch (b.state) {

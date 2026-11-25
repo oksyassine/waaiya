@@ -1952,4 +1952,23 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get notifTextForced =>
       'Aan: op deze telefoon vraagt Android voor elke start en zou het filteren dan bij elke schermvergrendeling stoppen. Waaiya heft deze bescherming tijdens het filteren op, waardoor ook de meldingstekst zichtbaar is. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd.';
+
+  @override
+  String get oneAppTitle => 'Bij het starten: ‘Eén app delen’, dan Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Als Android vraagt wat je wilt delen, kies ‘Eén app delen’ en dan Waaiya. Alle apps worden nog steeds gefilterd, meldingen blijven leesbaar en het filteren gaat door als het scherm vergrendelt. Met het hele scherm verbergt Android meldingstekst en stopt het filteren bij elke vergrendeling.';
+
+  @override
+  String get oneAppPair =>
+      'Koppel Waaiya één keer met draadloze foutopsporing op de pagina Installatie zodat het volledig werkt: dan wordt ook de originele muziek gedempt en vraagt Android niet meer bij elke start.';
+
+  @override
+  String get notifTextOneApp =>
+      'Zichtbaar als je bij het starten ‘Eén app delen’ en dan Waaiya kiest. Met het hele scherm verbergt Android het; na de eenmalige installatie heft Waaiya dat tijdens het filteren op.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Stop het filteren en start het opnieuw om de vervaging te gebruiken: die heeft het hele scherm nodig, en dit filteren begon met ‘Eén app delen’ aangeboden.';
 }

@@ -1961,4 +1961,23 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get notifTextForced =>
       'Imewashwa: kwenye simu hii Android huuliza kabla ya kila kuanza, na ingesimamisha kuchuja kila skrini inapofungwa. Waaiya huondoa ulinzi huu wakati wa kuchuja, kwa hiyo maandishi ya arifa pia huonekana. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.';
+
+  @override
+  String get oneAppTitle => 'Unapoanza: “Shiriki programu moja”, kisha Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Android inapouliza cha kushiriki, chagua “Shiriki programu moja”, kisha Waaiya. Programu zote bado zinachujwa, arifa zinasomeka, na kuchuja kunaendelea skrini inapofungwa. Ukichagua skrini nzima, Android huficha maandishi ya arifa na husimamisha kuchuja kila skrini inapofungwa.';
+
+  @override
+  String get oneAppPair =>
+      'Ili Waaiya ifanye kazi kikamilifu, iunganishe mara moja kwa Utatuzi usiotumia waya kwenye ukurasa wa Mpangilio: muziki asilia pia utanyamazishwa, na Android itaacha kuuliza kila unapoanza.';
+
+  @override
+  String get notifTextOneApp =>
+      'Huonyeshwa unapochagua “Shiriki programu moja”, kisha Waaiya, unapoanza. Kwa skrini nzima Android huyaficha; baada ya mpangilio wa mara moja, Waaiya huondoa hilo wakati wa kuchuja.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Simamisha kisha anzisha kuchuja tena ili kutumia ukungu: unahitaji skrini nzima, na kuchuja huku kulianza kukiwa na chaguo la “Shiriki programu moja”.';
 }

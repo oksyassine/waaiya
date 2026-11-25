@@ -76,6 +76,9 @@ class FilterService : Service() {
         /** Engine delay of the running filter in ms (model look-ahead; the capture/playback buffers add to it). */
         @Volatile var delayMs = 0
             private set
+        /** This filtering started with "Share one app" offered (CaptureChoice): no blur until the next start. */
+        @Volatile var oneAppSession = false
+            private set
         val running: Boolean get() = state == State.STARTING || state == State.FILTERING || state == State.MODEL_FAILED
         @Volatile var health: Health? = null
             private set
@@ -196,8 +199,11 @@ class FilterService : Service() {
         // the first notification was built before the muter existed: now it can say whether originals are silenced
         runCatching { getSystemService(NotificationManager::class.java).notify(1, notification()) }
         // Screen blur shares this projection; its virtual display must be created now (Android 14+ time limit),
-        // so it starts parked even when the blur is off and follows the settings live.
-        blur = runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
+        // so it starts parked even when the blur is off and follows the settings live. Not when the question offered
+        // "Share one app" (CaptureChoice): the capture may hold Waaiya alone, and a blur that sees nothing would
+        // cover nothing; turning the blur on then asks for a restart (blurNeedsRestart).
+        oneAppSession = CaptureChoice.offerOneApp(this)
+        blur = if (oneAppSession) null else runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
             .onFailure { Log.e(TAG, "screen blur did not start", it) }.getOrNull()
         worker = Thread({ loop(mp) }, "im-filter").apply { start() }
         return START_NOT_STICKY
@@ -294,6 +300,8 @@ class FilterService : Service() {
         } catch (e: Exception) {
             Log.e(TAG, "capture did not open", e)
             StopLog.record(this, "capture did not open: ${e.javaClass.simpleName}")
+            // Android before 16 (or a phone like it): no sound from a one-app share. Ask for the entire screen next time.
+            if (oneAppSession && e is UnsupportedOperationException) Settings(this).oneAppRefused = true
             endedBySystem(State.CAPTURE_FAILED); return
         }
         val outFmt = AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_FLOAT)

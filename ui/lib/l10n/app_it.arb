@@ -539,5 +539,10 @@
   "notifTextOpenDev": "Apri opzioni sviluppatore",
   "notifTextLockNote": "Su questo telefono Android ferma il filtro anche quando lo schermo si blocca, e le altre app restano mute finché non tocchi Riprendi. La configurazione evita anche questo.",
   "notifTextHandOptional": "Facoltativo, senza configurazione: attiva «Disattiva protezioni condivisione schermo» nelle opzioni sviluppatore. Resta poi disattivata per ogni condivisione dello schermo, e alcuni telefoni non ce l’hanno.",
-  "notifTextForced": "Attivo: su questo telefono Android chiede prima di ogni avvio e fermerebbe il filtro a ogni blocco dello schermo. Waaiya toglie questa protezione mentre filtra, e così si vede anche il testo delle notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette."
+  "notifTextForced": "Attivo: su questo telefono Android chiede prima di ogni avvio e fermerebbe il filtro a ogni blocco dello schermo. Waaiya toglie questa protezione mentre filtra, e così si vede anche il testo delle notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette.",
+  "oneAppTitle": "All’avvio: «Condividi un’app», poi Waaiya",
+  "oneAppBody": "Quando Android chiede cosa condividere, scegli «Condividi un’app», poi Waaiya. Tutte le app restano filtrate, le notifiche restano leggibili e il filtro continua quando lo schermo si blocca. Con tutto lo schermo, Android nasconde il testo delle notifiche e ferma il filtro a ogni blocco.",
+  "oneAppPair": "Perché Waaiya funzioni del tutto, associalo una volta con il debug wireless nella pagina Configurazione: così anche la musica originale viene silenziata e Android smette di chiedere a ogni avvio.",
+  "notifTextOneApp": "Visibile quando all’avvio scegli «Condividi un’app», poi Waaiya. Con tutto lo schermo Android lo nasconde; dopo la configurazione una tantum Waaiya lo toglie durante il filtro.",
+  "blurNeedsRestart": "Ferma e riavvia il filtro per usare la sfocatura: richiede tutto lo schermo, e questo filtro è partito offrendo «Condividi un’app»."
 }

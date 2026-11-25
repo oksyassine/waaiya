@@ -1952,4 +1952,23 @@ class AppLocalizationsHa extends AppLocalizations {
   @override
   String get notifTextForced =>
       'A kunne: a wannan waya Android tana tambaya kafin kowace farawa, kuma da za ta dakatar da tacewa duk lokacin da aka kulle allo. Waaiya tana cire wannan kariya yayin tacewa, don haka rubutun sanarwa ma yana bayyana. Sauran raba allo a lokaci guda ma ba su da kariya.';
+
+  @override
+  String get oneAppTitle => 'A farawa: “Raba manhaja ɗaya”, sannan Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Idan Android ta tambayi abin da za a raba, zaɓi “Raba manhaja ɗaya”, sannan Waaiya. Duk manhajoji za su ci gaba da tacewa, sanarwa za su kasance a karanta, kuma tacewa za ta ci gaba idan an kulle allo. Da dukan allo, Android tana ɓoye rubutun sanarwa kuma tana dakatar da tacewa a kowace kullewa.';
+
+  @override
+  String get oneAppPair =>
+      'Domin Waaiya ta yi aiki gaba ɗaya, haɗa ta sau ɗaya da Wireless debugging a shafin Saiti: daga nan ana kashe kiɗan asali ma, kuma Android ta daina tambaya a kowace farawa.';
+
+  @override
+  String get notifTextOneApp =>
+      'Ana nunawa idan ka zaɓi “Raba manhaja ɗaya”, sannan Waaiya, a farawa. Da dukan allo Android tana ɓoye shi; bayan saitin sau ɗaya Waaiya tana cire hakan yayin tacewa.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Dakatar da tacewa ka sake farawa don amfani da dushewa: tana buƙatar dukan allo, kuma wannan tacewa ta fara ne da zaɓin “Raba manhaja ɗaya”.';
 }

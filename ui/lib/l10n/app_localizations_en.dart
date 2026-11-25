@@ -1941,4 +1941,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notifTextForced =>
       'On: on this phone Android asks before each start, and would then stop filtering at every screen lock. Waaiya lifts this protection while it filters, which also shows notification text. Other screen shares made at the same time are not protected either.';
+
+  @override
+  String get oneAppTitle => 'At the start: “Share one app”, then Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'When Android asks what to share, choose “Share one app”, then Waaiya. Every app is still filtered, notifications stay readable, and filtering keeps running when the screen locks. With the entire screen, Android hides notification text and stops filtering at each screen lock.';
+
+  @override
+  String get oneAppPair =>
+      'For Waaiya to work fully, pair it once with Wireless debugging on the Setup page: the original music is then silenced too, and Android stops asking at each start.';
+
+  @override
+  String get notifTextOneApp =>
+      'Shown when you choose “Share one app”, then Waaiya, at the start. With the entire screen Android hides it; after the one-time setup Waaiya lifts that while filtering.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Stop and start filtering again to use the blur: it needs the entire screen, and this filtering started with “Share one app” offered.';
 }

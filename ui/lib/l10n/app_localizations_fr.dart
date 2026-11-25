@@ -1959,4 +1959,24 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get notifTextForced =>
       'Activé : sur ce téléphone, Android demande avant chaque démarrage et arrêterait alors le filtrage à chaque verrouillage de l’écran. Waaiya lève cette protection pendant le filtrage, ce qui affiche aussi le texte des notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus.';
+
+  @override
+  String get oneAppTitle =>
+      'Au démarrage : « Partager une appli », puis Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Quand Android demande quoi partager, choisissez « Partager une appli », puis Waaiya. Toutes les applications restent filtrées, les notifications restent lisibles et le filtrage continue quand l’écran se verrouille. Avec l’écran entier, Android masque le texte des notifications et arrête le filtrage à chaque verrouillage.';
+
+  @override
+  String get oneAppPair =>
+      'Pour que Waaiya fonctionne pleinement, associez-le une fois avec le débogage sans fil dans la page Configuration : la musique d’origine est alors aussi coupée, et Android ne demande plus à chaque démarrage.';
+
+  @override
+  String get notifTextOneApp =>
+      'Affiché quand vous choisissez « Partager une appli », puis Waaiya, au démarrage. Avec l’écran entier, Android le masque ; après la configuration unique, Waaiya lève cela pendant le filtrage.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Arrêtez puis relancez le filtrage pour utiliser le floutage : il a besoin de l’écran entier, et ce filtrage a démarré avec « Partager une appli » proposé.';
 }

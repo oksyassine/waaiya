@@ -1960,4 +1960,23 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get notifTextForced =>
       'An: Auf diesem Telefon fragt Android vor jedem Start und würde das Filtern dann bei jeder Bildschirmsperre beenden. Waaiya hebt diesen Schutz während des Filterns auf, wodurch auch der Benachrichtigungstext sichtbar wird. Andere gleichzeitige Bildschirmfreigaben sind dann ebenfalls nicht geschützt.';
+
+  @override
+  String get oneAppTitle => 'Beim Start: „Eine App teilen“, dann Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Wenn Android fragt, was geteilt werden soll, wähle „Eine App teilen“ und dann Waaiya. Alle Apps werden weiter gefiltert, Benachrichtigungen bleiben lesbar, und das Filtern läuft beim Sperren des Bildschirms weiter. Beim ganzen Bildschirm blendet Android Benachrichtigungstext aus und beendet das Filtern bei jeder Sperre.';
+
+  @override
+  String get oneAppPair =>
+      'Damit Waaiya voll funktioniert, kopple es einmal über kabelloses Debugging auf der Seite Einrichtung: Dann wird auch die Originalmusik stummgeschaltet, und Android fragt nicht mehr bei jedem Start.';
+
+  @override
+  String get notifTextOneApp =>
+      'Sichtbar, wenn du beim Start „Eine App teilen“ und dann Waaiya wählst. Beim ganzen Bildschirm blendet Android ihn aus; nach der einmaligen Einrichtung hebt Waaiya das beim Filtern auf.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Beende das Filtern und starte es neu, um die Unschärfe zu nutzen: Sie braucht den ganzen Bildschirm, und dieses Filtern begann mit dem Angebot „Eine App teilen“.';
 }

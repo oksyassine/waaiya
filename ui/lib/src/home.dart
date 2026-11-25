@@ -144,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 16),
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
             if (s.setup.originalsMuted && s.setup.helperMissing) const HelperMissingBanner(),
+            if (s.platform == 'android' && s.setup.notificationText.oneAppOffered) const OneAppNotice(),
             const FilterOptionsCard(),
             const FilterAppsCard(),
           ],
@@ -260,6 +261,34 @@ class FilterOptionsCard extends StatelessWidget {
   }
 }
 
+/// Android 16+, when Android asks before each start (no setup, or a phone that refused its grant) and the blur is
+/// off: the question also offers "Share one app". Picking Waaiya keeps every app filtered, shows notification text
+/// and keeps filtering through a screen lock (CaptureChoice.kt). The one-time pairing over Wireless debugging is
+/// still advised for Waaiya to work fully (silencing the originals, no question at each start).
+class OneAppNotice extends StatelessWidget {
+  const OneAppNotice({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final s = WaaiyaScope.of(context).state;
+    return SectionCard(
+      key: const Key('one_app_notice'),
+      title: l.oneAppTitle,
+      body: s.setup.originalsMuted ? l.oneAppBody : '${l.oneAppBody}\n\n${l.oneAppPair}',
+      children: [
+        if (!s.setup.originalsMuted) ...[
+          const SizedBox(height: 12),
+          TestId(
+            'one_app_setup',
+            child: FilledButton.tonal(onPressed: () => HomeNav.maybeOf(context)?.go('setup'), child: Text(l.setupGo)),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 /// Android 15+ hides what notifications say while any app captures the whole screen, and filtering is such a
 /// capture. The one-time setup (Wireless debugging, which the user needs anyway) gives Waaiya the right to lift that
 /// protection only while it filters (setting show_notification_text, applied at each start). Android's own switch in
@@ -291,6 +320,8 @@ class NotificationTextSwitch extends StatelessWidget {
       // Android reads its switch when a capture starts: a change made while filtering waits for the next start
       final waits = s.filter.running && nt.shownNow != null && nt.shownNow != nt.shown;
       body = waits ? '${l.notifTextBody}\n\n${l.notifTextNextStart}' : l.notifTextBody;
+    } else if (nt.oneAppOffered) {
+      body = l.notifTextOneApp; // "Share one app" at the start shows it, no Developer options needed
     } else {
       // no setup: Android also stops filtering at each screen lock when it asks before each start
       body = s.setup.consentSkipped ? l.notifTextHowTo : '${l.notifTextHowTo}\n\n${l.notifTextLockNote}';
@@ -317,10 +348,12 @@ class NotificationTextSwitch extends StatelessWidget {
             'notification_text_setup',
             child: FilledButton.tonal(onPressed: goSetup, child: Text(l.setupGo)),
           ),
-          const SizedBox(height: 12),
-          Text(l.notifTextHandOptional, style: Theme.of(context).textTheme.bodyMedium),
+          if (!nt.oneAppOffered) ...[
+            const SizedBox(height: 12),
+            Text(l.notifTextHandOptional, style: Theme.of(context).textTheme.bodyMedium),
+          ],
         ],
-        if (needsSetup || refused)
+        if ((needsSetup && !nt.oneAppOffered) || refused)
           Padding(
             padding: const EdgeInsetsDirectional.only(bottom: 8),
             child: TestId(

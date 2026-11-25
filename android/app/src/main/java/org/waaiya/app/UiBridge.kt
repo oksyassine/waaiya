@@ -3,7 +3,6 @@ package org.waaiya.app
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import android.os.Build
 import io.flutter.plugin.common.BinaryMessenger
@@ -343,6 +342,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "mono" to (FilterService.health?.monoForSpeed == true),
             "blockedApps" to FilterService.blockedApps,
             "captureCancelled" to captureCancelled,
+            // this filtering started with "Share one app" offered and the blur was turned on since: it needs a restart
+            "blurNeedsRestart" to (FilterService.running && FilterService.oneAppSession && settings.blurOn),
         ),
         "setup" to mapOf(
             // DUMP granted, or this phone refused it and Waaiya's helper reads the sessions (HelperDumps)
@@ -367,6 +368,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wanted" to settings.showNotificationText,
                 // no PROJECT_MEDIA: Waaiya lifts it anyway while filtering, or Android stops filtering at each lock
                 "forcedForLock" to ScreenShareProtection.neededForLock(activity),
+                // Android 16+: the start question also offers "Share one app" (pick Waaiya: text shown, no lock stop)
+                "oneAppOffered" to CaptureChoice.offerOneApp(activity),
                 "protectionOff" to ScreenShareProtection.protectionOff(activity),
                 "shownNow" to ScreenShareProtection.shownInCapture,
                 "refused" to ScreenShareProtection.refusedByPhone,
@@ -485,12 +488,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         }
         if (Build.VERSION.SDK_INT >= 33 && android.Manifest.permission.POST_NOTIFICATIONS in wanted) askedNotifications = true
         if (wanted.isNotEmpty()) { activity.requestPermissions(wanted.toTypedArray(), REQ_PERMISSIONS); return }
-        val mpm = activity.getSystemService(MediaProjectionManager::class.java)
-        // Android 14+ offers "a single app" first; a system-wide filter needs the whole device, so ask for that only.
-        val intent = if (Build.VERSION.SDK_INT >= 34)
-            mpm.createScreenCaptureIntent(android.media.projection.MediaProjectionConfig.createConfigForDefaultDisplay())
-        else mpm.createScreenCaptureIntent()
-        @Suppress("DEPRECATION") activity.startActivityForResult(intent, REQ_CAPTURE)
+        // the entire screen, or on Android 16+ also "Share one app" (CaptureChoice)
+        @Suppress("DEPRECATION") activity.startActivityForResult(CaptureChoice.intent(activity), REQ_CAPTURE)
     }
 
     fun onRequestPermissionsResult(requestCode: Int) {

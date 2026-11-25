@@ -77,6 +77,11 @@ class Settings(context: Context) {
         get() = p.getBoolean("show_notification_text", false)
         set(v) = p.edit().putBoolean("show_notification_text", v).apply()
 
+    /** This phone's capture refused the sound of a one-app share once: ask for the entire screen ([CaptureChoice]). */
+    var oneAppRefused: Boolean
+        get() = p.getBoolean("one_app_refused", false)
+        set(v) = p.edit().putBoolean("one_app_refused", v).apply()
+
     /** Simple mode (TEST): filter without the one-time setup by muting media while filtering ([SimpleMode]). */
     var simpleMode: Boolean
         get() = p.getBoolean("simple_mode", false)
