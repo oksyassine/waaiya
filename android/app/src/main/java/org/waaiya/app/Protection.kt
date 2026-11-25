@@ -112,6 +112,14 @@ object Protection : Feature {
         }
     }
 
+    /** Diagnostics: a change waiting for the period or the PIN, in words; null when none. */
+    fun pendingForReport(context: Context): String? = runCatching {
+        val c = core(context)
+        val p = c.pending() ?: return@runCatching null
+        val left = p.left(AndroidClock(context))
+        "${p.what} = ${p.value ?: ""}, " + if (left > 0) "applies in ${left / 60000} min" else "ready to confirm"
+    }.getOrNull()
+
     /** The machine detail of a refusal, for Flutter's onProtected (protection.dart). */
     private fun detail(c: ProtectionCore, what: String, value: Any?, g: ProtectionRules.Gate, delay: Int): String {
         val o = JSONObject()

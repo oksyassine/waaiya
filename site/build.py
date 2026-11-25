@@ -58,7 +58,7 @@ T = {
     "ar": dict(
         dir="rtl", other="en", other_label="English", other_href="en/",
         title="واعية: تطبيق يحذف الموسيقى والمعازف ويُبقي الكلام",
-        desc="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس، يزيل الآلات الموسيقية من صوت كل التطبيقات لحظةً بلحظة، ويُبقي الكلام وتلاوة القرآن. لا يخرج شيء من جهازك.",
+        desc="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس، يزيل الآلات الموسيقية من صوت تطبيقاتك لحظةً بلحظة، ويُبقي الكلام وتلاوة القرآن. والترشيح على جهازك.",
         nav=[("hear", "اسمع"), ("try", "جرّب"), ("cover", "تمويه الشاشة"), ("lang", "لغتك"), ("faq", "أسئلة")],
         nav_cta="حمّل",
         try_nav="جرّب",
@@ -93,7 +93,7 @@ T = {
                 decode="لم يستطع المتصفح قراءة هذا الملف. جرّب [[MP3]] أو [[M4A]] أو [[MP4]].",
                 filter="تعذّرت التصفية على هذا الجهاز، فلن نُسمِعك شيئًا على أنه «بعد واعية».")),
         h1="يزيل المعازف ويُبقي الكلام",
-        lead="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس. يزيل الآلات الموسيقية من صوت كل التطبيقات لحظةً بلحظة، ويُبقي الكلام وتلاوة القرآن. ولا يخرج شيء من جهازك.",
+        lead="تطبيق مجاني مفتوح المصدر لأندرويد وويندوز ولينكس. يزيل الآلات الموسيقية من صوت تطبيقاتك لحظةً بلحظة، ويُبقي الكلام وتلاوة القرآن. والترشيح على جهازك.",
         cta="حمّل واعية",
         power_label="التصفية على هذه الصفحة",
         r_off="اضغط الزر: الخطوط الأفقية في هذه الصفحة صورةُ موسيقى حقيقية.",
@@ -119,7 +119,7 @@ T = {
             ("تطبيقات تُسمَع كما هي", "اختر تطبيقات لا تمرّ بالتصفية، أو تطبيقات لا يغطّيها التمويه.", False),
         ],
         cover_h="غطِّ بيدك ما فات التمويه",
-        cover_p="«تمويه الشاشة» يغطّي النساء أو الصور غير المحتشمة في كل التطبيقات، على الجهاز نفسه. وإن فاتته صورة، فاضغط «تغطية جزء» واسحب إصبعك فوقها. جرّب ذلك على هذه الصورة.",
+        cover_p="«تمويه الشاشة» يغطّي صور النساء أو الصور غير المحتشمة في تطبيقاتك، على الجهاز نفسه. وإن فاتته صورة، فاضغط «تغطية جزء» واسحب إصبعك فوقها. جرّب ذلك على هذه الصورة.",
         cover_add="تغطية جزء", cover_clear="إزالة التغطية اليدوية", cover_hint="اسحب فوق الصورة.",
         cover_alt="مكبّر صوت عليه حبيبات رمل، من المقطع التعريفي بواعية",
         cover_note="تبقى مغطّاة حتى تزيلها أو يتوقف التمويه.",
@@ -143,17 +143,17 @@ T = {
         lang_cap="واعية على ويندوز، صفحة التصفية: {name}",
         lang_alt="صفحة التصفية في واعية على ويندوز بلغة: {name}",
         phone_h="على هاتفك",
-        phones=[("on", "التصفية", "زر واحد لكل التطبيقات"), ("screen", "الشاشة", "تمويه النساء والصور غير المحتشمة"),
+        phones=[("on", "التصفية", "زر واحد لتطبيقاتك"), ("screen", "الشاشة", "تمويه النساء والصور غير المحتشمة"),
                 ("settings2", "أوقات الصلاة", "صمت، ورسالة لمن يتصل"), ("settings3", "الحماية", "الانتظار قبل الإيقاف، والرمز")],
         phone_meta="أندرويد [[15]]",
         how_h="كيف تبدأ",
         how=[
             ("أولًا، ثبّت واعية.", "ملف [[waaiya.apk]] لأندرويد [[10]] أو أحدث، أو نسخة ويندوز أو لينكس."),
             ("ثم الإعداد لمرة واحدة.", "على الهاتف نفسه، في أربع خطوات: [[Wi‑Fi]]، و«خيارات المطور»، و«تصحيح الأخطاء اللاسلكي»، ورمز الإقران. لكل خطوة صورة بلغتك، وتظهر عليها علامة الإتمام تلقائيًا حين تُنجزها."),
-            ("ثم اضغط الزر.", "تُزال الآلات الموسيقية من كل التطبيقات. يبقى الإشعار ظاهرًا، وفيه زر الإيقاف."),
+            ("ثم اضغط الزر.", "تُزال الآلات الموسيقية من صوت تطبيقاتك. يبقى الإشعار ظاهرًا، وفيه زر الإيقاف."),
             ("وشغّل ما شئت.", "يوتيوب، إنستغرام، المتصفح، وأي تطبيق: محاضرة أو خبر أو وصفة، يصل الكلام وحده."),
         ],
-        priv_h="لا يخرج شيء من جهازك",
+        priv_h="الترشيح والتغطية يبقيان على جهازك",
         priv_p="التصفية وتمويه الشاشة يعملان على الجهاز. لا حساب، ولا إحصاءات، ولا إعلانات. وكل تغيير في الشيفرة يُختبر والإنترنت مقطوع عنه. والشيفرة كاملة على [[GitHub]] برخصة [[AGPL]]: يستطيع أي أحد أن يبني التطبيق منها ويقارنه بما ننشر.",
         facts=[("0", "اتصال بالإنترنت أثناء التصفية"), ("18", "لغة"), ("3", "أنظمة: أندرويد، ويندوز، لينكس"), ("30", "ملّي ثانية تأخير تقريبًا")],
         film_cap="مقطع تعريفي بواعية في [[52]] ثانية. صوته كلام فقط، بلا موسيقى.",
@@ -162,20 +162,21 @@ T = {
         faq=[
             ("هل يبقى الغناء والأناشيد؟", "لا، يُزال الغناء مع الآلات الموسيقية حاليًا، ويبقى الكلام والتلاوة. وللرجال خيار يكتم غناء النساء أيضًا، وهو ما زال في بدايته: يلتقط جزءًا من الغناء في الأغاني الحقيقية، لا كلّه."),
             ("هل يحتاج إلى الإنترنت؟", "لا. التصفية وتمويه الشاشة يعملان دون إنترنت. وحدها ميزة «فتح رابط» تتصل بموقع الرابط الذي تفتحه."),
-            ("ما الإعداد لمرة واحدة؟", "يتيح لواعية كتم الصوت الأصلي للتطبيقات أثناء التصفية. يجري على الهاتف نفسه عبر «تصحيح الأخطاء اللاسلكي» في أربع خطوات، تظهر علامة الإتمام على كل منها تلقائيًا حين تُنجزها. ودونه تعمل واعية، لكنها تسأل قبل كل تشغيل."),
-            ("هل يعمل على هاتفي؟", "أندرويد [[10]] أو أحدث. هواتف شاومي وأوبو وريلمي وون بلس لا تسمح للتطبيقات بالاحتفاظ ببعض الأذونات، فيتولّى مساعد واعية المهمة، دون إعداد مخفي تبحث عنه."),
+            ("ما الإعداد لمرة واحدة؟", "يتيح لواعية كتم الصوت الأصلي للتطبيقات أثناء التصفية. يجري على الهاتف نفسه عبر «تصحيح الأخطاء اللاسلكي» في أربع خطوات، تظهر علامة الإتمام على كل منها تلقائيًا حين تُنجزها. وهو ضروري: دونه تُسمع المعازف الأصلية مع الصوت المرشَّح، ويسأل أندرويد قبل كل تشغيل."),
+            ("هل يعمل على هاتفي؟", "أندرويد [[10]] أو أحدث. هواتف شاومي وأوبو وريلمي وون بلس لا تسمح للتطبيقات بالاحتفاظ ببعض الأذونات، فيتولّى مساعد واعية المهمة. ولذلك ثمن: يسأل أندرويد قبل كل تشغيل، ويتوقف المساعد عند إعادة تشغيل الهاتف وعند تحديث واعية، فتشغّله واعية من جديد حين تفتحها و«تصحيح الأخطاء اللاسلكي» مفعّل."),
+            ("هل يُبقي الأذان؟", "الكلام والتلاوة المسجّلة عن قرب تبقى. أما الأذان المسموع من بعيد، بصداه وصوت المكان، فكثيرًا ما يُكتم مع المعازف: هذا حدّ معروف نعمل عليه."),
             ("كم التأخير؟", "نحو [[30]] ملّي ثانية، أي أقل من عُشر ثانية، بين الصوت الأصلي وما تسمعه."),
             ("هل يستهلك البطارية؟", "الصوت الأحادي، وهو الافتراضي، يستهلك نحو نصف ما يستهلكه الستيريو. وفي واعية، يعرض «تقرير التشخيص» الاستهلاك في الساعة على هاتفك."),
-            ("هل يمكن منعي من إيقافه في لحظة ضعف؟", "اختر مدة انتظار قبل أي إيقاف، ورمزًا إن شئت. لكن لا شيء يمنع حذف التطبيق أو إيقافه الإجباري من إعدادات أندرويد، وواعية تقول ذلك بوضوح."),
+            ("هل يمكن منعي من إيقافه في لحظة ضعف؟", "اختر مدة انتظار قبل أي إيقاف، ورمزًا إن شئت. لكن لا شيء يمنع حذف التطبيق أو إيقافه الإجباري من إعدادات أندرويد، ولا إعادة تشغيل الهاتف، وواعية تقول ذلك بوضوح."),
             ("وويندوز ولينكس؟", "ويندوز [[10 (2004)]] أو أحدث: واعية في متجر مايكروسوفت، مجانًا، ويتحدّث المتجر بنفسه. ويبقى ملف [[zip]] في أسفل هذه الصفحة وعلى [[GitHub]]، لكنه غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز. لينكس: تطبيق سطح المكتب، أو سطر الأوامر وحده."),
             ("من يقف وراءه؟", "مشروع مفتوح المصدر برخصة [[AGPL]]، شيفرته كاملة على [[GitHub]]. يستطيع أي أحد أن يبني التطبيق منها بنفسه ويقارنه بما ننشر."),
         ],
         dl_btn="حمّل", dl_store="من متجر مايكروسوفت",
         dl_for={"android": "حمّل واعية لأندرويد", "windows": "حمّل واعية لويندوز", "linux": "حمّل واعية للينكس"},
         dl_rows=[
-            ("android", "أندرويد: [[waaiya.apk]]", APK, f"الإصدار [[{VERSION}]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[108 MB]]",
-             [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
-              ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
+            ("android", "أندرويد: [[waaiya.apk]]", APK, f"الإصدار [[{VERSION}]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[115 MB]]",
+             [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[96 MB]]"),
+              ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[94 MB]]")]),
             ("windows", "ويندوز: واعية في متجر مايكروسوفت", STORE, "مجانًا، وموقَّع من مايكروسوفت، ويتحدّث تلقائيًا. ويندوز [[10 (2004)]] أو أحدث.",
              [("ملف [[zip]]: فُكَّ ضغطه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
             ("linux", "لينكس: تطبيق سطح المكتب", LINUX_DESKTOP, "لينكس [[x64]] · [[58 MB]]",
@@ -191,7 +192,7 @@ T = {
     "en": dict(
         dir="ltr", other="ar", other_label="العربية", other_href="../",
         title="Waaiya: remove music from any app, keep the voice",
-        desc="A free, open-source app for Android, Windows and Linux. It removes musical instruments from the sound of every app, live, and keeps speech and Quran recitation.",
+        desc="A free, open-source app for Android, Windows and Linux. It removes musical instruments from the sound of your apps, live, and keeps speech and Quran recitation.",
         nav=[("hear", "Listen"), ("try", "Try it"), ("cover", "Screen blur"), ("lang", "Your language"), ("faq", "Questions")],
         nav_cta="Download",
         try_nav="Try it",
@@ -226,7 +227,7 @@ T = {
                 decode="The browser could not read this file. Try MP3, M4A or MP4.",
                 filter="Filtering failed on this device, so nothing is played as \u201cafter Waaiya\u201d.")),
         h1="Removes music, keeps the voice",
-        lead="A free, open-source app for Android, Windows and Linux. It removes musical instruments from the sound of every app, live, and keeps speech and Quran recitation. Nothing leaves your device.",
+        lead="A free, open-source app for Android, Windows and Linux. It removes musical instruments from the sound of your apps, live, and keeps speech and Quran recitation. The filtering happens on your device.",
         cta="Get Waaiya",
         power_label="Filtering on this page",
         r_off="Press the button: the horizontal lines on this page are a picture of real music.",
@@ -252,7 +253,7 @@ T = {
             ("Apps heard as they are", "Choose apps that skip filtering, or apps the screen blur leaves uncovered.", False),
         ],
         cover_h="Cover what the blur missed",
-        cover_p="Screen blur covers women, or immodest images, in every app, on the device itself. If it misses a picture, tap “Cover an area” and drag your finger over it. Try it on this picture.",
+        cover_p="Screen blur covers images of women, or immodest images, in your apps, on the device itself. If it misses a picture, tap “Cover an area” and drag your finger over it. Try it on this picture.",
         cover_add="Cover an area", cover_clear="Remove your covers", cover_hint="Drag over the picture.",
         cover_alt="A loudspeaker with grains of sand on it, from Waaiya's introduction video",
         cover_note="It stays covered until you remove it or the blur stops.",
@@ -276,17 +277,17 @@ T = {
         lang_cap="Waaiya on Windows, the filter page: {name}",
         lang_alt="Waaiya's filter page on Windows in {name}",
         phone_h="On your phone",
-        phones=[("on", "Filter", "One button for every app"), ("screen", "Screen", "Blur for women and immodest images"),
+        phones=[("on", "Filter", "One button for your apps"), ("screen", "Screen", "Blur for women and immodest images"),
                 ("settings2", "Prayer times", "Silence, and a text to callers"), ("settings3", "Protection", "Wait before turning off, and a PIN")],
         phone_meta="Android 15",
         how_h="How to start",
         how=[
             ("First, install Waaiya.", "waaiya.apk for Android 10 or newer. Or the Windows and Linux apps."),
             ("Then set it up once.", "On the phone itself, in four steps: Wi‑Fi, Developer options, Wireless debugging and the pairing code. Each step has a picture in your language and is checked off automatically when you finish it."),
-            ("Then press the button.", "Musical instruments are removed from every app. The notification stays, with its Stop button."),
+            ("Then press the button.", "Musical instruments are removed from your apps' sound. The notification stays, with its Stop button."),
             ("And play anything.", "YouTube, Instagram, the browser, any app: a lecture, the news, a recipe, only the voice comes through."),
         ],
-        priv_h="Nothing leaves your device",
+        priv_h="The filter and the blur stay on your device",
         priv_p="Filtering and screen blur run on the device. No account, no analytics, no ads. Every change to the code is tested with the internet cut off. All the code is on GitHub under the AGPL: anyone can build the app from it and compare it with what we publish.",
         facts=[("0", "internet connections while filtering"), ("18", "languages"), ("3", "platforms: Android, Windows, Linux"), ("30", "milliseconds of delay, roughly")],
         film_cap="An introduction to Waaiya in 52 seconds. Its sound is voice only, with no music.",
@@ -295,20 +296,21 @@ T = {
         faq=[
             ("Are singing and nasheeds kept?", "No. For now, singing is removed with the musical instruments, and speech and recitation stay. Men also have an option that mutes women's singing. It is still early: it catches part of the singing in real songs, not all of it."),
             ("Does it need the internet?", "No. Filtering and screen blur work offline. Only the “Open a link” feature contacts the site of the link you open."),
-            ("What is the one-time setup?", "It lets Waaiya silence the original sound of the apps while it filters. It runs on the phone itself through Wireless debugging, in four steps, each checked off automatically as you finish it. Without it Waaiya still works, but asks before each start."),
-            ("Will it work on my phone?", "Android 10 or newer. Xiaomi, OPPO, realme and OnePlus phones do not let apps keep some permissions, so Waaiya's helper takes over, with no hidden setting to find."),
+            ("What is the one-time setup?", "It lets Waaiya silence the original sound of the apps while it filters. It runs on the phone itself through Wireless debugging, in four steps, each checked off automatically as you finish it. It is needed: without it the original music is heard along with the filtered sound, and Android asks before each start."),
+            ("Will it work on my phone?", "Android 10 or newer. Xiaomi, OPPO, realme and OnePlus phones do not let apps keep some permissions, so Waaiya's helper takes over. That has a cost: Android asks before each start, and the helper stops when the phone restarts and when Waaiya is updated; Waaiya starts it again when you open it with Wireless debugging on."),
+            ("Is the adhan kept?", "Speech and recitation recorded up close are kept. An adhan heard from afar, with the echo and sound of the place, is often muted with the music: a known limit we are working on."),
             ("How much delay?", "About 30 milliseconds, less than a tenth of a second, between the original sound and what you hear."),
             ("Does it drain the battery?", "Mono sound, the default, uses about half of what stereo uses. The Diagnostics report in Waaiya shows the use per hour on your phone."),
-            ("Can I be stopped from turning it off in a weak moment?", "Choose a wait before turning off, and a PIN if you like. But nothing can prevent uninstalling or a force stop from Android's settings, and Waaiya says so plainly."),
+            ("Can I be stopped from turning it off in a weak moment?", "Choose a wait before turning off, and a PIN if you like. But nothing can prevent uninstalling, a force stop from Android's settings or restarting the phone, and Waaiya says so plainly."),
             ("Windows and Linux?", "Windows 10 (2004) or newer: Waaiya is in the Microsoft Store, free, and the Store keeps it up to date. The zip at the bottom of this page and on GitHub is still there, but it is not signed, so Windows Smart App Control may block it. Linux: the desktop app, or the command line alone."),
             ("Who is behind it?", "An open-source project under the AGPL, with all its code on GitHub. Anyone can build the app from it and compare it with what we publish."),
         ],
         dl_btn="Download", dl_store="Get it from the Microsoft Store",
         dl_for={"android": "Get Waaiya for Android", "windows": "Get Waaiya for Windows", "linux": "Get Waaiya for Linux"},
         dl_rows=[
-            ("android", "Android: waaiya.apk", APK, f"Version {VERSION}, for every kind of phone with Android 10 or newer · 108 MB",
-             [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
-              ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
+            ("android", "Android: waaiya.apk", APK, f"Version {VERSION}, for every kind of phone with Android 10 or newer · 115 MB",
+             [("Smaller, for most phones · arm64-v8a", APK_ARM64, "96 MB"),
+              ("For older 32-bit phones · armeabi-v7a", APK_V7A, "94 MB")]),
             ("windows", "Windows: Waaiya in the Microsoft Store", STORE, "Free, signed by Microsoft, updates itself. Windows 10 (2004) or newer.",
              [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed, so Windows Smart App Control may block it.")]),
             ("linux", "Linux: the desktop app", LINUX_DESKTOP, "Linux x64 · 58 MB",
@@ -402,7 +404,7 @@ def jsonld(lang, t, root_url):
         "license": "https://www.gnu.org/licenses/agpl-3.0.html",
         "isAccessibleForFree": True, "sameAs": [REPO, STORE],
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
-        "image": SITE + "assets/og.jpg",
+        "image": SITE + ("assets/og.jpg" if lang == "ar" else "assets/og-en.jpg"),
         "screenshot": SITE + f"assets/{lang}-on.webp",
     }
     faq = {"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": lang,
@@ -492,7 +494,7 @@ def page(lang, root):
 <meta property="og:title" content="{html.escape(t['title'])}">
 <meta property="og:description" content="{html.escape(t['desc'])}">
 <meta property="og:site_name" content="{'واعية' if rtl else 'Waaiya'}">
-<meta property="og:image" content="{SITE}assets/og.jpg">
+<meta property="og:image" content="{SITE}assets/{'og.jpg' if lang == 'ar' else 'og-en.jpg'}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{html.escape(plain(t['cover_alt']))}">
@@ -501,7 +503,7 @@ def page(lang, root):
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{html.escape(t['title'])}">
 <meta name="twitter:description" content="{html.escape(t['desc'])}">
-<meta name="twitter:image" content="{SITE}assets/og.jpg">
+<meta name="twitter:image" content="{SITE}assets/{'og.jpg' if lang == 'ar' else 'og-en.jpg'}">
 <meta name="theme-color" content="#053D35">
 {icons(a)}
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -1086,7 +1088,7 @@ def test_page(lang, root):
 LLMS = f"""# Waaiya (واعية)
 
 > Waaiya is a free, open-source (AGPL) app for Android 10+, Windows 10 (2004)+ and Linux that removes musical
-> instruments from the sound of every app, live (about 30 ms of delay), and keeps speech and Quran recitation.
+> instruments from the sound of your apps, live (about 30 ms of delay), and keeps speech and Quran recitation.
 > Optional screen blur for women or immodest images, prayer-time silence, a wait before turning off and a parent PIN.
 > Everything runs on the device; nothing is sent anywhere.
 

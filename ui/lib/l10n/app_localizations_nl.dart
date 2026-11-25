@@ -13,14 +13,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Haalt muziekinstrumenten uit elke app en houdt spraak en recitatie.';
+      'Haalt muziekinstrumenten uit het geluid van je apps en houdt spraak en recitatie.';
 
   @override
   String get onboardTitle => 'Welkom';
 
   @override
   String get onboardBody =>
-      'Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze telefoon. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd.';
+      'Waaiya haalt muziekinstrumenten uit het geluid van de apps op deze telefoon. Spraak en Koranrecitatie blijven behouden. Zangstemmen worden ook verwijderd.';
 
   @override
   String get onboardQuestion => 'Ik ben';
@@ -46,15 +46,15 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Instrumenten worden uit alle apps verwijderd. Het geluid komt ongeveer $delayMs ms later (1000 ms is één seconde).';
+    return 'Het geluid van je apps wordt gefilterd. Het komt ongeveer $delayMs ms later (1000 ms is één seconde).';
   }
 
   @override
-  String get stateOffDetail => 'Tik op de knop om te starten.';
+  String get stateOffDetail => 'Druk op de knop om te starten.';
 
   @override
   String get stateModelFailed =>
-      'Het geluidsmodel kon niet laden, dus het geluid is voor de zekerheid gedempt.';
+      'Het filter kon niet laden, dus het geluid is gedempt in plaats van ongefilterd af te spelen.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android heeft het filteren gestopt. Tik op de knop om opnieuw te starten.';
+      'Android heeft het filteren gestopt. Druk op de knop om opnieuw te starten.';
 
   @override
   String get stateSilencedTitle => 'Filteren gestopt';
 
   @override
   String get stateSilenced =>
-      'Filteren gestopt: andere apps zijn gedempt. Tik op de knop om opnieuw te starten, of op Stoppen om ze ongefilterd te horen.';
+      'Filteren gestopt: andere apps zijn gedempt. Druk op de knop om opnieuw te starten, of op Stoppen om ze ongefilterd te horen.';
 
   @override
   String get releaseSilence => 'Stoppen: apps ongefilterd horen';
@@ -82,7 +82,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android vraagt of je je scherm wilt delen. Alleen het geluid wordt gebruikt: er wordt niets opgenomen of verstuurd.';
+      'Android vraagt of je je scherm wilt delen. Er wordt niets opgenomen of verstuurd.';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Zonder de eenmalige installatie hieronder hoor je de muziek en het gefilterde geluid tegelijk.';
+      'Zonder de eenmalige installatie hoor je de muziek en het gefilterde geluid tegelijk.';
 
   @override
   String get step1Title => 'Shizuku installeren';
@@ -246,11 +246,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get change => 'Wijzigen';
 
   @override
-  String get playerTitle => 'Video\'s perfect synchroon';
+  String get playerTitle => 'Video\'s met beeld en geluid synchroon';
 
   @override
   String get playerBody =>
-      'Deel een video met Waaiya (of gebruik “Openen met”) om hem zonder vertraging gefilterd te bekijken.';
+      'Deel een video met Waaiya (of gebruik “Openen met”) om hem gefilterd te bekijken, met beeld en geluid synchroon, zonder de vertraging van het live filter.';
 
   @override
   String get licences => 'Opensourcelicenties';
@@ -391,7 +391,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Bedekt mensen en afbeeldingen op het scherm, in elke app, terwijl het filteren aan staat. Het werkt op de telefoon zelf; er wordt niets verstuurd.';
+      'Bedekt mensen en afbeeldingen op het scherm terwijl het filteren aan staat. Het werkt op de telefoon zelf; er wordt niets verstuurd.';
 
   @override
   String get blurOnTitle => 'De vervaging staat aan';
@@ -407,13 +407,13 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'Tik op de knop om te starten. Het filteren start mee.';
+      'Druk op de knop om te starten. Het filteren start mee.';
 
   @override
   String get blurWhatTitle => 'Wat wordt vervaagd';
 
   @override
-  String get blurWomenTitle => 'Vrouwen vervagen';
+  String get blurWomenTitle => 'Afbeeldingen van vrouwen vervagen';
 
   @override
   String get blurWomenBody =>
@@ -801,11 +801,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get wsetupCodeOk => 'Koppelen';
 
   @override
-  String get blurStrictTitle => 'Wie onbedekt blijft';
+  String get blurStrictTitle => 'Hoe zeker voordat een man getoond wordt';
 
   @override
   String blurStrictValue(String level) {
-    return 'Wie onbedekt blijft: $level';
+    return 'Hoe zeker voordat een man getoond wordt: $level';
   }
 
   @override
@@ -814,7 +814,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get blurStrict1 =>
-      'Evenwichtig: ongeveer twee keer zoveel mannen onbedekt';
+      'Evenwichtig: ongeveer twee keer zoveel mannen getoond';
 
   @override
   String get blurStrict2 => 'Soepel: iets meer mannen dan evenwichtig';
@@ -830,19 +830,19 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Iedereen van wie de app niet zeker weet dat het een man is, wordt bedekt. Streng laat ongeveer 7 op de 100 mannen onbedekt; evenwichtig ongeveer 14, soepel ongeveer 16. Elke stap minder streng laat ook ongeveer 1 vrouw op de 100 meer onbedekt.';
+      'Iemand wordt alleen getoond als de app zeker weet dat het een man is; alle anderen worden vervaagd. Streng toont ongeveer 7 op de 100 mannen, evenwichtig ongeveer 14, soepel ongeveer 16. Sommige vrouwen worden toch gemist; elke stap minder streng mist er ongeveer 1 op de 100 meer.';
 
   @override
   String get stateOnNotMuted =>
-      'Het originele geluid is nog niet gedempt, dus je hoort de muziek samen met het gefilterde geluid. Maak de eenmalige installatie hieronder af.';
+      'Het originele geluid is nog niet gedempt, dus je hoort de muziek samen met het gefilterde geluid. Maak de eenmalige installatie af op de pagina “Installatie”.';
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (onderaan dit scherm).';
+      'Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (Instellingen).';
 
   @override
   String get stateTooSlow =>
-      'Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg. “Een link openen” hieronder werkt nog wel: het filtert de video voordat die wordt afgespeeld.';
+      'Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg. “Een link openen” op de pagina “Links” werkt nog wel: het filtert de video voordat die wordt afgespeeld.';
 
   @override
   String get stateMonoNote =>
@@ -850,12 +850,12 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'Gedempt, omdat het geen filteren toestaat: $apps.';
+    return 'Gedempt omdat filteren niet wordt toegestaan door: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'Speelt ongefilterd af, omdat het geen filteren toestaat: $apps.';
+    return 'Speelt ongefilterd af omdat filteren niet wordt toegestaan door: $apps.';
   }
 
   @override
@@ -887,7 +887,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Wat Waaiya op deze telefoon ziet. Kopieer het of deel het met degene die je helpt. De app zelf verstuurt niets.';
+      'Wat Waaiya op deze telefoon ziet. Kopieer het of deel het met degene die je helpt. Waaiya verstuurt het niet zelf: jij kiest wie het krijgt.';
 
   @override
   String get notifStoppedTitle => 'Waaiya is gestopt';
@@ -928,7 +928,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get setupGo => 'Naar de installatie';
 
   @override
-  String get helperTitle => 'Tikken door de afdekkingen';
+  String get helperTitle => 'Door vervaagde delen heen tikken';
 
   @override
   String get helperBodyOff =>
@@ -939,7 +939,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'De helper van Waaiya tekent de afdekkingen: tikken gaan erdoorheen. Hij stopt als de telefoon opnieuw opstart of als USB-foutopsporing wordt uitgezet; tik dan opnieuw op de knop.';
+      'De helper van Waaiya tekent de vervaging: tikken gaan erdoorheen. Hij stopt als de telefoon opnieuw opstart of als “USB-foutopsporing” (een aparte schakelaar in Ontwikkelaarsopties) wordt uitgezet; tik dan opnieuw op de knop.';
 
   @override
   String get helperShizukuOn =>
@@ -955,37 +955,38 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settingsGeneralTitle => 'Algemeen';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle =>
+      'Eenvoudige modus (test): zonder Ontwikkelaarsopties';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Voor telefoons waarop de installatie hieronder te moeilijk is. Terwijl Waaiya filtert, dempt het het mediageluid van de telefoon en speelt het het gefilterde geluid af via een ander geluidskanaal. Met je volumeknoppen stel je het volume van Waaiya in. Android vraagt bij elke start om het scherm te delen. Het mediageluid komt terug als het filteren stopt.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Eenvoudige modus gebruiken';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Geluidskanaal: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'Wekker';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Melding';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Hoor je niets, of komt het geluid uit de luidspreker van de telefoon terwijl je oordopjes in hebt, probeer dan het andere kanaal. Melding is stil als de telefoon op trillen of Niet storen staat.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Dit is een test. Stuur na het uitproberen (luidspreker, oordopjes, Bluetooth) het diagnoserapport vanuit Instellingen.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Eenvoudige modus (test): het mediageluid is gedempt terwijl Waaiya filtert.';
 
   @override
   String get worshipPrayerFajr => 'Fajr';
@@ -1128,8 +1129,7 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Instrumenten worden uit alle apps verwijderd.';
+  String get stateOnDetailNoDelay => 'Het geluid van je apps wordt gefilterd.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1208,7 +1208,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Wat Waaiya op deze computer ziet. Kopieer het en geef het aan degene die je helpt. De app zelf verstuurt niets.';
+      'Wat Waaiya op deze computer ziet. Kopieer het en geef het aan degene die je helpt. Waaiya verstuurt het niet zelf: jij kiest wie het krijgt.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1290,7 +1290,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get fixCancel => 'Annuleren';
 
   @override
-  String get fixBlurAppsTitle => 'Apps zonder afdekking';
+  String get fixBlurAppsTitle => 'Apps zonder vervaging';
 
   @override
   String get fixBlurAppsBody =>
@@ -1344,7 +1344,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'Genoteerd ($count notities op dit apparaat).';
+    return 'Genoteerd. Notities op dit apparaat: $count.';
   }
 
   @override
@@ -1430,7 +1430,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get worshipAsrTitle => 'Tijd van Asr';
 
   @override
-  String get worshipAsrStandard => 'Standaard (shafi\'i, maliki, hanbali)';
+  String get worshipAsrStandard => 'Meerderheid (shafi\'i, maliki, hanbali)';
 
   @override
   String get worshipAsrHanafi => 'Hanafi';
@@ -1745,7 +1745,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Met een pincode moet je eerst de pincode invoeren om het filteren te stoppen of een bescherming uit te zetten. Een ouder stelt er bijvoorbeeld een in, zodat een kind het filteren niet kan uitzetten. Ook voor het wijzigen van de wachttijd of de pincode is de pincode nodig.';
+      'Met een pincode moet je eerst de pincode invoeren om het filteren te stoppen of een bescherming uit te zetten. Een ouder stelt er bijvoorbeeld een in, zodat een kind het filteren in Waaiya niet kan uitzetten (wat dit niet kan tegenhouden, staat hieronder). Ook voor het wijzigen van de wachttijd of de pincode is de pincode nodig.';
 
   @override
   String get protectPinForgot =>
@@ -1777,7 +1777,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'Verkeerde pincode. Nog $count pogingen voor een pauze.';
+    return 'Verkeerde pincode. Pogingen over voor een pauze: $count.';
   }
 
   @override
@@ -1839,7 +1839,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Wat dit niet kan tegenhouden: geforceerd stoppen, verwijderen, de gegevens van Waaiya wissen en de eigen instellingen van Android. Om dat te blokkeren zijn speciale Android-rechten nodig die Waaiya niet gebruikt. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.';
+      'Wat dit niet kan tegenhouden: de telefoon opnieuw opstarten (het filteren start niet vanzelf opnieuw), geforceerd stoppen, verwijderen, de gegevens van Waaiya wissen en de eigen instellingen van Android. Om dat te blokkeren zijn speciale Android-rechten nodig die Waaiya niet gebruikt. Dit beschermt tegen een zwak moment, niet tegen iemand die vastbesloten is.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1889,7 +1889,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze computer. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd.';
+      'Waaiya haalt muziekinstrumenten uit het geluid van de apps op deze computer. Spraak en Koranrecitatie blijven behouden. Zangstemmen worden ook verwijderd.';
 
   @override
   String get worshipUseLocation => 'Mijn locatie gebruiken';
@@ -1923,7 +1923,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'De officiële tijden van het ministerie van Habous en Islamitische Zaken voor $city.';
+    return 'Tijden berekend volgens de tabellen van het ministerie van Habous en Islamitische Zaken voor $city.';
   }
 
   @override
@@ -1945,7 +1945,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd. Werkt vanaf de volgende start.';
+      'Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Zolang die is opgeheven, kan een andere schermdeling op hetzelfde moment je meldingen en codes ook aan anderen laten zien.';
 
   @override
   String get notifTextNextStart =>
@@ -1976,14 +1976,14 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get notifTextForced =>
-      'Aan: op deze telefoon vraagt Android voor elke start en zou het filteren dan bij elke schermvergrendeling stoppen. Waaiya heft deze bescherming tijdens het filteren op, waardoor ook de meldingstekst zichtbaar is. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd.';
+      'Aan: op deze telefoon vraagt Android voor elke start en zou het filteren dan bij elke schermvergrendeling stoppen. Waaiya heft deze bescherming tijdens het filteren op, waardoor ook de meldingstekst zichtbaar is. Zolang die is opgeheven, kan een andere schermdeling op hetzelfde moment je meldingen en codes ook aan anderen laten zien.';
 
   @override
   String get oneAppTitle => 'Bij het starten: ‘Eén app delen’, dan Waaiya';
 
   @override
   String get oneAppBody =>
-      'Als Android vraagt wat je wilt delen, kies ‘Eén app delen’ en dan Waaiya. Alle apps worden nog steeds gefilterd, meldingen blijven leesbaar en het filteren gaat door als het scherm vergrendelt. Met het hele scherm verbergt Android meldingstekst en stopt het filteren bij elke vergrendeling.';
+      'Als Android vraagt wat je wilt delen, kies ‘Eén app delen’ en dan Waaiya. Andere apps worden nog steeds gefilterd, meldingen blijven leesbaar en het filteren gaat door als het scherm vergrendelt. Met het hele scherm verbergt Android meldingstekst en stopt het filteren bij elke vergrendeling.';
 
   @override
   String get oneAppPair =>
@@ -1996,4 +1996,58 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get blurNeedsRestart =>
       'Stop het filteren en start het opnieuw om de vervaging te gebruiken: die heeft het hele scherm nodig, en dit filteren begon met ‘Eén app delen’ aangeboden.';
+
+  @override
+  String get micOpenSettings =>
+      'Open de instellingen van Waaiya om de microfoon toe te staan';
+
+  @override
+  String get keepRunningTitle => 'Laat Waaiya draaien';
+
+  @override
+  String get keepRunningBattery =>
+      'Deze telefoon kan Waaiya na een tijdje sluiten om batterij te sparen, en dan stopt het filteren. Kies in de instellingen van Waaiya bij Batterij „Onbeperkt”. Op Xiaomi, Redmi en POCO: „Geen beperkingen”, en zet ook Autostart aan.';
+
+  @override
+  String get keepRunningNotifications =>
+      'De meldingen van Waaiya staan uit, dus het kan je niet laten weten wanneer het filteren stopt. Zet ze aan in de instellingen van Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Instellingen van Waaiya openen';
+
+  @override
+  String get lockAskTitle => 'Blijven filteren als het scherm vergrendelt?';
+
+  @override
+  String get lockTitle => 'Blijven filteren als het scherm vergrendelt';
+
+  @override
+  String get lockBody =>
+      'Op deze telefoon vraagt Android voor elke start en stopt het filteren dan bij elke schermvergrendeling. Waaiya kan dat voorkomen door tijdens het filteren de bescherming voor scherm delen van Android op te heffen, en zet die terug als het filteren stopt. Zolang die is opgeheven, kan een ander scherm delen op hetzelfde moment (een videogesprek bijvoorbeeld) ook je meldingen tonen. Een wijziging geldt vanaf de volgende start.';
+
+  @override
+  String get lockYes => 'Blijven filteren';
+
+  @override
+  String get lockNo => 'Stoppen bij elke vergrendeling';
+
+  @override
+  String get sendToSupport => 'Naar Waaiya sturen';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'De eenmalige installatie is nog niet gedaan. Zonder die installatie kan Waaiya het originele geluid niet dempen: je hoort de muziek en het gefilterde geluid tegelijk.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'Een wachttijd van $value kiezen? Vanaf nu wacht het uitzetten van het filter of een bescherming $value, en ook het korter maken van deze wachttijd.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android heeft Waaiya gesloten tijdens het filteren, dus het geluid werd niet meer gefilterd.';
 }

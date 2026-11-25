@@ -98,6 +98,9 @@ object ModelStore {
     const val BLUR_SEG = "blur_seg.onnx"
     private val BLUR_MODELS = listOf(BLUR_PERSON, BLUR_GENDER, BLUR_NSFW, BLUR_SEG)
 
+    /** One copy at a time: the audio thread, the blur and a model reload call this at once at a start, and two
+     *  copies writing the same file would leave a model half written. */
+    @Synchronized
     fun modelPath(context: Context): String {
         val dir = File(context.filesDir, "models").apply { mkdirs() }
         val version = context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
@@ -109,7 +112,8 @@ object ModelStore {
             for (name in names) {
                 runCatching { context.assets.open(name).use { i -> File(dir, name).outputStream().use { i.copyTo(it) } } }
             }
-            stamp.writeText(version.toString())
+            // a full disk: the models are copied again next time instead of ending the caller's thread
+            runCatching { stamp.writeText(version.toString()) }
         }
         return File(dir, MODEL).absolutePath
     }

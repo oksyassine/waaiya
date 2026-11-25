@@ -83,6 +83,15 @@ class Settings(context: Context) {
         get() = p.getBoolean("show_notification_text", false)
         set(v) = p.edit().putBoolean("show_notification_text", v).apply()
 
+    /**
+     * On a phone where Android asks before each start (no PROJECT_MEDIA), Android stops filtering at every screen lock
+     * unless its screen-share protection is lifted while filtering (ScreenShareProtection.neededForLock). The user's
+     * answer: -1 not asked yet (nothing is lifted; Start asks), 0 stop at each lock, 1 keep filtering (lifted).
+     */
+    var keepAtLock: Int
+        get() = p.getInt("keep_at_lock", -1)
+        set(v) = p.edit().putInt("keep_at_lock", v).apply()
+
     /** This phone's capture refused the sound of a one-app share once: ask for the entire screen ([CaptureChoice]). */
     var oneAppRefused: Boolean
         get() = p.getBoolean("one_app_refused", false)

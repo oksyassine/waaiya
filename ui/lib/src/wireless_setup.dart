@@ -96,7 +96,7 @@ Future<void> askPairingCode(BuildContext context) {
                   controller: field,
                   autofocus: true,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9 ]')), LengthLimitingTextInputFormatter(7)],
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9\u0660-\u0669\u06F0-\u06F9 ]')), LengthLimitingTextInputFormatter(7)],
                   decoration: InputDecoration(hintText: l.wsetupCodeHint, errorText: error),
                   onSubmitted: (_) => pair(),
                 ),

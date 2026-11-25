@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart' show Locale;
 
@@ -115,7 +116,10 @@ class DesktopBackend extends MemoryBackend {
         ? '${file.parent.path}${Platform.pathSeparator}protect.json'
         : '${defaultNotesFile().parent.path}${Platform.pathSeparator}protect.json');
     file ??= defaultSettingsFile();
-    systemLocale ??= Platform.localeName;
+    // the computer's languages in the user's order (a test gives one); the first one Waaiya has is used
+    final systemLocales = systemLocale != null
+        ? [systemLocale]
+        : [...ui.PlatformDispatcher.instance.locales.map((l) => l.toLanguageTag()), Platform.localeName];
     platform ??= Platform.operatingSystem;
     licencesDir ??= Directory('${File(Platform.resolvedExecutable).parent.path}${Platform.pathSeparator}licences');
     final linux = platform == 'linux', windows = platform == 'windows';
@@ -145,10 +149,10 @@ class DesktopBackend extends MemoryBackend {
       version: (engine?.bundledVersion ?? '').split('-').first.isNotEmpty
           ? engine!.bundledVersion.split('-').first
           : appVersion,
-      // The saved choice; on a first run the computer's language when Waaiya has it, else Arabic. Someone who used
+      // The saved choice; on a first run the first of the computer's languages that Waaiya has, else Arabic. Someone who used
       // Waaiya before this rule has a settings file without a language and keeps Arabic.
       language: appLanguageOf(saved[_langKey] as String?) ??
-          (saved.isEmpty ? appLanguageOf(systemLocale) ?? 'ar' : 'ar'),
+          (saved.isEmpty ? systemLocales.map(appLanguageOf).whereType<String>().firstOrNull ?? 'ar' : 'ar'),
       settings: WaaiyaSettings.fromMap(settings),
       filter: FilterInfo(simulated: engine == null),
       detectorModel: detector,

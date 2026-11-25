@@ -13,14 +13,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get tagline =>
-      'সব অ্যাপ থেকে বাদ্যযন্ত্র সরিয়ে দেয়, কথা ও তিলাওয়াত রেখে দেয়।';
+      'আপনার অ্যাপগুলোর শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়, কথা ও তিলাওয়াত রেখে দেয়।';
 
   @override
   String get onboardTitle => 'স্বাগতম';
 
   @override
   String get onboardBody =>
-      'Waaiya এই ফোনের সব অ্যাপের শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। আপাতত গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
+      'Waaiya এই ফোনের অ্যাপগুলোর শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
 
   @override
   String get onboardQuestion => 'আমি';
@@ -46,15 +46,15 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে। শব্দ প্রায় $delayMs মিলিসেকেন্ড দেরিতে আসে (১০০০ মিলিসেকেন্ডে এক সেকেন্ড)।';
+    return 'আপনার অ্যাপগুলোর শব্দ ফিল্টার করা হচ্ছে। এটি প্রায় $delayMs মিলিসেকেন্ড দেরিতে আসে (১০০০ মিলিসেকেন্ডে এক সেকেন্ড)।';
   }
 
   @override
-  String get stateOffDetail => 'চালু করতে বোতামে ট্যাপ করুন।';
+  String get stateOffDetail => 'চালু করতে বোতাম চাপুন।';
 
   @override
   String get stateModelFailed =>
-      'শব্দের মডেল লোড হয়নি, তাই নিরাপত্তার জন্য শব্দ বন্ধ রাখা হয়েছে।';
+      'ফিল্টার লোড হয়নি, তাই ফিল্টার ছাড়া বাজানোর বদলে শব্দ বন্ধ রাখা হয়েছে।';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android ফিল্টারিং বন্ধ করে দিয়েছে। আবার চালু করতে বোতামে ট্যাপ করুন।';
+      'Android ফিল্টারিং বন্ধ করে দিয়েছে। আবার চালু করতে বোতাম চাপুন।';
 
   @override
   String get stateSilencedTitle => 'ফিল্টারিং বন্ধ হয়েছে';
 
   @override
   String get stateSilenced =>
-      'ফিল্টারিং বন্ধ হয়েছে: অন্য অ্যাপগুলো নীরব করা আছে। আবার চালু করতে বোতামে ট্যাপ করুন, অথবা ফিল্টার ছাড়া শুনতে “বন্ধ করুন” চাপুন।';
+      'ফিল্টারিং বন্ধ হয়েছে: অন্য অ্যাপগুলো নীরব করা আছে। আবার চালু করতে বোতাম চাপুন, অথবা ফিল্টার ছাড়া শুনতে “বন্ধ করুন” চাপুন।';
 
   @override
   String get releaseSilence => 'বন্ধ করুন: ফিল্টার ছাড়া অ্যাপ শুনুন';
@@ -82,7 +82,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android আপনার স্ক্রিন শেয়ার করার অনুমতি চাইবে। শুধু শব্দ ব্যবহার করা হয়: কিছুই রেকর্ড বা পাঠানো হয় না।';
+      'Android আপনার স্ক্রিন শেয়ার করার অনুমতি চাইবে। কিছুই রেকর্ড বা পাঠানো হয় না।';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'নিচের এককালীন সেটআপ ছাড়া আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।';
+      'এককালীন সেটআপ ছাড়া আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।';
 
   @override
   String get step1Title => 'Shizuku ইনস্টল করুন';
@@ -247,11 +247,11 @@ class AppLocalizationsBn extends AppLocalizations {
   String get change => 'বদলান';
 
   @override
-  String get playerTitle => 'একদম মিলিয়ে ভিডিও';
+  String get playerTitle => 'শব্দ ও ছবি মিলিয়ে ভিডিও';
 
   @override
   String get playerBody =>
-      'কোনো ভিডিও Waaiya-তে শেয়ার করুন (বা “এর মাধ্যমে খুলুন” ব্যবহার করুন), কোনো বিলম্ব ছাড়াই ফিল্টার করে দেখতে।';
+      'কোনো ভিডিও Waaiya-তে শেয়ার করুন (বা “এর মাধ্যমে খুলুন” ব্যবহার করুন), লাইভ ফিল্টারের বিলম্ব ছাড়াই, শব্দ ও ছবি মিলিয়ে ফিল্টার করে দেখতে।';
 
   @override
   String get licences => 'ওপেন সোর্স লাইসেন্স';
@@ -392,7 +392,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'ফিল্টারিং চালু থাকাকালে সব অ্যাপে স্ক্রিনের মানুষ ও ছবি ঢেকে দেয়। এটি ফোনেই চলে; কিছুই কোথাও পাঠানো হয় না।';
+      'ফিল্টারিং চালু থাকাকালে স্ক্রিনের মানুষ ও ছবি ঢেকে দেয়। এটি ফোনেই চলে; কিছুই কোথাও পাঠানো হয় না।';
 
   @override
   String get blurOnTitle => 'ব্লার চালু আছে';
@@ -408,13 +408,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'চালু করতে বোতামে ট্যাপ করুন। এর সাথে ফিল্টারিংও শুরু হয়।';
+      'চালু করতে বোতাম চাপুন। এর সাথে ফিল্টারিংও শুরু হয়।';
 
   @override
   String get blurWhatTitle => 'কী ব্লার করা হবে';
 
   @override
-  String get blurWomenTitle => 'নারীদের ব্লার করুন';
+  String get blurWomenTitle => 'নারীদের ছবি ব্লার করুন';
 
   @override
   String get blurWomenBody =>
@@ -801,11 +801,11 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wsetupCodeOk => 'পেয়ার করুন';
 
   @override
-  String get blurStrictTitle => 'কারা ঢাকা থাকবে না';
+  String get blurStrictTitle => 'কোনো পুরুষকে দেখানোর আগে কতটা নিশ্চিত';
 
   @override
   String blurStrictValue(String level) {
-    return 'কারা ঢাকা থাকবে না: $level';
+    return 'কোনো পুরুষকে দেখানোর আগে কতটা নিশ্চিত: $level';
   }
 
   @override
@@ -813,7 +813,7 @@ class AppLocalizationsBn extends AppLocalizations {
       'কঠোর: শুধু যাদের অ্যাপ প্রায় নিশ্চিতভাবে পুরুষ মনে করে';
 
   @override
-  String get blurStrict1 => 'মাঝামাঝি: প্রায় দ্বিগুণ পুরুষ খোলা থাকে';
+  String get blurStrict1 => 'মাঝামাঝি: প্রায় দ্বিগুণ পুরুষ দেখানো হয়';
 
   @override
   String get blurStrict2 => 'শিথিল: মাঝামাঝির চেয়ে আরও কিছু পুরুষ';
@@ -829,19 +829,19 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'অ্যাপ যাকে পুরুষ বলে নিশ্চিত নয়, তাকে ঢেকে দেওয়া হয়। কঠোরে প্রতি ১০০ জনে প্রায় ৭ জন পুরুষ খোলা থাকে; মাঝামাঝিতে প্রায় ১৪, শিথিলে প্রায় ১৬। প্রতিটি কম কঠোর ধাপে প্রতি ১০০ জনে প্রায় আরও ১ জন নারীও খোলা থেকে যায়।';
+      'অ্যাপ যখন নিশ্চিত হয় যে কেউ পুরুষ, শুধু তখনই তাকে দেখানো হয়; বাকি সবাইকে ব্লার করা হয়। কঠোরে প্রতি ১০০ জনে প্রায় ৭ জন পুরুষ দেখানো হয়; মাঝামাঝিতে প্রায় ১৪, শিথিলে প্রায় ১৬। তবুও কিছু নারী ধরা পড়েন না; প্রতিটি কম কঠোর ধাপে প্রতি ১০০ জনে আরও প্রায় ১ জন ধরা পড়েন না।';
 
   @override
   String get stateOnNotMuted =>
-      'আসল শব্দ এখনো নীরব হয়নি, তাই আপনি ফিল্টার করা শব্দের সাথে মিউজিকও শুনছেন। নিচের এককালীন সেটআপ শেষ করুন।';
+      'আসল শব্দ এখনো নীরব হয়নি, তাই আপনি ফিল্টার করা শব্দের সাথে মিউজিকও শুনছেন। “সেটআপ” পাতায় এককালীন সেটআপ শেষ করুন।';
 
   @override
   String get stateOnMuteFailing =>
-      'এখন যে অ্যাপ বাজছে, Waaiya তার আসল শব্দ নীরব করতে পারছে না, তাই মিউজিক এখনো শোনা যেতে পারে। ফিল্টারিং বন্ধ করে আবার চালু করুন। তবুও থাকলে ডায়াগনস্টিক রিপোর্ট পাঠান (এই স্ক্রিনের নিচে)।';
+      'এখন যে অ্যাপ বাজছে, Waaiya তার আসল শব্দ নীরব করতে পারছে না, তাই মিউজিক এখনো শোনা যেতে পারে। ফিল্টারিং বন্ধ করে আবার চালু করুন। তবুও থাকলে ডায়াগনস্টিক রিপোর্ট পাঠান (সেটিংস)।';
 
   @override
   String get stateTooSlow =>
-      'এই ফোন লাইভ শব্দ ফিল্টার করার জন্য বেশি ধীর, তাই শব্দ কেটে যায়। নিচের “লিংক খুলুন” তবুও কাজ করে: এটি চালানোর আগে ভিডিও ফিল্টার করে।';
+      'এই ফোন লাইভ শব্দ ফিল্টার করার জন্য বেশি ধীর, তাই শব্দ কেটে যায়। “লিংক” পাতার “লিংক খুলুন” তবুও কাজ করে: এটি চালানোর আগে ভিডিও ফিল্টার করে।';
 
   @override
   String get stateMonoNote =>
@@ -849,12 +849,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'নীরব করা হয়েছে, কারণ এটি ফিল্টার করতে দেয় না: $apps।';
+    return 'নীরব করা হয়েছে, কারণ এই অ্যাপ ফিল্টার করতে দেয় না: $apps।';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'ফিল্টার ছাড়া বাজছে, কারণ এটি ফিল্টার করতে দেয় না: $apps।';
+    return 'ফিল্টার ছাড়া বাজছে, কারণ এই অ্যাপ ফিল্টার করতে দেয় না: $apps।';
   }
 
   @override
@@ -886,7 +886,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'এই ফোনে Waaiya যা দেখে। এটি কপি করুন বা যিনি আপনাকে সাহায্য করছেন তাঁর সাথে শেয়ার করুন। অ্যাপ নিজে কিছুই পাঠায় না।';
+      'এই ফোনে Waaiya যা দেখে। এটি কপি করুন বা যিনি আপনাকে সাহায্য করছেন তাঁর সাথে শেয়ার করুন। Waaiya নিজে থেকে এটি পাঠায় না: কে পাবে তা আপনিই ঠিক করেন।';
 
   @override
   String get notifStoppedTitle => 'Waaiya বন্ধ হয়েছে';
@@ -927,7 +927,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get setupGo => 'সেটআপে যান';
 
   @override
-  String get helperTitle => 'কভারের ভেতর দিয়ে স্পর্শ';
+  String get helperTitle => 'ব্লার করা জায়গার ভেতর দিয়ে ট্যাপ';
 
   @override
   String get helperBodyOff =>
@@ -938,7 +938,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'Waaiya-র সহায়ক কভারগুলো আঁকছে: স্পর্শ এর ভেতর দিয়ে চলে যায়। ফোন রিস্টার্ট হলে বা USB ডিবাগিং বন্ধ করলে এটি থেমে যায়; তখন আবার বোতামে ট্যাপ করুন।';
+      'Waaiya-র সহায়ক ব্লার আঁকছে: ট্যাপ এর ভেতর দিয়ে চলে যায়। ফোন রিস্টার্ট হলে বা “USB ডিবাগিং” (ডেভেলপার বিকল্পে একটি আলাদা সুইচ) বন্ধ করলে এটি থেমে যায়; তখন আবার বোতামে ট্যাপ করুন।';
 
   @override
   String get helperShizukuOn =>
@@ -954,37 +954,37 @@ class AppLocalizationsBn extends AppLocalizations {
   String get settingsGeneralTitle => 'সাধারণ';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle => 'সহজ মোড (পরীক্ষামূলক): ডেভেলপার বিকল্প ছাড়া';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'যেসব ফোনে নিচের সেটআপ খুব কঠিন, সেগুলোর জন্য। Waaiya ফিল্টার করার সময় ফোনের মিডিয়ার শব্দ বন্ধ রাখে এবং ফিল্টার করা শব্দ অন্য একটি শব্দ চ্যানেলে বাজায়। আপনার ভলিউম বোতাম Waaiya-র ভলিউম ঠিক করে। প্রতিবার চালু করার সময় Android স্ক্রিন শেয়ার করার অনুমতি চায়। ফিল্টারিং বন্ধ হলে মিডিয়ার শব্দ ফিরে আসে।';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'সহজ মোড ব্যবহার করুন';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'শব্দ চ্যানেল: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'অ্যালার্ম';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'বিজ্ঞপ্তি';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'কিছু শুনতে না পেলে, বা ইয়ারফোন লাগানো অবস্থায় শব্দ ফোনের স্পিকার থেকে এলে, অন্য চ্যানেলটি চেষ্টা করুন। ফোন ভাইব্রেট বা “বিরক্ত করবেন না” মোডে থাকলে “বিজ্ঞপ্তি” নীরব থাকে।';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'এটি একটি পরীক্ষা। চেষ্টা করে দেখার পর (স্পিকার, ইয়ারফোন, Bluetooth), দয়া করে সেটিংস থেকে ডায়াগনস্টিক রিপোর্ট পাঠান।';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'সহজ মোড (পরীক্ষামূলক): Waaiya ফিল্টার করার সময় মিডিয়ার শব্দ বন্ধ থাকে।';
 
   @override
   String get worshipPrayerFajr => 'ফজর';
@@ -1126,7 +1126,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay => 'সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে।';
+  String get stateOnDetailNoDelay => 'আপনার অ্যাপগুলোর শব্দ ফিল্টার করা হচ্ছে।';
 
   @override
   String get engineErrorNoPactl =>
@@ -1204,7 +1204,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। অ্যাপ নিজে কিছুই পাঠায় না।';
+      'এই কম্পিউটারে Waaiya যা দেখে। এটি কপি করে যিনি আপনাকে সাহায্য করছেন তাঁকে দিন। Waaiya নিজে থেকে এটি পাঠায় না: কে পাবে তা আপনিই ঠিক করেন।';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1340,7 +1340,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'লেখা হয়েছে (এই ডিভাইসে $countটি নোট)।';
+    return 'লেখা হয়েছে। এই ডিভাইসে নোট: $count।';
   }
 
   @override
@@ -1425,7 +1425,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get worshipAsrTitle => 'আসরের সময়';
 
   @override
-  String get worshipAsrStandard => 'সাধারণ (শাফেয়ি, মালিকি, হাম্বলি)';
+  String get worshipAsrStandard => 'সংখ্যাগরিষ্ঠ মত (শাফেয়ি, মালিকি, হাম্বলি)';
 
   @override
   String get worshipAsrHanafi => 'হানাফি';
@@ -1736,7 +1736,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'পিন থাকলে, ফিল্টার বন্ধ করতে বা কোনো সুরক্ষা বন্ধ করতে আগে পিন চাওয়া হয়। যেমন, বাবা বা মা একটি পিন রাখেন, যাতে শিশু ফিল্টার বন্ধ করতে না পারে। অপেক্ষার সময় বা পিন বদলাতেও পিন লাগে।';
+      'পিন থাকলে, ফিল্টার বন্ধ করতে বা কোনো সুরক্ষা বন্ধ করতে আগে পিন চাওয়া হয়। যেমন, বাবা বা মা একটি পিন রাখেন, যাতে শিশু Waaiya-তে ফিল্টার বন্ধ করতে না পারে (যা এটি আটকাতে পারে না তা নিচে দেওয়া আছে)। অপেক্ষার সময় বা পিন বদলাতেও পিন লাগে।';
 
   @override
   String get protectPinForgot =>
@@ -1768,7 +1768,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'ভুল পিন। বিরতির আগে আর $count বার চেষ্টা বাকি।';
+    return 'ভুল পিন। বিরতির আগে বাকি চেষ্টা: $count।';
   }
 
   @override
@@ -1830,7 +1830,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'যা এটি আটকাতে পারে না: জোর করে বন্ধ করা, আনইনস্টল করা, Waaiya-এর ডেটা মুছে ফেলা এবং Android-এর নিজস্ব সেটিংস। এগুলো আটকাতে Android-এর বিশেষ অনুমতি লাগে, যা Waaiya ব্যবহার করে না। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
+      'যা এটি আটকাতে পারে না: ফোন রিস্টার্ট করা (ফিল্টারিং নিজে থেকে আবার শুরু হয় না), জোর করে বন্ধ করা, আনইনস্টল করা, Waaiya-এর ডেটা মুছে ফেলা এবং Android-এর নিজস্ব সেটিংস। এগুলো আটকাতে Android-এর বিশেষ অনুমতি লাগে, যা Waaiya ব্যবহার করে না। এটি দুর্বল মুহূর্ত থেকে রক্ষা করে, দৃঢ়প্রতিজ্ঞ কারো থেকে নয়।';
 
   @override
   String get protectLimitsDesktop =>
@@ -1880,7 +1880,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya এই কম্পিউটারের সব অ্যাপের শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। আপাতত গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
+      'Waaiya এই কম্পিউটারের অ্যাপগুলোর শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
 
   @override
   String get worshipUseLocation => 'আমার অবস্থান ব্যবহার করুন';
@@ -1914,7 +1914,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return '$city-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সরকারি সময়।';
+    return '$city-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সারণির সঙ্গে মিলিয়ে হিসাব করা সময়।';
   }
 
   @override
@@ -1936,7 +1936,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'কোনো অ্যাপ পুরো স্ক্রিন রেকর্ড করলে Android বিজ্ঞপ্তির লেখা লুকিয়ে রাখে, আর ফিল্টার করাও তার মধ্যে পড়ে। চালু: Waaiya শুধু ফিল্টার চলার সময় এই সুরক্ষা তুলে নেয়, যাতে আপনি বিজ্ঞপ্তি পড়তে পারেন। একই সময়ের অন্য স্ক্রিন শেয়ারও তখন সুরক্ষিত থাকে না। পরের বার শুরু করলে কার্যকর হবে।';
+      'কোনো অ্যাপ পুরো স্ক্রিন রেকর্ড করলে Android বিজ্ঞপ্তির লেখা লুকিয়ে রাখে, আর ফিল্টার করাও তার মধ্যে পড়ে। চালু: Waaiya শুধু ফিল্টার চলার সময় এই সুরক্ষা তুলে নেয়, যাতে আপনি বিজ্ঞপ্তি পড়তে পারেন। সুরক্ষা তুলে নেওয়া থাকাকালে, একই সময়ের অন্য কোনো স্ক্রিন শেয়ারও আপনার বিজ্ঞপ্তি ও কোড অন্যদের দেখাতে পারে।';
 
   @override
   String get notifTextNextStart =>
@@ -1967,14 +1967,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get notifTextForced =>
-      'চালু: এই ফোনে Android প্রতিবার শুরু করার আগে জিজ্ঞেস করে, আর তখন প্রতিটি স্ক্রিন লকে ফিল্টার বন্ধ করে দিত। তাই Waaiya ফিল্টার চলার সময় এই সুরক্ষা তুলে নেয়, ফলে বিজ্ঞপ্তির লেখাও দেখা যায়। একই সময়ের অন্য স্ক্রিন শেয়ারও তখন সুরক্ষিত থাকে না।';
+      'চালু: এই ফোনে Android প্রতিবার শুরু করার আগে জিজ্ঞেস করে, আর তখন প্রতিটি স্ক্রিন লকে ফিল্টার বন্ধ করে দিত। তাই Waaiya ফিল্টার চলার সময় এই সুরক্ষা তুলে নেয়, ফলে বিজ্ঞপ্তির লেখাও দেখা যায়। সুরক্ষা তুলে নেওয়া থাকাকালে, একই সময়ের অন্য কোনো স্ক্রিন শেয়ারও আপনার বিজ্ঞপ্তি ও কোড অন্যদের দেখাতে পারে।';
 
   @override
   String get oneAppTitle => 'শুরুতে: “একটি অ্যাপ শেয়ার করুন”, তারপর Waaiya';
 
   @override
   String get oneAppBody =>
-      'Android কী শেয়ার করবেন জিজ্ঞেস করলে “একটি অ্যাপ শেয়ার করুন”, তারপর Waaiya বেছে নিন। সব অ্যাপ ফিল্টার হতে থাকবে, বিজ্ঞপ্তি পড়া যাবে, আর স্ক্রিন লক হলেও ফিল্টার চলবে। পুরো স্ক্রিন বেছে নিলে Android বিজ্ঞপ্তির লেখা লুকায় এবং প্রতিবার লক হলে ফিল্টার বন্ধ করে দেয়।';
+      'Android কী শেয়ার করবেন জিজ্ঞেস করলে “একটি অ্যাপ শেয়ার করুন”, তারপর Waaiya বেছে নিন। অন্য অ্যাপগুলো ফিল্টার হতে থাকবে, বিজ্ঞপ্তি পড়া যাবে, আর স্ক্রিন লক হলেও ফিল্টার চলবে। পুরো স্ক্রিন বেছে নিলে Android বিজ্ঞপ্তির লেখা লুকায় এবং প্রতিবার লক হলে ফিল্টার বন্ধ করে দেয়।';
 
   @override
   String get oneAppPair =>
@@ -1987,4 +1987,57 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get blurNeedsRestart =>
       'ঝাপসা করা ব্যবহার করতে ফিল্টার বন্ধ করে আবার চালু করুন: এর পুরো স্ক্রিন দরকার, আর এই ফিল্টার “একটি অ্যাপ শেয়ার করুন” প্রস্তাব নিয়ে শুরু হয়েছিল।';
+
+  @override
+  String get micOpenSettings => 'Waaiya-র সেটিংস খুলে মাইক্রোফোন অনুমতি দিন';
+
+  @override
+  String get keepRunningTitle => 'Waaiya চালু রাখুন';
+
+  @override
+  String get keepRunningBattery =>
+      'ব্যাটারি বাঁচাতে এই ফোন কিছুক্ষণ পর Waaiya বন্ধ করে দিতে পারে, তখন ফিল্টারিং থেমে যায়। Waaiya-র সেটিংসে ব্যাটারির অধীনে “সীমাবদ্ধতা নেই” বেছে নিন। Xiaomi, Redmi ও POCO-তে: “কোনো সীমাবদ্ধতা নেই”, আর অটোস্টার্টও চালু করুন।';
+
+  @override
+  String get keepRunningNotifications =>
+      'Waaiya-র বিজ্ঞপ্তি বন্ধ, তাই ফিল্টারিং থামলে এটি আপনাকে জানাতে পারে না। Waaiya-র সেটিংসে সেগুলো চালু করুন।';
+
+  @override
+  String get keepRunningOpen => 'Waaiya-র সেটিংস খুলুন';
+
+  @override
+  String get lockAskTitle => 'স্ক্রিন লক হলেও ফিল্টারিং চালু থাকবে?';
+
+  @override
+  String get lockTitle => 'স্ক্রিন লক হলেও ফিল্টারিং চালু রাখুন';
+
+  @override
+  String get lockBody =>
+      'এই ফোনে Android প্রতিবার শুরুর আগে জিজ্ঞাসা করে, তারপর প্রতিবার স্ক্রিন লক হলে ফিল্টারিং থামিয়ে দেয়। ফিল্টার করার সময় Android-এর স্ক্রিন শেয়ার সুরক্ষা তুলে নিয়ে Waaiya তা আটকাতে পারে, আর ফিল্টারিং থামলে আবার চালু করে। এটি তোলা থাকা অবস্থায় একই সময়ে অন্য কোনো স্ক্রিন শেয়ার (যেমন ভিডিও কল) আপনার বিজ্ঞপ্তিও দেখাতে পারে। পরিবর্তন পরের বার শুরু করলে কার্যকর হবে।';
+
+  @override
+  String get lockYes => 'ফিল্টারিং চালু রাখুন';
+
+  @override
+  String get lockNo => 'প্রতিবার লক হলে থামান';
+
+  @override
+  String get sendToSupport => 'Waaiya-কে পাঠান';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'এই ফোন লাইভ শব্দ ফিল্টার করার জন্য বেশি ধীর, তাই শব্দ কেটে যায়।';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'এককালীন সেটআপ এখনো হয়নি। এটি ছাড়া Waaiya আসল শব্দ নীরব করতে পারে না: আপনি মিউজিক ও ফিল্টার করা শব্দ একসাথে শুনবেন।';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return '$value অপেক্ষা বেছে নেবেন? এখন থেকে ফিল্টার বা কোনো সুরক্ষা বন্ধ করতে $value অপেক্ষা করতে হবে, এই অপেক্ষা কমাতেও তাই।';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'ফিল্টারিং চলার সময় Android Waaiya বন্ধ করে দিয়েছে, তাই শব্দ আর ফিল্টার হচ্ছিল না।';
 }

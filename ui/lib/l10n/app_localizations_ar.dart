@@ -13,14 +13,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tagline =>
-      'يزيل الآلات الموسيقية من صوت كل التطبيقات، ويُبقي الكلام والتلاوة.';
+      'تزيل الآلات الموسيقية من صوت تطبيقاتك، وتُبقي الكلام والتلاوة.';
 
   @override
   String get onboardTitle => 'أهلًا بك';
 
   @override
   String get onboardBody =>
-      'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.';
+      'تزيل واعية الآلات الموسيقية من صوت التطبيقات على هذا الهاتف، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا.';
 
   @override
   String get onboardQuestion => 'أنا';
@@ -46,7 +46,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'تُزال الآلات من كل التطبيقات. يتأخّر الصوت نحو $delayMs ميلي ثانية (١٠٠٠ ميلي ثانية = ثانية واحدة).';
+    return 'تُصفّى أصوات تطبيقاتك. يتأخّر الصوت نحو $delayMs ميلي ثانية (1000 ميلي ثانية = ثانية واحدة).';
   }
 
   @override
@@ -54,7 +54,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get stateModelFailed =>
-      'تعذّر تحميل نموذج الصوت، فكُتم الصوت احتياطًا.';
+      'تعذّر تحميل المرشِّح، فكُتم الصوت بدل أن يُسمع دون تصفية.';
 
   @override
   String get stateCaptureDenied =>
@@ -82,18 +82,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'سيطلب أندرويد مشاركة الشاشة. يُستخدم الصوت فقط، ولا يُسجَّل شيء ولا يُرسَل.';
+      'سيطلب أندرويد مشاركة الشاشة. لا يُسجَّل شيء ولا يُرسَل.';
 
   @override
   String get needRecordAudio =>
-      'تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.';
+      'تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا تسجّل صوتك أبدًا.';
 
   @override
   String get setupBannerTitle => 'بقيت خطوة واحدة';
 
   @override
   String get setupBannerBody =>
-      'بدون الإعداد أدناه ستسمع الموسيقى والصوت المُصفّى معًا.';
+      'دون الإعداد لمرة واحدة، ستسمع الموسيقى والصوت المُصفّى معًا.';
 
   @override
   String get step1Title => 'ثبّت Shizuku';
@@ -242,11 +242,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get change => 'تغيير';
 
   @override
-  String get playerTitle => 'فيديو بتزامن تام';
+  String get playerTitle => 'فيديو بصوت وصورة متزامنين';
 
   @override
   String get playerBody =>
-      'شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى بلا تأخير.';
+      'شارك فيديو مع واعية (أو استخدم «فتح باستخدام») لمشاهدته مُصفّى، بصوت وصورة متزامنين، دون تأخير التصفية المباشرة.';
 
   @override
   String get licences => 'تراخيص المصادر المفتوحة';
@@ -383,7 +383,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.';
+      'يغطّي الأشخاص والصور على الشاشة ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.';
 
   @override
   String get blurOnTitle => 'التمويه يعمل';
@@ -404,7 +404,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get blurWhatTitle => 'ما الذي يُموَّه';
 
   @override
-  String get blurWomenTitle => 'تمويه النساء';
+  String get blurWomenTitle => 'تمويه صور النساء';
 
   @override
   String get blurWomenBody =>
@@ -429,11 +429,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurStatusNeedsSetup =>
-      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
+      'ليعمل التمويه، يجب أن تظهر واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
+      'ليعمل التمويه، يجب أن تظهر واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurFailUnavailable =>
@@ -790,18 +790,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wsetupCodeOk => 'إقران';
 
   @override
-  String get blurStrictTitle => 'مَن يبقى دون تغطية';
+  String get blurStrictTitle => 'مدى التأكد قبل إظهار رجل';
 
   @override
   String blurStrictValue(String level) {
-    return 'مَن يبقى دون تغطية: $level';
+    return 'مدى التأكد قبل إظهار رجل: $level';
   }
 
   @override
   String get blurStrict0 => 'صارم: فقط من يكاد التطبيق يجزم أنه رجل';
 
   @override
-  String get blurStrict1 => 'متوازن: نحو ضعف عدد الرجال دون تغطية';
+  String get blurStrict1 => 'متوازن: يظهر نحو ضعف عدد الرجال';
 
   @override
   String get blurStrict2 => 'متساهل: رجال أكثر قليلًا من المتوازن';
@@ -817,19 +817,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'كل من لا يتأكد التطبيق أنه رجل يُغطّى. في الوضع الصارم يبقى نحو 7 رجال من كل 100 دون تغطية، وفي المتوازن نحو 14، وفي المتساهل نحو 16. وكل درجة أقل صرامة تترك أيضًا نحو امرأة واحدة إضافية من كل 100 دون تغطية.';
+      'لا يظهر الشخص إلا إذا تأكد التطبيق أنه رجل، ويُموَّه كل من سواه. في الوضع الصارم يظهر نحو 7 رجال من كل 100، وفي المتوازن نحو 14، وفي المتساهل نحو 16. ومع ذلك تفوت بعض النساء، وكل درجة أقل صرامة تُفوّت نحو امرأة إضافية من كل 100.';
 
   @override
   String get stateOnNotMuted =>
-      'الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة أدناه.';
+      'الصوت الأصلي لم يُكتم بعد، ولذلك تسمع الموسيقى مع الصوت المُصفّى. أكمل الإعداد لمرة واحدة في صفحة «الإعداد».';
 
   @override
   String get stateOnMuteFailing =>
-      'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (أسفل هذه الشاشة).';
+      'لا تستطيع واعية كتم الصوت الأصلي للتطبيق الذي يعمل الآن، ولذلك قد تُسمع الموسيقى. أوقف التصفية ثم شغّلها. وإن استمر ذلك فأرسل تقرير التشخيص (الإعدادات).';
 
   @override
   String get stateTooSlow =>
-      'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.';
+      'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» في صفحة «الروابط» يعمل: فهو يصفّي الفيديو قبل تشغيله.';
 
   @override
   String get stateMonoNote =>
@@ -837,12 +837,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'كُتم صوته لأنه لا يسمح بالتصفية: $apps.';
+    return 'كُتم لعدم السماح بالتصفية: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'يُسمع دون تصفية لأنه لا يسمح بها: $apps.';
+    return 'يُسمع دون تصفية لعدم السماح بها: $apps.';
   }
 
   @override
@@ -874,7 +874,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+      'ما تراه واعية على هذا الهاتف. انسخه أو شاركه مع من يساعدك. لا ترسله واعية من تلقاء نفسها: أنت تختار من يستلمه.';
 
   @override
   String get notifStoppedTitle => 'توقفت واعية';
@@ -914,7 +914,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get setupGo => 'الذهاب إلى الإعداد';
 
   @override
-  String get helperTitle => 'مرور اللمس عبر الأغطية';
+  String get helperTitle => 'اللمس عبر المناطق المموّهة';
 
   @override
   String get helperBodyOff =>
@@ -925,7 +925,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'مساعد واعية يرسم الأغطية: يمرّ اللمس من خلالها. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف ‏«تصحيح أخطاء USB»‏؛ اضغط الزر من جديد حينها.';
+      'مساعد واعية يرسم التمويه: تمرّ اللمسات من خلاله. يتوقف عند إعادة تشغيل الهاتف أو عند إيقاف «تصحيح أخطاء USB» (وهو مفتاح منفصل في خيارات المطور)؛ اضغط الزر من جديد حينها.';
 
   @override
   String get helperShizukuOn => 'Shizuku يرسم الأغطية: يمرّ اللمس من خلالها.';
@@ -940,37 +940,37 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsGeneralTitle => 'عام';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle => 'الوضع البسيط (تجريبي): دون خيارات المطور';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'للهواتف التي يصعب فيها الإعداد أدناه. أثناء التصفية تكتم واعية صوت الوسائط في الهاتف، وتُشغّل الصوت المُصفّى على قناة صوت أخرى. أزرار الصوت تضبط صوت واعية. يسأل أندرويد عن مشاركة الشاشة عند كل تشغيل. ويعود صوت الوسائط عند إيقاف التصفية.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'استخدام الوضع البسيط';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'قناة الصوت: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'المنبّه';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'الإشعارات';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'إن لم تسمع شيئًا، أو خرج الصوت من سمّاعة الهاتف والسمّاعات موصولة، فجرّب القناة الأخرى. قناة الإشعارات صامتة ما دام الهاتف على الاهتزاز أو «عدم الإزعاج».';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'هذا وضع تجريبي. بعد تجربته (السمّاعة، سمّاعات الأذن، البلوتوث)، أرسل من فضلك تقرير التشخيص من «الإعدادات».';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'الوضع البسيط (تجريبي): صوت الوسائط مكتوم أثناء التصفية.';
 
   @override
   String get worshipPrayerFajr => 'الفجر';
@@ -1111,7 +1111,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay => 'تُزال الآلات من كل التطبيقات.';
+  String get stateOnDetailNoDelay => 'تُصفّى أصوات تطبيقاتك.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1163,7 +1163,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String blurStatusNoOverlayDesktop(String details) {
-    return 'لا يستطيع التمويه الرسم فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n$details';
+    return 'لا يستطيع التمويه الظهور فوق النوافذ الأخرى في سطح المكتب هذا. التفاصيل:\n$details';
   }
 
   @override
@@ -1189,7 +1189,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. التطبيق نفسه لا يرسل شيئًا.';
+      'ما تراه واعية على هذا الحاسوب. انسخه وأعطه لمن يساعدك. لا ترسله واعية من تلقاء نفسها: أنت تختار من يستلمه.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1201,15 +1201,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get linkEntryBodyDesktop =>
-      'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.';
+      'الصق رابطًا من يوتيوب أو تيك توك أو إنستغرام لتشاهده والتصفية تعمل، أو لتحفظه بلا موسيقى.';
 
   @override
   String get linkEntryBodyWatch =>
-      'الصق رابطاً من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.';
+      'الصق رابطًا من يوتيوب أو تيك توك أو إنستغرام لتشاهده في متصفحك والتصفية تعمل.';
 
   @override
   String get linkWatchNoteDesktop =>
-      'يُفتح في متصفحك. يبدأ Waaiya التصفية أولاً، فتُزال الموسيقى هناك أيضاً.';
+      'يُفتح في متصفحك. تبدأ واعية التصفية أولًا، فتُزال الموسيقى هناك أيضًا.';
 
   @override
   String get linkFilterFailed =>
@@ -1225,7 +1225,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get linkShowInFolder => 'إظهار في المجلد';
 
   @override
-  String get linkSingingNote => 'يُكتم غناء النساء أيضاً، كما في إعداداتك.';
+  String get linkSingingNote => 'يُكتم غناء النساء أيضًا، كما في إعداداتك.';
 
   @override
   String get singingKeepTitle => 'إبقاء أصوات الغناء (تجريبي)';
@@ -1317,7 +1317,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get fixWrongSound => 'حُذف صوت خطأً';
 
   @override
-  String get fixMissedScreen => 'لم يُغطَّ شيء';
+  String get fixMissedScreen => 'بقي شيء دون تغطية';
 
   @override
   String get fixWrongScreen => 'غُطّي خطأً';
@@ -1367,7 +1367,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipPlaceNoMatch =>
-      'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلاً من ذلك.';
+      'لم توجد مدينة بهذا الاسم. يمكنك إدخال الإحداثيات بدلًا من ذلك.';
 
   @override
   String get worshipPlaceCustom => 'إدخال الإحداثيات';
@@ -1478,7 +1478,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String worshipSilentMinutes(Object minutes) {
-    return 'مدة الصمت: $minutes دقيقة';
+    return 'مدة الصمت بالدقائق: $minutes';
   }
 
   @override
@@ -1486,11 +1486,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipMuteBody =>
-      'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فوراً من الإشعار.';
+      'عند وقت كل صلاة، يُكتم صوت الوسائط (الفيديو والصوتيات والألعاب) للمدة أدناه. ويمكن إلغاء الكتم فورًا من الإشعار.';
 
   @override
   String worshipMuteMinutes(Object minutes) {
-    return 'مدة الكتم: $minutes دقيقة';
+    return 'مدة الكتم بالدقائق: $minutes';
   }
 
   @override
@@ -1498,11 +1498,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String worshipMinutesOption(Object minutes) {
-    return '$minutes دقيقة';
+    return '$minutes د';
   }
 
   @override
-  String get worshipNeedPlace => 'اختر المكان أولاً.';
+  String get worshipNeedPlace => 'اختر المكان أولًا.';
 
   @override
   String worshipNext(Object prayer, Object time) {
@@ -1521,7 +1521,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipDndNeeded =>
-      'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتاً.';
+      'اسمح لواعية بتغيير «عدم الإزعاج»، وإلا فلن يصير الهاتف صامتًا.';
 
   @override
   String get worshipAllow => 'السماح';
@@ -1532,7 +1532,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipNotificationsNeeded =>
-      'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتاً أو متى يعود.';
+      'الإشعارات متوقفة: لن ترى متى يصير الهاتف صامتًا أو متى يعود.';
 
   @override
   String get worshipTonesTitle => 'نغمة رنين وصوت إشعارات بسيطان';
@@ -1579,11 +1579,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipSmsBody =>
-      'في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبداً إلى الأرقام المخفية أو القصيرة.';
+      'في دقائق الصمت بعد وقت كل صلاة، يتلقى المتصل الذي يُترك هاتفه يرنّ رسالة واحدة. مرة لكل رقم في كل صلاة، ولا تُرسل أبدًا إلى الأرقام المخفية أو القصيرة.';
 
   @override
   String worshipSmsDelay(Object seconds) {
-    return 'بعد: $seconds ثانية من الرنين';
+    return 'بعد الرنين بالثواني: $seconds';
   }
 
   @override
@@ -1591,7 +1591,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String worshipSmsSecondsOption(Object seconds) {
-    return '$seconds ثانية';
+    return '$seconds ث';
   }
 
   @override
@@ -1620,11 +1620,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipWhyDnd =>
-      'لجعل الهاتف صامتاً في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.';
+      'لجعل الهاتف صامتًا في أوقات الصلاة، اسمح لواعية بالوصول إلى «عدم الإزعاج» في الصفحة التالية.';
 
   @override
   String get worshipWhyExact =>
-      'للعمل في الوقت تماماً، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.';
+      'للعمل في الوقت تمامًا، اسمح لواعية بضبط «المنبّهات والتذكيرات» في الصفحة التالية. وبدونه قد تتأخر التغييرات حتى 10 دقائق.';
 
   @override
   String get worshipWhyNotifications =>
@@ -1644,15 +1644,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get worshipMissingDnd =>
-      'لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفاً.';
+      'لم يُسمح بالوصول إلى «عدم الإزعاج»، لذا يبقى الصمت متوقفًا.';
 
   @override
   String get worshipMissingPhone =>
-      'لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفاً.';
+      'لم يُسمح بإذنَي «الهاتف» و«سجلّ المكالمات»، لذا يبقى الرد بالرسائل متوقفًا.';
 
   @override
   String get worshipMissingSms =>
-      'لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفاً.';
+      'لم يُسمح بإرسال الرسائل، لذا يبقى الرد بالرسائل متوقفًا.';
 
   @override
   String get worshipTryAgain => 'حاول مرة أخرى';
@@ -1674,7 +1674,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get protectDelayBody =>
-      'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.';
+      'مثلًا مع 30 دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد 30 دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال 15 دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.';
 
   @override
   String get protectDelayOff => 'بلا انتظار';
@@ -1683,33 +1683,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get protectDelay1m => 'دقيقة واحدة';
 
   @override
-  String get protectDelay5m => '٥ دقائق';
+  String get protectDelay5m => '5 دقائق';
 
   @override
-  String get protectDelay15m => '١٥ دقيقة';
+  String get protectDelay15m => '15 دقيقة';
 
   @override
-  String get protectDelay30m => '٣٠ دقيقة';
+  String get protectDelay30m => '30 دقيقة';
 
   @override
   String get protectDelay1h => 'ساعة واحدة';
 
   @override
-  String get protectDelay4h => '٤ ساعات';
+  String get protectDelay4h => '4 ساعات';
 
   @override
-  String get protectDelay24h => '٢٤ ساعة';
+  String get protectDelay24h => '24 ساعة';
 
   @override
   String protectDelayOther(Object minutes) {
-    return '$minutes دقيقة';
+    return '$minutes د';
   }
 
   @override
-  String get protectPinNone => 'الرمز: غير موضوع';
+  String get protectPinNone => 'الرقم السري: غير مضبوط';
 
   @override
-  String get protectPinIsSet => 'الرمز: موضوع';
+  String get protectPinIsSet => 'الرقم السري: مضبوط';
 
   @override
   String get protectPinSet => 'ضع رمزًا';
@@ -1719,39 +1719,39 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'مع الرمز، يُطلب الرمز أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رمزًا حتى لا يستطيع الطفل إيقاف التصفية. ويُطلب أيضًا لتغيير مدة الانتظار أو الرمز نفسه.';
+      'مع الرقم السري، يُطلب أولًا قبل إيقاف التصفية أو إطفاء أي حماية. مثلًا: يضع أحد الوالدين رقمًا سريًا حتى لا يستطيع الطفل إيقاف التصفية من واعية (وما لا تستطيع منعه مذكور أدناه). ويُطلب أيضًا لتغيير مدة الانتظار أو الرقم السري نفسه.';
 
   @override
   String get protectPinForgot =>
-      'اكتب الرمز في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.';
+      'اكتب الرقم السري في مكان آمن: إن نُسي فلا سبيل لاسترجاعه. ولا يبقى إلا مسح بيانات واعية أو إعادة تثبيتها، وهذا يمسح كل إعداداتها أيضًا.';
 
   @override
-  String get protectPinTitle => 'أدخل الرمز';
+  String get protectPinTitle => 'أدخل الرقم السري';
 
   @override
   String get protectPinNewTitle => 'اختر رمزًا';
 
   @override
-  String get protectPinChangeTitle => 'غيِّر الرمز';
+  String get protectPinChangeTitle => 'غيِّر الرقم السري';
 
   @override
-  String get protectPinCurrent => 'الرمز الحالي';
+  String get protectPinCurrent => 'الرقم السري الحالي';
 
   @override
-  String get protectPinNew => 'الرمز الجديد (من ٤ إلى ٨ أرقام)';
+  String get protectPinNew => 'الرقم السري الجديد (من 4 إلى 8 أرقام)';
 
   @override
-  String get protectPinAgain => 'الرمز الجديد مرة أخرى';
+  String get protectPinAgain => 'الرقم السري الجديد مرة أخرى';
 
   @override
-  String get protectPinBad => 'استعمل من ٤ إلى ٨ أرقام.';
+  String get protectPinBad => 'استعمل من 4 إلى 8 أرقام.';
 
   @override
-  String get protectPinDiffer => 'الرمزان الجديدان غير متطابقين.';
+  String get protectPinDiffer => 'الرقم السريان الجديدان غير متطابقين.';
 
   @override
   String protectPinWrong(Object count) {
-    return 'رمز خاطئ. بقيت $count محاولات قبل التوقّف قليلًا.';
+    return 'رقم سري خاطئ. المحاولات الباقية قبل التوقّف: $count.';
   }
 
   @override
@@ -1786,7 +1786,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String protectWaitBody(Object time, Object what) {
-    return '$what لن يحدث الآن. عند $time، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال ١٥ دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.';
+    return '$what لن يحدث الآن. عند $time، إن بقيتَ تريده، أكِّده في «الإعدادات» خلال 15 دقيقة. وإن لم تفعل شيئًا فلن يتغيّر شيء.';
   }
 
   @override
@@ -1809,11 +1809,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get protectHeldBack =>
-      'ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرمز.';
+      'ليس الآن: إعدادات الحماية تجعل هذا التغيير ينتظر، أو تطلب الرقم السري.';
 
   @override
   String get protectLimits =>
-      'ما لا تستطيع منعه: الإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
+      'ما لا تستطيع منعه: إعادة تشغيل الهاتف (لا تعود التصفية من تلقاء نفسها)، والإيقاف الإجباري، وإلغاء التثبيت، ومسح بيانات واعية، وإعدادات أندرويد نفسها. منعُ ذلك يحتاج صلاحيات خاصة في أندرويد لا تستعملها واعية. هذه حماية من لحظة ضعف، لا من شخص مُصِرّ.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1853,24 +1853,24 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get protectWhatPinChange => 'تغيير الرمز';
+  String get protectWhatPinChange => 'تغيير الرقم السري';
 
   @override
-  String get protectWhatPinClear => 'حذف الرمز';
+  String get protectWhatPinClear => 'حذف الرقم السري';
 
   @override
   String get protectWhatSetting => 'تغيير إعداد';
 
   @override
   String get onboardBodyDesktop =>
-      'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.';
+      'تزيل واعية الآلات الموسيقية من صوت التطبيقات على هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا.';
 
   @override
   String get worshipUseLocation => 'استخدم موقعي';
 
   @override
   String get worshipWhyLocation =>
-      'لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.';
+      'لمعرفة أوقات الصلاة حيث أنت، تقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. ويُحفظ على الهاتف بوصفه مكانك ولا يُرسل إلى أي جهة.';
 
   @override
   String get worshipLocating => 'جارٍ تحديد مكانك…';
@@ -1897,7 +1897,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة $city.';
+    return 'أوقات محسوبة لتطابق جداول وزارة الأوقاف والشؤون الإسلامية لمدينة $city.';
   }
 
   @override
@@ -1919,7 +1919,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'يُخفي أندرويد محتوى الإشعارات ما دام أي تطبيق يسجّل الشاشة كلها، والتصفية تُعدّ من ذلك. عند التفعيل: ترفع واعية هذه الحماية أثناء التصفية فقط، فتقرأ إشعاراتك. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا. يسري ذلك عند التشغيل التالي.';
+      'يُخفي أندرويد محتوى الإشعارات ما دام أي تطبيق يسجّل الشاشة كلها، والتصفية تُعدّ من ذلك. عند التفعيل: ترفع واعية هذه الحماية أثناء التصفية فقط، فتقرأ إشعاراتك. وما دامت مرفوعة، يمكن لمشاركة شاشة أخرى في الوقت نفسه أن تُظهر إشعاراتك ورموزك للآخرين أيضًا.';
 
   @override
   String get notifTextNextStart =>
@@ -1950,18 +1950,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifTextForced =>
-      'مفعّل: على هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف التصفية عند كل قفل للشاشة. لذلك ترفع واعية هذه الحماية أثناء التصفية، فيظهر نص الإشعارات أيضًا. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا.';
+      'مفعّل: على هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف التصفية عند كل قفل للشاشة. لذلك ترفع واعية هذه الحماية أثناء التصفية، فيظهر نص الإشعارات أيضًا. وما دامت مرفوعة، يمكن لمشاركة شاشة أخرى في الوقت نفسه أن تُظهر إشعاراتك ورموزك للآخرين أيضًا.';
 
   @override
   String get oneAppTitle => 'عند التشغيل: «مشاركة تطبيق واحد» ثم واعية';
 
   @override
   String get oneAppBody =>
-      'عندما يسألك أندرويد عمّا تشاركه، اختر «مشاركة تطبيق واحد» ثم واعية. تبقى كل التطبيقات مُصفّاة، ويبقى نص الإشعارات مقروءًا، وتستمر التصفية عند قفل الشاشة. أما مع الشاشة كلها فيُخفي أندرويد نص الإشعارات ويوقف التصفية عند كل قفل للشاشة.';
+      'عندما يسألك أندرويد عمّا تشاركه، اختر «مشاركة تطبيق واحد» ثم واعية. تبقى التطبيقات الأخرى مُصفّاة، ويبقى نص الإشعارات مقروءًا، وتستمر التصفية عند قفل الشاشة. أما مع الشاشة كلها فيُخفي أندرويد نص الإشعارات ويوقف التصفية عند كل قفل للشاشة.';
 
   @override
   String get oneAppPair =>
-      'ليعمل واعية كاملًا، اقرنه مرة واحدة عبر «تصحيح الأخطاء اللاسلكي» في صفحة الإعداد: عندها تُكتم الموسيقى الأصلية أيضًا، ويكفّ أندرويد عن السؤال عند كل تشغيل.';
+      'لتعمل واعية كاملةً، اقرنها مرة واحدة عبر «تصحيح الأخطاء اللاسلكي» في صفحة الإعداد: عندها تُكتم الموسيقى الأصلية أيضًا، ويكفّ أندرويد عن السؤال عند كل تشغيل.';
 
   @override
   String get notifTextOneApp =>
@@ -1970,4 +1970,57 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get blurNeedsRestart =>
       'أوقف التصفية ثم شغّلها من جديد لاستعمال التمويه: فهو يحتاج إلى الشاشة كلها، وقد بدأت هذه التصفية مع عرض «مشاركة تطبيق واحد».';
+
+  @override
+  String get micOpenSettings => 'افتح إعدادات واعية واسمح بالميكروفون';
+
+  @override
+  String get keepRunningTitle => 'أبقِ واعية تعمل';
+
+  @override
+  String get keepRunningBattery =>
+      'قد يغلق هذا الهاتف واعية بعد مدة لتوفير البطارية، فيتوقف الترشيح. في إعدادات واعية، تحت «البطارية»، اختر «غير مقيَّد». وفي شاومي وريدمي وبوكو: «بلا قيود»، وفعّل «التشغيل التلقائي» أيضًا.';
+
+  @override
+  String get keepRunningNotifications =>
+      'إشعارات واعية متوقفة، فلا تستطيع إخبارك حين يتوقف الترشيح. فعّلها في إعدادات واعية.';
+
+  @override
+  String get keepRunningOpen => 'افتح إعدادات واعية';
+
+  @override
+  String get lockAskTitle => 'هل يستمر الترشيح عند قفل الشاشة؟';
+
+  @override
+  String get lockTitle => 'استمرار الترشيح عند قفل الشاشة';
+
+  @override
+  String get lockBody =>
+      'في هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف الترشيح عند كل قفل للشاشة. تستطيع واعية منع ذلك برفع «حماية مشاركة الشاشة» في أندرويد أثناء الترشيح، وتعيدها حين يتوقف. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. يسري التغيير عند التشغيل التالي.';
+
+  @override
+  String get lockYes => 'استمر في الترشيح';
+
+  @override
+  String get lockNo => 'أوقفه عند كل قفل';
+
+  @override
+  String get sendToSupport => 'أرسل إلى واعية';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'هل تختار انتظارًا مدته $value؟ من الآن، يحتاج إيقاف الترشيح أو أي حماية إلى انتظار $value، وكذلك تقصير هذا الانتظار.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'أغلق أندرويد واعية أثناء التصفية، فلم يعد الصوت مُصفّى.';
 }

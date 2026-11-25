@@ -18,13 +18,16 @@ import java.util.Locale
  */
 object StopLog {
     private const val PREFS = "stop_log"
-    private const val KEEP = 8
+    private const val KEEP = 16
 
     /** Filtering ended by itself because of [why]. Any thread. */
     fun record(ctx: Context, why: String) = add(ctx, "STOP $why (${phone(ctx)})")
 
     /** Something worth knowing that did not end filtering (the output made again). */
     fun event(ctx: Context, what: String) = add(ctx, what)
+
+    /** As [event], with the phone's state (screen, lock, battery) at that moment. */
+    fun eventWithState(ctx: Context, what: String) = add(ctx, "$what (${phone(ctx)})")
 
     @Synchronized private fun add(ctx: Context, line: String) {
         runCatching {
@@ -40,8 +43,41 @@ object StopLog {
         val km = ctx.getSystemService(KeyguardManager::class.java)
         val yes = { b: Boolean -> if (b) "yes" else "no" }
         return "screen on ${yes(pm.isInteractive)}, locked ${yes(km.isKeyguardLocked)}, blur on ${yes(ScreenBlur.state != null)}, " +
-            "question skipped ${yes(ctx.hasProjectMediaAppOp())}, power saver ${yes(pm.isPowerSaveMode)}"
+            "question skipped ${yes(ctx.hasProjectMediaAppOp())}, power saver ${yes(pm.isPowerSaveMode)}, " +
+            "battery unrestricted ${yes(pm.isIgnoringBatteryOptimizations(ctx.packageName))}" +
+            (if (Build.VERSION.SDK_INT >= 28) ", background restricted " +
+                yes(ctx.getSystemService(android.app.ActivityManager::class.java).isBackgroundRestricted) else "")
     }
+
+    /** Filtering runs ([on]) or ended in an orderly way: a mark left set means the process died while filtering. */
+    fun markFiltering(ctx: Context, on: Boolean) {
+        val p = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()
+        if (on) p.putLong("filtering_since", System.currentTimeMillis()).remove("killed_at") else p.remove("filtering_since")
+        p.apply()
+    }
+
+    /**
+     * A new process (WaaiyaApp): if the last one died while filtering and it was not the user (force stop) or an
+     * update, remember when, for the Filter page's "Keep Waaiya running" card (the music then played unfiltered).
+     */
+    fun checkKilled(ctx: Context) {
+        val prefs = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val since = prefs.getLong("filtering_since", 0)
+        if (since == 0L) return
+        var at: Long = 0
+        if (Build.VERSION.SDK_INT >= 30) runCatching {
+            val e = ctx.getSystemService(ActivityManager::class.java)
+                .getHistoricalProcessExitReasons(ctx.packageName, 0, 1).firstOrNull()
+            if (e != null && e.timestamp >= since && e.reason !in setOf(10, 11, 15, 16))  // user stop, update
+                at = e.timestamp
+        }
+        val p = prefs.edit().remove("filtering_since")
+        if (at > 0) { p.putLong("killed_at", at); add(ctx, "Android ended Waaiya's process while it was filtering") }
+        p.apply()
+    }
+
+    /** When Android last ended Waaiya while it was filtering, or 0 (cleared when filtering starts again). */
+    fun killedAt(ctx: Context): Long = ctx.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getLong("killed_at", 0)
 
     /** The diagnostics report's lines: the last stops, and the last times Android ended Waaiya's process. */
     fun report(ctx: Context): String = buildString {

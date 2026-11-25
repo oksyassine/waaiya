@@ -32,7 +32,10 @@ Future<void> chooseWorshipPlace(BuildContext context, WorshipInfo info) async {
     return;
   }
   await HomeScreen.set(context, SettingKeys.prayerPlace, picked.id);
-  if (picked.method != null && context.mounted) await HomeScreen.set(context, SettingKeys.prayerMethod, picked.method!);
+  if (picked.method != null && context.mounted) {
+    await HomeScreen.set(context, SettingKeys.prayerMethod, picked.method!);
+    if (context.mounted) await _suggestAsr(context, picked.method!);
+  }
 }
 
 class _Picked {
@@ -85,6 +88,7 @@ Future<void> useMyLocation(BuildContext context) async {
           options: [for (var i = 0; i < worshipMethodKeys.length; i++) worshipMethodName(l, i)],
           selected: method);
       if (context.mounted) await HomeScreen.set(context, SettingKeys.prayerMethod, i ?? method);
+      if (context.mounted) await _suggestAsr(context, method);
     case 'off':
       final open = await showDialog<bool>(
         context: context,
@@ -375,3 +379,9 @@ class _CustomPlaceDialogState extends State<_CustomPlaceDialog> {
     );
   }
 }
+
+/// The Karachi method is suggested where the Hanafi school prevails (Pakistan, India, Bangladesh, Afghanistan): its
+/// later Asr is preselected there too; elsewhere the standard Asr. The user can change both on the page.
+const _karachi = 4;
+Future<void> _suggestAsr(BuildContext context, int suggestedMethod) =>
+    HomeScreen.set(context, SettingKeys.prayerAsr, suggestedMethod == _karachi ? 1 : 0);

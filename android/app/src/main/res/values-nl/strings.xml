@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Haalt muziekinstrumenten uit elke app en houdt spraak en recitatie.</string>
+    <string name="tagline">Haalt muziekinstrumenten uit het geluid van je apps en houdt spraak en recitatie.</string>
 
     <string name="onboard_title">Welkom</string>
-    <string name="onboard_body">Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze telefoon. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd.</string>
+    <string name="onboard_body">Waaiya haalt muziekinstrumenten uit het geluid van de apps op deze telefoon. Spraak en Koranrecitatie blijven behouden. Zangstemmen worden ook verwijderd.</string>
     <string name="onboard_question">Ik ben</string>
     <string name="gender_man">Een man</string>
     <string name="gender_woman">Een vrouw</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Filteren staat aan</string>
     <string name="state_off_title">Filteren staat uit</string>
     <string name="state_starting">Starten…</string>
-    <string name="state_on_detail">Instrumenten worden uit alle apps verwijderd. Het geluid komt ongeveer %1$d ms later (1000 ms is één seconde).</string>
-    <string name="state_off_detail">Tik op de knop om te starten.</string>
-    <string name="state_model_failed">Het geluidsmodel kon niet laden, dus het geluid is voor de zekerheid gedempt.</string>
+    <string name="state_on_detail">Het geluid van je apps wordt gefilterd. Het komt ongeveer %1$d ms later (1000 ms is één seconde).</string>
+    <string name="state_off_detail">Druk op de knop om te starten.</string>
+    <string name="state_model_failed">Het filter kon niet laden, dus het geluid is gedempt in plaats van ongefilterd af te spelen.</string>
     <string name="state_capture_denied">De toestemming voor de microfoon is nodig om het geluid van andere apps te ontvangen.</string>
-    <string name="state_stopped_by_system">Android heeft het filteren gestopt. Tik op de knop om opnieuw te starten.</string>
+    <string name="state_stopped_by_system">Android heeft het filteren gestopt. Druk op de knop om opnieuw te starten.</string>
     <string name="state_silenced_title">Filteren gestopt</string>
-    <string name="state_silenced">Filteren gestopt: andere apps zijn gedempt. Tik op de knop om opnieuw te starten, of op Stoppen om ze ongefilterd te horen.</string>
+    <string name="state_silenced">Filteren gestopt: andere apps zijn gedempt. Druk op de knop om opnieuw te starten, of op Stoppen om ze ongefilterd te horen.</string>
     <string name="release_silence">Stoppen: apps ongefilterd horen</string>
     <string name="power_start_cd">Filteren starten</string>
     <string name="power_stop_cd">Filteren stoppen</string>
-    <string name="capture_hint">Android vraagt of je je scherm wilt delen. Alleen het geluid wordt gebruikt: er wordt niets opgenomen of verstuurd.</string>
+    <string name="capture_hint">Android vraagt of je je scherm wilt delen. Er wordt niets opgenomen of verstuurd.</string>
     <string name="need_record_audio">Waaiya heeft de toestemming voor de microfoon nodig om het geluid van andere apps te ontvangen. Het neemt jou nooit op.</string>
 
     <string name="setup_banner_title">Nog één stap</string>
-    <string name="setup_banner_body">Zonder de eenmalige installatie hieronder hoor je de muziek en het gefilterde geluid tegelijk.</string>
+    <string name="setup_banner_body">Zonder de eenmalige installatie hoor je de muziek en het gefilterde geluid tegelijk.</string>
     <string name="step1_title">Shizuku installeren</string>
     <string name="step1_body">Een gratis hulpapp uit de Play Store.</string>
     <string name="step1_action">Shizuku downloaden</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Ik ben</string>
     <string name="change">Wijzigen</string>
 
-    <string name="player_title">Video\'s perfect synchroon</string>
-    <string name="player_body">Deel een video met Waaiya (of gebruik “Openen met”) om hem zonder vertraging gefilterd te bekijken.</string>
+    <string name="player_title">Video\'s met beeld en geluid synchroon</string>
+    <string name="player_body">Deel een video met Waaiya (of gebruik “Openen met”) om hem gefilterd te bekijken, met beeld en geluid synchroon, zonder de vertraging van het live filter.</string>
     <string name="licences">Opensourcelicenties</string>
     <string name="licences_intro">Waaiya is vrije software onder de GNU Affero General Public License v3 of later. Broncode: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Naamsvermelding 4.0 (trainingsdata): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,7 +83,7 @@
 
     <string name="notif_channel">Filter</string>
     <string name="notif_title">Waaiya staat aan</string>
-    <string name="notif_text">Instrumenten worden uit alle apps verwijderd</string>
+    <string name="notif_text">Het geluid van je apps wordt gefilterd</string>
     <string name="notif_stop">Stoppen</string>
     <string name="notif_resume">Hervatten</string>
     <!-- Link feature -->
@@ -126,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Schermvervaging</string>
-    <string name="blur_body">Bedekt mensen en afbeeldingen op het scherm, in elke app, terwijl het filteren aan staat. Het werkt op de telefoon zelf; er wordt niets verstuurd.</string>
+    <string name="blur_body">Bedekt mensen en afbeeldingen op het scherm terwijl het filteren aan staat. Het werkt op de telefoon zelf; er wordt niets verstuurd.</string>
     <string name="blur_on_title">De vervaging staat aan</string>
     <string name="blur_off_title">De vervaging staat uit</string>
     <string name="blur_start_cd">Vervaging starten</string>
     <string name="blur_stop_cd">Vervaging stoppen</string>
-    <string name="blur_off_detail">Tik op de knop om te starten. Het filteren start mee.</string>
+    <string name="blur_off_detail">Druk op de knop om te starten. Het filteren start mee.</string>
     <string name="blur_what_title">Wat wordt vervaagd</string>
-    <string name="blur_women_title">Vrouwen vervagen</string>
+    <string name="blur_women_title">Afbeeldingen van vrouwen vervagen</string>
     <string name="blur_women_body">Bedekt het hele lichaam. Als de app niet zeker weet dat iemand een man is, wordt die persoon ook bedekt.</string>
     <string name="blur_nudity_title">Onzedige beelden vervagen</string>
     <string name="blur_nudity_body">Naaktheid of onthullende kleding, bij wie dan ook: het hele scherm wordt bedekt.</string>
@@ -247,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Koppelingscode</string>
     <string name="wsetup_code_dialog_body">Alleen met een gesplitst scherm (Instellingen in de ene helft, Waaiya in de andere): als je Instellingen verlaat, sluit het koppelingsscherm en werkt de code niet meer. Typ de code van 6 cijfers die onder “Apparaat koppelen met koppelingscode” staat.</string>
     <string name="wsetup_code_ok">Koppelen</string>
-    <string name="blur_strict_title">Wie onbedekt blijft</string>
-    <string name="blur_strict_value">Wie onbedekt blijft: %1$s</string>
+    <string name="blur_strict_title">Hoe zeker voordat een man getoond wordt</string>
+    <string name="blur_strict_value">Hoe zeker voordat een man getoond wordt: %1$s</string>
     <string name="blur_strict_0">Streng: alleen mensen van wie de app bijna zeker weet dat het mannen zijn</string>
     <string name="blur_strict_1">Evenwichtig: ongeveer twee keer zoveel mannen onbedekt</string>
     <string name="blur_strict_2">Soepel: iets meer mannen dan evenwichtig</string>
     <string name="blur_strict_0_short">streng</string>
     <string name="blur_strict_1_short">evenwichtig</string>
     <string name="blur_strict_2_short">soepel</string>
-    <string name="blur_strict_help">Iedereen van wie de app niet zeker weet dat het een man is, wordt bedekt. Streng laat ongeveer 7 op de 100 mannen onbedekt; evenwichtig ongeveer 14, soepel ongeveer 16. Elke stap minder streng laat ook ongeveer 1 vrouw op de 100 meer onbedekt.</string>
+    <string name="blur_strict_help">Iemand wordt alleen getoond als de app zeker weet dat het een man is; alle anderen worden vervaagd. Streng toont ongeveer 7 op de 100 mannen, evenwichtig ongeveer 14, soepel ongeveer 16. Sommige vrouwen worden toch gemist; elke stap minder streng mist er ongeveer 1 op de 100 meer.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Het originele geluid is nog niet gedempt, dus je hoort de muziek samen met het gefilterde geluid. Maak de eenmalige installatie hieronder af.</string>
-    <string name="state_on_mute_failing">Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (onderaan dit scherm).</string>
-    <string name="state_too_slow">Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg. “Een link openen” hieronder werkt nog wel: het filtert de video voordat die wordt afgespeeld.</string>
+    <string name="state_on_not_muted">Het originele geluid is nog niet gedempt, dus je hoort de muziek samen met het gefilterde geluid. Maak de eenmalige installatie af op de pagina “Installatie”.</string>
+    <string name="state_on_mute_failing">Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (Instellingen).</string>
+    <string name="state_too_slow">Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg. “Een link openen” op de pagina “Links” werkt nog wel: het filtert de video voordat die wordt afgespeeld.</string>
     <string name="state_mono_note">Het geluid is in mono, zodat deze telefoon het bijhoudt.</string>
-    <string name="state_blocked_silenced">Gedempt, omdat het geen filteren toestaat: %1$s.</string>
-    <string name="state_blocked_unfiltered">Speelt ongefilterd af, omdat het geen filteren toestaat: %1$s.</string>
+    <string name="state_blocked_silenced">Gedempt omdat filteren niet wordt toegestaan door: %1$s.</string>
+    <string name="state_blocked_unfiltered">Speelt ongefilterd af omdat filteren niet wordt toegestaan door: %1$s.</string>
     <string name="state_capture_failed">Android gaf Waaiya het geluid van andere apps niet. Tik op de knop om opnieuw te starten.</string>
     <string name="state_capture_cancelled">Het starten is geannuleerd bij de vraag van Android over scherm delen. Waaiya heeft daar “Starten” nodig om het geluid te ontvangen. Er wordt niets opgenomen of verstuurd.</string>
     <string name="start_no_setup_title">De muziek is nog steeds te horen</string>
@@ -274,19 +274,20 @@
     <string name="notif_too_slow">Deze telefoon is te traag voor live filteren: het geluid valt weg</string>
     <string name="diag_button">Probleem? Diagnoserapport</string>
     <string name="diag_title">Diagnoserapport</string>
-    <string name="diag_note">Wat Waaiya op deze telefoon ziet. Kopieer het of deel het met degene die je helpt. De app zelf verstuurt niets.</string>
+    <string name="diag_note">Wat Waaiya op deze telefoon ziet. Kopieer het of deel het met degene die je helpt. Waaiya verstuurt het niet zelf: jij kiest wie het krijgt.</string>
     <string name="notif_stopped_title">Waaiya is gestopt</string>
     <string name="notif_stopped_text">Het geluid wordt niet meer gefilterd. Tik om opnieuw te starten.</string>
     <string name="notif_silenced_title">Filteren gestopt: andere apps zijn gedempt</string>
     <string name="notif_silenced_text">Tik om opnieuw te starten, of op Stoppen om ze ongefilterd te horen.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Aan</string>
+    <string name="tile_model_failed">Aan, maar stil: modelfout</string>
     <string name="tile_off">Uit</string>
     <string name="tile_starting">Starten…</string>
     <string name="tile_silenced">Gestopt, apps gedempt</string>
     <string name="tile_on_not_muted">Aan, installatie nodig</string>
     <string name="tile_open_app">Waaiya openen</string>
-    <string name="tile_text_label">Meldingstekst</string>
+    <string name="tile_text_label">Waaiya: meldingstekst</string>
     <string name="tile_text_shown">Zichtbaar tijdens filteren</string>
     <string name="tile_text_hidden">Verborgen tijdens filteren</string>
     <string name="tile_text_refused">Deze telefoon weigert het</string>
@@ -328,10 +329,10 @@
     <string name="setup_redo">Installatie opnieuw tonen</string>
     <string name="setup_go">Naar de installatie</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Tikken door de afdekkingen</string>
+    <string name="helper_title">Door vervaagde delen heen tikken</string>
     <string name="helper_body_off">Zonder hulp blokkeert een afdekking de tikken eronder. De helper van Waaiya tekent de afdekkingen zo dat tikken erdoorheen gaan. Zet Draadloze foutopsporing aan (wifi is nodig) en tik op de knop; de eerste keer koppel je één keer, zoals bij de installatie. Tik er na een herstart van de telefoon opnieuw op.</string>
     <string name="helper_start">Helper van Waaiya starten</string>
-    <string name="helper_on">De helper van Waaiya tekent de afdekkingen: tikken gaan erdoorheen. Hij stopt als de telefoon opnieuw opstart of als USB-foutopsporing wordt uitgezet; tik dan opnieuw op de knop.</string>
+    <string name="helper_on">De helper van Waaiya tekent de vervaging: tikken gaan erdoorheen. Hij stopt als de telefoon opnieuw opstart of als “USB-foutopsporing” (een aparte schakelaar in Ontwikkelaarsopties) wordt uitgezet; tik dan opnieuw op de knop.</string>
     <string name="helper_shizuku_on">Shizuku tekent de afdekkingen: tikken gaan erdoorheen.</string>
     <string name="helper_or_shizuku">Of met Shizuku:</string>
     <string name="guide_w_helper_note">Met de schermvervaging aan start de installatie ook de helper van Waaiya, zodat tikken door de afdekkingen gaan. Laat daarvoor “USB-foutopsporing” aan staan (Draadloze foutopsporing mag uit). Start de helper na een herstart van de telefoon opnieuw vanaf de pagina Scherm.</string>
@@ -347,7 +348,7 @@
     <string name="notif_fix_remove_covers">Eigen afdekkingen weghalen</string>
     <string name="notif_fix_note_missed">Iets gemist</string>
     <string name="notif_fix_note_wrong">Per ongeluk verborgen</string>
-    <string name="notif_fix_noted">Genoteerd (%1$d notities op deze telefoon)</string>
+    <string name="notif_fix_noted">Genoteerd. Notities op deze telefoon: %1$d</string>
     <string name="notif_fix_picker_hint">Sleep met je vinger over het gebied dat je wilt bedekken.</string>
     <string name="notif_fix_picker_cover">Bedekken</string>
     <string name="notif_fix_picker_cancel">Annuleren</string>
@@ -423,13 +424,13 @@
     <string name="mc_title">Controleren op muziek</string>
     <string name="mc_unnamed">Gedeeld bestand</string>
     <string name="mc_listening">Luistert… %1$d %%</string>
-    <string name="mc_private">Waaiya luistert op deze telefoon. Er wordt niets verstuurd of bewaard.</string>
+    <string name="mc_private">Waaiya luistert op deze telefoon. Het fragment wordt nergens naartoe verstuurd.</string>
     <string name="mc_music">Waaiya hoorde muziek</string>
     <string name="mc_music_detail">Instrumenten in %1$s (ongeveer %2$s %% van de clip).</string>
     <string name="mc_percussion">Waaiya hoorde alleen slagwerk</string>
     <string name="mc_percussion_detail">Trommels of ritmisch klappen, zonder andere instrumenten, in %1$s. U beslist.</string>
     <string name="mc_none">Geen instrumenten gehoord</string>
-    <string name="mc_none_detail">Waaiya heeft de hele clip beluisterd en geen muziekinstrumenten gehoord.</string>
+    <string name="mc_none_detail">Waaiya heeft de hele clip beluisterd en geen muziekinstrumenten gehoord. Sommige muziek kan gemist worden, vooral zachte muziek onder spraak.</string>
     <string name="mc_note_quiet">Zachte muziek onder spraak kan gemist worden.</string>
     <string name="mc_failed">Dit bestand kon niet worden gecontroleerd</string>
     <string name="mc_failed_no_model">Deze versie van Waaiya kan niet op muziek controleren.</string>
@@ -443,4 +444,13 @@
     <string name="mc_copy_failed">De kopie zonder muziek kon niet worden gemaakt.</string>
     <string name="mc_copy_name">%1$s (zonder muziek)</string>
     <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Eenvoudige modus (test): zonder Ontwikkelaarsopties</string>
+    <string name="simple_body">Voor telefoons waarop de installatie hieronder te moeilijk is. Terwijl Waaiya filtert, dempt het het mediageluid van de telefoon en speelt het het gefilterde geluid af via een ander geluidskanaal. Met je volumeknoppen stel je het volume van Waaiya in. Android vraagt bij elke start om het scherm te delen. Het mediageluid komt terug als het filteren stopt.</string>
+    <string name="simple_switch">Eenvoudige modus gebruiken</string>
+    <string name="simple_channel_title">Geluidskanaal: %1$s</string>
+    <string name="simple_channel_alarm">Wekker</string>
+    <string name="simple_channel_notification">Melding</string>
+    <string name="simple_channel_help">Hoor je niets, of komt het geluid uit de luidspreker van de telefoon terwijl je oordopjes in hebt, probeer dan het andere kanaal. Melding is stil als de telefoon op trillen of Niet storen staat.</string>
+    <string name="simple_test_note">Dit is een test. Stuur na het uitproberen (luidspreker, oordopjes, Bluetooth) het diagnoserapport vanuit Instellingen.</string>
+    <string name="simple_on_detail">Eenvoudige modus (test): het mediageluid is gedempt terwijl Waaiya filtert.</string>
 </resources>

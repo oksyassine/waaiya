@@ -24,11 +24,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
       - name: Build engine, CLI, LADSPA plugin and im-pulse
-        run: make -j"$(nproc)" all build/test-detector build/test-mono build/test-failclosed
+        run: make -j"$(nproc)" all build/test-detector build/test-mono build/test-failclosed build/test-cover
       - name: Engine test, mono switch on a running engine (slow phones)
         run: build/test-mono models/dfn3/dfn3_stream_int8.onnx
       - name: Engine test, fail-closed (no model = exact silence; no detector + FAIL_CLOSED = voice muted)
         run: build/test-failclosed models/dfn3/dfn3_stream_int8.onnx
+      - name: Blur tracker test (covers that hide the screen lift to look again; small covers stay)
+        run: build/test-cover
       - name: Privacy, the filter and the detector open no internet connection (linux/test_no_network.sh)
         run: make build/no-network.so && linux/test_no_network.sh
       - name: Women's-singing detector test (models-v1 release)

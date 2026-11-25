@@ -57,7 +57,8 @@ open class PlayerActivity : Activity() {
             Intent.ACTION_SEND -> if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
                                   else @Suppress("DEPRECATION") intent.getParcelableExtra(Intent.EXTRA_STREAM)
             else -> intent?.data
-        }
+        }?.takeIf { it.scheme == "content" || it.scheme == "file" }  // a file, never a web address (explicit intents
+                                                                       // skip the manifest's filters)
         if (streams == null && uri == null) { finish(); return }
 
         val renderers = object : DefaultRenderersFactory(this) {
@@ -74,7 +75,11 @@ open class PlayerActivity : Activity() {
                     .setAudioProcessorChain(chain).build()
             }
         }
-        val p = ExoPlayer.Builder(this, renderers).build()
+        // audio focus: another app's music pauses while a video plays here (it would be heard unfiltered over it)
+        val p = ExoPlayer.Builder(this, renderers)
+            .setAudioAttributes(androidx.media3.common.AudioAttributes.Builder().setUsage(C.USAGE_MEDIA)
+                .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE).build(), true)
+            .build()
         player = p
         setContentView(PlayerView(this).apply { this.player = p })
         // A link that cannot be played (expired, blocked, unsupported audio): say so instead of a black screen.

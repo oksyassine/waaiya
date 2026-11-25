@@ -163,4 +163,9 @@ class FixMistakesTest {
         assertEquals(listOf("remove", "missed"), FixMistakesActions.kinds(blurRunning = true, handCovers = 2))
         for (b in listOf(false, true)) for (n in 0..2) assertTrue(FixMistakesActions.kinds(b, n).size <= 2)
     }
+
+    @Test fun dualAppCopyHasTheSameAppIdInUser999() {
+        assertEquals(99_910_234, cloneUid(10_234))
+        assertEquals(99_910_234, cloneUid(1_010_234))  // from another user: same app id
+    }
 }

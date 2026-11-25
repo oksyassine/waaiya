@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Huondoa ala za muziki kwenye kila programu na kubakiza mazungumzo na kisomo.</string>
+    <string name="tagline">Huondoa ala za muziki kwenye sauti ya programu zako na kubakiza mazungumzo na kisomo.</string>
 
     <string name="onboard_title">Karibu</string>
-    <string name="onboard_body">Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika simu hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.</string>
+    <string name="onboard_body">Waaiya huondoa ala za muziki kwenye sauti ya programu zilizo katika simu hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Sauti za uimbaji huondolewa pia.</string>
     <string name="onboard_question">Mimi ni</string>
     <string name="gender_man">Mwanamume</string>
     <string name="gender_woman">Mwanamke</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Uchujaji umewashwa</string>
     <string name="state_off_title">Uchujaji umezimwa</string>
     <string name="state_starting">Inaanza…</string>
-    <string name="state_on_detail">Ala za muziki zinaondolewa kwenye programu zote. Sauti inachelewa takriban ms %1$d (ms 1000 ni sekunde moja).</string>
-    <string name="state_off_detail">Gusa kitufe ili kuanza.</string>
-    <string name="state_model_failed">Modeli ya sauti haikuweza kupakiwa, kwa hiyo sauti imenyamazishwa kwa usalama.</string>
+    <string name="state_on_detail">Sauti ya programu zako inachujwa. Inachelewa takriban ms %1$d (ms 1000 ni sekunde moja).</string>
+    <string name="state_off_detail">Bonyeza kitufe ili kuanza.</string>
+    <string name="state_model_failed">Kichujio hakikuweza kupakiwa, kwa hiyo sauti imenyamazishwa badala ya kucheza bila kuchujwa.</string>
     <string name="state_capture_denied">Ruhusa ya maikrofoni inahitajika ili kupokea sauti ya programu nyingine.</string>
-    <string name="state_stopped_by_system">Android imesimamisha uchujaji. Gusa kitufe ili kuanza tena.</string>
+    <string name="state_stopped_by_system">Android imesimamisha uchujaji. Bonyeza kitufe ili kuanza tena.</string>
     <string name="state_silenced_title">Uchujaji umesimama</string>
-    <string name="state_silenced">Uchujaji umesimama: programu nyingine zimenyamazishwa. Gusa kitufe ili kuanza tena, au Simamisha ili kuzisikia bila kuchujwa.</string>
+    <string name="state_silenced">Uchujaji umesimama: programu nyingine zimenyamazishwa. Bonyeza kitufe ili kuanza tena, au Simamisha ili kuzisikia bila kuchujwa.</string>
     <string name="release_silence">Simamisha: sikia programu bila kuchujwa</string>
     <string name="power_start_cd">Anza kuchuja</string>
     <string name="power_stop_cd">Simamisha uchujaji</string>
-    <string name="capture_hint">Android itakuuliza ushiriki skrini yako. Sauti pekee ndiyo hutumika: hakuna kinachorekodiwa wala kutumwa.</string>
+    <string name="capture_hint">Android itakuuliza ushiriki skrini yako. Hakuna kinachorekodiwa wala kutumwa.</string>
     <string name="need_record_audio">Waaiya inahitaji ruhusa ya maikrofoni ili kupokea sauti ya programu nyingine. Haikurekodi kamwe.</string>
 
     <string name="setup_banner_title">Hatua moja zaidi</string>
-    <string name="setup_banner_body">Bila usanidi wa mara moja ulio hapa chini, utasikia muziki na sauti iliyochujwa kwa pamoja.</string>
+    <string name="setup_banner_body">Bila usanidi wa mara moja, utasikia muziki na sauti iliyochujwa kwa pamoja.</string>
     <string name="step1_title">Sakinisha Shizuku</string>
     <string name="step1_body">Programu saidizi ya bure kutoka Play Store.</string>
     <string name="step1_action">Pata Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Mimi ni</string>
     <string name="change">Badilisha</string>
 
-    <string name="player_title">Video zenye sauti inayolingana kikamilifu</string>
-    <string name="player_body">Shiriki video kwa Waaiya (au tumia “Fungua ukitumia”) ili uitazame ikiwa imechujwa bila kuchelewa.</string>
+    <string name="player_title">Video zenye sauti na picha zinazolingana</string>
+    <string name="player_body">Shiriki video kwa Waaiya (au tumia “Fungua ukitumia”) ili uitazame ikiwa imechujwa, sauti na picha zikilingana, bila kuchelewa kwa kichujio cha moja kwa moja.</string>
     <string name="licences">Leseni za programu huria</string>
     <string name="licences_intro">Waaiya ni programu huria chini ya GNU Affero General Public License v3 au toleo jipya zaidi. Msimbo chanzo: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (data ya mafunzo): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,7 +83,7 @@
 
     <string name="notif_channel">Kichujio</string>
     <string name="notif_title">Waaiya imewashwa</string>
-    <string name="notif_text">Ala za muziki zinaondolewa kwenye programu zote</string>
+    <string name="notif_text">Sauti ya programu zako inachujwa</string>
     <string name="notif_stop">Simamisha</string>
     <string name="notif_resume">Endelea</string>
     <!-- Link feature -->
@@ -126,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Kufifisha skrini</string>
-    <string name="blur_body">Hufunika watu na picha kwenye skrini, katika kila programu, wakati uchujaji umewashwa. Hufanya kazi ndani ya simu; hakuna kinachotumwa popote.</string>
+    <string name="blur_body">Hufunika watu na picha kwenye skrini wakati uchujaji umewashwa. Hufanya kazi ndani ya simu; hakuna kinachotumwa popote.</string>
     <string name="blur_on_title">Ufifishaji umewashwa</string>
     <string name="blur_off_title">Ufifishaji umezimwa</string>
     <string name="blur_start_cd">Washa ufifishaji</string>
     <string name="blur_stop_cd">Zima ufifishaji</string>
-    <string name="blur_off_detail">Gusa kitufe ili kuanza. Uchujaji huanza pamoja nao.</string>
+    <string name="blur_off_detail">Bonyeza kitufe ili kuanza. Uchujaji huanza pamoja nao.</string>
     <string name="blur_what_title">Kinachofifishwa</string>
-    <string name="blur_women_title">Fifisha wanawake</string>
+    <string name="blur_women_title">Fifisha picha za wanawake</string>
     <string name="blur_women_body">Hufunika mwili mzima. Ikiwa programu haina uhakika kuwa mtu ni mwanamume, humfunika pia.</string>
     <string name="blur_nudity_title">Fifisha picha zisizo za staha</string>
     <string name="blur_nudity_body">Uchi au mavazi yanayoacha mwili wazi, kwa mtu yeyote: skrini nzima hufunikwa.</string>
@@ -247,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Msimbo wa kuoanisha</string>
     <string name="wsetup_code_dialog_body">Kwa skrini iliyogawanywa tu (Mipangilio upande mmoja, Waaiya upande mwingine): ukiondoka kwenye Mipangilio, skrini ya kuoanisha hufungwa na msimbo wake huacha kufanya kazi. Andika msimbo wa tarakimu 6 unaoonyeshwa chini ya “Oanisha kifaa ukitumia msimbo wa kuoanisha”.</string>
     <string name="wsetup_code_ok">Oanisha</string>
-    <string name="blur_strict_title">Nani anaachwa bila kufunikwa</string>
-    <string name="blur_strict_value">Nani anaachwa bila kufunikwa: %1$s</string>
+    <string name="blur_strict_title">Uhakika unaohitajika kabla mwanamume hajaonyeshwa</string>
+    <string name="blur_strict_value">Uhakika unaohitajika kabla mwanamume hajaonyeshwa: %1$s</string>
     <string name="blur_strict_0">Kali: watu ambao programu ina uhakika karibu kamili kuwa ni wanaume pekee</string>
     <string name="blur_strict_1">Wastani: takriban mara mbili ya wanaume wanaachwa bila kufunikwa</string>
     <string name="blur_strict_2">Legevu: wanaume wachache zaidi kuliko wastani</string>
     <string name="blur_strict_0_short">kali</string>
     <string name="blur_strict_1_short">wastani</string>
     <string name="blur_strict_2_short">legevu</string>
-    <string name="blur_strict_help">Mtu yeyote ambaye programu haina uhakika kuwa ni mwanamume hufunikwa. Kali huacha takriban wanaume 7 kati ya 100 bila kufunikwa; wastani takriban 14, legevu takriban 16. Kila hatua ya ukali mdogo pia huacha takriban mwanamke 1 zaidi kati ya 100 bila kufunikwa.</string>
+    <string name="blur_strict_help">Mtu huonyeshwa tu programu inapokuwa na uhakika kuwa ni mwanamume; wengine wote hufifishwa. Kali huonyesha takriban wanaume 7 kati ya 100, wastani takriban 14, legevu takriban 16. Baadhi ya wanawake bado hukoswa; kila hatua ya ukali mdogo hukosa takriban 1 zaidi kati ya 100.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Sauti asili bado haijanyamazishwa, kwa hiyo unasikia muziki pamoja na sauti iliyochujwa. Kamilisha usanidi wa mara moja hapa chini.</string>
-    <string name="state_on_mute_failing">Waaiya haiwezi kunyamazisha sauti asili ya programu inayocheza sasa, kwa hiyo huenda muziki bado ukasikika. Simamisha kisha uanze uchujaji tena. Tatizo likiendelea, tuma ripoti ya uchunguzi (chini kabisa ya skrini hii).</string>
-    <string name="state_too_slow">Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika. “Fungua kiungo” hapa chini bado hufanya kazi: huchuja video kabla ya kuicheza.</string>
+    <string name="state_on_not_muted">Sauti asili bado haijanyamazishwa, kwa hiyo unasikia muziki pamoja na sauti iliyochujwa. Kamilisha usanidi wa mara moja kwenye ukurasa wa “Usanidi”.</string>
+    <string name="state_on_mute_failing">Waaiya haiwezi kunyamazisha sauti asili ya programu inayocheza sasa, kwa hiyo huenda muziki bado ukasikika. Simamisha kisha uanze uchujaji tena. Tatizo likiendelea, tuma ripoti ya uchunguzi (Mipangilio).</string>
+    <string name="state_too_slow">Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika. “Fungua kiungo” kwenye ukurasa wa “Viungo” bado hufanya kazi: huchuja video kabla ya kuicheza.</string>
     <string name="state_mono_note">Sauti iko katika mono ili simu hii iweze kwenda sambamba.</string>
-    <string name="state_blocked_silenced">Imenyamazishwa, kwa sababu hairuhusu uchujaji: %1$s.</string>
-    <string name="state_blocked_unfiltered">Inacheza bila kuchujwa, kwa sababu hairuhusu uchujaji: %1$s.</string>
+    <string name="state_blocked_silenced">Imenyamazishwa kwa sababu uchujaji hauruhusiwi na: %1$s.</string>
+    <string name="state_blocked_unfiltered">Inacheza bila kuchujwa kwa sababu uchujaji hauruhusiwi na: %1$s.</string>
     <string name="state_capture_failed">Android haikuipa Waaiya sauti ya programu nyingine. Gusa kitufe ili kuanza tena.</string>
     <string name="state_capture_cancelled">Kuanza kumeghairiwa kwenye swali la Android la kushiriki skrini. Waaiya inahitaji uchague “Anza” (Start) hapo ili kupokea sauti. Hakuna kinachorekodiwa wala kutumwa.</string>
     <string name="start_no_setup_title">Muziki bado utasikika</string>
@@ -274,19 +274,20 @@
     <string name="notif_too_slow">Simu hii ni ya polepole mno kwa uchujaji wa moja kwa moja: sauti hukatika</string>
     <string name="diag_button">Kuna tatizo? Ripoti ya uchunguzi</string>
     <string name="diag_title">Ripoti ya uchunguzi</string>
-    <string name="diag_note">Kile ambacho Waaiya inaona kwenye simu hii. Kinakili au ukishiriki na yeyote anayekusaidia. Programu yenyewe haitumi chochote.</string>
+    <string name="diag_note">Kile ambacho Waaiya inaona kwenye simu hii. Kinakili au ukishiriki na yeyote anayekusaidia. Waaiya haikitumi yenyewe: wewe ndiye unayechagua nani akipate.</string>
     <string name="notif_stopped_title">Waaiya imesimama</string>
     <string name="notif_stopped_text">Sauti haichujwi tena. Gusa ili kuanza tena.</string>
     <string name="notif_silenced_title">Uchujaji umesimama: programu nyingine zimenyamazishwa</string>
     <string name="notif_silenced_text">Gusa ili kuanza tena, au Simamisha ili kuzisikia bila kuchujwa.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Imewashwa</string>
+    <string name="tile_model_failed">Imewashwa, lakini kimya: hitilafu ya modeli</string>
     <string name="tile_off">Imezimwa</string>
     <string name="tile_starting">Inaanza…</string>
     <string name="tile_silenced">Imesimama, programu kimya</string>
     <string name="tile_on_not_muted">Imewashwa, usanidi unahitajika</string>
     <string name="tile_open_app">Fungua Waaiya</string>
-    <string name="tile_text_label">Maandishi ya arifa</string>
+    <string name="tile_text_label">Waaiya: maandishi ya arifa</string>
     <string name="tile_text_shown">Yanaonyeshwa wakati wa kuchuja</string>
     <string name="tile_text_hidden">Yamefichwa wakati wa kuchuja</string>
     <string name="tile_text_refused">Simu hii inakataa</string>
@@ -328,10 +329,10 @@
     <string name="setup_redo">Onyesha usanidi tena</string>
     <string name="setup_go">Nenda kwenye usanidi</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Miguso kupitia vifuniko</string>
+    <string name="helper_title">Miguso kupitia maeneo yaliyofifishwa</string>
     <string name="helper_body_off">Bila msaada, kifuniko huzuia miguso iliyo chini yake. Msaidizi wa Waaiya huchora vifuniko ili miguso ipite ndani yake. Washa Utatuzi usiotumia waya (Wi-Fi inahitajika) na uguse kitufe; mara ya kwanza, oanisha mara moja kama katika usanidi. Simu ikiwashwa upya, kiguse tena.</string>
     <string name="helper_start">Washa msaidizi wa Waaiya</string>
-    <string name="helper_on">Msaidizi wa Waaiya anachora vifuniko: miguso hupita ndani yake. Husimama simu ikiwashwa upya au Utatuzi wa USB ukizimwa; hapo gusa kitufe tena.</string>
+    <string name="helper_on">Msaidizi wa Waaiya anachora ufifishaji: miguso hupita ndani yake. Husimama simu ikiwashwa upya au “Utatuzi wa USB” (swichi tofauti katika Chaguo za wasanidi programu) ukizimwa; hapo gusa kitufe tena.</string>
     <string name="helper_shizuku_on">Shizuku inachora vifuniko: miguso hupita ndani yake.</string>
     <string name="helper_or_shizuku">Au kwa Shizuku:</string>
     <string name="guide_w_helper_note">Ufifishaji wa skrini ukiwa umewashwa, usanidi pia humwasha msaidizi wa Waaiya, ili miguso ipite kwenye vifuniko. Acha “Utatuzi wa USB” ukiwa umewashwa kwa ajili yake (Utatuzi usiotumia waya unaweza kuzimwa). Simu ikiwashwa upya, mwashe msaidizi tena kutoka ukurasa wa Skrini.</string>
@@ -347,7 +348,7 @@
     <string name="notif_fix_remove_covers">Ondoa vifuniko vya mkono</string>
     <string name="notif_fix_note_missed">Kitu kimepita</string>
     <string name="notif_fix_note_wrong">Kimefichwa kimakosa</string>
-    <string name="notif_fix_noted">Imeandikwa (madokezo %1$d kwenye simu hii)</string>
+    <string name="notif_fix_noted">Imeandikwa. Madokezo kwenye simu hii: %1$d</string>
     <string name="notif_fix_picker_hint">Buruta kidole chako juu ya eneo la kufunika.</string>
     <string name="notif_fix_picker_cover">Kifunike</string>
     <string name="notif_fix_picker_cancel">Ghairi</string>
@@ -423,13 +424,13 @@
     <string name="mc_title">Angalia muziki</string>
     <string name="mc_unnamed">Faili lililoshirikiwa</string>
     <string name="mc_listening">Inasikiliza… %1$d %%</string>
-    <string name="mc_private">Waaiya inasikiliza kwenye simu hii. Hakuna kinachotumwa wala kuhifadhiwa.</string>
+    <string name="mc_private">Waaiya inasikiliza kwenye simu hii. Kipande hicho hakitumwi popote.</string>
     <string name="mc_music">Waaiya imesikia muziki</string>
     <string name="mc_music_detail">Ala za muziki katika %1$s (karibu %2$s %% ya klipu).</string>
     <string name="mc_percussion">Waaiya imesikia midundo tu</string>
     <string name="mc_percussion_detail">Ngoma au makofi ya mdundo, bila ala nyingine, katika %1$s. Uamuzi ni wako.</string>
     <string name="mc_none">Hakuna ala za muziki zilizosikika</string>
-    <string name="mc_none_detail">Waaiya imesikiliza klipu nzima na haikusikia ala za muziki.</string>
+    <string name="mc_none_detail">Waaiya imesikiliza klipu nzima na haikusikia ala za muziki. Baadhi ya muziki unaweza kupitwa, hasa muziki wa chini chini ya mazungumzo.</string>
     <string name="mc_note_quiet">Muziki wa chini chini ya mazungumzo unaweza kupitwa.</string>
     <string name="mc_failed">Faili hili halikuweza kuangaliwa</string>
     <string name="mc_failed_no_model">Toleo hili la Waaiya haliwezi kuangalia muziki.</string>
@@ -443,4 +444,13 @@
     <string name="mc_copy_failed">Nakala bila muziki haikuweza kutengenezwa.</string>
     <string name="mc_copy_name">%1$s (bila muziki)</string>
     <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Hali rahisi (jaribio): bila Chaguo za wasanidi programu</string>
+    <string name="simple_body">Kwa simu ambazo usanidi ulio hapa chini ni mgumu sana. Waaiya inapochuja, hunyamazisha sauti ya media ya simu na kucheza sauti iliyochujwa kwenye chaneli nyingine ya sauti. Vitufe vyako vya sauti hurekebisha sauti ya Waaiya. Android huomba kushiriki skrini kila unapoanza. Sauti ya media hurudi uchujaji unaposimama.</string>
+    <string name="simple_switch">Tumia hali rahisi</string>
+    <string name="simple_channel_title">Chaneli ya sauti: %1$s</string>
+    <string name="simple_channel_alarm">Kengele</string>
+    <string name="simple_channel_notification">Arifa</string>
+    <string name="simple_channel_help">Usiposikia chochote, au sauti ikitoka kwenye spika ya simu wakati vifaa vya masikioni vimechomekwa, jaribu chaneli nyingine. Arifa haitoi sauti simu ikiwa kwenye mtetemo au Usisumbue.</string>
+    <string name="simple_test_note">Hili ni jaribio. Baada ya kulijaribu (spika, vifaa vya masikioni, Bluetooth), tafadhali tuma ripoti ya uchunguzi kutoka kwenye Mipangilio.</string>
+    <string name="simple_on_detail">Hali rahisi (jaribio): sauti ya media imenyamazishwa wakati Waaiya inachuja.</string>
 </resources>

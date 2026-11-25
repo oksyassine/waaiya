@@ -45,6 +45,7 @@ abstract final class SettingKeys {
 
   /// Android 15+: lift Android's notification-text protection while filtering (needs the one-time setup).
   static const showNotificationText = 'show_notification_text';
+  static const keepAtLock = 'keep_at_lock';
 
   /// Phone silent for [prayerSilentMinutes] from each prayer time; media muted [prayerAdhanMinutes] at the adhan.
   static const prayerSilent = 'prayer_silent';
@@ -405,6 +406,9 @@ class SetupInfo {
     this.busy = false,
     this.message,
     this.adbCommands,
+    this.batteryRestricted = false,
+    this.killedWhileFiltering = false,
+    this.notificationsOff = false,
   });
 
   factory SetupInfo.fromMap(Map<Object?, Object?> m) => SetupInfo(
@@ -422,6 +426,9 @@ class SetupInfo {
         busy: _bool(m['busy'], false),
         message: BackendMessage.fromMap(m['message']),
         adbCommands: _str(m['adbCommands']),
+        batteryRestricted: _bool(m['batteryRestricted'], false),
+        killedWhileFiltering: _bool(m['killedWhileFiltering'], false),
+        notificationsOff: _bool(m['notificationsOff'], false),
       );
 
   /// The original sound can be silenced (Android: DUMP granted, or helper mode).
@@ -463,6 +470,16 @@ class SetupInfo {
   final BackendMessage? message;
   final String? adbCommands;
 
+  /// Android: Waaiya is under the phone's battery restrictions (not "unrestricted", or background-restricted), so
+  /// the phone may close it after a while and filtering stops.
+  final bool batteryRestricted;
+
+  /// Android ended Waaiya while it was filtering (not a force stop or an update): the music then played unfiltered.
+  final bool killedWhileFiltering;
+
+  /// Android: Waaiya's notifications are off, so it cannot say when Android stopped filtering.
+  final bool notificationsOff;
+
   Map<String, Object?> toMap() => {
         'originalsMuted': originalsMuted,
         'consentSkipped': consentSkipped,
@@ -478,6 +495,9 @@ class SetupInfo {
         'busy': busy,
         'message': message?.toMap(),
         'adbCommands': adbCommands,
+        'batteryRestricted': batteryRestricted,
+        'killedWhileFiltering': killedWhileFiltering,
+        'notificationsOff': notificationsOff,
       };
 }
 
@@ -746,6 +766,8 @@ class NotificationTextInfo {
     this.pairAdvised = false,
     this.shownNow,
     this.refused = false,
+    this.lockApplies = false,
+    this.keepAtLock = -1,
   });
 
   factory NotificationTextInfo.fromMap(Map<Object?, Object?> m) => NotificationTextInfo(
@@ -758,6 +780,8 @@ class NotificationTextInfo {
         pairAdvised: _bool(m['pairAdvised'], false),
         shownNow: m['shownNow'] is bool ? m['shownNow'] as bool : null,
         refused: _bool(m['refused'], false),
+        lockApplies: _bool(m['lockApplies'], false),
+        keepAtLock: m['keepAtLock'] is int ? m['keepAtLock'] as int : -1,
       );
 
   /// Android 15 or newer: the text is hidden during the capture.
@@ -775,6 +799,14 @@ class NotificationTextInfo {
   /// Android asks before each start on this phone, and then stops filtering at every screen lock unless the
   /// protection is off: Waaiya lifts it while filtering whatever [wanted] says, when it can ([canWrite]).
   final bool forcedForLock;
+
+  /// Android asks before each start on this phone and would stop filtering at every screen lock unless Waaiya lifts
+  /// the protection while filtering: the user decides ([keepAtLock]: -1 not asked, 0 stop at each lock, 1 keep).
+  final bool lockApplies;
+  final int keepAtLock;
+
+  /// Start asks the lock question first.
+  bool get lockAsk => lockApplies && keepAtLock == -1;
 
   /// Android 16+: the start question also offers "Share one app"; sharing only Waaiya keeps every app filtered, shows
   /// notification text and survives screen lock, with no setup and no Developer options.
@@ -805,6 +837,8 @@ class NotificationTextInfo {
         'pairAdvised': pairAdvised,
         'shownNow': shownNow,
         'refused': refused,
+        'lockApplies': lockApplies,
+        'keepAtLock': keepAtLock,
       };
 }
 
@@ -1092,6 +1126,9 @@ abstract interface class WaaiyaBackend {
   /// Screen blur: "Allow in Android settings" (draw over other apps).
   Future<void> openOverlaySettings();
 
+  /// Android: Waaiya's page in Android's settings (App info), where a refused permission can be allowed.
+  Future<void> openAppSettings();
+
   /// Opens the Shizuku app (its store page when it is not installed). Capability `shizukuSetup`.
   Future<void> openShizuku();
 
@@ -1164,6 +1201,9 @@ abstract interface class WaaiyaBackend {
 
   /// Android's share sheet with [text] (the diagnostics report).
   Future<void> shareText(String text);
+
+  /// Android: the person's email app, addressed to Waaiya's support with [subject] and [text] filled in; they send it.
+  Future<void> sendToSupport(String subject, String text);
 
   /// A 0.2.13 feature method, named `<feature>.<name>` (docs/FEATURES_CONTRACT.md), e.g. `worship.times`. Android:
   /// the same MethodChannel method name, routed by UiBridge to the feature's Kotlin object. Throws

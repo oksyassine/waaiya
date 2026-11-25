@@ -13,14 +13,14 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Barcha ilovalardan musiqa asboblarini olib tashlaydi, nutq va tilovatni saqlaydi.';
+      'Ilovalaringiz ovozidan musiqa asboblarini olib tashlaydi, nutq va tilovatni saqlaydi.';
 
   @override
   String get onboardTitle => 'Xush kelibsiz';
 
   @override
   String get onboardBody =>
-      'Waaiya bu telefondagi barcha ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Hozircha qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
+      'Waaiya bu telefondagi ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
 
   @override
   String get onboardQuestion => 'Men';
@@ -46,7 +46,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Barcha ilovalardan musiqa asboblari olib tashlanmoqda. Ovoz taxminan $delayMs ms kech keladi (1000 ms — bu bir soniya).';
+    return 'Ilovalaringiz ovozi filtrlanmoqda. U taxminan $delayMs ms kech keladi (1000 ms — bu bir soniya).';
   }
 
   @override
@@ -54,7 +54,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get stateModelFailed =>
-      'Ovoz modeli yuklanmadi, shuning uchun xavfsizlik uchun ovoz oʻchirildi.';
+      'Filtr yuklanmadi, shuning uchun ovoz filtrsiz ijro etilish oʻrniga oʻchirildi.';
 
   @override
   String get stateCaptureDenied =>
@@ -82,7 +82,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android ekraningizni ulashishni soʻraydi. Faqat ovoz ishlatiladi: hech narsa yozib olinmaydi va yuborilmaydi.';
+      'Android ekraningizni ulashishni soʻraydi. Hech narsa yozib olinmaydi va yuborilmaydi.';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Quyidagi bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.';
+      'Bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.';
 
   @override
   String get step1Title => 'Shizuku ilovasini oʻrnating';
@@ -247,11 +247,11 @@ class AppLocalizationsUz extends AppLocalizations {
   String get change => 'Oʻzgartirish';
 
   @override
-  String get playerTitle => 'Mukammal sinxron videolar';
+  String get playerTitle => 'Ovozi va tasviri sinxron videolar';
 
   @override
   String get playerBody =>
-      'Videoni kechikishsiz, filtrlangan holda koʻrish uchun uni Waaiyaga ulashing (yoki “Open with” / “… orqali ochish” bilan Waaiyada oching).';
+      'Videoni filtrlangan holda, ovozi va tasviri sinxron, jonli filtr kechikishisiz koʻrish uchun uni Waaiyaga ulashing (yoki “Open with” / “… orqali ochish” bilan Waaiyada oching).';
 
   @override
   String get licences => 'Ochiq kodli litsenziyalar';
@@ -393,7 +393,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Filtrlash yoqilganda barcha ilovalarda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.';
+      'Filtrlash yoqilganda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.';
 
   @override
   String get blurOnTitle => 'Xiralashtirish yoqilgan';
@@ -415,7 +415,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get blurWhatTitle => 'Nimani xiralashtirish';
 
   @override
-  String get blurWomenTitle => 'Ayollarni xiralashtirish';
+  String get blurWomenTitle => 'Ayollar tasvirlarini xiralashtirish';
 
   @override
   String get blurWomenBody =>
@@ -803,11 +803,12 @@ class AppLocalizationsUz extends AppLocalizations {
   String get wsetupCodeOk => 'Juftlash';
 
   @override
-  String get blurStrictTitle => 'Kim yopilmasdan qoladi';
+  String get blurStrictTitle =>
+      'Erkak koʻrsatilishi uchun qancha ishonch kerak';
 
   @override
   String blurStrictValue(String level) {
-    return 'Kim yopilmasdan qoladi: $level';
+    return 'Erkak koʻrsatilishi uchun qancha ishonch kerak: $level';
   }
 
   @override
@@ -816,7 +817,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get blurStrict1 =>
-      'Muvozanatli: taxminan ikki baravar koʻp erkak yopilmaydi';
+      'Muvozanatli: taxminan ikki baravar koʻp erkak koʻrsatiladi';
 
   @override
   String get blurStrict2 => 'Yumshoq: muvozanatlidan biroz koʻproq erkak';
@@ -832,31 +833,31 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Ilova erkak ekaniga ishonmagan har qanday kishi yopiladi. Qatʼiy rejim 100 erkakdan taxminan 7 tasini yopmaydi; muvozanatli taxminan 14 tasini, yumshoq taxminan 16 tasini. Har bir yumshoqroq bosqich 100 ayoldan yana taxminan 1 tasini ham yopmasdan qoldiradi.';
+      'Odam faqat ilova uning erkak ekaniga ishonch hosil qilgandagina koʻrsatiladi; qolgan hamma xiralashtiriladi. Qatʼiy rejim 100 erkakdan taxminan 7 tasini koʻrsatadi, muvozanatli taxminan 14 tasini, yumshoq taxminan 16 tasini. Baʼzi ayollar baribir oʻtkazib yuboriladi; har bir yumshoqroq bosqich 100 tadan yana taxminan 1 tasini oʻtkazib yuboradi.';
 
   @override
   String get stateOnNotMuted =>
-      'Asl ovoz hali oʻchirilmagan, shuning uchun musiqani filtrlangan ovoz bilan birga eshitasiz. Quyidagi bir martalik sozlashni yakunlang.';
+      'Asl ovoz hali oʻchirilmagan, shuning uchun musiqani filtrlangan ovoz bilan birga eshitasiz. “Sozlash” sahifasidagi bir martalik sozlashni yakunlang.';
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya hozir ijro etayotgan ilovaning asl ovozini oʻchira olmayapti, shuning uchun musiqa hali ham eshitilishi mumkin. Filtrlashni toʻxtatib, qayta boshlang. Agar shunday qolsa, diagnostika hisobotini yuboring (bu ekranning pastida).';
+      'Waaiya hozir ijro etayotgan ilovaning asl ovozini oʻchira olmayapti, shuning uchun musiqa hali ham eshitilishi mumkin. Filtrlashni toʻxtatib, qayta boshlang. Agar shunday qolsa, diagnostika hisobotini yuboring (Sozlamalar).';
 
   @override
   String get stateTooSlow =>
-      'Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi. Quyidagi “Havolani ochish” baribir ishlaydi: u videoni ijro etishdan oldin filtrlaydi.';
+      'Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi. “Havolalar” sahifasidagi “Havolani ochish” baribir ishlaydi: u videoni ijro etishdan oldin filtrlaydi.';
 
   @override
   String get stateMonoNote => 'Bu telefon ulgurishi uchun ovoz mono rejimda.';
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'Filtrlashga ruxsat bermagani uchun ovozsiz qilindi: $apps.';
+    return 'Ovozsiz qilindi, chunki bular filtrlashga ruxsat bermaydi: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'Filtrlashga ruxsat bermagani uchun filtrsiz ijro etilmoqda: $apps.';
+    return 'Filtrsiz ijro etilmoqda, chunki bular filtrlashga ruxsat bermaydi: $apps.';
   }
 
   @override
@@ -888,7 +889,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Waaiya bu telefonda nimalarni koʻrayotgani. Uni nusxalang yoki sizga yordam berayotgan kishiga ulashing. Ilovaning oʻzi hech narsa yubormaydi.';
+      'Waaiya bu telefonda nimalarni koʻrayotgani. Uni nusxalang yoki sizga yordam berayotgan kishiga ulashing. Waaiya uni oʻzi yubormaydi: kim olishini siz tanlaysiz.';
 
   @override
   String get notifStoppedTitle => 'Waaiya toʻxtadi';
@@ -929,7 +930,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get setupGo => 'Sozlashga oʻtish';
 
   @override
-  String get helperTitle => 'Qoplamalar orqali bosish';
+  String get helperTitle => 'Xiralashtirilgan joylar orqali bosish';
 
   @override
   String get helperBodyOff =>
@@ -940,7 +941,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'Waaiya yordamchisi qoplamalarni chizmoqda: bosishlar ulardan oʻtib ketadi. U telefon qayta ishga tushganda yoki USB orqali debaglash oʻchirilganda toʻxtaydi; shunda tugmani yana bosing.';
+      'Waaiya yordamchisi xiralashtirishni chizmoqda: bosishlar undan oʻtib ketadi. U telefon qayta ishga tushganda yoki “USB orqali debaglash” (“Dasturchilar uchun” boʻlimidagi alohida kalit) oʻchirilganda toʻxtaydi; shunda tugmani yana bosing.';
 
   @override
   String get helperShizukuOn =>
@@ -956,37 +957,38 @@ class AppLocalizationsUz extends AppLocalizations {
   String get settingsGeneralTitle => 'Umumiy';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle =>
+      'Oddiy rejim (sinov): “Dasturchilar uchun” boʻlimisiz';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Quyidagi sozlash juda qiyin boʻlgan telefonlar uchun. Waaiya filtrlayotganda telefonning media ovozini oʻchiradi va filtrlangan ovozni boshqa ovoz kanalida ijro etadi. Ovoz tugmalaringiz Waaiya ovoz balandligini sozlaydi. Android har bir ishga tushirishda ekranni ulashishni soʻraydi. Filtrlash toʻxtaganda media ovozi qaytadi.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Oddiy rejimdan foydalanish';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Ovoz kanali: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'Budilnik';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Bildirishnoma';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Hech narsa eshitilmasa yoki quloqchin ulangan boʻlsa-da ovoz telefon karnayidan chiqsa, boshqa kanalni sinab koʻring. Telefon tebranish rejimida yoki “Bezovta qilinmasin” yoqilgan boʻlsa, Bildirishnoma kanali ovozsiz boʻladi.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Bu sinov. Uni sinab koʻrgach (karnay, quloqchin, Bluetooth), iltimos, Sozlamalardan diagnostika hisobotini yuboring.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Oddiy rejim (sinov): Waaiya filtrlayotganda media ovozi oʻchiriladi.';
 
   @override
   String get worshipPrayerFajr => 'Bomdod';
@@ -1129,8 +1131,7 @@ class AppLocalizationsUz extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Barcha ilovalardan musiqa asboblari olib tashlanmoqda.';
+  String get stateOnDetailNoDelay => 'Ilovalaringiz ovozi filtrlanmoqda.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1208,7 +1209,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Waaiya bu kompyuterda nimalarni koʻrayotgani. Uni nusxalang va sizga yordam berayotgan kishiga bering. Ilovaning oʻzi hech narsa yubormaydi.';
+      'Waaiya bu kompyuterda nimalarni koʻrayotgani. Uni nusxalang va sizga yordam berayotgan kishiga bering. Waaiya uni oʻzi yubormaydi: kim olishini siz tanlaysiz.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1290,7 +1291,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get fixCancel => 'Bekor qilish';
 
   @override
-  String get fixBlurAppsTitle => 'Yopilmaydigan ilovalar';
+  String get fixBlurAppsTitle => 'Xiralashtirilmaydigan ilovalar';
 
   @override
   String get fixBlurAppsBody =>
@@ -1344,7 +1345,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'Qayd etildi (bu qurilmada $count ta qayd).';
+    return 'Qayd etildi. Bu qurilmadagi qaydlar: $count.';
   }
 
   @override
@@ -1430,7 +1431,7 @@ class AppLocalizationsUz extends AppLocalizations {
   String get worshipAsrTitle => 'Asr vaqti';
 
   @override
-  String get worshipAsrStandard => 'Standart (shofeʼiy, molikiy, hanbaliy)';
+  String get worshipAsrStandard => 'Jumhur (shofeʼiy, molikiy, hanbaliy)';
 
   @override
   String get worshipAsrHanafi => 'Hanafiy';
@@ -1744,7 +1745,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'PIN-kod oʻrnatilgan boʻlsa, filtrni toʻxtatish yoki istalgan himoyani oʻchirish avval PIN-kodni soʻraydi. Masalan, ota-ona bola filtrni oʻchira olmasligi uchun PIN-kod oʻrnatadi. Kutish muddatini yoki PIN-kodni oʻzgartirish ham uni soʻraydi.';
+      'PIN-kod oʻrnatilgan boʻlsa, filtrni toʻxtatish yoki istalgan himoyani oʻchirish avval PIN-kodni soʻraydi. Masalan, ota-ona bola Waaiyada filtrni oʻchira olmasligi uchun PIN-kod oʻrnatadi (u toʻxtata olmaydigan narsalar quyida keltirilgan). Kutish muddatini yoki PIN-kodni oʻzgartirish ham uni soʻraydi.';
 
   @override
   String get protectPinForgot =>
@@ -1776,7 +1777,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'PIN-kod notoʻgʻri. Pauzagacha $count ta urinish qoldi.';
+    return 'PIN-kod notoʻgʻri. Pauzagacha qolgan urinishlar: $count.';
   }
 
   @override
@@ -1838,7 +1839,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Bu nimani toʻxtata olmaydi: majburiy toʻxtatish, oʻchirib tashlash, Waaiya maʼlumotlarini tozalash va Androidning oʻz sozlamalari. Ularni bloklash uchun maxsus Android ruxsatlari kerak, Waaiya esa ulardan foydalanmaydi. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
+      'Bu nimani toʻxtata olmaydi: telefonni qayta ishga tushirish (filtrlash oʻz-oʻzidan qayta boshlanmaydi), majburiy toʻxtatish, oʻchirib tashlash, Waaiya maʼlumotlarini tozalash va Androidning oʻz sozlamalari. Ularni bloklash uchun maxsus Android ruxsatlari kerak, Waaiya esa ulardan foydalanmaydi. Bu zaif damdan himoya qiladi, qatʼiy qaror qilgan odamdan emas.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1888,7 +1889,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya bu kompyuterdagi barcha ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Hozircha qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
+      'Waaiya bu kompyuterdagi ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
 
   @override
   String get worshipUseLocation => 'Joylashuvimdan foydalanish';
@@ -1922,7 +1923,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'Habus va islomiy ishlar vazirligining $city uchun rasmiy vaqtlari.';
+    return 'Habus va islomiy ishlar vazirligining $city uchun jadvallariga moslab hisoblangan vaqtlar.';
   }
 
   @override
@@ -1945,7 +1946,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get notifTextBody =>
-      'Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi. Keyingi ishga tushirishda kuchga kiradi.';
+      'Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Himoya olib tashlangan paytda ayni vaqtdagi boshqa ekran ulashish ham bildirishnomalaringiz va kodlaringizni boshqalarga ko‘rsatishi mumkin.';
 
   @override
   String get notifTextNextStart =>
@@ -1976,7 +1977,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get notifTextForced =>
-      'Yoqilgan: bu telefonda Android har bir ishga tushirishdan oldin so‘raydi va keyin har bir ekran qulfida filtrlashni to‘xtatardi. Waaiya filtrlash paytida bu himoyani olib tashlaydi, shuning uchun bildirishnoma matni ham ko‘rinadi. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi.';
+      'Yoqilgan: bu telefonda Android har bir ishga tushirishdan oldin so‘raydi va keyin har bir ekran qulfida filtrlashni to‘xtatardi. Waaiya filtrlash paytida bu himoyani olib tashlaydi, shuning uchun bildirishnoma matni ham ko‘rinadi. Himoya olib tashlangan paytda ayni vaqtdagi boshqa ekran ulashish ham bildirishnomalaringiz va kodlaringizni boshqalarga ko‘rsatishi mumkin.';
 
   @override
   String get oneAppTitle =>
@@ -1984,7 +1985,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get oneAppBody =>
-      'Android nimani ulashishni so‘raganda “Bitta ilovani ulashish”ni, keyin Waaiya’ni tanlang. Barcha ilovalar filtrlanishda davom etadi, bildirishnomalar o‘qiladigan bo‘lib qoladi va ekran qulflanganda filtrlash davom etadi. Butun ekran bilan Android bildirishnoma matnini yashiradi va har bir qulfda filtrlashni to‘xtatadi.';
+      'Android nimani ulashishni so‘raganda “Bitta ilovani ulashish”ni, keyin Waaiya’ni tanlang. Boshqa ilovalar filtrlanishda davom etadi, bildirishnomalar o‘qiladigan bo‘lib qoladi va ekran qulflanganda filtrlash davom etadi. Butun ekran bilan Android bildirishnoma matnini yashiradi va har bir qulfda filtrlashni to‘xtatadi.';
 
   @override
   String get oneAppPair =>
@@ -1997,4 +1998,58 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get blurNeedsRestart =>
       'Xiralashtirishdan foydalanish uchun filtrlashni to‘xtatib, qayta ishga tushiring: unga butun ekran kerak, bu filtrlash esa “Bitta ilovani ulashish” taklifi bilan boshlangan.';
+
+  @override
+  String get micOpenSettings =>
+      'Mikrofonga ruxsat berish uchun Waaiya sozlamalarini ochish';
+
+  @override
+  String get keepRunningTitle => 'Waaiya ishlab tursin';
+
+  @override
+  String get keepRunningBattery =>
+      'Bu telefon batareyani tejash uchun bir muddatdan keyin Waaiyani yopishi mumkin, shunda filtrlash to‘xtaydi. Waaiya sozlamalarida, Batareya bo‘limida «Cheklanmagan»ni tanlang. Xiaomi, Redmi va POCO’da: «Cheklovlarsiz», hamda Avtoishga tushirishni ham yoqing.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Waaiya bildirishnomalari o‘chiq, shuning uchun filtrlash to‘xtaganda sizga xabar bera olmaydi. Ularni Waaiya sozlamalarida yoqing.';
+
+  @override
+  String get keepRunningOpen => 'Waaiya sozlamalarini ochish';
+
+  @override
+  String get lockAskTitle => 'Ekran qulflanganda filtrlash davom etsinmi?';
+
+  @override
+  String get lockTitle => 'Ekran qulflanganda filtrlashni davom ettirish';
+
+  @override
+  String get lockBody =>
+      'Bu telefonda Android har bir ishga tushirishdan oldin so‘raydi, so‘ng har safar ekran qulflanganda filtrlashni to‘xtatadi. Waaiya filtrlash paytida Androidning ekran ulashish himoyasini olib qo‘yib, buning oldini olishi mumkin va filtrlash to‘xtaganda uni qaytaradi. U olib qo‘yilgan paytda bir vaqtda bo‘lgan boshqa ekran ulashish (masalan, videoqo‘ng‘iroq) ham bildirishnomalaringizni ko‘rsatishi mumkin. O‘zgarish keyingi ishga tushirishda kuchga kiradi.';
+
+  @override
+  String get lockYes => 'Filtrlashni davom ettirish';
+
+  @override
+  String get lockNo => 'Har qulflashda to‘xtatish';
+
+  @override
+  String get sendToSupport => 'Waaiyaga yuborish';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Bir martalik sozlash hali bajarilmagan. Usiz Waaiya asl ovozni oʻchira olmaydi: musiqa va filtrlangan ovozni birga eshitasiz.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return '$value kutishni tanlaysizmi? Endi filtr yoki istalgan himoyani o‘chirish $value kutadi, bu kutishni qisqartirish ham shunday.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android Waaiya filtrlayotgan paytda uni yopdi, shuning uchun ovoz endi filtrlanmadi.';
 }

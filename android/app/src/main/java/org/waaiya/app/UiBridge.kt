@@ -228,6 +228,19 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                         .putExtra(Intent.EXTRA_TEXT, call.argument<String>("text") ?: throw BadArgs("text")), null))
                     result.success(null)
                 }
+                "sendToSupport" -> {
+                    // an email the person sends themselves: nothing leaves the phone unless they do
+                    val text = call.argument<String>("text") ?: throw BadArgs("text")
+                    val subject = call.argument<String>("subject") ?: "Waaiya"
+                    val mail = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")).putExtra(Intent.EXTRA_EMAIL, arrayOf(SUPPORT_EMAIL))
+                        .putExtra(Intent.EXTRA_SUBJECT, subject).putExtra(Intent.EXTRA_TEXT, text)
+                    // no email app: the share sheet, with the address at the top of the text
+                    runCatching { activity.startActivity(mail) }.onFailure {
+                        activity.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain")
+                            .putExtra(Intent.EXTRA_SUBJECT, subject).putExtra(Intent.EXTRA_TEXT, "$SUPPORT_EMAIL\n\n$text"), null))
+                    }
+                    result.success(null)
+                }
                 "openDeveloperOptions" -> {
                     // Developer options, or About phone when they are not turned on yet (step 2 of the guide).
                     // Checked first: with them off, the Developer options page opens and closes at once (no exception).
@@ -243,6 +256,11 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     if (devOn) runCatching { activity.startActivity(dev) }
                         .onFailure { activity.startActivity(about) }
                     else activity.startActivity(about)
+                    result.success(null)
+                }
+                "openAppSettings" -> {
+                    activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:${activity.packageName}")))
                     result.success(null)
                 }
                 "openOverlaySettings" -> {
@@ -351,6 +369,17 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 SetupHelp.Brand.XIAOMI -> "xiaomi"; SetupHelp.Brand.COLOROS -> "coloros"; SetupHelp.Brand.OTHER -> null
             },
             "consentSkipped" to activity.hasProjectMediaAppOp(),
+            // the phone may close Waaiya after a while (battery saver, OEM cleaners): the Filter page asks to lift it
+            "batteryRestricted" to runCatching {
+                !activity.getSystemService(android.os.PowerManager::class.java).isIgnoringBatteryOptimizations(activity.packageName) ||
+                    (Build.VERSION.SDK_INT >= 28 &&
+                        activity.getSystemService(android.app.ActivityManager::class.java).isBackgroundRestricted)
+            }.getOrDefault(false),
+            // Android ended Waaiya while it was filtering (StopLog): the same card says so
+            "killedWhileFiltering" to (StopLog.killedAt(activity) > 0 && !FilterService.running),
+            "notificationsOff" to runCatching {
+                !activity.getSystemService(android.app.NotificationManager::class.java).areNotificationsEnabled()
+            }.getOrDefault(false),
             // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
             "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
             // Android 15+ hides notification text during any whole-screen capture, filtering included: the Filter
@@ -361,6 +390,9 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                 "wanted" to settings.showNotificationText,
                 // no PROJECT_MEDIA: Waaiya lifts it anyway while filtering, or Android stops filtering at each lock
                 "forcedForLock" to ScreenShareProtection.neededForLock(activity),
+                // the user's choice about the lock on such a phone (Settings.keepAtLock): asked once at Start
+                "lockApplies" to ScreenShareProtection.lockApplies(activity),
+                "keepAtLock" to settings.keepAtLock,
                 // Android 16+: the start question also offers "Share one app" (pick Waaiya: text shown, no lock stop)
                 "oneAppOffered" to CaptureChoice.offerOneApp(activity),
                 // the one-app notice advises the one-time pairing until it is done (simple mode included)
@@ -432,12 +464,15 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "filter_off_apps" -> settings.filterOffApps = apps()
             "blur_off_apps" -> settings.blurOffApps = apps()
             "keep_singing" -> settings.keepSinging = bool()
-            // as the Quick Settings tile: on applies at the next start, off puts Android's switch back at once
+            // as the Quick Settings tile: off puts Android's switch back at once; while filtering, a new capture
+            // starts at once so the choice applies now (FilterService.restartForNotificationText)
+            "keep_at_lock" -> settings.keepAtLock = int(0, 1)
             "show_notification_text" -> {
                 val on = bool()
                 settings.showNotificationText = on
                 settings.notificationTextExplained = true
                 if (!on) ScreenShareProtection.restore(activity)
+                FilterService.restartForNotificationText(activity)?.let { runCatching { activity.startActivity(it) } }
             }
             "prayer_silent" -> settings.prayerSilent = bool()
             "prayer_silent_minutes" -> settings.prayerSilentMinutes = int(5, 90)
@@ -578,3 +613,5 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         const val REQ_WSETUP_NOTIFICATIONS = 8
     }
 }
+
+private const val SUPPORT_EMAIL = "support@waaiya.mssid.org"

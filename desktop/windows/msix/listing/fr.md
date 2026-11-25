@@ -4,7 +4,7 @@
 ## Description
 
 Waaiya retire les instruments de musique de tout ce que joue votre ordinateur et garde la voix : la parole, les cours
-et la récitation du Coran. Elle fonctionne avec toutes les applis (navigateurs, lecteurs vidéo, jeux), en direct, sur
+et la récitation du Coran. Elle fonctionne avec les applis que vous utilisez (navigateurs, lecteurs vidéo, jeux), en direct, sur
 votre ordinateur.
 
 - Un seul bouton : Waaiya filtre le son de toutes vos autres applis jusqu'à ce que vous appuyiez à nouveau.
@@ -39,7 +39,7 @@ lent, Waaiya passe en mono d'elle-même.
 
 ## Product features (one per line, at most 20)
 
-- Retire la musique de toutes les applis, garde la parole et la récitation du Coran
+- Retire la musique de vos applis, garde la parole et la récitation du Coran
 - Regardez des liens YouTube, TikTok et Instagram avec le filtre actif
 - En option : couper le chant des femmes (première version)
 - En direct, sur votre ordinateur : rien n'est envoyé
@@ -59,7 +59,7 @@ sans musique, supprimer la musique, halal, Coran, cours, voix, filtre
 
 ## Screenshot captions
 
-1. Un seul bouton retire la musique de toutes les applis.
+1. Un seul bouton retire la musique de vos applis.
 2. Regardez un lien avec le filtre actif.
 3. En option : floutage de l'écran au-dessus de toutes les fenêtres.
 4. Paramètres : langue, démarrer à l'ouverture de session.

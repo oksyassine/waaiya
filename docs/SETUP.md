@@ -5,7 +5,7 @@ Waaiya needs two things that Android only gives to the shell user (ADB):
     cmd package grant org.waaiya.app android.permission.DUMP     # list other apps' sessions, mute the originals
     cmd appops set org.waaiya.app PROJECT_MEDIA allow            # no screen-sharing question at every start
 
-and, optionally, one more for the "Notification text" Quick Settings tile (Android 15+):
+and, optionally, one more for the "Waaiya: notification text" Quick Settings tile (Android 15+):
 
     cmd package grant org.waaiya.app android.permission.WRITE_SECURE_SETTINGS
 
@@ -146,7 +146,7 @@ prompt on a real adbd (the emulators here do not ask: `ro.adb.secure=0`).
   `TileStartActivity` (Android hands out the screen-capture token only to an activity); after the setup Android
   answers without asking, so nothing shows. Without the DUMP grant or the microphone permission the tile opens the
   app instead, which explains.
-- **Notification text** (`ScreenShareTileService`, Android 15+ only: `values-v35/bools.xml`): Android 15 hides the
+- **Waaiya: notification text** (`ScreenShareTileService`, Android 15+ only: `values-v35/bools.xml`): Android 15 hides the
   text of notifications during a whole-screen capture, and filtering is one. When this tile is on, `FilterService`
   sets the global setting `disable_screen_share_protections_for_apps_and_notifications` (Developer options
   "Disable screen share protections") to 1 just before the capture starts and puts it back when filtering ends
@@ -171,8 +171,10 @@ prompt on a real adbd (the emulators here do not ask: `ro.adb.secure=0`).
   Waaiya is updated and when USB debugging is turned off. Waaiya starts it again by itself (a short silent run with
   the saved pairing) when the app is opened or filtering starts and Wireless debugging is on; otherwise a banner on
   the Filter and Setup pages has one button for it, and Start warns first. The switch is mentioned only as the
-  optional way to make the permissions permanent. **Not proven on a real phone yet**: Shizuku's server is known to
-  start on these phones without the switch, but that the restricted shell may still read the audio dumps is inferred.
+  optional way to make the permissions permanent. **Helper mode is not proven on a real phone yet**: Shizuku's server is known
+  to start on these phones without the switch, but that the restricted shell may still read the audio dumps is
+  inferred. (A tester's Redmi Note 15, HyperOS 3, Android 16, accepted the grants directly in November 2026, so it did
+  not need helper mode.)
 - vivo/iQOO (OriginOS) ignores `appops set PROJECT_MEDIA` without an error: the setup counts as done with DUMP alone
   and Android asks before each capture. Huawei says Wireless debugging is not available on its phones: the page
   points to the computer route there.

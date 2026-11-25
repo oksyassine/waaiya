@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Removes musical instruments from every app and keeps speech and recitation.</string>
+    <string name="tagline">Removes musical instruments from the sound of your apps and keeps speech and recitation.</string>
 
     <string name="onboard_title">Welcome</string>
-    <string name="onboard_body">Waaiya removes musical instruments from the sound of every app on this phone. Speech and Quran recitation are kept. For now, singing voices are removed too.</string>
+    <string name="onboard_body">Waaiya removes musical instruments from the sound of the apps on this phone. Speech and Quran recitation are kept. Singing voices are removed too.</string>
     <string name="onboard_question">I am</string>
     <string name="gender_man">A man</string>
     <string name="gender_woman">A woman</string>
@@ -13,21 +13,21 @@
     <string name="state_on_title">Filtering is on</string>
     <string name="state_off_title">Filtering is off</string>
     <string name="state_starting">Starting…</string>
-    <string name="state_on_detail">Instruments are removed from all apps. The sound comes about %1$d ms late (1000 ms is one second).</string>
-    <string name="state_off_detail">Tap the button to start.</string>
-    <string name="state_model_failed">The sound model could not load, so the sound is muted for safety.</string>
+    <string name="state_on_detail">Filtering the sound of your apps. It comes about %1$d ms late (1000 ms is one second).</string>
+    <string name="state_off_detail">Press the button to start.</string>
+    <string name="state_model_failed">The filter could not load, so the sound is muted instead of playing unfiltered.</string>
     <string name="state_capture_denied">The microphone permission is needed to receive other apps\' sound.</string>
-    <string name="state_stopped_by_system">Android stopped filtering. Tap the button to start again.</string>
+    <string name="state_stopped_by_system">Android stopped filtering. Press the button to start again.</string>
     <string name="state_silenced_title">Filtering stopped</string>
-    <string name="state_silenced">Filtering stopped: other apps are silenced. Tap the button to start again, or Stop to hear them unfiltered.</string>
+    <string name="state_silenced">Filtering stopped: other apps are silenced. Press the button to start again, or Stop to hear them unfiltered.</string>
     <string name="release_silence">Stop: hear apps unfiltered</string>
     <string name="power_start_cd">Start filtering</string>
     <string name="power_stop_cd">Stop filtering</string>
-    <string name="capture_hint">Android will ask to share your screen. Only the sound is used: nothing is recorded or sent.</string>
+    <string name="capture_hint">Android will ask to share your screen. Nothing is recorded or sent.</string>
     <string name="need_record_audio">Waaiya needs the microphone permission to receive other apps\' sound. It never records you.</string>
 
     <string name="setup_banner_title">One more step</string>
-    <string name="setup_banner_body">Without the one-time setup below, you will hear the music and the filtered sound together.</string>
+    <string name="setup_banner_body">Without the one-time setup, you will hear the music and the filtered sound together.</string>
     <string name="step1_title">Install Shizuku</string>
     <string name="step1_body">A free helper app from the Play Store.</string>
     <string name="step1_action">Get Shizuku</string>
@@ -72,8 +72,8 @@
     <string name="setting_gender_title">I am</string>
     <string name="change">Change</string>
 
-    <string name="player_title">Videos in perfect sync</string>
-    <string name="player_body">Share a video to Waaiya (or use \"Open with\") to watch it filtered with no delay.</string>
+    <string name="player_title">Videos with sound and picture in sync</string>
+    <string name="player_body">Share a video to Waaiya (or use “Open with”) to watch it filtered, with sound and picture in sync, without the live filter\'s delay.</string>
     <string name="licences">Open-source licences</string>
     <string name="licences_intro">Waaiya is free software under the GNU Affero General Public License v3 or later. Source code: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (training data): https://creativecommons.org/licenses/by/4.0/</string>
@@ -82,7 +82,7 @@
 
     <string name="notif_channel">Filter</string>
     <string name="notif_title">Waaiya is on</string>
-    <string name="notif_text">Instruments are removed from all apps</string>
+    <string name="notif_text">Filtering the sound of your apps</string>
     <string name="notif_stop">Stop</string>
     <string name="notif_resume">Resume</string>
     <!-- Link feature -->
@@ -125,14 +125,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Screen blur</string>
-    <string name="blur_body">Covers people and images on screen, in every app, while filtering is on. It runs on the phone; nothing is sent anywhere.</string>
+    <string name="blur_body">Covers people and images on screen while filtering is on. It runs on the phone; nothing is sent anywhere.</string>
     <string name="blur_on_title">The blur is on</string>
     <string name="blur_off_title">The blur is off</string>
     <string name="blur_start_cd">Start the blur</string>
     <string name="blur_stop_cd">Stop the blur</string>
-    <string name="blur_off_detail">Tap the button to start. Filtering starts with it.</string>
+    <string name="blur_off_detail">Press the button to start. Filtering starts with it.</string>
     <string name="blur_what_title">What to blur</string>
-    <string name="blur_women_title">Blur women</string>
+    <string name="blur_women_title">Blur images of women</string>
     <string name="blur_women_body">Covers the whole body. If the app is not sure that a person is a man, it covers them too.</string>
     <string name="blur_nudity_title">Blur immodest images</string>
     <string name="blur_nudity_body">Nudity or revealing clothes, on anyone: the whole screen is covered.</string>
@@ -248,22 +248,22 @@
     <string name="wsetup_code_dialog_title">Pairing code</string>
     <string name="wsetup_code_dialog_body">Only with split screen (Settings in one half, Waaiya in the other): leaving Settings closes the pairing screen and its code stops working. Type the 6-digit code shown under “Pair device with pairing code”.</string>
     <string name="wsetup_code_ok">Pair</string>
-    <string name="blur_strict_title">Who is left uncovered</string>
-    <string name="blur_strict_value">Who is left uncovered: %1$s</string>
+    <string name="blur_strict_title">How sure before a man is shown</string>
+    <string name="blur_strict_value">How sure before a man is shown: %1$s</string>
     <string name="blur_strict_0">Strict: only people the app is almost certain are men</string>
     <string name="blur_strict_1">Balanced: about twice as many men left uncovered</string>
     <string name="blur_strict_2">Relaxed: a few more men than balanced</string>
     <string name="blur_strict_0_short">strict</string>
     <string name="blur_strict_1_short">balanced</string>
     <string name="blur_strict_2_short">relaxed</string>
-    <string name="blur_strict_help">Anyone the app is not sure is a man is covered. Strict leaves about 7 men in 100 uncovered; balanced about 14, relaxed about 16. Each step less strict also leaves about 1 more woman in 100 uncovered.</string>
+    <string name="blur_strict_help">A person is shown only when the app is sure he is a man; everyone else is blurred. Strict shows about 7 men in 100, balanced about 14, relaxed about 16. Some women are still missed; each less strict step misses about 1 more in 100.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">The original sound is not silenced yet, so you hear the music together with the filtered sound. Finish the one-time setup below.</string>
-    <string name="state_on_mute_failing">Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (at the bottom of this screen).</string>
-    <string name="state_too_slow">This phone is too slow to filter live sound, so the sound cuts. \"Open a link\" below still works: it filters the video before playing it.</string>
+    <string name="state_on_not_muted">The original sound is not silenced yet, so you hear the music together with the filtered sound. Finish the one-time setup on the Setup page.</string>
+    <string name="state_on_mute_failing">Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (Settings).</string>
+    <string name="state_too_slow">This phone is too slow to filter live sound, so the sound cuts. “Open a link” on the Links page still works: it filters the video before playing it.</string>
     <string name="state_mono_note">The sound is in mono so that this phone keeps up.</string>
-    <string name="state_blocked_silenced">Silenced, because it does not allow filtering: %1$s.</string>
-    <string name="state_blocked_unfiltered">Playing unfiltered, because it does not allow filtering: %1$s.</string>
+    <string name="state_blocked_silenced">Silenced because filtering is not allowed by: %1$s.</string>
+    <string name="state_blocked_unfiltered">Playing unfiltered because filtering is not allowed by: %1$s.</string>
     <string name="state_capture_failed">Android did not give Waaiya the sound of other apps. Tap the button to start again.</string>
     <string name="state_capture_cancelled">Starting was cancelled at Android\'s screen-sharing question. Waaiya needs \"Start\" there to receive the sound. Nothing is recorded or sent.</string>
     <string name="start_no_setup_title">The music will still be heard</string>
@@ -275,19 +275,20 @@
     <string name="notif_too_slow">This phone is too slow for live filtering: the sound cuts</string>
     <string name="diag_button">Problem? Diagnostics report</string>
     <string name="diag_title">Diagnostics report</string>
-    <string name="diag_note">What Waaiya sees on this phone. Copy it or share it with whoever helps you. The app itself sends nothing.</string>
+    <string name="diag_note">What Waaiya sees on this phone. Copy it or share it with whoever helps you. Waaiya does not send it by itself: you choose who gets it.</string>
     <string name="notif_stopped_title">Waaiya stopped</string>
     <string name="notif_stopped_text">The sound is not filtered any more. Tap to start again.</string>
     <string name="notif_silenced_title">Filtering stopped: other apps are silenced</string>
     <string name="notif_silenced_text">Tap to start again, or Stop to hear them unfiltered.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">On</string>
+    <string name="tile_model_failed">On, but muted: model error</string>
     <string name="tile_off">Off</string>
     <string name="tile_starting">Starting…</string>
     <string name="tile_silenced">Stopped, apps silenced</string>
     <string name="tile_on_not_muted">On, setup needed</string>
     <string name="tile_open_app">Open Waaiya</string>
-    <string name="tile_text_label">Notification text</string>
+    <string name="tile_text_label">Waaiya: notification text</string>
     <string name="tile_text_shown">Shown while filtering</string>
     <string name="tile_text_hidden">Hidden while filtering</string>
     <string name="tile_text_refused">This phone refuses it</string>
@@ -329,10 +330,10 @@
     <string name="setup_redo">Show the setup again</string>
     <string name="setup_go">Go to the setup</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Touches through the covers</string>
+    <string name="helper_title">Tap through blurred areas</string>
     <string name="helper_body_off">Without help, a cover blocks the touches under it. Waaiya\'s helper draws the covers so that touches pass through. Turn on Wireless debugging (Wi-Fi is needed) and tap the button; the first time, pair once as in the setup. After the phone restarts, tap it again.</string>
     <string name="helper_start">Start Waaiya\'s helper</string>
-    <string name="helper_on">Waaiya\'s helper draws the covers: touches pass through them. It stops when the phone restarts or when USB debugging is turned off; tap the button again then.</string>
+    <string name="helper_on">Waaiya\'s helper draws the blur: taps pass through it. It stops when the phone restarts or when “USB debugging” (a separate switch in Developer options) is turned off; tap the button again then.</string>
     <string name="helper_shizuku_on">Shizuku draws the covers: touches pass through them.</string>
     <string name="helper_or_shizuku">Or with Shizuku:</string>
     <string name="guide_w_helper_note">With the screen blur on, the setup also starts Waaiya\'s helper, so that touches pass through the covers. Keep “USB debugging” on for it (Wireless debugging can be off). After the phone restarts, start the helper again from the Screen page.</string>
@@ -346,20 +347,20 @@
     <string name="notif_channel_silenced">Apps kept silent</string>
 
     <!-- Simple mode: a TEST (0.2.13), English only until real phones prove it (then translated). -->
-    <string name="simple_title" translatable="false">Simple mode (test): no Developer options</string>
-    <string name="simple_body" translatable="false">For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.</string>
-    <string name="simple_switch" translatable="false">Use simple mode</string>
-    <string name="simple_channel_title" translatable="false">Sound channel: %1$s</string>
-    <string name="simple_channel_alarm" translatable="false">Alarm</string>
-    <string name="simple_channel_notification" translatable="false">Notification</string>
-    <string name="simple_channel_help" translatable="false">If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.</string>
-    <string name="simple_test_note" translatable="false">This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.</string>
-    <string name="simple_on_detail" translatable="false">Simple mode (test): media sound is muted while Waaiya filters.</string>
+    <string name="simple_title">Simple mode (test): no Developer options</string>
+    <string name="simple_body">For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.</string>
+    <string name="simple_switch">Use simple mode</string>
+    <string name="simple_channel_title">Sound channel: %1$s</string>
+    <string name="simple_channel_alarm">Alarm</string>
+    <string name="simple_channel_notification">Notification</string>
+    <string name="simple_channel_help">If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.</string>
+    <string name="simple_test_note">This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.</string>
+    <string name="simple_on_detail">Simple mode (test): media sound is muted while Waaiya filters.</string>
     <string name="notif_fix_cover_area">Cover an area</string>
     <string name="notif_fix_remove_covers">Remove hand covers</string>
     <string name="notif_fix_note_missed">Missed something</string>
     <string name="notif_fix_note_wrong">Hidden by mistake</string>
-    <string name="notif_fix_noted">Noted (%1$d notes on this phone)</string>
+    <string name="notif_fix_noted">Noted. Notes on this phone: %1$d</string>
     <string name="notif_fix_picker_hint">Drag your finger over the area to cover.</string>
     <string name="notif_fix_picker_cover">Cover it</string>
     <string name="notif_fix_picker_cancel">Cancel</string>
@@ -436,13 +437,13 @@
     <string name="mc_title">Check for music</string>
     <string name="mc_unnamed">Shared file</string>
     <string name="mc_listening">Listening… %1$d %%</string>
-    <string name="mc_private">Waaiya listens on this phone. Nothing is sent or kept.</string>
+    <string name="mc_private">Waaiya listens on this phone. The clip is not sent anywhere.</string>
     <string name="mc_music">Waaiya heard music</string>
     <string name="mc_music_detail">Instruments in %1$s (about %2$s %% of the clip).</string>
     <string name="mc_percussion">Waaiya heard percussion only</string>
     <string name="mc_percussion_detail">Drums or rhythmic clapping, without other instruments, in %1$s. You decide.</string>
     <string name="mc_none">No instruments heard</string>
-    <string name="mc_none_detail">Waaiya listened to the whole clip and heard no musical instruments.</string>
+    <string name="mc_none_detail">Waaiya listened to the whole clip and heard no musical instruments. It can miss some music, mostly quiet music under speech.</string>
     <string name="mc_note_quiet">Quiet music under speech can be missed.</string>
     <string name="mc_failed">Could not check this file</string>
     <string name="mc_failed_no_model">This version of Waaiya cannot check for music.</string>

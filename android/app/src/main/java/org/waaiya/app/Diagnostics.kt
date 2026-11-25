@@ -85,8 +85,12 @@ object Diagnostics {
                 .format(java.util.Locale.ROOT, h.overallAvgMs, h.peakHopMs, h.lateHops, h.busyHops, h.hops))
             appendLine("Output: dropouts ${h.underruns}, waiting ${h.bufferedMs} ms, buffer ${h.bufferFrames} of " +
                 "${h.bufferCapacityFrames} frames (minimum ${h.minBufferFrames}), grown ${h.extraBufferHops}, " +
-                "given back ${h.trimmedHops} hops, keeping ${h.keepHops * 10} ms")
-            appendLine("Capture: level ${h.captureDb} dB, read errors ${h.readErrors}, model errors ${h.engineErrors}")
+                "given back ${h.trimmedHops} hops, added ${h.paddedHops} hops, keeping ${h.keepHops * 10} ms")
+            appendLine("Capture: level ${h.captureDb} dB, waiting " +
+                (if (h.captureWaitingMs < 0) "unknown" else "${h.captureWaitingMs} ms") +
+                ", read errors ${h.readErrors}, model errors ${h.engineErrors}")
+            appendLine("Capture silenced by Android: now ${yes(h.captureSilenced)}, ${h.silencedTimes} time(s), ${h.silencedSec} s in all; " +
+                "sound received ${h.hops / 100} s of ${h.runningSec} s, longest wait ${h.longestGapMs} ms, waits over 3 s: ${h.gaps}")
             appendLine("Women's singing filter: " + if (h.gateShare < 0) "off" else "on, muting %.0f%% of the time".format(java.util.Locale.ROOT, h.gateShare * 100))
             appendLine("Keep singing model: running ${yes(h.keepSinging)}")
             power?.let { p ->
@@ -129,6 +133,19 @@ object Diagnostics {
             }
         }
         appendLine("Silence apps that block filtering: ${yes(s.silenceUnfilterable)}")
+        // Apps heard unfiltered (FixMistakes): they are left out of the session list above. Each with its uid as this
+        // phone gives it, and what the running capture really leaves out.
+        val off = s.filterOffApps.sorted()
+        appendLine("Apps heard unfiltered: " + if (off.isEmpty()) "none" else off.joinToString(", ") { pkg ->
+            val uid = runCatching { ctx.packageManager.getApplicationInfo(pkg, 0).uid }.getOrNull()
+            "$pkg (${uid?.let { "uid $it" } ?: "not installed"})"
+        })
+        FilterService.captureExcluded?.takeIf { FilterService.running }?.let { ex ->
+            appendLine("  capture leaves out: ${if (ex.isEmpty()) "nothing" else ex.sorted().joinToString(", ") { "uid $it" }}" +
+                (FilterService.captureExcludeFailed?.let { f -> "; a capture with ${f.sorted().joinToString(", ") { "uid $it" }} " +
+                    "did not open, those apps stay filtered" } ?: ""))
+        }
+        Protection.pendingForReport(ctx)?.let { appendLine("Protection: a change is waiting: $it") }
         appendLine()
 
         appendLine("[Screen blur]")

@@ -145,6 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
             if (s.setup.originalsMuted && s.setup.helperMissing) const HelperMissingBanner(),
             if (s.platform == 'android' && s.setup.notificationText.oneAppOffered) const OneAppNotice(),
+            // once the setup is done: what still makes filtering stop on its own (battery cleaners, no notices)
+            if (s.platform == 'android' && s.setup.originalsMuted &&
+                (s.setup.batteryRestricted || s.setup.notificationsOff || s.setup.killedWhileFiltering))
+              const KeepRunningCard(),
             const FilterOptionsCard(),
             const FilterAppsCard(),
           ],
@@ -258,6 +262,15 @@ class FilterOptionsCard extends StatelessWidget {
           ),
         const SingingOptionSwitch(),
         if (android && s.setup.notificationText.supported) const NotificationTextSwitch(),
+        // the answer to the screen-lock question, to change it later (applies at the next start)
+        if (android && s.setup.notificationText.lockApplies && s.setup.notificationText.keepAtLock != -1)
+          SettingSwitch(
+            id: 'switch_keep_at_lock',
+            title: l.lockTitle,
+            body: l.lockBody,
+            value: s.setup.notificationText.keepAtLock == 1,
+            onChanged: (v) => set(SettingKeys.keepAtLock, v ? 1 : 0),
+          ),
       ],
     );
   }
@@ -267,6 +280,39 @@ class FilterOptionsCard extends StatelessWidget {
 /// off: the question also offers "Share one app". Picking Waaiya keeps every app filtered, shows notification text
 /// and keeps filtering through a screen lock (CaptureChoice.kt). The one-time pairing over Wireless debugging is
 /// still advised for Waaiya to work fully (silencing the originals, no question at each start).
+/// The phone may close Waaiya after a while (battery restrictions, a cleaner such as Xiaomi's), and then filtering
+/// stops; with notifications off Waaiya cannot even say so. Both are lifted on Waaiya's page in Android's settings.
+class KeepRunningCard extends StatelessWidget {
+  const KeepRunningCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final s = WaaiyaScope.of(context).state;
+    final body = [
+      if (s.setup.killedWhileFiltering) l.keepRunningKilled,
+      if (s.setup.batteryRestricted || s.setup.killedWhileFiltering) l.keepRunningBattery,
+      if (s.setup.notificationsOff) l.keepRunningNotifications,
+    ].join('\n\n');
+    return SectionCard(
+      key: const Key('keep_running'),
+      title: l.keepRunningTitle,
+      body: body,
+      children: [
+        const SizedBox(height: 12),
+        TestId(
+          'keep_running_open',
+          child: FilledButton.tonal(
+            key: const Key('keep_running_open'),
+            onPressed: () => runAction(context, (b) => b.openAppSettings()),
+            child: Text(l.keepRunningOpen, textAlign: TextAlign.center),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class OneAppNotice extends StatelessWidget {
   const OneAppNotice({super.key});
 
@@ -319,7 +365,8 @@ class NotificationTextSwitch extends StatelessWidget {
     } else if (nt.forced) {
       body = l.notifTextForced;
     } else if (nt.canWrite) {
-      // Android reads its switch when a capture starts: a change made while filtering waits for the next start
+      // Android reads its switch when a capture starts: a change made while filtering starts a new capture by
+      // itself (FilterService.restartForNotificationText); this note shows only when that could not happen
       final waits = s.filter.running && nt.shownNow != null && nt.shownNow != nt.shown;
       body = waits ? '${l.notifTextBody}\n\n${l.notifTextNextStart}' : l.notifTextBody;
     } else if (nt.oneAppOffered) {
@@ -446,6 +493,15 @@ Future<void> showDiagnostics(BuildContext context) async {
             },
             child: Text(l.linkShare),
           ),
+        if (s.platform == 'android')
+          TextButton(
+            key: const Key('diag_send'),
+            onPressed: () {
+              Navigator.pop(ctx);
+              runAction(context, (b) => b.sendToSupport('Waaiya diagnostics report', report));
+            },
+            child: Text(l.sendToSupport),
+          ),
         FilledButton(
           onPressed: () async {
             await Clipboard.setData(ClipboardData(text: report));
@@ -470,7 +526,8 @@ Future<void> startFiltering(BuildContext context) async {
       builder: (ctx) => AlertDialog(
         scrollable: true, // large text on a small screen: nothing is cut off
         title: Text(l.startNoSetupTitle),
-        content: Text(l.startNoSetupBody),
+        // the Play build has no "Open a link": its sentence is left out there
+        content: Text(s.capabilities.links ? l.startNoSetupBody : l.startNoSetupBodyNoLinks),
         actions: [
           TextButton(key: const Key('start_anyway'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.startNoSetupAnyway)),
           FilledButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.startNoSetupSetup)),
@@ -482,6 +539,25 @@ Future<void> startFiltering(BuildContext context) async {
       HomeNav.maybeOf(context)?.go('setup');
       return;
     }
+  }
+  // a phone where Android would stop filtering at every screen lock: ask once whether Waaiya may lift the
+  // screen-share protection while it filters (ScreenShareProtection.neededForLock); nothing is lifted before
+  if (s.platform == 'android' && s.setup.notificationText.lockAsk) {
+    final keep = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        scrollable: true,
+        title: Text(l.lockAskTitle),
+        content: Text(l.lockBody),
+        actions: [
+          TextButton(key: const Key('lock_no'), onPressed: () => Navigator.pop(ctx, false), child: Text(l.lockNo)),
+          FilledButton(key: const Key('lock_yes'), onPressed: () => Navigator.pop(ctx, true), child: Text(l.lockYes)),
+        ],
+      ),
+    );
+    if (!context.mounted || keep == null) return;
+    await runAction(context, (b) => b.setSetting(SettingKeys.keepAtLock, keep ? 1 : 0));
+    if (!context.mounted) return;
   }
   // helper mode, the helper stopped and not coming back by itself (Wireless debugging off): say so before starting
   if (s.setup.helperMissing && !s.setup.helperRestarting) {
@@ -511,7 +587,7 @@ Future<void> startFiltering(BuildContext context) async {
 (String, bool) filteringDetail(AppLocalizations l, AppState s) {
   final f = s.filter;
   final problem = switch (f.problem) {
-    FilterProblem.tooSlow => l.stateTooSlow,
+    FilterProblem.tooSlow => s.capabilities.links ? l.stateTooSlow : l.stateTooSlowNoLinks,
     FilterProblem.notMuted => l.stateOnNotMuted,
     FilterProblem.helperMissing => l.stateOnHelperMissing,
     FilterProblem.muteFailing => l.stateOnMuteFailing,
@@ -635,6 +711,18 @@ class PowerSection extends StatelessWidget {
               child: SingleChildScrollView(
                 child: SelectableText(technical, style: text.bodySmall?.copyWith(fontFamily: 'monospace', color: c.error)),
               ),
+            ),
+          ),
+        ],
+        // the microphone was refused: Android may not ask again, so its page in Android's settings is the way on
+        if (!on && f.micDenied) ...[
+          const SizedBox(height: 12),
+          TestId(
+            'mic_settings',
+            child: OutlinedButton(
+              key: const Key('mic_settings'),
+              onPressed: () => runAction(context, (b) => b.openAppSettings()),
+              child: Text(l.micOpenSettings, textAlign: TextAlign.center),
             ),
           ),
         ],

@@ -158,6 +158,13 @@ typedef struct {
                           * starts again at 2 x full_hold_ms. A video under the cover then shows through a few times
                           * a minute at first, then about once a minute, instead of every 3 s (default 60000;
                           * 0 = no doubling). Appended last: older callers' structs stay a valid prefix. */
+    float blind_hold_ms; /* covers visible in the capture: when the covers hide so much of the screen (over 70%) that a
+                          * scene change cannot be seen, person covers would stay for good, over the next app and
+                          * Waaiya's own screen too, and on Android 12+ they take the touches under them: the phone
+                          * is stuck. So after this long without being able to tell, they lift and the next frame
+                          * is looked at afresh (a person still there is covered again at once). Blind again right
+                          * after a lift: the next wait doubles, up to blind_max_hold_ms (default 3000; 0 = never lift) */
+    float blind_max_hold_ms; /* (default 24000) */
 } im_cover_params;
 
 /* covers_visible = 1 when our own covers appear in the captured frames (the overlay could not be excluded from

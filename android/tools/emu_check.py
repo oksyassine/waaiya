@@ -357,12 +357,15 @@ def main():
                     re.search(r"Effect Chain.*session.*\b%s\b" % m.group(1), flinger, re.I) is not None,
                     "Android's mixer shows an effect on that session")
     stats = re.findall(r"stats: hop avg ([\d.]+) max ([\d.]+) ms, late (\d+)%, underruns (\d+), buffered (\d+) ms, "
+                       r"capture waiting (-?\d+) ms, trimmed (\d+), padded (\d+), "
                        r"mono (\w+), slow (\w+), capture (-?\d+) dB, muter (\w+)", log)
     c.check(bool(stats), "the filter logs its numbers every 10 s", log[-400:])
     if stats:
-        avg, mx, late, under, buffered, mono, slow, cap, muter = stats[-1]
+        avg, mx, late, under, buffered, cwait, trimmed, padded, mono, slow, cap, muter = stats[-1]
         print(f"      numbers: hop avg {avg} ms, max {mx} ms, late {late}%, dropouts {under}, waiting {buffered} ms, "
+              f"capture waiting {cwait} ms, trimmed {trimmed}, padded {padded}, "
               f"mono {mono}, too slow {slow}, capture {cap} dB, muter {muter}")
+        c.check(int(cwait) >= 0, "the capture's backlog is measured (AudioRecord timestamp)", f"{cwait} ms")
         c.check(int(cap) > -60, "the other app's sound reaches the filter", f"capture {cap} dB")
         c.check(muter == ("OK" if silenced else "NO_PERMISSION"), "muter state matches the setup", muter)
         if a.expect_slow or not a.stereo:
