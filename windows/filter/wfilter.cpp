@@ -520,18 +520,28 @@ void restart_after_update(bool on) {
         RegisterApplicationRestart(c, RESTART_NO_CRASH | RESTART_NO_HANG | RESTART_NO_REBOOT);
 }
 
-// ---- watchdog: the main loop ticks at least every 0.5 s. Stuck for 10 s, the process ends itself: Windows keeps
-// the apps lowered (silent, fail-closed) and the app or a new start takes over (a stuck filter would otherwise hold
-// the single-instance lock and make every Start fail).
-std::atomic<long long> g_tick{0};
+// ---- watchdog: the main loop ticks at least every 0.5 s (the restorer every 2 s). Stuck for 10 s, the process ends
+// itself: Windows keeps the apps lowered (silent, fail-closed) and the app or a new start takes over (a stuck filter
+// would otherwise hold the single-instance lock and make every Start fail). The tick is a count, not a time: the
+// watchdog acts at the 5th of its own looks in a row, 2 s apart, that saw no new tick (10-12 s after the last tick),
+// so a change of the clock, or the computer sleeping (the wall clock and Windows' tick count go on counting through
+// sleep), never looks like a stuck loop: sleep costs at most one look.
+std::atomic<unsigned long long> g_tick{0};
+
+void tick() { g_tick.fetch_add(1); }
 
 DWORD WINAPI watchdog(LPVOID) {
+    unsigned long long seen = g_tick.load();
+    int still = 0; // looks in a row that saw no new tick
     for (;;) {
         Sleep(2000);
-        long long last = g_tick.load();
-        if (last != 0 && unix_ms() - last > 10000) {
-            logf("watchdog: the main loop has been stuck for %lld s; ending (apps stay lowered until Start or Stop)",
-                 (unix_ms() - last) / 1000);
+        unsigned long long now = g_tick.load();
+        if (now != seen) {
+            seen = now;
+            still = 0;
+        } else if (++still >= 5) {
+            logf("watchdog: the main loop has been stuck for about %d s; ending (apps stay lowered until Start or "
+                 "Stop)", still * 2);
             TerminateProcess(GetCurrentProcess(), 3);
         }
     }
@@ -772,7 +782,7 @@ int restore_loop(Sessions &ses, const Paths &p, HANDLE quit) {
     st.state = "restoring";
     st.engine = "";
     while (ses.pending() > 0) {
-        g_tick.store(unix_ms());
+        tick();
         st.pending = ses.pending();
         write_state(p.dir, st);
         HANDLE hs[2] = {ses.wake, quit};
@@ -808,7 +818,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     ResetEvent(quit);
     open_log(p.dir);
     if (w == WAIT_ABANDONED) logf("run: the previous filter ended without stopping; taking over");
-    g_tick.store(unix_ms());
+    tick();
     CloseHandle(CreateThread(nullptr, 0, watchdog, nullptr, 0, nullptr));
     CloseHandle(CreateThread(nullptr, 0, closing_window, nullptr, 0, nullptr));
 
@@ -936,7 +946,7 @@ int cmd_run(const Paths &p, bool bypass, bool restore_only) {
     };
 
     for (;;) {
-        g_tick.store(unix_ms());
+        tick();
         if (g_test_hang && au.running) {
             logf("test: the main loop stops here (--test-hang)");
             for (;;) Sleep(1000);
