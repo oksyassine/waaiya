@@ -1,6 +1,7 @@
 # Check for music before sharing
 
 Status: spec, approved in principle by the owner on 2026-11-25. Part 1 is built first; part 2 follows.
+Evaluation: see "Results" below and `reports/music_check.md`.
 
 ## Why
 
@@ -55,9 +56,16 @@ The engine already splits each moment into voice (kept) and everything else (rem
      filtering); the harmonic part's tonality (stable spectral peaks lasting > 200 ms) marks melodic instruments;
      a periodic onset envelope (autocorrelation peak at 60-200 BPM) in the percussive part marks rhythm. Noise is
      neither tonal nor periodic.
-   - **B. A small audio classifier on the residual**: YAMNet (Apache-2.0, AudioSet classes "Music", "Musical
-     instrument", "Drum", "Percussion"...; about 3.7 MB, converted to ONNX for the runtime the app already ships).
-     It runs on the residual, not the mix, so voices do not hide the music.
+   - **B. An audio tagger on the residual**: EfficientAT `mn04` (MobileNetV3 trained on AudioSet, MIT licence,
+     527 classes including "Music", every "Musical instrument" class, "Drum", "Percussion"; weights
+     `models/detector/weights/mn04_as_mAP_432.pt`, the same family as the recitation detector, about 4 MB). It runs
+     on the residual, not the mix, so voices do not hide quiet music. (YAMNet was the first idea; mn04 scores higher
+     on AudioSet and is already in the project.)
+   - **C. The same tagger on the input itself**: no engine run at all, the cheapest. Voices can mask quiet music.
+   - **BC**: both, music when either says so.
+   - **D**: a logistic model (one weight per tag of the input and of the residual, plus the residual level) trained
+     on the tune split's 1 s windows, its score averaged over about 5 s. On the phone: one dot product per window.
+   - **Dm**: the same model on the input's tags only, no engine run.
 3. **Decision**: a moment counts as music when the residual is loud enough relative to the input (at least -20 dB
    below it, so quiet background music under speech is still caught) and is classed as music. Parts shorter than
    3 s are merged or dropped; gaps under 2 s are bridged. The clip is "music heard" when any part remains.
@@ -90,11 +98,41 @@ Pass bar (per clip, on held-out clips not used for tuning):
 
 The report lists every miss and false alarm with the clip, so the wording and thresholds can be judged by ear.
 
+## Results (2026-11-25)
+
+Full numbers, misses and false alarms: `reports/music_check.md` (975 clips of about 20 s, 588 in the test split).
+
+| Approach | False alarms, clean voice (bar 2 %) | Noisy (bar 5 %) | Music found (bar 95 %) | Percussion only (bar 85 %) | Parts within 2 s |
+| --- | --- | --- | --- | --- | --- |
+| A signal features | 1.5 % | 2.0 % | 16 % | 0 % | 1/14 |
+| B tagger on residual | 1.1 % | 0 % | 74 % | 45 % | 4/14 |
+| C tagger on input | 0.7 % | 0 % | 71 % | 38 % | 5/14 |
+| D logistic, input + residual | 1.5 % | 0 % | 80 % | 36 % | 12/14 |
+| Dm logistic, input only | 2.6 % | 0 % | 81 % | 36 % | 12/14 |
+
+- Songs, instrumentals and intro/outro music: found (D: 41/41, 72/74, 13/14) with false alarms within the bar.
+- **Music under continuous speech (−15 to −25 dB): mostly missed** (D: 2/31). Lowering the threshold catches about
+  half of the −20 dB mixes only at 13–17 % false alarms on clean voice, a large share of them adhan: chanted voice
+  (recitation, adhan, especially with room echo) leaves a residual the tagger hears as music.
+- Percussion only: duff nasheeds are never labelled as percussion only (they are reported as music); plain
+  percussion recordings about two times in three.
+- Speed (estimate, see the report): the tagger alone is cheap (about 1.5–2.5 s for a minute of audio on a
+  mid-range phone); the engine run that B and D need is about 25–40 s, over the 10 s target.
+
+**So:** the bar is not met. What works today is a check that says "music heard" for clips that are plainly music or
+start/end with it (Dm or D), with honest wording that quiet music under speech may be missed. Reaching the bar for
+background music needs a detector trained for it (music under speech, chanted voice as negatives), which the test set
+can now measure. Owner decision pending.
+
+**Side finding (filter, not this feature):** the default dfn3 filter mutes the far-field Wikimedia `Adhan.ogg`
+completely (−25 → −73 dBFS). To be looked at separately.
+
 ## Build plan (part 1)
 
 1. Offline analysis in the engine or Kotlin: decode with Media3, run the engine hop by hop, collect per-hop
    residual features (and the classifier, if B), return the music parts. JVM tests on synthetic and test-set clips.
-2. Evaluation script on the server over the test set; pick A or B; write the results to `reports/`.
+2. Evaluation script on the server over the test set (`eval/music_check_features.py`, `eval/music_check_eval.py`,
+   set built by `testset/build_music_check.py`); pick the approach; results in `reports/music_check.md`.
 3. The share target (activity-alias with its own label), the check screen, the result screen, the clean copy
    (reuses the export path of `LinkExport`), sharing through `FileProvider`.
 4. Texts in the 18 languages, RTL checked.
