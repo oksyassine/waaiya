@@ -94,6 +94,7 @@ class FilterService : Service() {
         /** This filtering started with "Share one app" offered (CaptureChoice): no blur until the next start. */
         @Volatile var oneAppSession = false
             private set
+        private const val ONE_APP_SILENT_HOPS = 800  // 8 s of 10 ms hops
         val running: Boolean get() = state == State.STARTING || state == State.FILTERING || state == State.MODEL_FAILED
         @Volatile var health: Health? = null
             private set
@@ -461,6 +462,7 @@ class FilterService : Service() {
         // an app at screen lock: the originals are muted and the filtered copy is silence. Watched every 0.5 s.
         var silenced = false; var silencedTimes = 0; var silencedMs = 0L; var silencedAt = 0L
         var longestGapMs = 0L; var gaps = 0
+        var zeroHops = 0  // hops of pure digital silence in a row (a "Share one app" capture that carries no sound)
         var lastLog = lastReport
         var peak = 0f             // capture level over the report interval
         var captureDb = -120
@@ -493,6 +495,7 @@ class FilterService : Service() {
             Diagnostics.power?.noteRun(engine.modelName, monitor.mono)
         }
         Diagnostics.filterStarted(this)
+        StopLog.markFiltering(this, true)
         report()
         var simpleGain = -1f
         try {
@@ -525,6 +528,7 @@ class FilterService : Service() {
                     got += n
                 }
                 if (got < inBuf.size) continue
+                if (oneAppSession) { var z = true; for (v in inBuf) if (v != 0f) { z = false; break }; zeroHops = if (z) zeroHops + 1 else 0 }
                 val waited = android.os.SystemClock.elapsedRealtime() - waitFrom
                 if (waited > longestGapMs) longestGapMs = waited
                 if (waited >= GAP_MS) {
@@ -536,6 +540,19 @@ class FilterService : Service() {
                 framesRead += hop
                 backlog = captureBacklog(record, stamp, framesRead)
                 if (++hops % 50 == 0) {  // every 0.5 s: settings changed in the app apply live
+                    // "Share one app" on a phone that gives such a capture no other app's sound: the originals are
+                    // muted and the copy is silent ("it mutes everything"). 8 s of pure zeros while the muter holds an
+                    // app that is playing: this phone is asked for the entire screen from now on, and this session
+                    // ends as a failed capture (its text says to start again)
+                    if (oneAppSession && zeroHops >= ONE_APP_SILENT_HOPS) {
+                        val info = muter?.info()
+                        if (info != null && info.sessions.any { it.active && it.id in info.muted }) {
+                            Log.w(TAG, "capture: \"Share one app\" gives silence while apps play: entire screen from now on")
+                            settings.oneAppRefused = true
+                            StopLog.eventWithState(this, "Share one app gave silence while apps played; entire screen from the next start")
+                            endedBySystem(State.CAPTURE_FAILED, my); return
+                        }
+                    }
                     val sil = Build.VERSION.SDK_INT >= 29 &&
                         runCatching { record.activeRecordingConfiguration?.isClientSilenced }.getOrNull() == true
                     if (sil != silenced) {
@@ -696,7 +713,7 @@ class FilterService : Service() {
             StopLog.record(this, "filter loop failed: ${e.javaClass.simpleName}")
             endedBySystem(State.CAPTURE_FAILED, my)
         } finally {
-            if (my == session) { captureExcluded = null; captureExcludeFailed = null }
+            if (my == session) { captureExcluded = null; captureExcludeFailed = null; StopLog.markFiltering(this, false) }
             if (Build.VERSION.SDK_INT >= 31) runCatching { hint?.close() }
             runCatching { record.stop() }; record.release()
             runCatching { track.stop() }; track.release()
