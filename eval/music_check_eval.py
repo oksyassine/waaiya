@@ -28,6 +28,17 @@ PERC = list(range(161, 178))                       # Percussion .. Gong (drums, 
 GENRE = [i for i in range(216, 283) if i not in (218, 238, 254, 255, 271)]  # music genres and moods; no beatboxing,
                                                    # opera, vocal music, a capella, lullaby (voice-only possible)
 VOCAL = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 254, 255]  # singing, choir, chant, mantra... vocal music, a capella
+# Adhan guard (Cg, Dmg): chanted voice far away (adhan from loudspeakers, with echo) makes the generic "Music" class (137)
+# fire while no specific instrument, drum or genre class does; and its echo tail can pass for a gong (177). The guard
+# keeps a music window only when a specific class is present nearby, and leaves the gong out of the drums.
+PERC_NG = [i for i in PERC if i != 177]
+# Voice-proof evidence: instruments a chanted voice cannot pass for. Left out: the generic "Musical instrument" (138),
+# sustained melodic ones that answer to a voice far away (organs 155-157, synthesizer 158, brass 185-188, bowed
+# 189-191 and cello 193, woodwind 195-198, harmonica 208, bagpipes 210, didgeridoo 211, shofar 212, theremin 213),
+# bells and chimes (200-207, singing bowl 214: an echo tail rings like them), and the drone-like "Ambient music" (246).
+VOICE_LIKE = [155, 156, 157, 158, 185, 186, 187, 188, 189, 190, 191, 193, 195, 196, 197, 198, 208, 210, 211, 212, 213]
+SPECIFIC = sorted(set([i for i in range(139, 215) if i not in VOICE_LIKE and i not in range(200, 208) and i != 177]
+                      + [i for i in GENRE if i != 246]) - {214})
 
 NO_MUSIC = {"speech", "speech_room", "recitation", "recitation_hall", "adhan", "acapella"}
 NOISY = {"noise", "noisy_speech"}
@@ -96,6 +107,8 @@ def evidence(z, approach, th):
     """Per window: (music flag, percussion-like flag)."""
     lin, rel = z["lin"], z["lres"] - z["lin"]
     loud = lin > MIN_LIN
+    if approach in ("Cg", "Dmg"):                 # the guard itself is per part, in verdict()
+        return evidence(z, approach[:-1], dict(th, nogong=True))
     if approach == "A":
         res_ok = loud & (rel > th["rel"])
         tonal = res_ok & (z["tonal"] > th["tonal"])
@@ -108,7 +121,7 @@ def evidence(z, approach, th):
         if k > 1:
             sc = np.convolve(np.pad(sc, (k // 2, k // 2), mode="edge"), np.ones(k) / k, mode="valid")
         P = z["tag_mix"].astype(np.float32)
-        p = loud & (P[:, PERC].max(1) > th["perc"]) & (P[:, TONAL_INSTR].max(1) < th["tonal_max"])
+        p = loud & (P[:, PERC_NG if th.get("nogong") else PERC].max(1) > th["perc"]) & (P[:, TONAL_INSTR].max(1) < th["tonal_max"])
         return loud & (sc > th["music"]) | p, p
     tags = []
     if approach in ("B", "BC"):
@@ -118,7 +131,7 @@ def evidence(z, approach, th):
     mus = np.zeros(len(lin), bool)
     perc = np.zeros(len(lin), bool)
     for P, ok in tags:
-        ton, drums = P[:, TONAL_INSTR].max(1), P[:, PERC].max(1)
+        ton, drums = P[:, TONAL_INSTR].max(1), P[:, PERC_NG if th.get("nogong") else PERC].max(1)
         # "Music" also answers to singing and chant: a voice-only window loses part of it
         score = np.maximum.reduce([P[:, MUSIC] - th["vocal"] * P[:, VOCAL].max(1), ton, P[:, GENRE].max(1)])
         p = ok & (drums > th["perc"]) & (ton < th["tonal_max"])
@@ -131,6 +144,10 @@ def verdict(z, approach, th):
     mus, perc = evidence(z, approach, th)
     t = z["t"]
     mparts = parts_from(mus, t)
+    if approach in ("Cg", "Dmg"):
+        # adhan guard: a part stays only if some window in it has a voice-proof class (SPECIFIC) above `spec`
+        spec = z["tag_mix"].astype(np.float32)[:, SPECIFIC].max(1)
+        mparts = [p for p in mparts if spec[(t >= p[0]) & (t < p[1])].max(initial=0.0) > th["spec"]]
     if not mparts:
         return "none", []
     # percussion only: in every part, a large share of the windows look like drums without a melodic instrument
@@ -200,6 +217,27 @@ def tune(rows, feats, approach, margin=True):
     return tied[len(tied) // 2][3]
 
 
+GUARD = dict(spec=[round(0.02 * i, 2) for i in range(1, 16)])
+
+
+def tune_guard(rows, feats, approach, base_th):
+    """The adhan guard on top of the tuned C or Dm thresholds, from the tune split only: the strongest guard (highest
+    spec) that keeps music found and percussion labelled within 2 points of the unguarded
+    rule, with false alarms within the margin (1 % clean voice, 2.5 % noisy)."""
+    _, _, rate = score(rows, feats, approach[:-1], base_th)
+    found0, perc0 = ok_rate(rate(MUSIC_G)), ok_rate(rate(PERC_G))
+    best = None
+    for spec in GUARD["spec"]:
+        th = dict(base_th, spec=spec)
+        _, _, rate = score(rows, feats, approach, th)
+        fa, fan = ok_rate(rate(NO_MUSIC)), ok_rate(rate(NOISY))
+        found, perc = ok_rate(rate(MUSIC_G)), ok_rate(rate(PERC_G))
+        if found >= found0 - 0.02 - 1e-9 and perc >= perc0 - 0.02 - 1e-9 and fa <= 0.01 and fan <= 0.025:
+            if best is None or spec > best[0]:
+                best = (spec, th)
+    return best[1] if best else dict(base_th, spec=0.0)
+
+
 def part_error(r, parts):
     """Largest boundary error (s) between the hand-labelled music parts and the detected ones, None if none found."""
     worst = 0.0
@@ -216,7 +254,7 @@ def main():
     ap.add_argument("--set", default="/srv/build/music/set")
     ap.add_argument("--feat", default="/srv/build/music/feat")
     ap.add_argument("--report", default=None)
-    ap.add_argument("--approaches", default="A,B,C,BC,D,Dm")
+    ap.add_argument("--approaches", default="A,B,C,BC,D,Dm,Cg,Dmg")
     a = ap.parse_args()
     rows = list({r["id"]: r for r in map(json.loads, open(os.path.join(a.set, "manifest.jsonl")))}.values())
     feats = {}
@@ -242,9 +280,14 @@ def main():
     out.append("")
     summary = []
     for ap_name in a.approaches.split(","):
-        if ap_name in ("D", "Dm"):
-            _D[ap_name] = train_d(tune_rows, feats, mix_only=ap_name == "Dm")
-        th = tune(tune_rows, feats, ap_name)
+        if ap_name in ("D", "Dm", "Dmg"):
+            base = ap_name[:-1] if ap_name == "Dmg" else ap_name
+            if base not in _D:
+                _D[base] = train_d(tune_rows, feats, mix_only=base == "Dm")
+        if ap_name in ("Cg", "Dmg"):
+            th = tune_guard(tune_rows, feats, ap_name, tune(tune_rows, feats, ap_name[:-1]))
+        else:
+            th = tune(tune_rows, feats, ap_name)
         by, res, rate = score(test_rows, feats, ap_name, th)
         fa, fan = rate(NO_MUSIC), rate(NOISY)
         found, perc = rate(MUSIC_G), rate(PERC_G)

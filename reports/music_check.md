@@ -17,6 +17,9 @@ judged on the test split, whose sources (speaker language, reciter, recordist, a
   2 s; false alarms 1.5 % on clean voice and 0 % on noisy recordings (bar: 2 % and 5 %). It needs the engine run.
 - **Cheapest: C / Dm** (tags of the input only, no engine): C has the fewest false alarms (0.7 %) but finds less
   (71 %); Dm finds as much as D but its false alarms reach 2.6 %, almost all on adhan (6/25).
+- **With the adhan guard (Cg, Dmg; section below)**: Cg has no false alarm left on the test split (adhan 0/25) and
+  finds 69 %; Dmg keeps Dm's finds (81 %, instrumentals 73/74, songs 41/41) with 1.1 % false alarms on clean voice
+  (adhan 2/25). Both need only the tags of the input: the candidates for the app.
 - **Music under speech**: in the residual, mn04's "Music" score for background music at −15/−20 dB (median 0.71)
   stands well above plain speech (0.06), but chanted voice (recitation 0.36, recitation in a hall 0.54, adhan 0.40)
   overlaps it: the engine removes part of melodic and reverberant voice, and the tagger hears that as music. The curve
@@ -52,6 +55,42 @@ A Snapdragon 6-class phone core is roughly 3 to 5 times slower than this server'
 1-minute clip would take about 1.5–2.5 s with the tags of the input only (C, Dm) and about 25–40 s with the engine
 (B, D), well over the 10 s target, unless the engine runs on several cores or a lighter residual is used.
 
+## Adhan guard (Cg, Dmg)
+
+On the adhan windows the rules call music, the generic "Music" class (137) fires (0.35–0.8) while no instrument a
+voice could not imitate does: what fires is brass (185), woodwind (195), theremin (213), siren-like classes, the
+drone-like "Ambient music" (246), and a gong (177) for an echo tail. A far-away muezzin through loudspeakers, with
+echo, sounds to the tagger like a horn or a theremin.
+
+The guard, on top of the tuned C or Dm thresholds:
+
+1. Drums for the "percussion" windows leave the gong out (classes 161–176).
+2. After the parts are formed (windows flagged, gaps under 2 s bridged, parts under 3 s dropped), a part stays only if
+   at least one of its windows has a **voice-proof class** above `spec`: plucked strings and guitars (139–151),
+   keyboards except organs and synthesizer (152–154, 159, 160), drums (161–176), mallets (178–183), orchestra (184),
+   pizzicato (192), double bass (194), harp (199), Scratching (215), or a music genre (GENRE without 246). Left out
+   as voice-like: organs 155–157, synthesizer 158, brass 185–188, bowed 189–191 and 193, woodwind 195–198, harmonica
+   208, bagpipes 210, didgeridoo 211, shofar 212, theremin 213, and bells and chimes 200–207 and 214 (an echo tail
+   rings like them). The class lists are in `eval/dm_weights.json` (`classes.specific`).
+3. `spec` is chosen on the tune split only: the highest value (0.02 steps) that keeps music found and percussion
+   labelled within 2 points of the unguarded rule there, with false alarms within the margin. Cg: 0.10; Dmg: 0.08.
+
+A window-level version of the guard (a voice-proof class within ±2 s of each window) cost Dm too much music on the
+tune split to be set strong enough (its tuned value left adhan at 4/25); the part-level one is both simpler and
+better.
+
+| Test split | False alarms, clean | Adhan | Music found | Songs | Instrumentals | Background | Percussion only |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| C | 2/272 = 0.7 % | 2/25 | 113/160 = 70.6 % | 39/41 | 64/74 | 10/45 | 21/56 |
+| **Cg** | **0/272 = 0.0 %** | **0/25** | 111/160 = 69.4 % | 39/41 | 62/74 | 10/45 | 21/56 |
+| Dm | 7/272 = 2.6 % | 6/25 | 130/160 = 81.2 % | 41/41 | 73/74 | 16/45 | 20/56 |
+| **Dmg** | **3/272 = 1.1 %** | **2/25** | 129/160 = 80.6 % | 41/41 | 73/74 | 15/45 | 20/56 |
+
+For the app: `eval/dm_weights.json` (both rules' thresholds, the class lists, Dm's 527 weights and bias) and
+`eval/music_rule_vectors.json` (12 test clips: per-window level and tags, expected flags, parts and verdict under
+both rules). `eval/check_rule_port.py` is an independent implementation from the JSON alone that matches all 24.
+Tags are mn04's sigmoid outputs for 1 s of the input resampled to 32 kHz (`eval/music_check_features.py`).
+
 ## Summary (test split)
 
 | Approach | False alarms, clean voice (bar 2 %) | False alarms, noisy (bar 5 %) | Music found (bar 95 %) | Percussion only labelled (bar 85 %) | Parts within 2 s |
@@ -62,6 +101,8 @@ A Snapdragon 6-class phone core is roughly 3 to 5 times slower than this server'
 | BC | 3/272 = 1.1% | 0/100 = 0.0% | 114/160 = 71.2% | 22/56 = 39.3% | 5/14 |
 | D | 4/272 = 1.5% | 0/100 = 0.0% | 128/160 = 80.0% | 20/56 = 35.7% | 12/14 |
 | Dm | 7/272 = 2.6% | 0/100 = 0.0% | 130/160 = 81.2% | 20/56 = 35.7% | 12/14 |
+| Cg | 0/272 = 0.0% | 0/100 = 0.0% | 111/160 = 69.4% | 21/56 = 37.5% | 4/14 |
+| Dmg | 3/272 = 1.1% | 0/100 = 0.0% | 129/160 = 80.6% | 20/56 = 35.7% | 12/14 |
 
 ## Clips per group and split
 
@@ -825,5 +866,213 @@ Misses and false alarms (test):
 - `duffnasheed_test_22` (duff_nasheed, opus32): expected percussion, got none
 - `duffnasheed_test_23` (duff_nasheed, opus32): expected percussion, got none
 - `duffnasheed_test_24` (duff_nasheed, none): expected percussion, got music at 0.0-4.0 s
+- `speech_room_fs833bdccf_0` (speech_room, aac64): expected none, got music at 0.0-12.5 s
+
+## Approach Cg
+
+Thresholds (from tune): `{"rel": -99, "music": 0.75, "vocal": 0.5, "perc": 0.1, "tonal_max": 0.3, "pshare": 0.3, "spec": 0.1}`
+
+| Group | Expected | Meaning | Tune | Test |
+| --- | --- | --- | --- | --- |
+| acapella | none | false alarms | 0/16 = 0% | 0/27 = 0% |
+| adhan | none | false alarms | 0/21 = 0% | 0/25 = 0% |
+| background | music | found | 9/30 = 30% | 10/45 = 22% |
+| duff_nasheed | percussion | labelled percussion only | 0/15 = 0% | 0/25 = 0% |
+| music_instr | music | found | 33/44 = 75% | 62/74 = 84% |
+| music_song | music | found | 22/25 = 88% | 39/41 = 95% |
+| noise | none | false alarms | 1/56 = 2% | 0/60 = 0% |
+| noisy_speech | none | false alarms | 0/25 = 0% | 0/40 = 0% |
+| percussion | percussion | labelled percussion only | 22/30 = 73% | 21/31 = 68% |
+| recitation | none | false alarms | 0/23 = 0% | 0/69 = 0% |
+| recitation_hall | none | false alarms | 0/13 = 0% | 0/27 = 0% |
+| speech | none | false alarms | 1/63 = 2% | 0/84 = 0% |
+| speech_room | none | false alarms | 0/26 = 0% | 0/40 = 0% |
+
+Background music by level: -15 dB: 1/9, -20 dB: 0/9, -25 dB: 0/13, intro/outro: 9/14
+Intro/outro parts placed within 2 s: 4/14
+Percussion clips reported as no instruments: 33
+
+Misses and false alarms (test):
+
+- `music_song_fma20198` (music_song, none): expected music, got none
+- `music_song_fma22475` (music_song, none): expected music, got none
+- `percussion_fse0d59f6c_0` (percussion, aac64): expected percussion, got music at 0.5-15.0 s
+- `percussion_fs2b7569a3_0` (percussion, none): expected percussion, got none
+- `percussion_fsb0de54ac_0` (percussion, aac64): expected percussion, got none
+- `percussion_fs5f6e6e3a_0` (percussion, aac64): expected percussion, got none
+- `percussion_fs28744cde_0` (percussion, opus32): expected percussion, got none
+- `percussion_fs6bd6e761_0` (percussion, opus32): expected percussion, got music at 2.0-7.0 s
+- `percussion_fs1f8eed62_0` (percussion, aac64): expected percussion, got none
+- `percussion_fsa541818e_0` (percussion, aac64): expected percussion, got none
+- `percussion_fs6f0c61b8_0` (percussion, none): expected percussion, got none
+- `percussion_fs9aa75005_0` (percussion, opus32): expected percussion, got none
+- `music_instr_fma140321` (music_instr, none): expected music, got none
+- `music_instr_fma140322` (music_instr, opus32): expected music, got none
+- `music_instr_fma140324` (music_instr, none): expected music, got none
+- `music_instr_fma140331` (music_instr, aac64): expected music, got none
+- `music_instr_fma140336` (music_instr, none): expected music, got none
+- `music_instr_fma149489` (music_instr, aac64): expected music, got none
+- `music_instr_fma149755` (music_instr, aac64): expected music, got none
+- `music_instr_fma149778` (music_instr, aac64): expected music, got none
+- `music_instr_fma144782` (music_instr, aac64): expected music, got none
+- `music_instr_fma10035` (music_instr, aac64): expected music, got none
+- `music_instr_fma10037` (music_instr, opus32): expected music, got none
+- `music_instr_fma10044` (music_instr, aac64): expected music, got none
+- `background_test_1` (background, opus32): expected music, got none
+- `background_test_3` (background, none): expected music, got none
+- `background_test_4` (background, none): expected music, got none
+- `background_test_5` (background, opus32): expected music, got none
+- `background_test_6` (background, none): expected music, got none
+- `background_test_7` (background, opus32): expected music, got none
+- `background_test_8` (background, none): expected music, got none
+- `background_test_9` (background, none): expected music, got none
+- `background_test_10` (background, none): expected music, got none
+- `background_test_11` (background, none): expected music, got none
+- `background_test_12` (background, none): expected music, got none
+- `background_test_13` (background, none): expected music, got none
+- `background_test_14` (background, aac64): expected music, got none
+- `background_test_15` (background, opus32): expected music, got none
+- `background_test_16` (background, aac64): expected music, got none
+- `background_test_17` (background, none): expected music, got none
+- `background_test_19` (background, none): expected music, got none
+- `background_test_20` (background, opus32): expected music, got none
+- `background_test_21` (background, aac64): expected music, got none
+- `background_test_22` (background, none): expected music, got none
+- `background_test_23` (background, none): expected music, got none
+- `background_test_25` (background, aac64): expected music, got none
+- `background_test_26` (background, aac64): expected music, got none
+- `background_test_28` (background, none): expected music, got none
+- `background_test_29` (background, aac64): expected music, got none
+- `background_test_30` (background, aac64): expected music, got none
+- `background_test_31` (background, none): expected music, got none
+- `background_test_32` (background, aac64): expected music, got none
+- `background_test_35` (background, none): expected music, got none
+- `background_test_36` (background, opus32): expected music, got none
+- `background_test_37` (background, none): expected music, got none
+- `background_test_39` (background, opus32): expected music, got none
+- `background_test_41` (background, aac64): expected music, got none
+- `background_test_42` (background, none): expected music, got none
+- `background_test_44` (background, none): expected music, got none
+- `duffnasheed_test_0` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_1` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_2` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_3` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_4` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_5` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_6` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_7` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_8` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_9` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_10` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_11` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_12` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_13` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_14` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_15` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_16` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_17` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_18` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_19` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_20` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_21` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_22` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_23` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_24` (duff_nasheed, none): expected percussion, got none
+
+## Approach Dmg
+
+Thresholds (from tune): `{"music": 0.5, "smooth": 9, "perc": 0.1, "tonal_max": 0.3, "pshare": 0.3, "spec": 0.08}`
+
+| Group | Expected | Meaning | Tune | Test |
+| --- | --- | --- | --- | --- |
+| acapella | none | false alarms | 0/16 = 0% | 0/27 = 0% |
+| adhan | none | false alarms | 0/21 = 0% | 2/25 = 8% |
+| background | music | found | 10/30 = 33% | 15/45 = 33% |
+| duff_nasheed | percussion | labelled percussion only | 0/15 = 0% | 0/25 = 0% |
+| music_instr | music | found | 36/44 = 82% | 73/74 = 99% |
+| music_song | music | found | 24/25 = 96% | 41/41 = 100% |
+| noise | none | false alarms | 2/56 = 4% | 0/60 = 0% |
+| noisy_speech | none | false alarms | 0/25 = 0% | 0/40 = 0% |
+| percussion | percussion | labelled percussion only | 21/30 = 70% | 20/31 = 65% |
+| recitation | none | false alarms | 0/23 = 0% | 0/69 = 0% |
+| recitation_hall | none | false alarms | 0/13 = 0% | 0/27 = 0% |
+| speech | none | false alarms | 1/63 = 2% | 0/84 = 0% |
+| speech_room | none | false alarms | 0/26 = 0% | 1/40 = 2% |
+
+Background music by level: -15 dB: 1/9, -20 dB: 1/9, -25 dB: 0/13, intro/outro: 13/14
+Intro/outro parts placed within 2 s: 12/14
+Percussion clips reported as no instruments: 27
+
+Misses and false alarms (test):
+
+- `percussion_fse0d59f6c_0` (percussion, aac64): expected percussion, got music at 0.0-15.0 s
+- `percussion_fs2b7569a3_0` (percussion, none): expected percussion, got none
+- `percussion_fsb0de54ac_0` (percussion, aac64): expected percussion, got none
+- `percussion_fs5f6e6e3a_0` (percussion, aac64): expected percussion, got music at 0.0-6.5 s
+- `percussion_fs28744cde_0` (percussion, opus32): expected percussion, got none
+- `percussion_fs6bd6e761_0` (percussion, opus32): expected percussion, got music at 0.0-12.0 s
+- `percussion_fs1f8eed62_0` (percussion, aac64): expected percussion, got music at 0.0-12.0 s
+- `percussion_fsa541818e_0` (percussion, aac64): expected percussion, got none
+- `percussion_fs6f0c61b8_0` (percussion, none): expected percussion, got music at 0.0-20.0 s
+- `percussion_fs87878ab7_0` (percussion, none): expected percussion, got music at 3.0-20.0 s
+- `percussion_fs9aa75005_0` (percussion, opus32): expected percussion, got music at 4.5-20.0 s
+- `adhan_fs144431_1` (adhan, none): expected none, got music at 10.5-15.0 s
+- `adhan_fs144431_3` (adhan, none): expected none, got music at 8.0-11.0 s
+- `music_instr_fma149778` (music_instr, aac64): expected music, got none
+- `background_test_1` (background, opus32): expected music, got none
+- `background_test_3` (background, none): expected music, got none
+- `background_test_5` (background, opus32): expected music, got none
+- `background_test_6` (background, none): expected music, got none
+- `background_test_7` (background, opus32): expected music, got none
+- `background_test_8` (background, none): expected music, got none
+- `background_test_9` (background, none): expected music, got none
+- `background_test_10` (background, none): expected music, got none
+- `background_test_12` (background, none): expected music, got none
+- `background_test_13` (background, none): expected music, got none
+- `background_test_14` (background, aac64): expected music, got none
+- `background_test_15` (background, opus32): expected music, got none
+- `background_test_16` (background, aac64): expected music, got none
+- `background_test_19` (background, none): expected music, got none
+- `background_test_21` (background, aac64): expected music, got none
+- `background_test_22` (background, none): expected music, got none
+- `background_test_23` (background, none): expected music, got none
+- `background_test_25` (background, aac64): expected music, got none
+- `background_test_26` (background, aac64): expected music, got none
+- `background_test_28` (background, none): expected music, got none
+- `background_test_29` (background, aac64): expected music, got none
+- `background_test_30` (background, aac64): expected music, got none
+- `background_test_31` (background, none): expected music, got none
+- `background_test_32` (background, aac64): expected music, got none
+- `background_test_35` (background, none): expected music, got none
+- `background_test_36` (background, opus32): expected music, got none
+- `background_test_37` (background, none): expected music, got none
+- `background_test_39` (background, opus32): expected music, got none
+- `background_test_42` (background, none): expected music, got none
+- `background_test_44` (background, none): expected music, got none
+- `duffnasheed_test_0` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_1` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_2` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_3` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_4` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_5` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_6` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_7` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_8` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_9` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_10` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_11` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_12` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_13` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_14` (duff_nasheed, opus32): expected percussion, got music at 4.0-7.0 s
+- `duffnasheed_test_15` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_16` (duff_nasheed, opus32): expected percussion, got music at 2.5-6.5 s
+- `duffnasheed_test_17` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_18` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_19` (duff_nasheed, none): expected percussion, got none
+- `duffnasheed_test_20` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_21` (duff_nasheed, aac64): expected percussion, got none
+- `duffnasheed_test_22` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_23` (duff_nasheed, opus32): expected percussion, got none
+- `duffnasheed_test_24` (duff_nasheed, none): expected percussion, got none
 - `speech_room_fs833bdccf_0` (speech_room, aac64): expected none, got music at 0.0-12.5 s
 

@@ -124,8 +124,17 @@ start/end with it (Dm or D), with honest wording that quiet music under speech m
 background music needs a detector trained for it (music under speech, chanted voice as negatives), which the test set
 can now measure. Owner decision pending.
 
-**Side finding (filter, not this feature):** the default dfn3 filter mutes the far-field Wikimedia `Adhan.ogg`
-completely (−25 → −73 dBFS). To be looked at separately.
+**Adhan guard (Cg, Dmg).** On adhan the generic "Music" class fires while only voice-like instrument classes do
+(brass, woodwind, theremin). A part now stays only if one of its windows has a voice-proof class (plucked, struck,
+keyboard, drums, genres; `classes.specific` in `eval/dm_weights.json`) above a threshold chosen on the tune split:
+Cg (C + guard): 0.0 % false alarms on clean voice (adhan 0/25), 69 % of music found; Dmg (Dm + guard): 1.1 % (adhan
+2/25), 81 % found (songs 41/41, instrumentals 73/74). Both need only the tags of the input. The rules, Dm's weights
+and test vectors for the app's port: `eval/dm_weights.json`, `eval/music_rule_vectors.json`,
+`eval/check_rule_port.py`.
+
+**Side finding (filter, not this feature):** the default dfn3 filter mutes adhan recorded at a distance (32 of 46
+clips lose more than 20 dB), speech recorded at a distance (21/66) and very quiet speech (25/147). Cause, fixes and
+numbers: `reports/adhan_filter.md`.
 
 ## Build plan (part 1)
 
