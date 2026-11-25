@@ -45,7 +45,6 @@ class ChannelBackend implements WaaiyaBackend {
   Future<void> runSetupStep(int step) => _call<void>('runSetupStep', {'step': step});
 
   @override
-  Future<void> blurSetup() => _call<void>('blurSetup');
 
   @override
   Future<void> openOverlaySettings() => _call<void>('openOverlaySettings');

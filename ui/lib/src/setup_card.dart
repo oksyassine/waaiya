@@ -435,6 +435,9 @@ class _ComputerSetupState extends State<_ComputerSetup> {
           ),
         ),
         if (_open) ...[
+          // waaiya.mssid.org/usb does the same over WebUSB (site/usb/): no adb to install
+          SelectableText(l.computerWeb, style: text.bodyMedium),
+          const SizedBox(height: 8),
           Text(l.computerBody, style: text.bodyMedium),
           const SizedBox(height: 8),
           // Shell commands read left to right, also in an Arabic page.

@@ -71,7 +71,7 @@ void main() {
     expect(find.text('التصفية متوقفة'), findsOneWidget);
     expect(Directionality.of(tester.element(find.text('التصفية متوقفة'))), TextDirection.rtl);
     expect(find.textContaining('معاينة'), findsOneWidget);
-    expect(find.text('تمويه الشاشة'), findsNothing);
+    expect(find.text('ما الذي يُموَّه'), findsNothing);
     // no blur here (a development run): "who is left uncovered" is not shown anywhere
     expect(find.byKey(const Key('blur_strict')), findsNothing);
   });

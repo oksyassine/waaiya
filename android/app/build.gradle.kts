@@ -32,23 +32,33 @@ val blurA11y = providers.gradleProperty("imBlurA11y").isPresent
 val playBuild = providers.gradleProperty("imPlay").isPresent
 val noLinks = providers.gradleProperty("imNoLinks").isPresent
 
+// Waaiya moved from org.islamicmute.app to org.waaiya.app in 0.2.15 (docs/MOVE.md). -PimMoveBuild makes the last
+// release under the old name: the same app, which offers to install the new one and hands its settings over to it.
+val NEW_ID = "org.waaiya.app"
+val OLD_ID = "org.islamicmute.app"
+val moveBuild = providers.gradleProperty("imMoveBuild").isPresent
+
 android {
-    namespace = "org.islamicmute.app"
+    namespace = "org.waaiya.app"
     compileSdk = 35
     ndkVersion = "27.1.12297006"
 
     defaultConfig {
-        applicationId = "org.islamicmute.app"
+        applicationId = if (moveBuild) OLD_ID else NEW_ID
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 35
-        versionCode = 17
-        versionName = "0.2.14"
+        versionCode = 20
+        versionName = "0.2.17"
         // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
         providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
         buildConfigField("boolean", "BLUR_A11Y", blurA11y.toString())
         buildConfigField("boolean", "SELF_UPDATE", (!playBuild).toString())
         buildConfigField("boolean", "LINKS", (!noLinks).toString())
+        buildConfigField("boolean", "MOVE_BUILD", moveBuild.toString())
+        buildConfigField("String", "NEW_ID", "\"$NEW_ID\"")
+        buildConfigField("String", "OLD_ID", "\"$OLD_ID\"")
+        manifestPlaceholders["oldId"] = OLD_ID
         manifestPlaceholders["linksEnabled"] = (!noLinks).toString()
         if (blurA11y) versionNameSuffix = "-a11y"
         externalNativeBuild { cmake { arguments += "-DORT_DIR=${layout.buildDirectory.get().asFile}/ort" } }
@@ -199,6 +209,8 @@ androidComponents {
         if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/smsReply/AndroidManifest.xml")
         // App updates (AppUpdate.kt): not in Play builds, where Google Play updates the app.
         if (!providers.gradleProperty("imPlay").isPresent) v.sources.manifests.addStaticManifestFile("src/selfUpdate/AndroidManifest.xml")
+        // The old app's last version (org.islamicmute.app): its launcher entry under the old name, and MoveProvider
+        if (moveBuild) v.sources.manifests.addStaticManifestFile("src/move/AndroidManifest.xml")
     }
 }
 

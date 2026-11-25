@@ -182,6 +182,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get computerToggle => 'Gunakan komputer saja';
 
   @override
+  String get computerWeb =>
+      'Paling mudah: di komputer, buka waaiya.mssid.org/usb di Chrome atau Edge, aktifkan Proses debug USB, lalu sambungkan ponsel dengan kabel. Tidak perlu memasang apa pun, dan juga berfungsi di Android 10. Atau, jika adb sudah terpasang:';
+
+  @override
   String get computerBody =>
       'Aktifkan Proses debug USB, sambungkan ponsel, lalu jalankan:';
 
@@ -390,6 +394,25 @@ class AppLocalizationsId extends AppLocalizations {
       'Menutupi orang dan gambar di layar, di semua aplikasi, selama filter aktif. Berjalan di ponsel; tidak ada yang dikirim ke mana pun.';
 
   @override
+  String get blurOnTitle => 'Buram aktif';
+
+  @override
+  String get blurOffTitle => 'Buram nonaktif';
+
+  @override
+  String get blurStartCd => 'Mulai buram';
+
+  @override
+  String get blurStopCd => 'Hentikan buram';
+
+  @override
+  String get blurOffDetail =>
+      'Ketuk tombol untuk memulai. Penyaringan ikut dimulai.';
+
+  @override
+  String get blurWhatTitle => 'Yang diburamkan';
+
+  @override
   String get blurWomenTitle => 'Buramkan perempuan';
 
   @override
@@ -411,26 +434,23 @@ class AppLocalizationsId extends AppLocalizations {
       'Aktif: seluruh layar ditutup saat ponsel terlalu lambat atau buram gagal. Nonaktif: layar tetap terlihat dengan peringatan.';
 
   @override
-  String get blurSetupShizuku => 'Izinkan dengan Shizuku';
-
-  @override
   String get blurSetupManual => 'Izinkan di setelan Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: “Izinkan dengan Shizuku”, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau “Izinkan di setelan Android”, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
+      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: “Ke penyiapan”, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau “Izinkan di setelan Android”, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: jalankan Shizuku dan izinkan Waaiya di dalamnya, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau izinkan “Tampilkan di atas aplikasi lain” di setelan Android, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
+      'Untuk memburamkan, Waaiya harus tampil di atas aplikasi lain. Terbaik: lakukan penyiapan satu kali, agar ketukan Anda tetap sampai ke aplikasi di bawah buram. Atau izinkan “Tampilkan di atas aplikasi lain” di setelan Android, tetapi mengetuk area yang buram lalu tidak berpengaruh apa-apa.';
 
   @override
   String get blurFailUnavailable =>
-      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan asisten Waaiya atau Shizuku (Android 12 atau yang lebih baru) dan opsi ini aktif: penutup lalu digambar sehingga ketukan bisa menembusnya. Sampai saat itu, jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
+      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan asisten Waaiya (Android 12 atau yang lebih baru) dan opsi ini aktif: penutup lalu digambar sehingga ketukan bisa menembusnya. Sampai saat itu, jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan Shizuku (Android 12 atau yang lebih baru) atau aktifkan layanan aksesibilitas Waaiya Blur (Izinkan dengan Shizuku di atas) dan opsi ini aktif. Sampai saat itu, layar tetap terlihat dengan peringatan.';
+      'Tidak tersedia untuk sementara: penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak. Jalankan asisten Waaiya (Android 12 atau yang lebih baru) atau aktifkan layanan aksesibilitas Waaiya Blur di setelan Android dan opsi ini aktif. Sampai saat itu, layar tetap terlihat dengan peringatan.';
 
   @override
   String get languageTitle => 'Bahasa';
@@ -477,16 +497,11 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku tidak bisa mengizinkannya:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Cara menjalankan Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Tidak tersedia: di versi Android ini, penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak (penutup Shizuku memerlukan Android 12 atau yang lebih baru). Jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
+      'Tidak tersedia: di versi Android ini, penutup layar penuh akan menghalangi setiap ketukan dan Anda bisa terjebak (penutup yang bisa ditembus ketukan memerlukan Android 12 atau yang lebih baru). Jika buram tidak sanggup mengikuti, layar tetap terlihat dengan peringatan.';
 
   @override
   String get guideTitle => 'Jalankan Shizuku, langkah demi langkah';
@@ -1069,6 +1084,39 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Tidak dapat memeriksa saat ini. Coba lagi nanti.';
+
+  @override
+  String get moveOldTitle => 'Waaiya telah pindah';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya kini hadir sebagai aplikasi baru di Android (Waaiya yang sama dengan nama baru), dan aplikasi ini tidak akan mendapat pembaruan lagi. Pasang yang baru: setelan Anda ikut pindah. Lalu lakukan penyiapan satu kali di sana dan hapus yang ini.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya baru sudah terpasang. Buka: setelan Anda diambilnya. Lakukan penyiapan satu kalinya, lalu hapus yang lama ini agar keduanya tidak pernah memfilter bersamaan.';
+
+  @override
+  String get moveInstall => 'Pasang Waaiya baru';
+
+  @override
+  String get moveOpenNew => 'Buka Waaiya baru';
+
+  @override
+  String get moveRemoveThis => 'Hapus Waaiya lama ini';
+
+  @override
+  String get moveNewTitle => 'Waaiya lama masih terpasang';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya lama (sebelum versi 0.2.15) masih ada di ponsel ini. Hapus agar keduanya tidak pernah memfilter bersamaan.';
+
+  @override
+  String get moveNewImported => 'Setelan Anda sudah dibawa dari sana.';
+
+  @override
+  String get moveRemoveOld => 'Hapus Waaiya lama';
 
   @override
   String get desktopPreview =>
@@ -1836,4 +1884,53 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.';
+
+  @override
+  String get worshipUseLocation => 'Gunakan lokasi saya';
+
+  @override
+  String get worshipWhyLocation =>
+      'Untuk mengetahui waktu salat di tempat Anda, Waaiya membaca perkiraan lokasi ponsel ini satu kali, sekarang. Lokasi disimpan di ponsel sebagai tempat Anda dan tidak dikirim ke mana pun.';
+
+  @override
+  String get worshipLocating => 'Mencari lokasi Anda…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Lokasi tidak diizinkan. Anda bisa mencari kota Anda sebagai gantinya.';
+
+  @override
+  String get worshipLocationOff =>
+      'Lokasi mati di ponsel ini. Nyalakan lalu coba lagi, atau cari kota Anda.';
+
+  @override
+  String get worshipLocationSettings => 'Setelan lokasi';
+
+  @override
+  String get worshipLocationFailed =>
+      'Lokasi Anda tidak dapat ditemukan. Coba lagi sebentar lagi, atau cari kota Anda.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'dekat $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Waktu resmi Kementerian Wakaf dan Urusan Islam (Habous) untuk $city.';
+  }
+
+  @override
+  String get trayOpen => 'Buka Waaiya';
+
+  @override
+  String get trayQuit => 'Keluar';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows tidak mengizinkan Waaiya berjalan saat masuk. Aktifkan Waaiya di Pengaturan › Aplikasi › Startup, lalu aktifkan opsi ini lagi.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk.';
 }

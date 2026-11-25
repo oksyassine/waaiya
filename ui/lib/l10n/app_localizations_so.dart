@@ -184,6 +184,10 @@ class AppLocalizationsSo extends AppLocalizations {
   String get computerToggle => 'Isticmaal kombiyuutar beddelkeeda';
 
   @override
+  String get computerWeb =>
+      'Habka ugu fudud: kombiyuutar ka fur waaiya.mssid.org/usb adigoo isticmaalaya Chrome ama Edge, daar “USB debugging”, kadibna taleefanka ku xir xadhig (cable). Wax lama rakibayo, waxayna ku shaqaysaa Android 10 sidoo kale. Ama, haddii adb ku rakiban yahay:';
+
+  @override
   String get computerBody =>
       'Daar “USB debugging”, taleefanka ku xir kombiyuutarka oo socodsii:';
 
@@ -394,6 +398,25 @@ class AppLocalizationsSo extends AppLocalizations {
       'Waxay daboolaysaa dadka iyo sawirrada shaashadda, barnaamij kasta, inta shaandhayntu daaran tahay. Taleefanka ayay ka shaqaysaa; meelna waxba looma diro.';
 
   @override
+  String get blurOnTitle => 'Qarintu way shaqaynaysaa';
+
+  @override
+  String get blurOffTitle => 'Qarintu way dansan tahay';
+
+  @override
+  String get blurStartCd => 'Bilow qarinta';
+
+  @override
+  String get blurStopCd => 'Jooji qarinta';
+
+  @override
+  String get blurOffDetail =>
+      'Taabo badhanka si aad u bilowdo. Shaandhayntu way la bilaabantaa.';
+
+  @override
+  String get blurWhatTitle => 'Waxa la qarinayo';
+
+  @override
   String get blurWomenTitle => 'Qari haweenka';
 
   @override
@@ -416,26 +439,23 @@ class AppLocalizationsSo extends AppLocalizations {
       'Daaran: shaashadda oo dhan waa la daboolaa marka taleefanku aad u gaabis yahay ama qarintu fashilanto. Damsan: shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
-  String get blurSetupShizuku => 'Ku ogolow Shizuku';
-
-  @override
   String get blurSetupManual => 'Ku ogolow dejinta Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: “Ku ogolow Shizuku”, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama “Ku ogolow dejinta Android”, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
+      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: “U gudub habaynta”, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama “Ku ogolow dejinta Android”, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: bilow Shizuku oo Waaiya ku ogolow gudaheeda, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama ka ogolow “Display over other apps” dejinta Android, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
+      'Si ay u qariso, Waaiya waa inay ka muuqataa barnaamijyada kale dushooda. Midda ugu fiican: samee habaynta hal mar ah, si taabashadaadu weli u gaarto barnaamijka ka hooseeya qarinta. Ama ka ogolow “Display over other apps” dejinta Android, laakiin markaas taabashada meel la qariyay waxba ma qabato.';
 
   @override
   String get blurFailUnavailable =>
-      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya ama Shizuku (Android 12 ama ka cusub), doorashadanina way furmaysaa: daboollada markaas waxaa loo sawiraa si taabashadu uga gudubto. Ilaa markaas, marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
+      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya (Android 12 ama ka cusub), doorashadanina way furmaysaa: daboollada markaas waxaa loo sawiraa si taabashadu uga gudubto. Ilaa markaas, marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow Shizuku (Android 12 ama ka cusub) ama daar adeegga helitaanka (accessibility) ee “Qarinta Waaiya” (Ku ogolow Shizuku, kor), doorashadanina way furmaysaa. Ilaa markaas, shaashaddu way muuqanaysaa iyadoo digniin leh.';
+      'Hadda lama isticmaali karo: dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa. Bilow caawiyaha Waaiya (Android 12 ama ka cusub) ama ka daar dejinta Android adeegga helitaanka (accessibility) ee “Qarinta Waaiya”, doorashadanina way furmaysaa. Ilaa markaas, shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
   String get languageTitle => 'Luqadda';
@@ -482,16 +502,11 @@ class AppLocalizationsSo extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku ma ogolaan karin:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Sida loo bilaabo Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Lama isticmaali karo: noocan Android, dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa (daboollada Shizuku waxay u baahan yihiin Android 12 ama ka cusub). Marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
+      'Lama isticmaali karo: noocan Android, dabool shaashadda oo dhan ah wuxuu xannibi lahaa taabasho kasta, waadna ku xanibmi kartaa (daboollada ay taabashadu ka gudubto waxay u baahan yihiin Android 12 ama ka cusub). Marka qarintu aanay la jaanqaadi karin, shaashaddu way muuqanaysaa iyadoo digniin leh.';
 
   @override
   String get guideTitle => 'Bilow Shizuku, tallaabo tallaabo';
@@ -1077,6 +1092,39 @@ class AppLocalizationsSo extends AppLocalizations {
 
   @override
   String get updateCheckFailed => 'Hadda lama hubin karo. Mar dambe isku day.';
+
+  @override
+  String get moveOldTitle => 'Waaiya way guurtay';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya hadda waxay Android ku timaaddaa ab cusub (isla Waaiya, magac cusub), tanna wax cusboonaysiin ah ma helayso mar dambe. Rakib midda cusub: dejimahaagu way u guurayaan. Kadib samee diyaarinteeda hal mar ah oo ka saar tan.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya cusub waa la rakibay. Fur: waxay qaadanaysaa dejimahaaga. Samee diyaarinteeda hal mar ah, kadib ka saar tan duugga ah si aanay labaduba marna isku mar u shaandhayn.';
+
+  @override
+  String get moveInstall => 'Rakib Waaiya cusub';
+
+  @override
+  String get moveOpenNew => 'Fur Waaiya cusub';
+
+  @override
+  String get moveRemoveThis => 'Ka saar Waaiya duugga ah ee tan';
+
+  @override
+  String get moveNewTitle => 'Waaiya duugga ah weli waa rakiban tahay';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya duugga ah (ka hor nooca 0.2.15) weli waxay ku jirtaa taleefankan. Ka saar si aanay labaduba marna isku mar u shaandhayn.';
+
+  @override
+  String get moveNewImported => 'Dejimahaaga waa laga soo qaaday.';
+
+  @override
+  String get moveRemoveOld => 'Ka saar Waaiya duugga ah';
 
   @override
   String get desktopPreview =>
@@ -1851,4 +1899,53 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya waxay ka saartaa qalabka muusigga codka barnaamij kasta oo kombiyuutarkan ku jira. Hadalka iyo akhriska Qur\'aanka waa la hayaa. Hadda, codadka heesaha sidoo kale waa la saaraa.';
+
+  @override
+  String get worshipUseLocation => 'Isticmaal goobtayda';
+
+  @override
+  String get worshipWhyLocation =>
+      'Si loo helo waqtiyada salaadda meesha aad joogto, Waaiya waxay hal mar, hadda, akhrisaa goobta qiyaasta ah ee taleefankan. Waxay ku jirtaa taleefanka sida goobtaada, meelna looma diro.';
+
+  @override
+  String get worshipLocating => 'Waxaa la raadinayaa meesha aad joogto…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Goobta looma oggolaan. Waxaad raadin kartaa magaaladaada beddelkeeda.';
+
+  @override
+  String get worshipLocationOff =>
+      'Goobta waa ka dansan tahay taleefankan. Shid oo isku day mar kale, ama raadi magaaladaada.';
+
+  @override
+  String get worshipLocationSettings => 'Dejinta goobta';
+
+  @override
+  String get worshipLocationFailed =>
+      'Goobtaada lama helin. Isku day mar kale wax yar kadib, ama raadi magaaladaada.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'u dhow $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee $city.';
+  }
+
+  @override
+  String get trayOpen => 'Fur Waaiya';
+
+  @override
+  String get trayQuit => 'Ka bax';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows uma oggolaanayso Waaiya inay bilaabato marka la galo. Ka shid Waaiya Settings › Apps › Startup, kadibna mar kale shid tan.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Dejinta kombiyuutarkan, oo uu doortay maamulahiisu, uma oggolaanayso Waaiya inay bilaabato marka la galo.';
 }

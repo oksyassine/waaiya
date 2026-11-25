@@ -19,6 +19,7 @@ votre ordinateur.
 - Applications entendues sans filtre : choisissez des applications qui gardent leur son d'origine ; elles ne sont ni filtrées ni rendues muettes.
 - Protection pour les moments de faiblesse : l'arrêt peut attendre (par exemple 30 minutes) puis vous redemander, et un parent peut définir un code PIN.
 - Noter une erreur : signalez une musique passée ou une voix retirée par erreur ; les notes restent sur votre ordinateur.
+- Une icône près de l'horloge : ouvrez Waaiya, ou activez et arrêtez le filtrage, sans chercher l'application.
 - Démarrer à l'ouverture de session, si vous le souhaitez.
 - Tout tourne sur votre ordinateur. Rien n'est envoyé nulle part : ni compte, ni statistiques, ni publicité.
 - Gratuite et open source (AGPL-3.0)
@@ -32,17 +33,9 @@ lent, Waaiya passe en mono d'elle-même.
 
 ## What's new in this version
 
-Première version dans le Microsoft Store.
-- Nouvelle page Liens : regardez un lien YouTube, TikTok ou Instagram avec le filtre actif.
-- Couper le chant des femmes (première version), maintenant aussi sur Windows.
-- Applications entendues sans filtre
-- Protection pour les moments de faiblesse
-- Noter une erreur
-- 18 langues (nouvelles : espagnol, néerlandais, allemand, italien, russe, ouzbek, swahili, haoussa, somali).
-- Un design plus fluide : les boutons répondent tout de suite, des animations douces (aucune quand Windows demande moins
-  d'animations).
-- Corrections : un ancien filtre Waaiya qui ne répondait plus ne bloque plus le nouveau ; les détails des erreurs sont
-  plus faciles à lire.
+- Une icône près de l'horloge : ouvrez Waaiya, ou activez et arrêtez le filtrage depuis son menu. Fermer la fenêtre garde Waaiya là.
+- Démarrer à l'ouverture de session : Waaiya démarre près de l'horloge, et Windows vous demande l'autorisation si besoin.
+- Nouveau logo : le ع de واعية dessiné comme une oreille, net aussi dans les petites icônes.
 
 ## Product features (one per line, at most 20)
 
@@ -56,6 +49,7 @@ Première version dans le Microsoft Store.
 - Protection pour les moments de faiblesse
 - Noter une erreur
 - Démarrer à l'ouverture de session
+- Icône près de l'horloge : activer et arrêter le filtrage
 - 18 langues
 - Gratuite et open source
 

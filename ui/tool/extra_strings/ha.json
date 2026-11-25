@@ -208,5 +208,18 @@
   "protect_what_pin_change": "Canza PIN",
   "protect_what_pin_clear": "Cire PIN",
   "protect_what_setting": "Canza saiti",
-  "onboard_body_desktop": "Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur'ani. A yanzu, ana cire muryoyin waƙa ma."
+  "onboard_body_desktop": "Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur'ani. A yanzu, ana cire muryoyin waƙa ma.",
+  "worship_use_location": "Yi amfani da wurina",
+  "worship_why_location": "Don gano lokutan sallah a inda kake, Waaiya na karanta kimanin wurin wannan waya sau ɗaya, yanzu. Ana ajiye shi a waya a matsayin wurinka, ba a aika shi ko'ina.",
+  "worship_locating": "Ana neman inda kake…",
+  "worship_location_denied": "Ba a ba da izinin wuri ba. Za ka iya neman garinka maimakon haka.",
+  "worship_location_off": "An kashe wuri a wannan waya. Kunna shi ka sake gwadawa, ko ka nemi garinka.",
+  "worship_location_settings": "Saitunan wuri",
+  "worship_location_failed": "Ba a sami wurinka ba. Sake gwadawa nan ba da jimawa ba, ko ka nemi garinka.",
+  "worship_place_near": "kusa da {city}",
+  "worship_habous_note": "Lokutan hukuma na Ma'aikatar Habous da Harkokin Musulunci na {city}.",
+  "tray_open": "Buɗe Waaiya",
+  "tray_quit": "Fita",
+  "engine_error_autostart_blocked": "Windows ba ya barin Waaiya ta fara lokacin shiga. Kunna Waaiya a Settings › Apps › Startup, sannan ka sake kunna wannan.",
+  "engine_error_autostart_policy": "Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga."
 }

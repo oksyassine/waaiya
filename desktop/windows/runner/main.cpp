@@ -24,7 +24,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   project.set_dart_entrypoint_arguments(std::move(command_line_arguments));
 
-  FlutterWindow window(project);
+  // One Waaiya at a time: a second start (the Start menu while the window is hidden next to the clock) shows the
+  // first one's window instead; started at login (--tray), it only leaves.
+  bool at_login = false;
+  for (const auto& a : command_line_arguments) at_login |= a == "--tray";
+  HANDLE single = ::CreateMutexW(nullptr, FALSE, L"Local\\WaaiyaApp");
+  if (single && ::GetLastError() == ERROR_ALREADY_EXISTS) {
+    HWND other = ::FindWindowW(L"FLUTTER_RUNNER_WIN32_WINDOW", L"Waaiya");
+    if (other && !at_login) {
+      DWORD pid = 0;
+      ::GetWindowThreadProcessId(other, &pid);
+      ::AllowSetForegroundWindow(pid);
+      ::PostMessageW(other, Tray::ShowMessage(), 0, 0);
+    }
+    if (other) return EXIT_SUCCESS;
+  }
+
+  FlutterWindow window(project, at_login);
   Win32Window::Point origin(10, 10);
   Win32Window::Size size(520, 860);
   if (!window.Create(L"Waaiya", origin, size)) {

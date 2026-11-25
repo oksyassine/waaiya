@@ -180,6 +180,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get computerToggle => 'استخدم حاسوبًا بدلًا من ذلك';
 
   @override
+  String get computerWeb =>
+      'الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:';
+
+  @override
   String get computerBody => 'فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:';
 
   @override
@@ -382,6 +386,24 @@ class AppLocalizationsAr extends AppLocalizations {
       'يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.';
 
   @override
+  String get blurOnTitle => 'التمويه يعمل';
+
+  @override
+  String get blurOffTitle => 'التمويه متوقف';
+
+  @override
+  String get blurStartCd => 'تشغيل التمويه';
+
+  @override
+  String get blurStopCd => 'إيقاف التمويه';
+
+  @override
+  String get blurOffDetail => 'اضغط الزر للتشغيل. تبدأ التصفية معه.';
+
+  @override
+  String get blurWhatTitle => 'ما الذي يُموَّه';
+
+  @override
   String get blurWomenTitle => 'تمويه النساء';
 
   @override
@@ -403,26 +425,23 @@ class AppLocalizationsAr extends AppLocalizations {
       'مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
-  String get blurSetupShizuku => 'السماح عبر Shizuku';
-
-  @override
   String get blurSetupManual => 'السماح من إعدادات أندرويد';
 
   @override
   String get blurStatusNeedsSetup =>
-      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
+      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
+      'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.';
 
   @override
   String get blurFailUnavailable =>
-      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
+      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
   String get blurFailNeedsA11y =>
-      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.';
+      'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» من إعدادات أندرويد فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
   String get languageTitle => 'اللغة';
@@ -469,16 +488,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'تعذّر السماح عبر Shizuku:\n$details';
-  }
-
-  @override
   String get step2Guide => 'كيف أشغّل Shizuku؟';
 
   @override
   String get blurFailOldAndroid =>
-      'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
+      'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (الأغطية التي يمرّ منها اللمس تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.';
 
   @override
   String get guideTitle => 'تشغيل Shizuku خطوة بخطوة';
@@ -1053,6 +1067,39 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get updateCheckFailed => 'تعذّر البحث الآن. حاول لاحقًا.';
+
+  @override
+  String get moveOldTitle => 'انتقلت واعية';
+
+  @override
+  String get moveOldBody =>
+      'صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.';
+
+  @override
+  String get moveOldInstalled =>
+      'ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.';
+
+  @override
+  String get moveInstall => 'ثبّت واعية الجديدة';
+
+  @override
+  String get moveOpenNew => 'افتح واعية الجديدة';
+
+  @override
+  String get moveRemoveThis => 'احذف واعية القديمة هذه';
+
+  @override
+  String get moveNewTitle => 'ما زالت واعية القديمة مثبّتة';
+
+  @override
+  String get moveNewBody =>
+      'ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.';
+
+  @override
+  String get moveNewImported => 'نُقلت إعداداتك منها.';
+
+  @override
+  String get moveRemoveOld => 'احذف واعية القديمة';
 
   @override
   String get desktopPreview =>
@@ -1817,4 +1864,53 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.';
+
+  @override
+  String get worshipUseLocation => 'استخدم موقعي';
+
+  @override
+  String get worshipWhyLocation =>
+      'لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.';
+
+  @override
+  String get worshipLocating => 'جارٍ تحديد مكانك…';
+
+  @override
+  String get worshipLocationDenied =>
+      'لم يُسمح بالموقع. يمكنك البحث عن مدينتك بدلًا من ذلك.';
+
+  @override
+  String get worshipLocationOff =>
+      'الموقع مُطفأ في هذا الهاتف. شغّله ثم أعد المحاولة، أو ابحث عن مدينتك.';
+
+  @override
+  String get worshipLocationSettings => 'إعدادات الموقع';
+
+  @override
+  String get worshipLocationFailed =>
+      'تعذّر تحديد موقعك. أعد المحاولة بعد قليل، أو ابحث عن مدينتك.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'قرب $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة $city.';
+  }
+
+  @override
+  String get trayOpen => 'افتح واعية';
+
+  @override
+  String get trayQuit => 'خروج';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'ويندوز لا يسمح لواعية بالبدء عند تسجيل الدخول. فعّل واعية في الإعدادات › التطبيقات › بدء التشغيل، ثم فعّل هذا الخيار من جديد.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.';
 }

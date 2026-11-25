@@ -182,6 +182,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get computerToggle => 'Utiliser plutôt un ordinateur';
 
   @override
+  String get computerWeb =>
+      'Le plus simple : sur un ordinateur, ouvrez waaiya.mssid.org/usb dans Chrome ou Edge, activez le débogage USB et branchez le téléphone avec un câble. Rien à installer, et cela marche aussi sous Android 10. Ou, si adb est installé :';
+
+  @override
   String get computerBody =>
       'Activez le débogage USB, branchez le téléphone et lancez :';
 
@@ -395,6 +399,25 @@ class AppLocalizationsFr extends AppLocalizations {
       'Couvre les personnes et les images à l\'écran, dans toutes les applications, tant que le filtrage est activé. Tout se fait sur le téléphone ; rien n\'est envoyé nulle part.';
 
   @override
+  String get blurOnTitle => 'Le flou est activé';
+
+  @override
+  String get blurOffTitle => 'Le flou est désactivé';
+
+  @override
+  String get blurStartCd => 'Activer le flou';
+
+  @override
+  String get blurStopCd => 'Désactiver le flou';
+
+  @override
+  String get blurOffDetail =>
+      'Appuyez sur le bouton pour démarrer. Le filtrage démarre avec lui.';
+
+  @override
+  String get blurWhatTitle => 'Ce qui est flouté';
+
+  @override
   String get blurWomenTitle => 'Flouter les femmes';
 
   @override
@@ -416,26 +439,23 @@ class AppLocalizationsFr extends AppLocalizations {
       'Activé : tout l\'écran est couvert quand le téléphone est trop lent ou que le flou échoue. Désactivé : l\'écran reste visible avec un avertissement.';
 
   @override
-  String get blurSetupShizuku => 'Autoriser avec Shizuku';
-
-  @override
   String get blurSetupManual => 'Autoriser dans les paramètres Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : « Autoriser avec Shizuku », pour que vos appuis atteignent toujours l\'appli sous le flou. Ou « Autoriser dans les paramètres Android », mais alors un appui sur une zone floutée ne fait rien.';
+      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : « Aller à la configuration », pour que vos appuis atteignent toujours l\'appli sous le flou. Ou « Autoriser dans les paramètres Android », mais alors un appui sur une zone floutée ne fait rien.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : démarrez Shizuku et autorisez-y Waaiya, pour que vos appuis atteignent toujours l\'appli sous le flou. Ou autorisez « Superposition sur d\'autres applis » dans les paramètres Android, mais alors un appui sur une zone floutée ne fait rien.';
+      'Pour flouter, Waaiya doit s\'afficher par-dessus les autres applications. Le mieux : faites la configuration unique, pour que vos appuis atteignent toujours l\'appli sous le flou. Ou autorisez « Superposition sur d\'autres applis » dans les paramètres Android, mais alors un appui sur une zone floutée ne fait rien.';
 
   @override
   String get blurFailUnavailable =>
-      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya ou Shizuku (Android 12 ou plus récent) et l\'option s\'active : les caches sont alors dessinés pour que les appuis les traversent. D\'ici là, quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
+      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya (Android 12 ou plus récent) et l\'option s\'active : les caches sont alors dessinés pour que les appuis les traversent. D\'ici là, quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez Shizuku (Android 12 ou plus récent) ou activez le service d\'accessibilité Flou Waaiya (Autoriser avec Shizuku, ci-dessus) et l\'option s\'active. D\'ici là, l\'écran reste visible avec un avertissement.';
+      'Grisé pour l\'instant : un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé. Démarrez l\'assistant de Waaiya (Android 12 ou plus récent) ou activez le service d\'accessibilité Flou Waaiya dans les paramètres Android et l\'option s\'active. D\'ici là, l\'écran reste visible avec un avertissement.';
 
   @override
   String get languageTitle => 'Langue';
@@ -483,16 +503,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku n\'a pas pu l\'autoriser :\n$details';
-  }
-
-  @override
   String get step2Guide => 'Comment démarrer Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Grisé : sur cette version d\'Android, un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé (les caches de Shizuku nécessitent Android 12 ou plus récent). Quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
+      'Grisé : sur cette version d\'Android, un cache plein écran bloquerait tous les appuis et vous pourriez rester coincé (les caches que les appuis traversent nécessitent Android 12 ou plus récent). Quand le flou ne suit pas, l\'écran reste visible avec un avertissement.';
 
   @override
   String get guideTitle => 'Démarrer Shizuku, étape par étape';
@@ -1075,6 +1090,39 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Vérification impossible pour l\'instant. Réessayez plus tard.';
+
+  @override
+  String get moveOldTitle => 'Waaiya a déménagé';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya arrive désormais sous Android comme une nouvelle appli (la même Waaiya, sous un nouveau nom), et celle-ci ne recevra plus de mises à jour. Installez la nouvelle : vos réglages la suivent. Faites ensuite sa configuration unique et supprimez celle-ci.';
+
+  @override
+  String get moveOldInstalled =>
+      'La nouvelle Waaiya est installée. Ouvrez-la : elle reprend vos réglages. Faites sa configuration unique, puis supprimez cette ancienne pour que les deux ne filtrent jamais en même temps.';
+
+  @override
+  String get moveInstall => 'Installer la nouvelle Waaiya';
+
+  @override
+  String get moveOpenNew => 'Ouvrir la nouvelle Waaiya';
+
+  @override
+  String get moveRemoveThis => 'Supprimer cette ancienne Waaiya';
+
+  @override
+  String get moveNewTitle => 'L\'ancienne Waaiya est encore installée';
+
+  @override
+  String get moveNewBody =>
+      'L\'ancienne Waaiya (d\'avant la version 0.2.15) est encore sur ce téléphone. Supprimez-la pour que les deux ne filtrent jamais en même temps.';
+
+  @override
+  String get moveNewImported => 'Vos réglages ont été repris d\'elle.';
+
+  @override
+  String get moveRemoveOld => 'Supprimer l\'ancienne Waaiya';
 
   @override
   String get desktopPreview =>
@@ -1848,4 +1896,53 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya supprime les instruments de musique du son de toutes les applications de cet ordinateur. La parole et la récitation du Coran sont conservées. Pour l\'instant, les voix chantées sont aussi supprimées.';
+
+  @override
+  String get worshipUseLocation => 'Utiliser ma position';
+
+  @override
+  String get worshipWhyLocation =>
+      'Pour trouver les heures de prière là où vous êtes, Waaiya lit une seule fois, maintenant, la position approximative de ce téléphone. Elle reste sur le téléphone comme votre lieu et n\'est envoyée nulle part.';
+
+  @override
+  String get worshipLocating => 'Recherche de votre position…';
+
+  @override
+  String get worshipLocationDenied =>
+      'La position n\'a pas été autorisée. Vous pouvez chercher votre ville à la place.';
+
+  @override
+  String get worshipLocationOff =>
+      'La localisation est désactivée sur ce téléphone. Activez-la puis réessayez, ou cherchez votre ville.';
+
+  @override
+  String get worshipLocationSettings => 'Paramètres de localisation';
+
+  @override
+  String get worshipLocationFailed =>
+      'Votre position n\'a pas pu être trouvée. Réessayez dans un instant, ou cherchez votre ville.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'près de $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Les horaires officiels du ministère des Habous et des Affaires islamiques pour $city.';
+  }
+
+  @override
+  String get trayOpen => 'Ouvrir Waaiya';
+
+  @override
+  String get trayQuit => 'Quitter';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows ne laisse pas Waaiya démarrer à l\'ouverture de session. Activez Waaiya dans Paramètres › Applications › Démarrage, puis réactivez cette option.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Les paramètres de cet ordinateur, choisis par son administrateur, ne permettent pas à Waaiya de démarrer à l\'ouverture de session.';
 }

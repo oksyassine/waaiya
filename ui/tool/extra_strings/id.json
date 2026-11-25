@@ -208,5 +208,18 @@
   "protect_what_pin_change": "Ubah PIN",
   "protect_what_pin_clear": "Hapus PIN",
   "protect_what_setting": "Ubah pengaturan",
-  "onboard_body_desktop": "Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus."
+  "onboard_body_desktop": "Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.",
+  "worship_use_location": "Gunakan lokasi saya",
+  "worship_why_location": "Untuk mengetahui waktu salat di tempat Anda, Waaiya membaca perkiraan lokasi ponsel ini satu kali, sekarang. Lokasi disimpan di ponsel sebagai tempat Anda dan tidak dikirim ke mana pun.",
+  "worship_locating": "Mencari lokasi Anda…",
+  "worship_location_denied": "Lokasi tidak diizinkan. Anda bisa mencari kota Anda sebagai gantinya.",
+  "worship_location_off": "Lokasi mati di ponsel ini. Nyalakan lalu coba lagi, atau cari kota Anda.",
+  "worship_location_settings": "Setelan lokasi",
+  "worship_location_failed": "Lokasi Anda tidak dapat ditemukan. Coba lagi sebentar lagi, atau cari kota Anda.",
+  "worship_place_near": "dekat {city}",
+  "worship_habous_note": "Waktu resmi Kementerian Wakaf dan Urusan Islam (Habous) untuk {city}.",
+  "tray_open": "Buka Waaiya",
+  "tray_quit": "Keluar",
+  "engine_error_autostart_blocked": "Windows tidak mengizinkan Waaiya berjalan saat masuk. Aktifkan Waaiya di Pengaturan › Aplikasi › Startup, lalu aktifkan opsi ini lagi.",
+  "engine_error_autostart_policy": "Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk."
 }

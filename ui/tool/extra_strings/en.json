@@ -208,5 +208,18 @@
   "protect_what_pin_change": "Change the PIN",
   "protect_what_pin_clear": "Remove the PIN",
   "protect_what_setting": "Change a setting",
-  "onboard_body_desktop": "Waaiya removes musical instruments from the sound of every app on this computer. Speech and Quran recitation are kept. For now, singing voices are removed too."
+  "onboard_body_desktop": "Waaiya removes musical instruments from the sound of every app on this computer. Speech and Quran recitation are kept. For now, singing voices are removed too.",
+  "worship_use_location": "Use my location",
+  "worship_why_location": "To find the prayer times where you are, Waaiya reads this phone's approximate location once, now. It is kept on the phone as your place and sent nowhere.",
+  "worship_locating": "Finding where you are…",
+  "worship_location_denied": "Location was not allowed. You can search for your city instead.",
+  "worship_location_off": "Location is off on this phone. Turn it on and try again, or search for your city.",
+  "worship_location_settings": "Location settings",
+  "worship_location_failed": "Your location could not be found. Try again in a moment, or search for your city.",
+  "worship_place_near": "near {city}",
+  "worship_habous_note": "The official times of the Ministry of Habous and Islamic Affairs for {city}.",
+  "tray_open": "Open Waaiya",
+  "tray_quit": "Quit",
+  "engine_error_autostart_blocked": "Windows is not letting Waaiya start at login. Turn Waaiya on in Settings › Apps › Startup, then turn this on again.",
+  "engine_error_autostart_policy": "This computer's settings, chosen by its administrator, do not let Waaiya start at login."
 }

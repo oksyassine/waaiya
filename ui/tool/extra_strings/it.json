@@ -208,5 +208,18 @@
   "protect_what_pin_change": "Cambiare il PIN",
   "protect_what_pin_clear": "Rimuovere il PIN",
   "protect_what_setting": "Cambiare un'impostazione",
-  "onboard_body_desktop": "Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo computer. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano."
+  "onboard_body_desktop": "Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo computer. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano.",
+  "worship_use_location": "Usa la mia posizione",
+  "worship_why_location": "Per trovare gli orari di preghiera dove ti trovi, Waaiya legge una sola volta, ora, la posizione approssimativa di questo telefono. Resta sul telefono come tuo luogo e non viene inviata da nessuna parte.",
+  "worship_locating": "Ricerca della tua posizione…",
+  "worship_location_denied": "La posizione non è stata consentita. Puoi cercare la tua città.",
+  "worship_location_off": "La localizzazione è disattivata su questo telefono. Attivala e riprova, oppure cerca la tua città.",
+  "worship_location_settings": "Impostazioni di localizzazione",
+  "worship_location_failed": "Impossibile trovare la tua posizione. Riprova tra un momento, oppure cerca la tua città.",
+  "worship_place_near": "vicino a {city}",
+  "worship_habous_note": "Gli orari ufficiali del Ministero degli Habous e degli Affari islamici per {city}.",
+  "tray_open": "Apri Waaiya",
+  "tray_quit": "Esci",
+  "engine_error_autostart_blocked": "Windows non consente a Waaiya di avviarsi all'accesso. Attiva Waaiya in Impostazioni › App › Avvio, poi riattiva questa opzione.",
+  "engine_error_autostart_policy": "Le impostazioni di questo computer, scelte dal suo amministratore, non consentono a Waaiya di avviarsi all'accesso."
 }

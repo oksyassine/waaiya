@@ -1,4 +1,4 @@
-/* JNI bridge: org.islamicmute.app.Engine <-> C engine (same code as desktop). */
+/* JNI bridge: org.waaiya.app.Engine <-> C engine (same code as desktop). */
 #include <stdlib.h>
 #include <android/log.h>
 #include <jni.h>
@@ -7,7 +7,7 @@
 
 #define TAG "IslamicMute"
 
-JNIEXPORT jlong JNICALL Java_org_islamicmute_app_Engine_nativeCreate(JNIEnv *env, jclass cls, jstring path,
+JNIEXPORT jlong JNICALL Java_org_waaiya_app_Engine_nativeCreate(JNIEnv *env, jclass cls, jstring path,
                                                                        jstring detector, jint channels, jint rate,
                                                                        jboolean mono, jint policy) {
     (void)cls;
@@ -28,13 +28,13 @@ JNIEXPORT jlong JNICALL Java_org_islamicmute_app_Engine_nativeCreate(JNIEnv *env
     return (jlong)(intptr_t)e;
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeSetPolicy(JNIEnv *env, jclass cls, jlong h, jint policy) {
+JNIEXPORT void JNICALL Java_org_waaiya_app_Engine_nativeSetPolicy(JNIEnv *env, jclass cls, jlong h, jint policy) {
     (void)env; (void)cls;
     im_engine_set_policy((im_engine *)(intptr_t)h, (unsigned)policy);
 }
 
 /* probs: float[4] (female, speech, singing, recitation). Returns 1 muting, 0 not, -1 no detector. */
-JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeDetectorStatus(JNIEnv *env, jclass cls, jlong h,
+JNIEXPORT jint JNICALL Java_org_waaiya_app_Engine_nativeDetectorStatus(JNIEnv *env, jclass cls, jlong h,
                                                                              jfloatArray probs) {
     (void)cls;
     float p[4];
@@ -43,7 +43,7 @@ JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeDetectorStatus(JNIE
     return r;
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeProcess(JNIEnv *env, jclass cls, jlong h, jfloatArray in,
+JNIEXPORT void JNICALL Java_org_waaiya_app_Engine_nativeProcess(JNIEnv *env, jclass cls, jlong h, jfloatArray in,
                                                                       jfloatArray out, jint frames) {
     (void)cls;
     jfloat *pi = (*env)->GetPrimitiveArrayCritical(env, in, NULL);
@@ -54,7 +54,7 @@ JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeProcess(JNIEnv *env
 }
 
 /* Hop-aligned: in/out hold hops * hop frames; one hop less delay than nativeProcess. Returns 0 or -1. */
-JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeProcessHops(JNIEnv *env, jclass cls, jlong h, jfloatArray in,
+JNIEXPORT jint JNICALL Java_org_waaiya_app_Engine_nativeProcessHops(JNIEnv *env, jclass cls, jlong h, jfloatArray in,
                                                                          jfloatArray out, jint hops) {
     (void)cls;
     /* copies instead of GetPrimitiveArrayCritical: the engine run (several ms) must not hold the GC lock
@@ -72,49 +72,49 @@ JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeProcessHops(JNIEnv 
     return r;
 }
 
-JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeAlignedLatency(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jint JNICALL Java_org_waaiya_app_Engine_nativeAlignedLatency(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     return im_engine_aligned_latency((im_engine *)(intptr_t)h);
 }
 
-JNIEXPORT jint JNICALL Java_org_islamicmute_app_Engine_nativeLatency(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jint JNICALL Java_org_waaiya_app_Engine_nativeLatency(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     return im_engine_latency((im_engine *)(intptr_t)h);
 }
 
-JNIEXPORT jboolean JNICALL Java_org_islamicmute_app_Engine_nativeFailed(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jboolean JNICALL Java_org_waaiya_app_Engine_nativeFailed(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     return im_engine_failed((im_engine *)(intptr_t)h) ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeSetGate(JNIEnv *env, jclass cls, jlong h, jfloat g) {
+JNIEXPORT void JNICALL Java_org_waaiya_app_Engine_nativeSetGate(JNIEnv *env, jclass cls, jlong h, jfloat g) {
     (void)env; (void)cls;
     im_engine_set_gate((im_engine *)(intptr_t)h, g);
 }
 
 /* 1 = mix the channels and run the model once (slow phones). Returns the mode now in effect. */
-JNIEXPORT jboolean JNICALL Java_org_islamicmute_app_Engine_nativeSetMono(JNIEnv *env, jclass cls, jlong h, jboolean mono) {
+JNIEXPORT jboolean JNICALL Java_org_waaiya_app_Engine_nativeSetMono(JNIEnv *env, jclass cls, jlong h, jboolean mono) {
     (void)env; (void)cls;
     return im_engine_set_mono((im_engine *)(intptr_t)h, mono ? 1 : 0) ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jstring JNICALL Java_org_islamicmute_app_Engine_nativeModelName(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jstring JNICALL Java_org_waaiya_app_Engine_nativeModelName(JNIEnv *env, jclass cls, jlong h) {
     (void)cls;
     const char *n = im_engine_model_name((im_engine *)(intptr_t)h);
     return n ? (*env)->NewStringUTF(env, n) : NULL;
 }
 
-JNIEXPORT jlong JNICALL Java_org_islamicmute_app_Engine_nativeRunErrors(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT jlong JNICALL Java_org_waaiya_app_Engine_nativeRunErrors(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     return (jlong)im_engine_run_errors((im_engine *)(intptr_t)h);
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeReset(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT void JNICALL Java_org_waaiya_app_Engine_nativeReset(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     im_engine_reset((im_engine *)(intptr_t)h);
 }
 
-JNIEXPORT void JNICALL Java_org_islamicmute_app_Engine_nativeDestroy(JNIEnv *env, jclass cls, jlong h) {
+JNIEXPORT void JNICALL Java_org_waaiya_app_Engine_nativeDestroy(JNIEnv *env, jclass cls, jlong h) {
     (void)env; (void)cls;
     im_engine_destroy((im_engine *)(intptr_t)h);
 }

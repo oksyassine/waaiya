@@ -27,7 +27,7 @@ import tempfile
 import time
 import xml.etree.ElementTree as ET
 
-PKG = "org.islamicmute.app"
+PKG = "org.waaiya.app"
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "app", "src", "main", "res")
 REPO = os.path.join(HERE, "..", "..")
@@ -237,7 +237,7 @@ def main():
         uid, vc = re.search(r"(?:appId|userId)=(\d+)", dump).group(1), re.search(r"versionCode=(\d+)", dump).group(1)
         e.sh("for p in $(pidof waaiya_covers); do kill $p; done; "
              f"P=$(pm path {PKG} | head -n 1 | cut -d: -f2); CLASSPATH=$P setsid app_process /system/bin "
-             f"--nice-name=waaiya_covers org.islamicmute.app.CoverHelper {uid} {vc} </dev/null >/dev/null 2>&1 & "
+             f"--nice-name=waaiya_covers org.waaiya.app.CoverHelper {uid} {vc} </dev/null >/dev/null 2>&1 & "
              "for i in 1 2 3 4 5 6 7 8 9 10; do sleep 0.5; pidof waaiya_covers >/dev/null && break; done")
         c.check(e.sh("pidof waaiya_covers").strip() != "", "cover helper runs as a shell process")
     e.sh("input keyevent KEYCODE_WAKEUP")

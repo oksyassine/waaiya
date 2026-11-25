@@ -211,6 +211,10 @@
   "@computerToggle": {
     "description": "Android string computer_toggle"
   },
+  "computerWeb": "الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:",
+  "@computerWeb": {
+    "description": "Android string computer_web"
+  },
   "computerBody": "فعّل تصحيح أخطاء USB، ثم وصّل الهاتف ونفّذ:",
   "@computerBody": {
     "description": "Android string computer_body"
@@ -463,6 +467,30 @@
   "@blurBody": {
     "description": "Android string blur_body"
   },
+  "blurOnTitle": "التمويه يعمل",
+  "@blurOnTitle": {
+    "description": "Android string blur_on_title"
+  },
+  "blurOffTitle": "التمويه متوقف",
+  "@blurOffTitle": {
+    "description": "Android string blur_off_title"
+  },
+  "blurStartCd": "تشغيل التمويه",
+  "@blurStartCd": {
+    "description": "Android string blur_start_cd"
+  },
+  "blurStopCd": "إيقاف التمويه",
+  "@blurStopCd": {
+    "description": "Android string blur_stop_cd"
+  },
+  "blurOffDetail": "اضغط الزر للتشغيل. تبدأ التصفية معه.",
+  "@blurOffDetail": {
+    "description": "Android string blur_off_detail"
+  },
+  "blurWhatTitle": "ما الذي يُموَّه",
+  "@blurWhatTitle": {
+    "description": "Android string blur_what_title"
+  },
   "blurWomenTitle": "تمويه النساء",
   "@blurWomenTitle": {
     "description": "Android string blur_women_title"
@@ -487,27 +515,23 @@
   "@blurFailBody": {
     "description": "Android string blur_fail_body"
   },
-  "blurSetupShizuku": "السماح عبر Shizuku",
-  "@blurSetupShizuku": {
-    "description": "Android string blur_setup_shizuku"
-  },
   "blurSetupManual": "السماح من إعدادات أندرويد",
   "@blurSetupManual": {
     "description": "Android string blur_setup_manual"
   },
-  "blurStatusNeedsSetup": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
+  "blurStatusNeedsSetup": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
   "@blurStatusNeedsSetup": {
     "description": "Android string blur_status_needs_setup"
   },
-  "blurStatusNeedsOverlay": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
+  "blurStatusNeedsOverlay": "ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.",
   "@blurStatusNeedsOverlay": {
     "description": "Android string blur_status_needs_overlay"
   },
-  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailUnavailable": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailUnavailable": {
     "description": "Android string blur_fail_unavailable"
   },
-  "blurFailNeedsA11y": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailNeedsA11y": "معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» من إعدادات أندرويد فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailNeedsA11y": {
     "description": "Android string blur_fail_needs_a11y"
   },
@@ -569,20 +593,11 @@
       }
     }
   },
-  "blurSetupFailed": "تعذّر السماح عبر Shizuku:\n{details}",
-  "@blurSetupFailed": {
-    "description": "Android string blur_setup_failed",
-    "placeholders": {
-      "details": {
-        "type": "String"
-      }
-    }
-  },
   "step2Guide": "كيف أشغّل Shizuku؟",
   "@step2Guide": {
     "description": "Android string step2_guide"
   },
-  "blurFailOldAndroid": "معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
+  "blurFailOldAndroid": "معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (الأغطية التي يمرّ منها اللمس تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.",
   "@blurFailOldAndroid": {
     "description": "Android string blur_fail_old_android"
   },
@@ -1297,6 +1312,46 @@
   "updateCheckFailed": "تعذّر البحث الآن. حاول لاحقًا.",
   "@updateCheckFailed": {
     "description": "Android string update_check_failed"
+  },
+  "moveOldTitle": "انتقلت واعية",
+  "@moveOldTitle": {
+    "description": "Android string move_old_title"
+  },
+  "moveOldBody": "صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.",
+  "@moveOldBody": {
+    "description": "Android string move_old_body"
+  },
+  "moveOldInstalled": "ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.",
+  "@moveOldInstalled": {
+    "description": "Android string move_old_installed"
+  },
+  "moveInstall": "ثبّت واعية الجديدة",
+  "@moveInstall": {
+    "description": "Android string move_install"
+  },
+  "moveOpenNew": "افتح واعية الجديدة",
+  "@moveOpenNew": {
+    "description": "Android string move_open_new"
+  },
+  "moveRemoveThis": "احذف واعية القديمة هذه",
+  "@moveRemoveThis": {
+    "description": "Android string move_remove_this"
+  },
+  "moveNewTitle": "ما زالت واعية القديمة مثبّتة",
+  "@moveNewTitle": {
+    "description": "Android string move_new_title"
+  },
+  "moveNewBody": "ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.",
+  "@moveNewBody": {
+    "description": "Android string move_new_body"
+  },
+  "moveNewImported": "نُقلت إعداداتك منها.",
+  "@moveNewImported": {
+    "description": "Android string move_new_imported"
+  },
+  "moveRemoveOld": "احذف واعية القديمة",
+  "@moveRemoveOld": {
+    "description": "Android string move_remove_old"
   },
   "desktopPreview": "معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.",
   "@desktopPreview": {
@@ -2162,6 +2217,58 @@
   },
   "onboardBodyDesktop": "تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.",
   "@onboardBodyDesktop": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipUseLocation": "استخدم موقعي",
+  "@worshipUseLocation": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipWhyLocation": "لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.",
+  "@worshipWhyLocation": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocating": "جارٍ تحديد مكانك…",
+  "@worshipLocating": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationDenied": "لم يُسمح بالموقع. يمكنك البحث عن مدينتك بدلًا من ذلك.",
+  "@worshipLocationDenied": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationOff": "الموقع مُطفأ في هذا الهاتف. شغّله ثم أعد المحاولة، أو ابحث عن مدينتك.",
+  "@worshipLocationOff": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationSettings": "إعدادات الموقع",
+  "@worshipLocationSettings": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipLocationFailed": "تعذّر تحديد موقعك. أعد المحاولة بعد قليل، أو ابحث عن مدينتك.",
+  "@worshipLocationFailed": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipPlaceNear": "قرب {city}",
+  "@worshipPlaceNear": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "worshipHabousNote": "الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.",
+  "@worshipHabousNote": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "trayOpen": "افتح واعية",
+  "@trayOpen": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "trayQuit": "خروج",
+  "@trayQuit": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorAutostartBlocked": "ويندوز لا يسمح لواعية بالبدء عند تسجيل الدخول. فعّل واعية في الإعدادات › التطبيقات › بدء التشغيل، ثم فعّل هذا الخيار من جديد.",
+  "@engineErrorAutostartBlocked": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "engineErrorAutostartPolicy": "إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.",
+  "@engineErrorAutostartPolicy": {
     "description": "Flutter only. Not reviewed yet except in English."
   }
 }

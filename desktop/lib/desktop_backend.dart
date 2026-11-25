@@ -162,6 +162,7 @@ class DesktopBackend extends MemoryBackend {
         links: engine != null && (windows || linkTools != null),
         linkPage: true,
         linkSave: engine != null && linkTools != null,
+        tray: windows,
       ),
       // the covers let every click through (empty input region), so the full-screen fail cover is safe here
       blur: blur != null ? const BlurInfo(overlayAllowed: true, touchPassThrough: true) : const BlurInfo(),
@@ -264,7 +265,7 @@ class DesktopBackend extends MemoryBackend {
         where: args['where'] is String ? args['where'] as String : 'app',
         filter: '${s.filter.state.name}${s.settings.muteWomenSinging ? ", women's singing muted" : ''}'
             '${s.settings.filterOffApps.isNotEmpty ? ', unfiltered apps: ${s.settings.filterOffApps.join(', ')}' : ''}',
-        blur: '${s.blur.state?.name ?? 'off'}${s.settings.blurWomen ? ', women' : ''}'
+        blur: '${s.blur.state?.name ?? 'off'}${s.settings.blurEnabled ? '' : ', switched off'}${s.settings.blurWomen ? ', women' : ''}'
             '${s.settings.blurNudity ? ', nudity' : ''}, strictness ${s.settings.blurStrictness}',
         models: 'Waaiya ${s.version} (${s.platform}); engine ${engine?.bundledVersion ?? 'none'}'
             '${(engine?.hasDetector ?? false) ? ', detector' : ''}',
@@ -357,6 +358,7 @@ class DesktopBackend extends MemoryBackend {
   // --- Linux screen blur ---
 
   static const _blurKeys = {
+    SettingKeys.blurEnabled,
     SettingKeys.blurWomen,
     SettingKeys.blurNudity,
     SettingKeys.blurStrictness,

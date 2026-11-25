@@ -183,6 +183,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get computerToggle => 'Использовать компьютер';
 
   @override
+  String get computerWeb =>
+      'Проще всего: на компьютере откройте waaiya.mssid.org/usb в Chrome или Edge, включите отладку по USB и подключите телефон кабелем. Ничего устанавливать не нужно, работает и на Android 10. Или, если установлен adb:';
+
+  @override
   String get computerBody =>
       'Включите отладку по USB, подключите телефон и выполните:';
 
@@ -392,6 +396,25 @@ class AppLocalizationsRu extends AppLocalizations {
       'Закрывает людей и изображения на экране во всех приложениях, пока включён фильтр. Работает на самом телефоне; ничего никуда не отправляется.';
 
   @override
+  String get blurOnTitle => 'Размытие включено';
+
+  @override
+  String get blurOffTitle => 'Размытие выключено';
+
+  @override
+  String get blurStartCd => 'Включить размытие';
+
+  @override
+  String get blurStopCd => 'Выключить размытие';
+
+  @override
+  String get blurOffDetail =>
+      'Нажмите кнопку, чтобы начать. Фильтрация включится вместе с ним.';
+
+  @override
+  String get blurWhatTitle => 'Что размывать';
+
+  @override
   String get blurWomenTitle => 'Размывать женщин';
 
   @override
@@ -413,26 +436,23 @@ class AppLocalizationsRu extends AppLocalizations {
       'Вкл.: весь экран закрывается, когда телефон слишком медленный или размытие не работает. Выкл.: экран остаётся видимым, с предупреждением.';
 
   @override
-  String get blurSetupShizuku => 'Разрешить через Shizuku';
-
-  @override
   String get blurSetupManual => 'Разрешить в настройках Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Чтобы размывать, Waaiya нужно показываться поверх других приложений. Лучше всего: «Разрешить через Shizuku», тогда ваши нажатия по-прежнему доходят до приложения под размытием. Или «Разрешить в настройках Android», но тогда нажатие на размытую область ничего не делает.';
+      'Чтобы размывать, Waaiya нужно показываться поверх других приложений. Лучше всего: «Перейти к настройке», тогда ваши нажатия по-прежнему доходят до приложения под размытием. Или «Разрешить в настройках Android», но тогда нажатие на размытую область ничего не делает.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Чтобы размывать, Waaiya нужно показываться поверх других приложений. Лучше всего: запустите Shizuku и разрешите в нём Waaiya, тогда ваши нажатия по-прежнему доходят до приложения под размытием. Или разрешите «Поверх других приложений» в настройках Android, но тогда нажатие на размытую область ничего не делает.';
+      'Чтобы размывать, Waaiya нужно показываться поверх других приложений. Лучше всего: пройдите разовую настройку, тогда ваши нажатия по-прежнему доходят до приложения под размытием. Или разрешите «Поверх других приложений» в настройках Android, но тогда нажатие на размытую область ничего не делает.';
 
   @override
   String get blurFailUnavailable =>
-      'Пока недоступно: заслонка на весь экран блокировала бы все нажатия, и вы могли бы застрять. Запустите помощника Waaiya или Shizuku (Android 12 или новее), и эта настройка станет доступна: тогда заслонки рисуются так, что нажатия проходят сквозь них. А до тех пор, если размытие не успевает, экран остаётся видимым, с предупреждением.';
+      'Пока недоступно: заслонка на весь экран блокировала бы все нажатия, и вы могли бы застрять. Запустите помощника Waaiya (Android 12 или новее), и эта настройка станет доступна: тогда заслонки рисуются так, что нажатия проходят сквозь них. А до тех пор, если размытие не успевает, экран остаётся видимым, с предупреждением.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Пока недоступно: заслонка на весь экран блокировала бы все нажатия, и вы могли бы застрять. Запустите Shizuku (Android 12 или новее) или включите службу специальных возможностей «Размытие Waaiya» (кнопка «Разрешить через Shizuku» выше), и эта настройка станет доступна. А до тех пор экран остаётся видимым, с предупреждением.';
+      'Пока недоступно: заслонка на весь экран блокировала бы все нажатия, и вы могли бы застрять. Запустите помощника Waaiya (Android 12 или новее) или включите в настройках Android службу специальных возможностей «Размытие Waaiya», и эта настройка станет доступна. А до тех пор экран остаётся видимым, с предупреждением.';
 
   @override
   String get languageTitle => 'Язык';
@@ -479,16 +499,11 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku не смог это разрешить:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Как запустить Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Недоступно: на этой версии Android заслонка на весь экран блокировала бы все нажатия, и вы могли бы застрять (заслонкам Shizuku нужен Android 12 или новее). Если размытие не успевает, экран остаётся видимым, с предупреждением.';
+      'Недоступно: на этой версии Android заслонка на весь экран блокировала бы все нажатия, и вы могли бы застрять (заслонкам, сквозь которые проходят нажатия, нужен Android 12 или новее). Если размытие не успевает, экран остаётся видимым, с предупреждением.';
 
   @override
   String get guideTitle => 'Запуск Shizuku по шагам';
@@ -1069,6 +1084,39 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Сейчас проверить не удалось. Попробуйте позже.';
+
+  @override
+  String get moveOldTitle => 'Waaiya переехала';
+
+  @override
+  String get moveOldBody =>
+      'Теперь Waaiya выходит на Android как новое приложение (та же Waaiya под новым именем), а это больше не будет обновляться. Установите новое: ваши настройки перейдут в него. Затем выполните в нём одноразовую настройку и удалите это.';
+
+  @override
+  String get moveOldInstalled =>
+      'Новая Waaiya установлена. Откройте её: она заберёт ваши настройки. Выполните одноразовую настройку, затем удалите эту старую, чтобы они никогда не фильтровали одновременно.';
+
+  @override
+  String get moveInstall => 'Установить новую Waaiya';
+
+  @override
+  String get moveOpenNew => 'Открыть новую Waaiya';
+
+  @override
+  String get moveRemoveThis => 'Удалить эту старую Waaiya';
+
+  @override
+  String get moveNewTitle => 'Старая Waaiya всё ещё установлена';
+
+  @override
+  String get moveNewBody =>
+      'Старая Waaiya (до версии 0.2.15) всё ещё на этом телефоне. Удалите её, чтобы они никогда не фильтровали одновременно.';
+
+  @override
+  String get moveNewImported => 'Ваши настройки перенесены из неё.';
+
+  @override
+  String get moveRemoveOld => 'Удалить старую Waaiya';
 
   @override
   String get desktopPreview =>
@@ -1837,4 +1885,53 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya убирает музыкальные инструменты из звука всех приложений на этом компьютере. Речь и чтение Корана сохраняются. Пока что пение тоже убирается.';
+
+  @override
+  String get worshipUseLocation => 'Моё местоположение';
+
+  @override
+  String get worshipWhyLocation =>
+      'Чтобы найти время намаза там, где вы находитесь, Waaiya один раз, сейчас, считывает примерное местоположение телефона. Оно хранится на телефоне как ваше место и никуда не отправляется.';
+
+  @override
+  String get worshipLocating => 'Определяем, где вы…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Доступ к местоположению не разрешён. Вместо этого можно найти свой город.';
+
+  @override
+  String get worshipLocationOff =>
+      'Геолокация на этом телефоне выключена. Включите её и повторите, или найдите свой город.';
+
+  @override
+  String get worshipLocationSettings => 'Настройки геолокации';
+
+  @override
+  String get worshipLocationFailed =>
+      'Не удалось определить местоположение. Повторите чуть позже или найдите свой город.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'рядом с $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Официальное время Министерства хабусов и исламских дел для города $city.';
+  }
+
+  @override
+  String get trayOpen => 'Открыть Waaiya';
+
+  @override
+  String get trayQuit => 'Выйти';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows не разрешает Waaiya запускаться при входе в систему. Включите Waaiya в Параметры › Приложения › Автозагрузка, затем снова включите этот параметр.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Настройки этого компьютера, выбранные его администратором, не разрешают Waaiya запускаться при входе в систему.';
 }

@@ -256,8 +256,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('nav_screen'))); // the Screen page
     await tester.pumpAndSettle();
-    expect(find.text('تمويه الشاشة'), findsOneWidget); // the blur card
-    final card = find.ancestor(of: find.text('تمويه الشاشة'), matching: find.byType(Card));
+    expect(find.text('ما الذي يُموَّه'), findsOneWidget); // the blur card
+    final card = find.ancestor(of: find.text('ما الذي يُموَّه'), matching: find.byType(Card));
     final row = find.byKey(const Key('blur_strict'));
     expect(row, findsOneWidget);
     expect(find.descendant(of: card, matching: row), findsOneWidget);
@@ -296,7 +296,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('nav_screen')));
     await tester.pumpAndSettle();
-    expect(find.text('تمويه الشاشة'), findsOneWidget);
+    expect(find.text('ما الذي يُموَّه'), findsOneWidget);
     await tester.runAsync(() => b.close());
   });
 
@@ -306,7 +306,7 @@ void main() {
     expect(b.blur, isNull);
     await tester.pumpWidget(WaaiyaApp(backend: b));
     await tester.pumpAndSettle();
-    expect(find.text('تمويه الشاشة'), findsNothing);
+    expect(find.text('ما الذي يُموَّه'), findsNothing);
     await tester.scrollUntilVisible(find.text('الإعدادات'), 200);
     await tester.pumpAndSettle();
     // on no page at all, shown or not

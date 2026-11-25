@@ -182,6 +182,10 @@ class AppLocalizationsMs extends AppLocalizations {
   String get computerToggle => 'Gunakan komputer sebaliknya';
 
   @override
+  String get computerWeb =>
+      'Paling mudah: pada komputer, buka waaiya.mssid.org/usb dalam Chrome atau Edge, hidupkan Penyahpepijatan USB dan sambungkan telefon dengan kabel. Tiada apa-apa perlu dipasang, dan ia berfungsi pada Android 10 juga. Atau, jika adb dipasang:';
+
+  @override
   String get computerBody =>
       'Hidupkan Penyahpepijatan USB, sambungkan telefon dan jalankan:';
 
@@ -391,6 +395,25 @@ class AppLocalizationsMs extends AppLocalizations {
       'Menutup orang dan imej pada skrin, dalam setiap apl, semasa penapisan dihidupkan. Ia berjalan pada telefon; tiada apa-apa dihantar ke mana-mana.';
 
   @override
+  String get blurOnTitle => 'Pengaburan dihidupkan';
+
+  @override
+  String get blurOffTitle => 'Pengaburan dimatikan';
+
+  @override
+  String get blurStartCd => 'Mulakan pengaburan';
+
+  @override
+  String get blurStopCd => 'Hentikan pengaburan';
+
+  @override
+  String get blurOffDetail =>
+      'Ketik butang untuk bermula. Penapisan bermula bersamanya.';
+
+  @override
+  String get blurWhatTitle => 'Apa yang dikaburkan';
+
+  @override
   String get blurWomenTitle => 'Kaburkan wanita';
 
   @override
@@ -412,26 +435,23 @@ class AppLocalizationsMs extends AppLocalizations {
       'Hidup: seluruh skrin ditutup apabila telefon terlalu perlahan atau pengaburan gagal. Mati: skrin kekal kelihatan dengan amaran.';
 
   @override
-  String get blurSetupShizuku => 'Benarkan dengan Shizuku';
-
-  @override
   String get blurSetupManual => 'Benarkan dalam tetapan Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: “Benarkan dengan Shizuku”, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau “Benarkan dalam tetapan Android”, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
+      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: “Pergi ke persediaan”, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau “Benarkan dalam tetapan Android”, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: mulakan Shizuku dan benarkan Waaiya di dalamnya, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau benarkan “Paparkan di atas apl lain” dalam tetapan Android, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
+      'Untuk mengaburkan, Waaiya perlu dipaparkan di atas apl lain. Terbaik: lakukan persediaan sekali sahaja, supaya sentuhan anda masih sampai ke apl di bawah kawasan kabur. Atau benarkan “Paparkan di atas apl lain” dalam tetapan Android, tetapi sentuhan pada kawasan yang dikaburkan tidak akan berbuat apa-apa.';
 
   @override
   String get blurFailUnavailable =>
-      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan pembantu Waaiya atau Shizuku (Android 12 atau lebih baharu) dan ia akan dihidupkan: penutup kemudian dilukis supaya ketikan dapat melaluinya. Sehingga itu, apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
+      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan pembantu Waaiya (Android 12 atau lebih baharu) dan ia akan dihidupkan: penutup kemudian dilukis supaya ketikan dapat melaluinya. Sehingga itu, apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan Shizuku (Android 12 atau lebih baharu) atau hidupkan perkhidmatan kebolehaksesan Pengaburan Waaiya (Benarkan dengan Shizuku di atas) dan ia akan dihidupkan. Sehingga itu, skrin kekal kelihatan dengan amaran.';
+      'Dikelabukan buat masa ini: penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat. Mulakan pembantu Waaiya (Android 12 atau lebih baharu) atau hidupkan perkhidmatan kebolehaksesan Pengaburan Waaiya dalam tetapan Android dan ia akan dihidupkan. Sehingga itu, skrin kekal kelihatan dengan amaran.';
 
   @override
   String get languageTitle => 'Bahasa';
@@ -478,16 +498,11 @@ class AppLocalizationsMs extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku tidak dapat membenarkannya:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Cara memulakan Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Dikelabukan: pada versi Android ini, penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat (penutup Shizuku memerlukan Android 12 atau lebih baharu). Apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
+      'Dikelabukan: pada versi Android ini, penutup skrin penuh akan menyekat setiap ketikan dan anda mungkin tersekat (penutup yang boleh dilalui ketikan memerlukan Android 12 atau lebih baharu). Apabila pengaburan tidak sempat, skrin kekal kelihatan dengan amaran.';
 
   @override
   String get guideTitle => 'Mulakan Shizuku, langkah demi langkah';
@@ -1069,6 +1084,39 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Tidak dapat menyemak sekarang. Cuba lagi kemudian.';
+
+  @override
+  String get moveOldTitle => 'Waaiya telah berpindah';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya kini hadir sebagai aplikasi baharu di Android (Waaiya yang sama dengan nama baharu), dan aplikasi ini tidak akan menerima kemas kini lagi. Pasang yang baharu: tetapan anda ikut berpindah. Kemudian buat persediaan sekali sahaja di sana dan buang yang ini.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya baharu telah dipasang. Bukanya: ia mengambil tetapan anda. Buat persediaan sekali sahajanya, kemudian buang yang lama ini supaya kedua-duanya tidak menapis serentak.';
+
+  @override
+  String get moveInstall => 'Pasang Waaiya baharu';
+
+  @override
+  String get moveOpenNew => 'Buka Waaiya baharu';
+
+  @override
+  String get moveRemoveThis => 'Buang Waaiya lama ini';
+
+  @override
+  String get moveNewTitle => 'Waaiya lama masih dipasang';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya lama (sebelum versi 0.2.15) masih ada pada telefon ini. Buangnya supaya kedua-duanya tidak menapis serentak.';
+
+  @override
+  String get moveNewImported => 'Tetapan anda telah dibawa daripadanya.';
+
+  @override
+  String get moveRemoveOld => 'Buang Waaiya lama';
 
   @override
   String get desktopPreview =>
@@ -1837,4 +1885,53 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya membuang alat muzik daripada bunyi setiap apl pada komputer ini. Percakapan dan bacaan al-Quran dikekalkan. Buat masa ini, suara nyanyian turut dibuang.';
+
+  @override
+  String get worshipUseLocation => 'Guna lokasi saya';
+
+  @override
+  String get worshipWhyLocation =>
+      'Untuk mencari waktu solat di tempat anda, Waaiya membaca anggaran lokasi telefon ini sekali, sekarang. Ia disimpan dalam telefon sebagai tempat anda dan tidak dihantar ke mana-mana.';
+
+  @override
+  String get worshipLocating => 'Mencari lokasi anda…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Lokasi tidak dibenarkan. Anda boleh mencari bandar anda.';
+
+  @override
+  String get worshipLocationOff =>
+      'Lokasi dimatikan pada telefon ini. Hidupkan dan cuba lagi, atau cari bandar anda.';
+
+  @override
+  String get worshipLocationSettings => 'Tetapan lokasi';
+
+  @override
+  String get worshipLocationFailed =>
+      'Lokasi anda tidak dapat ditemui. Cuba lagi sebentar lagi, atau cari bandar anda.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'berhampiran $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Waktu rasmi Kementerian Wakaf dan Hal Ehwal Islam (Habous) bagi $city.';
+  }
+
+  @override
+  String get trayOpen => 'Buka Waaiya';
+
+  @override
+  String get trayQuit => 'Keluar';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows tidak membenarkan Waaiya bermula semasa log masuk. Hidupkan Waaiya dalam Tetapan › Aplikasi › Permulaan, kemudian hidupkan pilihan ini semula.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk.';
 }

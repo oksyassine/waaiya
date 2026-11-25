@@ -42,6 +42,13 @@ class WorshipInfo {
   bool get placeValid => _b('placeValid');
   String? get placeLabel => _s('placeLabel');
   bool get placeCustom => _b('placeCustom');
+
+  /// Coordinates near a listed city: its name ("near Paris"); null otherwise.
+  String? get placeNear => _s('placeNear');
+
+  /// The place is one of the Ministry of Habous's cities with Morocco's method: the times are its official table.
+  bool get habous => _b('habous');
+  bool get location => _b('location');
   String? get zone => _s('zone');
   String? get deviceZone => _s('deviceZone');
   int? get suggestedMethod => m['suggestedMethod'] is int ? m['suggestedMethod'] as int : null;
@@ -97,6 +104,7 @@ class WorshipInfo {
         'write' => writeSettings,
         'phone' => smsPhone,
         'sms' => smsSend,
+        'location' => location,
         _ => false,
       };
   String get notificationTone => _s('notificationTone') ?? '';
@@ -273,10 +281,22 @@ class _WorshipCardState extends State<WorshipCard> {
         children: [
           ValueRow(
             key: const Key('worship_place'),
-            label: w.placeSet && w.placeLabel != null ? l.worshipPlace(w.placeLabel!) : l.worshipPlaceNone,
+            label: !w.placeSet || w.placeLabel == null
+                ? l.worshipPlaceNone
+                : l.worshipPlace(w.placeNear != null ? l.worshipPlaceNear(w.placeNear!) : w.placeLabel!),
             action: w.placeSet ? l.change : l.worshipChoose,
             onPressed: () => chooseWorshipPlace(context, w),
           ),
+          if (!w.placeSet)
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: FilledButton.tonalIcon(
+                key: const Key('worship_use_location'),
+                icon: const Icon(Icons.my_location),
+                label: Text(l.worshipUseLocation),
+                onPressed: () => useMyLocation(context),
+              ),
+            ),
           if (w.placeSet && !w.placeValid) StatusText(l.worshipPlaceInvalid, isError: true),
           if (w.placeValid) ...[
             ValueRow(
@@ -291,7 +311,10 @@ class _WorshipCardState extends State<WorshipCard> {
                 if (i != null && context.mounted) set(SettingKeys.prayerMethod, i);
               },
             ),
-            if (w.suggestedMethod != null) Text(l.worshipMethodNote, style: text.bodySmall),
+            if (w.habous && w.placeLabel != null)
+              Text(l.worshipHabousNote(w.placeLabel!), key: const Key('worship_habous'), style: text.bodySmall)
+            else if (w.suggestedMethod != null)
+              Text(l.worshipMethodNote, style: text.bodySmall),
             ValueRow(
               key: const Key('worship_asr'),
               label: l.worshipAsr(st.prayerAsr == 1 ? l.worshipAsrHanafi : l.worshipAsrStandard),

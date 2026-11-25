@@ -182,6 +182,10 @@ class AppLocalizationsUz extends AppLocalizations {
   String get computerToggle => 'Oʻrniga kompyuterdan foydalanish';
 
   @override
+  String get computerWeb =>
+      'Eng osoni: kompyuterda Chrome yoki Edge’da waaiya.mssid.org/usb sahifasini oching, “USB orqali debaglash” ni yoqing va telefonni kabel bilan ulang. Hech narsa o‘rnatish shart emas, Android 10 da ham ishlaydi. Yoki adb o‘rnatilgan bo‘lsa:';
+
+  @override
   String get computerBody =>
       '“USB orqali debaglash” (USB debugging) ni yoqing, telefonni kompyuterga ulang va quyidagini ishga tushiring:';
 
@@ -392,6 +396,25 @@ class AppLocalizationsUz extends AppLocalizations {
       'Filtrlash yoqilganda barcha ilovalarda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.';
 
   @override
+  String get blurOnTitle => 'Xiralashtirish yoqilgan';
+
+  @override
+  String get blurOffTitle => 'Xiralashtirish oʻchirilgan';
+
+  @override
+  String get blurStartCd => 'Xiralashtirishni boshlash';
+
+  @override
+  String get blurStopCd => 'Xiralashtirishni toʻxtatish';
+
+  @override
+  String get blurOffDetail =>
+      'Boshlash uchun tugmani bosing. Filtrlash ham u bilan birga boshlanadi.';
+
+  @override
+  String get blurWhatTitle => 'Nimani xiralashtirish';
+
+  @override
   String get blurWomenTitle => 'Ayollarni xiralashtirish';
 
   @override
@@ -413,26 +436,23 @@ class AppLocalizationsUz extends AppLocalizations {
       'Yoqilgan: telefon juda sekin boʻlsa yoki xiralashtirish ishlamay qolsa, butun ekran yopiladi. Oʻchirilgan: ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
-  String get blurSetupShizuku => 'Shizuku orqali ruxsat berish';
-
-  @override
   String get blurSetupManual => 'Android sozlamalarida ruxsat berish';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: “Shizuku orqali ruxsat berish”, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki “Android sozlamalarida ruxsat berish”, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
+      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: “Sozlashga oʻtish”, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki “Android sozlamalarida ruxsat berish”, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: Shizuku ilovasini ishga tushiring va unda Waaiyaga ruxsat bering, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
+      'Xiralashtirish uchun Waaiya boshqa ilovalar ustida chizishi kerak. Eng yaxshisi: bir martalik sozlashni bajaring, shunda bosishlaringiz xiralik ostidagi ilovaga yetib boradi. Yoki Android sozlamalarida “Boshqa ilovalar ustidan ochish” (Display over other apps) uchun ruxsat bering, lekin unda xiralashtirilgan joyga bosish hech narsa qilmaydi.';
 
   @override
   String get blurFailUnavailable =>
-      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini yoki Shizuku ilovasini ishga tushiring (Android 12 yoki yangiroq) va bu sozlama yoqiladi: shunda qoplamalar bosishlar ulardan oʻtib ketadigan qilib chiziladi. Ungacha xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
+      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini ishga tushiring (Android 12 yoki yangiroq) va bu sozlama yoqiladi: shunda qoplamalar bosishlar ulardan oʻtib ketadigan qilib chiziladi. Ungacha xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Shizuku ilovasini ishga tushiring (Android 12 yoki yangiroq) yoki “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqing (yuqoridagi “Shizuku orqali ruxsat berish”) va bu sozlama yoqiladi. Ungacha ekran ogohlantirish bilan koʻrinib turadi.';
+      'Hozircha nofaol: butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin. Waaiya yordamchisini ishga tushiring (Android 12 yoki yangiroq) yoki Android sozlamalarida “Waaiya xiralashtirish” maxsus imkoniyatlar xizmatini yoqing va bu sozlama yoqiladi. Ungacha ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
   String get languageTitle => 'Til';
@@ -479,16 +499,11 @@ class AppLocalizationsUz extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku ruxsat bera olmadi:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Shizuku qanday ishga tushiriladi';
 
   @override
   String get blurFailOldAndroid =>
-      'Nofaol: Androidning bu versiyasida butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin (Shizuku qoplamalari uchun Android 12 yoki yangiroq kerak). Xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
+      'Nofaol: Androidning bu versiyasida butun ekranni yopuvchi qoplama har qanday bosishni toʻsib qoʻyadi va siz telefonni boshqara olmay qolishingiz mumkin (bosishlar oʻtib ketadigan qoplamalar uchun Android 12 yoki yangiroq kerak). Xiralashtirish ulgurmasa, ekran ogohlantirish bilan koʻrinib turadi.';
 
   @override
   String get guideTitle => 'Shizuku ilovasini qadamma-qadam ishga tushirish';
@@ -1070,6 +1085,39 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Hozir tekshirib boʻlmadi. Keyinroq urinib koʻring.';
+
+  @override
+  String get moveOldTitle => 'Waaiya ko‘chdi';
+
+  @override
+  String get moveOldBody =>
+      'Endi Waaiya Android’da yangi ilova sifatida chiqadi (o‘sha Waaiya, yangi nom bilan), bu ilova esa endi yangilanmaydi. Yangisini o‘rnating: sozlamalaringiz ham ko‘chadi. So‘ng uning bir martalik sozlashini bajaring va buni o‘chiring.';
+
+  @override
+  String get moveOldInstalled =>
+      'Yangi Waaiya o‘rnatildi. Uni oching: u sozlamalaringizni oladi. Bir martalik sozlashni bajaring, so‘ng ikkalasi hech qachon birga filtrlamasligi uchun bu eskisini o‘chiring.';
+
+  @override
+  String get moveInstall => 'Yangi Waaiya’ni o‘rnatish';
+
+  @override
+  String get moveOpenNew => 'Yangi Waaiya’ni ochish';
+
+  @override
+  String get moveRemoveThis => 'Bu eski Waaiya’ni o‘chirish';
+
+  @override
+  String get moveNewTitle => 'Eski Waaiya hali ham o‘rnatilgan';
+
+  @override
+  String get moveNewBody =>
+      'Eski Waaiya (0.2.15 versiyasidan oldingi) hali ham bu telefonda. Ikkalasi hech qachon birga filtrlamasligi uchun uni o‘chiring.';
+
+  @override
+  String get moveNewImported => 'Sozlamalaringiz undan olib kelindi.';
+
+  @override
+  String get moveRemoveOld => 'Eski Waaiya’ni o‘chirish';
 
   @override
   String get desktopPreview =>
@@ -1841,4 +1889,53 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya bu kompyuterdagi barcha ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Hozircha qoʻshiq aytayotgan ovozlar ham olib tashlanadi.';
+
+  @override
+  String get worshipUseLocation => 'Joylashuvimdan foydalanish';
+
+  @override
+  String get worshipWhyLocation =>
+      'Siz turgan joydagi namoz vaqtlarini topish uchun Waaiya bu telefonning taxminiy joylashuvini hozir bir marta o\'qiydi. U telefonda joyingiz sifatida saqlanadi va hech qayerga yuborilmaydi.';
+
+  @override
+  String get worshipLocating => 'Joylashuvingiz aniqlanmoqda…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Joylashuvga ruxsat berilmadi. Buning o\'rniga shahringizni qidirishingiz mumkin.';
+
+  @override
+  String get worshipLocationOff =>
+      'Bu telefonda joylashuv o\'chiq. Uni yoqib, qayta urinib ko\'ring yoki shahringizni qidiring.';
+
+  @override
+  String get worshipLocationSettings => 'Joylashuv sozlamalari';
+
+  @override
+  String get worshipLocationFailed =>
+      'Joylashuvingiz topilmadi. Birozdan so\'ng qayta urinib ko\'ring yoki shahringizni qidiring.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city yaqinida';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Habus va islomiy ishlar vazirligining $city uchun rasmiy vaqtlari.';
+  }
+
+  @override
+  String get trayOpen => 'Waaiyani ochish';
+
+  @override
+  String get trayQuit => 'Chiqish';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows tizimga kirishda Waaiya ishga tushishiga ruxsat bermayapti. Sozlamalar › Ilovalar › Ishga tushirish bo\'limida Waaiya\'ni yoqing, so\'ng bu parametrni qayta yoqing.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Bu kompyuterning administrator tanlagan sozlamalari tizimga kirishda Waaiya ishga tushishiga ruxsat bermaydi.';
 }

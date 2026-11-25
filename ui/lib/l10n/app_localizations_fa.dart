@@ -182,6 +182,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get computerToggle => 'به‌جای آن از رایانه استفاده کنید';
 
   @override
+  String get computerWeb =>
+      '‏ساده‌ترین راه: در یک رایانه، waaiya.mssid.org/usb را در Chrome یا Edge باز کنید، اشکال‌زدایی USB را روشن کنید و تلفن را با کابل وصل کنید. چیزی نصب نمی‌شود و روی Android 10 هم کار می‌کند. یا اگر adb نصب است:';
+
+  @override
   String get computerBody =>
       '‏اشکال‌زدایی USB را روشن کنید، تلفن را وصل کنید و این را اجرا کنید:';
 
@@ -393,6 +397,25 @@ class AppLocalizationsFa extends AppLocalizations {
       'افراد و تصاویر روی صفحه را در همهٔ برنامه‌ها، تا وقتی پالایش روشن است، می‌پوشاند. روی خود تلفن اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود.';
 
   @override
+  String get blurOnTitle => 'تاری روشن است';
+
+  @override
+  String get blurOffTitle => 'تاری خاموش است';
+
+  @override
+  String get blurStartCd => 'روشن کردن تاری';
+
+  @override
+  String get blurStopCd => 'خاموش کردن تاری';
+
+  @override
+  String get blurOffDetail =>
+      'برای شروع دکمه را بزنید. پالایش هم همراه آن شروع می‌شود.';
+
+  @override
+  String get blurWhatTitle => 'چه چیزی تار شود';
+
+  @override
   String get blurWomenTitle => 'تار کردن زنان';
 
   @override
@@ -414,26 +437,23 @@ class AppLocalizationsFa extends AppLocalizations {
       'روشن: وقتی تلفن خیلی کند است یا تاری از کار می‌افتد، کل صفحه پوشانده می‌شود. خاموش: صفحه با یک هشدار نمایان می‌ماند.';
 
   @override
-  String get blurSetupShizuku => 'اجازه با Shizuku';
-
-  @override
   String get blurSetupManual => 'اجازه در تنظیمات اندروید';
 
   @override
   String get blurStatusNeedsSetup =>
-      'برای تار کردن، واعية باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: «اجازه با Shizuku»، تا لمس‌های شما همچنان به برنامهٔ زیر تاری برسد. یا «اجازه در تنظیمات اندروید»، اما آن‌وقت لمس روی بخش تار کاری نمی‌کند.';
+      'برای تار کردن، واعية باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: «رفتن به راه‌اندازی»، تا لمس‌های شما همچنان به برنامهٔ زیر تاری برسد. یا «اجازه در تنظیمات اندروید»، اما آن‌وقت لمس روی بخش تار کاری نمی‌کند.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'برای تار کردن، واعية باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: Shizuku را اجرا کنید و در آن به واعية اجازه دهید، تا لمس‌های شما همچنان به برنامهٔ زیر تاری برسد. یا در تنظیمات اندروید «نمایش روی برنامه‌های دیگر» را مجاز کنید، اما آن‌وقت لمس روی بخش تار کاری نمی‌کند.';
+      'برای تار کردن، واعية باید روی برنامه‌های دیگر نمایش داده شود. بهترین راه: راه‌اندازی یک‌باره را انجام دهید، تا لمس‌های شما همچنان به برنامهٔ زیر تاری برسد. یا در تنظیمات اندروید «نمایش روی برنامه‌های دیگر» را مجاز کنید، اما آن‌وقت لمس روی بخش تار کاری نمی‌کند.';
 
   @override
   String get blurFailUnavailable =>
-      'فعلاً غیرفعال است: پوشش تمام‌صفحه جلوی همهٔ ضربه‌ها را می‌گیرد و ممکن است گیر بیفتید. دستیار واعية یا Shizuku را اجرا کنید (اندروید ۱۲ یا جدیدتر) تا فعال شود: آنگاه پوشش‌ها طوری کشیده می‌شوند که ضربه‌ها از آن‌ها عبور کنند. تا آن زمان، وقتی تاری عقب بماند، صفحه با یک هشدار نمایان می‌ماند.';
+      'فعلاً غیرفعال است: پوشش تمام‌صفحه جلوی همهٔ ضربه‌ها را می‌گیرد و ممکن است گیر بیفتید. دستیار واعية را اجرا کنید (اندروید ۱۲ یا جدیدتر) تا فعال شود: آنگاه پوشش‌ها طوری کشیده می‌شوند که ضربه‌ها از آن‌ها عبور کنند. تا آن زمان، وقتی تاری عقب بماند، صفحه با یک هشدار نمایان می‌ماند.';
 
   @override
   String get blurFailNeedsA11y =>
-      'فعلاً غیرفعال است: پوشش تمام‌صفحه جلوی همهٔ ضربه‌ها را می‌گیرد و ممکن است گیر بیفتید. Shizuku را اجرا کنید (اندروید ۱۲ یا جدیدتر) یا سرویس دسترس‌پذیری «تاری واعية» را روشن کنید («اجازه با Shizuku» در بالا) تا فعال شود. تا آن زمان، صفحه با یک هشدار نمایان می‌ماند.';
+      'فعلاً غیرفعال است: پوشش تمام‌صفحه جلوی همهٔ ضربه‌ها را می‌گیرد و ممکن است گیر بیفتید. دستیار واعية را اجرا کنید (اندروید ۱۲ یا جدیدتر) یا سرویس دسترس‌پذیری «تاری واعية» را در تنظیمات اندروید روشن کنید تا فعال شود. تا آن زمان، صفحه با یک هشدار نمایان می‌ماند.';
 
   @override
   String get languageTitle => 'زبان';
@@ -480,16 +500,11 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'برنامهٔ Shizuku نتوانست اجازه دهد:\n$details';
-  }
-
-  @override
   String get step2Guide => 'چگونه Shizuku را اجرا کنم';
 
   @override
   String get blurFailOldAndroid =>
-      'غیرفعال است: در این نسخهٔ اندروید، پوشش تمام‌صفحه جلوی همهٔ ضربه‌ها را می‌گیرد و ممکن است گیر بیفتید (پوشش‌های Shizuku به اندروید ۱۲ یا جدیدتر نیاز دارند). وقتی تاری عقب بماند، صفحه با یک هشدار نمایان می‌ماند.';
+      'غیرفعال است: در این نسخهٔ اندروید، پوشش تمام‌صفحه جلوی همهٔ ضربه‌ها را می‌گیرد و ممکن است گیر بیفتید (پوشش‌هایی که ضربه از آن‌ها عبور می‌کند به اندروید ۱۲ یا جدیدتر نیاز دارند). وقتی تاری عقب بماند، صفحه با یک هشدار نمایان می‌ماند.';
 
   @override
   String get guideTitle => 'اجرای Shizuku، گام به گام';
@@ -1068,6 +1083,39 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'اکنون بررسی ممکن نشد. بعداً دوباره امتحان کنید.';
+
+  @override
+  String get moveOldTitle => '‏واعیه منتقل شد';
+
+  @override
+  String get moveOldBody =>
+      '‏واعیه اکنون در Android به‌صورت یک برنامهٔ تازه عرضه می‌شود (همان واعیه با نامی تازه) و این یکی دیگر به‌روزرسانی نمی‌گیرد. نسخهٔ تازه را نصب کنید: تنظیمات شما هم منتقل می‌شود. سپس راه‌اندازی یک‌بارهٔ آن را انجام دهید و این را حذف کنید.';
+
+  @override
+  String get moveOldInstalled =>
+      '‏واعیهٔ تازه نصب شد. آن را باز کنید: تنظیمات شما را برمی‌دارد. راه‌اندازی یک‌باره‌اش را انجام دهید، سپس این قدیمی را حذف کنید تا هرگز هر دو با هم پالایش نکنند.';
+
+  @override
+  String get moveInstall => '‏نصب واعیهٔ تازه';
+
+  @override
+  String get moveOpenNew => '‏باز کردن واعیهٔ تازه';
+
+  @override
+  String get moveRemoveThis => '‏حذف این واعیهٔ قدیمی';
+
+  @override
+  String get moveNewTitle => '‏واعیهٔ قدیمی هنوز نصب است';
+
+  @override
+  String get moveNewBody =>
+      '‏واعیهٔ قدیمی (پیش از نسخهٔ 0.2.15) هنوز روی این تلفن است. آن را حذف کنید تا هرگز هر دو با هم پالایش نکنند.';
+
+  @override
+  String get moveNewImported => '‏تنظیمات شما از آن منتقل شد.';
+
+  @override
+  String get moveRemoveOld => '‏حذف واعیهٔ قدیمی';
 
   @override
   String get desktopPreview =>
@@ -1834,4 +1882,53 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'واعية سازهای موسیقی را از صدای همهٔ برنامه‌های این رایانه حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. فعلاً صدای آواز هم حذف می‌شود.';
+
+  @override
+  String get worshipUseLocation => 'استفاده از مکان من';
+
+  @override
+  String get worshipWhyLocation =>
+      'برای یافتن اوقات نماز در جایی که هستید، واعیه مکان تقریبی این گوشی را یک بار، همین حالا، می‌خواند. این مکان روی گوشی به‌عنوان محل شما نگه داشته می‌شود و به جایی فرستاده نمی‌شود.';
+
+  @override
+  String get worshipLocating => 'در حال یافتن مکان شما…';
+
+  @override
+  String get worshipLocationDenied =>
+      'اجازهٔ مکان داده نشد. می‌توانید به‌جای آن شهرتان را جستجو کنید.';
+
+  @override
+  String get worshipLocationOff =>
+      'مکان‌یابی در این گوشی خاموش است. آن را روشن کنید و دوباره امتحان کنید، یا شهرتان را جستجو کنید.';
+
+  @override
+  String get worshipLocationSettings => 'تنظیمات مکان';
+
+  @override
+  String get worshipLocationFailed =>
+      'مکان شما پیدا نشد. کمی بعد دوباره امتحان کنید، یا شهرتان را جستجو کنید.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'نزدیک $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'اوقات رسمی وزارت اوقاف و امور اسلامی مراکش برای $city.';
+  }
+
+  @override
+  String get trayOpen => 'باز کردن واعية';
+
+  @override
+  String get trayQuit => 'خروج';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'ویندوز اجازه نمی‌دهد واعية هنگام ورود اجرا شود. واعية را در تنظیمات › برنامه‌ها › راه‌اندازی روشن کنید، سپس این گزینه را دوباره روشن کنید.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'تنظیمات این رایانه، که مدیر آن انتخاب کرده است، اجازه نمی‌دهد واعية هنگام ورود اجرا شود.';
 }

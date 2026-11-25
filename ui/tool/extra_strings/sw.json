@@ -208,5 +208,18 @@
   "protect_what_pin_change": "Kubadilisha PIN",
   "protect_what_pin_clear": "Kuondoa PIN",
   "protect_what_setting": "Kubadilisha mpangilio",
-  "onboard_body_desktop": "Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia."
+  "onboard_body_desktop": "Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.",
+  "worship_use_location": "Tumia mahali nilipo",
+  "worship_why_location": "Ili kupata nyakati za swala mahali ulipo, Waaiya husoma mahali takriban pa simu hii mara moja, sasa. Huhifadhiwa kwenye simu kama mahali pako na haitumwi popote.",
+  "worship_locating": "Inatafuta mahali ulipo…",
+  "worship_location_denied": "Mahali hapakuruhusiwa. Unaweza kutafuta mji wako badala yake.",
+  "worship_location_off": "Huduma ya mahali imezimwa kwenye simu hii. Iwashe ujaribu tena, au utafute mji wako.",
+  "worship_location_settings": "Mipangilio ya mahali",
+  "worship_location_failed": "Mahali ulipo hapakupatikana. Jaribu tena baada ya muda mfupi, au utafute mji wako.",
+  "worship_place_near": "karibu na {city}",
+  "worship_habous_note": "Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa {city}.",
+  "tray_open": "Fungua Waaiya",
+  "tray_quit": "Ondoka",
+  "engine_error_autostart_blocked": "Windows hairuhusu Waaiya kuanza unapoingia. Washa Waaiya katika Mipangilio › Programu › Kuanzisha, kisha uwashe chaguo hili tena.",
+  "engine_error_autostart_policy": "Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia."
 }

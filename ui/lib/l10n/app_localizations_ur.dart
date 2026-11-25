@@ -182,6 +182,10 @@ class AppLocalizationsUr extends AppLocalizations {
   String get computerToggle => 'اس کے بجائے کمپیوٹر استعمال کریں';
 
   @override
+  String get computerWeb =>
+      '‏سب سے آسان: کمپیوٹر پر Chrome یا Edge میں waaiya.mssid.org/usb کھولیں، USB ڈیبگنگ آن کریں اور فون کو کیبل سے جوڑیں۔ کچھ انسٹال نہیں کرنا پڑتا، اور یہ Android 10 پر بھی کام کرتا ہے۔ یا، اگر adb انسٹال ہے:';
+
+  @override
   String get computerBody =>
       '‏USB ڈیبگنگ آن کریں، فون کو کمپیوٹر سے منسلک کریں اور یہ چلائیں:';
 
@@ -392,6 +396,25 @@ class AppLocalizationsUr extends AppLocalizations {
       'فلٹرنگ آن رہنے تک، ہر ایپ میں اسکرین پر لوگوں اور تصاویر کو ڈھانپ دیتی ہے۔ یہ فون پر ہی چلتی ہے؛ کچھ بھی کہیں نہیں بھیجا جاتا۔';
 
   @override
+  String get blurOnTitle => 'دھندلاہٹ آن ہے';
+
+  @override
+  String get blurOffTitle => 'دھندلاہٹ بند ہے';
+
+  @override
+  String get blurStartCd => 'دھندلاہٹ شروع کریں';
+
+  @override
+  String get blurStopCd => 'دھندلاہٹ بند کریں';
+
+  @override
+  String get blurOffDetail =>
+      'شروع کرنے کے لیے بٹن دبائیں۔ فلٹرنگ بھی ساتھ شروع ہو جاتی ہے۔';
+
+  @override
+  String get blurWhatTitle => 'کیا دھندلا کیا جائے';
+
+  @override
   String get blurWomenTitle => 'خواتین کو دھندلا کریں';
 
   @override
@@ -413,26 +436,23 @@ class AppLocalizationsUr extends AppLocalizations {
       'آن: جب فون بہت سست ہو یا دھندلاہٹ ناکام ہو جائے تو پوری اسکرین ڈھانپ دی جاتی ہے۔ آف: اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
 
   @override
-  String get blurSetupShizuku => 'Shizuku کے ساتھ اجازت دیں';
-
-  @override
   String get blurSetupManual => 'Android ترتیبات میں اجازت دیں';
 
   @override
   String get blurStatusNeedsSetup =>
-      'دھندلا کرنے کے لیے واعية کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: “Shizuku کے ساتھ اجازت دیں”، تاکہ آپ کے ٹچ دھندلاہٹ کے نیچے والی ایپ تک پہنچتے رہیں۔ یا “Android ترتیبات میں اجازت دیں”، لیکن پھر دھندلے حصے پر ٹچ کرنے سے کچھ نہیں ہوتا۔';
+      'دھندلا کرنے کے لیے واعية کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: “سیٹ اپ پر جائیں”، تاکہ آپ کے ٹچ دھندلاہٹ کے نیچے والی ایپ تک پہنچتے رہیں۔ یا “Android ترتیبات میں اجازت دیں”، لیکن پھر دھندلے حصے پر ٹچ کرنے سے کچھ نہیں ہوتا۔';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'دھندلا کرنے کے لیے واعية کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: Shizuku شروع کریں اور اس میں واعية کو اجازت دیں، تاکہ آپ کے ٹچ دھندلاہٹ کے نیچے والی ایپ تک پہنچتے رہیں۔ یا Android ترتیبات میں “دیگر ایپس پر دکھائیں” کی اجازت دیں، لیکن پھر دھندلے حصے پر ٹچ کرنے سے کچھ نہیں ہوتا۔';
+      'دھندلا کرنے کے لیے واعية کو دوسری ایپس کے اوپر ظاہر ہونا ہوتا ہے۔ بہترین: ایک بار کا سیٹ اپ مکمل کریں، تاکہ آپ کے ٹچ دھندلاہٹ کے نیچے والی ایپ تک پہنچتے رہیں۔ یا Android ترتیبات میں “دیگر ایپس پر دکھائیں” کی اجازت دیں، لیکن پھر دھندلے حصے پر ٹچ کرنے سے کچھ نہیں ہوتا۔';
 
   @override
   String get blurFailUnavailable =>
-      'فی الحال غیر فعال: پوری اسکرین کا پردہ ہر ٹچ روک دے گا اور آپ پھنس سکتے ہیں۔ واعية کا مددگار یا Shizuku (Android 12 یا نیا) شروع کریں تو یہ آن ہو جائے گا: پھر پردے اس طرح بنتے ہیں کہ ٹچ ان سے گزر جائیں۔ تب تک، جب دھندلاہٹ ساتھ نہ دے سکے تو اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
+      'فی الحال غیر فعال: پوری اسکرین کا پردہ ہر ٹچ روک دے گا اور آپ پھنس سکتے ہیں۔ واعية کا مددگار (Android 12 یا نیا) شروع کریں تو یہ آن ہو جائے گا: پھر پردے اس طرح بنتے ہیں کہ ٹچ ان سے گزر جائیں۔ تب تک، جب دھندلاہٹ ساتھ نہ دے سکے تو اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
 
   @override
   String get blurFailNeedsA11y =>
-      'فی الحال غیر فعال: پوری اسکرین کا پردہ ہر ٹچ روک دے گا اور آپ پھنس سکتے ہیں۔ Shizuku (Android 12 یا نیا) شروع کریں یا واعية دھندلاہٹ کی ایکسیسبیلٹی سروس آن کریں (اوپر “Shizuku کے ساتھ اجازت دیں”) تو یہ آن ہو جائے گا۔ تب تک، اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
+      'فی الحال غیر فعال: پوری اسکرین کا پردہ ہر ٹچ روک دے گا اور آپ پھنس سکتے ہیں۔ واعية کا مددگار (Android 12 یا نیا) شروع کریں یا Android ترتیبات میں واعية دھندلاہٹ کی ایکسیسبیلٹی سروس آن کریں تو یہ آن ہو جائے گا۔ تب تک، اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
 
   @override
   String get languageTitle => 'زبان';
@@ -479,16 +499,11 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku اس کی اجازت نہیں دے سکی:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Shizuku کیسے شروع کریں';
 
   @override
   String get blurFailOldAndroid =>
-      'غیر فعال: Android کے اس ورژن پر پوری اسکرین کا پردہ ہر ٹچ روک دے گا اور آپ پھنس سکتے ہیں (Shizuku کے پردوں کو Android 12 یا نیا درکار ہے)۔ جب دھندلاہٹ ساتھ نہ دے سکے تو اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
+      'غیر فعال: Android کے اس ورژن پر پوری اسکرین کا پردہ ہر ٹچ روک دے گا اور آپ پھنس سکتے ہیں (جن پردوں سے ٹچ گزر جائیں انہیں Android 12 یا نیا درکار ہے)۔ جب دھندلاہٹ ساتھ نہ دے سکے تو اسکرین ایک انتباہ کے ساتھ نظر آتی رہتی ہے۔';
 
   @override
   String get guideTitle => 'Shizuku شروع کریں، مرحلہ وار';
@@ -1066,6 +1081,39 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get updateCheckFailed => 'ابھی تلاش نہیں ہو سکی۔ بعد میں کوشش کریں۔';
+
+  @override
+  String get moveOldTitle => '‏واعیہ منتقل ہو گئی ہے';
+
+  @override
+  String get moveOldBody =>
+      '‏واعیہ اب Android پر ایک نئی ایپ کے طور پر آتی ہے (وہی واعیہ، نئے نام سے)، اور اس ایپ کو اب کوئی اپ ڈیٹ نہیں ملے گی۔ نئی ایپ انسٹال کریں: آپ کی سیٹنگز ساتھ جائیں گی۔ پھر اس کا ایک بار کا سیٹ اپ کریں اور اسے ہٹا دیں۔';
+
+  @override
+  String get moveOldInstalled =>
+      '‏نئی واعیہ انسٹال ہو گئی ہے۔ اسے کھولیں: یہ آپ کی سیٹنگز لے لے گی۔ اس کا ایک بار کا سیٹ اپ کریں، پھر اس پرانی کو ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔';
+
+  @override
+  String get moveInstall => '‏نئی واعیہ انسٹال کریں';
+
+  @override
+  String get moveOpenNew => '‏نئی واعیہ کھولیں';
+
+  @override
+  String get moveRemoveThis => '‏یہ پرانی واعیہ ہٹائیں';
+
+  @override
+  String get moveNewTitle => '‏پرانی واعیہ ابھی تک انسٹال ہے';
+
+  @override
+  String get moveNewBody =>
+      '‏پرانی واعیہ (ورژن 0.2.15 سے پہلے کی) ابھی تک اس فون پر ہے۔ اسے ہٹا دیں تاکہ دونوں کبھی ایک ساتھ فلٹر نہ کریں۔';
+
+  @override
+  String get moveNewImported => '‏آپ کی سیٹنگز اس سے لے آئی گئی ہیں۔';
+
+  @override
+  String get moveRemoveOld => '‏پرانی واعیہ ہٹائیں';
 
   @override
   String get desktopPreview =>
@@ -1832,4 +1880,53 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'واعية اس کمپیوٹر کی ہر ایپ کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ فی الحال گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
+
+  @override
+  String get worshipUseLocation => 'میرا مقام استعمال کریں';
+
+  @override
+  String get worshipWhyLocation =>
+      'جہاں آپ ہیں وہاں کے نماز کے اوقات جاننے کے لیے واعیہ اس فون کا تقریبی مقام ایک بار، ابھی، پڑھتا ہے۔ یہ فون پر آپ کی جگہ کے طور پر رہتا ہے اور کہیں نہیں بھیجا جاتا۔';
+
+  @override
+  String get worshipLocating => 'آپ کا مقام تلاش کیا جا رہا ہے…';
+
+  @override
+  String get worshipLocationDenied =>
+      'مقام کی اجازت نہیں دی گئی۔ اس کے بجائے آپ اپنا شہر تلاش کر سکتے ہیں۔';
+
+  @override
+  String get worshipLocationOff =>
+      'اس فون میں مقام بند ہے۔ اسے آن کر کے دوبارہ کوشش کریں، یا اپنا شہر تلاش کریں۔';
+
+  @override
+  String get worshipLocationSettings => 'مقام کی ترتیبات';
+
+  @override
+  String get worshipLocationFailed =>
+      'آپ کا مقام نہیں مل سکا۔ تھوڑی دیر بعد دوبارہ کوشش کریں، یا اپنا شہر تلاش کریں۔';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city کے قریب';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return '$city کے لیے وزارتِ اوقاف و امورِ اسلامیہ (مراکش) کے سرکاری اوقات۔';
+  }
+
+  @override
+  String get trayOpen => 'واعية کھولیں';
+
+  @override
+  String get trayQuit => 'باہر نکلیں';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'ونڈوز لاگ اِن پر واعية کو شروع ہونے نہیں دے رہا۔ ترتیبات › ایپس › اسٹارٹ اپ میں واعية کو آن کریں، پھر اسے دوبارہ آن کریں۔';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'اس کمپیوٹر کی ترتیبات، جو اس کے منتظم نے منتخب کی ہیں، لاگ اِن پر واعية کو شروع ہونے نہیں دیتیں۔';
 }

@@ -2,12 +2,12 @@
 
 Waaiya needs two things that Android only gives to the shell user (ADB):
 
-    cmd package grant org.islamicmute.app android.permission.DUMP     # list other apps' sessions, mute the originals
-    cmd appops set org.islamicmute.app PROJECT_MEDIA allow            # no screen-sharing question at every start
+    cmd package grant org.waaiya.app android.permission.DUMP     # list other apps' sessions, mute the originals
+    cmd appops set org.waaiya.app PROJECT_MEDIA allow            # no screen-sharing question at every start
 
 and, optionally, one more for the "Notification text" Quick Settings tile (Android 15+):
 
-    cmd package grant org.islamicmute.app android.permission.WRITE_SECURE_SETTINGS
+    cmd package grant org.waaiya.app android.permission.WRITE_SECURE_SETTINGS
 
 Without the first one the user hears the music and the filtered sound together. Both grants survive reboots and
 app updates; they are lost only on uninstall (or `pm revoke`).
@@ -20,8 +20,10 @@ app updates; they are lost only on uninstall (or `pm revoke`).
 2. **Shizuku.** Still offered: on a rooted Android 10 phone it works without a computer, and on Android 12+ its
    shell layer can draw the screen-blur covers (`ShizukuCovers.kt`); Waaiya's own helper does the same without it
    (below).
-3. **A computer** with `adb shell` (the commands above). Android 10 has no Wireless debugging pairing, so a
-   computer is needed there (directly, or once to start Shizuku).
+3. **A computer.** Easiest: **waaiya.mssid.org/usb** (English: `/en/usb/`) in Chrome or Edge, with USB debugging on
+   and a cable: the page runs the same commands over WebUSB, nothing to install (below). Or `adb shell` with the
+   commands above. Android 10 has no Wireless debugging pairing, so a computer is needed there (directly, or once to
+   start Shizuku).
 
 ## Route 1: how it works
 
@@ -68,7 +70,7 @@ attempt and a code that Settings shows on screen and discards).
 
 ## How it was verified
 
-- JVM unit tests (`./gradlew testDebugUnitTest --tests 'org.islamicmute.app.adb.*'`): RFC 8032 public keys,
+- JVM unit tests (`./gradlew testDebugUnitTest --tests 'org.waaiya.app.adb.*'`): RFC 8032 public keys,
   BoringSSL's M/N points against the coordinates in its source, the password-scalar fix, SPAKE2 agreement and a fixed
   regression vector, RFC 5869 HKDF vectors, the GCM nonce counter, pairing and adb framing, the adb public key
   against `adb keygen` output, the certificate, code parsing (Arabic-Indic digits, code + port), mDNS filtering and
@@ -99,6 +101,43 @@ Known limits:
   steps say to scroll down to it.
 - Android 11 needs the hidden Conscrypt exporter (reflection); a vendor that changed Conscrypt would break pairing
   there (the error is shown as the detail of "Pairing did not work").
+
+## Route 3 from a browser: waaiya.mssid.org/usb (site/usb/)
+
+A static page (Arabic at `/usb/`, English at `/en/usb/`, built by `site/build.py`) with its own small ADB client in
+plain JavaScript, no library and no server: `usb.js` (WebUSB: the interface with class 0xff, subclass 0x42,
+protocol 1, one bulk endpoint each way), `adb.js` (CNXN, AUTH, OPEN/WRTE/OKAY/CLSE), `flow.js` (what runs on the
+phone), `setup.js` (the page).
+
+- **Key.** RSA-2048 from Web Crypto, kept in the browser's localStorage (`waaiya.adbkey`) so that "Always allow from
+  this computer" holds. ADB signs the phone's 20-byte token as a SHA-1 digest (PKCS#1 v1.5 without hashing), which
+  Web Crypto cannot do, so the signature is computed with BigInt (CRT). The public key goes to the phone in adb's
+  format (android_pubkey_encode) when the signature is refused, and the phone asks "Allow USB debugging?".
+- **What it runs.** `getprop` (Android version, make, model), `pm path` (is Waaiya installed), then the same grant
+  line as the on-phone setup, then a check (`dumpsys package`, `cmd appops get`). If DUMP is still missing (Xiaomi,
+  OPPO family refusing the grant) and the phone has Android 11+, it starts Waaiya's helper with
+  `CoverHelper.startCommand`'s line, the uid and versionCode read from `dumpsys package`: the app then finds the
+  helper and goes into helper mode by itself. The page shows each command and its output under "What was run".
+- **Messages** for the usual failures: no WebUSB (Firefox, Safari), no phone chosen, the browser not allowed to open
+  it (Linux without udev rules, Windows with a vendor driver instead of WinUSB), another program holding it (an adb
+  server, Android Studio), not installed, Android 9 or older, refused (with the make's switch).
+- **Privacy.** The page loads nothing from elsewhere and talks only to the phone. The Android app names the page in
+  "Use a computer instead" (`computer_web`, 18 languages).
+
+Checked (2026-11-22):
+- `node site/usb/test/adb_unit.mjs`: signatures recovered by OpenSSL as DigestInfo(SHA-1) || token; the public key
+  byte for byte the same as `adb pubkey` on the same private key; header fields, sum and magic; with a fake phone
+  that knows no key, the key is sent once and the prompt reported, and the next connection gets in by signature.
+- `node site/usb/test/adb_e2e.mjs 127.0.0.1:5581 --setup` against the Android 11 emulator's adbd (its adb port
+  carries the same messages as USB; `adb kill-server` first): grants revoked, then given and checked (`done`);
+  `--helper` started `waaiya_covers` as the shell user and it kept running after the connection closed.
+- `node site/usb/test/page_test.mjs` after `build.py`: the built page in headless Chromium with a simulated USB phone
+  (WebUSB calls answered by a small adbd), nine cases: done, the "Allow" prompt, vivo (no PROJECT_MEDIA), a Xiaomi on
+  Android 14 (helper started with uid and version from `dumpsys`), a Xiaomi on Android 10 (refused, no helper),
+  not installed, no phone chosen, no WebUSB, and the Arabic page.
+
+Not checked: a real phone on a real USB port (Windows drivers, Linux udev, macOS), and the "Allow USB debugging?"
+prompt on a real adbd (the emulators here do not ask: `ro.adb.secure=0`).
 
 ## Quick Settings tiles
 
@@ -144,7 +183,7 @@ Known limits:
   filtering before typing the pairing code (`wsetup_filter_on`).
 - A grant refused by the system through Shizuku (`SecurityException`, `GRANT_RUNTIME_PERMISSIONS`, ...) is explained
   with that phone's switch, and points to the on-phone setup, which does not need it.
-- Debug builds: `adb shell run-as org.islamicmute.app touch files/simulate_refused` makes the grants answer like a
+- Debug builds: `adb shell run-as org.waaiya.app touch files/simulate_refused` makes the grants answer like a
   refusing phone, to test helper mode on an emulator.
 - Shizuku's helper process can take long to start (seen on a Xiaomi). The screen says "still working" after 20 s and
   gives up only after 2 min; an answer after that is still applied (`ShizukuSetup.addListener`).
@@ -177,7 +216,7 @@ pass through. Shizuku was the only such process; `CoverHelper.kt` is Waaiya's ow
 - **Start.** With a blur option on, the on-phone setup (or the "Start Waaiya's helper" button on the Screen page,
   the same run) also sends `CoverHelper.startCommand` over the Wireless debugging connection: it stops an older
   helper, then `CLASSPATH=<apk> setsid app_process /system/bin --nice-name=waaiya_covers
-  org.islamicmute.app.CoverHelper <uid> <version>`, as Shizuku starts its server.
+  org.waaiya.app.CoverHelper <uid> <version>`, as Shizuku starts its server.
 - **Hand-over.** The helper hosts `CoverService` (the same one Shizuku runs) and gives its binder to the app through
   `CoverHelperProvider`, a content-provider call (`IActivityManager.getContentProviderExternal` +
   `IContentProvider.call`, API 31+). The provider is exported but needs `INTERACT_ACROSS_USERS_FULL` (shell and root
@@ -188,7 +227,7 @@ pass through. Shizuku was the only such process; `CoverHelper.kt` is Waaiya's ow
   is gone; the version is also checked). The Screen page then shows the button again: one tap (Wi-Fi and Wireless
   debugging on, already paired) starts a new one.
 - **Choice of host** (`BlurOverlay.attach`): the helper when it runs, else Shizuku, else app overlay windows.
-  `blur.shizukuLayer` and the diagnostics line ("Covers drawn by: shell layer (Waaiya helper)") say which.
+  `blur.shellLayer` and the diagnostics line ("Covers drawn by: shell layer (Waaiya helper)") say which.
 - **Start race.** adbd ends the session as soon as the shell exits, and a background child that has not reached
   `setsid` yet goes with it (seen once in two runs). The start line therefore waits until `pidof waaiya_covers`
   sees the helper (up to 5 s) and prints `helper=started` or `helper=missing` into the setup log.

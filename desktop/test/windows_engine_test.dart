@@ -72,7 +72,8 @@ void main() {
         isTrue);
     expect(WindowsEngine.isPackagedPath(r'C:\Users\a\Downloads\waaiya\engine'), isFalse);
     final tmp = Directory.systemTemp.createTempSync('waaiya-win-');
-    final e = WindowsEngine(tmp, environment: {'LOCALAPPDATA': tmp.path}, packaged: true);
+    final e = WindowsEngine(tmp,
+        environment: {'LOCALAPPDATA': tmp.path}, packaged: true, startupTask: (_) async => 'enabled');
     final marker = File('${e.stateDir}\\autostart');
     expect(await e.setAutostart(true), isNull);
     expect(marker.existsSync(), isTrue);
@@ -81,6 +82,47 @@ void main() {
     expect(marker.existsSync(), isFalse);
     expect((await e.status()).autostart, isFalse);
     expect(await e.setAutostart(false), isNull); // already off
+    tmp.deleteSync(recursive: true);
+  });
+
+  test('Store package: Windows is asked to let the startup task run, and "Start at login" shows what Windows allows',
+      () async {
+    final tmp = Directory.systemTemp.createTempSync('waaiya-win-');
+    var task = 'disabled';
+    final calls = <String>[], opened = <String>[];
+    final e = WindowsEngine(tmp, environment: {'LOCALAPPDATA': tmp.path}, packaged: true, startupTask: (m) async {
+      calls.add(m);
+      if (m == 'request' && task == 'disabled') task = 'enabled'; // the user said yes to Windows' question
+      return task;
+    }, openSettings: (uri) async => opened.add(uri));
+
+    // off, never asked: Windows asks, the user agrees
+    expect(await e.setAutostart(true), isNull);
+    expect(calls, ['request']);
+    expect((await e.status()).autostart, isTrue);
+
+    // turned off in Settings > Apps > Startup: only that page can turn it on again; it opens
+    task = 'disabledByUser';
+    expect((await e.setAutostart(true))?.code, 'autostart_blocked');
+    expect(opened, ['ms-settings:startupapps']);
+    expect((await e.status()).autostart, isFalse); // the file is there, but Windows does not run the task
+
+    // the user said no to Windows' question: nothing opens
+    task = 'disabled';
+    final e2 = WindowsEngine(tmp, environment: {'LOCALAPPDATA': tmp.path}, packaged: true,
+        startupTask: (_) async => 'disabled', openSettings: (uri) async => opened.add(uri));
+    expect((await e2.setAutostart(true))?.code, 'autostart_blocked');
+    expect(opened, hasLength(1));
+
+    // the administrator's policy
+    final e3 = WindowsEngine(tmp,
+        environment: {'LOCALAPPDATA': tmp.path}, packaged: true, startupTask: (_) async => 'disabledByPolicy');
+    expect((await e3.setAutostart(true))?.code, 'autostart_policy');
+
+    // turning it off asks nothing
+    calls.clear();
+    expect(await e.setAutostart(false), isNull);
+    expect(calls, isEmpty);
     tmp.deleteSync(recursive: true);
   });
 

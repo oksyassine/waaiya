@@ -11,6 +11,7 @@ import 'home.dart';
 import 'onboarding.dart';
 import 'protection.dart';
 import 'theme.dart';
+import 'tray.dart';
 
 /// Waaiya's screens. Arabic and right-to-left by default; the language comes from the backend, never from the
 /// system, so it can be switched in the app (and the native side follows it).
@@ -70,7 +71,9 @@ class _Root extends StatelessWidget {
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: Colors.transparent,
       ),
-      child: WaaiyaScope.of(context).state.settings.gender.isEmpty ? const OnboardingScreen() : const HomeScreen(),
+      child: TrayBridge(
+        child: WaaiyaScope.of(context).state.settings.gender.isEmpty ? const OnboardingScreen() : const HomeScreen(),
+      ),
     );
   }
 }

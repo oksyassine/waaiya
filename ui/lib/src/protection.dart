@@ -81,6 +81,7 @@ String protectDelayLabel(AppLocalizations l, int minutes) => switch (minutes) {
 /// order: protectPending(time, what).)
 String protectWhat(AppLocalizations l, String what, Object? value) {
   String? name(String key) => switch (key) {
+        SettingKeys.blurEnabled => l.blurTitle,
         SettingKeys.blurWomen => l.blurWomenTitle,
         SettingKeys.blurNudity => l.blurNudityTitle,
         SettingKeys.blurFailCover => l.blurFailTitle,

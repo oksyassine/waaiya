@@ -9,6 +9,9 @@ cities of Muslim-majority countries + cities with large Muslim communities.
 Coordinates and non-Arabic names come from Natural Earth; time zones are
 assigned here (NE's TIMEZONE field is unreliable) and checked against a 2019
 tzdata release so that they also exist on Android 10 devices.
+
+Then run scripts/habous/make_habous.py: it replaces the Moroccan rows with the
+Ministry of Habous's 190 prayer-time cities (columns habous, rise, set).
 """
 import json, re, sys, unicodedata, zoneinfo, datetime, math, collections
 

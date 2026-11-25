@@ -70,7 +70,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('power')), findsOneWidget);
     expect(find.text(ar.filterOptionsTitle), findsOneWidget);
-    expect(find.text(ar.blurTitle), findsNothing);
+    expect(find.byKey(const Key('blur_power')), findsNothing);
     // the setup is missing: the Filter page says so and leads to the Setup page
     await tester.ensureVisible(find.text(ar.setupGo));
     await tester.pumpAndSettle();
@@ -79,7 +79,8 @@ void main() {
     expect(find.text(ar.wsetupRouteTitle), findsOneWidget);
     expect(find.byKey(const Key('power')), findsNothing);
     await goTo(tester, 'screen');
-    expect(find.text(ar.blurTitle), findsOneWidget);
+    expect(find.byKey(const Key('blur_power')), findsOneWidget);
+    expect(find.text(ar.blurWhatTitle), findsOneWidget);
     await goTo(tester, 'settings');
     expect(find.text(ar.settingGenderTitle, findRichText: true), findsNothing); // inside "label: value"
     expect(find.textContaining(ar.settingGenderTitle), findsOneWidget);
@@ -206,6 +207,30 @@ void main() {
     }));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('power')), findsOneWidget);
+  });
+
+  testWidgets('computer route: the page that needs no adb comes before the adb commands', (tester) async {
+    final ar = await AppLocalizations.delegate.load(const Locale('ar'));
+    expect(ar.computerWeb, contains('waaiya.mssid.org/usb'));
+    final b = _Recording(const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(originalsMuted: false, shizuku: ShizukuState.notInstalled,
+            wireless: WirelessInfo(supported: true), adbCommands: 'adb shell cmd package grant x y')));
+    await tester.pumpWidget(WaaiyaApp(backend: b));
+    await tester.pumpAndSettle();
+    await goTo(tester, 'setup');
+    await tester.ensureVisible(find.text(ar.setupOtherWays));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.setupOtherWays));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text(ar.computerToggle));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(ar.computerToggle));
+    await tester.pumpAndSettle();
+    expect(find.text(ar.computerWeb), findsOneWidget);
+    expect(find.text(ar.computerBody), findsOneWidget);
+    expect(tester.getTopLeft(find.text(ar.computerWeb)).dy, lessThan(tester.getTopLeft(find.text(ar.computerBody)).dy));
   });
 
   testWidgets('guided setup: steps tick themselves, one button for the current step, never a dead end',
@@ -340,10 +365,10 @@ void main() {
 
   test('every string name Android can send in setup.wireless has words', () async {
     final l = await AppLocalizations.delegate.load(const Locale('en'));
-    final kotlin = File('../android/app/src/main/java/org/islamicmute/app/WirelessSetup.kt').readAsStringSync();
+    final kotlin = File('../android/app/src/main/java/org/waaiya/app/WirelessSetup.kt').readAsStringSync();
     final texts = kotlin.substring(kotlin.indexOf('object WirelessSetupTexts'));
     final names = RegExp(r'R\.string\.(\w+)').allMatches(texts.substring(0, texts.indexOf('fun title('))).map((m) => m[1]!).toSet();
-    final bridge = File('../android/app/src/main/java/org/islamicmute/app/UiBridge.kt').readAsStringSync();
+    final bridge = File('../android/app/src/main/java/org/waaiya/app/UiBridge.kt').readAsStringSync();
     names.addAll(RegExp(r'wirelessHint = "(\w+)"').allMatches(bridge).map((m) => m[1]!));
     expect(names.length, greaterThan(20));
     for (final n in names) {
@@ -370,7 +395,7 @@ void main() {
     expect(b.calls, ['wirelessStart']);
     b.emit(b.state.copyWith(
         blur: const BlurInfo(
-            layerSupported: true, overlayAllowed: true, helperRunning: true, shizukuLayer: true, touchPassThrough: true)));
+            layerSupported: true, overlayAllowed: true, helperRunning: true, shellLayer: true, touchPassThrough: true)));
     await tester.pumpAndSettle();
     expect(find.text(ar.helperOn), findsOneWidget);
     expect(find.text(ar.helperStart), findsNothing);

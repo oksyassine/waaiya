@@ -1,3 +1,4 @@
+import 'app_move.dart';
 import 'app_update.dart';
 import 'dart:math' as math;
 
@@ -138,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const AppHeader(),
             const SizedBox(height: 24),
+            const MoveCard(),
             const PowerSection(),
             const SizedBox(height: 16),
             if ((caps.shizukuSetup || caps.adbSetup) && !s.setup.originalsMuted) SetupBanner(onGo: () => _go('setup')),
@@ -149,6 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
       'screen' => PageColumn(
           children: [
             PageTitle(l.navScreen),
+            const BlurPowerSection(),
+            const SizedBox(height: 16),
             BlurCard(onChanged: set),
             const BlurAppsCard(),
             const CoverHelperCard(),
@@ -176,6 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _ => PageColumn(
           children: [
             PageTitle(l.navSettings),
+            const MoveCard(),
             const GeneralSettingsCard(),
             const WorshipCard(),
             const ProtectionCard(),
@@ -349,7 +354,7 @@ Future<void> showDiagnostics(BuildContext context) async {
 
 /// Start was tapped (MainActivity.startFilter): without the one-time setup the original sound cannot be silenced,
 /// so say so before starting, not only in the setup card.
-Future<void> _start(BuildContext context) async {
+Future<void> startFiltering(BuildContext context) async {
   final l = AppLocalizations.of(context);
   final s = WaaiyaScope.of(context).state;
   if (s.capabilities.shizukuSetup && !s.setup.originalsMuted) {
@@ -484,12 +489,12 @@ class PowerSection extends StatelessWidget {
           identifier: 'power',
           label: on ? l.powerStopCd : l.powerStartCd,
           excludeSemantics: true,
-          child: _PowerButton(
+          child: PowerButton(
             on: on,
             starting: f.state == FilterState.starting,
             onTap: () {
               HapticFeedback.mediumImpact();
-              on ? runAction(context, (b) => b.stopFilter()) : _start(context);
+              on ? runAction(context, (b) => b.stopFilter()) : startFiltering(context);
             },
           ),
         ),
@@ -576,19 +581,19 @@ class _PageIn extends StatelessWidget {
 }
 
 /// The on/off control: its fill, ring and icon blend between off, starting (half) and on; it shrinks a little under
-/// the finger; a soft halo breathes twice when filtering begins, then stays (never an endless animation).
-class _PowerButton extends StatefulWidget {
-  const _PowerButton({required this.on, required this.starting, required this.onTap});
+/// the finger; a soft halo breathes twice when it turns on, then stays (never an endless animation).
+class PowerButton extends StatefulWidget {
+  const PowerButton({super.key, required this.on, required this.starting, required this.onTap});
 
   final bool on;
   final bool starting;
   final VoidCallback onTap;
 
   @override
-  State<_PowerButton> createState() => _PowerButtonState();
+  State<PowerButton> createState() => _PowerButtonState();
 }
 
-class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderStateMixin {
+class _PowerButtonState extends State<PowerButton> with SingleTickerProviderStateMixin {
   late final AnimationController _glow = AnimationController(vsync: this, duration: const Duration(milliseconds: 1300));
 
   @override
@@ -598,7 +603,7 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
   }
 
   @override
-  void didUpdateWidget(_PowerButton old) {
+  void didUpdateWidget(PowerButton old) {
     super.didUpdateWidget(old);
     final filtering = widget.on && !widget.starting, was = old.on && !old.starting;
     if (filtering && !was) _breathe();
@@ -687,5 +692,7 @@ String engineErrorText(AppLocalizations l, BackendMessage e) => switch (e.code) 
       'start_failed' => l.engineErrorStartFailed(e.detail),
       'service_failed' => l.engineErrorServiceFailed(e.detail),
       'model_failed' => l.stateModelFailed,
+      'autostart_blocked' => l.engineErrorAutostartBlocked,
+      'autostart_policy' => l.engineErrorAutostartPolicy,
       _ => l.actionFailed(e.detail.isEmpty ? e.code : e.detail),
     };

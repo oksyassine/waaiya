@@ -424,6 +424,12 @@ abstract class AppLocalizations {
   /// **'استخدم حاسوبًا بدلًا من ذلك'**
   String get computerToggle;
 
+  /// Android string computer_web
+  ///
+  /// In ar, this message translates to:
+  /// **'الأسهل: افتح على حاسوب الصفحة waaiya.mssid.org/usb في متصفح Chrome أو Edge، وفعّل تصحيح أخطاء USB، ثم وصّل الهاتف بكابل. لا حاجة إلى تثبيت شيء، وتعمل على أندرويد 10 أيضًا. أو إن كان adb مثبّتًا:'**
+  String get computerWeb;
+
   /// Android string computer_body
   ///
   /// In ar, this message translates to:
@@ -790,6 +796,42 @@ abstract class AppLocalizations {
   /// **'يغطّي الأشخاص والصور على الشاشة في كل التطبيقات ما دامت التصفية تعمل. يعمل على الهاتف، ولا يُرسَل شيء إلى أي مكان.'**
   String get blurBody;
 
+  /// Android string blur_on_title
+  ///
+  /// In ar, this message translates to:
+  /// **'التمويه يعمل'**
+  String get blurOnTitle;
+
+  /// Android string blur_off_title
+  ///
+  /// In ar, this message translates to:
+  /// **'التمويه متوقف'**
+  String get blurOffTitle;
+
+  /// Android string blur_start_cd
+  ///
+  /// In ar, this message translates to:
+  /// **'تشغيل التمويه'**
+  String get blurStartCd;
+
+  /// Android string blur_stop_cd
+  ///
+  /// In ar, this message translates to:
+  /// **'إيقاف التمويه'**
+  String get blurStopCd;
+
+  /// Android string blur_off_detail
+  ///
+  /// In ar, this message translates to:
+  /// **'اضغط الزر للتشغيل. تبدأ التصفية معه.'**
+  String get blurOffDetail;
+
+  /// Android string blur_what_title
+  ///
+  /// In ar, this message translates to:
+  /// **'ما الذي يُموَّه'**
+  String get blurWhatTitle;
+
   /// Android string blur_women_title
   ///
   /// In ar, this message translates to:
@@ -826,12 +868,6 @@ abstract class AppLocalizations {
   /// **'مفعّل: تُغطّى الشاشة كلها إذا كان الهاتف بطيئًا أو تعطّل التمويه. غير مفعّل: تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailBody;
 
-  /// Android string blur_setup_shizuku
-  ///
-  /// In ar, this message translates to:
-  /// **'السماح عبر Shizuku'**
-  String get blurSetupShizuku;
-
   /// Android string blur_setup_manual
   ///
   /// In ar, this message translates to:
@@ -841,25 +877,25 @@ abstract class AppLocalizations {
   /// Android string blur_status_needs_setup
   ///
   /// In ar, this message translates to:
-  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «السماح عبر Shizuku»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: «الذهاب إلى الإعداد»، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو «السماح من إعدادات أندرويد»، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsSetup;
 
   /// Android string blur_status_needs_overlay
   ///
   /// In ar, this message translates to:
-  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: شغّل Shizuku واسمح لواعية فيه، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
+  /// **'ليعمل التمويه، يجب أن ترسم واعية فوق التطبيقات الأخرى. الأفضل: أكمل الإعداد لمرة واحدة، فتبقى لمساتك تصل إلى التطبيق تحت التمويه. أو اسمح بـ«الظهور فوق التطبيقات الأخرى» من إعدادات أندرويد، لكن اللمسة على منطقة مموّهة لن تفعل شيئًا حينها.'**
   String get blurStatusNeedsOverlay;
 
   /// Android string blur_fail_unavailable
   ///
   /// In ar, this message translates to:
-  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية أو Shizuku (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) فيتفعّل هذا الخيار: تُرسم الأغطية حينها بحيث يمرّ اللمس من خلالها. وحتى ذلك الحين، إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailUnavailable;
 
   /// Android string blur_fail_needs_a11y
   ///
   /// In ar, this message translates to:
-  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل Shizuku (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» (السماح عبر Shizuku أعلاه) فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل مؤقتًا: تغطية الشاشة كلها ستمنع كل لمس وقد تعلق. شغّل مساعد واعية (أندرويد 12 أو أحدث) أو فعّل خدمة الإتاحة «تمويه واعية» من إعدادات أندرويد فيتفعّل هذا الخيار. وحتى ذلك الحين تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailNeedsA11y;
 
   /// Android string language_title
@@ -934,12 +970,6 @@ abstract class AppLocalizations {
   /// **'لا يستطيع التمويه رؤية الشاشة. التفاصيل:\n{details}'**
   String blurStatusNoCapture(String details);
 
-  /// Android string blur_setup_failed
-  ///
-  /// In ar, this message translates to:
-  /// **'تعذّر السماح عبر Shizuku:\n{details}'**
-  String blurSetupFailed(String details);
-
   /// Android string step2_guide
   ///
   /// In ar, this message translates to:
@@ -949,7 +979,7 @@ abstract class AppLocalizations {
   /// Android string blur_fail_old_android
   ///
   /// In ar, this message translates to:
-  /// **'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (أغطية Shizuku تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
+  /// **'معطّل: في هذه النسخة من أندرويد ستمنع تغطية الشاشة كلها كل لمس وقد تعلق (الأغطية التي يمرّ منها اللمس تحتاج أندرويد 12 أو أحدث). إذا عجز التمويه عن المتابعة تبقى الشاشة ظاهرة مع تنبيه.'**
   String get blurFailOldAndroid;
 
   /// Android string guide_title
@@ -1935,6 +1965,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تعذّر البحث الآن. حاول لاحقًا.'**
   String get updateCheckFailed;
+
+  /// Android string move_old_title
+  ///
+  /// In ar, this message translates to:
+  /// **'انتقلت واعية'**
+  String get moveOldTitle;
+
+  /// Android string move_old_body
+  ///
+  /// In ar, this message translates to:
+  /// **'صارت واعية تأتي في تطبيق جديد على أندرويد (واعية نفسها باسم جديد)، ولن تصل تحديثات أخرى لهذا التطبيق. ثبّت الجديد: تنتقل إليه إعداداتك. ثم أتمّ إعداده لمرة واحدة واحذف هذا.'**
+  String get moveOldBody;
+
+  /// Android string move_old_installed
+  ///
+  /// In ar, this message translates to:
+  /// **'ثُبّتت واعية الجديدة. افتحها: تأخذ إعداداتك. أتمّ إعدادها لمرة واحدة، ثم احذف هذه القديمة كي لا يعمل التطبيقان معًا.'**
+  String get moveOldInstalled;
+
+  /// Android string move_install
+  ///
+  /// In ar, this message translates to:
+  /// **'ثبّت واعية الجديدة'**
+  String get moveInstall;
+
+  /// Android string move_open_new
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح واعية الجديدة'**
+  String get moveOpenNew;
+
+  /// Android string move_remove_this
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف واعية القديمة هذه'**
+  String get moveRemoveThis;
+
+  /// Android string move_new_title
+  ///
+  /// In ar, this message translates to:
+  /// **'ما زالت واعية القديمة مثبّتة'**
+  String get moveNewTitle;
+
+  /// Android string move_new_body
+  ///
+  /// In ar, this message translates to:
+  /// **'ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.'**
+  String get moveNewBody;
+
+  /// Android string move_new_imported
+  ///
+  /// In ar, this message translates to:
+  /// **'نُقلت إعداداتك منها.'**
+  String get moveNewImported;
+
+  /// Android string move_remove_old
+  ///
+  /// In ar, this message translates to:
+  /// **'احذف واعية القديمة'**
+  String get moveRemoveOld;
 
   /// Flutter only. Not reviewed yet except in English.
   ///
@@ -3189,6 +3279,84 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'تزيل واعية الآلات الموسيقية من صوت كل تطبيقات هذا الحاسوب، وتُبقي الكلام وتلاوة القرآن. وتُزال أصوات الغناء أيضًا في الوقت الحالي.'**
   String get onboardBodyDesktop;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'استخدم موقعي'**
+  String get worshipUseLocation;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لمعرفة أوقات الصلاة حيث أنت، يقرأ واعية الموقع التقريبي لهذا الهاتف مرة واحدة، الآن. يُحفظ على الهاتف مكانًا لك ولا يُرسل إلى أي جهة.'**
+  String get worshipWhyLocation;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'جارٍ تحديد مكانك…'**
+  String get worshipLocating;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'لم يُسمح بالموقع. يمكنك البحث عن مدينتك بدلًا من ذلك.'**
+  String get worshipLocationDenied;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الموقع مُطفأ في هذا الهاتف. شغّله ثم أعد المحاولة، أو ابحث عن مدينتك.'**
+  String get worshipLocationOff;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات الموقع'**
+  String get worshipLocationSettings;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'تعذّر تحديد موقعك. أعد المحاولة بعد قليل، أو ابحث عن مدينتك.'**
+  String get worshipLocationFailed;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'قرب {city}'**
+  String worshipPlaceNear(Object city);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.'**
+  String worshipHabousNote(Object city);
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح واعية'**
+  String get trayOpen;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'خروج'**
+  String get trayQuit;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'ويندوز لا يسمح لواعية بالبدء عند تسجيل الدخول. فعّل واعية في الإعدادات › التطبيقات › بدء التشغيل، ثم فعّل هذا الخيار من جديد.'**
+  String get engineErrorAutostartBlocked;
+
+  /// Flutter only. Not reviewed yet except in English.
+  ///
+  /// In ar, this message translates to:
+  /// **'إعدادات هذا الحاسوب، التي اختارها مسؤوله، لا تسمح لواعية بالبدء عند تسجيل الدخول.'**
+  String get engineErrorAutostartPolicy;
 }
 
 class _AppLocalizationsDelegate

@@ -14,7 +14,7 @@ and `desktop/windows/msix/STORE_LISTING.md`.
    YouTube/TikTok/Instagram link, watch it or save it without music).
 3. **Store listing in all nine languages** (ar, en, fr, ur, id, tr, bn, fa, ms), with description and changelog.
 4. **No "formerly Islamic Mute"** anywhere users look. Done: NOTICE, THIRD_PARTY_LICENSES.md, README, the Linux sound
-   client ("Waaiya filter"), LADSPA and PipeWire names. Internal names (Android package `org.islamicmute.app`, Linux
+   client ("Waaiya filter"), LADSPA and PipeWire names. Internal names (Android package `org.islamicmute.app` until 0.2.15, now `org.waaiya.app`: `docs/MOVE.md`; Linux
    service and folders, repo folder) stay so existing installs update.
 5. Simple mode (PR #11, Android, no Developer options) is a phone **test**, not in 0.2.12 until the owner's phones
    confirm it.

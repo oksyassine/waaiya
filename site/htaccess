@@ -2,6 +2,11 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# the downloads folder itself (shared as "waaiya.mssid.org/downloads/"): no listing (-Indexes below), so send people
+# to the download section of the home page, in Arabic or English after the browser's language
+RewriteCond %{HTTP:Accept-Language} ^ar [NC]
+RewriteRule ^downloads/?$ /#download [NE,L,R=302]
+RewriteRule ^downloads/?$ /en/#download [NE,L,R=302]
 Options -Indexes
 AddType video/mp4 .mp4
 AddType image/webp .webp
@@ -39,9 +44,10 @@ AddType application/octet-stream .onnx .bin
   ExpiresByType application/octet-stream "access plus 7 days"
 </IfModule>
 
-# In-app updates (AppUpdate.kt): the release file must never be served from a cache; patches and APKs never change.
-<Files "update.json">
+# In-app updates (AppUpdate.kt): the release files (update.json for org.islamicmute.app, waaiya-update.json for
+# org.waaiya.app) must never be served from a cache; patches and APKs never change.
+<FilesMatch "^(waaiya-)?update\.json$">
   <IfModule mod_headers.c>
     Header set Cache-Control "no-store"
   </IfModule>
-</Files>
+</FilesMatch>

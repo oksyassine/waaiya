@@ -1348,10 +1348,38 @@ int cmd_stop(const Paths &p) {
     return 0;
 }
 
+// At login the app starts too, hidden: only its icon next to the clock, where filtering is turned on and off
+// (desktop/windows/runner/tray.cpp). It is <package>\waaiya_desktop.exe, one folder above this program's (engine).
+void start_app_in_tray() {
+    wchar_t self[MAX_PATH * 2];
+    DWORD n = GetModuleFileNameW(nullptr, self, (DWORD)(sizeof self / sizeof *self));
+    std::wstring app(self, n);
+    for (int up = 0; up < 2; up++) {
+        size_t k = app.find_last_of(L'\\');
+        if (k == std::wstring::npos) return;
+        app.resize(k);
+    }
+    app += L"\\waaiya_desktop.exe";
+    if (!exists(app)) return;
+    std::wstring cmd = L"\"" + app + L"\" --tray";
+    STARTUPINFOW si = {};
+    si.cb = sizeof si;
+    PROCESS_INFORMATION pi = {};
+    if (!CreateProcessW(app.c_str(), &cmd[0], nullptr, nullptr, FALSE, 0, nullptr, nullptr, &si, &pi)) {
+        logf("autostart: the app did not start (error %lu)", GetLastError());
+        return;
+    }
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+}
+
 // The Store package's startup task runs at every login (the package cannot add a Run value): the app's "Start at
 // login" is the file <dir>\autostart there.
 int cmd_autostart(const Paths &p) {
-    if (exists(p.dir + L"\\autostart")) return cmd_run(p, false, false);
+    if (exists(p.dir + L"\\autostart")) {
+        start_app_in_tray();
+        return cmd_run(p, false, false);
+    }
     WIN32_FILE_ATTRIBUTE_DATA a;
     if (GetFileAttributesExW(p.store.c_str(), GetFileExInfoStandard, &a) && (a.nFileSizeLow | a.nFileSizeHigh))
         return cmd_run(p, false, true);

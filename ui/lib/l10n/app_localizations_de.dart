@@ -182,6 +182,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get computerToggle => 'Stattdessen einen Computer verwenden';
 
   @override
+  String get computerWeb =>
+      'Am einfachsten: Öffnen Sie auf einem Computer waaiya.mssid.org/usb in Chrome oder Edge, schalten Sie USB-Debugging ein und verbinden Sie das Telefon per Kabel. Nichts zu installieren, funktioniert auch mit Android 10. Oder, wenn adb installiert ist:';
+
+  @override
   String get computerBody =>
       'Schalten Sie USB-Debugging ein, verbinden Sie das Telefon und führen Sie Folgendes aus:';
 
@@ -393,6 +397,25 @@ class AppLocalizationsDe extends AppLocalizations {
       'Verdeckt Menschen und Bilder auf dem Bildschirm, in jeder App, solange der Filter an ist. Das läuft auf dem Telefon; nichts wird irgendwohin gesendet.';
 
   @override
+  String get blurOnTitle => 'Die Unschärfe ist an';
+
+  @override
+  String get blurOffTitle => 'Die Unschärfe ist aus';
+
+  @override
+  String get blurStartCd => 'Unschärfe starten';
+
+  @override
+  String get blurStopCd => 'Unschärfe beenden';
+
+  @override
+  String get blurOffDetail =>
+      'Tippen Sie auf die Taste, um zu starten. Das Filtern startet mit.';
+
+  @override
+  String get blurWhatTitle => 'Was unscharf wird';
+
+  @override
   String get blurWomenTitle => 'Frauen unscharf machen';
 
   @override
@@ -415,26 +438,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'An: Der ganze Bildschirm wird verdeckt, wenn das Telefon zu langsam ist oder die Unschärfe ausfällt. Aus: Der Bildschirm bleibt mit einer Warnung sichtbar.';
 
   @override
-  String get blurSetupShizuku => 'Mit Shizuku erlauben';
-
-  @override
   String get blurSetupManual => 'In den Android-Einstellungen erlauben';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: „Mit Shizuku erlauben“, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder „In den Android-Einstellungen erlauben“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
+      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: „Zur Einrichtung“, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder „In den Android-Einstellungen erlauben“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: Starten Sie Shizuku und erlauben Sie dort Waaiya, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
+      'Zum Unscharfmachen muss Waaiya über anderen Apps angezeigt werden. Am besten: Erledigen Sie die einmalige Einrichtung, damit Ihre Berührungen weiter die App unter der Unschärfe erreichen. Oder erlauben Sie in den Android-Einstellungen „Über anderen Apps einblenden“, aber dann bewirkt ein Tippen auf einen unscharfen Bereich nichts.';
 
   @override
   String get blurFailUnavailable =>
-      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer oder Shizuku (Android 12 oder neuer), dann wird diese Option verfügbar: Die Abdeckungen werden dann so gezeichnet, dass Berührungen hindurchgehen. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar, wenn die Unschärfe nicht mithält.';
+      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer (Android 12 oder neuer), dann wird diese Option verfügbar: Die Abdeckungen werden dann so gezeichnet, dass Berührungen hindurchgehen. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar, wenn die Unschärfe nicht mithält.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie Shizuku (Android 12 oder neuer) oder schalten Sie die Bedienungshilfe „Waaiya-Unschärfe“ ein (oben „Mit Shizuku erlauben“), dann wird diese Option verfügbar. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar.';
+      'Vorerst ausgegraut: Eine Abdeckung über den ganzen Bildschirm würde jedes Tippen blockieren und Sie könnten feststecken. Starten Sie den Waaiya-Helfer (Android 12 oder neuer) oder schalten Sie in den Android-Einstellungen die Bedienungshilfe „Waaiya-Unschärfe“ ein, dann wird diese Option verfügbar. Bis dahin bleibt der Bildschirm mit einer Warnung sichtbar.';
 
   @override
   String get languageTitle => 'Sprache';
@@ -481,16 +501,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku konnte es nicht erlauben:\n$details';
-  }
-
-  @override
   String get step2Guide => 'So starten Sie Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Ausgegraut: Auf dieser Android-Version würde eine Abdeckung über den ganzen Bildschirm jedes Tippen blockieren und Sie könnten feststecken (Abdeckungen mit Shizuku erfordern Android 12 oder neuer). Wenn die Unschärfe nicht mithält, bleibt der Bildschirm mit einer Warnung sichtbar.';
+      'Ausgegraut: Auf dieser Android-Version würde eine Abdeckung über den ganzen Bildschirm jedes Tippen blockieren und Sie könnten feststecken (Abdeckungen, durch die Berührungen hindurchgehen, erfordern Android 12 oder neuer). Wenn die Unschärfe nicht mithält, bleibt der Bildschirm mit einer Warnung sichtbar.';
 
   @override
   String get guideTitle => 'Shizuku Schritt für Schritt starten';
@@ -1075,6 +1090,39 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Suchen ist gerade nicht möglich. Versuche es später noch einmal.';
+
+  @override
+  String get moveOldTitle => 'Waaiya ist umgezogen';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya kommt unter Android jetzt als neue App (dasselbe Waaiya unter neuem Namen), und diese hier erhält keine Updates mehr. Installieren Sie die neue: Ihre Einstellungen kommen mit. Richten Sie sie dann einmalig ein und entfernen Sie diese.';
+
+  @override
+  String get moveOldInstalled =>
+      'Das neue Waaiya ist installiert. Öffnen Sie es: Es übernimmt Ihre Einstellungen. Richten Sie es einmalig ein und entfernen Sie dann dieses alte, damit nie beide gleichzeitig filtern.';
+
+  @override
+  String get moveInstall => 'Neues Waaiya installieren';
+
+  @override
+  String get moveOpenNew => 'Neues Waaiya öffnen';
+
+  @override
+  String get moveRemoveThis => 'Dieses alte Waaiya entfernen';
+
+  @override
+  String get moveNewTitle => 'Das alte Waaiya ist noch installiert';
+
+  @override
+  String get moveNewBody =>
+      'Das alte Waaiya (von vor Version 0.2.15) ist noch auf diesem Telefon. Entfernen Sie es, damit nie beide gleichzeitig filtern.';
+
+  @override
+  String get moveNewImported => 'Ihre Einstellungen wurden daraus übernommen.';
+
+  @override
+  String get moveRemoveOld => 'Altes Waaiya entfernen';
 
   @override
   String get desktopPreview =>
@@ -1850,4 +1898,53 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya entfernt Musikinstrumente aus dem Ton aller Apps auf diesem Computer. Sprache und Koranrezitation bleiben erhalten. Vorerst werden auch Gesangsstimmen entfernt.';
+
+  @override
+  String get worshipUseLocation => 'Meinen Standort verwenden';
+
+  @override
+  String get worshipWhyLocation =>
+      'Um die Gebetszeiten an Ihrem Ort zu finden, liest Waaiya jetzt einmalig den ungefähren Standort dieses Telefons. Er bleibt als Ihr Ort auf dem Telefon und wird nirgendwohin gesendet.';
+
+  @override
+  String get worshipLocating => 'Standort wird ermittelt…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Der Standort wurde nicht erlaubt. Sie können stattdessen nach Ihrer Stadt suchen.';
+
+  @override
+  String get worshipLocationOff =>
+      'Die Standortermittlung ist auf diesem Telefon aus. Schalten Sie sie ein und versuchen Sie es erneut, oder suchen Sie nach Ihrer Stadt.';
+
+  @override
+  String get worshipLocationSettings => 'Standorteinstellungen';
+
+  @override
+  String get worshipLocationFailed =>
+      'Ihr Standort konnte nicht ermittelt werden. Versuchen Sie es gleich noch einmal, oder suchen Sie nach Ihrer Stadt.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'nahe $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Die offiziellen Zeiten des Ministeriums für Habous und islamische Angelegenheiten für $city.';
+  }
+
+  @override
+  String get trayOpen => 'Waaiya öffnen';
+
+  @override
+  String get trayQuit => 'Beenden';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows lässt Waaiya bei der Anmeldung nicht starten. Schalte Waaiya unter Einstellungen › Apps › Autostart ein und schalte diese Option dann erneut ein.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Die Einstellungen dieses Computers, von seinem Administrator festgelegt, erlauben keinen Start von Waaiya bei der Anmeldung.';
 }

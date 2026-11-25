@@ -1,6 +1,7 @@
 # Waaiya city list. Source: Natural Earth 1:10m Cultural Vectors, Populated Places (ne_10m_populated_places.geojson, v5.1.2, natural-earth-vector commit 789c990, file sha256 9b8e3de09048ef00dfc70357dbb9fa324493f214b5e0ae4daf1aa79a8d10116b), https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_populated_places.geojson ; licence: public domain (Natural Earth); fetched 2026-11-20. Rows selected and lightly edited by hand (Arabic names of Arab-world and holy cities, some English names, country codes for -99 places, time zones assigned per city and checked against IANA tzdata 2019c). Columns as named on the next line; alt = other English spellings to search by (added by hand).
 # The 'Jerusalem' row has country code PS and its Persian and Urdu names were changed to قدس and بیت المقدس by hand.
-id	cc	lat	lon	tz	en	ar	fr	tr	id_name	fa	ur	bn	alt
+# Morocco (and Ceuta, Melilla): the 190 cities of the Ministry of Habous's prayer times (habous.gov.ma), Arabic names as the ministry writes them, Latin names in scripts/habous/names.tsv, positions and horizons (rise, set: degrees below the horizon for sunrise and Maghrib) fitted to the ministry's published tables by scripts/habous/make_habous.py; habous = the ministry's city code.
+id	cc	lat	lon	tz	en	ar	fr	tr	id_name	fa	ur	bn	alt	habous	rise	set
 andorra_la_vella	AD	42.5000	1.5165	Europe/Andorra	Andorra la Vella	أندورا لا فيلا	Andorre-la-Vieille	Andorra la Vella	Andorra la Vella	آندورا لاولا	انڈورا لا ویلا	আন্দরা লা ভেলিয়া	
 abu_dhabi	AE	24.4667	54.3666	Asia/Dubai	Abu Dhabi	أبو ظبي	Abou Dabi	Abu Dabi	Abu Dhabi	ابوظبی	ابوظہبی	আবুধাবি	
 dubai	AE	25.2319	55.2780	Asia/Dubai	Dubai	دبي	Dubaï	Dubai	Dubai	شهر دبی	دبئی	দুবাই	
@@ -93,7 +94,9 @@ mansoura	EG	31.0504	31.3800	Africa/Cairo	Mansoura	المنصورة	Mansourah	Man
 port_said	EG	31.2600	32.2900	Africa/Cairo	Port Said	بورسعيد	Port-Saïd	Port Said	Bursaid	پورتسعید	پورٹ سعید	সাইদ বন্দর	
 asmara	ER	15.3333	38.9333	Africa/Asmara	Asmara	أسمرة	Asmara	Asmara	Asmara	اسمره	اسمارا	আসমারা	
 barcelona	ES	41.3852	2.1814	Europe/Madrid	Barcelona	برشلونة	Barcelone	Barselona	Barcelona	بارسلون	برشلونہ	বার্সেলোনা	
+ceuta	ES	35.8534	-5.3468	Africa/Ceuta	Ceuta (Sebta)	سبتة	Ceuta (Sebta)							24	1.787	1.938
 madrid	ES	40.4020	-3.6853	Europe/Madrid	Madrid	مدريد	Madrid	Madrid	Madrid	مادرید	میدرد	মাদ্রিদ	
+melilla	ES	35.2901	-2.9679	Africa/Ceuta	Melilla	مليلية	Melilla							40	1.386	1.575
 addis_ababa	ET	9.0353	38.6981	Africa/Addis_Ababa	Addis Ababa	أديس أبابا	Addis-Abeba	Addis Ababa	Addis Ababa	آدیس آبابا	ادیس ابابا	আদ্দিস আবাবা	
 harar	ET	9.3200	42.1500	Africa/Addis_Ababa	Harar	حرار	Harar Jugol	Harar	Harar	هرر	ہرار	হারা	
 helsinki	FI	60.1775	24.9322	Europe/Helsinki	Helsinki	هلسنكي	Helsinki	Helsinki	Helsinki	هلسینکی	ہلسنکی	হেলসিঙ্কি	
@@ -192,13 +195,194 @@ riga	LV	56.9500	24.1000	Europe/Riga	Riga	ريغا	Riga	Riga	Riga	ریگا	ریگ
 benghazi	LY	32.1187	20.0648	Africa/Tripoli	Benghazi	بنغازي	Benghazi	Bingazi	Benghazi	بنغازی	بنغازی	বেনগাজি	
 misrata	LY	32.3800	15.1000	Africa/Tripoli	Misrata	مصراتة	Misrata	Misurata	Misratah	مصراته	مصراتہ	মিসরাতা	
 tripoli_ly	LY	32.8925	13.1800	Africa/Tripoli	Tripoli	طرابلس	Tripoli	Trablus	Tripoli	طرابلس	طرابلس	ত্রিপোলি	
-casablanca	MA	33.6019	-7.6183	Africa/Casablanca	Casablanca	الدار البيضاء	Casablanca	Kazablanka	Casablanca	کازابلانکا	دار البیضاء	কাসাব্লাঙ্কা	
-fez	MA	34.0565	-5.0023	Africa/Casablanca	Fez	فاس	Fès	Fes	Fez	فاس	فاس	ফেজ	
-laayoune	MA	27.1500	-13.2000	Africa/El_Aaiun	Laayoune	العيون	Laâyoune	Layun	El Aaiún	العیون	العیون	লাইউন	
-marrakesh	MA	31.6319	-8.0019	Africa/Casablanca	Marrakesh	مراكش	Marrakech	Marakeş	Marrakesh	مراکش	مراکش	মারাক্কেশ	
-oujda	MA	34.6900	-1.9100	Africa/Casablanca	Oujda	وجدة	Oujda	Ucda	Oujda	وجده	وجدہ	ওজদা	
-rabat	MA	34.0253	-6.8364	Africa/Casablanca	Rabat	الرباط	Rabat	Rabat	Rabat	رباط	رباط	রাবাত	
-tangier	MA	35.7473	-5.8327	Africa/Casablanca	Tangier	طنجة	Tanger	Tanca	Tangier	طنجه	طنجہ	তানজাহ	
+agadir	MA	30.3790	-9.5695	Africa/Casablanca	Agadir	أكادير	Agadir							117	1.643	1.814
+agaiouar	MA	31.2434	-7.8159	Africa/Casablanca	Agaïouar	أكايوار	Agaïouar							311	2.180	2.275
+agdz	MA	30.6816	-6.4470	Africa/Casablanca	Agdz	أكدز	Agdz							142	2.339	2.402
+agoudal_imilchil	MA	32.0124	-5.4923	Africa/Casablanca	Agoudal (Imilchil)	أكدال أملشيل	Agoudal (Imilchil)							309	2.591	2.553
+agoudal_midelt	MA	32.0027	-5.4915	Africa/Casablanca	Agoudal (Imilchil, Midelt)	اكودال املشيل ميدلت	Agoudal (Imilchil, Midelt)							310	2.190	2.264
+ahfir	MA	34.9515	-2.1088	Africa/Casablanca	Ahfir	أحفير	Ahfir							53	1.632	1.783
+ain_aouda	MA	33.8004	-6.7919	Africa/Casablanca	Aïn Aouda	عين العودة	Aïn Aouda							312	1.536	1.691
+ain_chair	MA	32.1782	-2.5223	Africa/Casablanca	Aïn Chaïr	عين الشعير	Aïn Chaïr							37	2.042	2.136
+ait_el_kak	MA	31.2110	-7.7855	Africa/Casablanca	Aït El Kak	آيت القاق	Aït El Kak							308	2.710	2.659
+ait_ourir	MA	31.5459	-7.6550	Africa/Casablanca	Aït Ourir	آيت ورير	Aït Ourir							314	1.931	2.051
+akhfennir	MA	28.0785	-12.0618	Africa/Casablanca	Akhfennir	أخفنير	Akhfennir							164	1.661	1.832
+akka	MA	29.4109	-8.2538	Africa/Casablanca	Akka	أقا	Akka							124	2.330	2.385
+aknoul	MA	34.6409	-3.8846	Africa/Casablanca	Aknoul	أكنول	Aknoul							91	2.250	2.313
+al_hoceima	MA	35.2464	-3.9327	Africa/Casablanca	Al Hoceïma	الحسيمة	Al Hoceïma							23	1.520	1.707
+alnif	MA	31.1085	-5.1861	Africa/Casablanca	Alnif	النيف	Alnif							144	2.028	2.141
+amgala	MA	26.1548	-11.4025	Africa/El_Aaiun	Amgala	أمكالة	Amgala							163	1.646	1.816
+aousserd	MA	22.4984	-14.3046	Africa/El_Aaiun	Aousserd	أوسرد	Aousserd							167	1.652	1.815
+arbaoua	MA	34.8998	-5.9319	Africa/Casablanca	Arbaoua	عرباوة	Arbaoua							12	1.516	1.698
+asguine	MA	31.3237	-7.7697	Africa/Casablanca	Asguine	أسكين	Asguine							313	2.146	2.232
+asilah	MA	35.4618	-6.0510	Africa/Casablanca	Asilah	أصيلة	Asilah							17	1.429	1.607
+assa	MA	28.5450	-9.4459	Africa/Casablanca	Assa	أسا	Assa							150	1.638	1.823
+assoul	MA	31.8842	-5.1898	Africa/Casablanca	Assoul	أسول	Assoul							145	2.770	2.690
+azemmour	MA	33.2700	-8.3524	Africa/Casablanca	Azemmour	أزمور	Azemmour							67	1.473	1.653
+azilal	MA	31.9166	-6.5812	Africa/Casablanca	Azilal	أزيلال	Azilal							74	2.389	2.417
+azrou	MA	33.4172	-5.2442	Africa/Casablanca	Azrou	آزرو	Azrou							103	2.292	2.341
+bab_berred	MA	34.9762	-4.8873	Africa/Casablanca	Bab Berred	باب برد	Bab Berred							28	2.192	2.271
+ben_ahmed	MA	33.0768	-7.2621	Africa/Casablanca	Ben Ahmed	ابن أحمد	Ben Ahmed							64	1.908	2.029
+ben_guerir	MA	32.1928	-7.9650	Africa/Casablanca	Ben Guerir	بنجرير	Ben Guerir							108	1.823	1.966
+beni_ansar	MA	35.2658	-2.9193	Africa/Casablanca	Beni Ansar	بني أنصار	Beni Ansar							43	1.524	1.706
+beni_drar	MA	34.7975	-1.9906	Africa/Casablanca	Beni Drar	بني ادرار	Beni Drar							48	1.800	1.941
+beni_mellal	MA	32.2907	-6.3631	Africa/Casablanca	Béni Mellal	بني ملال	Béni Mellal							73	2.170	2.259
+beni_tadjit	MA	32.2855	-3.4679	Africa/Casablanca	Beni Tadjit	بني تجيت	Beni Tadjit							56	2.252	2.331
+benslimane	MA	33.5979	-7.1307	Africa/Casablanca	Benslimane	بن سليمان	Benslimane							60	1.621	1.792
+berkane	MA	34.9011	-2.3578	Africa/Casablanca	Berkane	بركان	Berkane							32	1.528	1.700
+berrechid	MA	33.2341	-7.5794	Africa/Casablanca	Berrechid	برشيد	Berrechid							65	1.566	1.744
+biougra	MA	30.1802	-9.3675	Africa/Casablanca	Biougra	بويكرة	Biougra							126	1.472	1.652
+bir_anzarane	MA	23.8780	-14.5331	Africa/El_Aaiun	Bir Anzarane	بئر أنزاران	Bir Anzarane							169	1.741	1.908
+bir_gandouz	MA	21.5700	-16.4698	Africa/El_Aaiun	Bir Gandouz	بئر كندوز	Bir Gandouz							168	1.641	1.838
+bouanane	MA	32.0533	-3.0522	Africa/Casablanca	Bouanane	بوعنان	Bouanane							57	2.022	2.126
+bouarfa	MA	32.5222	-1.9689	Africa/Casablanca	Bouarfa	بوعرفة	Bouarfa							34	2.034	2.161
+bouizakarne	MA	29.1775	-9.7324	Africa/Casablanca	Bouizakarne	بويزكارن	Bouizakarne							153	1.866	2.001
+boujdour	MA	26.1386	-14.5318	Africa/El_Aaiun	Boujdour	بوجدور	Boujdour							158	1.412	1.634
+boukraa	MA	26.3605	-12.8356	Africa/El_Aaiun	Boukraâ	بوكراع	Boukraâ							161	1.647	1.819
+boulemane	MA	33.3637	-4.7440	Africa/Casablanca	Boulemane	بولمان	Boulemane							84	2.695	2.617
+boumalne_dades	MA	31.3649	-6.0047	Africa/Casablanca	Boumalne Dadès	بومالن دادس	Boumalne Dadès							143	2.362	2.396
+boured	MA	34.7154	-4.1042	Africa/Casablanca	Boured	بورد	Boured							93	2.030	2.137
+bouskour	MA	34.6983	-3.6056	Africa/Casablanca	Bouskour	بوسكور	Bouskour							30	1.717	1.870
+bouznika	MA	33.7774	-7.1626	Africa/Casablanca	Bouznika	بوزنيقة	Bouznika							6	1.385	1.576
+casablanca	MA	33.5332	-7.6656	Africa/Casablanca	Casablanca	الدار البيضاء	Casablanca	Kazablanka	Casablanca	کازابلانکا	دار البیضاء	কাসাব্লাঙ্কা		58	1.524	1.698
+chefchaouen	MA	35.1275	-5.2658	Africa/Casablanca	Chefchaouen	شفشاون	Chefchaouen							18	2.146	2.229
+chichaoua	MA	31.5378	-8.7701	Africa/Casablanca	Chichaoua	شيشاوة	Chichaoua							107	1.799	1.945
+dakhla	MA	23.6971	-15.9920	Africa/El_Aaiun	Dakhla	الداخلة	Dakhla							165	1.498	1.686
+debdou	MA	33.9897	-3.0262	Africa/Casablanca	Debdou	دبدو	Debdou							41	2.144	2.215
+demnate	MA	31.7242	-7.0211	Africa/Casablanca	Demnate	دمنات	Demnate							76	2.402	2.427
+driouch	MA	34.9375	-3.3873	Africa/Casablanca	Driouch	دريوش	Driouch							55	1.850	1.973
+el_aioun_sidi_mellouk	MA	34.5683	-2.5082	Africa/Casablanca	El Aïoun Sidi Mellouk	العيون الشرقية	El Aïoun Sidi Mellouk							47	1.876	1.999
+el_borouj	MA	32.4857	-7.2028	Africa/Casablanca	El Borouj	البروج	El Borouj							63	1.792	1.955
+el_gara	MA	33.2819	-7.2458	Africa/Casablanca	El Gara	الكارة	El Gara							62	1.748	1.882
+el_hajeb	MA	33.6668	-5.3851	Africa/Casablanca	El Hajeb	الحاجب	El Hajeb							101	2.171	2.248
+el_jadida	MA	33.2339	-8.5219	Africa/Casablanca	El Jadida	الجديدة	El Jadida							66	1.399	1.570
+el_ksiba	MA	32.5472	-6.0547	Africa/Casablanca	El Ksiba	القصيبة	El Ksiba							77	2.238	2.306
+el_menzel	MA	33.8244	-4.5542	Africa/Casablanca	El Menzel Beni Yazgha	المنزل بني يازغة	El Menzel Beni Yazgha							87	2.121	2.215
+erfoud	MA	31.3739	-4.2377	Africa/Casablanca	Erfoud	أرفود	Erfoud							130	2.084	2.186
+errachidia	MA	31.8925	-4.4507	Africa/Casablanca	Errachidia	الرشيدية	Errachidia							128	2.082	2.182
+essaouira	MA	31.4835	-9.7850	Africa/Casablanca	Essaouira	الصويرة	Essaouira							106	1.422	1.614
+farkhana	MA	35.2629	-2.9866	Africa/Casablanca	Farkhana	فرخانة	Farkhana							44	1.524	1.694
+fez	MA	34.0418	-5.0213	Africa/Casablanca	Fez	فاس	Fès	Fes	Fez	فاس	فاس	ফেজ		81	1.748	1.911
+fezouane	MA	34.9169	-2.1996	Africa/Casablanca	Fezouane	فزوان	Fezouane							52	1.977	2.089
+figuig	MA	32.0829	-1.2390	Africa/Casablanca	Figuig	فكيك	Figuig							33	2.040	2.138
+fnideq	MA	35.8464	-5.3613	Africa/Casablanca	Fnideq	الفنيدق	Fnideq							25	1.555	1.750
+foum_el_hisn	MA	29.0313	-8.9012	Africa/Casablanca	Foum El Hisn	فم لحصن	Foum El Hisn							125	2.126	2.218
+foum_zguid	MA	30.0674	-6.8641	Africa/Casablanca	Foum Zguid	فم زكيد	Foum Zguid							320	2.325	2.388
+fquih_ben_salah	MA	32.4867	-6.7028	Africa/Casablanca	Fquih Ben Salah	الفقيه بنصالح	Fquih Ben Salah							75	1.792	1.958
+goulmima	MA	31.6896	-4.9512	Africa/Casablanca	Goulmima	كلميمة	Goulmima							132	2.098	2.199
+guelmim	MA	28.9787	-10.0746	Africa/Casablanca	Guelmim	كلميم	Guelmim							149	1.911	2.035
+guelta_zemmour	MA	25.1428	-12.3721	Africa/El_Aaiun	Guelta Zemmour	كلتة زمور	Guelta Zemmour							162	1.655	1.843
+guercif	MA	34.1998	-3.3679	Africa/Casablanca	Guercif	كرسيف	Guercif							35	1.707	1.869
+ifrane	MA	33.4949	-5.1081	Africa/Casablanca	Ifrane	يفرن	Ifrane							100	2.302	2.366
+igherm	MA	30.0787	-8.4676	Africa/Casablanca	Igherm	إغرم	Igherm							120	2.527	2.517
+iks	MA	30.9231	-7.8538	Africa/Casablanca	Iks	إيكس	Iks							317	2.681	2.622
+imilchil	MA	32.1233	-5.6110	Africa/Casablanca	Imilchil	إملشيل	Imilchil							133	2.575	2.588
+imin_tlat	MA	31.6146	-6.5348	Africa/Casablanca	Imin Tlat	إيمين ثلاث	Imin Tlat							322	2.097	2.186
+imintanoute	MA	31.1868	-8.8523	Africa/Casablanca	Imintanoute	إيمنتانوت	Imintanoute							305	2.048	2.170
+imouzzer_kandar	MA	33.7271	-5.0262	Africa/Casablanca	Imouzzer Kandar	إموزار كندر	Imouzzer Kandar							88	2.335	2.360
+jebha	MA	35.2018	-4.6721	Africa/Casablanca	El Jebha	الجبهة	El Jebha							26	1.583	1.748
+jerada	MA	34.2957	-2.1641	Africa/Casablanca	Jerada	جرادة	Jerada							36	2.115	2.218
+karia_ba_mohamed	MA	34.3529	-5.2163	Africa/Casablanca	Karia Ba Mohamed	قرية با محمد	Karia Ba Mohamed							96	1.580	1.749
+kasba_tadla	MA	32.5801	-6.2861	Africa/Casablanca	Kasba Tadla	قصبة تادلة	Kasba Tadla							78	1.830	1.969
+kelaat_mgouna	MA	31.2006	-6.1491	Africa/Casablanca	Kelaât M'Gouna	قلعة مكونة	Kelaât M'Gouna							141	2.322	2.380
+kelaat_sraghna	MA	32.0468	-7.4199	Africa/Casablanca	El Kelaâ des Sraghna	قلعة السراغنة	El Kelaâ des Sraghna							105	1.834	1.974
+kenitra	MA	34.2565	-6.6054	Africa/Casablanca	Kénitra	القنيطرة	Kénitra							7	1.535	1.708
+kerss	MA	31.5140	-7.6366	Africa/Casablanca	Kerss	كرس	Kerss							318	2.508	2.511
+ketama	MA	34.8412	-4.6357	Africa/Casablanca	Ketama	كتامة	Ketama							97	2.410	2.439
+kettara	MA	31.8237	-8.1662	Africa/Casablanca	Kettara	قطارة	Kettara							116	1.858	1.993
+khemis_sidi_abdeljalil	MA	34.1012	-4.5866	Africa/Casablanca	Khémis Sidi Abdeljalil	خميس سيدي عبد الجليل	Khémis Sidi Abdeljalil							301	1.861	1.982
+khemisset	MA	33.8213	-6.0848	Africa/Casablanca	Khémisset	الخميسات	Khémisset							2	1.761	1.907
+khenifra	MA	32.9045	-5.6821	Africa/Casablanca	Khénifra	خنيفرة	Khénifra							70	2.081	2.180
+khouribga	MA	32.8701	-6.9137	Africa/Casablanca	Khouribga	خريبكة	Khouribga							79	1.999	2.123
+ksar_el_kebir	MA	34.9744	-5.9140	Africa/Casablanca	Ksar El Kébir	القصر الكبير	Ksar El Kébir							21	1.452	1.648
+ksar_ich	MA	32.5159	-1.0193	Africa/Casablanca	Ksar Ich	قصر إيش	Ksar Ich							321	2.222	2.285
+ksar_sghir	MA	35.8404	-5.5685	Africa/Casablanca	Ksar Sghir	القصر الصغير	Ksar Sghir							22	1.463	1.639
+laayoune	MA	27.1612	-13.2362	Africa/El_Aaiun	Laayoune	العيون	Laâyoune	Layun	El Aaiún	العیون	العیون	লাইউন		156	1.411	1.610
+lagouira	MA	20.8202	-17.0952	Africa/El_Aaiun	Lagouira	الكويرة	Lagouira							166	1.417	1.650
+larache	MA	35.1613	-6.1505	Africa/Casablanca	Larache	العرائش	Larache							16	1.390	1.569
+lemsid	MA	27.9838	-10.8004	Africa/Casablanca	Lemsid	لمسيد	Lemsid							155	1.794	1.944
+mahbes	MA	27.3806	-9.0548	Africa/El_Aaiun	Mahbès	المحبس	Mahbès							154	1.758	1.937
+marrakesh	MA	31.6112	-8.0348	Africa/Casablanca	Marrakesh	مراكش	Marrakech	Marakeş	Marrakesh	مراکش	مراکش	মারাক্কেশ		104	1.860	2.002
+martil	MA	35.6172	-5.2855	Africa/Casablanca	Martil	مرتيل	Martil							19	1.382	1.581
+matmata	MA	34.0876	-4.5555	Africa/Casablanca	Matmata	مطماطة	Matmata							304	1.469	1.649
+mdiq	MA	35.6806	-5.3311	Africa/Casablanca	M'diq	المضيق	M'diq							20	1.391	1.573
+meknes	MA	33.8857	-5.5869	Africa/Casablanca	Meknès	مكناس	Meknès							99	1.857	2.004
+midelt	MA	32.6734	-4.7608	Africa/Casablanca	Midelt	ميدلت	Midelt							136	2.373	2.397
+missour	MA	33.0234	-4.0219	Africa/Casablanca	Missour	ميسور	Missour							85	2.038	2.137
+mohammedia	MA	33.6812	-7.3991	Africa/Casablanca	Mohammédia	المحمدية	Mohammédia							59	1.387	1.568
+moulay_bouazza	MA	33.2176	-6.1966	Africa/Casablanca	Moulay Bouazza	مولاي بوعزة	Moulay Bouazza							71	2.026	2.157
+moulay_bousselham	MA	34.8684	-6.2914	Africa/Casablanca	Moulay Bousselham	مولاي بوسلهام	Moulay Bousselham							13	1.395	1.565
+moulay_yacoub	MA	34.0711	-5.1831	Africa/Casablanca	Moulay Yacoub	مولاي يعقوب	Moulay Yacoub							83	1.706	1.862
+msemrir	MA	31.6633	-5.8167	Africa/Casablanca	Msemrir	أمسمرير	Msemrir							146	2.544	2.534
+nador	MA	35.1662	-2.9355	Africa/Casablanca	Nador	الناظور	Nador							39	1.516	1.698
+oualidia	MA	32.7184	-9.0432	Africa/Casablanca	Oualidia	الوليدية	Oualidia							112	1.408	1.584
+ouarzazate	MA	30.8785	-6.9279	Africa/Casablanca	Ouarzazate	ورزازات	Ouarzazate							138	2.183	2.275
+ouazzane	MA	34.7743	-5.5901	Africa/Casablanca	Ouazzane	وزان	Ouazzane							29	1.919	2.045
+oued_amlil	MA	34.1896	-4.2921	Africa/Casablanca	Oued Amlil	واد أمليل	Oued Amlil							98	1.726	1.865
+oued_laou	MA	35.4306	-5.1069	Africa/Casablanca	Oued Laou	واد لاو	Oued Laou							27	1.390	1.570
+oued_zem	MA	32.8320	-6.5833	Africa/Casablanca	Oued Zem	وادي زم	Oued Zem							80	2.020	2.148
+oujda	MA	34.6313	-1.9263	Africa/Casablanca	Oujda	وجدة	Oujda	Ucda	Oujda	وجده	وجدہ	ওজদা		31	1.915	2.054
+oulad_ayad	MA	34.0659	-4.6026	Africa/Casablanca	Oulad Ayad	أولاد عياد	Oulad Ayad							302	1.624	1.794
+ouled_teima	MA	30.3581	-9.2141	Africa/Casablanca	Ouled Teïma	أولاد تايمة	Ouled Teïma							127	1.625	1.795
+oulmes	MA	33.4045	-6.0063	Africa/Casablanca	Oulmès	والماس	Oulmès							5	2.210	2.276
+rabat	MA	33.9834	-6.8561	Africa/Casablanca	Rabat	الرباط	Rabat	Rabat	Rabat	رباط	رباط	রাবাত		1	1.417	1.608
+ras_el_ma	MA	35.1291	-2.4192	Africa/Casablanca	Ras El Ma	رأس الماء	Ras El Ma							50	1.394	1.563
+rehamna	MA	32.4590	-7.9176	Africa/Casablanca	Rehamna (Skhour Rehamna)	الرحامنة	Rehamna (Skhour Rehamna)							109	1.952	2.073
+ribat_el_kheir	MA	33.7979	-4.4132	Africa/Casablanca	Ribat El Kheir	رباط الخير	Ribat El Kheir							86	2.309	2.363
+rich	MA	32.2402	-4.4628	Africa/Casablanca	Rich	الريش	Rich							135	2.247	2.334
+rissani	MA	31.2543	-4.2735	Africa/Casablanca	Rissani	الريصاني	Rissani							129	2.097	2.193
+rommani	MA	33.4970	-6.6004	Africa/Casablanca	Rommani	الرماني	Rommani							4	1.786	1.940
+safi	MA	32.2893	-9.2558	Africa/Casablanca	Safi	آسفي	Safi							111	1.470	1.662
+saidia	MA	35.1782	-2.2573	Africa/Casablanca	Saïdia	السعيدية	Saïdia							49	1.392	1.565
+sefrou	MA	33.8285	-4.8496	Africa/Casablanca	Sefrou	صفرو	Sefrou							82	2.083	2.194
+selouane	MA	35.0476	-2.9365	Africa/Casablanca	Selouane	سلوان	Selouane							42	1.629	1.784
+settat	MA	32.9786	-7.6309	Africa/Casablanca	Settat	سطات	Settat							61	1.718	1.868
+sidi_bennour	MA	32.6600	-8.4383	Africa/Casablanca	Sidi Bennour	سيدي بنور	Sidi Bennour							68	1.522	1.695
+sidi_ghanem	MA	31.2578	-9.4515	Africa/Casablanca	Sidi Ghanem	سيدي غانم	Sidi Ghanem							306	2.084	2.182
+sidi_ifni	MA	29.3712	-10.1832	Africa/Casablanca	Sidi Ifni	سيدي إفني	Sidi Ifni							148	1.685	1.851
+sidi_kacem	MA	34.1816	-5.7208	Africa/Casablanca	Sidi Kacem	سيدي قاسم	Sidi Kacem							8	1.742	1.885
+sidi_slimane	MA	34.2582	-5.9507	Africa/Casablanca	Sidi Slimane	سيدي سليمان	Sidi Slimane							10	1.397	1.581
+sidi_yahya_el_gharb	MA	34.3007	-6.3229	Africa/Casablanca	Sidi Yahya El Gharb	سيدي يحيى الغرب	Sidi Yahya El Gharb							9	1.525	1.703
+skoura	MA	31.0568	-6.5487	Africa/Casablanca	Skoura	هسكورة	Skoura							140	2.213	2.288
+smara	MA	26.7445	-11.6742	Africa/El_Aaiun	Smara	السمارة	Smara							157	1.632	1.824
+souk_el_arbaa	MA	34.3009	-6.3230	Africa/Casablanca	Souk El Arbaâ du Gharb	سوق أربعاء الغرب	Souk El Arbaâ du Gharb							11	1.395	1.567
+tafantant	MA	31.3381	-7.5209	Africa/Casablanca	Tafantant	تفنتان	Tafantant							307	1.724	1.885
+taforalt	MA	34.7845	-2.4010	Africa/Casablanca	Taforalt	تافوغالت	Taforalt							51	2.032	2.134
+tafraout	MA	29.6981	-8.9850	Africa/Casablanca	Tafraout	تافراوت	Tafraout							122	2.348	2.400
+tahla	MA	34.0509	-4.4342	Africa/Casablanca	Tahla	تاهلة	Tahla							94	1.805	1.963
+taliouine	MA	30.5098	-7.9275	Africa/Casablanca	Taliouine	تالوين	Taliouine							121	2.297	2.369
+talsint	MA	32.5119	-3.4363	Africa/Casablanca	Talsint	تالسينت	Talsint							45	2.301	2.345
+tamanar	MA	30.9560	-9.6849	Africa/Casablanca	Tamanar	تمنار	Tamanar							110	1.741	1.905
+tameslouht	MA	31.4971	-8.1015	Africa/Casablanca	Tameslouht	تامصلوحت	Tameslouht							115	1.875	2.025
+tan_tan	MA	28.4512	-11.1194	Africa/Casablanca	Tan-Tan	طانطان	Tan-Tan							152	1.651	1.843
+tangier	MA	35.7667	-5.8200	Africa/Casablanca	Tangier	طنجة	Tanger	Tanca	Tangier	طنجه	طنجہ	তানজাহ		14	1.625	1.786
+taounate	MA	34.5044	-4.6507	Africa/Casablanca	Taounate	تاونات	Taounate							90	1.976	2.106
+taourirt	MA	34.3903	-2.8816	Africa/Casablanca	Taourirt	تاوريرت	Taourirt							38	2.082	2.178
+tarfaya	MA	27.9225	-12.9303	Africa/Casablanca	Tarfaya	طرفاية	Tarfaya							159	1.409	1.603
+taroudant	MA	30.4579	-8.8003	Africa/Casablanca	Taroudant	تارودانت	Taroudant							118	1.630	1.803
+tassoultante	MA	31.5424	-7.9477	Africa/Casablanca	Tassoultante	تسلطانت	Tassoultante							114	1.864	2.008
+tata	MA	29.7232	-7.9867	Africa/Casablanca	Tata	طاطا	Tata							123	1.938	2.063
+taza	MA	34.2010	-4.0217	Africa/Casablanca	Taza	تازة	Taza							89	2.030	2.138
+tazarine	MA	30.7294	-5.5687	Africa/Casablanca	Tazarine	تازارين	Tazarine							147	1.791	1.944
+tendite	MA	33.6357	-3.6320	Africa/Casablanca	Tendite	تنديت	Tendite							131	1.944	2.074
+tendrara	MA	33.0408	-2.0079	Africa/Casablanca	Tendrara	تندرارة	Tendrara							46	2.311	2.350
+tetouan	MA	35.5504	-5.3757	Africa/Casablanca	Tétouan	تطوان	Tétouan							15	1.803	1.933
+tifariti	MA	26.1599	-10.5730	Africa/El_Aaiun	Tifariti	تفاريتي	Tifariti							160	2.110	2.232
+tiflet	MA	33.9063	-6.3370	Africa/Casablanca	Tiflet	تيفلت	Tiflet							3	1.759	1.905
+tinejdad	MA	31.4718	-5.0353	Africa/Casablanca	Tinejdad	تنجداد	Tinejdad							134	2.094	2.183
+tinghir	MA	31.4637	-5.5347	Africa/Casablanca	Tinghir	تنغير	Tinghir							139	2.317	2.369
+tissa	MA	34.2839	-4.6827	Africa/Casablanca	Tissa	تيسة	Tissa							95	1.638	1.809
+tissint	MA	29.8804	-7.3038	Africa/Casablanca	Tissint	تيسنت	Tissint							319	2.293	2.350
+tizi_ouasli	MA	34.7600	-3.8066	Africa/Casablanca	Tizi Ouasli	تيزي وسلي	Tizi Ouasli							92	2.300	2.338
+tiznit	MA	29.6903	-9.7343	Africa/Casablanca	Tiznit	تزنيت	Tiznit							119	1.641	1.818
+toulkoult	MA	31.1893	-9.0644	Africa/Casablanca	Toulkoult	تولكولت	Toulkoult							316	2.176	2.266
+youssoufia	MA	32.2245	-8.5375	Africa/Casablanca	Youssoufia	اليوسفية	Youssoufia							113	1.760	1.909
+zag	MA	27.9886	-9.3007	Africa/Casablanca	Zag	الزاك	Zag							151	1.729	1.891
+zagora	MA	30.2872	-5.8564	Africa/Casablanca	Zagora	زاكورة	Zagora							137	1.981	2.095
+zaio	MA	34.9129	-2.7166	Africa/Casablanca	Zaïo	زايو	Zaïo							54	1.854	1.997
+zaouiat_ahansal	MA	31.7644	-6.1145	Africa/Casablanca	Zaouiat Ahansal	زاوية أحنصال	Zaouiat Ahansal							72	2.669	2.619
+zaouiat_moulay_brahim	MA	31.2669	-7.9656	Africa/Casablanca	Zaouiat Moulay Brahim	زاوية مولاي ابراهيم	Zaouiat Moulay Brahim							315	2.188	2.279
+zemamra	MA	32.5894	-8.7197	Africa/Casablanca	Khémis Zemamra	خميس الزمامرة	Khémis Zemamra							69	1.526	1.695
+zerhoun	MA	34.0528	-5.5480	Africa/Casablanca	Zerhoun	زرهون	Zerhoun							102	2.029	2.121
 monaco	MC	43.7396	7.4069	Europe/Monaco	Monaco	موناكو	Monaco	Monako	Monako	موناکو	موناکو	মোনাকো	
 chisinau	MD	47.0050	28.8577	Europe/Chisinau	Chisinau	كيشيناو	Chișinău	Kişinev	Kishinev	کیشیناو	کیشیناو	কিশিনাউ	
 podgorica	ME	42.4660	19.2663	Europe/Podgorica	Podgorica	بودغوريتسا	Podgorica	Podgorica	Podgorica	پودگوریتسا	پوڈگوریکا	পোডগোরিকা	

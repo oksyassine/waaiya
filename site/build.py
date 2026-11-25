@@ -7,7 +7,8 @@ template, plus privacy.html / en/privacy.html from docs/PRIVACY.md.
     site/deploy.sh [--preview]         # build and rsync to the host
 
 The page asks nothing of any other server: the typeface (IBM Plex Sans Arabic, OFL) and GSAP are in assets/.
-The one exception is "try a link" (site/link/), and only when the visitor submits a link.
+The exceptions are "try a link" (site/link/), only when the visitor submits a link, and the Google Play test sign-up
+(/test/, site/test/), which posts to our own host only when the visitor sends the form.
 Generated pictures and the filtered sound come from real material: see make_assets.py.
 """
 import datetime
@@ -23,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "public"
 SITE = "https://waaiya.mssid.org/"
 REPO = "https://github.com/oksyassine/waaiya"
-VERSION = "0.2.14"
+VERSION = "0.2.16"
 INDEXNOW_KEY = "975a156c404dff8c423982350b431cc8"  # public by design: Bing, Yandex and others fetch /<key>.txt
 VIDEO_DATE = "2026-11-21"  # the introduction video's upload date (VideoObject)
 DL = "https://waaiya.mssid.org/downloads/"   # every download lives here (site/upload_downloads.sh); GitHub has the same files
@@ -34,6 +35,7 @@ WIN_ZIP = DL + f"waaiya-desktop-windows-x64-v{VERSION}.zip"
 LINUX_DESKTOP = DL + f"waaiya-desktop-linux-x64-v{VERSION}.tar.gz"
 LINUX_CLI = DL + f"waaiya-linux-x64-v{VERSION}.tar.gz"
 SUMS = DL + "SHA256SUMS"
+STORE = "https://apps.microsoft.com/detail/9NBB296FSRJP"  # Microsoft Store listing (Store ID 9NBB296FSRJP)
 RELEASES = REPO + "/releases/latest"
 GSAP = "js/gsap-3.15.0.min.js"
 # "Try it on your sound" (site/try/, site/link/): the servers asked for a link, in order; empty hides the link box.
@@ -61,6 +63,9 @@ T = {
         nav_cta="حمّل",
         try_nav="جرّب",
         try_hero="أو جرّبها على ملف أو رابط",
+        notice="واعية في طريقها إلى [[Google Play]]: كن من أوائل من يختبرها على هاتفه.",
+        notice_mail="انضمّ بخطوتين ودون انتظار: مجموعة على [[Google]]، ثم رابط الاختبار.",
+        notice_cta="سجّل للاختبار",
         try_h="جرّبها بنفسك",
         try_p="اختر ملفًا من جهازك أو ألصق رابطًا. تعمل تصفية واعية الحقيقية هنا في متصفحك، ثم تنتقل بين «قبل» و«بعد» عند الموضع نفسه من المقطع.",
         try_file="اختر ملفًا من جهازك",
@@ -140,7 +145,7 @@ T = {
         phone_h="على هاتفك",
         phones=[("on", "التصفية", "زر واحد لكل التطبيقات"), ("screen", "الشاشة", "تمويه النساء والصور غير المحتشمة"),
                 ("settings2", "أوقات الصلاة", "صمت، ورسالة لمن يتصل"), ("settings3", "الحماية", "الانتظار قبل الإيقاف، والرمز")],
-        phone_meta="أندرويد [[15]] · واعية [[0.2.13]]",
+        phone_meta="أندرويد [[15]]",
         how_h="كيف تبدأ",
         how=[
             ("أولًا، ثبّت واعية.", "ملف [[waaiya.apk]] لأندرويد [[10]] أو أحدث، أو نسخة ويندوز أو لينكس."),
@@ -162,17 +167,17 @@ T = {
             ("كم التأخير؟", "نحو [[30]] ملّي ثانية، أي أقل من عُشر ثانية، بين الصوت الأصلي وما تسمعه."),
             ("هل يستهلك البطارية؟", "الصوت الأحادي، وهو الافتراضي، يستهلك نحو نصف ما يستهلكه الستيريو. وفي واعية، يعرض «تقرير التشخيص» الاستهلاك في الساعة على هاتفك."),
             ("هل يمكن منعي من إيقافه في لحظة ضعف؟", "اختر مدة انتظار قبل أي إيقاف، ورمزًا إن شئت. لكن لا شيء يمنع حذف التطبيق أو إيقافه الإجباري من إعدادات أندرويد، وواعية تقول ذلك بوضوح."),
-            ("وويندوز ولينكس؟", "ويندوز [[10 (2004)]] أو أحدث: قريبًا في متجر مايكروسوفت، والطلب قيد المراجعة. وحتى ذلك الحين يوجد ملف [[zip]] في أسفل هذه الصفحة وعلى [[GitHub]]، لكنه غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز. لينكس: تطبيق سطح المكتب، أو سطر الأوامر وحده."),
+            ("وويندوز ولينكس؟", "ويندوز [[10 (2004)]] أو أحدث: واعية في متجر مايكروسوفت، مجانًا، ويتحدّث المتجر بنفسه. ويبقى ملف [[zip]] في أسفل هذه الصفحة وعلى [[GitHub]]، لكنه غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز. لينكس: تطبيق سطح المكتب، أو سطر الأوامر وحده."),
             ("من يقف وراءه؟", "مشروع مفتوح المصدر برخصة [[AGPL]]، شيفرته كاملة على [[GitHub]]. يستطيع أي أحد أن يبني التطبيق منها بنفسه ويقارنه بما ننشر."),
         ],
-        dl_btn="حمّل", dl_soon="قريبًا في متجر مايكروسوفت",
+        dl_btn="حمّل", dl_store="من متجر مايكروسوفت",
         dl_for={"android": "حمّل واعية لأندرويد", "windows": "حمّل واعية لويندوز", "linux": "حمّل واعية للينكس"},
         dl_rows=[
-            ("android", "أندرويد: [[waaiya.apk]]", APK, "الإصدار [[0.2.13]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[108 MB]]",
+            ("android", "أندرويد: [[waaiya.apk]]", APK, f"الإصدار [[{VERSION}]]، لكل أنواع الهواتف بأندرويد [[10]] أو أحدث · [[108 MB]]",
              [("نسخة أصغر لأغلب الهواتف · [[arm64-v8a]]", APK_ARM64, "[[90 MB]]"),
               ("للهواتف القديمة بنظام [[32]] بت · [[armeabi-v7a]]", APK_V7A, "[[88 MB]]")]),
-            ("windows", "ويندوز: قريبًا في متجر مايكروسوفت", None, "الطلب قيد المراجعة. ويندوز [[10 (2004)]] أو أحدث.",
-             [("ملف [[zip]]: فُكَّ ضغطه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع بعد، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
+            ("windows", "ويندوز: واعية في متجر مايكروسوفت", STORE, "مجانًا، وموقَّع من مايكروسوفت، ويتحدّث تلقائيًا. ويندوز [[10 (2004)]] أو أحدث.",
+             [("ملف [[zip]]: فُكَّ ضغطه وشغّل [[waaiya_desktop.exe]]", WIN_ZIP, "[[47 MB]] · غير موقَّع، فقد يمنعه «التحكم الذكي في التطبيقات» في ويندوز.")]),
             ("linux", "لينكس: تطبيق سطح المكتب", LINUX_DESKTOP, "لينكس [[x64]] · [[58 MB]]",
              [("سطر الأوامر وحده، بلا واجهة", LINUX_CLI, "[[9 MB]]")]),
         ],
@@ -191,6 +196,9 @@ T = {
         nav_cta="Download",
         try_nav="Try it",
         try_hero="Or try it on a file or a link",
+        notice="Waaiya is coming to Google Play: be one of the first to test it on your phone.",
+        notice_mail="Join in two steps, no waiting: a Google group, then the test link.",
+        notice_cta="Sign up to test",
         try_h="Try it yourself",
         try_p="Pick a file from your device or paste a link. Waaiya's real filter runs here in your browser. Then switch between before and after at the same point in the clip.",
         try_file="Pick a file from your device",
@@ -270,7 +278,7 @@ T = {
         phone_h="On your phone",
         phones=[("on", "Filter", "One button for every app"), ("screen", "Screen", "Blur for women and immodest images"),
                 ("settings2", "Prayer times", "Silence, and a text to callers"), ("settings3", "Protection", "Wait before turning off, and a PIN")],
-        phone_meta="Android 15 · Waaiya 0.2.13",
+        phone_meta="Android 15",
         how_h="How to start",
         how=[
             ("First, install Waaiya.", "waaiya.apk for Android 10 or newer. Or the Windows and Linux apps."),
@@ -292,17 +300,17 @@ T = {
             ("How much delay?", "About 30 milliseconds, less than a tenth of a second, between the original sound and what you hear."),
             ("Does it drain the battery?", "Mono sound, the default, uses about half of what stereo uses. The Diagnostics report in Waaiya shows the use per hour on your phone."),
             ("Can I be stopped from turning it off in a weak moment?", "Choose a wait before turning off, and a PIN if you like. But nothing can prevent uninstalling or a force stop from Android's settings, and Waaiya says so plainly."),
-            ("Windows and Linux?", "Windows 10 (2004) or newer: soon in the Microsoft Store, where it is under review. Until then there is a zip at the bottom of this page and on GitHub. It is not signed yet, so Windows Smart App Control may block it. Linux: the desktop app, or the command line alone."),
+            ("Windows and Linux?", "Windows 10 (2004) or newer: Waaiya is in the Microsoft Store, free, and the Store keeps it up to date. The zip at the bottom of this page and on GitHub is still there, but it is not signed, so Windows Smart App Control may block it. Linux: the desktop app, or the command line alone."),
             ("Who is behind it?", "An open-source project under the AGPL, with all its code on GitHub. Anyone can build the app from it and compare it with what we publish."),
         ],
-        dl_btn="Download", dl_soon="Soon in the Microsoft Store",
+        dl_btn="Download", dl_store="Get it from the Microsoft Store",
         dl_for={"android": "Get Waaiya for Android", "windows": "Get Waaiya for Windows", "linux": "Get Waaiya for Linux"},
         dl_rows=[
-            ("android", "Android: waaiya.apk", APK, "Version 0.2.13, for every kind of phone with Android 10 or newer · 108 MB",
+            ("android", "Android: waaiya.apk", APK, f"Version {VERSION}, for every kind of phone with Android 10 or newer · 108 MB",
              [("Smaller, for most phones · arm64-v8a", APK_ARM64, "90 MB"),
               ("For older 32-bit phones · armeabi-v7a", APK_V7A, "88 MB")]),
-            ("windows", "Windows: soon in the Microsoft Store", None, "Under review. Windows 10 (2004) or newer.",
-             [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed yet, so Windows Smart App Control may block it.")]),
+            ("windows", "Windows: Waaiya in the Microsoft Store", STORE, "Free, signed by Microsoft, updates itself. Windows 10 (2004) or newer.",
+             [("The zip: unpack it and run waaiya_desktop.exe", WIN_ZIP, "47 MB · not signed, so Windows Smart App Control may block it.")]),
             ("linux", "Linux: the desktop app", LINUX_DESKTOP, "Linux x64 · 58 MB",
              [("Command line only, no window", LINUX_CLI, "9 MB")]),
         ],
@@ -364,6 +372,15 @@ def visible_len(s):
 POWER_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2v8.2"/><path d="M6.3 6.4a8.1 8.1 0 1 0 11.4 0"/></svg>'
 
 
+def icons(a):
+    """The tab icon: drawn at 16, 32 and 48 px (desktop/tool/make_icons.py --site), where the ear's arc stays apart from
+    the letter; scaled down from the 192 px logo, only a plain ع was seen."""
+    return (f'<link rel="icon" type="image/png" sizes="16x16" href="{a}favicon-16.png">'
+            f'<link rel="icon" type="image/png" sizes="32x32" href="{a}favicon-32.png">'
+            f'<link rel="icon" type="image/png" sizes="48x48" href="{a}favicon-48.png">'
+            f'<link rel="icon" type="image/png" sizes="192x192" href="{a}logo.png">')
+
+
 def mark(cls, draw=False):
     """The logo: the ع of واعية drawn as an ear («أذنٌ واعية»); the small arc in its bowl is the sound it keeps.
     Source: /srv/build/waaiya-logo (ain-ear), 120-unit grid. With draw=True the strokes draw on once."""
@@ -383,7 +400,7 @@ def jsonld(lang, t, root_url):
         "operatingSystem": "Android 10+, Windows 10 (2004)+, Linux",
         "softwareVersion": VERSION, "downloadUrl": APK,
         "license": "https://www.gnu.org/licenses/agpl-3.0.html",
-        "isAccessibleForFree": True, "sameAs": [REPO],
+        "isAccessibleForFree": True, "sameAs": [REPO, STORE],
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
         "image": SITE + "assets/og.jpg",
         "screenshot": SITE + f"assets/{lang}-on.webp",
@@ -433,20 +450,23 @@ def page(lang, root):
         for i, (q, ans) in enumerate(t["faq"]))
     rows = ""
     for k, main, href, note, more in t["dl_rows"]:
-        main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>' if href else f'<span class="dl-main soon">{e(main)}</span>'
+        main_html = f'<a class="dl-main" href="{href}">{e(main)}</a>'
         more_html = "".join(f'<li><a href="{h}">{e(n)}</a> <span>{e(x)}</span></li>' for n, h, x in more)
-        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p><ul class="dl-more">{more_html}</ul></li>'
+        test_html = (f'<a class="dl-test" href="test/"><strong>{e(t["notice"])}</strong><small>{e(t["notice_mail"])}</small>'
+                     f'<span>{e(t["notice_cta"])}<i aria-hidden="true">{"←" if t["dir"] == "rtl" else "→"}</i></span></a>') if k == "android" else ""
+        rows += f'<li data-plat="{k}">{main_html}<p>{e(note)}</p>{test_html}<ul class="dl-more">{more_html}</ul></li>'
     sums = f'<p class="dl-sums"><a href="{SUMS}">{e(t["dl_sums"][0])}</a> · <a href="{RELEASES}">{e(t["dl_sums"][1])}</a></p>'
     foot_links = "".join(f'<a href="{html.escape(h)}">{e(n)}</a>' for n, h in t["foot_links"])
 
     i18n = {k: plain(t[k]) for k in ("r_off", "r_off_h", "r_on", "r_on_h", "compact_off", "compact_on", "spec_cap_off", "spec_cap_on",
                                      "play", "pause", "cover_clear", "cover_hint", "card_on", "card_off", "card_stop", "card_start", "card_wait",
-                                     "card_left", "card_ready", "card_done", "card_hint", "card_kept", "lang_cap", "lang_alt", "dl_btn", "dl_soon")}
+                                     "card_left", "card_ready", "card_done", "card_hint", "card_kept", "lang_cap", "lang_alt", "dl_btn", "dl_store")}
     i18n["dl_for"] = t["dl_for"]
     i18n["names"] = lname
     i18n["apk"] = APK
     i18n["releases"] = RELEASES
     i18n["linux"] = LINUX_DESKTOP
+    i18n["store"] = STORE
     def plain_tree(v):
         return {k: plain_tree(x) for k, x in v.items()} if isinstance(v, dict) else plain(v)
     i18n["try"] = plain_tree(t["try_js"])
@@ -483,7 +503,7 @@ def page(lang, root):
 <meta name="twitter:description" content="{html.escape(t['desc'])}">
 <meta name="twitter:image" content="{SITE}assets/og.jpg">
 <meta name="theme-color" content="#053D35">
-<link rel="icon" href="{a}logo.png">
+{icons(a)}
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{a}fonts/ibm-plex-sans-arabic-{sub}-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(d){{d.classList.add("js");var s=null;try{{s=localStorage.getItem("waaiya.filter")}}catch(x){{}}var q=/[?&]filter=(on|off)/.exec(location.search);if(q)s=q[1];d.setAttribute("data-filter",s==="on"?"on":"off")}})(document.documentElement)</script>
@@ -695,10 +715,371 @@ def privacy(lang, root):
 <title>Waaiya: {e(T['en']['privacy_title'])} · {e(T['ar']['privacy_title'])}</title>{robots}
 <meta name="description" content="What Waaiya does with your data: the filter and the screen blur work on your device and send nothing. سياسة الخصوصية لتطبيق واعية.">
 <link rel="canonical" href="{SITE}privacy.html">
-<link rel="icon" href="{root}assets/logo.png">
+{icons(root + 'assets/')}
 <style>{fonts(root + 'assets/')}
 {CSS}</style></head>
 <body class="doc"><a class="doc-home" href="{root}{'en/' if lang == 'en' else ''}">Waaiya</a><main class="prose">{body}</main></body></html>
+"""
+
+
+# ---------- /usb/: the one-time Android setup from a computer, over WebUSB (site/usb/) ----------
+# Static texts render here; the script's messages go to the page as JSON (#usb-text). {model} is filled in by setup.js.
+USB = {
+    "en": dict(
+        dir="ltr", title="Set up Waaiya from a computer",
+        desc="Give Waaiya its one-time Android permissions from Chrome or Edge over a USB cable. Nothing to install.",
+        lead="Nothing to install: in Chrome or Edge, this page talks to your phone over the USB cable and gives Waaiya the "
+             "same permissions as the setup on the phone. It also works on Android 10 and on phones without "
+             "Wireless debugging.",
+        steps=["Install Waaiya on the phone ({apk}).",
+               "Turn on Developer options: in Settings › About phone, tap “Build number” 7 times (Samsung: About phone › "
+               "Software information; Xiaomi: “OS version”).",
+               "In Developer options, turn on “USB debugging”.",
+               "Connect the phone to this computer with a USB cable, unlock it, and press the button."],
+        apk="waaiya.apk", button="Connect the phone",
+        privacy="The page runs in your browser and talks only to the phone: nothing is sent anywhere. It keeps a key in "
+                "this browser so the phone can remember the computer (“Revoke USB debugging authorizations” in "
+                "Developer options makes the phone forget it).",
+        log="What was run on the phone", source="Source", home="Waaiya",
+        js=dict(
+            choose="Choose your phone in the browser's list.",
+            opening="Opening the phone…",
+            allow="On the phone: “Allow USB debugging?” Tick “Always allow from this computer”, then tap Allow.",
+            allowWhy="This lets the page run the setup commands. If nothing shows, unlock the phone, or unplug it and "
+                     "plug it in again.",
+            step_phone="Reading the phone…", step_grants="Giving Waaiya its permissions…",
+            step_helper="This phone refused the permissions: starting Waaiya's helper instead…",
+            thePhone="the phone",
+            done="Done: Waaiya has its permissions on {model}.",
+            noProjectMedia="This phone does not keep the permission that skips Android's screen-sharing question, so "
+                           "Android will ask at every start (vivo and iQOO phones do this).",
+            doneAfter="Unplug the phone and open Waaiya: its setup page ticks itself. You can turn USB debugging off "
+                      "again; the permissions stay until Waaiya is uninstalled.",
+            helper="{model} refused the permissions, so Waaiya's helper now lists the sound for it instead.",
+            helperAfter="Open Waaiya now, and leave USB debugging on. The helper stops when the phone restarts or USB "
+                        "debugging is turned off: then connect here again, or do Waaiya's own setup on the phone "
+                        "once (Wireless debugging) and it restarts the helper by itself.",
+            tipXiaomi="To keep the permissions for good: in Developer options, turn on “USB debugging (Security "
+                      "settings)” (it asks you to sign in to a Xiaomi account), then connect again.",
+            tipColoros="To keep the permissions for good: in Developer options, turn on “Disable permission "
+                       "monitoring” (on the newest versions “Disable system optimization”, sometimes shown only with "
+                       "the phone in English), then connect again.",
+            refused="This phone refused the permissions.",
+            refusedOld="Waaiya's helper needs Android 11 or newer, so on this phone the permissions must be allowed "
+                       "in Developer options (Xiaomi: “USB debugging (Security settings)”; OPPO, OnePlus, realme: "
+                       "“Disable permission monitoring”).",
+            refusedOther="Check that the phone is unlocked and connect again. If it keeps refusing, copy what was run "
+                         "(below) and send it to us on GitHub.",
+            noApp="Waaiya is not installed on this phone. Install it first (waaiya.mssid.org/downloads/), then connect "
+                  "again.",
+            tooOld="Waaiya needs Android 10 or newer.",
+            unsupported="This browser cannot reach USB devices. Open this page in Chrome, Edge or another Chromium "
+                        "browser, on Windows, macOS, Linux or ChromeOS.",
+            err_unsupported="This browser cannot reach USB devices.",
+            err_none="No phone was chosen. If the list was empty: unlock the phone, check that USB debugging is on, and "
+                     "try another cable (some cables only charge).",
+            err_noadb="That device has no USB debugging. Turn on “USB debugging” in Developer options and choose "
+                      "the phone again.",
+            err_access="The browser was not allowed to open the phone.",
+            accessWindows="On Windows the phone needs the WinUSB driver: some phone makers' drivers block it. Install "
+                          "Google's USB driver, or try another computer.",
+            accessLinux="On Linux, install your distribution's android-udev-rules package (or add a udev rule for the "
+                        "phone), then unplug the phone and plug it in again.",
+            accessOther="Unplug the phone, plug it in again and retry.",
+            err_busy="Another program is using the phone: close Android Studio or phone manager apps, and if adb is "
+                     "installed run “adb kill-server”. Then try again.",
+            err_io="The connection to the phone broke off. Unplug it, plug it in again and retry.",
+            lost="The phone was disconnected. Plug it in again and retry.",
+            error="Something went wrong. Unplug the phone, plug it in again and retry.",
+        )),
+    "ar": dict(
+        dir="rtl", title="إعداد واعية من حاسوب",
+        desc="امنح واعية أذونات أندرويد مرة واحدة من متصفح Chrome أو Edge عبر كابل USB، دون تثبيت أي برنامج.",
+        lead="لا حاجة إلى تثبيت شيء: في متصفح Chrome أو Edge، تتصل هذه الصفحة بهاتفك عبر كابل USB وتمنح واعية الأذونات "
+             "نفسها التي يمنحها الإعداد على الهاتف. وتعمل أيضًا على أندرويد 10 وعلى الهواتف التي ليس فيها "
+             "«تصحيح الأخطاء اللاسلكي».",
+        steps=["ثبّت واعية على الهاتف ({apk}).",
+               "فعّل «خيارات المطور»: في الإعدادات › «حول الهاتف»، اضغط على «رقم الإصدار» 7 مرات (سامسونج: «حول الهاتف» › "
+               "«معلومات البرنامج»؛ شاومي: «إصدار النظام»).",
+               "في «خيارات المطور»، فعّل «تصحيح أخطاء USB».",
+               "وصّل الهاتف بهذا الحاسوب بكابل USB، وافتح قفله، ثم اضغط الزر."],
+        apk="waaiya.apk", button="وصّل الهاتف",
+        privacy="تعمل الصفحة في متصفحك ولا تتصل إلا بالهاتف: لا يُرسَل شيء إلى أي مكان. وتحفظ في هذا المتصفح مفتاحًا "
+                "ليتذكّر الهاتف هذا الحاسوب (يُنسيه الهاتفَ خيارُ «إبطال تفويضات تصحيح أخطاء USB» في «خيارات المطور»).",
+        log="ما نُفِّذ على الهاتف", source="المصدر", home="واعية",
+        js=dict(
+            choose="اختر هاتفك من قائمة المتصفح.",
+            opening="جارٍ فتح الهاتف…",
+            allow="على الهاتف: «هل تريد السماح بتصحيح أخطاء USB؟» ضع علامة على «السماح دائمًا من هذا الكمبيوتر»، ثم اضغط «سماح».",
+            allowWhy="هذا يتيح للصفحة تنفيذ أوامر الإعداد. إن لم يظهر شيء، فافتح قفل الهاتف، أو افصله ثم وصّله من جديد.",
+            step_phone="جارٍ قراءة الهاتف…", step_grants="جارٍ منح واعية أذوناتها…",
+            step_helper="رفض الهاتف منح الأذونات: جارٍ تشغيل مساعد واعية بدلًا منها…",
+            thePhone="الهاتف",
+            done="تمّ: صارت لواعية أذوناتها على {model}.",
+            noProjectMedia="هذا الهاتف لا يحتفظ بالإذن الذي يتخطّى سؤال أندرويد عن مشاركة الشاشة، فسيسأل أندرويد عند كل "
+                           "تشغيل (تفعل ذلك هواتف vivo وiQOO).",
+            doneAfter="افصل الهاتف وافتح واعية: صفحة الإعداد تؤشّر خطواتها وحدها. ويمكنك إيقاف «تصحيح أخطاء USB» من "
+                      "جديد؛ تبقى الأذونات حتى تُحذف واعية.",
+            helper="رفض {model} منح الأذونات، فصار مساعد واعية يقرأ الأصوات بدلًا منها.",
+            helperAfter="افتح واعية الآن، واترك «تصحيح أخطاء USB» مفعّلًا. يتوقف المساعد عند إعادة تشغيل الهاتف أو عند "
+                        "إيقاف «تصحيح أخطاء USB»: فوصّل الهاتف هنا من جديد، أو أتمّ إعداد واعية على الهاتف مرة واحدة "
+                        "(«تصحيح الأخطاء اللاسلكي») فتعيد تشغيل المساعد وحدها.",
+            tipXiaomi="للاحتفاظ بالأذونات نهائيًا: فعّل في «خيارات المطور» «تصحيح أخطاء USB (إعدادات الأمان)» (يطلب "
+                      "تسجيل الدخول إلى حساب شاومي)، ثم وصّل الهاتف من جديد.",
+            tipColoros="للاحتفاظ بالأذونات نهائيًا: فعّل في «خيارات المطور» «تعطيل مراقبة الأذونات» (اسمه في أحدث "
+                       "الإصدارات «تعطيل تحسين النظام»، وقد لا يظهر إلا إذا كانت لغة الهاتف الإنجليزية)، ثم وصّل "
+                       "الهاتف من جديد.",
+            refused="رفض الهاتف منح الأذونات.",
+            refusedOld="مساعد واعية يحتاج إلى أندرويد 11 أو أحدث، فلا بد في هذا الهاتف من السماح بالأذونات في «خيارات "
+                       "المطور» (شاومي: «تصحيح أخطاء USB (إعدادات الأمان)»؛ أوبو وون بلس وريلمي: «تعطيل مراقبة الأذونات»).",
+            refusedOther="تأكّد أن الهاتف مفتوح القفل ثم وصّله من جديد. وإن ظل يرفض، فانسخ ما نُفِّذ (في الأسفل) "
+                         "وأرسله إلينا على GitHub.",
+            noApp="واعية غير مثبّتة على هذا الهاتف. ثبّتها أولًا (waaiya.mssid.org/downloads/)، ثم وصّل الهاتف من جديد.",
+            tooOld="تحتاج واعية إلى أندرويد 10 أو أحدث.",
+            unsupported="هذا المتصفح لا يصل إلى أجهزة USB. افتح هذه الصفحة في Chrome أو Edge أو متصفح آخر مبني على "
+                        "Chromium، على ويندوز أو ماك أو لينكس أو ChromeOS.",
+            err_unsupported="هذا المتصفح لا يصل إلى أجهزة USB.",
+            err_none="لم يُختر أي هاتف. إن كانت القائمة فارغة: افتح قفل الهاتف، وتأكّد أن «تصحيح أخطاء USB» مفعّل، "
+                     "وجرّب كابلًا آخر (بعض الكابلات للشحن فقط).",
+            err_noadb="هذا الجهاز ليس فيه «تصحيح أخطاء USB». فعّله في «خيارات المطور» ثم اختر الهاتف من جديد.",
+            err_access="لم يُسمح للمتصفح بفتح الهاتف.",
+            accessWindows="في ويندوز يحتاج الهاتف إلى تعريف WinUSB، وبعض تعريفات الشركات المصنّعة تمنعه. ثبّت تعريف USB "
+                          "من Google، أو جرّب حاسوبًا آخر.",
+            accessLinux="في لينكس، ثبّت حزمة android-udev-rules من توزيعتك (أو أضف قاعدة udev للهاتف)، ثم افصل الهاتف "
+                        "ووصّله من جديد.",
+            accessOther="افصل الهاتف ووصّله من جديد، ثم أعد المحاولة.",
+            err_busy="برنامج آخر يستعمل الهاتف: أغلق Android Studio أو برامج إدارة الهاتف، وإن كان adb مثبّتًا فنفّذ "
+                     "«adb kill-server». ثم أعد المحاولة.",
+            err_io="انقطع الاتصال بالهاتف. افصله ووصّله من جديد، ثم أعد المحاولة.",
+            lost="فُصل الهاتف. وصّله من جديد ثم أعد المحاولة.",
+            error="حدث خطأ. افصل الهاتف ووصّله من جديد، ثم أعد المحاولة.",
+        )),
+}
+USB_FILES = ("adb.js", "usb.js", "flow.js", "setup.js")
+
+
+def usb_page(lang, root):
+    u = USB[lang]
+    other, other_label, other_href = ("en", "English", "en/usb/") if lang == "ar" else ("ar", "العربية", "usb/")
+    robots = '<meta name="robots" content="noindex">' if PREVIEW else ""
+    home = root + ("en/" if lang == "en" else "")
+    link = '<a href="' + APK + '">' + e(u["apk"]) + "</a>"
+    steps = "".join("<li>" + e(s).replace("{apk}", link) + "</li>" for s in u["steps"])
+    text = json.dumps(u["js"], ensure_ascii=False).replace("</", "<\\/")
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{u['dir']}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(u['title'])} · Waaiya</title>{robots}
+<meta name="description" content="{e(u['desc'])}">
+<link rel="canonical" href="{SITE}{'en/' if lang == 'en' else ''}usb/">
+<link rel="alternate" hreflang="ar" href="{SITE}usb/"><link rel="alternate" hreflang="en" href="{SITE}en/usb/">
+{icons(root + 'assets/')}
+<style>{fonts(root + 'assets/')}
+{CSS}</style></head>
+<body class="doc"><a class="doc-home" href="{home}">{e(u['home'])}</a>
+<a class="doc-lang" href="{root}{other_href}" lang="{other}" hreflang="{other}">{other_label}</a>
+<main class="prose usb">
+<h1>{e(u['title'])}</h1>
+<p class="usb-lead">{e(u['lead'])}</p>
+<ol class="usb-steps">{steps}</ol>
+<p><button id="usb-connect" class="cbtn" type="button">{e(u['button'])}</button></p>
+<div id="usb-status" class="usb-status" role="status" aria-live="polite" tabindex="-1" hidden></div>
+<details id="usb-log" class="usb-log" hidden><summary>{e(u['log'])}</summary><pre id="usb-log-text" dir="ltr"></pre></details>
+<p class="usb-privacy">{e(u['privacy'])} <a href="{REPO}/tree/main/site/usb">{e(u['source'])}</a></p>
+</main>
+<script type="application/json" id="usb-text">{text}</script>
+<script type="module" src="{root}assets/usb/setup.js"></script>
+</body></html>
+"""
+
+
+# ---------- /test/: sign up for the Google Play test (site/test/) ----------
+# The form posts to {root}api/test-signup.php (site/test/signup.php, copied by main()): on the live site /api/, on the
+# preview /preview/api/. The endpoint keeps the list outside the docroot and tells the owner on Telegram.
+GROUP_URL = "https://groups.google.com/g/waaiya-testers"
+OPTIN_URL = "https://play.google.com/apps/testing/org.waaiya.app"
+PLAY_URL = "https://play.google.com/store/apps/details?id=org.waaiya.app"
+TEST = {
+    "ar": dict(
+        dir="rtl", home="واعية", home_href="", privacy_href="privacy.html",
+        title="انضمّ إلى اختبار واعية على [[Google Play]]",
+        desc="واعية في طريقها إلى [[Google Play]]. انضمّ إلى اختبارها على هاتفك بخطوتين ودون انتظار، قبل نشرها للجميع.",
+        lead="واعية في طريقها إلى متجر [[Google Play]]. وقبل أن تُنشر للجميع، يطلب [[Google]] أن يجرّبها مختبرون مدة "
+             "أسبوعين. الانضمام خطوتان، ولا حاجة إلى انتظارنا.",
+        steps_h="كيف تنضمّ",
+        steps=[("انضمّ إلى مجموعة «[[Waaiya testers]]» بحساب [[Google]] الذي تستعمله في [[Google Play]] على هاتفك.",
+                "انضمّ إلى المجموعة", GROUP_URL),
+               ("ثم ثبّت واعية من [[Google Play]] على هاتفك الأندرويد بالحساب نفسه، وأبقِها مثبّتة [[14]] يومًا على "
+                "الأقل: هذا ما يطلبه [[Google]] قبل نشر التطبيق للجميع. واستعملها كما تشاء.",
+                "ثبّت واعية من [[Google Play]]", PLAY_URL)],
+        steps_note="إن لم تظهر لك واعية في [[Google Play]]، فانتظر بضع دقائق بعد الانضمام إلى المجموعة، أو افتح "
+                   "<<رابط الاختبار>> واضغط «أصبح مختبِرًا».",
+        form_h="أرسل لي هذه الخطوات بالبريد (اختياري)",
+        form_p="اكتب عنوانك فنرسل إليك هذه الخطوات وروابطها، لتفتحها لاحقًا على هاتفك.",
+        email_label="عنوان [[Gmail]]، أو عنوان حسابك في [[Google]]",
+        email_note="يُفضَّل العنوان الذي تستعمله في [[Google Play]] على هاتفك.",
+        name_label="اسمك (اختياري)",
+        submit="أرسل لي الخطوات",
+        use_note="لا نستعمل عنوانك إلا لإرسال هذه الخطوات إليك ولمساعدتك في هذا الاختبار: لا يُنشر، ولا يُعطى لأحد. "
+                 "يُحفظ في قائمة على خادم موقعنا، ويصل إلى المطوّر عبر [[Telegram]]. أما المجموعة فتديرها [[Google]]، "
+                 "ولا يرى عناوينَ أعضائها إلا المطوّر.",
+        privacy="سياسة الخصوصية",
+        remove_h="الخروج من الاختبار",
+        remove_p="للخروج: غادر المجموعة من صفحتها («مغادرة المجموعة»)، واخرج من البرنامج في [[Google Play]]. "
+                 "ولحذف عنوانك من قائمتنا أيضًا، اكتبه هنا.",
+        remove_btn="احذف عنواني",
+        js=dict(
+            sending="جارٍ الإرسال…",
+            done="شكرًا! ستصلك الخطوات على بريدك خلال دقائق. ويمكنك أن تبدأ بها الآن من هذه الصفحة.",
+            removed="تمّ. إن كان هذا العنوان في قائمتنا فقد حُذف منها.",
+            invalid_email="هذا لا يبدو عنوان بريد صحيحًا. تحقّق منه ثم أعد المحاولة.",
+            rate="محاولات كثيرة من هذا الاتصال. أعد المحاولة بعد ساعة.",
+            failed="تعذّر الإرسال الآن. أعد المحاولة بعد دقائق.",
+            oops="لم يُرسَل شيء: تحقّق من العنوان ثم أعد المحاولة، أو أعدها بعد قليل.")),
+    "en": dict(
+        dir="ltr", home="Waaiya", home_href="en/", privacy_href="en/privacy.html",
+        title="Join the Waaiya test on Google Play",
+        desc="Waaiya is coming to Google Play. Join its test on your phone in two steps, no waiting, before it is "
+             "published for everyone.",
+        lead="Waaiya is on its way to Google Play. Before it can be published for everyone, Google asks for testers to "
+             "try it for two weeks. Joining takes two steps, and you do not have to wait for us.",
+        steps_h="How to join",
+        steps=[("Join the “Waaiya testers” group with the Google account you use for Google Play on your phone.",
+                "Join the group", GROUP_URL),
+               ("Then install Waaiya from Google Play on your Android phone, with the same account, and keep it "
+                "installed for at least 14 days: Google asks for this before an app is published for everyone. Use it "
+                "as you like.", "Install Waaiya from Google Play", PLAY_URL)],
+        steps_note="If Google Play does not show Waaiya yet, wait a few minutes after joining the group, or open "
+                   "<<the test link>> and tap \u201cBecome a tester\u201d.",
+        form_h="Email me these steps (optional)",
+        form_p="Leave your address and we send you these steps and links, to open later on your phone.",
+        email_label="Gmail address, or the address of your Google account",
+        email_note="Best: the one you use for Google Play on your phone.",
+        name_label="Your name (optional)",
+        submit="Email me the steps",
+        use_note="Your address is used only to send you these steps and to help you with this test: it is not "
+                 "published and not given to anyone. It is kept in a list on our website's server and sent to the "
+                 "developer over Telegram. The group is run by Google; only the developer sees its members' addresses.",
+        privacy="Privacy policy",
+        remove_h="Leave the test",
+        remove_p="To leave: leave the group on its page (“Leave group”), and leave the program in Google Play. "
+                 "To delete your address from our list too, enter it here.",
+        remove_btn="Delete my address",
+        js=dict(
+            sending="Sending…",
+            done="Thank you! The steps will be in your inbox within a few minutes. You can also start them now from "
+                 "this page.",
+            removed="Done. If this address was on our list, it has been deleted.",
+            invalid_email="This does not look like an email address. Check it and try again.",
+            rate="Too many tries from this connection. Try again in an hour.",
+            failed="It could not be sent just now. Try again in a few minutes.",
+            oops="Nothing was sent: check the address and try again, or try again a little later.")),
+    "fr": dict(
+        dir="ltr", home="Waaiya", home_href="en/", privacy_href="en/privacy.html",
+        title="Testez Waaiya sur Google Play",
+        desc="Waaiya arrive sur Google Play. Rejoignez son test sur votre téléphone en deux étapes, sans attendre, "
+             "avant sa publication pour tous.",
+        lead="Waaiya arrive sur Google Play. Avant de la publier pour tous, Google demande qu'elle soit testée pendant "
+             "deux semaines. Rejoindre le test prend deux étapes, sans attendre notre réponse.",
+        steps_h="Comment rejoindre le test",
+        steps=[("Rejoignez le groupe « Waaiya testers » avec le compte Google que vous utilisez pour Google "
+                "Play sur votre téléphone.", "Rejoindre le groupe", GROUP_URL),
+               ("Installez ensuite Waaiya depuis Google Play sur votre téléphone Android, avec le même compte, et "
+                "gardez-la installée au moins 14 jours\u00a0: Google le demande avant de publier une application pour "
+                "tous. Utilisez-la comme vous voulez.", "Installer Waaiya depuis Google Play", PLAY_URL)],
+        steps_note="Si Google Play n'affiche pas encore Waaiya, attendez quelques minutes après avoir rejoint le groupe, "
+                   "ou ouvrez <<le lien du test>> et touchez «\u00a0Devenir testeur\u00a0».",
+        form_h="Recevoir ces étapes par e-mail (facultatif)",
+        form_p="Indiquez votre adresse et nous vous envoyons ces étapes et leurs liens, à ouvrir plus tard sur votre "
+               "téléphone.",
+        email_label="Adresse Gmail, ou adresse de votre compte Google",
+        email_note="De préférence celle que vous utilisez pour Google Play sur votre téléphone.",
+        name_label="Votre nom (facultatif)",
+        submit="M'envoyer les étapes",
+        use_note="Votre adresse sert uniquement à vous envoyer ces étapes et à vous aider pour ce test : elle n'est "
+                 "ni publiée, ni transmise à quiconque. Elle est conservée dans une liste sur le serveur de notre site "
+                 "et envoyée au développeur par Telegram. Le groupe est géré par Google ; seul le développeur voit "
+                 "les adresses de ses membres.",
+        privacy="Politique de confidentialité (en anglais et en arabe)",
+        remove_h="Quitter le test",
+        remove_p="Pour quitter le test : quittez le groupe depuis sa page (« Quitter le groupe »), puis "
+                 "le programme dans Google Play. Pour supprimer aussi votre adresse de notre liste, indiquez-la ici.",
+        remove_btn="Supprimer mon adresse",
+        js=dict(
+            sending="Envoi…",
+            done="Merci ! Les étapes arrivent dans votre boîte de réception d'ici quelques minutes. Vous pouvez "
+                 "aussi les suivre dès maintenant sur cette page.",
+            removed="C'est fait. Si cette adresse était dans notre liste, elle en a été supprimée.",
+            invalid_email="Cette adresse ne semble pas valide. Vérifiez-la et réessayez.",
+            rate="Trop d'essais depuis cette connexion. Réessayez dans une heure.",
+            failed="L'envoi a échoué. Réessayez dans quelques minutes.",
+            oops="Rien n'a été envoyé : vérifiez l'adresse et réessayez, ou réessayez un peu plus tard.")),
+}
+TEST_LANGS = (("ar", "العربية", "test/"), ("en", "English", "en/test/"), ("fr", "Français", "fr/test/"))
+
+
+def test_page(lang, root):
+    u = TEST[lang]
+    for k, lim in (("title", 60), ("desc", 160)):
+        n = visible_len(plain(u[k]))
+        assert n <= lim, f"test {lang} {k} is {n} characters (limit {lim})"
+    robots = '<meta name="robots" content="noindex">' if PREVIEW else ""
+    path = dict((c, p) for c, _, p in TEST_LANGS)
+    alts = "".join(f'<link rel="alternate" hreflang="{c}" href="{SITE}{p}">' for c, _, p in TEST_LANGS)
+    others = " · ".join(f'<a href="{root}{p}" lang="{c}" hreflang="{c}">{n}</a>' for c, n, p in TEST_LANGS if c != lang)
+    steps = "".join(f'<li><p>{e(t)}</p><p><a class="cbtn tst-go" href="{url}" rel="noopener" target="_blank">'
+                    f'{e(btn)}</a></p></li>' for t, btn, url in u["steps"])
+    text = json.dumps({k: plain(v) for k, v in u["js"].items()}, ensure_ascii=False).replace("</", "<\\/")
+    action = f"{root}api/test-signup.php"
+    trap = ('<div class="vh" aria-hidden="true"><label for="tst-web-{n}">Website</label>'
+            '<input id="tst-web-{n}" name="website" type="text" tabindex="-1" autocomplete="off"></div>')
+    hidden = f'<input type="hidden" name="lang" value="{lang}">'
+    status = '<p class="tst-status" role="status" aria-live="polite" tabindex="-1" hidden></p>'
+    return f"""<!doctype html>
+<html lang="{lang}" dir="{u['dir']}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{e(plain(u['title']))} · {'واعية' if lang == 'ar' else 'Waaiya'}</title>{robots}
+<meta name="description" content="{e(plain(u['desc']))}">
+<link rel="canonical" href="{SITE}{path[lang]}">
+{alts}<link rel="alternate" hreflang="x-default" href="{SITE}test/">
+<link rel="icon" href="{root}assets/logo.png">
+<style>{fonts(root + 'assets/')}
+{CSS}</style></head>
+<body class="doc"><a class="doc-home" href="{root}{u['home_href']}">{e(u['home'])}</a>
+<span class="doc-lang">{others}</span>
+<main class="prose tst">
+<h1>{e(u['title'])}</h1>
+<p class="tst-lead">{e(u['lead'])}</p>
+<h2>{e(u['steps_h'])}</h2>
+<ol class="tst-steps">{steps}</ol>
+<p class="tst-hint">{re.sub(r'&lt;&lt;(.+?)&gt;&gt;', lambda m: f'<a href="{OPTIN_URL}" rel="noopener" target="_blank">{m.group(1)}</a>', e(u['steps_note']))}</p>
+<h2>{e(u['form_h'])}</h2>
+<p>{e(u['form_p'])}</p>
+<form class="tst-form" action="{action}" method="post">{hidden}<input type="hidden" name="mode" value="join">
+<div class="tst-field"><label for="tst-email">{e(u['email_label'])}</label>
+<input id="tst-email" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" dir="ltr" spellcheck="false" autocapitalize="off" aria-describedby="tst-email-note">
+<p class="tst-hint" id="tst-email-note">{e(u['email_note'])}</p></div>
+<div class="tst-field"><label for="tst-name">{e(u['name_label'])}</label>
+<input id="tst-name" name="name" type="text" maxlength="80" autocomplete="name" dir="auto"></div>
+{trap.format(n=1)}
+<p><button type="submit" class="cbtn">{e(u['submit'])}</button></p>
+{status}
+</form>
+<p class="tst-status ok tst-after" id="done" tabindex="-1">{e(u['js']['done'])}</p>
+<p class="tst-status ok tst-after" id="removed" tabindex="-1">{e(u['js']['removed'])}</p>
+<p class="tst-status bad tst-after" id="oops" tabindex="-1">{e(u['js']['oops'])}</p>
+<p class="tst-use">{e(u['use_note'])} <a href="{root}{u['privacy_href']}">{e(u['privacy'])}</a></p>
+<details class="tst-remove"><summary>{e(u['remove_h'])}</summary>
+<form class="tst-form" action="{action}" method="post">{hidden}<input type="hidden" name="mode" value="remove">
+<p>{e(u['remove_p'])}</p>
+<div class="tst-field"><label for="tst-email-rm" class="vh">{e(u['email_label'])}</label>
+<input id="tst-email-rm" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" dir="ltr" spellcheck="false" autocapitalize="off"></div>
+{trap.format(n=2)}
+<p><button type="submit" class="cbtn quiet">{e(u['remove_btn'])}</button></p>
+{status}
+</form></details>
+</main>
+<script type="application/json" id="test-text">{text}</script>
+<script src="{root}assets/test/signup.js" defer></script>
+</body></html>
 """
 
 
@@ -714,11 +1095,13 @@ LLMS = f"""# Waaiya (واعية)
 - [Waaiya, in Arabic]({SITE}): the main page
 - [Waaiya, in English]({SITE}en/)
 - [Privacy policy]({SITE}privacy.html)
+- [Set up Android from a computer over USB (Chrome, Edge)]({SITE}en/usb/)
 
 ## Downloads and source
 
 - [Android: waaiya.apk {VERSION}]({APK})
-- [Windows and Linux releases]({RELEASES}): the Windows zip is not signed yet; a Microsoft Store listing is under review
+- [Windows: Waaiya in the Microsoft Store]({STORE}): free, signed by Microsoft
+- [Windows and Linux releases]({RELEASES}): the Windows zip (not signed) and the Linux apps
 - [Source code]({REPO})
 """
 
@@ -777,7 +1160,8 @@ def sitemap():
     today = datetime.date.today().isoformat()
     alts = "".join(f'\n    <xhtml:link rel="alternate" hreflang="{h}" href="{u}"/>'
                    for h, u in (("ar", SITE), ("en", SITE + "en/"), ("x-default", SITE)))
-    urls = [(SITE, alts, "1.0"), (SITE + "en/", alts, "0.9"), (SITE + "privacy.html", "", "0.3")]
+    urls = [(SITE, alts, "1.0"), (SITE + "en/", alts, "0.9"), (SITE + "privacy.html", "", "0.3"),
+            (SITE + "usb/", "", "0.4"), (SITE + "en/usb/", "", "0.4")]
     body = "".join(f"  <url>\n    <loc>{u}</loc>{a}\n    <lastmod>{today}</lastmod>\n    <priority>{p}</priority>\n  </url>\n"
                    for u, a, p in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
@@ -794,6 +1178,20 @@ def main():
     (OUT / "en/index.html").write_text(page("en", "../"))
     (OUT / "privacy.html").write_text(privacy("ar", ""))
     (OUT / "en/privacy.html").write_text(privacy("en", "../"))
+    (OUT / "assets/usb").mkdir(parents=True)
+    for f in USB_FILES:
+        shutil.copy(HERE / "usb" / f, OUT / "assets/usb" / f)
+    (OUT / "usb").mkdir()
+    (OUT / "en/usb").mkdir()
+    (OUT / "usb/index.html").write_text(usb_page("ar", "../"))
+    (OUT / "en/usb/index.html").write_text(usb_page("en", "../../"))
+    (OUT / "assets/test").mkdir(parents=True)
+    shutil.copy(HERE / "test/signup.js", OUT / "assets/test/signup.js")
+    (OUT / "api").mkdir()
+    shutil.copy(HERE / "test/signup.php", OUT / "api/test-signup.php")
+    for c, _, p in TEST_LANGS:
+        (OUT / p).mkdir(parents=True)
+        (OUT / p / "index.html").write_text(test_page(c, "../" * p.count("/")))
     (OUT / "llms.txt").write_text(LLMS)
     if not PREVIEW:
         (OUT / "robots.txt").write_text(ROBOTS)

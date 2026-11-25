@@ -208,5 +208,18 @@
   "protect_what_pin_change": "Pincode wijzigen",
   "protect_what_pin_clear": "Pincode verwijderen",
   "protect_what_setting": "Een instelling wijzigen",
-  "onboard_body_desktop": "Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze computer. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd."
+  "onboard_body_desktop": "Waaiya haalt muziekinstrumenten uit het geluid van elke app op deze computer. Spraak en Koranrecitatie blijven behouden. Voorlopig worden zangstemmen ook verwijderd.",
+  "worship_use_location": "Mijn locatie gebruiken",
+  "worship_why_location": "Om de gebedstijden te vinden waar je bent, leest Waaiya nu één keer de geschatte locatie van deze telefoon. Die blijft op de telefoon als je plaats en wordt nergens heen gestuurd.",
+  "worship_locating": "Je locatie zoeken…",
+  "worship_location_denied": "Locatie is niet toegestaan. Je kunt in plaats daarvan je stad zoeken.",
+  "worship_location_off": "Locatie staat uit op deze telefoon. Zet die aan en probeer het opnieuw, of zoek je stad.",
+  "worship_location_settings": "Locatie-instellingen",
+  "worship_location_failed": "Je locatie kon niet worden gevonden. Probeer het zo opnieuw, of zoek je stad.",
+  "worship_place_near": "bij {city}",
+  "worship_habous_note": "De officiële tijden van het ministerie van Habous en Islamitische Zaken voor {city}.",
+  "tray_open": "Waaiya openen",
+  "tray_quit": "Afsluiten",
+  "engine_error_autostart_blocked": "Windows laat Waaiya niet starten bij het aanmelden. Zet Waaiya aan in Instellingen › Apps › Opstarten en zet deze optie daarna weer aan.",
+  "engine_error_autostart_policy": "De instellingen van deze computer, gekozen door de beheerder, laten Waaiya niet starten bij het aanmelden."
 }

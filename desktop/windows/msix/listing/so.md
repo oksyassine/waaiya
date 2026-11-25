@@ -18,6 +18,7 @@ ciyaaraha), si toos ah, kombiyuutarkaaga.
 - Barnaamijyada la maqlo iyagoo aan la shaandheyn: dooro barnaamijyada lagu maqlo codkooda asalka ah; lama sifeeyo lamana aamusiyo.
 - Ilaalin waqtiyada daciifnimada: joojinta waa la sugsiin karaa (tusaale 30 daqiiqo) kadibna mar kale ayaa lagu weydiinayaa, waalidkuna wuu dhigi karaa PIN.
 - Qor khalad: calaamadee muusig dhaafay ama cod si qalad ah loo saaray; qoraallada waxay ku jiraan kombiyuutarkaaga.
+- Calaamad ku ag taal saacadda: fur Waaiya, ama shid oo dami sifeynta, adigoon raadin barnaamijka.
 - Bilow marka aad soo gasho, haddii aad rabto.
 - Wax walba kombiyuutarkaaga ayay ka shaqeeyaan. Meelna waxba looma diro: akoon ma jiro, falanqayn ma jirto,
   xayeysiis ma jiro.
@@ -32,17 +33,9 @@ gaabis ah, Waaiya iskeed ayay ugu wareegtaa mono.
 
 ## What's new in this version
 
-Noocii ugu horreeyay ee Microsoft Store.
-- Bog cusub oo Linkiyada ah: daawo link YouTube, TikTok ama Instagram adigoo shaandhadu daaran tahay.
-- Aamusii heesaha haweenka (nooc hore), hadda Windows-ka sidoo kale.
-- Barnaamijyada la maqlo iyagoo aan la shaandheyn
-- Ilaalin waqtiyada daciifnimada
-- Qor khalad
-- 18 luqadood (cusub: Isbaanish, Holandays, Jarmal, Talyaani, Ruush, Usbeki, Sawaaxili, Hawsa, Soomaali).
-- Naqshad ka jilicsan: badhamadu isla markiiba way jawaabaan, dhaqdhaqaaq deggan (midna ma jiro haddii Windows
-  codsato dhaqdhaqaaq yar).
-- Hagaajinno: shaandho Waaiya oo hore oo joojisay jawaabta hadda ma xannibto tan cusub; faahfaahinta khaladaadka way
-  fududahay in la akhriyo.
+- Calaamad ku ag taal saacadda: fur Waaiya, ama ka shid oo ka dami sifeynta liiskeeda. Xiridda daaqadda waxay Waaiya ku haysaa halkaas.
+- Bilow marka aad soo gasho: Waaiya waxay ka bilaabataa saacadda agteeda, Windows-na waxay ku weydiisaa ogolaansho marka loo baahdo.
+- Astaan cusub: xarafka ع ee واعية oo loo sawiray sida dheg, kana muuqda calaamadaha yaryar sidoo kale.
 
 ## Product features (one per line, at most 20)
 
@@ -56,6 +49,7 @@ Noocii ugu horreeyay ee Microsoft Store.
 - Ilaalin waqtiyada daciifnimada
 - Qor khalad
 - Bilow marka aad soo gasho
+- Calaamad ku ag taal saacadda: shid oo dami sifeynta
 - 18 luqadood
 - Bilaash ah oo isha furan
 

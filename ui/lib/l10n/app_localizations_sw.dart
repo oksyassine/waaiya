@@ -182,6 +182,10 @@ class AppLocalizationsSw extends AppLocalizations {
   String get computerToggle => 'Tumia kompyuta badala yake';
 
   @override
+  String get computerWeb =>
+      'Njia rahisi zaidi: kwenye kompyuta, fungua waaiya.mssid.org/usb katika Chrome au Edge, washa Utatuzi wa USB kisha unganisha simu kwa kebo. Hakuna cha kusakinisha, na inafanya kazi kwenye Android 10 pia. Au, ikiwa adb imesakinishwa:';
+
+  @override
   String get computerBody =>
       'Washa Utatuzi wa USB, unganisha simu kisha uendeshe:';
 
@@ -392,6 +396,25 @@ class AppLocalizationsSw extends AppLocalizations {
       'Hufunika watu na picha kwenye skrini, katika kila programu, wakati uchujaji umewashwa. Hufanya kazi ndani ya simu; hakuna kinachotumwa popote.';
 
   @override
+  String get blurOnTitle => 'Ufifishaji umewashwa';
+
+  @override
+  String get blurOffTitle => 'Ufifishaji umezimwa';
+
+  @override
+  String get blurStartCd => 'Washa ufifishaji';
+
+  @override
+  String get blurStopCd => 'Zima ufifishaji';
+
+  @override
+  String get blurOffDetail =>
+      'Gusa kitufe ili kuanza. Uchujaji huanza pamoja nao.';
+
+  @override
+  String get blurWhatTitle => 'Kinachofifishwa';
+
+  @override
   String get blurWomenTitle => 'Fifisha wanawake';
 
   @override
@@ -414,26 +437,23 @@ class AppLocalizationsSw extends AppLocalizations {
       'Imewashwa: skrini nzima hufunikwa simu ikiwa ya polepole mno au ufifishaji ukishindwa. Imezimwa: skrini hubaki ikionekana pamoja na onyo.';
 
   @override
-  String get blurSetupShizuku => 'Ruhusu kwa Shizuku';
-
-  @override
   String get blurSetupManual => 'Ruhusu katika mipangilio ya Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: “Ruhusu kwa Shizuku”, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au “Ruhusu katika mipangilio ya Android”, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
+      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: “Nenda kwenye usanidi”, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au “Ruhusu katika mipangilio ya Android”, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: washa Shizuku na uiruhusu Waaiya ndani yake, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
+      'Ili kufifisha, Waaiya inahitaji kuonyeshwa juu ya programu nyingine. Bora zaidi: fanya usanidi wa mara moja, ili miguso yako iendelee kufika kwenye programu iliyo chini ya ufifishaji. Au ruhusu “Onyesha juu ya programu zingine” (Display over other apps) katika mipangilio ya Android, lakini hapo kugusa eneo lililofifishwa hakufanyi chochote.';
 
   @override
   String get blurFailUnavailable =>
-      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa msaidizi wa Waaiya au Shizuku (Android 12 au mpya zaidi) na chaguo hili litawaka: vifuniko kisha huchorwa ili miguso ipite ndani yake. Hadi hapo, ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
+      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa msaidizi wa Waaiya (Android 12 au mpya zaidi) na chaguo hili litawaka: vifuniko kisha huchorwa ili miguso ipite ndani yake. Hadi hapo, ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa Shizuku (Android 12 au mpya zaidi) au washa huduma ya ufikivu ya Ufifishaji wa Waaiya (Ruhusu kwa Shizuku, hapo juu) na chaguo hili litawaka. Hadi hapo, skrini hubaki ikionekana pamoja na onyo.';
+      'Halipatikani kwa sasa: kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama. Washa msaidizi wa Waaiya (Android 12 au mpya zaidi) au washa huduma ya ufikivu ya Ufifishaji wa Waaiya katika mipangilio ya Android na chaguo hili litawaka. Hadi hapo, skrini hubaki ikionekana pamoja na onyo.';
 
   @override
   String get languageTitle => 'Lugha';
@@ -481,16 +501,11 @@ class AppLocalizationsSw extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku haikuweza kuuruhusu:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Jinsi ya kuwasha Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Halipatikani: kwenye toleo hili la Android kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama (vifuniko vya Shizuku vinahitaji Android 12 au mpya zaidi). Ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
+      'Halipatikani: kwenye toleo hili la Android kifuniko cha skrini nzima kingezuia kila mguso na ungeweza kukwama (vifuniko ambavyo miguso hupita ndani yake vinahitaji Android 12 au mpya zaidi). Ufifishaji usipoweza kwenda sambamba, skrini hubaki ikionekana pamoja na onyo.';
 
   @override
   String get guideTitle => 'Washa Shizuku, hatua kwa hatua';
@@ -1074,6 +1089,39 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Haikuweza kuangalia sasa. Jaribu tena baadaye.';
+
+  @override
+  String get moveOldTitle => 'Waaiya imehamia';
+
+  @override
+  String get moveOldBody =>
+      'Sasa Waaiya inakuja kama programu mpya kwenye Android (Waaiya ileile kwa jina jipya), na hii haitapata masasisho tena. Sakinisha mpya: mipangilio yako inahamia. Kisha fanya mpangilio wake wa mara moja na uondoe hii.';
+
+  @override
+  String get moveOldInstalled =>
+      'Waaiya mpya imesakinishwa. Ifungue: inachukua mipangilio yako. Fanya mpangilio wake wa mara moja, kisha uondoe hii ya zamani ili mbili zisichuje kwa wakati mmoja.';
+
+  @override
+  String get moveInstall => 'Sakinisha Waaiya mpya';
+
+  @override
+  String get moveOpenNew => 'Fungua Waaiya mpya';
+
+  @override
+  String get moveRemoveThis => 'Ondoa Waaiya hii ya zamani';
+
+  @override
+  String get moveNewTitle => 'Waaiya ya zamani bado imesakinishwa';
+
+  @override
+  String get moveNewBody =>
+      'Waaiya ya zamani (ya kabla ya toleo 0.2.15) bado iko kwenye simu hii. Iondoe ili mbili zisichuje kwa wakati mmoja.';
+
+  @override
+  String get moveNewImported => 'Mipangilio yako imeletwa kutoka kwake.';
+
+  @override
+  String get moveRemoveOld => 'Ondoa Waaiya ya zamani';
 
   @override
   String get desktopPreview =>
@@ -1851,4 +1899,53 @@ class AppLocalizationsSw extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya huondoa ala za muziki kwenye sauti ya kila programu katika kompyuta hii. Mazungumzo na kisomo cha Qur\'ani hubaki. Kwa sasa, sauti za uimbaji huondolewa pia.';
+
+  @override
+  String get worshipUseLocation => 'Tumia mahali nilipo';
+
+  @override
+  String get worshipWhyLocation =>
+      'Ili kupata nyakati za swala mahali ulipo, Waaiya husoma mahali takriban pa simu hii mara moja, sasa. Huhifadhiwa kwenye simu kama mahali pako na haitumwi popote.';
+
+  @override
+  String get worshipLocating => 'Inatafuta mahali ulipo…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Mahali hapakuruhusiwa. Unaweza kutafuta mji wako badala yake.';
+
+  @override
+  String get worshipLocationOff =>
+      'Huduma ya mahali imezimwa kwenye simu hii. Iwashe ujaribu tena, au utafute mji wako.';
+
+  @override
+  String get worshipLocationSettings => 'Mipangilio ya mahali';
+
+  @override
+  String get worshipLocationFailed =>
+      'Mahali ulipo hapakupatikana. Jaribu tena baada ya muda mfupi, au utafute mji wako.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'karibu na $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa $city.';
+  }
+
+  @override
+  String get trayOpen => 'Fungua Waaiya';
+
+  @override
+  String get trayQuit => 'Ondoka';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows hairuhusu Waaiya kuanza unapoingia. Washa Waaiya katika Mipangilio › Programu › Kuanzisha, kisha uwashe chaguo hili tena.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Mipangilio ya kompyuta hii, iliyochaguliwa na msimamizi wake, hairuhusu Waaiya kuanza unapoingia.';
 }

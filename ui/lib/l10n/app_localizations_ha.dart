@@ -182,6 +182,10 @@ class AppLocalizationsHa extends AppLocalizations {
   String get computerToggle => 'Yi amfani da kwamfuta maimakon haka';
 
   @override
+  String get computerWeb =>
+      'Hanya mafi sauƙi: a kwamfuta, buɗe waaiya.mssid.org/usb a Chrome ko Edge, kunna “USB debugging” sannan ku haɗa wayar da waya (cable). Babu abin da za a saka, kuma yana aiki a Android 10 ma. Ko kuma, idan adb yana kan kwamfutar:';
+
+  @override
   String get computerBody =>
       'Kunna zaɓin “USB debugging”, haɗa wayar da kwamfuta sannan ku gudanar da wannan umarni:';
 
@@ -392,6 +396,25 @@ class AppLocalizationsHa extends AppLocalizations {
       'Yana rufe mutane da hotuna a allo, a kowace manhaja, yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.';
 
   @override
+  String get blurOnTitle => 'Dusashewa tana aiki';
+
+  @override
+  String get blurOffTitle => 'Dusashewa a kashe take';
+
+  @override
+  String get blurStartCd => 'Kunna dusashewa';
+
+  @override
+  String get blurStopCd => 'Kashe dusashewa';
+
+  @override
+  String get blurOffDetail =>
+      'Ku taɓa maɓallin don farawa. Tacewa ma tana farawa tare da ita.';
+
+  @override
+  String get blurWhatTitle => 'Abin da za a dusashe';
+
+  @override
   String get blurWomenTitle => 'Dusashe mata';
 
   @override
@@ -413,26 +436,23 @@ class AppLocalizationsHa extends AppLocalizations {
       'A kunne: ana rufe dukkan allo idan wayar ta yi jinkiri sosai ko dusashewa ta kasa. A kashe: allon yana bayyana tare da gargaɗi.';
 
   @override
-  String get blurSetupShizuku => 'Ba da izini da Shizuku';
-
-  @override
   String get blurSetupManual => 'Ba da izini a saitunan Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: “Ba da izini da Shizuku”, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma “Ba da izini a saitunan Android”, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
+      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: “Je zuwa saitin”, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma “Ba da izini a saitunan Android”, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku kunna Shizuku ku kuma ba Waaiya izini a ciki, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma ku ba da izinin “Display over other apps” a saitunan Android, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
+      'Don dusashewa, Waaiya yana buƙatar nunawa a saman sauran manhajoji. Mafi kyau: ku yi saitin na lokaci ɗaya, don taɓawarku ta ci gaba da kaiwa manhajar da ke ƙarƙashin dusashewa. Ko kuma ku ba da izinin “Display over other apps” a saitunan Android, amma daga nan taɓa wurin da aka dusashe ba zai yi komai ba.';
 
   @override
   String get blurFailUnavailable =>
-      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya ko Shizuku (Android 12 ko sabo) sai ya kunnu: daga nan ana zana murfin ta yadda taɓawa ke ratsa su. Kafin nan, idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
+      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya (Android 12 ko sabo) sai ya kunnu: daga nan ana zana murfin ta yadda taɓawa ke ratsa su. Kafin nan, idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna Shizuku (Android 12 ko sabo) ko ku kunna sabis ɗin sauƙaƙa amfani “Dusashewar Waaiya” (“Ba da izini da Shizuku” a sama) sai ya kunnu. Kafin nan, allon yana bayyana tare da gargaɗi.';
+      'Ba ya aiki a yanzu: murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa. Ku kunna mataimakin Waaiya (Android 12 ko sabo) ko ku kunna sabis ɗin sauƙaƙa amfani “Dusashewar Waaiya” a saitunan Android sai ya kunnu. Kafin nan, allon yana bayyana tare da gargaɗi.';
 
   @override
   String get languageTitle => 'Harshe';
@@ -479,16 +499,11 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku bai iya ba da izinin ba:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Yadda ake kunna Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Ba ya aiki: a wannan sigar Android, murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa (murfin Shizuku yana buƙatar Android 12 ko sabo). Idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
+      'Ba ya aiki: a wannan sigar Android, murfin dukkan allo zai hana kowace taɓawa kuma za ku iya maƙalewa (murfin da taɓawa ke ratsa su yana buƙatar Android 12 ko sabo). Idan dusashewa ta kasa tafiya daidai, allon yana bayyana tare da gargaɗi.';
 
   @override
   String get guideTitle => 'Kunna Shizuku, mataki-mataki';
@@ -1068,6 +1083,39 @@ class AppLocalizationsHa extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Ba a iya dubawa yanzu ba. Sake gwadawa daga baya.';
+
+  @override
+  String get moveOldTitle => 'Waaiya ta koma';
+
+  @override
+  String get moveOldBody =>
+      'Yanzu Waaiya tana zuwa a matsayin sabuwar manhaja a Android (Waaiya ɗaya ce da sabon suna), kuma wannan ba za ta ƙara samun sabuntawa ba. Saka sabuwar: saitunanku za su bi ta. Sannan ku yi saitin farko na sau ɗaya a cikinta, ku cire wannan.';
+
+  @override
+  String get moveOldInstalled =>
+      'An saka sabuwar Waaiya. Buɗe ta: za ta ɗauki saitunanku. Yi saitin farko na sau ɗaya, sannan ku cire wannan tsohuwar don kada su biyu su tace a lokaci ɗaya.';
+
+  @override
+  String get moveInstall => 'Saka sabuwar Waaiya';
+
+  @override
+  String get moveOpenNew => 'Buɗe sabuwar Waaiya';
+
+  @override
+  String get moveRemoveThis => 'Cire wannan tsohuwar Waaiya';
+
+  @override
+  String get moveNewTitle => 'Tsohuwar Waaiya tana nan a kan wayar';
+
+  @override
+  String get moveNewBody =>
+      'Tsohuwar Waaiya (ta kafin siga 0.2.15) tana nan a wannan wayar. Cire ta don kada su biyu su tace a lokaci ɗaya.';
+
+  @override
+  String get moveNewImported => 'An kawo saitunanku daga gare ta.';
+
+  @override
+  String get moveRemoveOld => 'Cire tsohuwar Waaiya';
 
   @override
   String get desktopPreview =>
@@ -1842,4 +1890,53 @@ class AppLocalizationsHa extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur\'ani. A yanzu, ana cire muryoyin waƙa ma.';
+
+  @override
+  String get worshipUseLocation => 'Yi amfani da wurina';
+
+  @override
+  String get worshipWhyLocation =>
+      'Don gano lokutan sallah a inda kake, Waaiya na karanta kimanin wurin wannan waya sau ɗaya, yanzu. Ana ajiye shi a waya a matsayin wurinka, ba a aika shi ko\'ina.';
+
+  @override
+  String get worshipLocating => 'Ana neman inda kake…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Ba a ba da izinin wuri ba. Za ka iya neman garinka maimakon haka.';
+
+  @override
+  String get worshipLocationOff =>
+      'An kashe wuri a wannan waya. Kunna shi ka sake gwadawa, ko ka nemi garinka.';
+
+  @override
+  String get worshipLocationSettings => 'Saitunan wuri';
+
+  @override
+  String get worshipLocationFailed =>
+      'Ba a sami wurinka ba. Sake gwadawa nan ba da jimawa ba, ko ka nemi garinka.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'kusa da $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Lokutan hukuma na Ma\'aikatar Habous da Harkokin Musulunci na $city.';
+  }
+
+  @override
+  String get trayOpen => 'Buɗe Waaiya';
+
+  @override
+  String get trayQuit => 'Fita';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows ba ya barin Waaiya ta fara lokacin shiga. Kunna Waaiya a Settings › Apps › Startup, sannan ka sake kunna wannan.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga.';
 }

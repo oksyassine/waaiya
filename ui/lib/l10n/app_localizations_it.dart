@@ -182,6 +182,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get computerToggle => 'Usa invece un computer';
 
   @override
+  String get computerWeb =>
+      'Il modo più semplice: su un computer apri waaiya.mssid.org/usb in Chrome o Edge, attiva il Debug USB e collega il telefono con un cavo. Niente da installare, e funziona anche con Android 10. Oppure, con adb installato:';
+
+  @override
   String get computerBody =>
       'Attiva il Debug USB, collega il telefono ed esegui:';
 
@@ -391,6 +395,25 @@ class AppLocalizationsIt extends AppLocalizations {
       'Copre le persone e le immagini sullo schermo, in tutte le app, mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.';
 
   @override
+  String get blurOnTitle => 'La sfocatura è attiva';
+
+  @override
+  String get blurOffTitle => 'La sfocatura è spenta';
+
+  @override
+  String get blurStartCd => 'Avvia la sfocatura';
+
+  @override
+  String get blurStopCd => 'Ferma la sfocatura';
+
+  @override
+  String get blurOffDetail =>
+      'Tocca il pulsante per avviare. Il filtraggio parte insieme.';
+
+  @override
+  String get blurWhatTitle => 'Cosa sfocare';
+
+  @override
   String get blurWomenTitle => 'Sfoca le donne';
 
   @override
@@ -413,26 +436,23 @@ class AppLocalizationsIt extends AppLocalizations {
       'Attivato: tutto lo schermo viene coperto quando il telefono è troppo lento o la sfocatura non funziona. Disattivato: lo schermo resta visibile con un avviso.';
 
   @override
-  String get blurSetupShizuku => 'Consenti con Shizuku';
-
-  @override
   String get blurSetupManual => 'Consenti nelle impostazioni di Android';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: «Consenti con Shizuku», così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure «Consenti nelle impostazioni di Android», ma allora un tocco su un\'area sfocata non fa nulla.';
+      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: «Vai alla configurazione», così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure «Consenti nelle impostazioni di Android», ma allora un tocco su un\'area sfocata non fa nulla.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: avvia Shizuku e consenti Waaiya al suo interno, così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure consenti «Mostra sopra altre app» nelle impostazioni di Android, ma allora un tocco su un\'area sfocata non fa nulla.';
+      'Per sfocare, Waaiya deve mostrarsi sopra le altre app. Meglio: fai la configurazione una tantum, così i tuoi tocchi arrivano comunque all\'app sotto la sfocatura. Oppure consenti «Mostra sopra altre app» nelle impostazioni di Android, ma allora un tocco su un\'area sfocata non fa nulla.';
 
   @override
   String get blurFailUnavailable =>
-      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya o Shizuku (Android 12 o versioni successive) e l\'opzione si attiva: le coperture vengono allora disegnate in modo che i tocchi le attraversino. Fino ad allora, quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
+      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya (Android 12 o versioni successive) e l\'opzione si attiva: le coperture vengono allora disegnate in modo che i tocchi le attraversino. Fino ad allora, quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia Shizuku (Android 12 o versioni successive) o attiva il servizio di accessibilità Sfocatura Waaiya (Consenti con Shizuku, qui sopra) e l\'opzione si attiva. Fino ad allora, lo schermo resta visibile con un avviso.';
+      'Non disponibile per ora: una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato. Avvia l\'assistente di Waaiya (Android 12 o versioni successive) o attiva il servizio di accessibilità Sfocatura Waaiya nelle impostazioni di Android e l\'opzione si attiva. Fino ad allora, lo schermo resta visibile con un avviso.';
 
   @override
   String get languageTitle => 'Lingua';
@@ -480,16 +500,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku non è riuscito a consentirlo:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Come avviare Shizuku';
 
   @override
   String get blurFailOldAndroid =>
-      'Non disponibile: su questa versione di Android una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato (le coperture di Shizuku richiedono Android 12 o versioni successive). Quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
+      'Non disponibile: su questa versione di Android una copertura a schermo intero bloccherebbe ogni tocco e il telefono potrebbe restare bloccato (le coperture attraversate dai tocchi richiedono Android 12 o versioni successive). Quando la sfocatura non sta al passo, lo schermo resta visibile con un avviso.';
 
   @override
   String get guideTitle => 'Avviare Shizuku, passo dopo passo';
@@ -1075,6 +1090,39 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Non è possibile controllare ora. Riprova più tardi.';
+
+  @override
+  String get moveOldTitle => 'Waaiya si è trasferita';
+
+  @override
+  String get moveOldBody =>
+      'Su Android Waaiya ora arriva come una nuova app (la stessa Waaiya con un nuovo nome), e questa non riceverà più aggiornamenti. Installa la nuova: le tue impostazioni la seguono. Poi fai la sua configurazione iniziale e rimuovi questa.';
+
+  @override
+  String get moveOldInstalled =>
+      'La nuova Waaiya è installata. Aprila: prende le tue impostazioni. Fai la sua configurazione iniziale, poi rimuovi questa vecchia così che le due non filtrino mai insieme.';
+
+  @override
+  String get moveInstall => 'Installa la nuova Waaiya';
+
+  @override
+  String get moveOpenNew => 'Apri la nuova Waaiya';
+
+  @override
+  String get moveRemoveThis => 'Rimuovi questa vecchia Waaiya';
+
+  @override
+  String get moveNewTitle => 'La vecchia Waaiya è ancora installata';
+
+  @override
+  String get moveNewBody =>
+      'La vecchia Waaiya (precedente alla versione 0.2.15) è ancora su questo telefono. Rimuovila così che le due non filtrino mai insieme.';
+
+  @override
+  String get moveNewImported => 'Le tue impostazioni sono state prese da lì.';
+
+  @override
+  String get moveRemoveOld => 'Rimuovi la vecchia Waaiya';
 
   @override
   String get desktopPreview =>
@@ -1846,4 +1894,53 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo computer. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano.';
+
+  @override
+  String get worshipUseLocation => 'Usa la mia posizione';
+
+  @override
+  String get worshipWhyLocation =>
+      'Per trovare gli orari di preghiera dove ti trovi, Waaiya legge una sola volta, ora, la posizione approssimativa di questo telefono. Resta sul telefono come tuo luogo e non viene inviata da nessuna parte.';
+
+  @override
+  String get worshipLocating => 'Ricerca della tua posizione…';
+
+  @override
+  String get worshipLocationDenied =>
+      'La posizione non è stata consentita. Puoi cercare la tua città.';
+
+  @override
+  String get worshipLocationOff =>
+      'La localizzazione è disattivata su questo telefono. Attivala e riprova, oppure cerca la tua città.';
+
+  @override
+  String get worshipLocationSettings => 'Impostazioni di localizzazione';
+
+  @override
+  String get worshipLocationFailed =>
+      'Impossibile trovare la tua posizione. Riprova tra un momento, oppure cerca la tua città.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return 'vicino a $city';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Gli orari ufficiali del Ministero degli Habous e degli Affari islamici per $city.';
+  }
+
+  @override
+  String get trayOpen => 'Apri Waaiya';
+
+  @override
+  String get trayQuit => 'Esci';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows non consente a Waaiya di avviarsi all\'accesso. Attiva Waaiya in Impostazioni › App › Avvio, poi riattiva questa opzione.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Le impostazioni di questo computer, scelte dal suo amministratore, non consentono a Waaiya di avviarsi all\'accesso.';
 }

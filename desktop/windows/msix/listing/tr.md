@@ -17,6 +17,7 @@ Kuran tilavetini. Her uygulamayla (tarayıcılar, video oynatıcılar, oyunlar) 
 - Filtresiz duyulan uygulamalar: özgün sesiyle duyulacak uygulamaları seçin; ne süzülür ne susturulur.
 - Zayıf anlar için koruma: durdurma beklemeye ayarlanabilir (örneğin 30 dakika) ve sonra size yeniden sorar; bir ebeveyn PIN de belirleyebilir.
 - Bir hatayı not edin: geçen müziği ya da yanlışlıkla silinen sesi işaretleyin; notlar bilgisayarınızda kalır.
+- Saatin yanında bir simge: uygulamayı aramadan Waaiya'yı açın ya da filtrelemeyi başlatıp durdurun.
 - İsterseniz oturum açılınca başlat.
 - Her şey bilgisayarınızda çalışır. Hiçbir yere bir şey gönderilmez: hesap yok, analiz yok, reklam yok.
 - Ücretsiz ve açık kaynak (AGPL-3.0)
@@ -30,16 +31,9 @@ Waaiya kendiliğinden monoya geçer.
 
 ## What's new in this version
 
-Microsoft Store'daki ilk sürüm.
-- Yeni Bağlantılar sayfası: bir YouTube, TikTok veya Instagram bağlantısını filtre açıkken izleyin.
-- Kadınların şarkı sesini sustur (ilk sürüm), artık Windows'ta da.
-- Filtresiz duyulan uygulamalar
-- Zayıf anlar için koruma
-- Bir hatayı not edin
-- 18 dil (yeni: İspanyolca, Felemenkçe, Almanca, İtalyanca, Rusça, Özbekçe, Svahili, Hausaca, Somalice).
-- Daha akıcı tasarım: düğmeler anında yanıt verir, yumuşak animasyonlar (Windows daha az hareket istediğinde hiç yok).
-- Düzeltmeler: yanıt vermeyi bırakmış eski bir Waaiya filtresi artık yenisini engellemiyor; hata ayrıntıları daha kolay
-  okunuyor.
+- Saatin yanında bir simge: Waaiya'yı açın ya da menüsünden filtrelemeyi başlatıp durdurun. Pencereyi kapatınca Waaiya orada kalır.
+- Oturum açılınca başlat: Waaiya saatin yanında başlar ve gerektiğinde Windows izninizi ister.
+- Yeni logo: واعية'deki ع harfi kulak biçiminde çizildi, küçük simgelerde de net.
 
 ## Product features (one per line, at most 20)
 
@@ -53,6 +47,7 @@ Microsoft Store'daki ilk sürüm.
 - Zayıf anlar için koruma
 - Bir hatayı not edin
 - Oturum açılınca başlat
+- Saatin yanında simge: filtrelemeyi başlatma ve durdurma
 - 18 dil
 - Ücretsiz ve açık kaynak
 

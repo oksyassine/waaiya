@@ -182,6 +182,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get computerToggle => 'বরং কম্পিউটার ব্যবহার করুন';
 
   @override
+  String get computerWeb =>
+      'সবচেয়ে সহজ: কম্পিউটারে Chrome বা Edge-এ waaiya.mssid.org/usb খুলুন, USB ডিবাগিং চালু করুন এবং কেবল দিয়ে ফোনটি সংযুক্ত করুন। কিছু ইনস্টল করতে হবে না, Android 10-এও কাজ করে। অথবা adb ইনস্টল থাকলে:';
+
+  @override
   String get computerBody =>
       'USB ডিবাগিং চালু করুন, ফোনটি সংযুক্ত করুন এবং চালান:';
 
@@ -391,6 +395,25 @@ class AppLocalizationsBn extends AppLocalizations {
       'ফিল্টারিং চালু থাকাকালে সব অ্যাপে স্ক্রিনের মানুষ ও ছবি ঢেকে দেয়। এটি ফোনেই চলে; কিছুই কোথাও পাঠানো হয় না।';
 
   @override
+  String get blurOnTitle => 'ব্লার চালু আছে';
+
+  @override
+  String get blurOffTitle => 'ব্লার বন্ধ আছে';
+
+  @override
+  String get blurStartCd => 'ব্লার চালু করুন';
+
+  @override
+  String get blurStopCd => 'ব্লার বন্ধ করুন';
+
+  @override
+  String get blurOffDetail =>
+      'চালু করতে বোতামে ট্যাপ করুন। এর সাথে ফিল্টারিংও শুরু হয়।';
+
+  @override
+  String get blurWhatTitle => 'কী ব্লার করা হবে';
+
+  @override
   String get blurWomenTitle => 'নারীদের ব্লার করুন';
 
   @override
@@ -412,26 +435,23 @@ class AppLocalizationsBn extends AppLocalizations {
       'চালু: ফোন বেশি ধীর হলে বা ব্লার ব্যর্থ হলে পুরো স্ক্রিন ঢেকে দেওয়া হয়। বন্ধ: একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
 
   @override
-  String get blurSetupShizuku => 'Shizuku দিয়ে অনুমতি দিন';
-
-  @override
   String get blurSetupManual => 'Android সেটিংসে অনুমতি দিন';
 
   @override
   String get blurStatusNeedsSetup =>
-      'ব্লার করতে Waaiya-কে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: “Shizuku দিয়ে অনুমতি দিন”, যাতে আপনার ট্যাপ তখনও ব্লারের নিচের অ্যাপে পৌঁছায়। অথবা “Android সেটিংসে অনুমতি দিন”, কিন্তু তখন ব্লার করা জায়গায় ট্যাপ করলে কিছুই হয় না।';
+      'ব্লার করতে Waaiya-কে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: “সেটআপে যান”, যাতে আপনার ট্যাপ তখনও ব্লারের নিচের অ্যাপে পৌঁছায়। অথবা “Android সেটিংসে অনুমতি দিন”, কিন্তু তখন ব্লার করা জায়গায় ট্যাপ করলে কিছুই হয় না।';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'ব্লার করতে Waaiya-কে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: Shizuku চালু করুন এবং সেখানে Waaiya-কে অনুমতি দিন, যাতে আপনার ট্যাপ তখনও ব্লারের নিচের অ্যাপে পৌঁছায়। অথবা Android সেটিংসে “অন্যান্য অ্যাপের উপরে দেখানো” অনুমতি দিন, কিন্তু তখন ব্লার করা জায়গায় ট্যাপ করলে কিছুই হয় না।';
+      'ব্লার করতে Waaiya-কে অন্য অ্যাপের উপরে আঁকতে হয়। সবচেয়ে ভালো: এককালীন সেটআপটি করুন, যাতে আপনার ট্যাপ তখনও ব্লারের নিচের অ্যাপে পৌঁছায়। অথবা Android সেটিংসে “অন্যান্য অ্যাপের উপরে দেখানো” অনুমতি দিন, কিন্তু তখন ব্লার করা জায়গায় ট্যাপ করলে কিছুই হয় না।';
 
   @override
   String get blurFailUnavailable =>
-      'আপাতত ধূসর: পুরো স্ক্রিনের কভার সব ট্যাপ আটকে দেবে এবং আপনি আটকে যেতে পারেন। Waaiya-র সহায়ক বা Shizuku (Android 12 বা নতুন) চালু করুন, তখন এটি চালু হবে: কভারগুলো এমনভাবে আঁকা হয় যে ট্যাপ এর ভেতর দিয়ে চলে যায়। ততক্ষণ ব্লার তাল রাখতে না পারলে একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
+      'আপাতত ধূসর: পুরো স্ক্রিনের কভার সব ট্যাপ আটকে দেবে এবং আপনি আটকে যেতে পারেন। Waaiya-র সহায়ক (Android 12 বা নতুন) চালু করুন, তখন এটি চালু হবে: কভারগুলো এমনভাবে আঁকা হয় যে ট্যাপ এর ভেতর দিয়ে চলে যায়। ততক্ষণ ব্লার তাল রাখতে না পারলে একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
 
   @override
   String get blurFailNeedsA11y =>
-      'আপাতত ধূসর: পুরো স্ক্রিনের কভার সব ট্যাপ আটকে দেবে এবং আপনি আটকে যেতে পারেন। Shizuku (Android 12 বা নতুন) চালু করুন অথবা Waaiya Blur অ্যাক্সেসিবিলিটি সার্ভিস চালু করুন (উপরে “Shizuku দিয়ে অনুমতি দিন”), তখন এটি চালু হবে। ততক্ষণ একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
+      'আপাতত ধূসর: পুরো স্ক্রিনের কভার সব ট্যাপ আটকে দেবে এবং আপনি আটকে যেতে পারেন। Waaiya-র সহায়ক (Android 12 বা নতুন) চালু করুন অথবা Android সেটিংসে Waaiya Blur অ্যাক্সেসিবিলিটি সার্ভিস চালু করুন, তখন এটি চালু হবে। ততক্ষণ একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
 
   @override
   String get languageTitle => 'ভাষা';
@@ -478,16 +498,11 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku অনুমতি দিতে পারেনি:\n$details';
-  }
-
-  @override
   String get step2Guide => 'কীভাবে Shizuku চালু করবেন';
 
   @override
   String get blurFailOldAndroid =>
-      'ধূসর: এই Android সংস্করণে পুরো স্ক্রিনের কভার সব ট্যাপ আটকে দেবে এবং আপনি আটকে যেতে পারেন (Shizuku-র কভারের জন্য Android 12 বা নতুন দরকার)। ব্লার তাল রাখতে না পারলে একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
+      'ধূসর: এই Android সংস্করণে পুরো স্ক্রিনের কভার সব ট্যাপ আটকে দেবে এবং আপনি আটকে যেতে পারেন (যে কভারের ভেতর দিয়ে ট্যাপ যায় তার জন্য Android 12 বা নতুন দরকার)। ব্লার তাল রাখতে না পারলে একটি সতর্কবার্তাসহ স্ক্রিন দেখা যায়।';
 
   @override
   String get guideTitle => 'Shizuku চালু করুন, ধাপে ধাপে';
@@ -1067,6 +1082,39 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get updateCheckFailed => 'এখন খোঁজা গেল না। পরে আবার চেষ্টা করুন।';
+
+  @override
+  String get moveOldTitle => 'ওয়াইয়া চলে গেছে';
+
+  @override
+  String get moveOldBody =>
+      'ওয়াইয়া এখন Android-এ একটি নতুন অ্যাপ হিসেবে আসে (একই ওয়াইয়া, নতুন নামে), আর এটি আর আপডেট পাবে না। নতুনটি ইনস্টল করুন: আপনার সেটিংস সঙ্গে যাবে। তারপর এর এককালীন সেটআপ করুন এবং এটি সরিয়ে দিন।';
+
+  @override
+  String get moveOldInstalled =>
+      'নতুন ওয়াইয়া ইনস্টল হয়েছে। এটি খুলুন: এটি আপনার সেটিংস নেবে। এর এককালীন সেটআপ করুন, তারপর এই পুরোনোটি সরিয়ে দিন যাতে দুটি একসঙ্গে ফিল্টার না করে।';
+
+  @override
+  String get moveInstall => 'নতুন ওয়াইয়া ইনস্টল করুন';
+
+  @override
+  String get moveOpenNew => 'নতুন ওয়াইয়া খুলুন';
+
+  @override
+  String get moveRemoveThis => 'এই পুরোনো ওয়াইয়া সরান';
+
+  @override
+  String get moveNewTitle => 'পুরোনো ওয়াইয়া এখনও ইনস্টল আছে';
+
+  @override
+  String get moveNewBody =>
+      'পুরোনো ওয়াইয়া (0.2.15 সংস্করণের আগের) এখনও এই ফোনে আছে। এটি সরিয়ে দিন যাতে দুটি একসঙ্গে ফিল্টার না করে।';
+
+  @override
+  String get moveNewImported => 'আপনার সেটিংস এটি থেকে আনা হয়েছে।';
+
+  @override
+  String get moveRemoveOld => 'পুরোনো ওয়াইয়া সরান';
 
   @override
   String get desktopPreview =>
@@ -1833,4 +1881,53 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya এই কম্পিউটারের সব অ্যাপের শব্দ থেকে বাদ্যযন্ত্র সরিয়ে দেয়। কথা ও কুরআন তিলাওয়াত রেখে দেওয়া হয়। আপাতত গানের কণ্ঠও সরিয়ে দেওয়া হয়।';
+
+  @override
+  String get worshipUseLocation => 'আমার অবস্থান ব্যবহার করুন';
+
+  @override
+  String get worshipWhyLocation =>
+      'আপনি যেখানে আছেন সেখানকার নামাজের সময় জানতে Waaiya এই ফোনের আনুমানিক অবস্থান এখন একবার পড়ে। এটি ফোনে আপনার জায়গা হিসেবে থাকে এবং কোথাও পাঠানো হয় না।';
+
+  @override
+  String get worshipLocating => 'আপনার অবস্থান খোঁজা হচ্ছে…';
+
+  @override
+  String get worshipLocationDenied =>
+      'অবস্থানের অনুমতি দেওয়া হয়নি। এর বদলে আপনার শহর খুঁজতে পারেন।';
+
+  @override
+  String get worshipLocationOff =>
+      'এই ফোনে অবস্থান বন্ধ আছে। চালু করে আবার চেষ্টা করুন, অথবা আপনার শহর খুঁজুন।';
+
+  @override
+  String get worshipLocationSettings => 'অবস্থান সেটিংস';
+
+  @override
+  String get worshipLocationFailed =>
+      'আপনার অবস্থান পাওয়া যায়নি। একটু পরে আবার চেষ্টা করুন, অথবা আপনার শহর খুঁজুন।';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city-এর কাছে';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return '$city-এর জন্য হাবুস ও ইসলামি বিষয়ক মন্ত্রণালয়ের সরকারি সময়।';
+  }
+
+  @override
+  String get trayOpen => 'Waaiya খুলুন';
+
+  @override
+  String get trayQuit => 'প্রস্থান';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows লগইনের সময় Waaiya চালু হতে দিচ্ছে না। Settings › Apps › Startup-এ Waaiya চালু করুন, তারপর এটি আবার চালু করুন।';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'এই কম্পিউটারের সেটিংস, যা এর প্রশাসক বেছে নিয়েছেন, লগইনের সময় Waaiya চালু হতে দেয় না।';
 }

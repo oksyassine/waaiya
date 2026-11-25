@@ -182,6 +182,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get computerToggle => 'Bunun yerine bilgisayar kullan';
 
   @override
+  String get computerWeb =>
+      'En kolayı: bir bilgisayarda Chrome veya Edge ile waaiya.mssid.org/usb adresini açın, USB hata ayıklamasını açın ve telefonu kabloyla bağlayın. Hiçbir şey kurmanız gerekmez, Android 10\'da da çalışır. Ya da adb kuruluysa:';
+
+  @override
   String get computerBody =>
       'USB hata ayıklamasını açın, telefonu bağlayın ve şunu çalıştırın:';
 
@@ -393,6 +397,25 @@ class AppLocalizationsTr extends AppLocalizations {
       'Filtreleme açıkken her uygulamada ekrandaki insanları ve görüntüleri örter. Telefonda çalışır; hiçbir yere bir şey gönderilmez.';
 
   @override
+  String get blurOnTitle => 'Bulanıklaştırma açık';
+
+  @override
+  String get blurOffTitle => 'Bulanıklaştırma kapalı';
+
+  @override
+  String get blurStartCd => 'Bulanıklaştırmayı başlat';
+
+  @override
+  String get blurStopCd => 'Bulanıklaştırmayı durdur';
+
+  @override
+  String get blurOffDetail =>
+      'Başlatmak için düğmeye dokunun. Filtreleme de onunla başlar.';
+
+  @override
+  String get blurWhatTitle => 'Neyin bulanıklaştırılacağı';
+
+  @override
   String get blurWomenTitle => 'Kadınları bulanıklaştır';
 
   @override
@@ -414,26 +437,23 @@ class AppLocalizationsTr extends AppLocalizations {
       'Açık: telefon çok yavaş kaldığında veya bulanıklaştırma başarısız olduğunda tüm ekran örtülür. Kapalı: ekran bir uyarıyla görünür kalır.';
 
   @override
-  String get blurSetupShizuku => 'Shizuku ile izin ver';
-
-  @override
   String get blurSetupManual => 'Android ayarlarında izin ver';
 
   @override
   String get blurStatusNeedsSetup =>
-      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: “Shizuku ile izin ver”; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da “Android ayarlarında izin ver”; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
+      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: “Kuruluma git”; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da “Android ayarlarında izin ver”; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
 
   @override
   String get blurStatusNeedsOverlay =>
-      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: Shizuku\'yu başlatın ve içinde Waaiya\'ya izin verin; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
+      'Bulanıklaştırmak için Waaiya\'nın diğer uygulamaların üzerine çizmesi gerekir. En iyisi: tek seferlik kurulumu yapın; böylece dokunuşlarınız bulanıklığın altındaki uygulamaya yine ulaşır. Ya da Android ayarlarında “Diğer uygulamaların üzerinde göster” iznini verin; ama o zaman bulanık bir alana dokunmak hiçbir şey yapmaz.';
 
   @override
   String get blurFailUnavailable =>
-      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını veya Shizuku\'yu (Android 12 veya daha yeni) başlatın, seçenek kullanılabilir olur: örtüler o zaman dokunuşlar içinden geçecek şekilde çizilir. O zamana kadar, bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
+      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını (Android 12 veya daha yeni) başlatın, seçenek kullanılabilir olur: örtüler o zaman dokunuşlar içinden geçecek şekilde çizilir. O zamana kadar, bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
 
   @override
   String get blurFailNeedsA11y =>
-      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Shizuku\'yu başlatın (Android 12 veya daha yeni) ya da Waaiya Bulanıklaştırma erişilebilirlik hizmetini açın (yukarıdaki “Shizuku ile izin ver”), seçenek kullanılabilir olur. O zamana kadar ekran bir uyarıyla görünür kalır.';
+      'Şimdilik kullanılamıyor: tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz. Waaiya yardımcısını başlatın (Android 12 veya daha yeni) ya da Android ayarlarında Waaiya Bulanıklaştırma erişilebilirlik hizmetini açın, seçenek kullanılabilir olur. O zamana kadar ekran bir uyarıyla görünür kalır.';
 
   @override
   String get languageTitle => 'Dil';
@@ -480,16 +500,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String blurSetupFailed(String details) {
-    return 'Shizuku izin veremedi:\n$details';
-  }
-
-  @override
   String get step2Guide => 'Shizuku nasıl başlatılır';
 
   @override
   String get blurFailOldAndroid =>
-      'Kullanılamıyor: bu Android sürümünde tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz (Shizuku örtüleri Android 12 veya daha yenisini gerektirir). Bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
+      'Kullanılamıyor: bu Android sürümünde tam ekran bir örtü her dokunuşu engeller ve takılıp kalabilirsiniz (dokunuşların içinden geçtiği örtüler Android 12 veya daha yenisini gerektirir). Bulanıklaştırma yetişemediğinde ekran bir uyarıyla görünür kalır.';
 
   @override
   String get guideTitle => 'Shizuku\'yu adım adım başlatın';
@@ -1069,6 +1084,39 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get updateCheckFailed =>
       'Şu anda denetlenemedi. Daha sonra yeniden deneyin.';
+
+  @override
+  String get moveOldTitle => 'Waaiya taşındı';
+
+  @override
+  String get moveOldBody =>
+      'Waaiya artık Android\'de yeni bir uygulama olarak geliyor (aynı Waaiya, yeni bir adla) ve bu uygulama artık güncelleme almayacak. Yenisini kurun: ayarlarınız da taşınır. Sonra onun tek seferlik kurulumunu yapın ve bunu kaldırın.';
+
+  @override
+  String get moveOldInstalled =>
+      'Yeni Waaiya kuruldu. Açın: ayarlarınızı alır. Tek seferlik kurulumunu yapın, sonra ikisi asla aynı anda filtrelemesin diye bu eskisini kaldırın.';
+
+  @override
+  String get moveInstall => 'Yeni Waaiya\'yı kur';
+
+  @override
+  String get moveOpenNew => 'Yeni Waaiya\'yı aç';
+
+  @override
+  String get moveRemoveThis => 'Bu eski Waaiya\'yı kaldır';
+
+  @override
+  String get moveNewTitle => 'Eski Waaiya hâlâ yüklü';
+
+  @override
+  String get moveNewBody =>
+      'Eski Waaiya (0.2.15 sürümünden önceki) hâlâ bu telefonda. İkisi asla aynı anda filtrelemesin diye kaldırın.';
+
+  @override
+  String get moveNewImported => 'Ayarlarınız ondan alındı.';
+
+  @override
+  String get moveRemoveOld => 'Eski Waaiya\'yı kaldır';
 
   @override
   String get desktopPreview =>
@@ -1835,4 +1883,53 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get onboardBodyDesktop =>
       'Waaiya, bu bilgisayardaki her uygulamanın sesinden müzik aletlerini kaldırır. Konuşma ve Kuran tilaveti korunur. Şimdilik şarkı söyleyen sesler de kaldırılır.';
+
+  @override
+  String get worshipUseLocation => 'Konumumu kullan';
+
+  @override
+  String get worshipWhyLocation =>
+      'Bulunduğunuz yerin namaz vakitlerini bulmak için Waaiya bu telefonun yaklaşık konumunu şimdi bir kez okur. Konum telefonda yeriniz olarak kalır ve hiçbir yere gönderilmez.';
+
+  @override
+  String get worshipLocating => 'Konumunuz bulunuyor…';
+
+  @override
+  String get worshipLocationDenied =>
+      'Konum izni verilmedi. Bunun yerine şehrinizi arayabilirsiniz.';
+
+  @override
+  String get worshipLocationOff =>
+      'Bu telefonda konum kapalı. Açıp yeniden deneyin ya da şehrinizi arayın.';
+
+  @override
+  String get worshipLocationSettings => 'Konum ayarları';
+
+  @override
+  String get worshipLocationFailed =>
+      'Konumunuz bulunamadı. Birazdan yeniden deneyin ya da şehrinizi arayın.';
+
+  @override
+  String worshipPlaceNear(Object city) {
+    return '$city yakını';
+  }
+
+  @override
+  String worshipHabousNote(Object city) {
+    return 'Habous ve İslami İşler Bakanlığı\'nın $city için resmî vakitleri.';
+  }
+
+  @override
+  String get trayOpen => 'Waaiya uygulamasını aç';
+
+  @override
+  String get trayQuit => 'Çık';
+
+  @override
+  String get engineErrorAutostartBlocked =>
+      'Windows, Waaiya\'nın oturum açılırken başlamasına izin vermiyor. Ayarlar › Uygulamalar › Başlangıç bölümünde Waaiya\'yı açın, ardından bu seçeneği yeniden açın.';
+
+  @override
+  String get engineErrorAutostartPolicy =>
+      'Bu bilgisayarın yöneticisi tarafından seçilen ayarlar, Waaiya\'nın oturum açılırken başlamasına izin vermiyor.';
 }

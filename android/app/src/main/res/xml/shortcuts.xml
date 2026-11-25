@@ -10,9 +10,9 @@
         android:shortcutShortLabel="@string/shortcut_start_short"
         android:shortcutLongLabel="@string/shortcut_start_long">
         <intent
-            android:action="org.islamicmute.app.START_FILTER"
-            android:targetPackage="org.islamicmute.app"
-            android:targetClass="org.islamicmute.app.TileStartActivity" />
+            android:action="org.waaiya.app.START_FILTER"
+            android:targetPackage="org.waaiya.app"
+            android:targetClass="org.waaiya.app.TileStartActivity" />
     </shortcut>
     <shortcut
         android:shortcutId="stop"
@@ -21,8 +21,8 @@
         android:shortcutShortLabel="@string/shortcut_stop_short"
         android:shortcutLongLabel="@string/shortcut_stop_long">
         <intent
-            android:action="org.islamicmute.app.STOP_FILTER"
-            android:targetPackage="org.islamicmute.app"
-            android:targetClass="org.islamicmute.app.TileStartActivity" />
+            android:action="org.waaiya.app.STOP_FILTER"
+            android:targetPackage="org.waaiya.app"
+            android:targetClass="org.waaiya.app.TileStartActivity" />
     </shortcut>
 </shortcuts>
