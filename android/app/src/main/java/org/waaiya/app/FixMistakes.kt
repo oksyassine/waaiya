@@ -76,7 +76,7 @@ object FixMistakes : Feature {
         uidSet = apps.mapNotNull { pkg ->
             runCatching { ctx.packageManager.getApplicationInfo(pkg, 0).uid }.getOrNull()
                 ?.takeIf { it != me && it >= Process.FIRST_APPLICATION_UID }
-        }.toSet()
+        }.flatMap { uid -> listOf(uid, cloneUid(uid)) }.toSet()
         uidKey = key
         uidAt = now
         return uidSet
@@ -433,3 +433,7 @@ object FixMistakes : Feature {
         FilterService.refreshNotification()
     }
 }
+
+/** The same app's copy in the "dual apps" / "app clone" profile (user 999 on Xiaomi, OPPO, OnePlus, vivo): a uid
+ *  that does not exist on the phone matches nothing. */
+internal fun cloneUid(uid: Int): Int = 999 * 100_000 + uid % 100_000
