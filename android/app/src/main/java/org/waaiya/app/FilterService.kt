@@ -92,6 +92,10 @@ class FilterService : Service() {
         private const val REQ_OUTPUT = 2
         private const val REQ_MODEL = 4
         private const val REQ_END = 8
+        /** A read or write that has waited this long may be released by the watchdog (its capture or output stopped). */
+        private const val UNBLOCK_MS = 1000L
+        /** The model is loaded again for a NaN at most this often. */
+        private const val MODEL_RELOAD_MS = 30_000L
         private const val CHANNEL = "filter"
         private const val CHANNEL_SILENCED = "silenced"
         private const val TAG = "IslamicMute"
@@ -522,6 +526,7 @@ class FilterService : Service() {
         probe.record = record; probe.track = track
         muter?.ownSessions = setOf(track.audioSessionId)
         var pausedForFault = false   // debug: the track was paused to make writing wait (ACTION_DEBUG_FAULT)
+        var lastModelReload = -MODEL_RELOAD_MS
         fun startLoad(ks: Boolean) {
             loading = true
             Thread({
@@ -594,6 +599,11 @@ class FilterService : Service() {
                     val n = record.read(inBuf, got, inBuf.size - got, AudioRecord.READ_BLOCKING)
                     // the watchdog stopped this capture to unblock the read: the next hop rebuilds it
                     if (n <= 0 && probe.request.get() != 0) break
+                    // a capture that is no longer recording gives nothing at once: rebuild it, do not spin
+                    if (n == 0 && record.recordingState != AudioRecord.RECORDSTATE_RECORDING) {
+                        probe.request.getAndUpdate { it or REQ_CAPTURE }
+                        break
+                    }
                     if (n < 0) {
                         if (stop || my != session) break  // our own stop ended this capture: not a fault
                         // the capture is gone (projection revoked, audio server restarted): say so instead of
@@ -715,7 +725,9 @@ class FilterService : Service() {
                 if (!finite) {
                     outBuf.fill(0f)
                     synchronized(probe) { probe.nonFinite++ }
-                    if (!loading) {
+                    val nowMs = android.os.SystemClock.elapsedRealtime()
+                    if (!loading && nowMs - lastModelReload >= MODEL_RELOAD_MS) {
+                        lastModelReload = nowMs
                         Recent.event(this, "the model gave a hop that is not a number: silenced, model loaded again")
                         startLoad(singing)
                     }
@@ -941,20 +953,28 @@ class FilterService : Service() {
                     Recent.event(this, e)
                 }
                 if (det.episodeStarted && snapAt < tick) snapAt = tick + 20
-                if (tick == snapAt) log.snapshot("stuck", "Around the last stuck sound (40 s before it was found, 20 s after)")
+                if (tick == snapAt) log.snapshot("stuck", "Around stuck sound (40 s before it was found, 20 s after)", 60)
+                // The loop does the step at the top of its next hop. One that waits in a read or a write is released by
+                // stopping that capture or output, only the one it waits on (not one the loop has just made) and only
+                // after a real wait: a running loop is in a read most of the time, and its capture must not be
+                // stopped before the new one is ready (the rebuild has no gap). pause() would do nothing to a track
+                // that is already paused, and the write would wait on.
+                fun waits(p: StuckDetector.Phase) =
+                    probe.phase == p && android.os.SystemClock.elapsedRealtime() - probe.phaseSince >= UNBLOCK_MS
                 when (action) {
                     StuckDetector.Action.REBUILD_CAPTURE -> {
+                        val r = probe.record
                         probe.request.getAndUpdate { it or REQ_CAPTURE }
-                        // a read that waits is released by stopping its capture; the loop then makes a new one
                         synchronized(ioLock) {
-                            if (probe.phase == StuckDetector.Phase.READ) runCatching { probe.record?.stop() }
+                            if (probe.record === r && waits(StuckDetector.Phase.READ)) runCatching { r?.stop() }
                         }
                     }
                     StuckDetector.Action.REBUILD_OUTPUT, StuckDetector.Action.END -> {
+                        val t = probe.track
                         probe.request.getAndUpdate { it or if (action == StuckDetector.Action.END) REQ_END else REQ_OUTPUT }
-                        // a write that waits is released by stopping its track (pause() does nothing to a track
-                        // that is already paused, and the write would wait on)
-                        synchronized(ioLock) { runCatching { probe.track?.stop() } }
+                        synchronized(ioLock) {
+                            if (probe.track === t && waits(StuckDetector.Phase.WRITE)) runCatching { t?.stop() }
+                        }
                     }
                     StuckDetector.Action.NONE -> {}
                 }

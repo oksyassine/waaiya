@@ -65,14 +65,13 @@ class StuckDetector {
         // the capture gives silence while a muted app plays
         if (s.playing > 0 && flowing && s.inDb <= SILENT_DB) {
             silentSecs++
-            if (silentSecs == SILENT_S) {
+            // within a minute of the last rebuild: nothing at all (no event, no snapshot), so a run of harmless
+            // silences (a feed of muted videos) cannot push the one that mattered out of the report
+            if (silentSecs == SILENT_S && tick - lastCaptureRebuild >= BACKOFF_S) {
                 silentEpisode = true; episodeStarted = true
-                if (tick - lastCaptureRebuild >= BACKOFF_S) {
-                    lastCaptureRebuild = tick
-                    action = Action.REBUILD_CAPTURE
-                    event = "no sound from the capture for $SILENT_S s while ${s.playing} muted app(s) played: capture rebuilt"
-                } else event = "no sound from the capture for $SILENT_S s while ${s.playing} muted app(s) played " +
-                    "(capture rebuilt ${tick - lastCaptureRebuild} s ago: only logged)"
+                lastCaptureRebuild = tick
+                action = Action.REBUILD_CAPTURE
+                event = "no sound from the capture for $SILENT_S s while ${s.playing} muted app(s) played: capture rebuilt"
             }
         } else {
             if (silentEpisode && s.inDb > SILENT_DB) event = "sound from the capture again after ${silentSecs} s"

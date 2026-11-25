@@ -42,6 +42,18 @@ class StuckDetectorTest {
         assertTrue("200 s: at most 4 rebuilds, was $rebuilds", rebuilds in 1..4)
     }
 
+    @Test fun aSilenceWithinTheBackoffLeavesNoTrace() {
+        val d = StuckDetector()
+        run(d, flowing(inDb = -120), 8)
+        run(d, flowing(inDb = -20), 2)
+        val events = ArrayList<String>()
+        var started = false
+        repeat(10) { d.second(flowing(inDb = -120)); d.event?.let { events += it }; started = started || d.episodeStarted }
+        d.second(flowing(inDb = -20)); d.event?.let { events += it }
+        assertTrue("no event: $events", events.isEmpty())
+        assertTrue("no snapshot", !started)
+    }
+
     @Test fun soundBackIsLogged() {
         val d = StuckDetector()
         run(d, flowing(inDb = -120), 8)

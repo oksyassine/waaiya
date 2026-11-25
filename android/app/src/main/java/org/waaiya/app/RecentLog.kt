@@ -9,19 +9,21 @@ import java.io.File
  * - one line per second for the last [SECONDS] seconds (written by the filter's watchdog, even when the filter loop
  *   itself is stuck);
  * - the last [EVENTS] events (stuck sound found, what was tried, sound back, starts and stops);
- * - copies of the last minute taken at the moments that matter ([snapshot]): when the user stops filtering, when
- *   filtering stops by itself, around stuck sound, and the minute the previous run of Waaiya left behind.
+ * - copies of the last minutes taken at the moments that matter ([snapshot]): when the user stops filtering (two
+ *   minutes), when filtering stops by itself (two minutes), around stuck sound (one minute), and the minute the
+ *   previous run of Waaiya left behind. The last few of each kind are kept ([KEEP]), so a second off/on, or a
+ *   harmless silence found later, does not overwrite the one that mattered.
  *
  * Saved to two files: the live lines every few seconds ([flush], about 12 KB), the events and snapshots when they
  * change. A process that Android ends keeps its last minute.
  * No Android classes: tested on the JVM (RecentLogTest).
  */
 class RecentLog(private val file: File?) {
-    data class Snapshot(val kind: String, val title: String, val lines: List<String>)
+    data class Snapshot(val kind: String, val at: String, val title: String, val lines: List<String>)
 
     private val lines = ArrayDeque<String>()
     private val events = ArrayDeque<String>()
-    private val snaps = LinkedHashMap<String, Snapshot>()
+    private val snaps = ArrayList<Snapshot>()  // oldest first
     private var dirty = false
 
     init { load() }
@@ -38,12 +40,19 @@ class RecentLog(private val file: File?) {
         saveKept()
     }
 
-    /** Keeps the last [n] seconds under [kind] (one copy per kind, the newest). */
-    @Synchronized fun snapshot(kind: String, title: String, n: Int = SNAP) {
+    /** Keeps the last [n] seconds under [kind]; the oldest copy of that kind goes beyond [KEEP]. */
+    @Synchronized fun snapshot(kind: String, title: String, n: Int = SECONDS) {
         if (lines.isEmpty()) return
-        snaps.remove(kind)
-        snaps[kind] = Snapshot(kind, title, lines.toList().takeLast(n))
+        add(Snapshot(kind, java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.ROOT).format(java.util.Date()),
+            title, lines.toList().takeLast(n)))
         saveKept()
+    }
+
+    private fun add(s: Snapshot) {
+        snaps += s
+        val same = snaps.filter { it.kind == s.kind }
+        val keep = KEEP[s.kind] ?: 2
+        if (same.size > keep) snaps.removeAll(same.take(same.size - keep).toSet())
     }
 
     /** The live lines are about to restart (a new filtering session): nothing to keep from them beyond the snapshots. */
@@ -59,14 +68,14 @@ class RecentLog(private val file: File?) {
             appendLine("Last minute, one line per second:")
             if (lines.isEmpty()) appendLine("  none yet") else lines.toList().takeLast(SNAP).forEach { appendLine("  $it") }
         }
-        for (s in snaps.values.reversed()) {
-            appendLine("${s.title}:")
+        for (s in snaps.reversed()) {  // newest first
+            appendLine("${s.title} (saved ${s.at}):")
             s.lines.forEach { appendLine("  $it") }
         }
         append(LEGEND)
     }.trimEnd()
 
-    @Synchronized fun snapshots(): List<Snapshot> = snaps.values.toList()
+    @Synchronized fun snapshots(): List<Snapshot> = snaps.toList()
     @Synchronized fun eventLines(): List<String> = events.toList()
     @Synchronized fun liveLines(): List<String> = lines.toList()
 
@@ -79,8 +88,8 @@ class RecentLog(private val file: File?) {
 
     private fun saveKept() = write(file, buildString {
         events.forEach { append("E ").append(it).append('\n') }
-        for (s in snaps.values) {
-            append("S ").append(s.kind).append('\t').append(s.title).append('\n')
+        for (s in snaps) {
+            append("S ").append(s.kind).append('\t').append(s.at).append('\t').append(s.title).append('\n')
             s.lines.forEach { append("s ").append(it).append('\n') }
         }
     })
@@ -102,25 +111,24 @@ class RecentLog(private val file: File?) {
         val f = file ?: return
         val text = listOfNotNull(f, liveFile).joinToString("\n") { runCatching { it.readText() }.getOrDefault("") }
         val old = ArrayList<String>()
-        var cur: Pair<String, String>? = null
+        var cur: List<String>? = null
         var curLines = ArrayList<String>()
-        fun close() { cur?.let { (k, t) -> snaps[k] = Snapshot(k, t, curLines) }; cur = null; curLines = ArrayList() }
+        fun close() { cur?.let { (k, at, t) -> snaps += Snapshot(k, at, t, curLines) }; cur = null; curLines = ArrayList() }
         for (l in text.split('\n')) {
             if (l.length < 2) continue
             val body = l.substring(2)
             when (l[0]) {
                 'L' -> old += body
                 'E' -> events.addLast(body)
-                'S' -> { close(); val tab = body.indexOf('\t'); if (tab > 0) cur = body.substring(0, tab) to body.substring(tab + 1) }
+                'S' -> { close(); body.split('\t', limit = 3).takeIf { it.size == 3 }?.let { cur = it } }
                 's' -> curLines += body
             }
         }
         close()
         while (events.size > EVENTS) events.removeFirst()
         if (old.isNotEmpty()) {
-            snaps.remove(PREVIOUS_RUN)
-            snaps[PREVIOUS_RUN] = Snapshot(PREVIOUS_RUN, "The last minute saved by the previous run of Waaiya (its process ended)",
-                old.takeLast(SNAP))
+            add(Snapshot(PREVIOUS_RUN, old.last().substringBefore(' '),
+                "The last minute saved by the previous run of Waaiya (its process ended)", old.takeLast(SNAP)))
             saveKept(); saveLive()  // kept once: the next process does not see these lines again
         }
     }
@@ -130,6 +138,8 @@ class RecentLog(private val file: File?) {
         const val EVENTS = 40
         const val SNAP = 60
         const val PREVIOUS_RUN = "previous_run"
+        /** Copies kept per kind (others: 2). About 60 KB of report at most. */
+        val KEEP = mapOf("user_stop" to 2, "self_stop" to 2, "stuck" to 3, PREVIOUS_RUN to 1)
         const val LEGEND = "Line: time, h hops done that second (100 = all), in / out loudest sound captured / played (dB), " +
             "w model ms (slowest hop), r wait for the capture ms, wr wait to write the output ms, drop output dropouts, " +
             "cap sound waiting in the capture ms, buf in the output ms, play muted apps playing, at where the loop is / " +

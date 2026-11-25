@@ -25,7 +25,7 @@ class RecentLogTest {
         val next = RecentLog(f)  // a new process
         val snap = next.snapshots().single()
         assertEquals("user_stop", snap.kind)
-        assertEquals(RecentLog.SNAP, snap.lines.size)
+        assertEquals("a stop keeps all it has, up to two minutes", 90, snap.lines.size)
         assertEquals("s89", snap.lines.last())
         assertEquals(listOf("stuck found"), next.eventLines())
         assertTrue("a clean stop leaves no previous-run minute", next.snapshots().none { it.kind == RecentLog.PREVIOUS_RUN })
@@ -43,11 +43,16 @@ class RecentLogTest {
         assertTrue(next.report(live = false).contains("previous run"))
     }
 
-    @Test fun oneSnapshotPerKindTheNewest() {
-        val log = RecentLog(null)
-        log.second("a"); log.snapshot("stuck", "Stuck")
-        log.second("b"); log.snapshot("stuck", "Stuck")
-        assertEquals(listOf("a", "b"), log.snapshots().single().lines)
+    @Test fun theLastFewOfEachKindAreKept() {
+        val f = tmp()
+        val log = RecentLog(f)
+        for (x in listOf("a", "b", "c", "d")) { log.second(x); log.snapshot("stuck", "Stuck", 60) }
+        log.second("e"); log.snapshot("user_stop", "Stop")
+        val kept = RecentLog(f).snapshots()
+        assertEquals("three stuck, the newest", listOf("d", "c", "b"),
+            kept.filter { it.kind == "stuck" }.map { it.lines.last() }.reversed())
+        assertEquals(1, kept.count { it.kind == "user_stop" })
+        assertTrue(RecentLog(f).report(false).contains("Stuck (saved "))
     }
 
     @Test fun reportHasEventsLiveLinesAndSnapshots() {
@@ -56,6 +61,6 @@ class RecentLogTest {
         val r = log.report(live = true)
         assertTrue(r.contains("  e1"))
         assertTrue(r.contains("Last minute, one line per second:\n  now"))
-        assertTrue(r.contains("Before it stopped by itself:\n  now"))
+        assertTrue(r, Regex("Before it stopped by itself \\(saved [\\d-]+ [\\d:]+\\):\n  now").containsMatchIn(r))
     }
 }

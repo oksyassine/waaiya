@@ -402,6 +402,24 @@ def main():
         log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
         c.check("watch:" not in log.split("event: capture rebuilt")[-1] or "again" in log.split("event: capture rebuilt")[-1],
                 "after the faults: no new stuck sound found", log[-400:])
+        # a player that plays pure silence (a feed video autoplaying muted): harmless, so at most one capture rebuild,
+        # filtering goes on, and the stuck minute kept above is not pushed out of the report
+        with tempfile.TemporaryDirectory() as d:
+            quiet = os.path.join(d, "silence.wav")
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo", "-t", "90",
+                            quiet], check=True)
+            e.adb("push", quiet, "/sdcard/Music/emu_silence.wav", check=True)
+        e.adb("logcat", "-c")
+        e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
+             "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_silence.wav")
+        time.sleep(70)
+        log = e.adb("logcat", "-d", "-s", "IslamicMute:V")
+        c.check(log.count("watch: no sound from the capture") <= 1, "silent player: at most one capture rebuild",
+                log[-500:])
+        c.check("event: STOP" not in log and "the output does not play" not in log, "silent player: filtering goes on")
+        e.sh("am start -n com.google.android.apps.youtube.music/.audiopreview.AudioPreviewPlayerActivity "
+             "-a android.intent.action.VIEW -t audio/x-wav -d file:///sdcard/Music/emu_check.wav")
+        time.sleep(5)
 
     if a.simple:
         uid = re.search(r"(?:appId|userId)=(\d+)", e.sh(f"dumpsys package {PKG}")).group(1)
@@ -561,7 +579,7 @@ def main():
     c.check("installed from" in report and "Numbers from" in report, "report: when, from where, how old")
     if a.stuck and silenced:
         c.check("capture rebuilt" in report and "output made again" in report, "report: the stuck events", report[-1500:])
-        c.check("Around the last stuck sound" in report, "report: the minute around the stuck sound")
+        c.check("Around stuck sound" in report, "report: the minute around the stuck sound")
     if a.shots:
         with open(os.path.join(a.shots, "report.txt"), "w") as f:
             f.write(report)
