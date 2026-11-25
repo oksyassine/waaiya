@@ -24,7 +24,13 @@ object MusicRule {
     private val GENRE = (216..282).filter { it !in setOf(218, 238, 254, 255, 271) }.toIntArray()
     /** singing, choir, chant, mantra... vocal music, a cappella */
     private val VOCAL = ((27..36) + listOf(254, 255)).toIntArray()
-    private val SPECIFIC = TONAL_INSTR + PERC_NO_GONG + GENRE
+    /** Adhan guard: instruments a chanted voice cannot pass for. Left out: the generic "Musical instrument" (138),
+     *  sustained melodic ones that answer to a voice far away (organs, synthesizer, brass, bowed, cello, woodwind,
+     *  harmonica, bagpipes, didgeridoo, shofar, theremin), bells, chimes and the singing bowl (an echo tail rings like
+     *  them), the gong, and the drone-like "Ambient music" (246). */
+    private val VOICE_LIKE = setOf(155, 156, 157, 158, 185, 186, 187, 188, 189, 190, 191, 193, 195, 196, 197, 198, 208, 210, 211, 212, 213)
+    private val SPECIFIC = ((139..214).filter { it !in VOICE_LIKE && it !in 200..207 && it != 177 && it != 214 } +
+        GENRE.filter { it != 246 }).distinct().sorted().toIntArray()
 
     data class Thresholds(
         val music: Float = 0.75f,
@@ -36,10 +42,9 @@ object MusicRule {
         val pshare: Float = 0.3f,
         /** windows quieter than this (dBFS) are not judged */
         val minLevelDb: Float = -45f,
-        /** adhan guard: a music window needs a specific instrument, drum or genre class above [guardSpec] within
-         *  [guardRadius] windows; null = no guard */
-        val guardSpec: Float? = null,
-        val guardRadius: Int = 0,
+        /** adhan guard (eval approach Cg): a part with music stays only if one of its windows has a voice-proof class
+         *  above this; the gong does not count as a drum. null = no guard (approach C). */
+        val guardSpec: Float? = 0.12f,
         val minPartS: Double = 3.0,
         val gapS: Double = 2.0,
     )
@@ -76,15 +81,6 @@ object MusicRule {
             mus[k] = score > th.music || pc
             perc[k] = pc
         }
-        if (guard) {
-            val spec = FloatArray(n) { max(probs[it], SPECIFIC) }
-            for (k in 0 until n) {
-                if (!mus[k] || perc[k]) continue
-                var near = 0f
-                for (j in maxOf(0, k - th.guardRadius)..minOf(n - 1, k + th.guardRadius)) near = maxOf(near, spec[j])
-                if (near <= th.guardSpec!!) mus[k] = false
-            }
-        }
         return mus to perc
     }
 
@@ -102,7 +98,13 @@ object MusicRule {
 
     fun decide(probs: List<FloatArray>, levelsDb: FloatArray, durationS: Double, th: Thresholds = DEFAULT): Result {
         val (mus, perc) = evidence(probs, levelsDb, th)
-        val parts = parts(mus, th).map { Part(it.start, minOf(it.end, durationS)) }
+        var raw = parts(mus, th)
+        th.guardSpec?.let { g ->
+            raw = raw.filter { pt ->
+                mus.indices.any { val t = it * STEP_S; t >= pt.start && t < pt.end && max(probs[it], SPECIFIC) > g }
+            }
+        }
+        val parts = raw.map { Part(it.start, minOf(it.end, durationS)) }
         if (parts.isEmpty()) return Result(Verdict.NONE, emptyList())
         // percussion only: in every part, a large share of the windows look like drums without a melodic instrument
         val percOnly = parts.all { pt ->
