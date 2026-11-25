@@ -529,5 +529,15 @@
   "worshipLocationSettings": "Ajustes de ubicación",
   "worshipLocationFailed": "No se pudo encontrar su ubicación. Inténtelo de nuevo en un momento, o busque su ciudad.",
   "worshipPlaceNear": "cerca de {city}",
-  "worshipHabousNote": "Los horarios oficiales del Ministerio de Habices y Asuntos Islámicos para {city}."
+  "worshipHabousNote": "Los horarios oficiales del Ministerio de Habices y Asuntos Islámicos para {city}.",
+  "notifTextTitle": "Mostrar el texto de las notificaciones al filtrar",
+  "notifTextBody": "Android oculta el contenido de las notificaciones mientras una app graba toda la pantalla, y filtrar cuenta como eso. Activado: Waaiya quita esta protección solo mientras filtra, para que puedas leer tus notificaciones. Otras pantallas compartidas al mismo tiempo tampoco quedan protegidas. Se aplica en el próximo inicio.",
+  "notifTextNextStart": "Detén el filtrado y vuelve a iniciarlo para aplicar este cambio.",
+  "notifTextRefused": "Este teléfono rechazó el cambio. Activa tú mismo «Desactivar protecciones al compartir pantalla» en las opciones para desarrolladores.",
+  "notifTextByHand": "Visible: la protección de Android está desactivada en las opciones para desarrolladores («Desactivar protecciones al compartir pantalla»). Sigue desactivada para cualquier pantalla compartida hasta que la vuelvas a activar allí.",
+  "notifTextHowTo": "Android oculta el contenido de las notificaciones mientras Waaiya filtra. Tras la configuración única, Waaiya las muestra: quita esta protección solo mientras filtra.",
+  "notifTextOpenDev": "Abrir opciones para desarrolladores",
+  "notifTextLockNote": "En este teléfono Android también detiene el filtrado al bloquear la pantalla, y las demás apps quedan en silencio hasta que toques Reanudar. La configuración también lo evita.",
+  "notifTextHandOptional": "Opcional, sin configuración: activa «Desactivar protecciones al compartir pantalla» en las opciones para desarrolladores. Quedará desactivada para cualquier pantalla compartida, y algunos teléfonos no la tienen.",
+  "notifTextForced": "Activado: en este teléfono Android pregunta antes de cada inicio y detendría el filtrado en cada bloqueo de pantalla. Waaiya quita esta protección mientras filtra, lo que también muestra el texto de las notificaciones. Otras pantallas compartidas al mismo tiempo tampoco quedan protegidas."
 }

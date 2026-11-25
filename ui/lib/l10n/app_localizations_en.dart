@@ -1903,4 +1903,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'The official times of the Ministry of Habous and Islamic Affairs for $city.';
   }
+
+  @override
+  String get notifTextTitle => 'Show notification text while filtering';
+
+  @override
+  String get notifTextBody =>
+      'Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either. Takes effect at the next start.';
+
+  @override
+  String get notifTextNextStart =>
+      'Stop and start filtering again for this change to take effect.';
+
+  @override
+  String get notifTextRefused =>
+      'This phone refused the change. Turn on “Disable screen share protections” in Developer options yourself.';
+
+  @override
+  String get notifTextByHand =>
+      'Shown: Android\'s protection is off in Developer options (“Disable screen share protections”). It stays off for every screen share until you turn it back on there.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android hides what notifications say while Waaiya filters. After the one-time setup, Waaiya shows them: it lifts this protection only while it filters.';
+
+  @override
+  String get notifTextOpenDev => 'Open Developer options';
+
+  @override
+  String get notifTextLockNote =>
+      'On this phone Android also stops filtering when the screen locks, and other apps then stay silent until you tap Resume. The setup prevents that too.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Optional, without the setup: turn on “Disable screen share protections” in Developer options. It then stays off for every screen share, and some phones do not have it.';
+
+  @override
+  String get notifTextForced =>
+      'On: on this phone Android asks before each start, and would then stop filtering at every screen lock. Waaiya lifts this protection while it filters, which also shows notification text. Other screen shares made at the same time are not protected either.';
 }

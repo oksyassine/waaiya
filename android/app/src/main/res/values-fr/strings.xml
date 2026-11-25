@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya est activé</string>
     <string name="notif_text">Les instruments sont supprimés de toutes les applications</string>
     <string name="notif_stop">Arrêter</string>
+    <string name="notif_resume">Reprendre</string>
     <!-- Lien -->
     <string name="link_entry_title">Ouvrir un lien</string>
     <string name="link_entry_body">Collez un lien YouTube, TikTok ou Instagram pour le regarder ou l\'enregistrer sans musique.</string>

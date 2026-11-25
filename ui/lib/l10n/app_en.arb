@@ -529,5 +529,39 @@
   "worshipLocationSettings": "Location settings",
   "worshipLocationFailed": "Your location could not be found. Try again in a moment, or search for your city.",
   "worshipPlaceNear": "near {city}",
-  "worshipHabousNote": "The official times of the Ministry of Habous and Islamic Affairs for {city}."
+  "worshipHabousNote": "The official times of the Ministry of Habous and Islamic Affairs for {city}.",
+  "notifTextTitle": "Show notification text while filtering",
+  "@notifTextTitle": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextBody": "Android hides what notifications say while any app records the whole screen, and filtering counts as that. On: Waaiya lifts this protection only while it filters, so you can read your notifications. Other screen shares made at the same time are not protected either. Takes effect at the next start.",
+  "@notifTextBody": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextNextStart": "Stop and start filtering again for this change to take effect.",
+  "@notifTextNextStart": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextRefused": "This phone refused the change. Turn on “Disable screen share protections” in Developer options yourself.",
+  "@notifTextRefused": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextByHand": "Shown: Android's protection is off in Developer options (“Disable screen share protections”). It stays off for every screen share until you turn it back on there.",
+  "@notifTextByHand": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextHowTo": "Android hides what notifications say while Waaiya filters. After the one-time setup, Waaiya shows them: it lifts this protection only while it filters.",
+  "@notifTextHowTo": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextOpenDev": "Open Developer options",
+  "@notifTextOpenDev": {
+    "description": "Filter options, Android 15+: notification text while filtering (NotificationTextSwitch)"
+  },
+  "notifTextLockNote": "On this phone Android also stops filtering when the screen locks, and other apps then stay silent until you tap Resume. The setup prevents that too.",
+  "@notifTextLockNote": {
+    "description": "Under the notification-text switch when Android's capture question is not skipped (Android stops a capture at screen lock then; its protections switch prevents it)"
+  },
+  "notifTextHandOptional": "Optional, without the setup: turn on “Disable screen share protections” in Developer options. It then stays off for every screen share, and some phones do not have it.",
+  "notifTextForced": "On: on this phone Android asks before each start, and would then stop filtering at every screen lock. Waaiya lifts this protection while it filters, which also shows notification text. Other screen shares made at the same time are not protected either."
 }

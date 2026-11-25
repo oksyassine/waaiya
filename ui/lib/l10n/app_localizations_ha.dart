@@ -1914,4 +1914,42 @@ class AppLocalizationsHa extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Lokutan hukuma na Ma\'aikatar Habous da Harkokin Musulunci na $city.';
   }
+
+  @override
+  String get notifTextTitle => 'Nuna rubutun sanarwa yayin tacewa';
+
+  @override
+  String get notifTextBody =>
+      'Android tana ɓoye abin da sanarwa ke faɗi yayin da wata manhaja ke ɗaukar dukan allo, kuma tacewa tana cikin haka. A kunne: Waaiya tana cire wannan kariya ne kawai yayin tacewa, don ka karanta sanarwarka. Sauran raba allo a lokaci guda ma ba za su sami kariya ba. Zai fara aiki a farawa ta gaba.';
+
+  @override
+  String get notifTextNextStart =>
+      'Dakatar da tacewa ka sake farawa domin wannan canji ya yi aiki.';
+
+  @override
+  String get notifTextRefused =>
+      'Wannan waya ta ƙi canjin. Kunna “Kashe kariyar raba allo” da kanka a cikin Zaɓuɓɓukan masu haɓakawa.';
+
+  @override
+  String get notifTextByHand =>
+      'Ana nunawa: kariyar Android a kashe take a cikin Zaɓuɓɓukan masu haɓakawa (“Kashe kariyar raba allo”). Za ta kasance a kashe ga kowane raba allo har sai ka sake kunna ta a can.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android tana ɓoye abin da sanarwa ke faɗi yayin da Waaiya ke tacewa. Bayan saitin sau ɗaya, Waaiya tana nuna su: tana cire wannan kariya yayin tacewa kawai.';
+
+  @override
+  String get notifTextOpenDev => 'Buɗe Zaɓuɓɓukan masu haɓakawa';
+
+  @override
+  String get notifTextLockNote =>
+      'A wannan waya Android tana dakatar da tacewa idan an kulle allo, sauran manhajoji kuma su yi shiru har sai ka taɓa Ci gaba. Saitin yana hana hakan ma.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Na zaɓi, ba tare da saiti ba: kunna “Kashe kariyar raba allo” a cikin Zaɓuɓɓukan masu haɓakawa. Daga nan za ta kasance a kashe ga kowane raba allo, kuma wasu wayoyi ba su da ita.';
+
+  @override
+  String get notifTextForced =>
+      'A kunne: a wannan waya Android tana tambaya kafin kowace farawa, kuma da za ta dakatar da tacewa duk lokacin da aka kulle allo. Waaiya tana cire wannan kariya yayin tacewa, don haka rubutun sanarwa ma yana bayyana. Sauran raba allo a lokaci guda ma ba su da kariya.';
 }

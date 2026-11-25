@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya ist an</string>
     <string name="notif_text">Instrumente werden aus allen Apps entfernt</string>
     <string name="notif_stop">Stopp</string>
+    <string name="notif_resume">Fortsetzen</string>
     <!-- Link-Funktion -->
     <string name="link_entry_title">Link öffnen</string>
     <string name="link_entry_body">Fügen Sie einen YouTube-, TikTok- oder Instagram-Link ein, um das Video ohne Musik anzusehen oder zu speichern.</string>

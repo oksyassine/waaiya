@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya работает</string>
     <string name="notif_text">Инструменты убраны во всех приложениях</string>
     <string name="notif_stop">Стоп</string>
+    <string name="notif_resume">Продолжить</string>
     <!-- Link feature -->
     <string name="link_entry_title">Открыть ссылку</string>
     <string name="link_entry_body">Вставьте ссылку на YouTube, TikTok или Instagram, чтобы посмотреть или сохранить видео без музыки.</string>

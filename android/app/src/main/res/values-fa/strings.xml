@@ -85,6 +85,7 @@
     <string name="notif_title">واعية روشن است</string>
     <string name="notif_text">سازها از همهٔ برنامه‌ها حذف می‌شوند</string>
     <string name="notif_stop">توقف</string>
+    <string name="notif_resume">ادامه</string>
     <!-- Link feature -->
     <string name="link_entry_title">باز کردن پیوند</string>
     <string name="link_entry_body">پیوندی از YouTube، TikTok یا Instagram را جای‌گذاری کنید تا آن را بدون موسیقی تماشا یا ذخیره کنید.</string>

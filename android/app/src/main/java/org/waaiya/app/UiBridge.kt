@@ -243,7 +243,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     val devOn = android.provider.Settings.Global.getInt(activity.contentResolver,
                         android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
                     val about = Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)
-                    if (devOn) runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                    // highlight: the key of one switch on that page, scrolled to and flashed (AOSP Settings' search
+                    // extra; phones that ignore it just open the page)
+                    val dev = Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                    when (call.argument<String>("highlight")) {
+                        "screen_share" -> dev.putExtra(":settings:fragment_args_key", ScreenShareProtection.KEY)
+                    }
+                    if (devOn) runCatching { activity.startActivity(dev) }
                         .onFailure { activity.startActivity(about) }
                     else activity.startActivity(about)
                     result.success(null)
@@ -353,6 +359,18 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "consentSkipped" to activity.hasProjectMediaAppOp(),
             // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
             "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
+            // Android 15+ hides notification text during any whole-screen capture, filtering included: the Filter
+            // options switch (setup done: Waaiya lifts it only while filtering) or Developer options by hand
+            "notificationText" to mapOf(
+                "supported" to ScreenShareProtection.supported,
+                "canWrite" to ScreenShareProtection.setUp(activity),
+                "wanted" to settings.showNotificationText,
+                // no PROJECT_MEDIA: Waaiya lifts it anyway while filtering, or Android stops filtering at each lock
+                "forcedForLock" to ScreenShareProtection.neededForLock(activity),
+                "protectionOff" to ScreenShareProtection.protectionOff(activity),
+                "shownNow" to ScreenShareProtection.shownInCapture,
+                "refused" to ScreenShareProtection.refusedByPhone,
+            ),
             // Xiaomi: its notification style can hide the field for the pairing code (SetupHelp)
             // or Huawei: Wireless debugging may be missing there, the computer is then the way
             "deviceNote" to when {
@@ -418,6 +436,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "filter_off_apps" -> settings.filterOffApps = apps()
             "blur_off_apps" -> settings.blurOffApps = apps()
             "keep_singing" -> settings.keepSinging = bool()
+            // as the Quick Settings tile: on applies at the next start, off puts Android's switch back at once
+            "show_notification_text" -> {
+                val on = bool()
+                settings.showNotificationText = on
+                settings.notificationTextExplained = true
+                if (!on) ScreenShareProtection.restore(activity)
+            }
             "prayer_silent" -> settings.prayerSilent = bool()
             "prayer_silent_minutes" -> settings.prayerSilentMinutes = int(5, 90)
             "prayer_adhan_mute" -> settings.prayerAdhanMute = bool()

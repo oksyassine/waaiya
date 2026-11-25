@@ -1923,4 +1923,42 @@ class AppLocalizationsSo extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Waqtiyada rasmiga ah ee Wasaaradda Habous iyo Arrimaha Islaamka ee $city.';
   }
+
+  @override
+  String get notifTextTitle => 'Muuji qoraalka ogeysiisyada inta la sifeynayo';
+
+  @override
+  String get notifTextBody =>
+      'Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta app kasta duubayso shaashadda oo dhan, sifeyntuna waa sidaas oo kale. Shidan: Waaiya waxay ilaalintan ka qaadaa oo keliya inta ay sifeyneyso, si aad u akhrido ogeysiisyadaada. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo. Waxay dhaqan galaysaa bilowga xiga.';
+
+  @override
+  String get notifTextNextStart =>
+      'Jooji oo dib u bilow sifeynta si isbeddelkani u dhaqan galo.';
+
+  @override
+  String get notifTextRefused =>
+      'Taleefankani wuu diiday isbeddelka. Adigu shid “Dami ilaalinta wadaagista shaashadda” ee Xulashooyinka horumariyaha.';
+
+  @override
+  String get notifTextByHand =>
+      'Waa la muujinayaa: ilaalinta Android waa ka dansan tahay Xulashooyinka horumariyaha (“Dami ilaalinta wadaagista shaashadda”). Way dansanaanaysaa wadaagis kasta oo shaashadda ilaa aad halkaas dib uga shido.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta Waaiya sifeyneyso. Diyaarinta hal mar ah kadib, Waaiya ayaa muujisa: ilaalintan waxay ka qaadaa oo keliya inta ay sifeyneyso.';
+
+  @override
+  String get notifTextOpenDev => 'Fur Xulashooyinka horumariyaha';
+
+  @override
+  String get notifTextLockNote =>
+      'Taleefankan Android waxay sidoo kale joojisaa sifeynta marka shaashaddu xirmato, app-yada kalena way aamusnaanayaan ilaa aad taabato Sii wad. Diyaarintu taasna way ka hortagtaa.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Ikhtiyaari, diyaarin la\'aan: shid “Dami ilaalinta wadaagista shaashadda” ee Xulashooyinka horumariyaha. Markaas way dansanaanaysaa wadaagis kasta oo shaashadda, taleefannada qaarna ma laha.';
+
+  @override
+  String get notifTextForced =>
+      'Shidan: taleefankan Android waxay weydiisaa bilow kasta ka hor, markaas waxay joojin lahayd sifeynta mar kasta oo shaashaddu xirmato. Waaiya waxay ilaalintan ka qaadaa inta ay sifeyneyso, sidaas darteed qoraalka ogeysiisyaduna wuu muuqdaa. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo.';
 }

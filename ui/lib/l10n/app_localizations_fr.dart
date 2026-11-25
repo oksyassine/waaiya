@@ -1920,4 +1920,43 @@ class AppLocalizationsFr extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Les horaires officiels du ministère des Habous et des Affaires islamiques pour $city.';
   }
+
+  @override
+  String get notifTextTitle =>
+      'Afficher le texte des notifications pendant le filtrage';
+
+  @override
+  String get notifTextBody =>
+      'Android masque le contenu des notifications tant qu’une application enregistre tout l’écran, et le filtrage en fait partie. Activé : Waaiya lève cette protection seulement pendant qu’il filtre, pour que vous puissiez lire vos notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus. Prend effet au prochain démarrage.';
+
+  @override
+  String get notifTextNextStart =>
+      'Arrêtez puis relancez le filtrage pour appliquer ce changement.';
+
+  @override
+  String get notifTextRefused =>
+      'Ce téléphone a refusé le changement. Activez vous-même « Désactiver les protections de partage d’écran » dans les options pour les développeurs.';
+
+  @override
+  String get notifTextByHand =>
+      'Affiché : la protection d’Android est désactivée dans les options pour les développeurs (« Désactiver les protections de partage d’écran »). Elle reste désactivée pour tout partage d’écran jusqu’à ce que vous la réactiviez.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android masque le contenu des notifications pendant que Waaiya filtre. Après la configuration unique, Waaiya les affiche : il lève cette protection seulement pendant le filtrage.';
+
+  @override
+  String get notifTextOpenDev => 'Ouvrir les options pour les développeurs';
+
+  @override
+  String get notifTextLockNote =>
+      'Sur ce téléphone, Android arrête aussi le filtrage quand l’écran se verrouille, et les autres applications restent alors muettes jusqu’à ce que vous touchiez Reprendre. La configuration évite cela aussi.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Facultatif, sans configuration : activez « Désactiver les protections de partage d’écran » dans les options pour les développeurs. Elle reste alors désactivée pour tout partage d’écran, et certains téléphones ne l’ont pas.';
+
+  @override
+  String get notifTextForced =>
+      'Activé : sur ce téléphone, Android demande avant chaque démarrage et arrêterait alors le filtrage à chaque verrouillage de l’écran. Waaiya lève cette protection pendant le filtrage, ce qui affiche aussi le texte des notifications. Les autres partages d’écran faits au même moment ne sont pas protégés non plus.';
 }

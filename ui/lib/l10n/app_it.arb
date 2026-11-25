@@ -529,5 +529,15 @@
   "worshipLocationSettings": "Impostazioni di localizzazione",
   "worshipLocationFailed": "Impossibile trovare la tua posizione. Riprova tra un momento, oppure cerca la tua città.",
   "worshipPlaceNear": "vicino a {city}",
-  "worshipHabousNote": "Gli orari ufficiali del Ministero degli Habous e degli Affari islamici per {city}."
+  "worshipHabousNote": "Gli orari ufficiali del Ministero degli Habous e degli Affari islamici per {city}.",
+  "notifTextTitle": "Mostra il testo delle notifiche durante il filtro",
+  "notifTextBody": "Android nasconde il contenuto delle notifiche mentre un’app registra tutto lo schermo, e il filtro conta come tale. Attivo: Waaiya toglie questa protezione solo mentre filtra, così puoi leggere le notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette. Vale dal prossimo avvio.",
+  "notifTextNextStart": "Ferma e riavvia il filtro perché la modifica abbia effetto.",
+  "notifTextRefused": "Questo telefono ha rifiutato la modifica. Attiva tu «Disattiva protezioni condivisione schermo» nelle opzioni sviluppatore.",
+  "notifTextByHand": "Visibile: la protezione di Android è disattivata nelle opzioni sviluppatore («Disattiva protezioni condivisione schermo»). Resta disattivata per ogni condivisione dello schermo finché non la riattivi lì.",
+  "notifTextHowTo": "Android nasconde il contenuto delle notifiche mentre Waaiya filtra. Dopo la configurazione una tantum Waaiya le mostra: toglie questa protezione solo mentre filtra.",
+  "notifTextOpenDev": "Apri opzioni sviluppatore",
+  "notifTextLockNote": "Su questo telefono Android ferma il filtro anche quando lo schermo si blocca, e le altre app restano mute finché non tocchi Riprendi. La configurazione evita anche questo.",
+  "notifTextHandOptional": "Facoltativo, senza configurazione: attiva «Disattiva protezioni condivisione schermo» nelle opzioni sviluppatore. Resta poi disattivata per ogni condivisione dello schermo, e alcuni telefoni non ce l’hanno.",
+  "notifTextForced": "Attivo: su questo telefono Android chiede prima di ogni avvio e fermerebbe il filtro a ogni blocco dello schermo. Waaiya toglie questa protezione mentre filtra, e così si vede anche il testo delle notifiche. Anche altre condivisioni dello schermo nello stesso momento non sono protette."
 }

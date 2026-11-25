@@ -529,5 +529,15 @@
   "worshipLocationSettings": "Locatie-instellingen",
   "worshipLocationFailed": "Je locatie kon niet worden gevonden. Probeer het zo opnieuw, of zoek je stad.",
   "worshipPlaceNear": "bij {city}",
-  "worshipHabousNote": "De officiële tijden van het ministerie van Habous en Islamitische Zaken voor {city}."
+  "worshipHabousNote": "De officiële tijden van het ministerie van Habous en Islamitische Zaken voor {city}.",
+  "notifTextTitle": "Meldingstekst tonen tijdens filteren",
+  "notifTextBody": "Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd. Werkt vanaf de volgende start.",
+  "notifTextNextStart": "Stop het filteren en start het opnieuw om deze wijziging toe te passen.",
+  "notifTextRefused": "Deze telefoon weigerde de wijziging. Zet zelf ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties.",
+  "notifTextByHand": "Zichtbaar: de bescherming van Android staat uit in de ontwikkelaarsopties (‘Beveiliging voor scherm delen uitzetten’). Ze blijft uit voor elke schermdeling tot je haar daar weer aanzet.",
+  "notifTextHowTo": "Android verbergt de inhoud van meldingen terwijl Waaiya filtert. Na de eenmalige installatie toont Waaiya ze: het heft deze bescherming alleen tijdens het filteren op.",
+  "notifTextOpenDev": "Ontwikkelaarsopties openen",
+  "notifTextLockNote": "Op deze telefoon stopt Android het filteren ook als het scherm vergrendelt, en andere apps blijven dan stil tot je op Hervatten tikt. De installatie voorkomt dat ook.",
+  "notifTextHandOptional": "Optioneel, zonder installatie: zet ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties. Ze blijft dan uit voor elke schermdeling, en sommige telefoons hebben haar niet.",
+  "notifTextForced": "Aan: op deze telefoon vraagt Android voor elke start en zou het filteren dan bij elke schermvergrendeling stoppen. Waaiya heft deze bescherming tijdens het filteren op, waardoor ook de meldingstekst zichtbaar is. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd."
 }

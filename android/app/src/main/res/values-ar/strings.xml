@@ -84,6 +84,7 @@
     <string name="notif_title">التصفية تعمل</string>
     <string name="notif_text">تُزال الآلات من صوت كل التطبيقات</string>
     <string name="notif_stop">إيقاف</string>
+    <string name="notif_resume">استئناف</string>
     <!-- Link feature -->
     <string name="link_entry_title">فتح رابط</string>
     <string name="link_entry_body">الصق رابطًا من YouTube أو TikTok أو Instagram لمشاهدته أو حفظه بلا موسيقى.</string>

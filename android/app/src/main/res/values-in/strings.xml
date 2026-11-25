@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya aktif</string>
     <string name="notif_text">Alat musik dihapus dari semua aplikasi</string>
     <string name="notif_stop">Berhenti</string>
+    <string name="notif_resume">Lanjutkan</string>
     <!-- Link feature -->
     <string name="link_entry_title">Buka tautan</string>
     <string name="link_entry_body">Tempel tautan YouTube, TikTok, atau Instagram untuk menontonnya atau menyimpannya tanpa musik.</string>

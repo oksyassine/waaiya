@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya açık</string>
     <string name="notif_text">Tüm uygulamalardan müzik aletleri kaldırılıyor</string>
     <string name="notif_stop">Durdur</string>
+    <string name="notif_resume">Sürdür</string>
     <!-- Link feature -->
     <string name="link_entry_title">Bağlantı aç</string>
     <string name="link_entry_body">Müziksiz izlemek veya kaydetmek için bir YouTube, TikTok ya da Instagram bağlantısı yapıştırın.</string>

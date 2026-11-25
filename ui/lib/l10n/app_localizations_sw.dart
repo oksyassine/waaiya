@@ -1923,4 +1923,42 @@ class AppLocalizationsSw extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Nyakati rasmi za Wizara ya Habous na Mambo ya Kiislamu kwa $city.';
   }
+
+  @override
+  String get notifTextTitle => 'Onyesha maandishi ya arifa wakati wa kuchuja';
+
+  @override
+  String get notifTextBody =>
+      'Android huficha maudhui ya arifa wakati programu yoyote inarekodi skrini nzima, na kuchuja kunahesabiwa hivyo. Imewashwa: Waaiya huondoa ulinzi huu wakati wa kuchuja tu, ili usome arifa zako. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa. Itatumika utakapoanzisha tena.';
+
+  @override
+  String get notifTextNextStart =>
+      'Simamisha kisha anzisha kuchuja tena ili badiliko hili litumike.';
+
+  @override
+  String get notifTextRefused =>
+      'Simu hii imekataa badiliko. Washa mwenyewe “Zima ulinzi wa kushiriki skrini” katika Chaguo za wasanidi programu.';
+
+  @override
+  String get notifTextByHand =>
+      'Inaonyeshwa: ulinzi wa Android umezimwa katika Chaguo za wasanidi programu (“Zima ulinzi wa kushiriki skrini”). Unabaki umezimwa kwa kila ushiriki wa skrini hadi uuwashe tena hapo.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android huficha maudhui ya arifa wakati Waaiya inachuja. Baada ya mpangilio wa mara moja, Waaiya huzionyesha: huondoa ulinzi huu wakati wa kuchuja tu.';
+
+  @override
+  String get notifTextOpenDev => 'Fungua Chaguo za wasanidi programu';
+
+  @override
+  String get notifTextLockNote =>
+      'Kwenye simu hii Android pia husimamisha kuchuja skrini inapofungwa, na programu nyingine hubaki kimya hadi uguse Endelea. Mpangilio huzuia hilo pia.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Si lazima, bila mpangilio: washa “Zima ulinzi wa kushiriki skrini” katika Chaguo za wasanidi programu. Kisha utabaki umezimwa kwa kila ushiriki wa skrini, na baadhi ya simu hazina hiki.';
+
+  @override
+  String get notifTextForced =>
+      'Imewashwa: kwenye simu hii Android huuliza kabla ya kila kuanza, na ingesimamisha kuchuja kila skrini inapofungwa. Waaiya huondoa ulinzi huu wakati wa kuchuja, kwa hiyo maandishi ya arifa pia huonekana. Ushiriki mwingine wa skrini wakati huo huo pia hautalindwa.';
 }

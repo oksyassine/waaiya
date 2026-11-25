@@ -1913,4 +1913,43 @@ class AppLocalizationsUz extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Habus va islomiy ishlar vazirligining $city uchun rasmiy vaqtlari.';
   }
+
+  @override
+  String get notifTextTitle =>
+      'Filtrlash paytida bildirishnoma matnini ko‘rsatish';
+
+  @override
+  String get notifTextBody =>
+      'Biror ilova butun ekranni yozib olayotganda Android bildirishnomalar matnini yashiradi, filtrlash ham shunga kiradi. Yoqilgan: Waaiya bu himoyani faqat filtrlash paytida olib tashlaydi, shunda bildirishnomalarni o‘qiy olasiz. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi. Keyingi ishga tushirishda kuchga kiradi.';
+
+  @override
+  String get notifTextNextStart =>
+      'O‘zgarish kuchga kirishi uchun filtrlashni to‘xtatib, qayta ishga tushiring.';
+
+  @override
+  String get notifTextRefused =>
+      'Bu telefon o‘zgarishni rad etdi. Dasturchilar uchun parametrlarda “Ekran ulashish himoyasini o‘chirish”ni o‘zingiz yoqing.';
+
+  @override
+  String get notifTextByHand =>
+      'Ko‘rsatilmoqda: Android himoyasi dasturchilar uchun parametrlarda o‘chirilgan (“Ekran ulashish himoyasini o‘chirish”). U yerda qayta yoqmaguningizcha har qanday ekran ulashishda o‘chiq qoladi.';
+
+  @override
+  String get notifTextHowTo =>
+      'Waaiya filtrlayotganda Android bildirishnomalar matnini yashiradi. Bir martalik sozlashdan keyin Waaiya ularni ko‘rsatadi: bu himoyani faqat filtrlash paytida olib tashlaydi.';
+
+  @override
+  String get notifTextOpenDev => 'Dasturchilar uchun parametrlarni ochish';
+
+  @override
+  String get notifTextLockNote =>
+      'Bu telefonda ekran qulflanganda Android filtrlashni ham to‘xtatadi va siz Davom ettirish tugmasini bosmaguningizcha boshqa ilovalar jim qoladi. Sozlash bunga ham yo‘l qo‘ymaydi.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Ixtiyoriy, sozlashsiz: dasturchilar uchun parametrlarda “Ekran ulashish himoyasini o‘chirish”ni yoqing. Shunda u har qanday ekran ulashishda o‘chiq qoladi, ayrim telefonlarda esa bu yo‘q.';
+
+  @override
+  String get notifTextForced =>
+      'Yoqilgan: bu telefonda Android har bir ishga tushirishdan oldin so‘raydi va keyin har bir ekran qulfida filtrlashni to‘xtatardi. Waaiya filtrlash paytida bu himoyani olib tashlaydi, shuning uchun bildirishnoma matni ham ko‘rinadi. Ayni paytdagi boshqa ekran ulashishlari ham himoyalanmaydi.';
 }

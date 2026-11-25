@@ -113,7 +113,7 @@ class ScreenShareTileService : TileService() {
     private fun update() {
         val tile = qsTile ?: return
         val can = ScreenShareProtection.setUp(this)
-        val on = can && Settings(this).showNotificationText
+        val on = can && ScreenShareProtection.wanted(this)
         tile.label = getString(R.string.tile_text_label)
         tile.state = if (on) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
         val running = ScreenShareProtection.shownInCapture

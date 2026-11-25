@@ -1922,4 +1922,42 @@ class AppLocalizationsDe extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'Die offiziellen Zeiten des Ministeriums für Habous und islamische Angelegenheiten für $city.';
   }
+
+  @override
+  String get notifTextTitle => 'Benachrichtigungstext beim Filtern zeigen';
+
+  @override
+  String get notifTextBody =>
+      'Android blendet den Inhalt von Benachrichtigungen aus, solange eine App den ganzen Bildschirm aufnimmt, und das Filtern zählt dazu. An: Waaiya hebt diesen Schutz nur während des Filterns auf, damit du deine Benachrichtigungen lesen kannst. Andere gleichzeitige Bildschirmfreigaben sind dann ebenfalls nicht geschützt. Gilt ab dem nächsten Start.';
+
+  @override
+  String get notifTextNextStart =>
+      'Beende das Filtern und starte es neu, damit die Änderung gilt.';
+
+  @override
+  String get notifTextRefused =>
+      'Dieses Telefon hat die Änderung abgelehnt. Schalte „Bildschirmfreigabe-Schutz deaktivieren“ in den Entwickleroptionen selbst ein.';
+
+  @override
+  String get notifTextByHand =>
+      'Sichtbar: Der Schutz von Android ist in den Entwickleroptionen aus („Bildschirmfreigabe-Schutz deaktivieren“). Er bleibt für jede Bildschirmfreigabe aus, bis du ihn dort wieder einschaltest.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android blendet den Inhalt von Benachrichtigungen aus, während Waaiya filtert. Nach der einmaligen Einrichtung zeigt Waaiya ihn: Es hebt diesen Schutz nur während des Filterns auf.';
+
+  @override
+  String get notifTextOpenDev => 'Entwickleroptionen öffnen';
+
+  @override
+  String get notifTextLockNote =>
+      'Auf diesem Telefon beendet Android das Filtern auch beim Sperren des Bildschirms, und andere Apps bleiben dann stumm, bis du auf Fortsetzen tippst. Die Einrichtung verhindert auch das.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Optional, ohne Einrichtung: Schalte „Bildschirmfreigabe-Schutz deaktivieren“ in den Entwickleroptionen ein. Er bleibt dann für jede Bildschirmfreigabe aus, und manche Telefone haben ihn nicht.';
+
+  @override
+  String get notifTextForced =>
+      'An: Auf diesem Telefon fragt Android vor jedem Start und würde das Filtern dann bei jeder Bildschirmsperre beenden. Waaiya hebt diesen Schutz während des Filterns auf, wodurch auch der Benachrichtigungstext sichtbar wird. Andere gleichzeitige Bildschirmfreigaben sind dann ebenfalls nicht geschützt.';
 }

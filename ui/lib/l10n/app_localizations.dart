@@ -3309,6 +3309,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'الأوقات الرسمية لوزارة الأوقاف والشؤون الإسلامية لمدينة {city}.'**
   String worshipHabousNote(Object city);
+
+  /// No description provided for @notifTextTitle.
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار نص الإشعارات أثناء التصفية'**
+  String get notifTextTitle;
+
+  /// No description provided for @notifTextBody.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُخفي أندرويد محتوى الإشعارات ما دام أي تطبيق يسجّل الشاشة كلها، والتصفية تُعدّ من ذلك. عند التفعيل: ترفع واعية هذه الحماية أثناء التصفية فقط، فتقرأ إشعاراتك. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا. يسري ذلك عند التشغيل التالي.'**
+  String get notifTextBody;
+
+  /// No description provided for @notifTextNextStart.
+  ///
+  /// In ar, this message translates to:
+  /// **'أوقف التصفية ثم شغّلها من جديد ليسري هذا التغيير.'**
+  String get notifTextNextStart;
+
+  /// No description provided for @notifTextRefused.
+  ///
+  /// In ar, this message translates to:
+  /// **'رفض هذا الهاتف التغيير. فعّل بنفسك «إيقاف ميزات الحماية أثناء مشاركة الشاشة» في خيارات المطور.'**
+  String get notifTextRefused;
+
+  /// No description provided for @notifTextByHand.
+  ///
+  /// In ar, this message translates to:
+  /// **'النص ظاهر: حماية أندرويد متوقفة في خيارات المطور («إيقاف ميزات الحماية أثناء مشاركة الشاشة»). وتبقى متوقفة لكل مشاركة شاشة حتى تعيد تفعيلها هناك.'**
+  String get notifTextByHand;
+
+  /// No description provided for @notifTextHowTo.
+  ///
+  /// In ar, this message translates to:
+  /// **'يُخفي أندرويد محتوى الإشعارات أثناء تصفية واعية. بعد الإعداد لمرة واحدة تُظهرها واعية: ترفع هذه الحماية أثناء التصفية فقط.'**
+  String get notifTextHowTo;
+
+  /// No description provided for @notifTextOpenDev.
+  ///
+  /// In ar, this message translates to:
+  /// **'فتح خيارات المطور'**
+  String get notifTextOpenDev;
+
+  /// No description provided for @notifTextLockNote.
+  ///
+  /// In ar, this message translates to:
+  /// **'على هذا الهاتف يوقف أندرويد التصفية أيضًا عند قفل الشاشة، فتبقى التطبيقات الأخرى صامتة حتى تضغط «استئناف». والإعداد يمنع ذلك أيضًا.'**
+  String get notifTextLockNote;
+
+  /// No description provided for @notifTextHandOptional.
+  ///
+  /// In ar, this message translates to:
+  /// **'اختياري، دون إعداد: فعّل «إيقاف ميزات الحماية أثناء مشاركة الشاشة» في خيارات المطور. ستبقى الحماية متوقفة حينها لكل مشاركة شاشة، وبعض الهواتف ليس فيها هذا المفتاح.'**
+  String get notifTextHandOptional;
+
+  /// No description provided for @notifTextForced.
+  ///
+  /// In ar, this message translates to:
+  /// **'مفعّل: على هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف التصفية عند كل قفل للشاشة. لذلك ترفع واعية هذه الحماية أثناء التصفية، فيظهر نص الإشعارات أيضًا. ولا تكون مشاركات الشاشة الأخرى في الوقت نفسه محمية أيضًا.'**
+  String get notifTextForced;
 }
 
 class _AppLocalizationsDelegate

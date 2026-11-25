@@ -85,6 +85,7 @@
     <string name="notif_title">واعية آن ہے</string>
     <string name="notif_text">تمام ایپس سے آلات ہٹائے جا رہے ہیں</string>
     <string name="notif_stop">روکیں</string>
+    <string name="notif_resume">دوبارہ شروع کریں</string>
     <!-- Link feature -->
     <string name="link_entry_title">لنک کھولیں</string>
     <string name="link_entry_body">YouTube، TikTok یا Instagram کا لنک پیسٹ کریں تاکہ اسے بغیر موسیقی کے دیکھیں یا محفوظ کریں۔</string>

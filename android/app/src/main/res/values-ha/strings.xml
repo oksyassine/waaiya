@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya yana kunne</string>
     <string name="notif_text">Ana cire kayan kiɗa daga dukkan manhajoji</string>
     <string name="notif_stop">Dakatar</string>
+    <string name="notif_resume">Ci gaba</string>
     <!-- Link feature -->
     <string name="link_entry_title">Buɗe mahaɗa</string>
     <string name="link_entry_body">Liƙa mahaɗar (link) YouTube, TikTok ko Instagram don kallo ko ajiye ta ba tare da kiɗa ba.</string>

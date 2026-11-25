@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya staat aan</string>
     <string name="notif_text">Instrumenten worden uit alle apps verwijderd</string>
     <string name="notif_stop">Stoppen</string>
+    <string name="notif_resume">Hervatten</string>
     <!-- Link feature -->
     <string name="link_entry_title">Een link openen</string>
     <string name="link_entry_body">Plak een link van YouTube, TikTok of Instagram om hem zonder muziek te bekijken of op te slaan.</string>

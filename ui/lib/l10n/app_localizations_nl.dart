@@ -1914,4 +1914,42 @@ class AppLocalizationsNl extends AppLocalizations {
   String worshipHabousNote(Object city) {
     return 'De officiële tijden van het ministerie van Habous en Islamitische Zaken voor $city.';
   }
+
+  @override
+  String get notifTextTitle => 'Meldingstekst tonen tijdens filteren';
+
+  @override
+  String get notifTextBody =>
+      'Android verbergt de inhoud van meldingen zolang een app het hele scherm opneemt, en filteren telt daarvoor mee. Aan: Waaiya heft deze bescherming alleen tijdens het filteren op, zodat je je meldingen kunt lezen. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd. Werkt vanaf de volgende start.';
+
+  @override
+  String get notifTextNextStart =>
+      'Stop het filteren en start het opnieuw om deze wijziging toe te passen.';
+
+  @override
+  String get notifTextRefused =>
+      'Deze telefoon weigerde de wijziging. Zet zelf ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties.';
+
+  @override
+  String get notifTextByHand =>
+      'Zichtbaar: de bescherming van Android staat uit in de ontwikkelaarsopties (‘Beveiliging voor scherm delen uitzetten’). Ze blijft uit voor elke schermdeling tot je haar daar weer aanzet.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android verbergt de inhoud van meldingen terwijl Waaiya filtert. Na de eenmalige installatie toont Waaiya ze: het heft deze bescherming alleen tijdens het filteren op.';
+
+  @override
+  String get notifTextOpenDev => 'Ontwikkelaarsopties openen';
+
+  @override
+  String get notifTextLockNote =>
+      'Op deze telefoon stopt Android het filteren ook als het scherm vergrendelt, en andere apps blijven dan stil tot je op Hervatten tikt. De installatie voorkomt dat ook.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Optioneel, zonder installatie: zet ‘Beveiliging voor scherm delen uitzetten’ aan in de ontwikkelaarsopties. Ze blijft dan uit voor elke schermdeling, en sommige telefoons hebben haar niet.';
+
+  @override
+  String get notifTextForced =>
+      'Aan: op deze telefoon vraagt Android voor elke start en zou het filteren dan bij elke schermvergrendeling stoppen. Waaiya heft deze bescherming tijdens het filteren op, waardoor ook de meldingstekst zichtbaar is. Andere schermdelingen op hetzelfde moment zijn dan ook niet beschermd.';
 }
