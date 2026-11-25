@@ -260,6 +260,9 @@ object AppUpdate : Feature {
                     }
                 }
                 set("ready", 1.0)
+                // the 100 MB file is read and checked here, off the screen's thread
+                val why = AppUpdateInstall.verify(c, apk, r.versionCode, TARGET)
+                if (why != null) { Log.w(TAG, "install: $why"); apk.delete(); set("error", 0.0, "bad_file"); return@execute }
                 main.post { install(c, apk, r) }
             } catch (e: Exception) {
                 Log.w(TAG, "update: $e")
@@ -325,8 +328,6 @@ object AppUpdate : Feature {
     /** Main thread. Checks the APK, then hands it to Android's installer (or asks for the permission first). */
     fun install(context: Context, apk: File, r: Release) {
         val c = context.applicationContext
-        val why = AppUpdateInstall.verify(c, apk, r.versionCode, TARGET)
-        if (why != null) { Log.w(TAG, "install: $why"); apk.delete(); set("error", 0.0, "bad_file"); return }
         if (!c.packageManager.canRequestPackageInstalls()) {
             // Android 11 and older kill the app when this permission is allowed: the update goes on by itself when
             // Waaiya is opened again (resumeAfterPermission), so the user does not have to find the button again
@@ -340,11 +341,13 @@ object AppUpdate : Feature {
         prefs(c).edit().remove("installAfterPermission").apply()  // the user is asked now: no second prompt later
         if (FilterService.running) {
             // filtering was started while the update downloaded: the same gate as Stop, or wait for the next tap
+            // Not stopped here: filtering goes on until Android replaces the app, so cancelling at Android's
+            // installer leaves it running
             try { Protection.checkStop(c) } catch (e: FeatureException) { set("ready", 1.0); return }
-            c.startService(Intent(c, FilterService::class.java).setAction(FilterService.ACTION_STOP))
         }
         set("installing", 1.0)
-        AppUpdateInstall.commit(c, apk, TARGET)?.let { set("error", 1.0, "install") }
+        // the copy into the install session (100 MB) off the screen's thread
+        worker.execute { AppUpdateInstall.commit(c, apk, TARGET)?.let { set("error", 1.0, "install") } }
     }
 
     /** The user tapped "Update now", then allowed installs (which restarted the app): go on, Android still asks. */
