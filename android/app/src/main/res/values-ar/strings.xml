@@ -417,4 +417,30 @@
     <string name="move_new_body">ما زالت واعية القديمة (من قبل الإصدار 0.2.15) على هذا الهاتف. احذفها كي لا يعمل التطبيقان معًا.</string>
     <string name="move_new_imported">نُقلت إعداداتك منها.</string>
     <string name="move_remove_old">احذف واعية القديمة</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">واعية: فحص الموسيقى</string>
+    <string name="mc_title">فحص الموسيقى</string>
+    <string name="mc_unnamed">ملف مُشارَك</string>
+    <string name="mc_listening">جارٍ الاستماع… %1$d %%</string>
+    <string name="mc_private">تستمع واعية على هذا الهاتف. لا يُرسَل شيء ولا يُحفَظ.</string>
+    <string name="mc_music">سمعت واعية موسيقى</string>
+    <string name="mc_music_detail">آلات موسيقية في %1$s (نحو %2$s %% من المقطع).</string>
+    <string name="mc_percussion">سمعت واعية إيقاعًا فقط</string>
+    <string name="mc_percussion_detail">طبول أو تصفيق إيقاعي، بلا آلات أخرى، في %1$s. القرار لك.</string>
+    <string name="mc_none">لم تُسمَع آلات موسيقية</string>
+    <string name="mc_none_detail">استمعت واعية إلى المقطع كله ولم تسمع آلات موسيقية.</string>
+    <string name="mc_note_quiet">قد تفوتها الموسيقى الخافتة تحت الكلام.</string>
+    <string name="mc_failed">تعذّر فحص هذا الملف</string>
+    <string name="mc_failed_no_model">هذا الإصدار من واعية لا يفحص الموسيقى.</string>
+    <string name="mc_failed_no_sound">ليس فيه صوت.</string>
+    <string name="mc_failed_too_long">مدته أطول من 30 دقيقة.</string>
+    <string name="mc_failed_unreadable">لا تستطيع واعية قراءة هذا الملف.</string>
+    <string name="mc_share_clean">مشاركة بلا موسيقى</string>
+    <string name="mc_share_anyway">مشاركة على حاله</string>
+    <string name="mc_listen">الاستماع هنا</string>
+    <string name="mc_copying">جارٍ إعداد نسخة بلا موسيقى… %1$d %%</string>
+    <string name="mc_copy_failed">تعذّر إعداد النسخة بلا موسيقى.</string>
+    <string name="mc_copy_name">%1$s (بلا موسيقى)</string>
+    <string name="mc_list_sep">"، "</string>
 </resources>

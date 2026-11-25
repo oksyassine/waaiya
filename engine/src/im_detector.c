@@ -35,8 +35,9 @@ struct im_detector {
     float *ring;                /* [frames][bins] power frames */
     int ring_pos, frames_since_eval;
     float *in;                  /* [bins * frames] classifier input */
-    float out[IM_DET_NOUT];
-    float probs[IM_DET_NOUT];
+    int nout;                   /* outputs of the model: IM_DET_NOUT for the singing detector, 527 for the tagger */
+    float *out;                 /* [nout] */
+    float *probs;               /* [nout] */
 };
 
 static int meta_get(const OrtApi *api, OrtModelMetadata *md, OrtAllocator *al, const char *key, char *dst, size_t n) {
@@ -142,7 +143,7 @@ void im_detector_reset(im_detector *d) {
     d->frames_since_eval = 0;
     memset(d->frame, 0, sizeof(float) * (size_t)d->n_fft);
     memset(d->ring, 0, sizeof(float) * (size_t)d->frames * (size_t)d->bins);
-    memset(d->probs, 0, sizeof d->probs);
+    memset(d->probs, 0, sizeof(float) * (size_t)d->nout);
 }
 
 void im_detector_destroy(im_detector *d) {
@@ -155,6 +156,7 @@ void im_detector_destroy(im_detector *d) {
     }
     free(d->bitrev); free(d->tw_re); free(d->tw_im); free(d->big_re); free(d->big_im);
     free(d->sub_re); free(d->sub_im); free(d->window); free(d->frame); free(d->ring); free(d->in);
+    free(d->out); free(d->probs);
     free(d);
 }
 
@@ -211,12 +213,30 @@ im_detector *im_detector_create(const OrtApi *api, OrtEnv *env, const char *path
         goto bad;
     }
     d->bins = d->n_fft / 2 + 1;
+    {   /* output size from the model: [1, nout] */
+        OrtTypeInfo *ti = NULL;
+        const OrtTensorTypeAndShapeInfo *tti = NULL;
+        size_t nd = 0;
+        int64_t dims[4] = {0};
+        if ((st = api->SessionGetOutputTypeInfo(d->sess, 0, &ti)) || (st = api->CastTypeInfoToTensorInfo(ti, &tti)) ||
+            (st = api->GetDimensionsCount(tti, &nd)) || nd != 2 || (st = api->GetDimensions(tti, dims, nd))) {
+            if (st) { fail(err, errlen, "output shape", api->GetErrorMessage(st)); api->ReleaseStatus(st); }
+            else fail(err, errlen, "output must be [1, n]", NULL);
+            if (ti) api->ReleaseTypeInfo(ti);
+            goto bad;
+        }
+        api->ReleaseTypeInfo(ti);
+        d->nout = (int)dims[1];
+        if (d->nout <= 0 || d->nout > 4096) { fail(err, errlen, "bad output size", NULL); goto bad; }
+    }
     if (!setup_fft(d)) { fail(err, errlen, "n_fft must be 2^k or 3*2^k", NULL); goto bad; }
     d->window = calloc((size_t)d->n_fft, sizeof(float));
     d->frame = calloc((size_t)d->n_fft, sizeof(float));
     d->ring = calloc((size_t)d->frames * (size_t)d->bins, sizeof(float));
     d->in = calloc((size_t)d->frames * (size_t)d->bins, sizeof(float));
-    if (!d->window || !d->frame || !d->ring || !d->in) { fail(err, errlen, "out of memory", NULL); goto bad; }
+    d->out = calloc((size_t)(d->nout > IM_DET_NOUT ? d->nout : IM_DET_NOUT), sizeof(float));
+    d->probs = calloc((size_t)(d->nout > IM_DET_NOUT ? d->nout : IM_DET_NOUT), sizeof(float));
+    if (!d->window || !d->frame || !d->ring || !d->in || !d->out || !d->probs) { fail(err, errlen, "out of memory", NULL); goto bad; }
     int off = (d->n_fft - d->win) / 2;
     for (int i = 0; i < d->win; i++)  /* symmetric Hann (torch.hann_window(periodic=False)) */
         d->window[off + i] = (float)(0.5 - 0.5 * cos(2.0 * M_PI * i / (d->win - 1)));
@@ -224,10 +244,10 @@ im_detector *im_detector_create(const OrtApi *api, OrtEnv *env, const char *path
     if ((st = api->CreateCpuMemoryInfo(OrtArenaAllocator, OrtMemTypeDefault, &d->mem))) {
         fail(err, errlen, "mem", api->GetErrorMessage(st)); api->ReleaseStatus(st); goto bad;
     }
-    int64_t ishape[3] = {1, d->bins, d->frames}, oshape[2] = {1, IM_DET_NOUT};
+    int64_t ishape[3] = {1, d->bins, d->frames}, oshape[2] = {1, d->nout};
     if ((st = api->CreateTensorWithDataAsOrtValue(d->mem, d->in, sizeof(float) * (size_t)d->bins * (size_t)d->frames,
                                                   ishape, 3, ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT, &d->v_in)) ||
-        (st = api->CreateTensorWithDataAsOrtValue(d->mem, d->out, sizeof d->out, oshape, 2,
+        (st = api->CreateTensorWithDataAsOrtValue(d->mem, d->out, sizeof(float) * (size_t)d->nout, oshape, 2,
                                                   ONNX_TENSOR_ELEMENT_DATA_TYPE_FLOAT, &d->v_out))) {
         fail(err, errlen, "tensor", api->GetErrorMessage(st)); api->ReleaseStatus(st); goto bad;
     }
@@ -252,13 +272,13 @@ static int classify(im_detector *d) {
     size_t n = (size_t)d->bins * (size_t)d->frames;
     for (size_t i = 0; i < n; i++) energy += d->in[i];
     if (energy < 1e-6 * (double)d->frames) { /* no voice in the window (separated output is silent) */
-        memset(d->probs, 0, sizeof d->probs);
+        memset(d->probs, 0, sizeof(float) * (size_t)d->nout);
         return 1;
     }
     const char *in_names[1] = {"power"}, *out_names[1] = {"probs"};
     OrtStatus *st = d->api->Run(d->sess, NULL, in_names, (const OrtValue *const *)&d->v_in, 1, out_names, 1, &d->v_out);
     if (st) { d->api->ReleaseStatus(st); return -1; }
-    for (int i = 0; i < IM_DET_NOUT; i++) {
+    for (int i = 0; i < d->nout; i++) {
         if (!isfinite(d->out[i])) return -1;
         d->probs[i] = d->out[i];
     }
@@ -294,6 +314,7 @@ int im_detector_push(im_detector *d, const float *x, int n) {
 }
 
 const float *im_detector_probs(const im_detector *d) { return d->probs; }
+int im_detector_nout(const im_detector *d) { return d ? d->nout : 0; }
 float im_detector_threshold(const im_detector *d) { return d->threshold; }
 float im_detector_release_s(const im_detector *d) { return d->release_s; }
 int im_detector_hop(const im_detector *d) { return d->hop; }

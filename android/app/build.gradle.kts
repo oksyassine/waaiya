@@ -47,8 +47,8 @@ android {
         applicationId = if (moveBuild) OLD_ID else NEW_ID
         minSdk = 29          // AudioPlaybackCapture
         targetSdk = 36       // Google Play: new apps and updates target Android 16 from 2026-08-31
-        versionCode = 21
-        versionName = "0.2.17"
+        versionCode = 22
+        versionName = "0.2.18"
         // Tests of the in-app update only (AppUpdate.kt): -PimTestVersionCode=N builds a "newer" app. Never for releases.
         providers.gradleProperty("imTestVersionCode").orNull?.let { versionCode = it.toInt(); versionNameSuffix = "-t$it" }
         buildConfigField("String", "YTDLP_VERSION", "\"$ytDlpVersion\"")
@@ -175,11 +175,16 @@ val requiredModels = linkedMapOf(
 // Women's-singing detector: -PimDetector=/path/detector.onnx (default: models/detector/detector_v1.onnx if present).
 // In the models-v1 release since 0.2.12 (scripts/fetch_deps.sh detector); a local build without it warns (CI fails).
 val detectorModel = modelFile("imDetector", rootProject.file("../models/detector/detector_v1.onnx"))
+// "Check for music" (docs/MUSIC_CHECK.md): the AudioSet tagger, -PimMusicTagger=/path or models/music/tagger_mn04.onnx
+// (models-v1 release, scripts/fetch_deps.sh models; made by models/music/export_tagger.py). Without it the check
+// says this version cannot check for music.
+val musicTagger = modelFile("imMusicTagger", rootProject.file("../models/music/tagger_mn04.onnx"))
 // Sync, not Copy: build/modelAssets ends up holding exactly the files found now, so a model whose source is gone
 // cannot ship from a stale copy left there by an older build.
 val copyModel by tasks.registering(Sync::class) {
     requiredModels.forEach { (asset, src) -> from(src) { rename { asset } } }
     from(detectorModel) { rename { "detector.onnx" } }
+    from(musicTagger) { rename { "music_tagger.onnx" } }
     into(modelAssets)
 }
 // The check runs once the task graph is known, not as an action of copyModel: Gradle skips a copy task's actions

@@ -418,4 +418,30 @@
     <string name="move_new_body">Waaiya lama (sebelum versi 0.2.15) masih ada pada telefon ini. Buangnya supaya kedua-duanya tidak menapis serentak.</string>
     <string name="move_new_imported">Tetapan anda telah dibawa daripadanya.</string>
     <string name="move_remove_old">Buang Waaiya lama</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: semak muzik</string>
+    <string name="mc_title">Semak muzik</string>
+    <string name="mc_unnamed">Fail yang dikongsi</string>
+    <string name="mc_listening">Sedang mendengar… %1$d %%</string>
+    <string name="mc_private">Waaiya mendengar di telefon ini. Tiada apa-apa dihantar atau disimpan.</string>
+    <string name="mc_music">Waaiya mendengar muzik</string>
+    <string name="mc_music_detail">Alat muzik dalam %1$s (kira-kira %2$s %% daripada klip).</string>
+    <string name="mc_percussion">Waaiya hanya mendengar perkusi</string>
+    <string name="mc_percussion_detail">Gendang atau tepukan berirama, tanpa alat muzik lain, dalam %1$s. Anda yang memutuskan.</string>
+    <string name="mc_none">Tiada alat muzik didengar</string>
+    <string name="mc_none_detail">Waaiya mendengar keseluruhan klip dan tidak mendengar alat muzik.</string>
+    <string name="mc_note_quiet">Muzik perlahan di bawah percakapan mungkin terlepas.</string>
+    <string name="mc_failed">Fail ini tidak dapat disemak</string>
+    <string name="mc_failed_no_model">Versi Waaiya ini tidak dapat menyemak muzik.</string>
+    <string name="mc_failed_no_sound">Fail ini tiada bunyi.</string>
+    <string name="mc_failed_too_long">Tempohnya melebihi 30 minit.</string>
+    <string name="mc_failed_unreadable">Waaiya tidak dapat membaca fail ini.</string>
+    <string name="mc_share_clean">Kongsi tanpa muzik</string>
+    <string name="mc_share_anyway">Kongsi juga</string>
+    <string name="mc_listen">Dengar di sini</string>
+    <string name="mc_copying">Membuat salinan tanpa muzik… %1$d %%</string>
+    <string name="mc_copy_failed">Salinan tanpa muzik tidak dapat dibuat.</string>
+    <string name="mc_copy_name">%1$s (tanpa muzik)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

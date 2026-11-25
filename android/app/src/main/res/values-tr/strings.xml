@@ -418,4 +418,30 @@
     <string name="move_new_body">Eski Waaiya (0.2.15 sürümünden önceki) hâlâ bu telefonda. İkisi asla aynı anda filtrelemesin diye kaldırın.</string>
     <string name="move_new_imported">Ayarlarınız ondan alındı.</string>
     <string name="move_remove_old">Eski Waaiya\'yı kaldır</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: müzik kontrolü</string>
+    <string name="mc_title">Müzik kontrolü</string>
+    <string name="mc_unnamed">Paylaşılan dosya</string>
+    <string name="mc_listening">Dinleniyor… %%%1$d</string>
+    <string name="mc_private">Waaiya bu telefonda dinler. Hiçbir şey gönderilmez ya da saklanmaz.</string>
+    <string name="mc_music">Waaiya müzik duydu</string>
+    <string name="mc_music_detail">%1$s içinde çalgılar (klibin yaklaşık %%%2$s kadarı).</string>
+    <string name="mc_percussion">Waaiya yalnızca ritim duydu</string>
+    <string name="mc_percussion_detail">Başka çalgı olmadan davul ya da ritimli el çırpma, %1$s içinde. Karar sizin.</string>
+    <string name="mc_none">Çalgı duyulmadı</string>
+    <string name="mc_none_detail">Waaiya klibin tamamını dinledi ve müzik aleti duymadı.</string>
+    <string name="mc_note_quiet">Konuşmanın altındaki hafif müzik gözden kaçabilir.</string>
+    <string name="mc_failed">Bu dosya kontrol edilemedi</string>
+    <string name="mc_failed_no_model">Waaiya\'nın bu sürümü müzik kontrolü yapamaz.</string>
+    <string name="mc_failed_no_sound">Sesi yok.</string>
+    <string name="mc_failed_too_long">30 dakikadan uzun.</string>
+    <string name="mc_failed_unreadable">Waaiya bu dosyayı okuyamıyor.</string>
+    <string name="mc_share_clean">Müziksiz paylaş</string>
+    <string name="mc_share_anyway">Yine de paylaş</string>
+    <string name="mc_listen">Burada dinle</string>
+    <string name="mc_copying">Müziksiz kopya hazırlanıyor… %%%1$d</string>
+    <string name="mc_copy_failed">Müziksiz kopya hazırlanamadı.</string>
+    <string name="mc_copy_name">%1$s (müziksiz)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

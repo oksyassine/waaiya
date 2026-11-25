@@ -418,4 +418,30 @@
     <string name="move_new_body">‏واعیهٔ قدیمی (پیش از نسخهٔ 0.2.15) هنوز روی این تلفن است. آن را حذف کنید تا هرگز هر دو با هم پالایش نکنند.</string>
     <string name="move_new_imported">‏تنظیمات شما از آن منتقل شد.</string>
     <string name="move_remove_old">‏حذف واعیهٔ قدیمی</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">واعية: بررسی موسیقی</string>
+    <string name="mc_title">بررسی موسیقی</string>
+    <string name="mc_unnamed">فایل اشتراک‌گذاشته</string>
+    <string name="mc_listening">در حال گوش دادن… %1$d %%</string>
+    <string name="mc_private">واعية روی همین گوشی گوش می‌دهد. چیزی فرستاده یا نگه داشته نمی‌شود.</string>
+    <string name="mc_music">واعية موسیقی شنید</string>
+    <string name="mc_music_detail">سازها در %1$s (حدود %2$s %% از کلیپ).</string>
+    <string name="mc_percussion">واعية فقط ضرب شنید</string>
+    <string name="mc_percussion_detail">طبل یا دست‌زدن ریتمیک، بدون ساز دیگر، در %1$s. تصمیم با شماست.</string>
+    <string name="mc_none">سازی شنیده نشد</string>
+    <string name="mc_none_detail">واعية کل کلیپ را گوش داد و ساز موسیقی نشنید.</string>
+    <string name="mc_note_quiet">موسیقی آرام زیر صحبت ممکن است از قلم بیفتد.</string>
+    <string name="mc_failed">این فایل بررسی نشد</string>
+    <string name="mc_failed_no_model">این نسخه از واعية نمی‌تواند موسیقی را بررسی کند.</string>
+    <string name="mc_failed_no_sound">صدا ندارد.</string>
+    <string name="mc_failed_too_long">بیشتر از ۳۰ دقیقه است.</string>
+    <string name="mc_failed_unreadable">واعية نمی‌تواند این فایل را بخواند.</string>
+    <string name="mc_share_clean">اشتراک بدون موسیقی</string>
+    <string name="mc_share_anyway">اشتراک به همین صورت</string>
+    <string name="mc_listen">گوش دادن در اینجا</string>
+    <string name="mc_copying">در حال ساخت نسخهٔ بدون موسیقی… %1$d %%</string>
+    <string name="mc_copy_failed">نسخهٔ بدون موسیقی ساخته نشد.</string>
+    <string name="mc_copy_name">%1$s (بدون موسیقی)</string>
+    <string name="mc_list_sep">"، "</string>
 </resources>

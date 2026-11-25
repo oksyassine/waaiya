@@ -417,4 +417,30 @@
     <string name="move_new_body">Tsohuwar Waaiya (ta kafin siga 0.2.15) tana nan a wannan wayar. Cire ta don kada su biyu su tace a lokaci ɗaya.</string>
     <string name="move_new_imported">An kawo saitunanku daga gare ta.</string>
     <string name="move_remove_old">Cire tsohuwar Waaiya</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: duba ko akwai kiɗa</string>
+    <string name="mc_title">Duba ko akwai kiɗa</string>
+    <string name="mc_unnamed">Fayil da aka raba</string>
+    <string name="mc_listening">Ana saurare… %1$d %%</string>
+    <string name="mc_private">Waaiya tana saurare a wannan wayar. Ba a aika ko ajiye komai ba.</string>
+    <string name="mc_music">Waaiya ta ji kiɗa</string>
+    <string name="mc_music_detail">Kayan kiɗa a %1$s (kusan %2$s %% na bidiyon).</string>
+    <string name="mc_percussion">Waaiya ta ji kaɗe-kaɗe kawai</string>
+    <string name="mc_percussion_detail">Ganguna ko tafi mai kari, ba tare da wasu kayan kiɗa ba, a %1$s. Kai ne za ka yanke shawara.</string>
+    <string name="mc_none">Ba a ji kayan kiɗa ba</string>
+    <string name="mc_none_detail">Waaiya ta saurari dukan bidiyon kuma ba ta ji kayan kiɗa ba.</string>
+    <string name="mc_note_quiet">Kiɗa mai ƙaramar murya a ƙarƙashin magana na iya wucewa ba a ji ba.</string>
+    <string name="mc_failed">Ba a iya duba wannan fayil ba</string>
+    <string name="mc_failed_no_model">Wannan sigar Waaiya ba ta iya duba kiɗa.</string>
+    <string name="mc_failed_no_sound">Ba shi da sauti.</string>
+    <string name="mc_failed_too_long">Ya fi minti 30 tsawo.</string>
+    <string name="mc_failed_unreadable">Waaiya ba ta iya karanta wannan fayil ba.</string>
+    <string name="mc_share_clean">Raba ba tare da kiɗa ba</string>
+    <string name="mc_share_anyway">Raba duk da haka</string>
+    <string name="mc_listen">Saurara a nan</string>
+    <string name="mc_copying">Ana yin kwafi ba tare da kiɗa ba… %1$d %%</string>
+    <string name="mc_copy_failed">Ba a iya yin kwafin ba tare da kiɗa ba.</string>
+    <string name="mc_copy_name">%1$s (ba tare da kiɗa ba)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

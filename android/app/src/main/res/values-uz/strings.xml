@@ -418,4 +418,30 @@
     <string name="move_new_body">Eski Waaiya (0.2.15 versiyasidan oldingi) hali ham bu telefonda. Ikkalasi hech qachon birga filtrlamasligi uchun uni o‘chiring.</string>
     <string name="move_new_imported">Sozlamalaringiz undan olib kelindi.</string>
     <string name="move_remove_old">Eski Waaiya’ni o‘chirish</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: musiqani tekshirish</string>
+    <string name="mc_title">Musiqani tekshirish</string>
+    <string name="mc_unnamed">Ulashilgan fayl</string>
+    <string name="mc_listening">Tinglanmoqda… %1$d %%</string>
+    <string name="mc_private">Waaiya shu telefonda tinglaydi. Hech narsa yuborilmaydi va saqlanmaydi.</string>
+    <string name="mc_music">Waaiya musiqa eshitdi</string>
+    <string name="mc_music_detail">%1$s da cholg‘u asboblari (klipning taxminan %2$s %%).</string>
+    <string name="mc_percussion">Waaiya faqat zarbli cholg‘u eshitdi</string>
+    <string name="mc_percussion_detail">Boshqa cholg‘usiz baraban yoki ritmik qarsak, %1$s da. Qaror sizda.</string>
+    <string name="mc_none">Cholg‘u eshitilmadi</string>
+    <string name="mc_none_detail">Waaiya butun klipni tingladi va musiqa asbobi eshitmadi.</string>
+    <string name="mc_note_quiet">Nutq ostidagi past musiqa e’tibordan chetda qolishi mumkin.</string>
+    <string name="mc_failed">Bu faylni tekshirib bo‘lmadi</string>
+    <string name="mc_failed_no_model">Waaiya’ning bu versiyasi musiqani tekshira olmaydi.</string>
+    <string name="mc_failed_no_sound">Unda ovoz yo‘q.</string>
+    <string name="mc_failed_too_long">U 30 daqiqadan uzun.</string>
+    <string name="mc_failed_unreadable">Waaiya bu faylni o‘qiy olmaydi.</string>
+    <string name="mc_share_clean">Musiqasiz ulashish</string>
+    <string name="mc_share_anyway">Baribir ulashish</string>
+    <string name="mc_listen">Shu yerda tinglash</string>
+    <string name="mc_copying">Musiqasiz nusxa tayyorlanmoqda… %1$d %%</string>
+    <string name="mc_copy_failed">Musiqasiz nusxani tayyorlab bo‘lmadi.</string>
+    <string name="mc_copy_name">%1$s (musiqasiz)</string>
+    <string name="mc_list_sep">", "</string>
 </resources>

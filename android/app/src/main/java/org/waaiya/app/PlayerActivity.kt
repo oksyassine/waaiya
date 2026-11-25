@@ -44,6 +44,8 @@ open class PlayerActivity : Activity() {
          *  Read only by [LinkPlayerActivity] (not exported), never from another app's intent. */
         const val EXTRA_STREAMS = "streams"
         const val EXTRA_TITLE = "title"
+        /** Where to start (ms): "Listen here" after a music check starts at the first part with music. */
+        const val EXTRA_START_MS = "start_ms"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +95,7 @@ open class PlayerActivity : Activity() {
             finish()
             return
         }
+        intent?.getLongExtra(EXTRA_START_MS, 0L)?.takeIf { it > 0 }?.let { p.seekTo(it) }
         p.prepare()
         p.play()
     }
