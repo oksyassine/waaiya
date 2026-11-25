@@ -537,5 +537,20 @@
   "trayOpen": "Buka Waaiya",
   "trayQuit": "Keluar",
   "engineErrorAutostartBlocked": "Windows tidak membenarkan Waaiya bermula semasa log masuk. Hidupkan Waaiya dalam Tetapan › Aplikasi › Permulaan, kemudian hidupkan pilihan ini semula.",
-  "engineErrorAutostartPolicy": "Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk."
+  "engineErrorAutostartPolicy": "Tetapan komputer ini, yang dipilih oleh pentadbirnya, tidak membenarkan Waaiya bermula semasa log masuk.",
+  "notifTextTitle": "Tunjukkan teks pemberitahuan semasa menapis",
+  "notifTextBody": "Android menyembunyikan isi pemberitahuan selagi mana-mana apl merakam seluruh skrin, dan penapisan dikira begitu. Hidup: Waaiya mengangkat perlindungan ini hanya semasa menapis, supaya anda boleh membaca pemberitahuan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi. Berkuat kuasa pada permulaan seterusnya.",
+  "notifTextNextStart": "Hentikan dan mulakan semula penapisan supaya perubahan ini berkuat kuasa.",
+  "notifTextRefused": "Telefon ini menolak perubahan. Hidupkan sendiri “Lumpuhkan perlindungan perkongsian skrin” dalam Pilihan pembangun.",
+  "notifTextByHand": "Ditunjukkan: perlindungan Android dimatikan dalam Pilihan pembangun (“Lumpuhkan perlindungan perkongsian skrin”). Ia kekal mati untuk setiap perkongsian skrin sehingga anda menghidupkannya semula di sana.",
+  "notifTextHowTo": "Android menyembunyikan isi pemberitahuan semasa Waaiya menapis. Selepas persediaan sekali, Waaiya menunjukkannya: perlindungan ini diangkat hanya semasa menapis.",
+  "notifTextOpenDev": "Buka Pilihan pembangun",
+  "notifTextLockNote": "Pada telefon ini Android juga menghentikan penapisan apabila skrin dikunci, dan apl lain kekal senyap sehingga anda mengetik Sambung. Persediaan juga menghalangnya.",
+  "notifTextHandOptional": "Pilihan, tanpa persediaan: hidupkan “Lumpuhkan perlindungan perkongsian skrin” dalam Pilihan pembangun. Ia kemudian kekal mati untuk setiap perkongsian skrin, dan sesetengah telefon tiada suis ini.",
+  "notifTextForced": "Hidup: pada telefon ini Android bertanya sebelum setiap permulaan, lalu akan menghentikan penapisan setiap kali skrin dikunci. Waaiya mengangkat perlindungan ini semasa menapis, jadi teks pemberitahuan juga ditunjukkan. Perkongsian skrin lain pada masa yang sama juga tidak dilindungi.",
+  "oneAppTitle": "Semasa mula: “Kongsi satu apl”, kemudian Waaiya",
+  "oneAppBody": "Apabila Android bertanya apa yang hendak dikongsi, pilih “Kongsi satu apl”, kemudian Waaiya. Semua apl masih ditapis, pemberitahuan kekal boleh dibaca, dan penapisan terus berjalan apabila skrin dikunci. Dengan seluruh skrin, Android menyembunyikan teks pemberitahuan dan menghentikan penapisan setiap kali skrin dikunci.",
+  "oneAppPair": "Supaya Waaiya berfungsi sepenuhnya, gandingkannya sekali dengan Penyahpepijatan wayarles di halaman Persediaan: muzik asal juga akan disenyapkan, dan Android berhenti bertanya pada setiap permulaan.",
+  "notifTextOneApp": "Ditunjukkan apabila anda memilih “Kongsi satu apl”, kemudian Waaiya, semasa mula. Dengan seluruh skrin Android menyembunyikannya; selepas persediaan sekali, Waaiya mengangkatnya semasa menapis.",
+  "blurNeedsRestart": "Hentikan dan mulakan semula penapisan untuk menggunakan kabur: ia memerlukan seluruh skrin, dan penapisan ini bermula dengan pilihan “Kongsi satu apl”."
 }

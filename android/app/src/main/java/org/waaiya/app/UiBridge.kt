@@ -3,7 +3,6 @@ package org.waaiya.app
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import android.os.Build
 import io.flutter.plugin.common.BinaryMessenger
@@ -235,7 +234,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
                     val devOn = android.provider.Settings.Global.getInt(activity.contentResolver,
                         android.provider.Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
                     val about = Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS)
-                    if (devOn) runCatching { activity.startActivity(Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)) }
+                    // highlight: the key of one switch on that page, scrolled to and flashed (AOSP Settings' search
+                    // extra; phones that ignore it just open the page)
+                    val dev = Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS)
+                    when (call.argument<String>("highlight")) {
+                        "screen_share" -> dev.putExtra(":settings:fragment_args_key", ScreenShareProtection.KEY)
+                    }
+                    if (devOn) runCatching { activity.startActivity(dev) }
                         .onFailure { activity.startActivity(about) }
                     else activity.startActivity(about)
                     result.success(null)
@@ -330,6 +335,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "mono" to (FilterService.health?.monoForSpeed == true),
             "blockedApps" to FilterService.blockedApps,
             "captureCancelled" to captureCancelled,
+            // this filtering started with "Share one app" offered and the blur was turned on since: it needs a restart
+            "blurNeedsRestart" to (FilterService.running && FilterService.oneAppSession && settings.blurOn),
         ),
         "setup" to mapOf(
             // DUMP granted, or this phone refused it and Waaiya's helper reads the sessions (HelperDumps)
@@ -346,6 +353,22 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "consentSkipped" to activity.hasProjectMediaAppOp(),
             // the notification-text tile is on but WRITE_SECURE_SETTINGS is missing: the setup grants it
             "notificationTextNeedsSetup" to ScreenShareProtection.needsSetup(activity),
+            // Android 15+ hides notification text during any whole-screen capture, filtering included: the Filter
+            // options switch (setup done: Waaiya lifts it only while filtering) or Developer options by hand
+            "notificationText" to mapOf(
+                "supported" to ScreenShareProtection.supported,
+                "canWrite" to ScreenShareProtection.setUp(activity),
+                "wanted" to settings.showNotificationText,
+                // no PROJECT_MEDIA: Waaiya lifts it anyway while filtering, or Android stops filtering at each lock
+                "forcedForLock" to ScreenShareProtection.neededForLock(activity),
+                // Android 16+: the start question also offers "Share one app" (pick Waaiya: text shown, no lock stop)
+                "oneAppOffered" to CaptureChoice.offerOneApp(activity),
+                // the one-app notice advises the one-time pairing until it is done (simple mode included)
+                "pairAdvised" to !activity.setupDone(),
+                "protectionOff" to ScreenShareProtection.protectionOff(activity),
+                "shownNow" to ScreenShareProtection.shownInCapture,
+                "refused" to ScreenShareProtection.refusedByPhone,
+            ),
             // Xiaomi: its notification style can hide the field for the pairing code (SetupHelp)
             // or Huawei: Wireless debugging may be missing there, the computer is then the way
             "deviceNote" to when {
@@ -409,6 +432,13 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
             "filter_off_apps" -> settings.filterOffApps = apps()
             "blur_off_apps" -> settings.blurOffApps = apps()
             "keep_singing" -> settings.keepSinging = bool()
+            // as the Quick Settings tile: on applies at the next start, off puts Android's switch back at once
+            "show_notification_text" -> {
+                val on = bool()
+                settings.showNotificationText = on
+                settings.notificationTextExplained = true
+                if (!on) ScreenShareProtection.restore(activity)
+            }
             "prayer_silent" -> settings.prayerSilent = bool()
             "prayer_silent_minutes" -> settings.prayerSilentMinutes = int(5, 90)
             "prayer_adhan_mute" -> settings.prayerAdhanMute = bool()
@@ -450,12 +480,8 @@ class UiBridge(private val activity: Activity, messenger: BinaryMessenger) :
         }
         if (Build.VERSION.SDK_INT >= 33 && android.Manifest.permission.POST_NOTIFICATIONS in wanted) askedNotifications = true
         if (wanted.isNotEmpty()) { activity.requestPermissions(wanted.toTypedArray(), REQ_PERMISSIONS); return }
-        val mpm = activity.getSystemService(MediaProjectionManager::class.java)
-        // Android 14+ offers "a single app" first; a system-wide filter needs the whole device, so ask for that only.
-        val intent = if (Build.VERSION.SDK_INT >= 34)
-            mpm.createScreenCaptureIntent(android.media.projection.MediaProjectionConfig.createConfigForDefaultDisplay())
-        else mpm.createScreenCaptureIntent()
-        @Suppress("DEPRECATION") activity.startActivityForResult(intent, REQ_CAPTURE)
+        // the entire screen, or on Android 16+ also "Share one app" (CaptureChoice)
+        @Suppress("DEPRECATION") activity.startActivityForResult(CaptureChoice.intent(activity), REQ_CAPTURE)
     }
 
     fun onRequestPermissionsResult(requestCode: Int) {

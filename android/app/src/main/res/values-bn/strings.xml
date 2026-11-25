@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya চালু আছে</string>
     <string name="notif_text">সব অ্যাপ থেকে বাদ্যযন্ত্র সরানো হচ্ছে</string>
     <string name="notif_stop">বন্ধ করুন</string>
+    <string name="notif_resume">আবার চালু করুন</string>
     <!-- Link feature -->
     <string name="link_entry_title">লিংক খুলুন</string>
     <string name="link_entry_body">YouTube, TikTok বা Instagram-এর লিংক পেস্ট করুন, মিউজিক ছাড়া দেখতে বা সেভ করতে।</string>

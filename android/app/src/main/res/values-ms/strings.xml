@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya dihidupkan</string>
     <string name="notif_text">Alat muzik dibuang daripada semua apl</string>
     <string name="notif_stop">Henti</string>
+    <string name="notif_resume">Sambung</string>
     <!-- Ciri pautan -->
     <string name="link_entry_title">Buka pautan</string>
     <string name="link_entry_body">Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya atau menyimpannya tanpa muzik.</string>

@@ -53,7 +53,8 @@ class ChannelBackend implements WaaiyaBackend {
   Future<void> openShizuku() => _call<void>('openShizuku');
 
   @override
-  Future<void> openDeveloperOptions() => _call<void>('openDeveloperOptions');
+  Future<void> openDeveloperOptions({String? highlight}) =>
+      _call<void>('openDeveloperOptions', {'highlight': ?highlight});
 
   @override
   Future<void> setLanguage(String tag) => _call<void>('setLanguage', {'tag': tag});

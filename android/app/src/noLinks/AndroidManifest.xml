@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- -PimNoLinks (store builds): "Open a link" is left out, not only hidden. The link screens and the export service
+     are removed, with the foreground-service type only the export used (mediaProcessing). -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING" tools:node="remove" />
+    <application>
+        <activity android:name=".LinkActivity" tools:node="remove" />
+        <activity android:name=".LinkPlayerActivity" tools:node="remove" />
+        <service android:name=".LinkExportService" tools:node="remove" />
+    </application>
+</manifest>

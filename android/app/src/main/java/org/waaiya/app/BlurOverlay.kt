@@ -12,10 +12,8 @@ import android.graphics.RectF
 import android.os.Build
 import android.util.Log
 import android.view.Gravity
-import android.view.SurfaceControl
 import android.view.View
 import android.view.WindowManager
-import org.lsposed.hiddenapibypass.HiddenApiBypass
 
 /**
  * The screen-blur covers, drawn over every app.
@@ -41,20 +39,22 @@ class BlurOverlay(private val context: Context) {
 
     private var wm: WindowManager? = null
     /** One window, its layout and whether the skip-screenshot flag is on its current surface. */
-    private class Win(val v: CoverView, val p: WindowManager.LayoutParams) { var skip = false }
+    private class Win(val v: CoverView, val p: WindowManager.LayoutParams)
     private val wins = ArrayList<Win>()
     /** The host that is drawing now; null while nothing draws, including while the shell layer is still being
      *  set up and checked (up to 8 s): the blur must not say "on" before covers can appear. Read by ScreenBlur's
      *  worker thread too. */
     @Volatile var host: Host? = null
         private set
-    /** True once the skip-screenshot flag was applied without error on every window (the self-test still decides).
-     *  Shell layer: true once its start() and probe cover worked. */
+    /** True when the covers are kept out of the screen capture by the skip-screenshot flag: the shell layer (the
+     *  setup's helper or Shizuku) sets it once its start() and probe cover worked. App-overlay windows cannot (it is
+     *  a hidden API, not used: Google Play refuses hidden-API calls), so there the self-test finds the covers in the
+     *  capture and they are masked out. */
     val skipApplied: Boolean
         get() = when (host) {
             null -> false
             Host.SHELL -> true
-            else -> wins.isNotEmpty() && wins.all { it.skip }
+            else -> false  // app-overlay windows: no public way to keep them out of the capture
         }
 
     private var layer: ShellCovers? = null
@@ -137,7 +137,6 @@ class BlurOverlay(private val context: Context) {
             }
             val win = Win(v, p)
             wins += win
-            v.post { applySkipScreenshot(win) }
         }
         wm = w; host = h
         return true
@@ -295,7 +294,6 @@ class BlurOverlay(private val context: Context) {
                 p.x = want[0]; p.y = want[1]; p.width = want[2] - want[0]; p.height = want[3] - want[1]
                 win.v.origin(want[0], want[1])
                 runCatching { wm?.updateViewLayout(win.v, p) }
-                win.v.post { applySkipScreenshot(win) } // a relayout may give the window a new surface
             }
             // every window draws all covers that reach into it, so overlapping groups still look like one cover
             if (g != null) win.v.set(rs, count, thumb, failMode, testSquare, scr)
@@ -348,25 +346,6 @@ class BlurOverlay(private val context: Context) {
         for (y in cy0..cy1) for (x in cx0..cx1) { val p = t.getPixel(x, y); r += Color.red(p); g += Color.green(p); bl += Color.blue(p); n++ }
         if (n == 0) return null
         return Color.rgb((r / n * 0.8).toInt(), (g / n * 0.8).toInt(), (bl / n * 0.8).toInt())
-    }
-
-    /** Hidden API: SurfaceControl.Transaction#setSkipScreenshot on an overlay window's surface (Android 12+). */
-    private fun applySkipScreenshot(win: Win) {
-        val v = win.v
-        if (Build.VERSION.SDK_INT < 31 || wins.none { it === win }) return
-        try {
-            HiddenApiBypass.addHiddenApiExemptions("Landroid/view/")
-            val vri = HiddenApiBypass.invoke(View::class.java, v, "getViewRootImpl") ?: return
-            val sc = HiddenApiBypass.invoke(vri.javaClass, vri, "getSurfaceControl") as? SurfaceControl ?: return
-            if (!sc.isValid) { v.postDelayed({ applySkipScreenshot(win) }, 100); return }
-            val tx = SurfaceControl.Transaction()
-            HiddenApiBypass.invoke(SurfaceControl.Transaction::class.java, tx, "setSkipScreenshot", sc, true)
-            tx.apply()
-            win.skip = true
-        } catch (t: Throwable) {
-            Log.w(TAG, "blur overlay: skip-screenshot not available: $t")
-            win.skip = false
-        }
     }
 
     private class CoverView(ctx: Context) : View(ctx) {

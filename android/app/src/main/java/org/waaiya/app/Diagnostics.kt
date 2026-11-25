@@ -63,8 +63,8 @@ object Diagnostics {
             "(helper running: ${yes(HelperDumps.helperReady)})")
         appendLine("Skip screen-share question (PROJECT_MEDIA): ${yes(ctx.hasProjectMediaAppOp())}")
         appendLine("Shizuku: ${ShizukuSetup.state(ctx)}")
-        appendLine("Notification text tile (Android 15+): permission ${yes(ScreenShareProtection.canWrite(ctx))}, " +
-            "on ${yes(Settings(ctx).showNotificationText)}")
+        appendLine("Notification text (Android 15+): permission ${yes(ScreenShareProtection.canWrite(ctx))}, " +
+            "on ${yes(Settings(ctx).showNotificationText)}, Android's protection off now ${yes(ScreenShareProtection.protectionOff(ctx))}")
         appendLine("Last setup: " + SetupLog.report(ctx))
         appendLine("Microphone permission: ${yes(granted(android.Manifest.permission.RECORD_AUDIO))}")
         appendLine("Notifications: ${yes(ctx.getSystemService(NotificationManager::class.java).areNotificationsEnabled())}")
@@ -98,6 +98,8 @@ object Diagnostics {
         appendLine("Keep singing chosen: ${yes(s.keepSinging)}, model bundled: ${yes(ModelStore.hasSinging(ctx))}")
         appendLine("Stereo chosen: ${yes(s.audioStereo)}, starts in mono (learned on this phone): ${yes(s.audioMono)}")
         appendLine("Keep apps silent if filtering stops by itself: ${yes(s.holdSilence)}")
+        appendLine("Stops by itself (newest last):")
+        appendLine(StopLog.report(ctx))
         appendLine("Detector model bundled: ${yes(ModelStore.hasDetector(ctx))}")
         val am = ctx.getSystemService(AudioManager::class.java)
         appendLine("Media playing now (Waaiya's own output counts): ${yes(am.isMusicActive)}, media volume ${am.getStreamVolume(AudioManager.STREAM_MUSIC)}/" +

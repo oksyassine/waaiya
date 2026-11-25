@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya yoqilgan</string>
     <string name="notif_text">Barcha ilovalardan musiqa asboblari olib tashlanmoqda</string>
     <string name="notif_stop">Toʻxtatish</string>
+    <string name="notif_resume">Davom ettirish</string>
     <!-- Link feature -->
     <string name="link_entry_title">Havolani ochish</string>
     <string name="link_entry_body">YouTube, TikTok yoki Instagram havolasini qoʻying va uni musiqasiz koʻring yoki saqlang.</string>

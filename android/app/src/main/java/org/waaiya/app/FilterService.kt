@@ -76,6 +76,9 @@ class FilterService : Service() {
         /** Engine delay of the running filter in ms (model look-ahead; the capture/playback buffers add to it). */
         @Volatile var delayMs = 0
             private set
+        /** This filtering started with "Share one app" offered (CaptureChoice): no blur until the next start. */
+        @Volatile var oneAppSession = false
+            private set
         val running: Boolean get() = state == State.STARTING || state == State.FILTERING || state == State.MODEL_FAILED
         @Volatile var health: Health? = null
             private set
@@ -175,6 +178,7 @@ class FilterService : Service() {
             override fun onStop() {
                 if (stop) return  // our own stop: the user's, or entering SILENCED
                 Log.i(TAG, "projection stopped by the system")
+                StopLog.record(this@FilterService, "screen capture stopped by Android")
                 endedBySystem(null)
             }
         }, null)
@@ -195,8 +199,11 @@ class FilterService : Service() {
         // the first notification was built before the muter existed: now it can say whether originals are silenced
         runCatching { getSystemService(NotificationManager::class.java).notify(1, notification()) }
         // Screen blur shares this projection; its virtual display must be created now (Android 14+ time limit),
-        // so it starts parked even when the blur is off and follows the settings live.
-        blur = runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
+        // so it starts parked even when the blur is off and follows the settings live. Not when the question offered
+        // "Share one app" (CaptureChoice): the capture may hold Waaiya alone, and a blur that sees nothing would
+        // cover nothing; turning the blur on then asks for a restart (blurNeedsRestart).
+        oneAppSession = CaptureChoice.offerOneApp(this)
+        blur = if (oneAppSession) null else runCatching { ScreenBlur(this, mp, settings).also { it.start() } }
             .onFailure { Log.e(TAG, "screen blur did not start", it) }.getOrNull()
         worker = Thread({ loop(mp) }, "im-filter").apply { start() }
         return START_NOT_STICKY
@@ -290,12 +297,18 @@ class FilterService : Service() {
         var record = try {
             openRecord(excluded)
         } catch (e: SecurityException) { publish(State.NO_CAPTURE_PERMISSION); stopSelf(); return
-        } catch (e: Exception) { Log.e(TAG, "capture did not open", e); endedBySystem(State.CAPTURE_FAILED); return }
+        } catch (e: Exception) {
+            Log.e(TAG, "capture did not open", e)
+            StopLog.record(this, "capture did not open: ${e.javaClass.simpleName}")
+            // Android before 16 (or a phone like it): no sound from a one-app share. Ask for the entire screen next time.
+            if (oneAppSession && e is UnsupportedOperationException) Settings(this).oneAppRefused = true
+            endedBySystem(State.CAPTURE_FAILED); return
+        }
         val outFmt = AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_FLOAT)
             .setSampleRate(Engine.SAMPLE_RATE).setChannelMask(AudioFormat.CHANNEL_OUT_STEREO).build()
         val minOut = AudioTrack.getMinBufferSize(Engine.SAMPLE_RATE, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_FLOAT)
         val minOutFrames = minOut / frameBytes
-        val track = AudioTrack.Builder()
+        fun makeTrack() = AudioTrack.Builder()
             // simple mode (test): another channel, media is muted while it filters
             .setAudioAttributes(AudioAttributes.Builder()
                 .setUsage(if (SimpleMode.active) SimpleMode.usage(this) else AudioAttributes.USAGE_MEDIA)
@@ -306,7 +319,10 @@ class FilterService : Service() {
             // room to grow (LoadMonitor.GROW_BUFFER); the size in use starts at the minimum, as before
             .setBufferSizeInBytes(minOut + LoadMonitor.MAX_EXTRA_HOPS * hop * frameBytes)
             .build()
-        runCatching { track.setBufferSizeInFrames(minOutFrames) }
+            .also { t -> runCatching { t.setBufferSizeInFrames(minOutFrames) } }
+        var track = makeTrack()
+        var trackRebuilds = 0      // the output died and was made again (audio server restart, route change)
+        var lastRebuild = 0L
         val settings = Settings(this)
         // Always created with one model instance per channel, then switched to mono: only such an engine can go
         // back to stereo, so the user's mono / stereo choice applies live in both directions.
@@ -382,6 +398,7 @@ class FilterService : Service() {
                         readErrors++
                         Log.w(TAG, "capture read failed: $n")
                         if (n == AudioRecord.ERROR_DEAD_OBJECT || ++readErrorsInARow >= 20) {
+                            StopLog.record(this, "capture read failed $n")
                             endedBySystem(State.CAPTURE_FAILED); return
                         }
                         Thread.sleep(10)
@@ -457,7 +474,26 @@ class FilterService : Service() {
                 muter?.gate?.let { engine.setGate(it) }
                 // delay that is no longer needed is given back by skipping one hop that holds no sound
                 if (!monitor.takeTrim(isSilent(outBuf))) {
-                    track.write(outBuf, 0, outBuf.size, AudioTrack.WRITE_BLOCKING)
+                    val w = track.write(outBuf, 0, outBuf.size, AudioTrack.WRITE_BLOCKING)
+                    if (w < 0) {
+                        // the output is gone (audio server restarted, the phone moved the stream): nothing would be
+                        // heard while the originals stay muted. Make it again; when that keeps failing, say so.
+                        val now = android.os.SystemClock.elapsedRealtime()
+                        Log.w(TAG, "output write failed: $w, making the output again")
+                        if (now - lastRebuild < 10_000 && ++trackRebuilds >= 3) {
+                            StopLog.record(this, "output failed $w")
+                            endedBySystem(State.CAPTURE_FAILED); return
+                        }
+                        if (now - lastRebuild >= 10_000) trackRebuilds = 0
+                        lastRebuild = now
+                        runCatching { track.release() }
+                        track = makeTrack()
+                        track.play()
+                        if (SimpleMode.active) track.setVolume(simpleGain)
+                        written = 0
+                        StopLog.event(this, "output made again after write error $w")
+                        continue
+                    }
                     written += hop
                 }
                 val fill = (written - (track.playbackHeadPosition.toLong() and 0xFFFFFFFFL)).toInt()
@@ -495,6 +531,7 @@ class FilterService : Service() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "filter loop failed", e)
+            StopLog.record(this, "filter loop failed: ${e.javaClass.simpleName}")
             endedBySystem(State.CAPTURE_FAILED)
         } finally {
             if (Build.VERSION.SDK_INT >= 31) runCatching { hint?.close() }
@@ -561,6 +598,10 @@ class FilterService : Service() {
             .setSmallIcon(R.drawable.ic_notification)
             .setColor(getColor(R.color.error))
             .setContentIntent(open)
+            // filter again (the other apps stay muted meanwhile): Android's question, or none after the setup
+            .addAction(Notification.Action.Builder(null, getString(R.string.notif_resume), PendingIntent.getActivity(this, 2,
+                Intent(this, TileStartActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                PendingIntent.FLAG_IMMUTABLE)).build())
             .addAction(Notification.Action.Builder(null, getString(R.string.notif_stop), stopIntent).build())
             .setOngoing(true)
             .setGroup(GROUP)

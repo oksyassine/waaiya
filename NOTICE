@@ -9,7 +9,7 @@ The name "Waaiya" is not licensed by it: see TRADEMARKS.md.
 This product includes or is built with third-party software and models.
 Full list, licences and dataset notes: THIRD_PARTY_LICENSES.md.
 
-- ONNX Runtime 1.19.2, Copyright (c) Microsoft Corporation. MIT License.
+- ONNX Runtime 1.20.0 (Android) and 1.19.2 (Linux, Windows), Copyright (c) Microsoft Corporation. MIT License.
   Binary builds bundle libonnxruntime; ship its ThirdPartyNotices.txt with them.
 - DeepFilterNet3 model and code (deepfilternet 0.5.6), Copyright (c) 2021 Hendrik Schroeter.
   MIT OR Apache-2.0. Used for the models in models/dfn3/ and as the base of the voice model.

@@ -1948,4 +1948,61 @@ class AppLocalizationsSo extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Dejinta kombiyuutarkan, oo uu doortay maamulahiisu, uma oggolaanayso Waaiya inay bilaabato marka la galo.';
+
+  @override
+  String get notifTextTitle => 'Muuji qoraalka ogeysiisyada inta la sifeynayo';
+
+  @override
+  String get notifTextBody =>
+      'Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta app kasta duubayso shaashadda oo dhan, sifeyntuna waa sidaas oo kale. Shidan: Waaiya waxay ilaalintan ka qaadaa oo keliya inta ay sifeyneyso, si aad u akhrido ogeysiisyadaada. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo. Waxay dhaqan galaysaa bilowga xiga.';
+
+  @override
+  String get notifTextNextStart =>
+      'Jooji oo dib u bilow sifeynta si isbeddelkani u dhaqan galo.';
+
+  @override
+  String get notifTextRefused =>
+      'Taleefankani wuu diiday isbeddelka. Adigu shid “Dami ilaalinta wadaagista shaashadda” ee Xulashooyinka horumariyaha.';
+
+  @override
+  String get notifTextByHand =>
+      'Waa la muujinayaa: ilaalinta Android waa ka dansan tahay Xulashooyinka horumariyaha (“Dami ilaalinta wadaagista shaashadda”). Way dansanaanaysaa wadaagis kasta oo shaashadda ilaa aad halkaas dib uga shido.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android waxay qarisaa waxa ogeysiisyadu sheegayaan inta Waaiya sifeyneyso. Diyaarinta hal mar ah kadib, Waaiya ayaa muujisa: ilaalintan waxay ka qaadaa oo keliya inta ay sifeyneyso.';
+
+  @override
+  String get notifTextOpenDev => 'Fur Xulashooyinka horumariyaha';
+
+  @override
+  String get notifTextLockNote =>
+      'Taleefankan Android waxay sidoo kale joojisaa sifeynta marka shaashaddu xirmato, app-yada kalena way aamusnaanayaan ilaa aad taabato Sii wad. Diyaarintu taasna way ka hortagtaa.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Ikhtiyaari, diyaarin la\'aan: shid “Dami ilaalinta wadaagista shaashadda” ee Xulashooyinka horumariyaha. Markaas way dansanaanaysaa wadaagis kasta oo shaashadda, taleefannada qaarna ma laha.';
+
+  @override
+  String get notifTextForced =>
+      'Shidan: taleefankan Android waxay weydiisaa bilow kasta ka hor, markaas waxay joojin lahayd sifeynta mar kasta oo shaashaddu xirmato. Waaiya waxay ilaalintan ka qaadaa inta ay sifeyneyso, sidaas darteed qoraalka ogeysiisyaduna wuu muuqdaa. Wadaagista kale ee shaashadda ee isla waqtigaas sidoo kale lama ilaaliyo.';
+
+  @override
+  String get oneAppTitle => 'Bilowga: “La wadaag hal app”, kadib Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Marka Android ay weydiiso waxa la wadaagayo, dooro “La wadaag hal app”, kadib Waaiya. App-yada oo dhan weli waa la sifeeyaa, ogeysiisyaduna way akhrinayaan, sifeyntuna way sii socotaa marka shaashaddu xirmato. Shaashadda oo dhan, Android waxay qarisaa qoraalka ogeysiisyada waxayna joojisaa sifeynta mar kasta oo la xiro.';
+
+  @override
+  String get oneAppPair =>
+      'Si Waaiya si buuxda ugu shaqeyso, hal mar ku xir Debugging-ka wireless-ka bogga Diyaarinta: markaas muusigga asalka ah sidoo kale waa la aamusiyaa, Android-na way joojisaa weydiinta bilow kasta.';
+
+  @override
+  String get notifTextOneApp =>
+      'Waa la muujiyaa marka aad dooratid “La wadaag hal app”, kadib Waaiya, bilowga. Shaashadda oo dhan Android way qarisaa; diyaarinta hal mar ah kadib Waaiya waxay ka qaadaa inta ay sifeyneyso.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Jooji oo dib u bilow sifeynta si aad u isticmaasho qarinta: waxay u baahan tahay shaashadda oo dhan, sifeyntanna waxay ku bilaabatay iyadoo la soo bandhigay “La wadaag hal app”.';
 }

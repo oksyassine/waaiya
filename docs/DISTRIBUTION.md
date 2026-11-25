@@ -7,7 +7,7 @@ are the owner's are marked **Owner**, with the recommended answer.
 |---|---|---|
 | mssid.org and GitHub releases (signed APK) | Live | Nothing new; see below for Google's developer verification |
 | Microsoft Store | Package ready (PR #12) | Submission by the owner (desktop/windows/msix/STORE_LISTING.md) |
-| Google Play | Build option ready (`-PimPlay`, `-PimNoLinks`) | A Play developer account, the owner's decisions below, the store listing |
+| Google Play, Galaxy Store, Xiaomi GetApps, Huawei AppGallery | Store build ready (docs/STORES.md: Android 16 target, 16 KB pages, no updater, SMS reply or links) | Developer accounts, the owner's decisions in docs/STORES.md, the uploads |
 | IzzyOnDroid (F-Droid client repository) | Metadata ready (`fastlane/metadata/android/`, en, ar, fr) | A request to the repository; its APK size limit (below) |
 | F-Droid main repository | Blocked for now | Builds from source only: see below |
 | Obtainium | Works today | Users add `https://github.com/oksyassine/waaiya`; it follows GitHub releases |

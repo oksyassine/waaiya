@@ -43,6 +43,9 @@ abstract final class SettingKeys {
   /// Keep singing voices (voice_v1 model, a test): off by default.
   static const keepSinging = 'keep_singing';
 
+  /// Android 15+: lift Android's notification-text protection while filtering (needs the one-time setup).
+  static const showNotificationText = 'show_notification_text';
+
   /// Phone silent for [prayerSilentMinutes] from each prayer time; media muted [prayerAdhanMinutes] at the adhan.
   static const prayerSilent = 'prayer_silent';
   static const prayerSilentMinutes = 'prayer_silent_minutes';
@@ -93,6 +96,7 @@ abstract final class SettingKeys {
     filterOffApps: '',
     blurOffApps: '',
     keepSinging: false,
+    showNotificationText: false,
     prayerSilent: false,
     prayerSilentMinutes: 20,
     prayerAdhanMute: false,
@@ -317,6 +321,7 @@ class FilterInfo {
     this.mono = false,
     this.blockedApps = const [],
     this.captureCancelled = false,
+    this.blurNeedsRestart = false,
   });
 
   factory FilterInfo.fromMap(Map<Object?, Object?> m) => FilterInfo(
@@ -330,7 +335,12 @@ class FilterInfo {
         mono: _bool(m['mono'], false),
         blockedApps: (m['blockedApps'] is List ? m['blockedApps'] as List : const []).whereType<String>().toList(),
         captureCancelled: _bool(m['captureCancelled'], false),
+        blurNeedsRestart: _bool(m['blurNeedsRestart'], false),
       );
+
+  /// Android: this filtering started with "Share one app" offered and the blur, which needs the entire screen, was
+  /// turned on since: it works from the next start.
+  final bool blurNeedsRestart;
 
   final FilterState state;
   final int delayMs;
@@ -375,6 +385,7 @@ class FilterInfo {
         'mono': mono,
         'blockedApps': blockedApps,
         'captureCancelled': captureCancelled,
+        'blurNeedsRestart': blurNeedsRestart,
       };
 }
 
@@ -383,6 +394,7 @@ class SetupInfo {
     this.originalsMuted = true,
     this.consentSkipped = true,
     this.notificationTextNeedsSetup = false,
+    this.notificationText = const NotificationTextInfo(),
     this.deviceNote,
     this.helperMode = false,
     this.helperMissing = false,
@@ -399,6 +411,7 @@ class SetupInfo {
         originalsMuted: _bool(m['originalsMuted'], true),
         consentSkipped: _bool(m['consentSkipped'], true),
         notificationTextNeedsSetup: _bool(m['notificationTextNeedsSetup'], false),
+        notificationText: NotificationTextInfo.fromMap(_map(m['notificationText'])),
         deviceNote: _str(m['deviceNote']),
         helperMode: _bool(m['helperMode'], false),
         helperMissing: _bool(m['helperMissing'], false),
@@ -434,6 +447,9 @@ class SetupInfo {
   /// one-time setup grants it, so the setup card shows again.
   final bool notificationTextNeedsSetup;
 
+  /// Notification text while filtering (Android 15+).
+  final NotificationTextInfo notificationText;
+
   /// `xiaomi` or `coloros`: this phone needs a Developer options switch changed before the setup; null otherwise.
   final String? deviceNote;
 
@@ -451,6 +467,7 @@ class SetupInfo {
         'originalsMuted': originalsMuted,
         'consentSkipped': consentSkipped,
         'notificationTextNeedsSetup': notificationTextNeedsSetup,
+        'notificationText': notificationText.toMap(),
         'deviceNote': deviceNote,
         'helperMode': helperMode,
         'helperMissing': helperMissing,
@@ -716,6 +733,81 @@ const linkErrorCodes = {
 /// One full snapshot: the getState result and every event.
 /// setup.wireless (docs/UI_CONTRACT.md): the on-phone setup's progress. [title] and [body] are Android string
 /// names (wsetup_*, setup_refused_*), turned into words by [wirelessText].
+/// Android 15+ hides the text of every notification while any app captures the whole screen, and filtering is
+/// such a capture. Android's own switch (Developer options › "Disable screen share protections") lifts it.
+class NotificationTextInfo {
+  const NotificationTextInfo({
+    this.supported = false,
+    this.canWrite = false,
+    this.wanted = false,
+    this.protectionOff = false,
+    this.forcedForLock = false,
+    this.oneAppOffered = false,
+    this.pairAdvised = false,
+    this.shownNow,
+    this.refused = false,
+  });
+
+  factory NotificationTextInfo.fromMap(Map<Object?, Object?> m) => NotificationTextInfo(
+        supported: _bool(m['supported'], false),
+        canWrite: _bool(m['canWrite'], false),
+        wanted: _bool(m['wanted'], false),
+        protectionOff: _bool(m['protectionOff'], false),
+        forcedForLock: _bool(m['forcedForLock'], false),
+        oneAppOffered: _bool(m['oneAppOffered'], false),
+        pairAdvised: _bool(m['pairAdvised'], false),
+        shownNow: m['shownNow'] is bool ? m['shownNow'] as bool : null,
+        refused: _bool(m['refused'], false),
+      );
+
+  /// Android 15 or newer: the text is hidden during the capture.
+  final bool supported;
+
+  /// The one-time setup gave Waaiya the right to change Android's switch (only while filtering).
+  final bool canWrite;
+
+  /// The user asked Waaiya to show the text while filtering (setting show_notification_text).
+  final bool wanted;
+
+  /// Android's switch is on now: by Waaiya for this filtering, or by the user in Developer options for good.
+  final bool protectionOff;
+
+  /// Android asks before each start on this phone, and then stops filtering at every screen lock unless the
+  /// protection is off: Waaiya lifts it while filtering whatever [wanted] says, when it can ([canWrite]).
+  final bool forcedForLock;
+
+  /// Android 16+: the start question also offers "Share one app"; sharing only Waaiya keeps every app filtered, shows
+  /// notification text and survives screen lock, with no setup and no Developer options.
+  final bool oneAppOffered;
+
+  /// the one-time pairing is not done yet (simple mode included): the one-app notice advises it
+  final bool pairAdvised;
+
+  /// Waaiya keeps it lifted while filtering on its own ([forcedForLock] with the right to change it).
+  bool get forced => forcedForLock && canWrite && !refused;
+
+  /// While filtering: whether the text shows in this capture (Android reads its switch when a capture starts).
+  final bool? shownNow;
+
+  /// This phone refused Waaiya's change (the helper's write did not take).
+  final bool refused;
+
+  /// What the switch shows: text visible while filtering, whichever way.
+  bool get shown => protectionOff || (canWrite && (wanted || forcedForLock) && !refused);
+
+  Map<String, Object?> toMap() => {
+        'supported': supported,
+        'canWrite': canWrite,
+        'wanted': wanted,
+        'protectionOff': protectionOff,
+        'forcedForLock': forcedForLock,
+        'oneAppOffered': oneAppOffered,
+        'pairAdvised': pairAdvised,
+        'shownNow': shownNow,
+        'refused': refused,
+      };
+}
+
 class WirelessInfo {
   const WirelessInfo({
     this.supported = false,
@@ -1004,7 +1096,8 @@ abstract interface class WaaiyaBackend {
   Future<void> openShizuku();
 
   /// Android's Developer options (About phone when they are not turned on yet). Capability `shizukuSetup`.
-  Future<void> openDeveloperOptions();
+  /// [highlight] `screen_share`: scrolled to "Disable screen share protections" where the phone supports it.
+  Future<void> openDeveloperOptions({String? highlight});
 
   /// "ar" or "en"; saved natively so native screens, services and notifications follow it.
   Future<void> setLanguage(String tag);

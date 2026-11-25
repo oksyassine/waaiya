@@ -28,6 +28,11 @@ ORT_VERSION=1.19.2
 # package holds the Linux x64 and Windows x64 libraries, the headers and the licence texts; its libonnxruntime.so is
 # byte for byte the one of the GitHub archive this project used before (sha256 9c8139e1...).
 ORT_NUPKG_SHA256=fa133c8fe6238445a0dd3e8447baa5c7d16f418caa8e576c7e253ba77b27b61b
+# The Android app uses onnxruntime-android 1.20.0 (android/app/build.gradle.kts ortVersion: the first release with
+# 16 KB-aligned libraries). The AAR has no licence texts: they come from the same version's PyPI wheel.
+ORT_ANDROID_VERSION=1.20.0
+ORT_ANDROID_WHEEL=https://files.pythonhosted.org/packages/53/d8/93706484c8e0db2dfde8559e74b5a9ab74d203a0471671121188c212f7cb/onnxruntime-1.20.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+ORT_ANDROID_WHEEL_SHA256=041fefe60af844ebd90f344c84f908201490555cd0a6d78dd0a7acdc27b59972
 MINGW_VERSION=20261104
 MINGW_SHA256=919380403de87dca3c581c2053230cd298af5e891286628ba0613b7fed370926
 # Links on Windows (docs/HANDOFF_WINDOWS.md). yt-dlp.exe's checksum is the one of the release's SHA2-256SUMS.
@@ -98,6 +103,27 @@ ort() {
     fi
     ort_unpack linux-x64 third_party/onnxruntime
     echo "onnxruntime $ORT_VERSION -> third_party/onnxruntime"
+}
+
+# ort_android: LICENSE, ThirdPartyNotices.txt and VERSION_NUMBER of the Android app's ONNX Runtime ->
+# third_party/onnxruntime-android/ (the Android build's open-source licences screen ships them).
+ort_android() {
+    local d=third_party/onnxruntime-android
+    if [ "$(cat $d/VERSION_NUMBER 2>/dev/null)" = "$ORT_ANDROID_VERSION" ]; then
+        echo "onnxruntime $ORT_ANDROID_VERSION licence texts already in $d"; return
+    fi
+    fetch "$ORT_ANDROID_WHEEL" "$WORK/ort.whl"
+    echo "$ORT_ANDROID_WHEEL_SHA256  $WORK/ort.whl" | sha256sum -c --quiet || { echo "ONNX Runtime wheel: checksum mismatch" >&2; exit 1; }
+    rm -rf "$d" && mkdir -p "$d"
+    python3 -I - "$WORK/ort.whl" "$d" "$ORT_ANDROID_VERSION" <<'PY'
+import sys, zipfile
+whl, dest, ver = sys.argv[1:]
+z = zipfile.ZipFile(whl)
+for name in ("LICENSE", "ThirdPartyNotices.txt"):
+    open(f"{dest}/{name}", "wb").write(z.read(f"onnxruntime/{name}").replace(b"\r\n", b"\n"))
+open(f"{dest}/VERSION_NUMBER", "w").write(ver + "\n")
+PY
+    echo "onnxruntime $ORT_ANDROID_VERSION licence texts -> $d"
 }
 
 # get_asset TAG NAME DIR: downloads one release asset into DIR/NAME.
@@ -226,12 +252,13 @@ detector() {
 
 case "${1:-all}" in
     ort) ort ;;
+    ort-android) ort_android ;;
     ort-win) ort_win ;;
     mingw) mingw ;;
     links-win) links_win ;;
     models) models ;;
     vision) vision ;;
     detector) detector ;;
-    all) ort; models; vision; detector ;;
-    *) echo "usage: $0 [ort|ort-win|mingw|links-win|models|vision|detector|all]" >&2; exit 2 ;;
+    all) ort; ort_android; models; vision; detector ;;
+    *) echo "usage: $0 [ort|ort-android|ort-win|mingw|links-win|models|vision|detector|all]" >&2; exit 2 ;;
 esac

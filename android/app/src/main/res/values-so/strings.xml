@@ -85,6 +85,7 @@
     <string name="notif_title">Waaiya way daaran tahay</string>
     <string name="notif_text">Qalabka muusigga waa laga saaray dhammaan barnaamijyada</string>
     <string name="notif_stop">Jooji</string>
+    <string name="notif_resume">Sii wad</string>
     <!-- Link feature -->
     <string name="link_entry_title">Fur link</string>
     <string name="link_entry_body">Dhaji link YouTube, TikTok ama Instagram si aad u daawato ama aad u kaydiso muusig la\'aan.</string>
