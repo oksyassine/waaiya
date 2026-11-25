@@ -1744,6 +1744,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get protectDelayTitle => 'Wachten voor het uitzetten';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Een wachttijd van $value kiezen? Vanaf nu wacht het uitzetten van het filter of een bescherming $value, en ook het korter maken van deze wachttijd.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Bijvoorbeeld met 30 minuten: je drukt op de knop om te stoppen, maar het filter blijft werken. Na 30 minuten vraagt deze pagina of je nog steeds wilt stoppen. Druk binnen 15 minuten op ‘Bevestigen’ en het stopt; anders verandert er niets. Hetzelfde geldt voor het uitzetten van een afdekking of een andere bescherming. Iets aanzetten werkt altijd meteen.';
 

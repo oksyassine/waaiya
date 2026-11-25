@@ -1738,6 +1738,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get protectDelayTitle => 'Tunggu sebelum mematikan';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Pilih waktu tunggu $value? Mulai sekarang, mematikan filter atau perlindungan apa pun menunggu $value, begitu juga memperpendek waktu tunggu ini.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Misalnya dengan 30 menit: Anda menekan tombol untuk berhenti, tetapi filter tetap bekerja. Setelah 30 menit, halaman ini bertanya apakah Anda masih ingin berhenti. Tekan “Konfirmasi” dalam 15 menit maka filter berhenti; jika tidak, tidak ada yang berubah. Begitu juga untuk mematikan penutup atau perlindungan lain. Menyalakan sesuatu selalu langsung berlaku.';
 

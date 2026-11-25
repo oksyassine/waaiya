@@ -1739,6 +1739,11 @@ class AppLocalizationsMs extends AppLocalizations {
   String get protectDelayTitle => 'Tunggu sebelum mematikan';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Pilih masa menunggu $value? Mulai sekarang, mematikan penapis atau sebarang perlindungan menunggu $value, begitu juga memendekkan masa menunggu ini.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Contohnya dengan 30 minit: anda menekan butang untuk berhenti, tetapi penapis terus berfungsi. Selepas 30 minit, halaman ini bertanya sama ada anda masih mahu berhenti. Tekan “Sahkan” dalam masa 15 minit dan ia berhenti; jika tidak, tiada apa yang berubah. Begitu juga untuk mematikan penutup atau perlindungan lain. Menghidupkan sesuatu sentiasa berlaku serta-merta.';
 

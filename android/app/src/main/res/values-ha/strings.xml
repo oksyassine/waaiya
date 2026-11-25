@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Duk wanda manhajar ba ta tabbatar namiji ne ba ana rufe shi. Tsantsan yana barin kusan maza 7 cikin 100 ba a rufe ba; tsaka-tsaki kusan 14, sassauci kusan 16. Kowane mataki na rage tsantsan yana kuma barin kusan ƙarin mace 1 cikin 100 ba a rufe ba.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">Ba a yi wa ainihin sauti shiru ba tukuna, don haka kuna jin kiɗan tare da sautin da aka tace. Ku kammala saitin sau ɗaya da ke ƙasa.</string>
-    <string name="state_on_mute_failing">Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (a ƙasan wannan shafi).</string>
+    <string name="state_on_mute_failing">Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (Saituna).</string>
     <string name="state_too_slow">Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa. “Buɗe mahaɗa” da ke ƙasa yana aiki duk da haka: yana tace bidiyon kafin ya kunna shi.</string>
     <string name="state_mono_note">Sautin yana mono don wannan waya ta iya tafiya daidai.</string>
     <string name="state_blocked_silenced">An yi masa shiru, saboda ba ya barin tacewa: %1$s.</string>

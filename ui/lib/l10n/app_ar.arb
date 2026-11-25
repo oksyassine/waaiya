@@ -94,17 +94,6 @@
     "description": "Android string capture_hint"
   },
   "needRecordAudio": "تحتاج واعية إذن الميكروفون لاستقبال صوت التطبيقات الأخرى. ولا يسجّل صوتك أبدًا.",
-  "micOpenSettings": "افتح إعدادات واعية واسمح بالميكروفون",
-  "keepRunningTitle": "أبقِ واعية تعمل",
-  "keepRunningBattery": "قد يغلق هذا الهاتف واعية بعد مدة لتوفير البطارية، فيتوقف الترشيح. في إعدادات واعية، تحت «البطارية»، اختر «غير مقيَّد». وفي شاومي وريدمي وبوكو: «بلا قيود»، وفعّل «التشغيل التلقائي» أيضًا.",
-  "keepRunningNotifications": "إشعارات واعية متوقفة، فلا تستطيع إخبارك حين يتوقف الترشيح. فعّلها في إعدادات واعية.",
-  "keepRunningOpen": "افتح إعدادات واعية",
-  "lockAskTitle": "هل يستمر الترشيح عند قفل الشاشة؟",
-  "lockTitle": "استمرار الترشيح عند قفل الشاشة",
-  "lockBody": "في هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف الترشيح عند كل قفل للشاشة. تستطيع واعية منع ذلك برفع «حماية مشاركة الشاشة» في أندرويد أثناء الترشيح، وتعيدها حين يتوقف. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. يسري التغيير عند التشغيل التالي.",
-  "lockYes": "استمر في الترشيح",
-  "lockNo": "أوقفه عند كل قفل",
-  "sendToSupport": "أرسل إلى واعية",
   "@needRecordAudio": {
     "description": "Android string need_record_audio"
   },
@@ -1003,7 +992,6 @@
     "description": "Android string state_on_mute_failing"
   },
   "stateTooSlow": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت. خيار «فتح رابط» أدناه يعمل: فهو يصفّي الفيديو قبل تشغيله.",
-  "stateTooSlowNoLinks": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت.",
   "@stateTooSlow": {
     "description": "Android string state_too_slow"
   },
@@ -1042,7 +1030,6 @@
     "description": "Android string start_no_setup_title"
   },
   "startNoSetupBody": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.\n\nخيار «فتح رابط» يعمل دون أي إعداد.",
-  "startNoSetupBodyNoLinks": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.",
   "@startNoSetupBody": {
     "description": "Android string start_no_setup_body"
   },
@@ -2343,5 +2330,66 @@
   "blurNeedsRestart": "أوقف التصفية ثم شغّلها من جديد لاستعمال التمويه: فهو يحتاج إلى الشاشة كلها، وقد بدأت هذه التصفية مع عرض «مشاركة تطبيق واحد».",
   "@blurNeedsRestart": {
     "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "micOpenSettings": "افتح إعدادات واعية واسمح بالميكروفون",
+  "@micOpenSettings": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "keepRunningTitle": "أبقِ واعية تعمل",
+  "@keepRunningTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "keepRunningBattery": "قد يغلق هذا الهاتف واعية بعد مدة لتوفير البطارية، فيتوقف الترشيح. في إعدادات واعية، تحت «البطارية»، اختر «غير مقيَّد». وفي شاومي وريدمي وبوكو: «بلا قيود»، وفعّل «التشغيل التلقائي» أيضًا.",
+  "@keepRunningBattery": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "keepRunningNotifications": "إشعارات واعية متوقفة، فلا تستطيع إخبارك حين يتوقف الترشيح. فعّلها في إعدادات واعية.",
+  "@keepRunningNotifications": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "keepRunningOpen": "افتح إعدادات واعية",
+  "@keepRunningOpen": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "lockAskTitle": "هل يستمر الترشيح عند قفل الشاشة؟",
+  "@lockAskTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "lockTitle": "استمرار الترشيح عند قفل الشاشة",
+  "@lockTitle": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "lockBody": "في هذا الهاتف يسأل أندرويد قبل كل تشغيل، ثم يوقف الترشيح عند كل قفل للشاشة. تستطيع واعية منع ذلك برفع «حماية مشاركة الشاشة» في أندرويد أثناء الترشيح، وتعيدها حين يتوقف. وما دامت مرفوعة، فقد تُظهر مشاركة شاشة أخرى في الوقت نفسه (مكالمة فيديو مثلًا) إشعاراتك أيضًا. يسري التغيير عند التشغيل التالي.",
+  "@lockBody": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "lockYes": "استمر في الترشيح",
+  "@lockYes": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "lockNo": "أوقفه عند كل قفل",
+  "@lockNo": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "sendToSupport": "أرسل إلى واعية",
+  "@sendToSupport": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "stateTooSlowNoLinks": "هذا الهاتف أبطأ من أن يصفّي الصوت مباشرة، ولذلك يتقطّع الصوت.",
+  "@stateTooSlowNoLinks": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "startNoSetupBodyNoLinks": "الإعداد لمرة واحدة لم يكتمل بعد. بدونه لا تستطيع واعية كتم الصوت الأصلي، فتسمع الموسيقى والصوت المُصفّى معًا.",
+  "@startNoSetupBodyNoLinks": {
+    "description": "Flutter only. Not reviewed yet except in English."
+  },
+  "protectDelayLongAsk": "هل تختار انتظارًا مدته {value}؟ من الآن، يحتاج إيقاف الترشيح أو أي حماية إلى انتظار {value}، وكذلك تقصير هذا الانتظار.",
+  "@protectDelayLongAsk": {
+    "description": "Flutter only. Not reviewed yet except in English.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   }
 }

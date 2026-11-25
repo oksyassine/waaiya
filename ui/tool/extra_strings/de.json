@@ -236,5 +236,19 @@
   "one_app_body": "Wenn Android fragt, was geteilt werden soll, wähle „Eine App teilen“ und dann Waaiya. Alle Apps werden weiter gefiltert, Benachrichtigungen bleiben lesbar, und das Filtern läuft beim Sperren des Bildschirms weiter. Beim ganzen Bildschirm blendet Android Benachrichtigungstext aus und beendet das Filtern bei jeder Sperre.",
   "one_app_pair": "Damit Waaiya voll funktioniert, kopple es einmal über kabelloses Debugging auf der Seite Einrichtung: Dann wird auch die Originalmusik stummgeschaltet, und Android fragt nicht mehr bei jedem Start.",
   "notif_text_one_app": "Sichtbar, wenn du beim Start „Eine App teilen“ und dann Waaiya wählst. Beim ganzen Bildschirm blendet Android ihn aus; nach der einmaligen Einrichtung hebt Waaiya das beim Filtern auf.",
-  "blur_needs_restart": "Beende das Filtern und starte es neu, um die Unschärfe zu nutzen: Sie braucht den ganzen Bildschirm, und dieses Filtern begann mit dem Angebot „Eine App teilen“."
+  "blur_needs_restart": "Beende das Filtern und starte es neu, um die Unschärfe zu nutzen: Sie braucht den ganzen Bildschirm, und dieses Filtern begann mit dem Angebot „Eine App teilen“.",
+  "mic_open_settings": "Waaiyas Einstellungen öffnen und das Mikrofon erlauben",
+  "keep_running_title": "Waaiya laufen lassen",
+  "keep_running_battery": "Dieses Telefon kann Waaiya nach einer Weile schließen, um Akku zu sparen, und dann stoppt das Filtern. Wähle in Waaiyas Einstellungen unter Akku „Nicht eingeschränkt“. Bei Xiaomi, Redmi und POCO: „Keine Einschränkungen“, und schalte auch Autostart ein.",
+  "keep_running_notifications": "Waaiyas Benachrichtigungen sind aus, daher kann es dir nicht sagen, wenn das Filtern stoppt. Schalte sie in Waaiyas Einstellungen ein.",
+  "keep_running_open": "Waaiyas Einstellungen öffnen",
+  "lock_ask_title": "Beim Sperren des Bildschirms weiter filtern?",
+  "lock_title": "Beim Sperren des Bildschirms weiter filtern",
+  "lock_body": "Auf diesem Telefon fragt Android vor jedem Start und beendet das Filtern dann bei jeder Bildschirmsperre. Waaiya kann das verhindern, indem es während des Filterns Androids Schutz für Bildschirmfreigaben aufhebt, und stellt ihn wieder her, wenn das Filtern endet. Solange er aufgehoben ist, kann eine gleichzeitige andere Bildschirmfreigabe (etwa ein Videoanruf) auch deine Benachrichtigungen zeigen. Eine Änderung gilt ab dem nächsten Start.",
+  "lock_yes": "Weiter filtern",
+  "lock_no": "Bei jeder Sperre stoppen",
+  "send_to_support": "An Waaiya senden",
+  "state_too_slow_no_links": "Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus.",
+  "start_no_setup_body_no_links": "Die einmalige Einrichtung ist noch nicht erledigt. Ohne sie kann Waaiya den Originalton nicht stummschalten: Sie hören die Musik und den gefilterten Ton zusammen.",
+  "protect_delay_long_ask": "Eine Wartezeit von {value} wählen? Ab jetzt wartet das Ausschalten des Filters oder eines Schutzes {value}, ebenso das Verkürzen dieser Wartezeit."
 }

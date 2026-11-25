@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Toute personne dont l\'appli n\'est pas sûre que c\'est un homme est couverte. Strict laisse environ 7 hommes sur 100 découverts ; équilibré environ 14, souple environ 16. Chaque cran moins strict laisse aussi environ 1 femme de plus sur 100 découverte.</string>
     <!-- Filtre en direct : problèmes expliqués en mots, rapport de diagnostic -->
     <string name="state_on_not_muted">Le son d\'origine n\'est pas encore coupé, donc vous entendez la musique avec le son filtré. Terminez la configuration initiale ci-dessous.</string>
-    <string name="state_on_mute_failing">Waaiya ne peut pas couper le son d\'origine de l\'appli en cours de lecture, donc la musique peut encore s\'entendre. Arrêtez puis relancez le filtrage. Si cela continue, envoyez le rapport de diagnostic (en bas de cet écran).</string>
+    <string name="state_on_mute_failing">Waaiya ne peut pas couper le son d\'origine de l\'appli en cours de lecture, donc la musique peut encore s\'entendre. Arrêtez puis relancez le filtrage. Si cela continue, envoyez le rapport de diagnostic (Paramètres).</string>
     <string name="state_too_slow">Ce téléphone est trop lent pour filtrer le son en direct, donc le son se coupe. « Ouvrir un lien » ci-dessous fonctionne quand même : il filtre la vidéo avant de la lire.</string>
     <string name="state_mono_note">Le son est en mono pour que ce téléphone suive.</string>
     <string name="state_blocked_silenced">Rendu muet, car il n\'autorise pas le filtrage : %1$s.</string>

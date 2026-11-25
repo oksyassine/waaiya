@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Se cubre a toda persona que la aplicación no tenga claro que es un hombre. Estricto deja sin cubrir a unos 7 hombres de cada 100; equilibrado, a unos 14; flexible, a unos 16. Cada nivel menos estricto también deja sin cubrir a aproximadamente 1 mujer más de cada 100.</string>
     <!-- Filtro en directo: problemas explicados con palabras, el informe de diagnóstico -->
     <string name="state_on_not_muted">El sonido original aún no está silenciado, así que oye la música junto con el sonido filtrado. Termine la configuración inicial de abajo.</string>
-    <string name="state_on_mute_failing">Waaiya no puede silenciar el sonido original de la aplicación que suena ahora, así que puede que aún se oiga la música. Detenga e inicie el filtrado. Si sigue igual, envíe el informe de diagnóstico (al final de esta pantalla).</string>
+    <string name="state_on_mute_failing">Waaiya no puede silenciar el sonido original de la aplicación que suena ahora, así que puede que aún se oiga la música. Detenga e inicie el filtrado. Si sigue igual, envíe el informe de diagnóstico (Ajustes).</string>
     <string name="state_too_slow">Este teléfono es demasiado lento para filtrar el sonido en directo, así que el sonido se corta. «Abrir un enlace», más abajo, sigue funcionando: filtra el vídeo antes de reproducirlo.</string>
     <string name="state_mono_note">El sonido está en mono para que este teléfono pueda seguir el ritmo.</string>
     <string name="state_blocked_silenced">En silencio, porque no permite el filtrado: %1$s.</string>

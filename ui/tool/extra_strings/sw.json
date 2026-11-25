@@ -236,5 +236,19 @@
   "one_app_body": "Android inapouliza cha kushiriki, chagua “Shiriki programu moja”, kisha Waaiya. Programu zote bado zinachujwa, arifa zinasomeka, na kuchuja kunaendelea skrini inapofungwa. Ukichagua skrini nzima, Android huficha maandishi ya arifa na husimamisha kuchuja kila skrini inapofungwa.",
   "one_app_pair": "Ili Waaiya ifanye kazi kikamilifu, iunganishe mara moja kwa Utatuzi usiotumia waya kwenye ukurasa wa Mpangilio: muziki asilia pia utanyamazishwa, na Android itaacha kuuliza kila unapoanza.",
   "notif_text_one_app": "Huonyeshwa unapochagua “Shiriki programu moja”, kisha Waaiya, unapoanza. Kwa skrini nzima Android huyaficha; baada ya mpangilio wa mara moja, Waaiya huondoa hilo wakati wa kuchuja.",
-  "blur_needs_restart": "Simamisha kisha anzisha kuchuja tena ili kutumia ukungu: unahitaji skrini nzima, na kuchuja huku kulianza kukiwa na chaguo la “Shiriki programu moja”."
+  "blur_needs_restart": "Simamisha kisha anzisha kuchuja tena ili kutumia ukungu: unahitaji skrini nzima, na kuchuja huku kulianza kukiwa na chaguo la “Shiriki programu moja”.",
+  "mic_open_settings": "Fungua mipangilio ya Waaiya ili kuruhusu maikrofoni",
+  "keep_running_title": "Weka Waaiya ikiendelea",
+  "keep_running_battery": "Simu hii inaweza kufunga Waaiya baada ya muda ili kuokoa betri, kisha uchujaji husimama. Katika mipangilio ya Waaiya, chini ya Betri, chagua “Bila vikwazo”. Kwenye Xiaomi, Redmi na POCO: “Hakuna vikwazo”, na uwashe pia Kuanza kiotomatiki.",
+  "keep_running_notifications": "Arifa za Waaiya zimezimwa, kwa hiyo haiwezi kukujulisha uchujaji unaposimama. Ziwashe katika mipangilio ya Waaiya.",
+  "keep_running_open": "Fungua mipangilio ya Waaiya",
+  "lock_ask_title": "Uendelee kuchuja skrini ikifungwa?",
+  "lock_title": "Endelea kuchuja skrini ikifungwa",
+  "lock_body": "Kwenye simu hii Android huuliza kabla ya kila kuanza, kisha husimamisha uchujaji kila skrini inapofungwa. Waaiya inaweza kuzuia hilo kwa kuondoa ulinzi wa kushiriki skrini wa Android wakati wa kuchuja, na huurudisha uchujaji unaposimama. Ukiwa umeondolewa, ushiriki mwingine wa skrini wakati huo huo (simu ya video, kwa mfano) unaweza pia kuonyesha arifa zako. Mabadiliko yanatumika utakapoanzisha tena.",
+  "lock_yes": "Endelea kuchuja",
+  "lock_no": "Simama kila inapofungwa",
+  "send_to_support": "Tuma kwa Waaiya",
+  "state_too_slow_no_links": "Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika.",
+  "start_no_setup_body_no_links": "Usanidi wa mara moja bado haujafanywa. Bila huo Waaiya haiwezi kunyamazisha sauti asili: utasikia muziki na sauti iliyochujwa kwa pamoja.",
+  "protect_delay_long_ask": "Uchague kusubiri {value}? Kuanzia sasa, kuzima kichujio au ulinzi wowote kutasubiri {value}, na pia kufupisha muda huu wa kusubiri."
 }

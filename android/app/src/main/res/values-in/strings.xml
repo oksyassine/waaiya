@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Siapa pun yang tidak dipastikan aplikasi sebagai laki-laki akan ditutup. Ketat membiarkan sekitar 7 dari 100 laki-laki tidak ditutup; seimbang sekitar 14, longgar sekitar 16. Setiap tingkat yang kurang ketat juga membiarkan sekitar 1 perempuan lagi dari 100 tidak ditutup.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">Suara aslinya belum dibisukan, jadi Anda mendengar musik bersama suara yang difilter. Selesaikan penyiapan satu kali di bawah.</string>
-    <string name="state_on_mute_failing">Waaiya tidak bisa membisukan suara asli dari aplikasi yang sedang diputar, jadi musik mungkin masih terdengar. Hentikan lalu mulai filter. Jika tetap terjadi, kirim laporan diagnostik (di bagian bawah layar ini).</string>
+    <string name="state_on_mute_failing">Waaiya tidak bisa membisukan suara asli dari aplikasi yang sedang diputar, jadi musik mungkin masih terdengar. Hentikan lalu mulai filter. Jika tetap terjadi, kirim laporan diagnostik (Setelan).</string>
     <string name="state_too_slow">Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus. “Buka tautan” di bawah tetap berfungsi: video difilter dulu sebelum diputar.</string>
     <string name="state_mono_note">Suara dalam mode mono agar ponsel ini sanggup mengikuti.</string>
     <string name="state_blocked_silenced">Dibisukan, karena tidak mengizinkan filter: %1$s.</string>

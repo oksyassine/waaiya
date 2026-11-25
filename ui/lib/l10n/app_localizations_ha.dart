@@ -1744,6 +1744,11 @@ class AppLocalizationsHa extends AppLocalizations {
   String get protectDelayTitle => 'Jira kafin kashewa';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Za ka zaɓi jira na $value? Daga yanzu, kashe tacewa ko kowace kariya zai jira $value, haka ma rage wannan jiran.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Misali, da minti 30: kuna danna maɓallin tsayawa, amma tacewa tana ci gaba da aiki. Bayan minti 30, wannan shafi zai tambaye ku ko har yanzu kuna son dakatarwa. Ku danna “Tabbatar” cikin minti 15 sai ta tsaya; in ba haka ba babu abin da zai canza. Haka nan ma kashe murfi ko wata kariya. Kunna abubuwa koyaushe yana aiki nan take.';
 

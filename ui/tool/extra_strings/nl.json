@@ -236,5 +236,19 @@
   "one_app_body": "Als Android vraagt wat je wilt delen, kies ‘Eén app delen’ en dan Waaiya. Alle apps worden nog steeds gefilterd, meldingen blijven leesbaar en het filteren gaat door als het scherm vergrendelt. Met het hele scherm verbergt Android meldingstekst en stopt het filteren bij elke vergrendeling.",
   "one_app_pair": "Koppel Waaiya één keer met draadloze foutopsporing op de pagina Installatie zodat het volledig werkt: dan wordt ook de originele muziek gedempt en vraagt Android niet meer bij elke start.",
   "notif_text_one_app": "Zichtbaar als je bij het starten ‘Eén app delen’ en dan Waaiya kiest. Met het hele scherm verbergt Android het; na de eenmalige installatie heft Waaiya dat tijdens het filteren op.",
-  "blur_needs_restart": "Stop het filteren en start het opnieuw om de vervaging te gebruiken: die heeft het hele scherm nodig, en dit filteren begon met ‘Eén app delen’ aangeboden."
+  "blur_needs_restart": "Stop het filteren en start het opnieuw om de vervaging te gebruiken: die heeft het hele scherm nodig, en dit filteren begon met ‘Eén app delen’ aangeboden.",
+  "mic_open_settings": "Open de instellingen van Waaiya om de microfoon toe te staan",
+  "keep_running_title": "Laat Waaiya draaien",
+  "keep_running_battery": "Deze telefoon kan Waaiya na een tijdje sluiten om batterij te sparen, en dan stopt het filteren. Kies in de instellingen van Waaiya bij Batterij „Onbeperkt”. Op Xiaomi, Redmi en POCO: „Geen beperkingen”, en zet ook Autostart aan.",
+  "keep_running_notifications": "De meldingen van Waaiya staan uit, dus het kan je niet laten weten wanneer het filteren stopt. Zet ze aan in de instellingen van Waaiya.",
+  "keep_running_open": "Instellingen van Waaiya openen",
+  "lock_ask_title": "Blijven filteren als het scherm vergrendelt?",
+  "lock_title": "Blijven filteren als het scherm vergrendelt",
+  "lock_body": "Op deze telefoon vraagt Android voor elke start en stopt het filteren dan bij elke schermvergrendeling. Waaiya kan dat voorkomen door tijdens het filteren de bescherming voor scherm delen van Android op te heffen, en zet die terug als het filteren stopt. Zolang die is opgeheven, kan een ander scherm delen op hetzelfde moment (een videogesprek bijvoorbeeld) ook je meldingen tonen. Een wijziging geldt vanaf de volgende start.",
+  "lock_yes": "Blijven filteren",
+  "lock_no": "Stoppen bij elke vergrendeling",
+  "send_to_support": "Naar Waaiya sturen",
+  "state_too_slow_no_links": "Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg.",
+  "start_no_setup_body_no_links": "De eenmalige installatie is nog niet gedaan. Zonder die installatie kan Waaiya het originele geluid niet dempen: je hoort de muziek en het gefilterde geluid tegelijk.",
+  "protect_delay_long_ask": "Een wachttijd van {value} kiezen? Vanaf nu wacht het uitzetten van het filter of een bescherming {value}, en ook het korter maken van deze wachttijd."
 }

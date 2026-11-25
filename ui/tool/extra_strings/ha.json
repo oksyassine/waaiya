@@ -236,5 +236,19 @@
   "one_app_body": "Idan Android ta tambayi abin da za a raba, zaɓi “Raba manhaja ɗaya”, sannan Waaiya. Duk manhajoji za su ci gaba da tacewa, sanarwa za su kasance a karanta, kuma tacewa za ta ci gaba idan an kulle allo. Da dukan allo, Android tana ɓoye rubutun sanarwa kuma tana dakatar da tacewa a kowace kullewa.",
   "one_app_pair": "Domin Waaiya ta yi aiki gaba ɗaya, haɗa ta sau ɗaya da Wireless debugging a shafin Saiti: daga nan ana kashe kiɗan asali ma, kuma Android ta daina tambaya a kowace farawa.",
   "notif_text_one_app": "Ana nunawa idan ka zaɓi “Raba manhaja ɗaya”, sannan Waaiya, a farawa. Da dukan allo Android tana ɓoye shi; bayan saitin sau ɗaya Waaiya tana cire hakan yayin tacewa.",
-  "blur_needs_restart": "Dakatar da tacewa ka sake farawa don amfani da dushewa: tana buƙatar dukan allo, kuma wannan tacewa ta fara ne da zaɓin “Raba manhaja ɗaya”."
+  "blur_needs_restart": "Dakatar da tacewa ka sake farawa don amfani da dushewa: tana buƙatar dukan allo, kuma wannan tacewa ta fara ne da zaɓin “Raba manhaja ɗaya”.",
+  "mic_open_settings": "Buɗe saitunan Waaiya don ba da izinin makirufo",
+  "keep_running_title": "Bar Waaiya yana aiki",
+  "keep_running_battery": "Wannan waya na iya rufe Waaiya bayan ɗan lokaci don adana baturi, sai tacewa ta tsaya. A saitunan Waaiya, ƙarƙashin Baturi, zaɓi “Babu iyaka”. A Xiaomi, Redmi da POCO: “Babu ƙuntatawa”, kuma kunna Farawa da kanta.",
+  "keep_running_notifications": "Sanarwar Waaiya a kashe take, don haka ba za ta iya gaya maka lokacin da tacewa ta tsaya ba. Kunna su a saitunan Waaiya.",
+  "keep_running_open": "Buɗe saitunan Waaiya",
+  "lock_ask_title": "A ci gaba da tacewa idan an kulle allo?",
+  "lock_title": "A ci gaba da tacewa idan an kulle allo",
+  "lock_body": "A wannan waya Android tana tambaya kafin kowane farawa, sannan ta dakatar da tacewa a duk lokacin da aka kulle allo. Waaiya na iya hana hakan ta hanyar ɗage kariyar raba allo ta Android yayin tacewa, kuma ta mayar da ita idan tacewa ta tsaya. Muddin an ɗage ta, wani raba allo a lokaci guda (kiran bidiyo, misali) zai iya nuna sanarwarka. Canji zai fara aiki a farawa ta gaba.",
+  "lock_yes": "Ci gaba da tacewa",
+  "lock_no": "Tsaya a kowane kulle",
+  "send_to_support": "Aika wa Waaiya",
+  "state_too_slow_no_links": "Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa.",
+  "start_no_setup_body_no_links": "Ba a yi saitin sau ɗaya ba tukuna. Ba tare da shi ba Waaiya ba zai iya yi wa ainihin sauti shiru ba: za ku ji kiɗan da sautin da aka tace tare.",
+  "protect_delay_long_ask": "Za ka zaɓi jira na {value}? Daga yanzu, kashe tacewa ko kowace kariya zai jira {value}, haka ma rage wannan jiran."
 }

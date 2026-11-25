@@ -1743,6 +1743,11 @@ class AppLocalizationsUz extends AppLocalizations {
   String get protectDelayTitle => 'Oʻchirishdan oldin kutish';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return '$value kutishni tanlaysizmi? Endi filtr yoki istalgan himoyani o‘chirish $value kutadi, bu kutishni qisqartirish ham shunday.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Masalan, 30 daqiqa bilan: toʻxtatish tugmasini bosasiz, lekin filtr ishlashda davom etadi. 30 daqiqadan soʻng bu sahifa hali ham toʻxtatmoqchimisiz, deb soʻraydi. 15 daqiqa ichida “Tasdiqlash” tugmasini bossangiz, u toʻxtaydi; aks holda hech narsa oʻzgarmaydi. Qoplamani yoki boshqa himoyani oʻchirish ham shunday. Biror narsani yoqish har doim darhol ishlaydi.';
 

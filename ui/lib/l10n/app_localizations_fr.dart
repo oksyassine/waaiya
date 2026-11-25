@@ -1750,6 +1750,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get protectDelayTitle => 'Délai avant l\'arrêt';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Choisir une attente de $value ? Désormais, désactiver le filtre ou une protection attendra $value, de même que raccourcir cette attente.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Par exemple, avec 30 minutes : vous appuyez sur le bouton pour arrêter, mais le filtre continue. Après 30 minutes, cette page vous demande si vous voulez toujours arrêter. Appuyez sur « Confirmer » dans les 15 minutes et il s\'arrête ; sinon rien ne change. Il en va de même pour désactiver une couverture ou toute autre protection. Activer quelque chose fonctionne toujours tout de suite.';
 

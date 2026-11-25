@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Wer nach Einschätzung der App nicht sicher ein Mann ist, wird verdeckt. Streng lässt etwa 7 von 100 Männern unverdeckt, Ausgewogen etwa 14, Locker etwa 16. Jede weniger strenge Stufe lässt außerdem etwa 1 von 100 Frauen mehr unverdeckt.</string>
     <!-- Live-Filter: Probleme in Worten, der Diagnosebericht -->
     <string name="state_on_not_muted">Der Originalton ist noch nicht stummgeschaltet, deshalb hören Sie die Musik zusammen mit dem gefilterten Ton. Schließen Sie unten die einmalige Einrichtung ab.</string>
-    <string name="state_on_mute_failing">Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (unten auf diesem Bildschirm).</string>
+    <string name="state_on_mute_failing">Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (Einstellungen).</string>
     <string name="state_too_slow">Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus. „Link öffnen“ unten funktioniert trotzdem: Es filtert das Video, bevor es abgespielt wird.</string>
     <string name="state_mono_note">Der Ton ist in Mono, damit dieses Telefon mithält.</string>
     <string name="state_blocked_silenced">Stummgeschaltet, weil es das Filtern nicht erlaubt: %1$s.</string>

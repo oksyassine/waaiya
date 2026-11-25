@@ -1754,6 +1754,11 @@ class AppLocalizationsSo extends AppLocalizations {
   String get protectDelayTitle => 'Sugid ka hor damin';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Ma doorataa sugitaan $value ah? Hadda kadib, damidda shaandhada ama ilaalin kasta waxay sugaysaa $value, sidoo kale gaabinta sugitaankan.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Tusaale ahaan, 30 daqiiqo: waxaad riixdaa badhanka joojinta, laakiin shaandhayntu way sii shaqaynaysaa. 30 daqiiqo kadib, boggani wuxuu ku weydiinayaa inaad weli rabto inaad joojiso. Riix “Xaqiiji” 15 daqiiqo gudahood waana istaagaysaa; haddii kale waxba isma beddelaan. Sidaas oo kale ayay tahay demista dabool ama ilaalin kale. Daarista waxyaabaha had iyo jeer isla markiiba way shaqaysaa.';
 

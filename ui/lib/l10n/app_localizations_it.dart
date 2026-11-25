@@ -1749,6 +1749,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get protectDelayTitle => 'Attesa prima di spegnere';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Scegliere un\'attesa di $value? Da ora, disattivare il filtro o qualsiasi protezione attenderà $value, e così pure accorciare questa attesa.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Per esempio, con 30 minuti: premi il pulsante per fermare, ma il filtro continua a funzionare. Dopo 30 minuti questa pagina ti chiede se vuoi ancora fermarlo. Premi «Conferma» entro 15 minuti e si ferma; altrimenti non cambia nulla. Lo stesso vale per disattivare una copertura o qualsiasi altra protezione. Attivare qualcosa funziona sempre subito.';
 

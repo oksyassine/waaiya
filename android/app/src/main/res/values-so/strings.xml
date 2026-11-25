@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Qof kasta oo barnaamijku aanu hubin inuu nin yahay waa la daboolaa. Adag wuxuu ka tagaa qiyaastii 7 nin 100-kii iyagoo aan la daboolin; dhexdhexaad qiyaastii 14, fudud qiyaastii 16. Heer kasta oo ka adkaan yar wuxuu sidoo kale ka tagaa qiyaastii 1 haweeney oo dheeraad ah 100-kii iyadoo aan la daboolin.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">Codka asalka ah weli lama aamusiin, sidaas darteed waxaad maqlaysaa muusigga oo la socda codka la shaandheeyay. Dhammaystir habaynta hal mar ah ee hoose.</string>
-    <string name="state_on_mute_failing">Waaiya ma aamusiin karto codka asalka ah ee barnaamijka hadda shaqaynaya, sidaas darteed muusigga weli waa la maqli karaa. Jooji oo dib u bilow shaandhaynta. Haddii ay sii jirto, dir warbixinta baaritaanka (hoosta shaashaddan).</string>
+    <string name="state_on_mute_failing">Waaiya ma aamusiin karto codka asalka ah ee barnaamijka hadda shaqaynaya, sidaas darteed muusigga weli waa la maqli karaa. Jooji oo dib u bilow shaandhaynta. Haddii ay sii jirto, dir warbixinta baaritaanka (Dejinta).</string>
     <string name="state_too_slow">Taleefankani aad buu ugu gaabis yahay inuu shaandheeyo codka tooska ah, sidaas darteed codku wuu go\'aa. “Fur link” ee hoose weli wuu shaqeeyaa: wuxuu shaandheeyaa muuqaalka ka hor inta aan la daarin.</string>
     <string name="state_mono_note">Codku waa mono si taleefankani ula jaanqaado.</string>
     <string name="state_blocked_silenced">Waa la aamusiiyay, maxaa yeelay ma oggola shaandhaynta: %1$s.</string>

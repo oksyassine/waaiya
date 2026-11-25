@@ -1753,6 +1753,11 @@ class AppLocalizationsSw extends AppLocalizations {
   String get protectDelayTitle => 'Kusubiri kabla ya kuzima';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Uchague kusubiri $value? Kuanzia sasa, kuzima kichujio au ulinzi wowote kutasubiri $value, na pia kufupisha muda huu wa kusubiri.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Kwa mfano, kwa dakika 30: unabonyeza kitufe cha kusimamisha, lakini kichujio kinaendelea kufanya kazi. Baada ya dakika 30, ukurasa huu unakuuliza kama bado unataka kusimamisha. Bonyeza “Thibitisha” ndani ya dakika 15 nacho kinasimama; la sivyo hakuna kinachobadilika. Ndivyo ilivyo pia kwa kuzima kifuniko au ulinzi mwingine wowote. Kuwasha vitu hufanya kazi mara moja kila wakati.';
 

@@ -236,5 +236,19 @@
   "one_app_body": "Marka Android ay weydiiso waxa la wadaagayo, dooro “La wadaag hal app”, kadib Waaiya. App-yada oo dhan weli waa la sifeeyaa, ogeysiisyaduna way akhrinayaan, sifeyntuna way sii socotaa marka shaashaddu xirmato. Shaashadda oo dhan, Android waxay qarisaa qoraalka ogeysiisyada waxayna joojisaa sifeynta mar kasta oo la xiro.",
   "one_app_pair": "Si Waaiya si buuxda ugu shaqeyso, hal mar ku xir Debugging-ka wireless-ka bogga Diyaarinta: markaas muusigga asalka ah sidoo kale waa la aamusiyaa, Android-na way joojisaa weydiinta bilow kasta.",
   "notif_text_one_app": "Waa la muujiyaa marka aad dooratid “La wadaag hal app”, kadib Waaiya, bilowga. Shaashadda oo dhan Android way qarisaa; diyaarinta hal mar ah kadib Waaiya waxay ka qaadaa inta ay sifeyneyso.",
-  "blur_needs_restart": "Jooji oo dib u bilow sifeynta si aad u isticmaasho qarinta: waxay u baahan tahay shaashadda oo dhan, sifeyntanna waxay ku bilaabatay iyadoo la soo bandhigay “La wadaag hal app”."
+  "blur_needs_restart": "Jooji oo dib u bilow sifeynta si aad u isticmaasho qarinta: waxay u baahan tahay shaashadda oo dhan, sifeyntanna waxay ku bilaabatay iyadoo la soo bandhigay “La wadaag hal app”.",
+  "mic_open_settings": "Fur dejinta Waaiya si aad u oggolaato makarafoonka",
+  "keep_running_title": "Waaiya ha shaqeyso",
+  "keep_running_battery": "Taleefankani wuxuu xiri karaa Waaiya muddo kadib si uu u keydiyo batariga, kadibna shaandhayntu way joogsataa. Dejinta Waaiya, hoosta Batariga, dooro “Xaddid la'aan”. Xiaomi, Redmi iyo POCO: “Xaddid ma jiro”, oo sidoo kale shid Bilow-iskiis.",
+  "keep_running_notifications": "Ogeysiisyada Waaiya way dansan yihiin, markaa kuma ogeysiin karo marka shaandhayntu joogsato. Ka shid dejinta Waaiya.",
+  "keep_running_open": "Fur dejinta Waaiya",
+  "lock_ask_title": "Ma la sii wadaa shaandhaynta marka shaashadda la quflo?",
+  "lock_title": "Sii wad shaandhaynta marka shaashadda la quflo",
+  "lock_body": "Taleefankan Android wuxuu weydiiyaa ka hor bilow kasta, kadibna wuxuu joojiyaa shaandhaynta mar kasta oo shaashadda la quflo. Waaiya way ka hortagi kartaa iyadoo qaadaysa ilaalinta wadaagista shaashadda ee Android inta ay shaandhaynayso, waxayna soo celisaa marka shaandhayntu joogsato. Inta ay qaadan tahay, wadaagis shaashadeed kale oo isla waqtigaas ah (wicitaan muuqaal ah, tusaale) ayaa sidoo kale tusi kara ogeysiisyadaada. Isbeddel wuxuu dhaqan galayaa bilowga xiga.",
+  "lock_yes": "Sii wad shaandhaynta",
+  "lock_no": "Jooji quful kasta",
+  "send_to_support": "U dir Waaiya",
+  "state_too_slow_no_links": "Taleefankani aad buu ugu gaabis yahay inuu shaandheeyo codka tooska ah, sidaas darteed codku wuu go'aa.",
+  "start_no_setup_body_no_links": "Habaynta hal mar ah weli lama samayn. La'aanteed Waaiya ma aamusiin karto codka asalka ah: waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.",
+  "protect_delay_long_ask": "Ma doorataa sugitaan {value} ah? Hadda kadib, damidda shaandhada ama ilaalin kasta waxay sugaysaa {value}, sidoo kale gaabinta sugitaankan."
 }

@@ -3040,6 +3040,12 @@ abstract class AppLocalizations {
   /// **'الانتظار قبل الإيقاف'**
   String get protectDelayTitle;
 
+  /// No description provided for @protectDelayLongAsk.
+  ///
+  /// In ar, this message translates to:
+  /// **'هل تختار انتظارًا مدته {value}؟ من الآن، يحتاج إيقاف الترشيح أو أي حماية إلى انتظار {value}، وكذلك تقصير هذا الانتظار.'**
+  String protectDelayLongAsk(Object value);
+
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:

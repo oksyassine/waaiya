@@ -1752,6 +1752,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get protectDelayTitle => 'Warten vor dem Ausschalten';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Eine Wartezeit von $value wählen? Ab jetzt wartet das Ausschalten des Filters oder eines Schutzes $value, ebenso das Verkürzen dieser Wartezeit.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Zum Beispiel mit 30 Minuten: Sie drücken die Taste zum Stoppen, aber der Filter arbeitet weiter. Nach 30 Minuten fragt diese Seite, ob Sie immer noch stoppen möchten. Drücken Sie innerhalb von 15 Minuten „Bestätigen“, dann stoppt er; sonst ändert sich nichts. Genauso beim Ausschalten einer Abdeckung oder eines anderen Schutzes. Etwas einschalten geht immer sofort.';
 

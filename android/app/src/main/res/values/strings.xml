@@ -259,7 +259,7 @@
     <string name="blur_strict_help">Anyone the app is not sure is a man is covered. Strict leaves about 7 men in 100 uncovered; balanced about 14, relaxed about 16. Each step less strict also leaves about 1 more woman in 100 uncovered.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">The original sound is not silenced yet, so you hear the music together with the filtered sound. Finish the one-time setup below.</string>
-    <string name="state_on_mute_failing">Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (at the bottom of this screen).</string>
+    <string name="state_on_mute_failing">Waaiya cannot silence the original sound of the app playing now, so the music may still be heard. Stop and start filtering. If it stays, send the diagnostics report (Settings).</string>
     <string name="state_too_slow">This phone is too slow to filter live sound, so the sound cuts. \"Open a link\" below still works: it filters the video before playing it.</string>
     <string name="state_mono_note">The sound is in mono so that this phone keeps up.</string>
     <string name="state_blocked_silenced">Silenced, because it does not allow filtering: %1$s.</string>

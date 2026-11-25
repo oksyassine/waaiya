@@ -236,5 +236,19 @@
   "one_app_body": "When Android asks what to share, choose “Share one app”, then Waaiya. Every app is still filtered, notifications stay readable, and filtering keeps running when the screen locks. With the entire screen, Android hides notification text and stops filtering at each screen lock.",
   "one_app_pair": "For Waaiya to work fully, pair it once with Wireless debugging on the Setup page: the original music is then silenced too, and Android stops asking at each start.",
   "notif_text_one_app": "Shown when you choose “Share one app”, then Waaiya, at the start. With the entire screen Android hides it; after the one-time setup Waaiya lifts that while filtering.",
-  "blur_needs_restart": "Stop and start filtering again to use the blur: it needs the entire screen, and this filtering started with “Share one app” offered."
+  "blur_needs_restart": "Stop and start filtering again to use the blur: it needs the entire screen, and this filtering started with “Share one app” offered.",
+  "mic_open_settings": "Open Waaiya's settings to allow the microphone",
+  "keep_running_title": "Keep Waaiya running",
+  "keep_running_battery": "This phone may close Waaiya after a while to save battery, and then filtering stops. In Waaiya's settings, under Battery, choose “Unrestricted”. On Xiaomi, Redmi and POCO: “No restrictions”, and turn on Autostart too.",
+  "keep_running_notifications": "Waaiya's notifications are off, so it cannot tell you when filtering stops. Turn them on in Waaiya's settings.",
+  "keep_running_open": "Open Waaiya's settings",
+  "lock_ask_title": "Keep filtering when the screen locks?",
+  "lock_title": "Keep filtering when the screen locks",
+  "lock_body": "On this phone Android asks before each start, and then stops filtering at every screen lock. Waaiya can prevent that by lifting Android's screen-share protection while it filters, and puts it back when filtering stops. While it is lifted, another screen share made at the same time (a video call, for example) can also show your notifications. A change applies at the next start.",
+  "lock_yes": "Keep filtering",
+  "lock_no": "Stop at each lock",
+  "send_to_support": "Send to Waaiya",
+  "state_too_slow_no_links": "This phone is too slow to filter live sound, so the sound cuts.",
+  "start_no_setup_body_no_links": "The one-time setup is not done yet. Without it Waaiya cannot silence the original sound: you will hear the music and the filtered sound together.",
+  "protect_delay_long_ask": "Choose a wait of {value}? From now on, turning off the filter or any protection waits {value}, and so does making this wait shorter."
 }

@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Sesiapa yang apl tidak pasti lelaki akan ditutup. Ketat membiarkan kira-kira 7 daripada 100 lelaki tidak ditutup; seimbang kira-kira 14, longgar kira-kira 16. Setiap langkah yang kurang ketat juga membiarkan kira-kira 1 lagi daripada 100 wanita tidak ditutup.</string>
     <!-- Penapisan langsung: masalah diterangkan dengan perkataan, laporan diagnostik -->
     <string name="state_on_not_muted">Bunyi asal belum disenyapkan, jadi anda mendengar muzik bersama bunyi yang ditapis. Selesaikan persediaan sekali sahaja di bawah.</string>
-    <string name="state_on_mute_failing">Waaiya tidak dapat menyenyapkan bunyi asal apl yang sedang dimainkan, jadi muzik mungkin masih kedengaran. Hentikan dan mulakan penapisan. Jika masih berlaku, hantar laporan diagnostik (di bahagian bawah skrin ini).</string>
+    <string name="state_on_mute_failing">Waaiya tidak dapat menyenyapkan bunyi asal apl yang sedang dimainkan, jadi muzik mungkin masih kedengaran. Hentikan dan mulakan penapisan. Jika masih berlaku, hantar laporan diagnostik (Tetapan).</string>
     <string name="state_too_slow">Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus. “Buka pautan” di bawah masih berfungsi: ia menapis video sebelum memainkannya.</string>
     <string name="state_mono_note">Bunyi dalam mono supaya telefon ini tidak ketinggalan.</string>
     <string name="state_blocked_silenced">Disenyapkan, kerana ia tidak membenarkan penapisan: %1$s.</string>

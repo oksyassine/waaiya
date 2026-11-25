@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Mtu yeyote ambaye programu haina uhakika kuwa ni mwanamume hufunikwa. Kali huacha takriban wanaume 7 kati ya 100 bila kufunikwa; wastani takriban 14, legevu takriban 16. Kila hatua ya ukali mdogo pia huacha takriban mwanamke 1 zaidi kati ya 100 bila kufunikwa.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">Sauti asili bado haijanyamazishwa, kwa hiyo unasikia muziki pamoja na sauti iliyochujwa. Kamilisha usanidi wa mara moja hapa chini.</string>
-    <string name="state_on_mute_failing">Waaiya haiwezi kunyamazisha sauti asili ya programu inayocheza sasa, kwa hiyo huenda muziki bado ukasikika. Simamisha kisha uanze uchujaji tena. Tatizo likiendelea, tuma ripoti ya uchunguzi (chini kabisa ya skrini hii).</string>
+    <string name="state_on_mute_failing">Waaiya haiwezi kunyamazisha sauti asili ya programu inayocheza sasa, kwa hiyo huenda muziki bado ukasikika. Simamisha kisha uanze uchujaji tena. Tatizo likiendelea, tuma ripoti ya uchunguzi (Mipangilio).</string>
     <string name="state_too_slow">Simu hii ni ya polepole mno kuchuja sauti moja kwa moja, kwa hiyo sauti hukatika. “Fungua kiungo” hapa chini bado hufanya kazi: huchuja video kabla ya kuicheza.</string>
     <string name="state_mono_note">Sauti iko katika mono ili simu hii iweze kwenda sambamba.</string>
     <string name="state_blocked_silenced">Imenyamazishwa, kwa sababu hairuhusu uchujaji: %1$s.</string>

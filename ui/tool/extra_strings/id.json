@@ -236,5 +236,19 @@
   "one_app_body": "Saat Android menanyakan apa yang dibagikan, pilih “Bagikan satu aplikasi”, lalu Waaiya. Semua aplikasi tetap difilter, notifikasi tetap terbaca, dan pemfilteran terus berjalan saat layar terkunci. Dengan seluruh layar, Android menyembunyikan teks notifikasi dan menghentikan pemfilteran setiap layar terkunci.",
   "one_app_pair": "Agar Waaiya bekerja penuh, sambungkan sekali dengan Proses debug nirkabel di halaman Penyiapan: musik asli juga akan dibisukan, dan Android berhenti bertanya setiap kali mulai.",
   "notif_text_one_app": "Tampil saat Anda memilih “Bagikan satu aplikasi”, lalu Waaiya, ketika mulai. Dengan seluruh layar Android menyembunyikannya; setelah penyiapan sekali, Waaiya mencabutnya selama memfilter.",
-  "blur_needs_restart": "Hentikan lalu mulai lagi pemfilteran untuk memakai blur: blur memerlukan seluruh layar, dan pemfilteran ini dimulai dengan pilihan “Bagikan satu aplikasi”."
+  "blur_needs_restart": "Hentikan lalu mulai lagi pemfilteran untuk memakai blur: blur memerlukan seluruh layar, dan pemfilteran ini dimulai dengan pilihan “Bagikan satu aplikasi”.",
+  "mic_open_settings": "Buka setelan Waaiya untuk mengizinkan mikrofon",
+  "keep_running_title": "Biarkan Waaiya tetap berjalan",
+  "keep_running_battery": "Ponsel ini bisa menutup Waaiya setelah beberapa waktu untuk menghemat baterai, lalu pemfilteran berhenti. Di setelan Waaiya, pada Baterai, pilih “Tidak dibatasi”. Di Xiaomi, Redmi, dan POCO: “Tidak ada batasan”, dan aktifkan juga Mulai otomatis.",
+  "keep_running_notifications": "Notifikasi Waaiya mati, jadi Waaiya tidak bisa memberi tahu saat pemfilteran berhenti. Aktifkan di setelan Waaiya.",
+  "keep_running_open": "Buka setelan Waaiya",
+  "lock_ask_title": "Tetap memfilter saat layar terkunci?",
+  "lock_title": "Tetap memfilter saat layar terkunci",
+  "lock_body": "Di ponsel ini Android bertanya sebelum setiap mulai, lalu menghentikan pemfilteran setiap kali layar terkunci. Waaiya dapat mencegahnya dengan mencabut perlindungan berbagi layar Android selama memfilter, dan memasangnya kembali saat pemfilteran berhenti. Selama dicabut, berbagi layar lain pada saat yang sama (misalnya panggilan video) juga bisa menampilkan notifikasi Anda. Perubahan berlaku saat mulai berikutnya.",
+  "lock_yes": "Tetap memfilter",
+  "lock_no": "Berhenti tiap terkunci",
+  "send_to_support": "Kirim ke Waaiya",
+  "state_too_slow_no_links": "Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus.",
+  "start_no_setup_body_no_links": "Penyiapan satu kali belum dilakukan. Tanpanya Waaiya tidak bisa membisukan suara aslinya: Anda akan mendengar musik dan suara yang difilter secara bersamaan.",
+  "protect_delay_long_ask": "Pilih waktu tunggu {value}? Mulai sekarang, mematikan filter atau perlindungan apa pun menunggu {value}, begitu juga memperpendek waktu tunggu ini."
 }

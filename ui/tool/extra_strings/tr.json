@@ -236,5 +236,19 @@
   "one_app_body": "Android neyi paylaşacağınızı sorduğunda “Tek uygulama paylaş”ı, sonra Waaiya'yı seçin. Tüm uygulamalar filtrelenmeye devam eder, bildirimler okunabilir kalır ve ekran kilitlendiğinde filtreleme sürer. Tüm ekranla Android bildirim metnini gizler ve her kilitlemede filtrelemeyi durdurur.",
   "one_app_pair": "Waaiya'nın tam çalışması için Kurulum sayfasında Kablosuz hata ayıklama ile bir kez eşleştirin: o zaman özgün müzik de susturulur ve Android her başlatmada sormayı bırakır.",
   "notif_text_one_app": "Başlatırken “Tek uygulama paylaş”ı, sonra Waaiya'yı seçtiğinizde gösterilir. Tüm ekranla Android bunu gizler; tek seferlik kurulumdan sonra Waaiya bunu filtrelerken kaldırır.",
-  "blur_needs_restart": "Bulanıklaştırmayı kullanmak için filtrelemeyi durdurup yeniden başlatın: tüm ekrana ihtiyaç duyar ve bu filtreleme “Tek uygulama paylaş” sunularak başladı."
+  "blur_needs_restart": "Bulanıklaştırmayı kullanmak için filtrelemeyi durdurup yeniden başlatın: tüm ekrana ihtiyaç duyar ve bu filtreleme “Tek uygulama paylaş” sunularak başladı.",
+  "mic_open_settings": "Mikrofona izin vermek için Waaiya ayarlarını aç",
+  "keep_running_title": "Waaiya çalışmaya devam etsin",
+  "keep_running_battery": "Bu telefon pil tasarrufu için Waaiya'yı bir süre sonra kapatabilir ve filtreleme durur. Waaiya ayarlarında, Pil altında “Kısıtlanmamış”ı seçin. Xiaomi, Redmi ve POCO'da: “Kısıtlama yok”, ayrıca Otomatik başlatmayı da açın.",
+  "keep_running_notifications": "Waaiya'nın bildirimleri kapalı, bu yüzden filtreleme durduğunda size haber veremez. Bunları Waaiya ayarlarından açın.",
+  "keep_running_open": "Waaiya ayarlarını aç",
+  "lock_ask_title": "Ekran kilitlendiğinde filtreleme sürsün mü?",
+  "lock_title": "Ekran kilitlendiğinde filtrelemeye devam et",
+  "lock_body": "Bu telefonda Android her başlatmadan önce sorar ve ardından her ekran kilidinde filtrelemeyi durdurur. Waaiya, filtreleme sırasında Android'in ekran paylaşımı korumasını kaldırarak bunu önleyebilir ve filtreleme durunca korumayı geri koyar. Koruma kaldırıldığı sürece aynı anda yapılan başka bir ekran paylaşımı (örneğin görüntülü arama) da bildirimlerinizi gösterebilir. Değişiklik bir sonraki başlatmada geçerli olur.",
+  "lock_yes": "Filtrelemeye devam et",
+  "lock_no": "Her kilitte durdur",
+  "send_to_support": "Waaiya'ya gönder",
+  "state_too_slow_no_links": "Bu telefon canlı sesi filtrelemek için çok yavaş, bu yüzden ses kesiliyor.",
+  "start_no_setup_body_no_links": "Tek seferlik kurulum henüz yapılmadı. Kurulum olmadan Waaiya orijinal sesi susturamaz: müziği ve filtrelenmiş sesi birlikte duyarsınız.",
+  "protect_delay_long_ask": "{value} bekleme seçilsin mi? Bundan sonra filtreyi veya herhangi bir korumayı kapatmak {value} bekler; bu beklemeyi kısaltmak da öyle."
 }

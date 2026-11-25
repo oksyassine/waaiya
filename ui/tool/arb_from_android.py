@@ -59,6 +59,7 @@ EXTRA_PLACEHOLDERS = {
     "blur_status_no_capture": [("details", "String")],
     "blur_status_no_overlay_desktop": [("details", "String")],
     "blur_status_exited": [("details", "String")],
+    "protect_delay_long_ask": [("value", "String")],
 }
 
 

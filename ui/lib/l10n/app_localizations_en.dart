@@ -1733,6 +1733,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get protectDelayTitle => 'Wait before turning off';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'Choose a wait of $value? From now on, turning off the filter or any protection waits $value, and so does making this wait shorter.';
+  }
+
+  @override
   String get protectDelayBody =>
       'For example, with 30 minutes: you press the button to stop, but the filter keeps working. After 30 minutes, this page asks whether you still want to stop. Press “Confirm” within 15 minutes and it stops; otherwise nothing changes. It is the same for turning off a cover or any other protection. Turning things on always works at once.';
 

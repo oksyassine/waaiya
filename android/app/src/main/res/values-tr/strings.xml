@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Uygulamanın erkek olduğundan emin olmadığı herkes örtülür. Sıkı ayar 100 erkekten yaklaşık 7\'sini örtmeden bırakır; dengeli yaklaşık 14\'ünü, rahat yaklaşık 16\'sını. Daha gevşek her adım, 100 kadından yaklaşık 1 kadını daha örtmeden bırakır.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">Orijinal ses henüz susturulmadı, bu yüzden müziği filtrelenmiş sesle birlikte duyarsınız. Aşağıdaki tek seferlik kurulumu tamamlayın.</string>
-    <string name="state_on_mute_failing">Waaiya şu anda çalan uygulamanın orijinal sesini susturamıyor, bu yüzden müzik hâlâ duyulabilir. Filtrelemeyi durdurup başlatın. Sorun sürerse tanılama raporunu gönderin (bu ekranın en altında).</string>
+    <string name="state_on_mute_failing">Waaiya şu anda çalan uygulamanın orijinal sesini susturamıyor, bu yüzden müzik hâlâ duyulabilir. Filtrelemeyi durdurup başlatın. Sorun sürerse tanılama raporunu gönderin (Ayarlar).</string>
     <string name="state_too_slow">Bu telefon canlı sesi filtrelemek için çok yavaş, bu yüzden ses kesiliyor. Aşağıdaki “Bağlantı aç” yine çalışır: videoyu oynatmadan önce filtreler.</string>
     <string name="state_mono_note">Bu telefon yetişebilsin diye ses mono.</string>
     <string name="state_blocked_silenced">Filtrelemeye izin vermediği için susturuldu: %1$s.</string>

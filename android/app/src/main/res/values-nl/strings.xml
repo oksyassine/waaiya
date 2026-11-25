@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Iedereen van wie de app niet zeker weet dat het een man is, wordt bedekt. Streng laat ongeveer 7 op de 100 mannen onbedekt; evenwichtig ongeveer 14, soepel ongeveer 16. Elke stap minder streng laat ook ongeveer 1 vrouw op de 100 meer onbedekt.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
     <string name="state_on_not_muted">Het originele geluid is nog niet gedempt, dus je hoort de muziek samen met het gefilterde geluid. Maak de eenmalige installatie hieronder af.</string>
-    <string name="state_on_mute_failing">Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (onderaan dit scherm).</string>
+    <string name="state_on_mute_failing">Waaiya kan het originele geluid van de app die nu speelt niet dempen, dus de muziek is misschien nog te horen. Stop het filteren en start het opnieuw. Blijft het zo, stuur dan het diagnoserapport (Instellingen).</string>
     <string name="state_too_slow">Deze telefoon is te traag om live geluid te filteren, dus het geluid valt weg. “Een link openen” hieronder werkt nog wel: het filtert de video voordat die wordt afgespeeld.</string>
     <string name="state_mono_note">Het geluid is in mono, zodat deze telefoon het bijhoudt.</string>
     <string name="state_blocked_silenced">Gedempt, omdat het geen filteren toestaat: %1$s.</string>

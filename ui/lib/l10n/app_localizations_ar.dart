@@ -1717,6 +1717,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get protectDelayTitle => 'الانتظار قبل الإيقاف';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return 'هل تختار انتظارًا مدته $value؟ من الآن، يحتاج إيقاف الترشيح أو أي حماية إلى انتظار $value، وكذلك تقصير هذا الانتظار.';
+  }
+
+  @override
   String get protectDelayBody =>
       'مثلًا مع ٣٠ دقيقة: تضغط زرّ الإيقاف، لكن التصفية تبقى تعمل. بعد ٣٠ دقيقة تسألك هذه الصفحة: أما زلت تريد الإيقاف؟ اضغط «أكِّد» خلال ١٥ دقيقة فتتوقف، وإلا فلن يتغيّر شيء. وكذلك إطفاء التغطية أو أي حماية أخرى. أما التشغيل فيسري فورًا دائمًا.';
 

@@ -258,7 +258,7 @@
     <string name="blur_strict_help">Viene coperto chiunque l\'app non riconosca con certezza come uomo. Rigoroso lascia scoperti circa 7 uomini su 100; equilibrato circa 14, permissivo circa 16. Ogni livello meno rigoroso lascia scoperta anche circa 1 donna in più su 100.</string>
     <!-- Filtro in tempo reale: problemi spiegati a parole, il rapporto di diagnostica -->
     <string name="state_on_not_muted">L\'audio originale non è ancora silenziato, quindi senti la musica insieme all\'audio filtrato. Completa la configurazione iniziale qui sotto.</string>
-    <string name="state_on_mute_failing">Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (in fondo a questa schermata).</string>
+    <string name="state_on_mute_failing">Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (Impostazioni).</string>
     <string name="state_too_slow">Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe. “Apri un link” qui sotto funziona comunque: filtra il video prima di riprodurlo.</string>
     <string name="state_mono_note">L\'audio è in mono perché questo telefono riesca a stare al passo.</string>
     <string name="state_blocked_silenced">Silenziata, perché non permette il filtro: %1$s.</string>

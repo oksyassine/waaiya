@@ -1737,6 +1737,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get protectDelayTitle => 'Kapatmadan önce bekleme';
 
   @override
+  String protectDelayLongAsk(Object value) {
+    return '$value bekleme seçilsin mi? Bundan sonra filtreyi veya herhangi bir korumayı kapatmak $value bekler; bu beklemeyi kısaltmak da öyle.';
+  }
+
+  @override
   String get protectDelayBody =>
       'Örneğin 30 dakika ile: durdurmak için düğmeye basarsınız ama filtre çalışmaya devam eder. 30 dakika sonra bu sayfa hâlâ durdurmak isteyip istemediğinizi sorar. 15 dakika içinde “Onayla” düğmesine basarsanız durur; basmazsanız hiçbir şey değişmez. Bir örtüyü ya da başka bir korumayı kapatmak da böyledir. Bir şeyi açmak her zaman hemen olur.';
 

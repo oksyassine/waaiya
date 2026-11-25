@@ -236,5 +236,19 @@
   "one_app_body": "Quando Android chiede cosa condividere, scegli «Condividi un’app», poi Waaiya. Tutte le app restano filtrate, le notifiche restano leggibili e il filtro continua quando lo schermo si blocca. Con tutto lo schermo, Android nasconde il testo delle notifiche e ferma il filtro a ogni blocco.",
   "one_app_pair": "Perché Waaiya funzioni del tutto, associalo una volta con il debug wireless nella pagina Configurazione: così anche la musica originale viene silenziata e Android smette di chiedere a ogni avvio.",
   "notif_text_one_app": "Visibile quando all’avvio scegli «Condividi un’app», poi Waaiya. Con tutto lo schermo Android lo nasconde; dopo la configurazione una tantum Waaiya lo toglie durante il filtro.",
-  "blur_needs_restart": "Ferma e riavvia il filtro per usare la sfocatura: richiede tutto lo schermo, e questo filtro è partito offrendo «Condividi un’app»."
+  "blur_needs_restart": "Ferma e riavvia il filtro per usare la sfocatura: richiede tutto lo schermo, e questo filtro è partito offrendo «Condividi un’app».",
+  "mic_open_settings": "Apri le impostazioni di Waaiya per consentire il microfono",
+  "keep_running_title": "Tieni Waaiya in funzione",
+  "keep_running_battery": "Questo telefono può chiudere Waaiya dopo un po' per risparmiare batteria, e il filtro si ferma. Nelle impostazioni di Waaiya, sotto Batteria, scegli «Senza restrizioni». Su Xiaomi, Redmi e POCO: «Nessuna restrizione», e attiva anche l'Avvio automatico.",
+  "keep_running_notifications": "Le notifiche di Waaiya sono disattivate, quindi non può avvisarti quando il filtro si ferma. Attivale nelle impostazioni di Waaiya.",
+  "keep_running_open": "Apri le impostazioni di Waaiya",
+  "lock_ask_title": "Continuare a filtrare quando lo schermo si blocca?",
+  "lock_title": "Continua a filtrare quando lo schermo si blocca",
+  "lock_body": "Su questo telefono Android chiede prima di ogni avvio e poi interrompe il filtro a ogni blocco dello schermo. Waaiya può evitarlo togliendo la protezione di condivisione schermo di Android mentre filtra, e la ripristina quando il filtro si ferma. Finché è tolta, un'altra condivisione dello schermo nello stesso momento (una videochiamata, per esempio) può mostrare anche le tue notifiche. Una modifica vale dal prossimo avvio.",
+  "lock_yes": "Continua a filtrare",
+  "lock_no": "Ferma a ogni blocco",
+  "send_to_support": "Invia a Waaiya",
+  "state_too_slow_no_links": "Questo telefono è troppo lento per filtrare l'audio in tempo reale, quindi l'audio si interrompe.",
+  "start_no_setup_body_no_links": "La configurazione iniziale non è ancora stata fatta. Senza di essa Waaiya non può silenziare l'audio originale: sentirai la musica e l'audio filtrato insieme.",
+  "protect_delay_long_ask": "Scegliere un'attesa di {value}? Da ora, disattivare il filtro o qualsiasi protezione attenderà {value}, e così pure accorciare questa attesa."
 }
