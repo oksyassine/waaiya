@@ -107,7 +107,7 @@ class MusicCheckActivity : Activity() {
 
     /** "0:00–0:35, 1:10–1:40", each range kept left to right in right-to-left text. */
     private fun ranges(parts: List<MusicRule.Part>): String =
-        parts.joinToString(getString(R.string.mc_list_sep)) { "⁦${time(it.start)}–${time(it.end)}⁩" }
+        parts.joinToString(getString(R.string.mc_list_sep)) { "\u2066${time(it.start)}–${time(it.end)}\u2069" }
 
     private fun show(out: MusicScan.Companion.Outcome) {
         findViewById<View>(R.id.listening).visibility = View.GONE
