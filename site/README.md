@@ -12,6 +12,10 @@ The landing page: Arabic at `/`, English at `/en/`, the privacy policy (`docs/PR
   intro film's footage. Inputs live in `site/.work/` (not committed): `mix.wav` = testset `speech_ar_0_mvr-3`
   (voice: Arabic Speech Corpus, Nawar Halabi, CC BY 4.0; music synthesised by the project) and `out.wav` =
   `build/im-process -m models/dfn3/dfn3_stream_int8.onnx mix.wav out.wav`.
+- `stats.js` counts the website's visits (never the apps): pages, clicks, the "Try it" and tester-form moments, sent to
+  Mishkat's analytics endpoint (`https://mishkat.mssid.org/api/t`, app `waaiya`), whose admin dashboard has a Waaiya
+  tab. No cookie, no lasting id, no address kept; off on `/preview/`, with Do Not Track or GPC, and with `?stats=off`.
+  `?adm=1` marks your own browser so the dashboard can leave your visits out. What is kept: `docs/PRIVACY.md`.
 - Nothing is fetched from another server: IBM Plex Sans Arabic (OFL, `assets/fonts/OFL.txt`) and GSAP 3.15.0
   (`assets/js/GSAP-LICENSE.txt`) are in `assets/`. The only outside links are the downloads and the source.
 - Phone pictures: the 0.2.12 release on the Android 15 emulator. Film: the 50 s intro (`/srv/build/waaiya-intro`).

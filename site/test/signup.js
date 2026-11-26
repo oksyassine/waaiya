@@ -24,10 +24,13 @@
         .catch(function () { return { error: "failed" }; })
         .then(function (res) {
           btn.disabled = false;
+          var track = window.waaiyaTrack || function () {};  // the visit count (site/stats.js): that it worked, never the address
           if (res && res.ok) {
+            track(remove ? "signup_remove" : "signup");
             say("ok", remove ? T.removed : T.done);
             form.reset();
           } else {
+            track("signup_fail", { why: res && T[res.error] ? res.error : "failed" });
             say("bad", T[res && res.error] || T.failed);
           }
         });

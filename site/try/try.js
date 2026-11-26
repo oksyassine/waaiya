@@ -106,10 +106,20 @@
     });
   }
 
-  async function run(get, label) {
+  // the visit count (site/stats.js): where the sound came from, its length, and a fixed error code; never the sound,
+  // the file's name or the link
+  function count(name, src, extra, value) {
+    if (!window.waaiyaTrack) return;
+    var pr = { src: src };
+    for (var k in extra || {}) pr[k] = extra[k];
+    window.waaiyaTrack(name, pr, value);
+  }
+
+  async function run(get, label, kind) {
     if (working) return;
     busy(true); stop(); deck.hidden = true; before = after = null; picture = null; showPicture();
     audio();  // created on the visitor's tap, so it may play later
+    count("try_start", kind);
     try {
       var got = await get();
       if (!got.length || got.length < SR / 2) throw "decode";
@@ -122,8 +132,11 @@
       showPicture();
       deck.hidden = false;
       say(T.ready, "done", 1);
+      count("try_done", kind, null, Math.round(before.duration));
     } catch (e) {
-      say(T.err[typeof e === "string" && T.err[e] ? e : "all"], "error");
+      var why = typeof e === "string" && T.err[e] ? e : "all";
+      say(T.err[why], "error");
+      count("try_fail", kind, { why: why });
     } finally {
       busy(false);
     }
@@ -185,7 +198,7 @@
   fileIn.addEventListener("change", function () {
     var f = fileIn.files && fileIn.files[0];
     if (f) run(function () { return fromFile(f).then(function (pcm) { if (/^video\//.test(f.type)) picture = f; return pcm; }); },
-               T.src_file.replace("{name}", f.name));
+               T.src_file.replace("{name}", f.name), "file");
     fileIn.value = "";
   });
   form.addEventListener("submit", function (e) {
@@ -194,7 +207,7 @@
     if (!/^https?:\/\/\S+$/i.test(u)) { say(T.err.invalid_url, "error"); linkIn.focus(); return; }
     var meta = null;
     run(function () { return fromLink(u).then(function (r) { meta = r.meta; picture = r.picture; return r.pcm; }); },
-        function () { return T.src_link.replace("{title}", (meta && meta.title) || u); });
+        function () { return T.src_link.replace("{title}", (meta && meta.title) || u); }, "link");
   });
   for (var i = 0; i < sides.length; i++) sides[i].addEventListener("click", function () { pick(this.getAttribute("data-side")); });
   play.addEventListener("click", function () { if (!before) return; if (nodes) stop(); else { if (offset >= before.duration - 0.05) offset = 0; start(); } });
