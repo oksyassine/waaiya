@@ -154,7 +154,7 @@ T = {
             ("وشغّل ما شئت.", "يوتيوب، إنستغرام، المتصفح، وأي تطبيق: محاضرة أو خبر أو وصفة، يصل الكلام وحده."),
         ],
         priv_h="الترشيح والتغطية يبقيان على جهازك",
-        priv_p="التصفية وتمويه الشاشة يعملان على الجهاز. لا حساب، ولا إحصاءات، ولا إعلانات. وكل تغيير في الشيفرة يُختبر والإنترنت مقطوع عنه. والشيفرة كاملة على [[GitHub]] برخصة [[AGPL]]: يستطيع أي أحد أن يبني التطبيق منها ويقارنه بما ننشر.",
+        priv_p="التصفية وتمويه الشاشة يعملان على الجهاز. لا حساب، ولا إحصاءات في التطبيق، ولا إعلانات. وكل تغيير في الشيفرة يُختبر والإنترنت مقطوع عنه. والشيفرة كاملة على [[GitHub]] برخصة [[AGPL]]: يستطيع أي أحد أن يبني التطبيق منها ويقارنه بما ننشر.",
         facts=[("0", "اتصال بالإنترنت أثناء التصفية"), ("18", "لغة"), ("3", "أنظمة: أندرويد، ويندوز، لينكس"), ("30", "ملّي ثانية تأخير تقريبًا")],
         film_cap="مقطع تعريفي بواعية في [[52]] ثانية. صوته كلام فقط، بلا موسيقى.",
         film_alt="مقطع تعريفي بواعية",
@@ -288,7 +288,7 @@ T = {
             ("And play anything.", "YouTube, Instagram, the browser, any app: a lecture, the news, a recipe, only the voice comes through."),
         ],
         priv_h="The filter and the blur stay on your device",
-        priv_p="Filtering and screen blur run on the device. No account, no analytics, no ads. Every change to the code is tested with the internet cut off. All the code is on GitHub under the AGPL: anyone can build the app from it and compare it with what we publish.",
+        priv_p="Filtering and screen blur run on the device. No account, no analytics in the app, no ads. Every change to the code is tested with the internet cut off. All the code is on GitHub under the AGPL: anyone can build the app from it and compare it with what we publish.",
         facts=[("0", "internet connections while filtering"), ("18", "languages"), ("3", "platforms: Android, Windows, Linux"), ("30", "milliseconds of delay, roughly")],
         film_cap="An introduction to Waaiya in 52 seconds. Its sound is voice only, with no music.",
         film_alt="Waaiya introduction video",
@@ -660,6 +660,7 @@ def page(lang, root):
 <script type="application/json" id="i18n">{i18n_json}</script>
 <script src="{a}{GSAP}"></script>
 <script>{JS}</script>
+<script src="{a}stats.js" defer></script>
 <script src="{a}try/try.js" defer></script>
 </body>
 </html>
@@ -720,7 +721,8 @@ def privacy(lang, root):
 {icons(root + 'assets/')}
 <style>{fonts(root + 'assets/')}
 {CSS}</style></head>
-<body class="doc"><a class="doc-home" href="{root}{'en/' if lang == 'en' else ''}">Waaiya</a><main class="prose">{body}</main></body></html>
+<body class="doc"><a class="doc-home" href="{root}{'en/' if lang == 'en' else ''}">Waaiya</a><main class="prose">{body}</main>
+<script src="{root}assets/stats.js" defer></script></body></html>
 """
 
 
@@ -889,6 +891,7 @@ def usb_page(lang, root):
 <p class="usb-privacy">{e(u['privacy'])} <a href="{REPO}/tree/main/site/usb">{e(u['source'])}</a></p>
 </main>
 <script type="application/json" id="usb-text">{text}</script>
+<script src="{root}assets/stats.js" defer></script>
 <script type="module" src="{root}assets/usb/setup.js"></script>
 </body></html>
 """
@@ -1080,6 +1083,7 @@ def test_page(lang, root):
 </form></details>
 </main>
 <script type="application/json" id="test-text">{text}</script>
+<script src="{root}assets/stats.js" defer></script>
 <script src="{root}assets/test/signup.js" defer></script>
 </body></html>
 """
@@ -1176,6 +1180,7 @@ def main():
     (OUT / "en").mkdir(parents=True)
     shutil.copytree(HERE / "assets", OUT / "assets")
     try_assets(OUT / "assets/try")
+    shutil.copy(HERE / "stats.js", OUT / "assets/stats.js")  # the website's visit count (docs/PRIVACY.md)
     (OUT / "index.html").write_text(page("ar", ""))
     (OUT / "en/index.html").write_text(page("en", "../"))
     (OUT / "privacy.html").write_text(privacy("ar", ""))

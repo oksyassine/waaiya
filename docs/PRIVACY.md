@@ -1,6 +1,6 @@
 # Waaiya privacy policy
 
-Last change: 2026-11-25. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
+Last change: 2026-11-26. Applies to Waaiya on Android, Linux and Windows. [العربية أدناه](#سياسة-الخصوصية)
 
 ## In short
 
@@ -111,6 +111,19 @@ or used for anything else. To limit abuse the form counts sends per address for 
 day). To have your address deleted, use "Leave the test" on the same page; to leave the test itself, leave the group
 and the program in Google Play.
 
+## The website's visit count
+
+The apps count nothing. The website, waaiya.mssid.org, counts its own visits so the developer can see how people find
+Waaiya: the pages seen and for how long, clicks on its links and buttons (for example which download), the site or
+campaign tag you came from, and, without their content, three moments: a "Try it on your sound" started, finished
+(with the clip's length) or failed (with the error's code), and the tester form sent. Nothing you type, no file, link
+or sound is counted. There is no cookie and no lasting identifier: a visit's random id lives in the browser tab and
+ends with it. The counts go to Mssid's own analytics server (o2switch, France), which turns your address into a
+country and city and then drops it, and counts visitors per day with a hash that changes every day, so two days
+cannot be linked. Browser details kept: device type, system, browser, language, time zone and screen size. Records
+are deleted after 400 days and are never sold, shared or used for advertising. Do Not Track or Global Privacy
+Control turns the count off, and so does opening any page with `?stats=off` (`?stats=on` turns it back on).
+
 ## Changes and contact
 
 Waaiya is made by Mssid, which is responsible for this app, the website and this policy. Questions, or a request about data the website
@@ -123,7 +136,7 @@ Changes to this policy are made in this file in that public repository, where th
 
 ## سياسة الخصوصية
 
-آخر تعديل: 2026-11-25. تنطبق على واعية في أندرويد ولينكس وويندوز.
+آخر تعديل: 2026-11-26. تنطبق على واعية في أندرويد ولينكس وويندوز.
 
 ### باختصار
 
@@ -230,6 +243,18 @@ support@waaiya.mssid.org، بخادم المطوّر نفسه الذي يقرأ 
 في Telegram (فتمرّ الرسالة بـ Telegram). لا يُنشر العنوان، ولا يُعطى لأحد، ولا يُستعمل لغير ذلك. وللحدّ من إساءة الاستخدام
 يعدّ النموذج الإرسالات لكل عنوان مدة ساعة (بصيغة مشفّرة تتغير كل يوم). ولحذف عنوانك، استعمل «الخروج من الاختبار» في الصفحة
 نفسها؛ ولترك الاختبار نفسه، غادر المجموعة والبرنامج في Google Play.
+
+### عدّ زيارات الموقع
+
+التطبيقات لا تعدّ شيئًا. أما الموقع waaiya.mssid.org فيعدّ زياراته ليعرف المطوّر كيف يصل الناس إلى واعية: الصفحات التي
+فُتحت ومدتها، والنقرات على روابطه وأزراره (أي تنزيل اختير مثلًا)، والموقع أو وسم الحملة الذي جئت منه، ودون محتواها ثلاث
+لحظات: بدء «جرّبها على صوتك» ونجاحه (مع طول المقطع) أو تعذّره (مع رمز الخطأ)، وإرسال نموذج الاختبار. لا يُعدّ شيء مما
+تكتبه، ولا ملف ولا رابط ولا صوت. لا ملفات تعريف ارتباط (cookies) ولا معرِّف دائم: للزيارة رقم عشوائي يعيش في لسان المتصفح
+وينتهي معه. وتذهب الأعداد إلى خادم الإحصاء الخاص بـ Mssid (لدى o2switch في فرنسا)، فيستخرج من عنوانك البلد والمدينة ثم
+يُهمله، ويعدّ الزوار في كل يوم بصيغة مشفّرة تتغير كل يوم فلا يُربط يوم بآخر. ويُحفظ من المتصفح: نوع الجهاز والنظام والمتصفح
+واللغة والمنطقة الزمنية وحجم الشاشة. تُحذف السجلات بعد 400 يوم، ولا تُباع ولا تُعطى لأحد ولا تُستعمل للإعلان. ويوقف العدَّ
+إعدادُ «عدم التتبع» (Do Not Track) أو Global Privacy Control في المتصفح، وكذلك فتح أي صفحة بإضافة `?stats=off`
+(و`?stats=on` يعيده).
 
 ### التغييرات والتواصل
 
