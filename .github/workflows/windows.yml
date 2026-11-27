@@ -162,6 +162,8 @@ jobs:
           Start-Sleep -Seconds 8
           if ($p.HasExited) { throw "the app exited at once (code $($p.ExitCode))" }
           Stop-Process -Id $p.Id -Force
+      - name: Pages switched by real clicks, also with an accessibility client reading the window (Settings then Filter used to close the app)
+        run: python windows/test/ui_nav_test.py exe desktop/build/windows/x64/runner/Release/waaiya_desktop.exe nav-shots
       - name: Package
         shell: pwsh
         run: |

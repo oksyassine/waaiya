@@ -100,31 +100,39 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [for (final p in pages) _PageIn(active: p == pages[index], child: _body(context, p, s))],
           ),
         ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: index,
-          onDestinationSelected: (i) => _go(pages[i]),
-          destinations: [
-            for (final p in pages)
-              TestId(
-                'nav_$p',
-                key: Key('nav_$p'),
-                child: switch (p) {
-                  'filter' => NavigationDestination(
-                      icon: const Icon(Icons.graphic_eq_rounded), label: l.navFilter),
-                  'screen' => NavigationDestination(
-                      icon: const Icon(Icons.blur_on_rounded), label: l.navScreen),
-                  'links' => NavigationDestination(icon: const Icon(Icons.link_rounded), label: l.navLinks),
-                  'setup' => NavigationDestination(
-                      icon: Badge(isLabelVisible: setupMissing, child: const Icon(Icons.build_circle_outlined)),
-                      selectedIcon: Badge(isLabelVisible: setupMissing, child: const Icon(Icons.build_circle)),
-                      label: l.navSetup),
-                  _ => NavigationDestination(
-                      icon: const Icon(Icons.settings_outlined),
-                      selectedIcon: const Icon(Icons.settings),
-                      label: l.navSettings),
-                },
-              ),
-          ],
+        // No tooltips on the bottom bar: the labels are always shown, and a tooltip's
+        // overlay adds semantics nodes that no parent lists. Flutter's Windows
+        // accessibility bridge crashes on those once a screen reader, the touch
+        // keyboard or any other accessibility client reads the window
+        // (Settings then Filter closed the app). See flutter/flutter#183313.
+        bottomNavigationBar: TooltipVisibility(
+          visible: false,
+          child: NavigationBar(
+            selectedIndex: index,
+            onDestinationSelected: (i) => _go(pages[i]),
+            destinations: [
+              for (final p in pages)
+                TestId(
+                  'nav_$p',
+                  key: Key('nav_$p'),
+                  child: switch (p) {
+                    'filter' => NavigationDestination(
+                        icon: const Icon(Icons.graphic_eq_rounded), label: l.navFilter),
+                    'screen' => NavigationDestination(
+                        icon: const Icon(Icons.blur_on_rounded), label: l.navScreen),
+                    'links' => NavigationDestination(icon: const Icon(Icons.link_rounded), label: l.navLinks),
+                    'setup' => NavigationDestination(
+                        icon: Badge(isLabelVisible: setupMissing, child: const Icon(Icons.build_circle_outlined)),
+                        selectedIcon: Badge(isLabelVisible: setupMissing, child: const Icon(Icons.build_circle)),
+                        label: l.navSetup),
+                    _ => NavigationDestination(
+                        icon: const Icon(Icons.settings_outlined),
+                        selectedIcon: const Icon(Icons.settings),
+                        label: l.navSettings),
+                  },
+                ),
+            ],
+          ),
         ),
       ),
     );
