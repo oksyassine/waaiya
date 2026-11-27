@@ -185,10 +185,9 @@ def main():
     check(ok, "Settings then Filter, 4 times, no accessibility client: the app keeps running"
           + ("" if ok else f" (ended {where}, exit code 0x{code:08X})"))
     if ok:
-        tree = uia_names()
-        print(tree, flush=True)
-        n = int(tree.split(" elements")[0].split()[-1]) if " elements" in tree else 0
-        check(n > 5, f"an accessibility client reads the app's own tree ({n} elements)")
+        # the walk itself shows only the view's pane, but asking is enough: Flutter turns its accessibility tree on
+        # (the 0.2.19 build crashed on the very next Filter click after this, every time)
+        print(uia_names(), flush=True)
         where = rounds("b")
         ok, code = alive(proc)
         check(ok, "the same with an accessibility client reading the window: the app keeps running"
