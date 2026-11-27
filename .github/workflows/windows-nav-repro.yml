@@ -1,0 +1,57 @@
+name: Windows page switching (repro)
+
+# Temporary: the published 0.2.19 Store package and zip, installed on a runner, Settings then back to Filter.
+on:
+  push:
+    branches: [claude/fix-windows-settings-back-crash]
+    paths: [.github/workflows/windows-nav-repro.yml, windows/test/ui_nav_test.py]
+
+permissions:
+  contents: read
+
+jobs:
+  nav:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: The published 0.2.19 Store package and zip
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download v0.2.19 -p "waaiya-store-x64-v0.2.19.msix" -p "waaiya-desktop-windows-x64-v0.2.19.zip"
+          Expand-Archive waaiya-desktop-windows-x64-v0.2.19.zip -DestinationPath zip
+          Get-ChildItem zip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Zip install (no package)
+        continue-on-error: true
+        run: python windows/test/ui_nav_test.py exe zip/waaiya/waaiya_desktop.exe shots/zip
+      - name: Test certificate with the Store publisher's name; the Store package signed and installed
+        shell: pwsh
+        run: |
+          $pub = "CN=C31050E3-9E33-47EF-9D5C-040742962A92"
+          $cert = New-SelfSignedCertificate -Type Custom -Subject $pub -KeyUsage DigitalSignature `
+            -FriendlyName "Waaiya CI test" -CertStoreLocation Cert:\CurrentUser\My `
+            -TextExtension @("2.5.29.37={text}1.3.6.1.5.5.7.3.3", "2.5.29.19={text}")
+          $pw = ConvertTo-SecureString -String "ci-test" -Force -AsPlainText
+          Export-PfxCertificate -Cert $cert -FilePath test.pfx -Password $pw | Out-Null
+          Export-Certificate -Cert $cert -FilePath test.cer | Out-Null
+          Import-Certificate -FilePath test.cer -CertStoreLocation Cert:\LocalMachine\TrustedPeople | Out-Null
+          $signtool = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\10.*\x64\signtool.exe" |
+            Sort-Object { [version]$_.Directory.Parent.Name } | Select-Object -Last 1
+          Copy-Item waaiya-store-x64-v0.2.19.msix store-test.msix
+          & $signtool.FullName sign /fd SHA256 /f test.pfx /p ci-test store-test.msix
+          if ($LASTEXITCODE) { throw "signtool: exit $LASTEXITCODE" }
+          Add-AppxPackage -Path store-test.msix
+          (Get-AppxPackage -Name Oks.Waaiya).PackageFamilyName
+      - name: Store package
+        run: python windows/test/ui_nav_test.py msix Oks.Waaiya_wa2h0h9gfqbyp shots/msix
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nav-shots
+          path: shots
+          retention-days: 7
