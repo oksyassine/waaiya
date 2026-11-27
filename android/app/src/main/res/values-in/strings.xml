@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Jika Anda tidak mendengar apa pun, atau suara keluar dari speaker ponsel saat earphone terpasang, coba saluran yang lain. Notifikasi tidak bersuara saat ponsel dalam mode getar atau Jangan Ganggu.</string>
     <string name="simple_test_note">Ini uji coba. Setelah mencobanya (speaker, earphone, Bluetooth), mohon kirim laporan diagnostik dari Setelan.</string>
     <string name="simple_on_detail">Mode sederhana (uji coba): suara media dibisukan selama Waaiya memfilter.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Teks langsung</string>
+    <string name="captions_card_body">Menulis di layar apa yang diucapkan dalam bahasa Arab saat khutbah atau kajian: untuk tunarungu dan yang kurang pendengaran. Berjalan di ponsel, tanpa internet.</string>
+    <string name="captions_card_open">Buka teks langsung</string>
+    <string name="captions_card_missing">Versi Waaiya ini tidak punya model ucapan bahasa Arab, jadi tidak bisa menulis teks.</string>
+    <string name="captions_title">Teks langsung</string>
+    <string name="captions_listening">Mendengarkan</string>
+    <string name="captions_paused">Dijeda</string>
+    <string name="captions_pause">Jeda</string>
+    <string name="captions_resume">Lanjutkan</string>
+    <string name="captions_clear">Hapus</string>
+    <string name="captions_smaller">Teks lebih kecil</string>
+    <string name="captions_bigger">Teks lebih besar</string>
+    <string name="captions_colours">Warna</string>
+    <string name="captions_clean">Hilangkan suara latar dulu</string>
+    <string name="captions_hint">Arahkan ponsel ke imam atau pengeras suara. Teks ditulis di ponsel; tidak ada yang dikirim.</string>
+    <string name="captions_no_mic">Waaiya perlu mikrofon untuk menulis apa yang diucapkan. Izinkan, lalu buka layar ini lagi.</string>
+    <string name="captions_failed">Teks langsung tidak bisa dimulai di ponsel ini.</string>
+    <string name="captions_slow">Ponsel ini lambat untuk teks langsung, jadi teks bisa terlambat.</string>
+    <string name="captions_note">Ditulis oleh ponsel: beberapa kata bisa salah.</string>
 </resources>

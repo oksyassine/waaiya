@@ -454,4 +454,24 @@
     <string name="simple_channel_help">اگر کچھ سنائی نہ دے، یا ایئرفون لگے ہونے کے باوجود آواز فون کے اسپیکر سے آئے، تو دوسرا چینل آزمائیں۔ فون وائبریٹ پر ہو یا «ڈسٹرب نہ کریں» آن ہو تو اطلاع والا چینل خاموش رہتا ہے۔</string>
     <string name="simple_test_note">یہ ایک آزمائش ہے۔ اسے آزمانے کے بعد (اسپیکر، ایئرفون، Bluetooth) براہ کرم ترتیبات سے تشخیصی رپورٹ بھیجیں۔</string>
     <string name="simple_on_detail">آسان موڈ (آزمائشی): واعية کے فلٹر کرتے وقت میڈیا آواز بند رہتی ہے۔</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">براہِ راست کیپشن</string>
+    <string name="captions_card_body">خطبے یا درس میں عربی میں جو کہا جائے اسے اسکرین پر لکھتا ہے: بہرے اور کم سننے والوں کے لیے۔ فون پر، انٹرنیٹ کے بغیر چلتا ہے۔</string>
+    <string name="captions_card_open">کیپشن کھولیں</string>
+    <string name="captions_card_missing">Waaiya کے اس ورژن میں عربی گفتگو کا ماڈل نہیں، اس لیے یہ کیپشن نہیں لکھ سکتا۔</string>
+    <string name="captions_title">براہِ راست کیپشن</string>
+    <string name="captions_listening">سن رہا ہے</string>
+    <string name="captions_paused">رکا ہوا</string>
+    <string name="captions_pause">روکیں</string>
+    <string name="captions_resume">جاری رکھیں</string>
+    <string name="captions_clear">صاف کریں</string>
+    <string name="captions_smaller">چھوٹا متن</string>
+    <string name="captions_bigger">بڑا متن</string>
+    <string name="captions_colours">رنگ</string>
+    <string name="captions_clean">پہلے پس منظر کی آوازیں ہٹائیں</string>
+    <string name="captions_hint">فون کو امام یا لاؤڈ اسپیکر کی طرف رکھیں۔ متن فون پر لکھا جاتا ہے؛ کچھ بھیجا نہیں جاتا۔</string>
+    <string name="captions_no_mic">جو کہا جائے اسے لکھنے کے لیے Waaiya کو مائیکروفون چاہیے۔ اجازت دیں، پھر یہ اسکرین دوبارہ کھولیں۔</string>
+    <string name="captions_failed">اس فون پر کیپشن شروع نہیں ہو سکے۔</string>
+    <string name="captions_slow">یہ فون براہِ راست کیپشن کے لیے سست ہے، اس لیے متن دیر سے آ سکتا ہے۔</string>
+    <string name="captions_note">فون نے لکھا ہے: کچھ الفاظ غلط ہو سکتے ہیں۔</string>
 </resources>

@@ -1125,6 +1125,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get moveRemoveOld => 'Altes Waaiya entfernen';
 
   @override
+  String get captionsCardTitle => 'Live-Untertitel';
+
+  @override
+  String get captionsCardBody =>
+      'Schreibt auf den Bildschirm, was auf Arabisch gesagt wird, bei einer Khutba oder einem Unterricht: für Gehörlose und Schwerhörige. Läuft auf dem Telefon, ohne Internet.';
+
+  @override
+  String get captionsCardOpen => 'Untertitel öffnen';
+
+  @override
   String get desktopPreview =>
       'Vorschau: Der Filter ist auf diesem Computer noch nicht eingebunden. Die Taste zeigt nur, wie die App funktionieren wird.';
 

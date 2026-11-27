@@ -29,7 +29,7 @@ interface FeatureHost {
 class FeatureException(val code: String, message: String) : Exception(message)
 
 object Features {
-    val ALL: List<Feature> = listOf(FixMistakes, Worship, Protection, Singing, AppUpdate, AppMove)
+    val ALL: List<Feature> = listOf(FixMistakes, Worship, Protection, Singing, AppUpdate, AppMove, Captions)
 
     fun byMethod(method: String): Pair<Feature, String>? {
         val dot = method.indexOf('.')

@@ -200,6 +200,11 @@
             android:taskAffinity=""
             android:launchMode="singleTask" />
 
+        <!-- Live captions (docs/CAPTIONS.md): Arabic speech from the microphone as large text, while open. -->
+        <activity android:name=".CaptionsActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" />
+
         <!-- Screen blur's accessibility service (touches pass through the covers) is only in builds made with
              -PimBlurA11y: src/blurA11y/AndroidManifest.xml. Play Protect blocks sideloaded apps that declare one. -->
         <!-- Worship helpers: Waaiya's own prayer-time alarms and notification buttons (not exported), and the system

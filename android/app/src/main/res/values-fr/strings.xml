@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Si vous n\'entendez rien, ou si le son sort du haut-parleur alors que des écouteurs sont branchés, essayez l\'autre canal. Le canal Notification est muet quand le téléphone est en mode vibreur ou Ne pas déranger.</string>
     <string name="simple_test_note">C\'est un test. Après l\'avoir essayé (haut-parleur, écouteurs, Bluetooth), envoyez s\'il vous plaît le rapport de diagnostic depuis Paramètres.</string>
     <string name="simple_on_detail">Mode simple (test) : le son multimédia est coupé pendant le filtrage de Waaiya.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Sous-titres en direct</string>
+    <string name="captions_card_body">Écrit à l\'écran ce qui est dit en arabe, pour une khutba ou un cours : pour les personnes sourdes et malentendantes. Fonctionne sur le téléphone, sans internet.</string>
+    <string name="captions_card_open">Ouvrir les sous-titres</string>
+    <string name="captions_card_missing">Cette version de Waaiya n\'a pas le modèle de parole arabe : elle ne peut pas écrire de sous-titres.</string>
+    <string name="captions_title">Sous-titres en direct</string>
+    <string name="captions_listening">À l\'écoute</string>
+    <string name="captions_paused">En pause</string>
+    <string name="captions_pause">Pause</string>
+    <string name="captions_resume">Reprendre</string>
+    <string name="captions_clear">Effacer</string>
+    <string name="captions_smaller">Texte plus petit</string>
+    <string name="captions_bigger">Texte plus grand</string>
+    <string name="captions_colours">Couleurs</string>
+    <string name="captions_clean">Retirer d\'abord les bruits de fond</string>
+    <string name="captions_hint">Tournez le téléphone vers l\'imam ou le haut-parleur. Le texte est écrit sur le téléphone ; rien n\'est envoyé.</string>
+    <string name="captions_no_mic">Waaiya a besoin du micro pour écrire ce qui est dit. Autorisez-le, puis rouvrez cet écran.</string>
+    <string name="captions_failed">Les sous-titres n\'ont pas pu démarrer sur ce téléphone.</string>
+    <string name="captions_slow">Ce téléphone est lent pour les sous-titres en direct : le texte peut arriver en retard.</string>
+    <string name="captions_note">Écrit par le téléphone : certains mots peuvent être faux.</string>
 </resources>

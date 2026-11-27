@@ -453,4 +453,24 @@
     <string name="simple_channel_help">Hoor je niets, of komt het geluid uit de luidspreker van de telefoon terwijl je oordopjes in hebt, probeer dan het andere kanaal. Melding is stil als de telefoon op trillen of Niet storen staat.</string>
     <string name="simple_test_note">Dit is een test. Stuur na het uitproberen (luidspreker, oordopjes, Bluetooth) het diagnoserapport vanuit Instellingen.</string>
     <string name="simple_on_detail">Eenvoudige modus (test): het mediageluid is gedempt terwijl Waaiya filtert.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Live ondertiteling</string>
+    <string name="captions_card_body">Schrijft op het scherm wat er in het Arabisch wordt gezegd, bij een khutba of een les: voor doven en slechthorenden. Werkt op de telefoon, zonder internet.</string>
+    <string name="captions_card_open">Ondertiteling openen</string>
+    <string name="captions_card_missing">Deze versie van Waaiya heeft geen Arabisch spraakmodel en kan dus geen ondertiteling schrijven.</string>
+    <string name="captions_title">Live ondertiteling</string>
+    <string name="captions_listening">Luistert</string>
+    <string name="captions_paused">Gepauzeerd</string>
+    <string name="captions_pause">Pauze</string>
+    <string name="captions_resume">Verder</string>
+    <string name="captions_clear">Wissen</string>
+    <string name="captions_smaller">Kleinere tekst</string>
+    <string name="captions_bigger">Grotere tekst</string>
+    <string name="captions_colours">Kleuren</string>
+    <string name="captions_clean">Eerst achtergrondgeluiden verwijderen</string>
+    <string name="captions_hint">Richt de telefoon op de imam of de luidspreker. De tekst wordt op de telefoon geschreven; er wordt niets verstuurd.</string>
+    <string name="captions_no_mic">Waaiya heeft de microfoon nodig om te schrijven wat er gezegd wordt. Sta het toe en open dit scherm opnieuw.</string>
+    <string name="captions_failed">De ondertiteling kon op deze telefoon niet starten.</string>
+    <string name="captions_slow">Deze telefoon is traag voor live ondertiteling, dus de tekst kan later komen.</string>
+    <string name="captions_note">Geschreven door de telefoon: sommige woorden kunnen fout zijn.</string>
 </resources>

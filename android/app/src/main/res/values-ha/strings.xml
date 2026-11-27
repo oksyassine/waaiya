@@ -453,4 +453,24 @@
     <string name="simple_channel_help">Idan ba ku jin komai, ko sauti yana fitowa daga lasifikar wayar alhali belun kunne na ciki, gwada ɗayan hanyar. “Sanarwa” ba ta da sauti idan wayar tana kan girgiza ko “Do Not Disturb”.</string>
     <string name="simple_test_note">Wannan gwaji ne. Bayan kun gwada shi (lasifika, belun kunne, Bluetooth), don Allah ku tura rahoton bincike daga Saituna.</string>
     <string name="simple_on_detail">Yanayi mai sauƙi (gwaji): an kashe sautin media yayin da Waaiya ke tacewa.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Rubutun magana kai tsaye</string>
+    <string name="captions_card_body">Yana rubuta abin da ake faɗa da Larabci a allo, a huɗuba ko darasi: don kurame da masu ƙarancin ji. Yana aiki a waya, ba tare da intanet ba.</string>
+    <string name="captions_card_open">Buɗe rubutun magana</string>
+    <string name="captions_card_missing">Wannan sigar Waaiya ba ta da samfurin maganar Larabci, don haka ba za ta iya rubuta magana ba.</string>
+    <string name="captions_title">Rubutun magana kai tsaye</string>
+    <string name="captions_listening">Tana sauraro</string>
+    <string name="captions_paused">An dakata</string>
+    <string name="captions_pause">Dakata</string>
+    <string name="captions_resume">Ci gaba</string>
+    <string name="captions_clear">Share</string>
+    <string name="captions_smaller">Ƙaramin rubutu</string>
+    <string name="captions_bigger">Babban rubutu</string>
+    <string name="captions_colours">Launuka</string>
+    <string name="captions_clean">Cire sautin bango tukuna</string>
+    <string name="captions_hint">Juya wayar zuwa ga liman ko lasifika. Ana rubuta rubutun a waya; ba a aika komai.</string>
+    <string name="captions_no_mic">Waaiya na buƙatar makirufo don rubuta abin da ake faɗa. Ba da izini, sannan ka sake buɗe wannan allon.</string>
+    <string name="captions_failed">Rubutun magana bai iya farawa a wannan wayar ba.</string>
+    <string name="captions_slow">Wannan wayar tana da jinkiri ga rubutun magana kai tsaye, don haka rubutun zai iya makara.</string>
+    <string name="captions_note">Waya ce ta rubuta: wasu kalmomi na iya zama ba daidai ba.</string>
 </resources>

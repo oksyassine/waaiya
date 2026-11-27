@@ -1116,6 +1116,16 @@ class AppLocalizationsUr extends AppLocalizations {
   String get moveRemoveOld => '‏پرانی واعیہ ہٹائیں';
 
   @override
+  String get captionsCardTitle => 'براہِ راست کیپشن';
+
+  @override
+  String get captionsCardBody =>
+      'خطبے یا درس میں عربی میں جو کہا جائے اسے اسکرین پر لکھتا ہے: بہرے اور کم سننے والوں کے لیے۔ فون پر، انٹرنیٹ کے بغیر چلتا ہے۔';
+
+  @override
+  String get captionsCardOpen => 'کیپشن کھولیں';
+
+  @override
   String get desktopPreview =>
       'پیش نظارہ: اس کمپیوٹر پر فلٹر انجن ابھی منسلک نہیں ہے۔ بٹن صرف یہ دکھاتا ہے کہ ایپ کیسے کام کرے گی۔';
 

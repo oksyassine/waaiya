@@ -31,6 +31,8 @@ jobs:
         run: build/test-failclosed models/dfn3/dfn3_stream_int8.onnx
       - name: Blur tracker test (covers that hide the screen lift to look again; small covers stay)
         run: build/test-cover
+      - name: Live captions engine test (line cutting, Arabic text, a made-up speech model; docs/CAPTIONS.md)
+        run: python3 -m pip install --quiet onnx numpy && make test-captions
       - name: Privacy, the filter and the detector open no internet connection (linux/test_no_network.sh)
         run: make build/no-network.so && linux/test_no_network.sh
       - name: Women's-singing detector test (models-v1 release)

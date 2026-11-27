@@ -1119,6 +1119,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get moveRemoveOld => 'Hapus Waaiya lama';
 
   @override
+  String get captionsCardTitle => 'Teks langsung';
+
+  @override
+  String get captionsCardBody =>
+      'Menulis di layar apa yang diucapkan dalam bahasa Arab saat khutbah atau kajian: untuk tunarungu dan yang kurang pendengaran. Berjalan di ponsel, tanpa internet.';
+
+  @override
+  String get captionsCardOpen => 'Buka teks langsung';
+
+  @override
   String get desktopPreview =>
       'Pratinjau: mesin filter belum terhubung di komputer ini. Tombol hanya menunjukkan cara kerja aplikasi.';
 

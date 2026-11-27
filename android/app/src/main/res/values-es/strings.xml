@@ -453,4 +453,24 @@
     <string name="simple_channel_help">Si no oye nada, o el sonido sale por el altavoz del teléfono con los auriculares puestos, pruebe el otro canal. «Notificación» queda en silencio mientras el teléfono está en vibración o en «No molestar».</string>
     <string name="simple_test_note">Esto es una prueba. Después de probarlo (altavoz, auriculares, Bluetooth), por favor, envíe el informe de diagnóstico desde Ajustes.</string>
     <string name="simple_on_detail">Modo sencillo (prueba): el sonido multimedia está silenciado mientras Waaiya filtra.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Subtítulos en directo</string>
+    <string name="captions_card_body">Escribe en la pantalla lo que se dice en árabe, en una jutba o una clase: para personas sordas o con pérdida auditiva. Funciona en el teléfono, sin internet.</string>
+    <string name="captions_card_open">Abrir subtítulos</string>
+    <string name="captions_card_missing">Esta versión de Waaiya no tiene el modelo de voz en árabe, así que no puede escribir subtítulos.</string>
+    <string name="captions_title">Subtítulos en directo</string>
+    <string name="captions_listening">Escuchando</string>
+    <string name="captions_paused">En pausa</string>
+    <string name="captions_pause">Pausa</string>
+    <string name="captions_resume">Continuar</string>
+    <string name="captions_clear">Borrar</string>
+    <string name="captions_smaller">Texto más pequeño</string>
+    <string name="captions_bigger">Texto más grande</string>
+    <string name="captions_colours">Colores</string>
+    <string name="captions_clean">Quitar primero los ruidos de fondo</string>
+    <string name="captions_hint">Apunta el teléfono hacia el imán o el altavoz. El texto se escribe en el teléfono; no se envía nada.</string>
+    <string name="captions_no_mic">Waaiya necesita el micrófono para escribir lo que se dice. Permítelo y vuelve a abrir esta pantalla.</string>
+    <string name="captions_failed">Los subtítulos no pudieron empezar en este teléfono.</string>
+    <string name="captions_slow">Este teléfono es lento para los subtítulos en directo, así que el texto puede llegar tarde.</string>
+    <string name="captions_note">Lo escribe el teléfono: algunas palabras pueden estar mal.</string>
 </resources>

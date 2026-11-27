@@ -1117,6 +1117,16 @@ class AppLocalizationsBn extends AppLocalizations {
   String get moveRemoveOld => 'পুরোনো ওয়াইয়া সরান';
 
   @override
+  String get captionsCardTitle => 'সরাসরি ক্যাপশন';
+
+  @override
+  String get captionsCardBody =>
+      'খুতবা বা দারসে আরবিতে যা বলা হয় তা পর্দায় লিখে দেয়: বধির ও কম শুনতে পান এমন মানুষের জন্য। ইন্টারনেট ছাড়াই ফোনে চলে।';
+
+  @override
+  String get captionsCardOpen => 'ক্যাপশন খুলুন';
+
+  @override
   String get desktopPreview =>
       'প্রিভিউ: এই কম্পিউটারে ফিল্টার ইঞ্জিন এখনো সংযুক্ত নয়। বোতামটি শুধু দেখায় অ্যাপটি কীভাবে কাজ করবে।';
 

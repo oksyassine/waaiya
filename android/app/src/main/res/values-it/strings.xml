@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Se non senti nulla, o il suono esce dall\'altoparlante del telefono mentre hai gli auricolari, prova l\'altro canale. Il canale Notifica resta muto mentre il telefono è in vibrazione o in Non disturbare.</string>
     <string name="simple_test_note">Questa è una prova. Dopo averla provata (altoparlante, auricolari, Bluetooth), invia il rapporto di diagnostica dalle Impostazioni.</string>
     <string name="simple_on_detail">Modalità semplice (prova): l\'audio multimediale è disattivato mentre Waaiya filtra.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Sottotitoli dal vivo</string>
+    <string name="captions_card_body">Scrive sullo schermo ciò che viene detto in arabo, in una khutba o una lezione: per persone sorde e con problemi di udito. Funziona sul telefono, senza internet.</string>
+    <string name="captions_card_open">Apri i sottotitoli</string>
+    <string name="captions_card_missing">Questa versione di Waaiya non ha il modello vocale arabo, quindi non può scrivere sottotitoli.</string>
+    <string name="captions_title">Sottotitoli dal vivo</string>
+    <string name="captions_listening">In ascolto</string>
+    <string name="captions_paused">In pausa</string>
+    <string name="captions_pause">Pausa</string>
+    <string name="captions_resume">Riprendi</string>
+    <string name="captions_clear">Cancella</string>
+    <string name="captions_smaller">Testo più piccolo</string>
+    <string name="captions_bigger">Testo più grande</string>
+    <string name="captions_colours">Colori</string>
+    <string name="captions_clean">Togli prima i rumori di fondo</string>
+    <string name="captions_hint">Punta il telefono verso l\'imam o l\'altoparlante. Il testo viene scritto sul telefono; non viene inviato nulla.</string>
+    <string name="captions_no_mic">Waaiya ha bisogno del microfono per scrivere ciò che viene detto. Consentilo, poi riapri questa schermata.</string>
+    <string name="captions_failed">I sottotitoli non sono potuti partire su questo telefono.</string>
+    <string name="captions_slow">Questo telefono è lento per i sottotitoli dal vivo, quindi il testo può arrivare in ritardo.</string>
+    <string name="captions_note">Scritto dal telefono: alcune parole possono essere sbagliate.</string>
 </resources>

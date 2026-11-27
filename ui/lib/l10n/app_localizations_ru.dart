@@ -1120,6 +1120,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get moveRemoveOld => 'Удалить старую Waaiya';
 
   @override
+  String get captionsCardTitle => 'Субтитры в реальном времени';
+
+  @override
+  String get captionsCardBody =>
+      'Пишет на экране то, что говорят по-арабски на хутбе или уроке: для глухих и слабослышащих. Работает на телефоне, без интернета.';
+
+  @override
+  String get captionsCardOpen => 'Открыть субтитры';
+
+  @override
   String get desktopPreview =>
       'Предварительный просмотр: движок фильтра на этом компьютере пока не подключён. Кнопка только показывает, как будет работать приложение.';
 

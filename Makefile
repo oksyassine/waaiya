@@ -12,7 +12,7 @@ LDLIBS  += $(if $(SYSROOT),-Wl$(comma)-rpath-link$(comma)/usr/lib/x86_64-linux-g
 comma   := ,
 BUILD    = build
 
-all: $(BUILD)/im-process $(BUILD)/im-music-scan $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so \
+all: $(BUILD)/im-process $(BUILD)/im-caption $(BUILD)/im-music-scan $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so \
      $(BUILD)/im-blur
 
 # im-pulse loads libpulse.so.0 at run time (cli/pulse_dl.h), so it builds without libpulse-dev.
@@ -89,6 +89,36 @@ $(BUILD)/im-pulse: cli/im_pulse.c cli/pulse_dl.h $(ENGINE_OBJ)
 $(BUILD)/islamic_mute_ladspa.so: linux/ladspa/im_ladspa.c $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) -shared $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN' -Wl,--no-undefined
 
+# Live captions (docs/CAPTIONS.md): speech to text (ASR contract), caption lines, and the im-caption CLI.
+CAPTIONS_OBJ = $(BUILD)/im_asr.o $(BUILD)/im_ctc.o $(BUILD)/im_captions.o
+
+$(BUILD)/im_asr.o: engine/src/im_asr.c engine/include/im_captions.h engine/src/im_ctc.h engine/src/im_path.h | $(BUILD)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD)/im_ctc.o: engine/src/im_ctc.c engine/src/im_ctc.h | $(BUILD)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD)/im_captions.o: engine/src/im_captions.c engine/include/im_captions.h engine/src/im_ctc.h | $(BUILD)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# im-caption -a asr.onnx [-m voice.onnx] in.wav
+$(BUILD)/im-caption: cli/im_caption.c cli/wav.c $(CAPTIONS_OBJ) $(ENGINE_OBJ)
+	$(CC) $(CFLAGS) -Icli $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
+
+$(BUILD)/test-captions: engine/test/test_captions.c $(CAPTIONS_OBJ)
+	$(CC) $(CFLAGS) -Iengine/src $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
+
+$(BUILD)/test-asr: engine/test/test_asr.c $(CAPTIONS_OBJ)
+	$(CC) $(CFLAGS) -Iengine/src $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
+
+# The ASR runs on a tiny made-up model (models/asr/make_test_model.py, needs python3 with onnx and numpy).
+$(BUILD)/test_asr.onnx: models/asr/make_test_model.py | $(BUILD)
+	python3 models/asr/make_test_model.py $(BUILD)
+
+test-captions: $(BUILD)/test-captions $(BUILD)/test-asr $(BUILD)/test_asr.onnx
+	$(BUILD)/test-captions
+	$(BUILD)/test-asr $(BUILD)
+
 # test shim: refuses internet sockets (linux/test_no_network.sh); exported symbols, so not $(CFLAGS)
 $(BUILD)/no-network.so: linux/no_network.c | $(BUILD)
 	$(CC) $(SYSFLAG) -O2 -Wall -Wextra -shared -fPIC $< -o $@ -ldl
@@ -96,4 +126,4 @@ $(BUILD)/no-network.so: linux/no_network.c | $(BUILD)
 clean:
 	rm -rf $(BUILD)
 
-.PHONY: all clean pulse test-blur check-blur-abi
+.PHONY: all clean pulse test-blur check-blur-abi test-captions

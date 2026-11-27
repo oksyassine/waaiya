@@ -1102,6 +1102,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get moveRemoveOld => 'احذف واعية القديمة';
 
   @override
+  String get captionsCardTitle => 'كتابة الكلام مباشرة';
+
+  @override
+  String get captionsCardBody =>
+      'يكتب على الشاشة ما يُقال بالعربية في الخطبة أو الدرس، للصمّ وضعاف السمع. يعمل على الهاتف دون إنترنت.';
+
+  @override
+  String get captionsCardOpen => 'افتح الكتابة المباشرة';
+
+  @override
   String get desktopPreview =>
       'معاينة: محرك التصفية غير موصول بهذا الحاسوب بعد. الزر يعرض فقط كيف سيعمل التطبيق.';
 

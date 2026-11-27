@@ -453,4 +453,24 @@
     <string name="simple_channel_help">إن لم تسمع شيئًا، أو خرج الصوت من سمّاعة الهاتف والسمّاعات موصولة، فجرّب القناة الأخرى. قناة الإشعارات صامتة ما دام الهاتف على الاهتزاز أو «عدم الإزعاج».</string>
     <string name="simple_test_note">هذا وضع تجريبي. بعد تجربته (السمّاعة، سمّاعات الأذن، البلوتوث)، أرسل من فضلك تقرير التشخيص من «الإعدادات».</string>
     <string name="simple_on_detail">الوضع البسيط (تجريبي): صوت الوسائط مكتوم أثناء التصفية.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">كتابة الكلام مباشرة</string>
+    <string name="captions_card_body">يكتب على الشاشة ما يُقال بالعربية في الخطبة أو الدرس، للصمّ وضعاف السمع. يعمل على الهاتف دون إنترنت.</string>
+    <string name="captions_card_open">افتح الكتابة المباشرة</string>
+    <string name="captions_card_missing">هذا الإصدار من واعية ليس فيه نموذج الكلام العربي، فلا يستطيع كتابة الكلام.</string>
+    <string name="captions_title">كتابة الكلام مباشرة</string>
+    <string name="captions_listening">يستمع</string>
+    <string name="captions_paused">متوقف مؤقتًا</string>
+    <string name="captions_pause">إيقاف مؤقت</string>
+    <string name="captions_resume">متابعة</string>
+    <string name="captions_clear">مسح</string>
+    <string name="captions_smaller">خط أصغر</string>
+    <string name="captions_bigger">خط أكبر</string>
+    <string name="captions_colours">الألوان</string>
+    <string name="captions_clean">أزل الأصوات المحيطة أولًا</string>
+    <string name="captions_hint">وجّه الهاتف نحو الإمام أو مكبّر الصوت. يُكتب النص على الهاتف ولا يُرسَل شيء.</string>
+    <string name="captions_no_mic">تحتاج واعية إلى الميكروفون لتكتب ما يُقال. اسمح به ثم افتح هذه الشاشة مرة أخرى.</string>
+    <string name="captions_failed">تعذّر بدء الكتابة المباشرة على هذا الهاتف.</string>
+    <string name="captions_slow">هذا الهاتف بطيء على الكتابة المباشرة، فقد يتأخر النص.</string>
+    <string name="captions_note">يكتبه الهاتف آليًا، وقد يخطئ في بعض الكلمات.</string>
 </resources>

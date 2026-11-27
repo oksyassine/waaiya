@@ -179,12 +179,17 @@ val detectorModel = modelFile("imDetector", rootProject.file("../models/detector
 // (models-v1 release, scripts/fetch_deps.sh models; made by models/music/export_tagger.py). Without it the check
 // says this version cannot check for music.
 val musicTagger = modelFile("imMusicTagger", rootProject.file("../models/music/tagger_mn04.onnx"))
+// Live captions (docs/CAPTIONS.md): the Arabic speech model, -PimCaptionsModel=/path or
+// models/asr/fastconformer_ar_int8.onnx (made by models/asr/export_fastconformer.py). Without it the captions card
+// says this version has no Arabic speech model.
+val captionsModel = modelFile("imCaptionsModel", rootProject.file("../models/asr/fastconformer_ar_int8.onnx"))
 // Sync, not Copy: build/modelAssets ends up holding exactly the files found now, so a model whose source is gone
 // cannot ship from a stale copy left there by an older build.
 val copyModel by tasks.registering(Sync::class) {
     requiredModels.forEach { (asset, src) -> from(src) { rename { asset } } }
     from(detectorModel) { rename { "detector.onnx" } }
     from(musicTagger) { rename { "music_tagger.onnx" } }
+    from(captionsModel) { rename { "captions_ar.onnx" } }
     into(modelAssets)
 }
 // The check runs once the task graph is known, not as an action of copyModel: Gradle skips a copy task's actions
@@ -204,6 +209,9 @@ gradle.taskGraph.whenReady {
     if (!detectorModel.isFile) {
         logger.warn("warning: no women's-singing detector at $detectorModel (-PimDetector=...): this " +
             (if (release) "release" else "debug") + " build has no women's-singing filter.")
+    }
+    if (!captionsModel.isFile) {
+        logger.warn("warning: no Arabic speech model at $captionsModel (-PimCaptionsModel=...): this build has no live captions.")
     }
 }
 android.sourceSets["main"].assets.srcDir(modelAssets)

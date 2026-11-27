@@ -2026,6 +2026,24 @@ abstract class AppLocalizations {
   /// **'احذف واعية القديمة'**
   String get moveRemoveOld;
 
+  /// Android string captions_card_title
+  ///
+  /// In ar, this message translates to:
+  /// **'كتابة الكلام مباشرة'**
+  String get captionsCardTitle;
+
+  /// Android string captions_card_body
+  ///
+  /// In ar, this message translates to:
+  /// **'يكتب على الشاشة ما يُقال بالعربية في الخطبة أو الدرس، للصمّ وضعاف السمع. يعمل على الهاتف دون إنترنت.'**
+  String get captionsCardBody;
+
+  /// Android string captions_card_open
+  ///
+  /// In ar, this message translates to:
+  /// **'افتح الكتابة المباشرة'**
+  String get captionsCardOpen;
+
   /// Flutter only. Not reviewed yet except in English.
   ///
   /// In ar, this message translates to:

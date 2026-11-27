@@ -1120,6 +1120,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get moveRemoveOld => 'Eski Waaiya\'yı kaldır';
 
   @override
+  String get captionsCardTitle => 'Canlı altyazı';
+
+  @override
+  String get captionsCardBody =>
+      'Hutbede veya derste Arapça söyleneni ekrana yazar: işitme engelliler ve az işitenler için. Telefonda, internetsiz çalışır.';
+
+  @override
+  String get captionsCardOpen => 'Altyazıyı aç';
+
+  @override
   String get desktopPreview =>
       'Önizleme: filtre motoru bu bilgisayara henüz bağlı değil. Düğme yalnızca uygulamanın nasıl çalışacağını gösterir.';
 

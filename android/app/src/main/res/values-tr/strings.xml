@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Hiçbir şey duymazsanız ya da kulaklık takılıyken ses telefonun hoparlöründen gelirse diğer kanalı deneyin. Telefon titreşimdeyken veya Rahatsız Etmeyin açıkken Bildirim sessizdir.</string>
     <string name="simple_test_note">Bu bir denemedir. Denedikten sonra (hoparlör, kulaklık, Bluetooth) lütfen Ayarlar\'dan tanılama raporunu gönderin.</string>
     <string name="simple_on_detail">Basit mod (deneme): Waaiya filtrelerken medya sesi kapalıdır.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Canlı altyazı</string>
+    <string name="captions_card_body">Hutbede veya derste Arapça söyleneni ekrana yazar: işitme engelliler ve az işitenler için. Telefonda, internetsiz çalışır.</string>
+    <string name="captions_card_open">Altyazıyı aç</string>
+    <string name="captions_card_missing">Waaiya\'nın bu sürümünde Arapça konuşma modeli yok, bu yüzden altyazı yazamaz.</string>
+    <string name="captions_title">Canlı altyazı</string>
+    <string name="captions_listening">Dinliyor</string>
+    <string name="captions_paused">Duraklatıldı</string>
+    <string name="captions_pause">Duraklat</string>
+    <string name="captions_resume">Devam</string>
+    <string name="captions_clear">Temizle</string>
+    <string name="captions_smaller">Daha küçük yazı</string>
+    <string name="captions_bigger">Daha büyük yazı</string>
+    <string name="captions_colours">Renkler</string>
+    <string name="captions_clean">Önce arka plan seslerini kaldır</string>
+    <string name="captions_hint">Telefonu imama veya hoparlöre doğru tutun. Metin telefonda yazılır; hiçbir şey gönderilmez.</string>
+    <string name="captions_no_mic">Waaiya\'nın söyleneni yazması için mikrofona ihtiyacı var. İzin verin, sonra bu ekranı yeniden açın.</string>
+    <string name="captions_failed">Altyazı bu telefonda başlatılamadı.</string>
+    <string name="captions_slow">Bu telefon canlı altyazı için yavaş, metin gecikebilir.</string>
+    <string name="captions_note">Telefon tarafından yazılır: bazı kelimeler yanlış olabilir.</string>
 </resources>

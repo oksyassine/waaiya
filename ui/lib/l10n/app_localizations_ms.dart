@@ -1119,6 +1119,16 @@ class AppLocalizationsMs extends AppLocalizations {
   String get moveRemoveOld => 'Buang Waaiya lama';
 
   @override
+  String get captionsCardTitle => 'Sari kata langsung';
+
+  @override
+  String get captionsCardBody =>
+      'Menulis di skrin apa yang diucapkan dalam bahasa Arab semasa khutbah atau kuliah: untuk orang pekak dan kurang pendengaran. Berfungsi pada telefon, tanpa internet.';
+
+  @override
+  String get captionsCardOpen => 'Buka sari kata';
+
+  @override
   String get desktopPreview =>
       'Pratonton: enjin penapis belum disambungkan pada komputer ini. Butang ini hanya menunjukkan cara apl akan berfungsi.';
 

@@ -1126,6 +1126,16 @@ class AppLocalizationsSw extends AppLocalizations {
   String get moveRemoveOld => 'Ondoa Waaiya ya zamani';
 
   @override
+  String get captionsCardTitle => 'Manukuu ya moja kwa moja';
+
+  @override
+  String get captionsCardBody =>
+      'Huandika kwenye skrini kinachosemwa kwa Kiarabu katika khutba au darsa: kwa viziwi na wasiosikia vizuri. Hufanya kazi kwenye simu, bila intaneti.';
+
+  @override
+  String get captionsCardOpen => 'Fungua manukuu';
+
+  @override
   String get desktopPreview =>
       'Onyesho la majaribio: injini ya kichujio bado haijaunganishwa kwenye kompyuta hii. Kitufe kinaonyesha tu jinsi programu itakavyofanya kazi.';
 

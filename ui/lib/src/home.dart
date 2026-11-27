@@ -9,6 +9,7 @@ import '../l10n/app_localizations.dart';
 import 'app.dart';
 import 'backend.dart';
 import 'blur_card.dart';
+import 'captions.dart';
 import 'fix_mistakes.dart';
 import 'licences.dart';
 import 'links_page.dart';
@@ -151,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const KeepRunningCard(),
             const FilterOptionsCard(),
             const FilterAppsCard(),
+            const CaptionsCard(),
           ],
         ),
       'screen' => PageColumn(

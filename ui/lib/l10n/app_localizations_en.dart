@@ -1114,6 +1114,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moveRemoveOld => 'Remove the old Waaiya';
 
   @override
+  String get captionsCardTitle => 'Live captions';
+
+  @override
+  String get captionsCardBody =>
+      'Writes what is said in Arabic on the screen, for a khutba or a lesson: for deaf and hard-of-hearing listeners. It works on the phone, without internet.';
+
+  @override
+  String get captionsCardOpen => 'Open captions';
+
+  @override
   String get desktopPreview =>
       'Preview: the filter engine is not connected on this computer yet. The button only shows how the app will work.';
 

@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Hech narsa eshitilmasa yoki quloqchin ulangan boʻlsa-da ovoz telefon karnayidan chiqsa, boshqa kanalni sinab koʻring. Telefon tebranish rejimida yoki “Bezovta qilinmasin” yoqilgan boʻlsa, Bildirishnoma kanali ovozsiz boʻladi.</string>
     <string name="simple_test_note">Bu sinov. Uni sinab koʻrgach (karnay, quloqchin, Bluetooth), iltimos, Sozlamalardan diagnostika hisobotini yuboring.</string>
     <string name="simple_on_detail">Oddiy rejim (sinov): Waaiya filtrlayotganda media ovozi oʻchiriladi.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Jonli subtitrlar</string>
+    <string name="captions_card_body">Xutba yoki darsda arabcha aytilganni ekranga yozadi: kar va eshitishi past odamlar uchun. Telefonda, internetsiz ishlaydi.</string>
+    <string name="captions_card_open">Subtitrlarni ochish</string>
+    <string name="captions_card_missing">Waaiya’ning bu versiyasida arabcha nutq modeli yo‘q, shuning uchun u subtitr yoza olmaydi.</string>
+    <string name="captions_title">Jonli subtitrlar</string>
+    <string name="captions_listening">Tinglayapti</string>
+    <string name="captions_paused">To‘xtatilgan</string>
+    <string name="captions_pause">To‘xtatish</string>
+    <string name="captions_resume">Davom etish</string>
+    <string name="captions_clear">Tozalash</string>
+    <string name="captions_smaller">Kichikroq matn</string>
+    <string name="captions_bigger">Kattaroq matn</string>
+    <string name="captions_colours">Ranglar</string>
+    <string name="captions_clean">Avval fon tovushlarini olib tashlash</string>
+    <string name="captions_hint">Telefonni imom yoki karnay tomonga qarating. Matn telefonda yoziladi; hech narsa yuborilmaydi.</string>
+    <string name="captions_no_mic">Aytilganni yozish uchun Waaiya’ga mikrofon kerak. Ruxsat bering, keyin bu ekranni qayta oching.</string>
+    <string name="captions_failed">Bu telefonda subtitrlar ishga tushmadi.</string>
+    <string name="captions_slow">Bu telefon jonli subtitrlar uchun sekin, matn kechikishi mumkin.</string>
+    <string name="captions_note">Telefon yozgan: ba’zi so‘zlar xato bo‘lishi mumkin.</string>
 </resources>

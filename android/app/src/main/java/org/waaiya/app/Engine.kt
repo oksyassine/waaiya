@@ -152,6 +152,33 @@ object ModelStore {
         return f.takeIf { it.exists() }?.absolutePath
     }
 
+    /** Live captions' Arabic speech model (docs/CAPTIONS.md). */
+    const val CAPTIONS = "captions_ar.onnx"
+
+    /**
+     * The captions model copied out of the APK, or null when this build does not bundle it. Copied on its own, when
+     * the captions screen first opens, not with the other models: it is large and most people never open captions.
+     * Written to a temporary name first, so a copy cut short is never loaded.
+     */
+    @Synchronized
+    fun captionsPath(context: Context): String? {
+        val dir = File(context.filesDir, "models").apply { mkdirs() }
+        val f = File(dir, CAPTIONS)
+        val stamp = File(dir, "$CAPTIONS.version")
+        if (!hasAsset(context, CAPTIONS)) { f.delete(); stamp.delete(); return null }
+        val version = context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode.toString()
+        if (!f.exists() || stamp.takeIf { it.exists() }?.readText() != version) {
+            val tmp = File(dir, "$CAPTIONS.part")
+            val ok = runCatching {
+                context.assets.open(CAPTIONS).use { i -> tmp.outputStream().use { i.copyTo(it) } }
+                tmp.renameTo(f) || run { f.delete(); tmp.renameTo(f) }
+            }.getOrDefault(false)
+            if (!ok) { tmp.delete(); return null }
+            runCatching { stamp.writeText(version) }
+        }
+        return f.absolutePath
+    }
+
     fun hasAsset(context: Context, name: String): Boolean = runCatching { context.assets.open(name).close() }.isSuccess
 
     fun hasDetector(context: Context): Boolean = runCatching { context.assets.open(DETECTOR).close() }.isSuccess

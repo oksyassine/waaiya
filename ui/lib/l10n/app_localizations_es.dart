@@ -1123,6 +1123,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get moveRemoveOld => 'Desinstalar la Waaiya antigua';
 
   @override
+  String get captionsCardTitle => 'Subtítulos en directo';
+
+  @override
+  String get captionsCardBody =>
+      'Escribe en la pantalla lo que se dice en árabe, en una jutba o una clase: para personas sordas o con pérdida auditiva. Funciona en el teléfono, sin internet.';
+
+  @override
+  String get captionsCardOpen => 'Abrir subtítulos';
+
+  @override
   String get desktopPreview =>
       'Vista previa: el motor del filtro aún no está conectado en este ordenador. El botón solo muestra cómo funcionará la aplicación.';
 

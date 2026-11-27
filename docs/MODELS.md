@@ -14,6 +14,7 @@ Model weights are **not in git**. `.gitignore` excludes `*.onnx`, `*.state_init.
 | `models/vision/gender.onnx` (v1, comparison) | ~6 MB | screen blur, woman/man per person: `fetch_openimages.py` (both splits), `train_gender.py` (CPU, ~2 h), `export_vision.py gender` |
 | `models/vision/seg.onnx` | 12.9 MB | screen blur (bundled as `blur_seg.onnx` when present; without it covers are rectangles), person outlines: LR-ASPP MobileNetV3-large fine-tuned on Open Images V7 person masks: `kaggle/blur-seg/` (`prep_seg_crops.py` + `train_seg.py`, 2x T4), then `export_vision.py seg --src seg_s192.pt --out seg.onnx`; scores in `eval/results/blur_silhouette.md` |
 | `models/vision/nsfw_marqo_int8.onnx` | 6.7 MB | screen blur, immodest images: `export_vision.py marqo` (Marqo/nsfw-image-detection-384), then int8 (MatMul/Gemm only; see `models/vision/README.md`) |
+| `models/asr/fastconformer_ar_int8.onnx` | ~120 MB (int8 of ~115M parameters) | live captions (bundled as `captions_ar.onnx` when present): `python models/asr/export_fastconformer.py` on a machine with NeMo and Hugging Face access (NVIDIA `stt_ar_fastconformer_hybrid_large_pc_v1.0`, CTC head; check its licence on the model card first). See `models/asr/README.md` |
 
 ## Distribution: release assets
 

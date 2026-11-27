@@ -1119,6 +1119,16 @@ class AppLocalizationsFa extends AppLocalizations {
   String get moveRemoveOld => '‏حذف واعیهٔ قدیمی';
 
   @override
+  String get captionsCardTitle => 'زیرنویس زنده';
+
+  @override
+  String get captionsCardBody =>
+      'آنچه را به عربی در خطبه یا درس گفته می‌شود روی صفحه می‌نویسد: برای ناشنوایان و کم‌شنوایان. روی گوشی و بدون اینترنت کار می‌کند.';
+
+  @override
+  String get captionsCardOpen => 'باز کردن زیرنویس';
+
+  @override
   String get desktopPreview =>
       'پیش‌نمایش: موتور پالایش هنوز روی این رایانه وصل نشده است. این دکمه فقط نشان می‌دهد برنامه چگونه کار خواهد کرد.';
 

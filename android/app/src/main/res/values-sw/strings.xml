@@ -453,4 +453,24 @@
     <string name="simple_channel_help">Usiposikia chochote, au sauti ikitoka kwenye spika ya simu wakati vifaa vya masikioni vimechomekwa, jaribu chaneli nyingine. Arifa haitoi sauti simu ikiwa kwenye mtetemo au Usisumbue.</string>
     <string name="simple_test_note">Hili ni jaribio. Baada ya kulijaribu (spika, vifaa vya masikioni, Bluetooth), tafadhali tuma ripoti ya uchunguzi kutoka kwenye Mipangilio.</string>
     <string name="simple_on_detail">Hali rahisi (jaribio): sauti ya media imenyamazishwa wakati Waaiya inachuja.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Manukuu ya moja kwa moja</string>
+    <string name="captions_card_body">Huandika kwenye skrini kinachosemwa kwa Kiarabu katika khutba au darsa: kwa viziwi na wasiosikia vizuri. Hufanya kazi kwenye simu, bila intaneti.</string>
+    <string name="captions_card_open">Fungua manukuu</string>
+    <string name="captions_card_missing">Toleo hili la Waaiya halina modeli ya usemi wa Kiarabu, kwa hiyo haliwezi kuandika manukuu.</string>
+    <string name="captions_title">Manukuu ya moja kwa moja</string>
+    <string name="captions_listening">Inasikiliza</string>
+    <string name="captions_paused">Imesitishwa</string>
+    <string name="captions_pause">Sitisha</string>
+    <string name="captions_resume">Endelea</string>
+    <string name="captions_clear">Futa</string>
+    <string name="captions_smaller">Maandishi madogo zaidi</string>
+    <string name="captions_bigger">Maandishi makubwa zaidi</string>
+    <string name="captions_colours">Rangi</string>
+    <string name="captions_clean">Ondoa kwanza sauti za nyuma</string>
+    <string name="captions_hint">Elekeza simu kwa imamu au kipaza sauti. Maandishi huandikwa kwenye simu; hakuna kinachotumwa.</string>
+    <string name="captions_no_mic">Waaiya inahitaji maikrofoni ili kuandika kinachosemwa. Iruhusu, kisha fungua skrini hii tena.</string>
+    <string name="captions_failed">Manukuu hayakuweza kuanza kwenye simu hii.</string>
+    <string name="captions_slow">Simu hii ni ya polepole kwa manukuu ya moja kwa moja, kwa hiyo maandishi yanaweza kuchelewa.</string>
+    <string name="captions_note">Imeandikwa na simu: baadhi ya maneno yanaweza kuwa na makosa.</string>
 </resources>

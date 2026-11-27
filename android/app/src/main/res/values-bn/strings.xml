@@ -454,4 +454,24 @@
     <string name="simple_channel_help">কিছু শুনতে না পেলে, বা ইয়ারফোন লাগানো অবস্থায় শব্দ ফোনের স্পিকার থেকে এলে, অন্য চ্যানেলটি চেষ্টা করুন। ফোন ভাইব্রেট বা “বিরক্ত করবেন না” মোডে থাকলে “বিজ্ঞপ্তি” নীরব থাকে।</string>
     <string name="simple_test_note">এটি একটি পরীক্ষা। চেষ্টা করে দেখার পর (স্পিকার, ইয়ারফোন, Bluetooth), দয়া করে সেটিংস থেকে ডায়াগনস্টিক রিপোর্ট পাঠান।</string>
     <string name="simple_on_detail">সহজ মোড (পরীক্ষামূলক): Waaiya ফিল্টার করার সময় মিডিয়ার শব্দ বন্ধ থাকে।</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">সরাসরি ক্যাপশন</string>
+    <string name="captions_card_body">খুতবা বা দারসে আরবিতে যা বলা হয় তা পর্দায় লিখে দেয়: বধির ও কম শুনতে পান এমন মানুষের জন্য। ইন্টারনেট ছাড়াই ফোনে চলে।</string>
+    <string name="captions_card_open">ক্যাপশন খুলুন</string>
+    <string name="captions_card_missing">Waaiya-র এই সংস্করণে আরবি কথার মডেল নেই, তাই এটি ক্যাপশন লিখতে পারে না।</string>
+    <string name="captions_title">সরাসরি ক্যাপশন</string>
+    <string name="captions_listening">শুনছে</string>
+    <string name="captions_paused">বিরতি চলছে</string>
+    <string name="captions_pause">বিরতি</string>
+    <string name="captions_resume">আবার চালু</string>
+    <string name="captions_clear">মুছুন</string>
+    <string name="captions_smaller">ছোট লেখা</string>
+    <string name="captions_bigger">বড় লেখা</string>
+    <string name="captions_colours">রং</string>
+    <string name="captions_clean">আগে পেছনের শব্দ সরান</string>
+    <string name="captions_hint">ফোনটি ইমাম বা লাউডস্পিকারের দিকে ধরুন। লেখা ফোনেই তৈরি হয়; কিছুই পাঠানো হয় না।</string>
+    <string name="captions_no_mic">যা বলা হয় তা লিখতে Waaiya-র মাইক্রোফোন দরকার। অনুমতি দিন, তারপর এই পর্দা আবার খুলুন।</string>
+    <string name="captions_failed">এই ফোনে ক্যাপশন চালু করা যায়নি।</string>
+    <string name="captions_slow">সরাসরি ক্যাপশনের জন্য এই ফোন ধীর, তাই লেখা দেরিতে আসতে পারে।</string>
+    <string name="captions_note">ফোন লিখেছে: কিছু শব্দ ভুল হতে পারে।</string>
 </resources>

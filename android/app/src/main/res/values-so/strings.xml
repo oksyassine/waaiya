@@ -453,4 +453,24 @@
     <string name="simple_channel_help">Haddii aadan waxba maqlin, ama codku ka soo baxo kuhadlaha taleefanka iyadoo sameecadaha dhegaha ku jiraan, isku day kanaalka kale. Ogeysiisku waa aamusan yahay marka taleefanku ku jiro gariir ama “Do Not Disturb”.</string>
     <string name="simple_test_note">Tani waa tijaabo. Kadib markaad isku daydo (kuhadlaha, sameecadaha dhegaha, Bluetooth), fadlan ka dir warbixinta baaritaanka “Dejinta”.</string>
     <string name="simple_on_detail">Hab fudud (tijaabo): codka warbaahinta waa la aamusiiyay inta Waaiya shaandheyneyso.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Qoraal toos ah</string>
+    <string name="captions_card_body">Wuxuu shaashadda ku qoraa waxa Carabi lagu yidhaahdo khudbad ama cashar: dadka dhegoolaha ah iyo kuwa maqalkoodu yar yahay. Wuxuu ku shaqeeyaa taleefanka, internet la\'aan.</string>
+    <string name="captions_card_open">Fur qoraalka tooska ah</string>
+    <string name="captions_card_missing">Noocan Waaiya ma laha qaabka hadalka Carabiga, sidaas darteed ma qori karo qoraalka.</string>
+    <string name="captions_title">Qoraal toos ah</string>
+    <string name="captions_listening">Wuu dhegaysanayaa</string>
+    <string name="captions_paused">Waa la hakiyay</string>
+    <string name="captions_pause">Hakii</string>
+    <string name="captions_resume">Sii wad</string>
+    <string name="captions_clear">Tirtir</string>
+    <string name="captions_smaller">Qoraal ka yar</string>
+    <string name="captions_bigger">Qoraal ka weyn</string>
+    <string name="captions_colours">Midabada</string>
+    <string name="captions_clean">Marka hore ka saar dhawaaqa gadaasha</string>
+    <string name="captions_hint">Taleefanka u jeedi imaamka ama sameecadda. Qoraalka waxaa lagu qoraa taleefanka; waxba lama diro.</string>
+    <string name="captions_no_mic">Waaiya waxay u baahan tahay makarafoonka si ay u qorto waxa la yidhaahdo. Oggolow, kadibna mar kale fur shaashaddan.</string>
+    <string name="captions_failed">Qoraalka tooska ah kuma bilaaban karin taleefankan.</string>
+    <string name="captions_slow">Taleefankani wuu gaabis yahay qoraalka tooska ah, sidaas darteed qoraalku wuu daahi karaa.</string>
+    <string name="captions_note">Taleefanka ayaa qoray: erayada qaarkood way khaldami karaan.</string>
 </resources>

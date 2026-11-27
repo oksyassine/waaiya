@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Если ничего не слышно или звук идёт из динамика телефона, когда подключены наушники, попробуйте другой канал. Канал «Уведомления» молчит, когда телефон в режиме вибрации или «Не беспокоить».</string>
     <string name="simple_test_note">Это тест. Попробовав его (динамик, наушники, Bluetooth), пожалуйста, отправьте диагностический отчёт из раздела «Параметры».</string>
     <string name="simple_on_detail">Простой режим (тест): звук медиа отключён, пока Waaiya фильтрует.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Субтитры в реальном времени</string>
+    <string name="captions_card_body">Пишет на экране то, что говорят по-арабски на хутбе или уроке: для глухих и слабослышащих. Работает на телефоне, без интернета.</string>
+    <string name="captions_card_open">Открыть субтитры</string>
+    <string name="captions_card_missing">В этой версии Waaiya нет модели арабской речи, поэтому она не может писать субтитры.</string>
+    <string name="captions_title">Субтитры в реальном времени</string>
+    <string name="captions_listening">Слушает</string>
+    <string name="captions_paused">Пауза</string>
+    <string name="captions_pause">Пауза</string>
+    <string name="captions_resume">Продолжить</string>
+    <string name="captions_clear">Очистить</string>
+    <string name="captions_smaller">Мельче</string>
+    <string name="captions_bigger">Крупнее</string>
+    <string name="captions_colours">Цвета</string>
+    <string name="captions_clean">Сначала убрать фоновые звуки</string>
+    <string name="captions_hint">Направьте телефон на имама или громкоговоритель. Текст пишется на телефоне; ничего не отправляется.</string>
+    <string name="captions_no_mic">Waaiya нужен микрофон, чтобы записывать сказанное. Разрешите его и снова откройте этот экран.</string>
+    <string name="captions_failed">Не удалось запустить субтитры на этом телефоне.</string>
+    <string name="captions_slow">Этот телефон медленный для субтитров в реальном времени, текст может запаздывать.</string>
+    <string name="captions_note">Пишет телефон: некоторые слова могут быть неверными.</string>
 </resources>

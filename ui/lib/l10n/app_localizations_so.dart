@@ -1128,6 +1128,16 @@ class AppLocalizationsSo extends AppLocalizations {
   String get moveRemoveOld => 'Ka saar Waaiya duugga ah';
 
   @override
+  String get captionsCardTitle => 'Qoraal toos ah';
+
+  @override
+  String get captionsCardBody =>
+      'Wuxuu shaashadda ku qoraa waxa Carabi lagu yidhaahdo khudbad ama cashar: dadka dhegoolaha ah iyo kuwa maqalkoodu yar yahay. Wuxuu ku shaqeeyaa taleefanka, internet la\'aan.';
+
+  @override
+  String get captionsCardOpen => 'Fur qoraalka tooska ah';
+
+  @override
   String get desktopPreview =>
       'Muuqaal hordhac ah: matoorka shaandhaynta weli lagama xirin kombiyuutarkan. Badhanku wuxuu kaliya muujinayaa sida barnaamijku u shaqayn doono.';
 

@@ -453,4 +453,24 @@
     <string name="simple_channel_help">Wenn Sie nichts hören oder der Ton bei eingesteckten Kopfhörern aus dem Lautsprecher des Telefons kommt, versuchen Sie den anderen Kanal. „Benachrichtigung“ ist stumm, solange das Telefon auf Vibration oder „Bitte nicht stören“ steht.</string>
     <string name="simple_test_note">Dies ist ein Test. Nachdem Sie es ausprobiert haben (Lautsprecher, Kopfhörer, Bluetooth), senden Sie bitte den Diagnosebericht aus den Einstellungen.</string>
     <string name="simple_on_detail">Einfacher Modus (Test): Der Medienton ist stummgeschaltet, während Waaiya filtert.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Live-Untertitel</string>
+    <string name="captions_card_body">Schreibt auf den Bildschirm, was auf Arabisch gesagt wird, bei einer Khutba oder einem Unterricht: für Gehörlose und Schwerhörige. Läuft auf dem Telefon, ohne Internet.</string>
+    <string name="captions_card_open">Untertitel öffnen</string>
+    <string name="captions_card_missing">Diese Version von Waaiya hat kein arabisches Sprachmodell und kann daher keine Untertitel schreiben.</string>
+    <string name="captions_title">Live-Untertitel</string>
+    <string name="captions_listening">Hört zu</string>
+    <string name="captions_paused">Pausiert</string>
+    <string name="captions_pause">Pause</string>
+    <string name="captions_resume">Weiter</string>
+    <string name="captions_clear">Löschen</string>
+    <string name="captions_smaller">Kleinere Schrift</string>
+    <string name="captions_bigger">Größere Schrift</string>
+    <string name="captions_colours">Farben</string>
+    <string name="captions_clean">Zuerst Hintergrundgeräusche entfernen</string>
+    <string name="captions_hint">Richten Sie das Telefon auf den Imam oder den Lautsprecher. Der Text entsteht auf dem Telefon; nichts wird gesendet.</string>
+    <string name="captions_no_mic">Waaiya braucht das Mikrofon, um das Gesagte zu schreiben. Erlauben Sie es und öffnen Sie diese Seite erneut.</string>
+    <string name="captions_failed">Die Untertitel konnten auf diesem Telefon nicht starten.</string>
+    <string name="captions_slow">Dieses Telefon ist für Live-Untertitel langsam, der Text kann verspätet kommen.</string>
+    <string name="captions_note">Vom Telefon geschrieben: manche Wörter können falsch sein.</string>
 </resources>

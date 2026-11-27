@@ -1118,6 +1118,16 @@ class AppLocalizationsHa extends AppLocalizations {
   String get moveRemoveOld => 'Cire tsohuwar Waaiya';
 
   @override
+  String get captionsCardTitle => 'Rubutun magana kai tsaye';
+
+  @override
+  String get captionsCardBody =>
+      'Yana rubuta abin da ake faɗa da Larabci a allo, a huɗuba ko darasi: don kurame da masu ƙarancin ji. Yana aiki a waya, ba tare da intanet ba.';
+
+  @override
+  String get captionsCardOpen => 'Buɗe rubutun magana';
+
+  @override
   String get desktopPreview =>
       'Samfoti: injin tacewa bai haɗu a wannan kwamfuta ba tukuna. Maɓallin yana nuna yadda manhajar za ta yi aiki ne kawai.';
 

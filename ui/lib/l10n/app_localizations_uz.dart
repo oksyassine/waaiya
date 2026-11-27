@@ -1122,6 +1122,16 @@ class AppLocalizationsUz extends AppLocalizations {
   String get moveRemoveOld => 'Eski Waaiya’ni o‘chirish';
 
   @override
+  String get captionsCardTitle => 'Jonli subtitrlar';
+
+  @override
+  String get captionsCardBody =>
+      'Xutba yoki darsda arabcha aytilganni ekranga yozadi: kar va eshitishi past odamlar uchun. Telefonda, internetsiz ishlaydi.';
+
+  @override
+  String get captionsCardOpen => 'Subtitrlarni ochish';
+
+  @override
   String get desktopPreview =>
       'Namoyish rejimi: filtr mexanizmi bu kompyuterda hali ulanmagan. Tugma faqat ilova qanday ishlashini koʻrsatadi.';
 

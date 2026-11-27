@@ -457,4 +457,24 @@
     <string name="mc_copy_failed">The copy without music could not be made.</string>
     <string name="mc_copy_name">%1$s (without music)</string>
     <string name="mc_list_sep">", "</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Live captions</string>
+    <string name="captions_card_body">Writes what is said in Arabic on the screen, for a khutba or a lesson: for deaf and hard-of-hearing listeners. It works on the phone, without internet.</string>
+    <string name="captions_card_open">Open captions</string>
+    <string name="captions_card_missing">This version of Waaiya has no Arabic speech model, so it cannot write captions.</string>
+    <string name="captions_title">Live captions</string>
+    <string name="captions_listening">Listening</string>
+    <string name="captions_paused">Paused</string>
+    <string name="captions_pause">Pause</string>
+    <string name="captions_resume">Resume</string>
+    <string name="captions_clear">Clear</string>
+    <string name="captions_smaller">Smaller text</string>
+    <string name="captions_bigger">Bigger text</string>
+    <string name="captions_colours">Colours</string>
+    <string name="captions_clean">Remove background sounds first</string>
+    <string name="captions_hint">Point the phone towards the imam or the loudspeaker. The text is written on the phone; nothing is sent.</string>
+    <string name="captions_no_mic">Waaiya needs the microphone to write what is said. Allow it, then open this screen again.</string>
+    <string name="captions_failed">Captions could not start on this phone.</string>
+    <string name="captions_slow">This phone is slow for live captions, so the text may come late.</string>
+    <string name="captions_note">Written by the phone: some words can be wrong.</string>
 </resources>

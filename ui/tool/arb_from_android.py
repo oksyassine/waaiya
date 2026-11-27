@@ -25,7 +25,7 @@ OUT = REPO / "ui/lib/l10n"
 # Native-only strings (notification, blur covers drawn by the service, accessibility service). The "Waaiya
 # stopped" notice is also the desktop screen's text when the filter stopped by itself.
 # Quick Settings tiles (tile_*) and the illustrated setup guide (guide_w_*) are Android-only too.
-SKIP = re.compile(r"^(mc_.*|music_check_label|notif_(?!stopped_).*|blur_cover_.*|blur_not_working|blur_a11y_.*|link_channel|tile_.*|shortcut_.*|guide_w_.*)$")
+SKIP = re.compile(r"^(mc_.*|music_check_label|notif_(?!stopped_).*|blur_cover_.*|blur_not_working|blur_a11y_.*|link_channel|tile_.*|shortcut_.*|guide_w_.*|captions_(?!card_(?:title|body|open)$).*)$")
 
 # Android format arguments -> named placeholders, per string.
 PLACEHOLDERS = {

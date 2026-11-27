@@ -1120,6 +1120,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get moveRemoveOld => 'Oude Waaiya verwijderen';
 
   @override
+  String get captionsCardTitle => 'Live ondertiteling';
+
+  @override
+  String get captionsCardBody =>
+      'Schrijft op het scherm wat er in het Arabisch wordt gezegd, bij een khutba of een les: voor doven en slechthorenden. Werkt op de telefoon, zonder internet.';
+
+  @override
+  String get captionsCardOpen => 'Ondertiteling openen';
+
+  @override
   String get desktopPreview =>
       'Voorbeeld: de filtermotor is nog niet verbonden op deze computer. De knop laat alleen zien hoe de app gaat werken.';
 

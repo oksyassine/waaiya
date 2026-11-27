@@ -454,4 +454,24 @@
     <string name="simple_channel_help">Jika anda tidak mendengar apa-apa, atau bunyi keluar dari pembesar suara telefon semasa fon telinga dipakai, cuba saluran yang satu lagi. Pemberitahuan senyap semasa telefon dalam mod getar atau Jangan Ganggu.</string>
     <string name="simple_test_note">Ini ialah percubaan. Selepas mencubanya (pembesar suara, fon telinga, Bluetooth), sila hantar laporan diagnostik dari Tetapan.</string>
     <string name="simple_on_detail">Mod mudah (percubaan): bunyi media disenyapkan semasa Waaiya menapis.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">Sari kata langsung</string>
+    <string name="captions_card_body">Menulis di skrin apa yang diucapkan dalam bahasa Arab semasa khutbah atau kuliah: untuk orang pekak dan kurang pendengaran. Berfungsi pada telefon, tanpa internet.</string>
+    <string name="captions_card_open">Buka sari kata</string>
+    <string name="captions_card_missing">Versi Waaiya ini tiada model pertuturan bahasa Arab, jadi ia tidak boleh menulis sari kata.</string>
+    <string name="captions_title">Sari kata langsung</string>
+    <string name="captions_listening">Mendengar</string>
+    <string name="captions_paused">Dijeda</string>
+    <string name="captions_pause">Jeda</string>
+    <string name="captions_resume">Sambung</string>
+    <string name="captions_clear">Kosongkan</string>
+    <string name="captions_smaller">Teks lebih kecil</string>
+    <string name="captions_bigger">Teks lebih besar</string>
+    <string name="captions_colours">Warna</string>
+    <string name="captions_clean">Buang bunyi latar dahulu</string>
+    <string name="captions_hint">Halakan telefon ke arah imam atau pembesar suara. Teks ditulis pada telefon; tiada apa yang dihantar.</string>
+    <string name="captions_no_mic">Waaiya perlukan mikrofon untuk menulis apa yang diucapkan. Benarkannya, kemudian buka skrin ini semula.</string>
+    <string name="captions_failed">Sari kata tidak dapat dimulakan pada telefon ini.</string>
+    <string name="captions_slow">Telefon ini perlahan untuk sari kata langsung, jadi teks mungkin lewat.</string>
+    <string name="captions_note">Ditulis oleh telefon: sesetengah perkataan mungkin salah.</string>
 </resources>

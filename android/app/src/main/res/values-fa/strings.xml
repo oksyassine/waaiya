@@ -454,4 +454,24 @@
     <string name="simple_channel_help">اگر چیزی نمی‌شنوید، یا با وجود هدفون صدا از بلندگوی تلفن پخش می‌شود، کانال دیگر را امتحان کنید. وقتی تلفن روی لرزش یا «مزاحم نشوید» است، «اعلان» بی‌صدا است.</string>
     <string name="simple_test_note">این یک آزمایش است. پس از امتحان آن (بلندگو، هدفون، بلوتوث)، لطفاً گزارش عیب‌یابی را از «تنظیمات» بفرستید.</string>
     <string name="simple_on_detail">حالت ساده (آزمایشی): تا وقتی واعية پالایش می‌کند، صدای رسانه قطع است.</string>
+    <!-- Live captions (docs/CAPTIONS.md) -->
+    <string name="captions_card_title">زیرنویس زنده</string>
+    <string name="captions_card_body">آنچه را به عربی در خطبه یا درس گفته می‌شود روی صفحه می‌نویسد: برای ناشنوایان و کم‌شنوایان. روی گوشی و بدون اینترنت کار می‌کند.</string>
+    <string name="captions_card_open">باز کردن زیرنویس</string>
+    <string name="captions_card_missing">این نسخهٔ Waaiya مدل گفتار عربی ندارد، پس نمی‌تواند زیرنویس بنویسد.</string>
+    <string name="captions_title">زیرنویس زنده</string>
+    <string name="captions_listening">در حال شنیدن</string>
+    <string name="captions_paused">متوقف</string>
+    <string name="captions_pause">توقف</string>
+    <string name="captions_resume">ادامه</string>
+    <string name="captions_clear">پاک کردن</string>
+    <string name="captions_smaller">متن کوچک‌تر</string>
+    <string name="captions_bigger">متن بزرگ‌تر</string>
+    <string name="captions_colours">رنگ‌ها</string>
+    <string name="captions_clean">اول صداهای پس‌زمینه را حذف کن</string>
+    <string name="captions_hint">گوشی را به سمت امام یا بلندگو بگیرید. متن روی گوشی نوشته می‌شود و چیزی فرستاده نمی‌شود.</string>
+    <string name="captions_no_mic">Waaiya برای نوشتن آنچه گفته می‌شود به میکروفون نیاز دارد. اجازه دهید و این صفحه را دوباره باز کنید.</string>
+    <string name="captions_failed">زیرنویس روی این گوشی شروع نشد.</string>
+    <string name="captions_slow">این گوشی برای زیرنویس زنده کند است، پس متن ممکن است دیر برسد.</string>
+    <string name="captions_note">نوشتهٔ گوشی: بعضی کلمه‌ها ممکن است اشتباه باشند.</string>
 </resources>
