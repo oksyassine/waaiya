@@ -26,9 +26,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: An audio output for the runner (Scream virtual driver)
+        shell: pwsh
+        run: windows/test/audio_device.ps1
       - name: Zip install (no package)
         continue-on-error: true
         run: python windows/test/ui_nav_test.py exe zip/waaiya/waaiya_desktop.exe shots/zip
+      - name: Zip install, filtering
+        continue-on-error: true
+        run: python windows/test/ui_nav_test.py exe zip/waaiya/waaiya_desktop.exe shots/zip-f filtering
       - name: Test certificate with the Store publisher's name; the Store package signed and installed
         shell: pwsh
         run: |
@@ -48,7 +54,10 @@ jobs:
           Add-AppxPackage -Path store-test.msix
           (Get-AppxPackage -Name Oks.Waaiya).PackageFamilyName
       - name: Store package
+        continue-on-error: true
         run: python windows/test/ui_nav_test.py msix Oks.Waaiya_wa2h0h9gfqbyp shots/msix
+      - name: Store package, filtering
+        run: python windows/test/ui_nav_test.py msix Oks.Waaiya_wa2h0h9gfqbyp shots/msix-f filtering
       - uses: actions/upload-artifact@v4
         if: always()
         with:

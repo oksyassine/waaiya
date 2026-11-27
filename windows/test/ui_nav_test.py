@@ -80,6 +80,12 @@ def shot(name):
        f"$g.CopyFromScreen({x}, {y}, 0, 0, $b.Size); $b.Save('{path}'); $g.Dispose(); $b.Dispose()")
 
 
+def digest(name):
+    import hashlib
+    with open(os.path.join(SHOTS, name + ".png"), "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()[:8]
+
+
 def alive(proc_handle):
     code = wt.DWORD()
     k32.GetExitCodeProcess(proc_handle, ctypes.byref(code))
@@ -87,18 +93,20 @@ def alive(proc_handle):
 
 
 def uia_names():
-    """Reads the window's whole UI Automation tree (Flutter turns its accessibility on for this)."""
-    return ps(
+    """Reads the Flutter view's whole UI Automation tree (Flutter turns its accessibility on for this; asked twice,
+    as the first question only turns it on)."""
+    view = u32.FindWindowExW(window(), None, "FLUTTERVIEW", None)
+    script = (
         "Add-Type -AssemblyName UIAutomationClient, UIAutomationTypes; "
-        "$w = [System.Windows.Automation.AutomationElement]::RootElement.FindFirst("
-        "[System.Windows.Automation.TreeScope]::Children, (New-Object System.Windows.Automation.PropertyCondition("
-        "[System.Windows.Automation.AutomationElement]::NameProperty, 'Waaiya'))); "
-        "if (-not $w) { 'no window'; exit } "
-        "$all = $w.FindAll([System.Windows.Automation.TreeScope]::Descendants, "
-        "[System.Windows.Automation.Condition]::TrueCondition); "
-        "\"$($all.Count) elements\"; "
-        "$all | Select-Object -First 60 | ForEach-Object { '  ' + $_.Current.ControlType.ProgrammaticName + ' | ' + "
-        "$_.Current.Name + ' | ' + $_.Current.AutomationId }")
+        f"$e = [System.Windows.Automation.AutomationElement]::FromHandle([IntPtr]{view or window()}); "
+        "$walker = [System.Windows.Automation.TreeWalker]::RawViewWalker; $n = 0; $lines = @(); "
+        "function Walk($x, $depth) { $script:n++; if ($script:lines.Count -lt 80) { $script:lines += ('  ' * $depth) + "
+        "$x.Current.ControlType.ProgrammaticName + ' | ' + $x.Current.Name + ' | ' + $x.Current.AutomationId }; "
+        "$c = $walker.GetFirstChild($x); while ($c) { Walk $c ($depth + 1); $c = $walker.GetNextSibling($c) } } "
+        "Walk $e 0; \"$n elements\"; $lines")
+    ps(script)
+    time.sleep(2)
+    return ps(script)
 
 
 def crash_record():
@@ -116,6 +124,16 @@ def main():
     subprocess.run(["reg", "add", key, "/v", "DumpFolder", "/t", "REG_EXPAND_SZ", "/d", dumps, "/f"], capture_output=True)
     subprocess.run(["reg", "add", key, "/v", "DumpType", "/t", "REG_DWORD", "/d", "1", "/f"], capture_output=True)
 
+    filtering = len(sys.argv) > 4 and sys.argv[4] == "filtering"
+    if filtering:  # the filter running first, as on a PC where it started at login
+        if MODE == "exe":
+            subprocess.Popen([os.path.join(os.path.dirname(TARGET), "engine", "waaiya-filter.exe"), "run"])
+        else:
+            loc = ps("(Get-AppxPackage -Name Oks.Waaiya).InstallLocation")
+            print(ps(f"Invoke-CommandInDesktopPackage -PackageFamilyName {TARGET} -AppId Waaiya "
+                     f"-Command '{loc}\\engine\\waaiya-filter.exe' -Args 'run'"), flush=True)
+        time.sleep(6)
+        print("  filter running: " + str(pid_of("waaiya-filter.exe")), flush=True)
     if MODE == "exe":
         subprocess.Popen([TARGET])
     else:
@@ -153,6 +171,8 @@ def main():
             click(first, bar_y)
             time.sleep(1.5)
             shot(f"{tag}-{i}-filter")
+            a, b = digest(f"{tag}-{i}-settings"), digest(f"{tag}-{i}-filter")
+            print(f"  round {i + 1}: settings {a}, filter {b}" + (" (the same picture: the click did not switch)" if a == b else ""), flush=True)
             ok, _ = alive(proc)
             if not ok:
                 return f"back on Filter, round {i + 1}"
