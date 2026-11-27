@@ -110,6 +110,8 @@ def uia_names():
 
 
 def crash_record():
+    print(ps("Get-WinEvent -FilterHashtable @{LogName='Application'; Id=1000} -MaxEvents 1 | "
+             "ForEach-Object { ($_.Message -split [Environment]::NewLine) -match 'offset' }"), flush=True)
     print(ps("Get-WinEvent -FilterHashtable @{LogName='Application'; Id=1000,1001,1026} -MaxEvents 8 "
              "-ErrorAction SilentlyContinue | Where-Object { $_.Message -match 'waaiya' } | "
              "ForEach-Object { '--- ' + $_.TimeCreated + ' event ' + $_.Id; $_.Message }"), flush=True)

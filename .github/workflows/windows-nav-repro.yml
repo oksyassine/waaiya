@@ -26,15 +26,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: An audio output for the runner (Scream virtual driver)
-        shell: pwsh
-        run: windows/test/audio_device.ps1
-      - name: Zip install (no package)
-        continue-on-error: true
-        run: python windows/test/ui_nav_test.py exe zip/waaiya/waaiya_desktop.exe shots/zip
-      - name: Zip install, filtering
-        continue-on-error: true
-        run: python windows/test/ui_nav_test.py exe zip/waaiya/waaiya_desktop.exe shots/zip-f filtering
       - name: Test certificate with the Store publisher's name; the Store package signed and installed
         shell: pwsh
         run: |
@@ -56,8 +47,16 @@ jobs:
       - name: Store package
         continue-on-error: true
         run: python windows/test/ui_nav_test.py msix Oks.Waaiya_wa2h0h9gfqbyp shots/msix
-      - name: Store package, filtering
-        run: python windows/test/ui_nav_test.py msix Oks.Waaiya_wa2h0h9gfqbyp shots/msix-f filtering
+      - name: The crash's call stack (Flutter's symbols for this engine, cdb)
+        shell: pwsh
+        run: |
+          curl.exe -sSfL -o fw.zip https://storage.googleapis.com/flutter_infra_release/flutter/c1db59d880ca73dd86cec08a6663f287522d9f39/windows-x64-release/windows-x64-flutter.zip
+          Expand-Archive fw.zip -DestinationPath sym
+          $cdb = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Debuggers\x64\cdb.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $cdb) { $cdb = Get-ChildItem -Recurse "${env:ProgramFiles(x86)}\Windows Kits" -Filter cdb.exe -ErrorAction SilentlyContinue | Select-Object -First 1 }
+          "cdb: $($cdb.FullName)"
+          $dmp = Get-ChildItem shots/msix/dumps/*.dmp | Select-Object -First 1
+          & $cdb.FullName -z $dmp.FullName -y "$PWD\sym;srv*C:\symcache*https://msdl.microsoft.com/download/symbols" -c ".symopt+0x40;.reload /f flutter_windows.dll;.ecxr;r;kn 60;q" 2>&1 | Select-Object -Last 120
       - uses: actions/upload-artifact@v4
         if: always()
         with:
