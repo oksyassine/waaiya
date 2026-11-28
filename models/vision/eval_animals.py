@@ -8,7 +8,7 @@ person box of any kind (fetched by id from the public bucket; list in the result
 
     make build/libimvision.so
     python models/vision/eval_animals.py --person models/vision/person_yolox_nano.onnx \
-        --gender models/vision/gender_v2.onnx --images DIR [--male-clear 0.999] [--person-score 0.1] [--seg models/vision/seg.onnx]
+        --gender models/vision/gender_v3.onnx --images DIR [--male-clear 0.999] [--person-score 0.1] [--seg models/vision/seg.onnx]
 """
 import argparse
 import os

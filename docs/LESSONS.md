@@ -25,3 +25,4 @@
 - `emu_check.py` with an arm64-only APK runs under translation: blur frames take 5-8 s and the blur reports FAILING by design. Build with `-PimX86` for blur checks on an x86 emulator.
 - `kaggle kernels status` with no `~/.kaggle` token says "You must authenticate": load the project's .env first (`set -a; . ./.env; set +a`). The kernel id in kernel-metadata.json has no user part; use `mohammedmoutawakkil/<slug>`.
 - A Flutter worktree in the scratchpad disappears between sessions (git marks it "prunable"): `git -C ~/flutter worktree prune` before adding it again.
+- `gh release create` marks the new release "Latest" by default, even a models-only one: pass `--latest=false` (or the README's app download link points at models).

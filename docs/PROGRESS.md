@@ -34,14 +34,12 @@ Updated 2026-11-27. Project-wide status lives in `docs/STATUS.md`; this file tra
   passes the rule fixed before the run: animal photos with a cover 13.2% -> 6.5%, women covered 95.8%, small women
   unchanged, men left clear 8.9% -> 7.3%. x86 debug APK with it (-PimBlurGender): emu_check --blur ALL PASSED.
 
-## In progress
-- Switch every platform to gender_v3.onnx (local, gitignored, in models/vision/): code still names gender_v2.onnx;
-  goes with release `models-vision-v2` (needs the user's OK). The C changes for "other" + reuse are uncommitted.
+- Released `models-vision-v2` (2026-11-28: animal-gated detector + gender_v3.onnx; nsfw and seg unchanged). Every
+  platform and fetch_deps.sh switched; fresh fetch verified; make test-blur 156/156, Android unit 142/142, desktop
+  linux_blur_test + ui parity_test pass, emu_check --blur ALL PASSED.
 
 ## Next
 - On the phone: start blur, scroll photos 30 s; logcat should show "tiles now take turns" then "person outlines
   off"; frames ~450 ms (expected, not measured).
-- Commit the uncommitted blur work (reuse, "other" label, eval docs); open a PR (PR #53 already merged up to 547597c).
-- Publish the animal-gated detector (new release `models-vision-v2`, needs the user's OK).
 - `test_vision_engine.py` fails on main's detector too (worst IoU 0.63 on 20 images): predates tiles/nest.
 - Engine-side handling of extra/part detection boxes (the main cap on men clear), or retrain the segmenter.

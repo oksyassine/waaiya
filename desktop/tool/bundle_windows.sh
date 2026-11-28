@@ -22,7 +22,7 @@ BIN="${2:?usage: $0 <Windows app dir> <build-win dir>}"
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
 E="$APP/engine"
 
-VISION=(person_yolox_nano.onnx gender_v2.onnx nsfw_marqo_int8.onnx)
+VISION=(person_yolox_nano.onnx gender_v3.onnx nsfw_marqo_int8.onnx)
 for f in waaiya-filter.exe waaiya-blur.exe onnxruntime.dll models/dfn3/dfn3_stream_int8.onnx \
          models/dfn3/dfn3_stream_int8.state_init.bin "${VISION[@]/#/models/vision/}"; do
     [ -f "$BIN/$f" ] || { echo "missing $BIN/$f: build with windows/Makefile and copy the models next to it" >&2; exit 1; }

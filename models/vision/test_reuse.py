@@ -37,7 +37,7 @@ def matched(a, b):
 
 
 def main(paths):
-    v = Vision(os.path.join(HERE, "person_yolox_nano.onnx"), os.path.join(HERE, "gender_v2.onnx"), None, WOMEN)
+    v = Vision(os.path.join(HERE, "person_yolox_nano.onnx"), os.path.join(HERE, "gender_v3.onnx"), None, WOMEN)
     if v.status:
         sys.exit(f"models: {v.error}")
     fails, n_cov, n_clear = [], 0, 0

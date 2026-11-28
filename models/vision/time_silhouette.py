@@ -23,7 +23,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--person", default=os.path.join(ROOT, "person_yolox_nano.onnx"))
-    ap.add_argument("--gender", default=os.path.join(ROOT, "gender_v2.onnx"))
+    ap.add_argument("--gender", default=os.path.join(ROOT, "gender_v3.onnx"))
     ap.add_argument("--seg", required=True)
     ap.add_argument("--images", default=os.path.join(ROOT, "data/oi_seg/test/full"))
     ap.add_argument("--layout", default="photo", choices=["photo", "portrait"])

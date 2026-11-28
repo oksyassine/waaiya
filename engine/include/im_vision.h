@@ -59,7 +59,7 @@ typedef struct {
 typedef struct {
     float person_score;  /* detector threshold (default 0.10: low, recall first; eval_blur.py) */
     float nms_iou;       /* default 0.5 */
-    float male_clear;    /* a person is left clear only when p(man or boy) >= this (default 0.999, for gender_v2.onnx: eval/results/blur_gender_v2.md) */
+    float male_clear;    /* a person is left clear only when p(man, boy or other) >= this (default 0.999, for gender_v3.onnx: eval/results/blur_animals.md) */
     float nsfw_score;    /* frame covered when p(nsfw) >= this (default 0.6) */
     int max_people;      /* people classified per frame, largest first; the rest are covered (default 12) */
     int tiles;           /* elongated frames (a phone held upright): the person detector also runs on up to this many

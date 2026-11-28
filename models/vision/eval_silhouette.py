@@ -129,7 +129,7 @@ def image_gt(data, split, rows, boxes, W, H):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--person", default=os.path.join(ROOT, "person_yolox_nano.onnx"))
-    ap.add_argument("--gender", default=os.path.join(ROOT, "gender_v2.onnx"))
+    ap.add_argument("--gender", default=os.path.join(ROOT, "gender_v3.onnx"))
     ap.add_argument("--seg", required=True)
     ap.add_argument("--data", default=os.path.join(ROOT, "data/oi_seg"))
     ap.add_argument("--split", default="validation")

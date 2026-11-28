@@ -137,7 +137,7 @@ class LinuxBlur {
   /// few seconds after every start must not be restarted for ever).
   final Duration stableAfter;
 
-  static const _models = ['person_yolox_nano.onnx', 'gender_v2.onnx', 'nsfw_marqo_int8.onnx'];
+  static const _models = ['person_yolox_nano.onnx', 'gender_v3.onnx', 'nsfw_marqo_int8.onnx'];
 
   /// The helper next to the app, or null (a development run, or a bundle without the blur). Models missing from
   /// the bundle still give a blur: the card stays and says so (the helper reports `models_missing`), never a blur
