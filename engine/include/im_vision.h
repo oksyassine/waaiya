@@ -43,7 +43,8 @@ typedef struct {
     float x0, y0, x1, y1;
     int kind;
     float score; /* detector score (people) or nudity probability (FULL) */
-    float p_male; /* classifier: probability of man or boy, -1 when not classified */
+    float p_male; /* classifier: probability of man or boy (or "other", not a person, when the model has that
+                     label): the box is left clear when >= male_clear; -1 when not classified */
 } im_vrect;
 
 typedef struct {
@@ -58,7 +59,7 @@ typedef struct {
 typedef struct {
     float person_score;  /* detector threshold (default 0.10: low, recall first; eval_blur.py) */
     float nms_iou;       /* default 0.5 */
-    float male_clear;    /* a person is left clear only when p(man or boy) >= this (default 0.999, for gender_v2.onnx: eval/results/blur_gender_v2.md) */
+    float male_clear;    /* a person is left clear only when p(man, boy or other) >= this (default 0.999, for gender_v3.onnx: eval/results/blur_animals.md) */
     float nsfw_score;    /* frame covered when p(nsfw) >= this (default 0.6) */
     int max_people;      /* people classified per frame, largest first; the rest are covered (default 12) */
     int tiles;           /* elongated frames (a phone held upright): the person detector also runs on up to this many
@@ -82,6 +83,11 @@ typedef struct {
     int seg_min_px;      /* people shorter than this (frame pixels) keep their rectangle: too few pixels to outline
                             (default 48: 96 gives the same coverage on photos but outlines half as many people in
                             a portrait frame, where people are small; eval/results/blur_silhouette.md) */
+    int reuse_frames;    /* a covered person (woman or unsure) matched (IoU >= 0.6) to one covered in the previous
+                            call keeps that verdict for up to this many calls before the classifier runs on them
+                            again; people left clear are classified on every call, so reuse only ever covers. For a
+                            stream of frames of one screen; 0 = classify everyone every call (default: unrelated
+                            images, as in the evaluation tools, must not share verdicts) */
 } im_vision_params;
 
 /* Outline of one person, relative to their box (0,0 = box top-left, 1,1 = box bottom-right; values outside 0..1

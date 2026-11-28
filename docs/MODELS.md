@@ -9,8 +9,9 @@ Model weights are **not in git**. `.gitignore` excludes `*.onnx`, `*.state_init.
 | `voice_v1_fp16.onnx` + `.state_init.bin` ("keep singing", models-v1) | 4.4 MB (fp16 of the 16 MB voice_v1) | Kaggle notebook `kaggle/voice-train` (see `models/voice/README.md`) |
 | `models/detector/detector_v1.onnx` | ~4 MB | Kaggle notebook `kaggle/detector-train` |
 | `models/detector/weights/mn04_as_mAP_432.pt` | 4 MB | EfficientAT release v0.0.1 (fetched by the detector notebook) |
-| `models/vision/person_yolox_nano.onnx` | 3.6 MB | screen blur, people: `python models/vision/export_vision.py yolox --src yolox_nano.onnx --out ...` (official YOLOX ONNX, release 0.1.1rc0); the score is 0 where a COCO animal class beats person (`eval/results/blur_animals.md`; published copy `models-vision-v1` predates this) |
-| `models/vision/gender_v2.onnx` | ~17 MB | screen blur (bundled), woman/man per person, MobileNetV3-large: `prep_train_crops.py` + `kaggle/blur-gender/` (2x T4, ~100 min), `train_gender_v2.py`; scores in `eval/results/blur_gender_v2.md` |
+| `models/vision/person_yolox_nano.onnx` | 3.6 MB | screen blur, people: `python models/vision/export_vision.py yolox --src yolox_nano.onnx --out ...` (official YOLOX ONNX, release 0.1.1rc0); the score is 0 where a COCO animal class beats person (`eval/results/blur_animals.md`; published in `models-vision-v2`, `models-vision-v1` has the older one) |
+| `models/vision/gender_v3.onnx` | ~17 MB | screen blur (bundled since models-vision-v2), woman/man/girl/boy/other (animals, left clear) per person, MobileNetV3-large: `prep_train_crops.py` + `prep_other_crops.py` + `kaggle/blur-gender/` (run gender_v3_other, 2x T4), `train_gender_v2.py --other`; scores in `eval/results/blur_animals.md` |
+| `models/vision/gender_v2.onnx` (previous, in models-vision-v1) | ~17 MB | woman/man per person, MobileNetV3-large: `prep_train_crops.py` + `kaggle/blur-gender/` (2x T4, ~100 min), `train_gender_v2.py`; scores in `eval/results/blur_gender_v2.md` |
 | `models/vision/gender.onnx` (v1, comparison) | ~6 MB | screen blur, woman/man per person: `fetch_openimages.py` (both splits), `train_gender.py` (CPU, ~2 h), `export_vision.py gender` |
 | `models/vision/seg.onnx` | 12.9 MB | screen blur (bundled as `blur_seg.onnx` when present; without it covers are rectangles), person outlines: LR-ASPP MobileNetV3-large fine-tuned on Open Images V7 person masks: `kaggle/blur-seg/` (`prep_seg_crops.py` + `train_seg.py`, 2x T4), then `export_vision.py seg --src seg_s192.pt --out seg.onnx`; scores in `eval/results/blur_silhouette.md` |
 | `models/vision/nsfw_marqo_int8.onnx` | 6.7 MB | screen blur, immodest images: `export_vision.py marqo` (Marqo/nsfw-image-detection-384), then int8 (MatMul/Gemm only; see `models/vision/README.md`) |
@@ -21,7 +22,7 @@ Published models are attached to a tagged release (for example `models-v1`) as
 `<name>.onnx`, `<name>.state_init.bin` and a `SHA256SUMS` file, plus release notes that list each model's
 base model, training data and licences (from `THIRD_PARTY_LICENSES.md`). App and daemon releases bundle the
 model they were tested with. `scripts/fetch_deps.sh` downloads and checks them: `models` (voice, `models-v1`),
-`vision` (the three screen-blur models, `models-vision-v1`, bundled in the Linux desktop app).
+`vision` (the three screen-blur models, `models-vision-v2`, bundled in the Linux desktop app).
 
 Why not the alternatives:
 

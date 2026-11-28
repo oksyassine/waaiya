@@ -13,7 +13,7 @@ from imvision import Cover, Vision, WOMEN
 layout = sys.argv[1]; TS = [0.98, 0.999]
 gt = B.read_gt(); full = os.path.join(B.DATA, "crops/validation/full")
 rep = [i for i in sorted(gt) if B.half(i) == "report" and os.path.exists(os.path.join(full, i + ".jpg"))]
-v = Vision(person=os.path.join(B.ROOT, "person_yolox_nano.onnx"), gender=os.path.join(B.ROOT, "gender_v2.onnx"), policy=WOMEN, threads=4)
+v = Vision(person=os.path.join(B.ROOT, "person_yolox_nano.onnx"), gender=os.path.join(B.ROOT, "gender_v3.onnx"), policy=WOMEN, threads=4)
 cover = Cover(covers_visible=False)
 def contain(a, b):
     ix, iy = min(a[2], b[2]) - max(a[0], b[0]), min(a[3], b[3]) - max(a[1], b[1])

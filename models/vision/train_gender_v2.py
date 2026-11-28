@@ -6,6 +6,8 @@ Differences from train_gender.py (v1):
   - strong low-resolution augmentation (a 16:9 video in a portrait phone shows people 3-4x smaller);
   - loss on the decision the blur makes: binary cross-entropy on p(man)+p(boy), plus a small 4-class term
     (the 4 labels stay: the C side sums man+boy); no label smoothing (it pulls confident scores down, toward the male_clear threshold);
+  - --other: a fifth label from <data>/index_other.csv (prep_other_crops.py: what the detector boxes on animals),
+    on the "leave clear" side of that loss (the C side sums man+boy+other), sampled at --other-share;
   - checkpoint selection on a holdout of *train* images (never on the validation images the scorer uses):
     men left clear when at most 0.5% of women/girls are left clear;
   - pretrained weights only from Hugging Face safetensors (no pickles); mean/std from the timm pretrained_cfg;
@@ -33,18 +35,20 @@ import torch.nn.functional as F
 from PIL import Image, ImageFilter
 from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 
-LABELS = ["woman", "man", "girl", "boy"]
-MALE, FEMALE = [1, 3], [0, 2]
+LABELS = ["woman", "man", "girl", "boy", "other"]  # "other" only with --other (the model then has 5 outputs)
+MALE, FEMALE, OTHER = [1, 3], [0, 2], 4
+CLEAR = MALE + [OTHER]  # the C side leaves a box clear when these sum to >= male_clear
 CONTEXT = 0.10  # im_vision.c classify()
 
 
-def read_index(root):
+def read_index(root, other=False):
     tr, ho = [], []
-    with open(os.path.join(root, "index.csv"), newline="") as f:
-        for r in csv.DictReader(f):
-            item = (os.path.join(root, r["crop"]), LABELS.index(r["label"]),
-                    tuple(float(r[k]) for k in ("bx0", "by0", "bx1", "by1")), float(r["h_frame"]))
-            (ho if r["holdout"] == "1" else tr).append(item)
+    for name in ["index.csv"] + (["index_other.csv"] if other else []):
+        with open(os.path.join(root, name), newline="") as f:
+            for r in csv.DictReader(f):
+                item = (os.path.join(root, r["crop"]), LABELS.index(r["label"]),
+                        tuple(float(r[k]) for k in ("bx0", "by0", "bx1", "by1")), float(r["h_frame"]))
+                (ho if r["holdout"] == "1" else tr).append(item)
     return tr, ho
 
 
@@ -106,12 +110,13 @@ def to_input(x, mean, std, train):
 
 
 def male_logit(logits):
-    return torch.logsumexp(logits[:, MALE], 1) - torch.logsumexp(logits[:, FEMALE], 1)
+    """log p(leave clear) - log p(woman or girl): man+boy, and other when the model has it."""
+    return torch.logsumexp(logits[:, [c for c in CLEAR if c < logits.shape[1]]], 1) - torch.logsumexp(logits[:, FEMALE], 1)
 
 
 def metrics(pm, y):
-    female = np.isin(y, FEMALE)
-    pf, pmm = pm[female], pm[~female]
+    female, other = np.isin(y, FEMALE), y == OTHER
+    pf, pmm, po = pm[female], pm[~female & ~other], pm[other]
     order = np.concatenate([pf, pmm]).argsort().argsort() + 1
     auc = (order[len(pf):].sum() - len(pmm) * (len(pmm) + 1) / 2) / max(1, len(pf) * len(pmm))
     rep = {"n_female": int(len(pf)), "n_male": int(len(pmm)), "auc": float(auc),
@@ -121,6 +126,10 @@ def metrics(pm, y):
         rep["at_women_clear"][str(q)] = {"male_clear": t, "men_left_clear": float((pmm > t).mean())}
     for t in (0.9, 0.95, 0.98, 0.99, 0.995, 0.999):
         rep["thresholds"][str(t)] = {"women_left_clear": float((pf >= t).mean()), "men_left_clear": float((pmm >= t).mean())}
+        if len(po):
+            rep["thresholds"][str(t)]["other_left_clear"] = float((po >= t).mean())
+    if len(po):  # animals left clear at the 0.5% women point
+        rep["other_left_clear"] = float((po > rep["at_women_clear"]["0.005"]["male_clear"]).mean())
     return rep
 
 
@@ -136,12 +145,12 @@ def predict(net, loader, mean, std, dev, amp):
     return torch.cat(ps).numpy(), torch.cat(ys).numpy()
 
 
-def build(arch, tag):
+def build(arch, tag, n_labels):
     """timm model with ImageNet weights from the Hugging Face safetensors file (no pickle)."""
     from huggingface_hub import hf_hub_download
     from safetensors.torch import load_file
 
-    net = timm.create_model(f"{arch}.{tag}" if tag else arch, pretrained=False, num_classes=len(LABELS))
+    net = timm.create_model(f"{arch}.{tag}" if tag else arch, pretrained=False, num_classes=n_labels)
     pc = net.pretrained_cfg
     if tag:
         sd = load_file(hf_hub_download(pc["hf_hub_id"], "model.safetensors"))
@@ -170,6 +179,8 @@ def main():
     ap.add_argument("--aux", type=float, default=0.2, help="weight of the 4-class loss")
     ap.add_argument("--ema", type=float, default=0.9995)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--other", action="store_true", help="add the 'other' label from <data>/index_other.csv")
+    ap.add_argument("--other-share", type=float, default=0.2, help="share of each batch drawn from the other crops")
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     a = ap.parse_args()
     random.seed(0)
@@ -180,18 +191,25 @@ def main():
     amp = dev.type == "cuda"
     size = (a.height, a.width)
 
-    train, hold = read_index(a.data)
-    counts = np.bincount([y for _, y, _, _ in train], minlength=4)
-    print(f"train {dict(zip(LABELS, counts.tolist()))}, holdout {len(hold)}", flush=True)
-    side = np.array([counts[0] + counts[2], counts[1] + counts[3]], np.float64)
-    wts = [1.0 / side[0 if y in FEMALE else 1] for _, y, _, _ in train]
+    labels = LABELS if a.other else LABELS[:4]
+    train, hold = read_index(a.data, a.other)
+    counts = np.bincount([y for _, y, _, _ in train], minlength=len(labels))
+    print(f"train {dict(zip(labels, counts.tolist()))}, holdout {len(hold)}", flush=True)
+    # equal female and male sides; with --other, other crops make up other_share of the samples
+    share = {0: 0.5, 1: 0.5, 2: 0.0}
+    if a.other:
+        assert counts[OTHER], "no other crops in index_other.csv"
+        share = {0: (1 - a.other_share) / 2, 1: (1 - a.other_share) / 2, 2: a.other_share}
+    group = lambda y: 2 if y == OTHER else 0 if y in FEMALE else 1  # noqa: E731
+    size_of = {0: counts[0] + counts[2], 1: counts[1] + counts[3], 2: counts[OTHER] if a.other else 1}
+    wts = [share[group(y)] / size_of[group(y)] for _, y, _, _ in train]
     sampler = WeightedRandomSampler(wts, num_samples=a.epoch_size or len(train), replacement=True)
     kw = dict(num_workers=a.workers, pin_memory=amp, persistent_workers=a.workers > 0)
     tl = DataLoader(Crops(train, size, "train"), batch_size=a.batch, sampler=sampler, drop_last=True, **kw)
     hl = DataLoader(Crops(hold, size, "eval"), batch_size=512, **kw)
     ll = DataLoader(Crops(hold, size, "lowres"), batch_size=512, **kw)
 
-    net, mean_l, std_l = build(a.arch, a.tag)
+    net, mean_l, std_l = build(a.arch, a.tag, len(labels))
     print(f"{a.arch}.{a.tag}: mean {mean_l} std {std_l}", flush=True)
     net = net.to(dev).to(memory_format=torch.channels_last)
     ema = copy.deepcopy(net).eval()
@@ -220,7 +238,7 @@ def main():
             y = y.to(dev, non_blocking=True)
             with torch.autocast("cuda", dtype=torch.float16, enabled=amp):
                 logits = net(x).float()
-            loss = F.binary_cross_entropy_with_logits(male_logit(logits), (y % 2 == 1).float()) \
+            loss = F.binary_cross_entropy_with_logits(male_logit(logits), ((y % 2 == 1) | (y == OTHER)).float()) \
                 + a.aux * F.cross_entropy(logits, y)
             opt.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
@@ -242,7 +260,7 @@ def main():
                 done = True
                 break
         # save before the (slower) evaluation, so a killed session still leaves weights
-        meta = {"labels": LABELS, "size": list(size), "mean": mean_l, "std": std_l, "arch": a.arch}
+        meta = {"labels": labels, "size": list(size), "mean": mean_l, "std": std_l, "arch": a.arch}
         torch.save({"state_dict": ema.state_dict(), **meta}, os.path.join(a.out, f"{name}_last.pt"))
         rep = {"epoch": ep, "step": step, "minutes": (time.time() - t0) / 60, "train_loss": tot / max(1, n)}
         for tag_, m in (("raw", net), ("ema", ema)):

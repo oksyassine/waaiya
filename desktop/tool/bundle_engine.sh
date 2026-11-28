@@ -10,14 +10,14 @@
 #   engine/models/dfn3/dfn3_stream_int8.{onnx,state_init.bin}   (+ models/detector/detector_v1.onnx if present)
 #   engine/VERSION   app version + hash of the files above; the app reinstalls when the installed one differs
 # Screen blur (run from the bundle by the app, never installed, so left out of VERSION):
-#   engine/build/im-blur   engine/models/vision/{person_yolox_nano,gender_v2,nsfw_marqo_int8}.onnx
+#   engine/build/im-blur   engine/models/vision/{person_yolox_nano,gender_v3,nsfw_marqo_int8}.onnx
 set -euo pipefail
 BUNDLE="${1:?usage: $0 <desktop bundle dir>}"
 REPO="$(cd "$(dirname "$0")/../.." && pwd)"
 ORT="${ORT:-$REPO/third_party/onnxruntime}"
 E="$BUNDLE/engine"
 
-VISION=(person_yolox_nano.onnx gender_v2.onnx nsfw_marqo_int8.onnx)
+VISION=(person_yolox_nano.onnx gender_v3.onnx nsfw_marqo_int8.onnx)
 for f in build/im-stream build/islamic_mute_ladspa.so models/dfn3/dfn3_stream_int8.onnx \
          models/dfn3/dfn3_stream_int8.state_init.bin build/im-blur "${VISION[@]/#/models/vision/}"; do
     [ -f "$REPO/$f" ] || { echo "missing $f: run scripts/fetch_deps.sh and make all first" >&2; exit 1; }
@@ -59,7 +59,7 @@ for f in LICENSE ThirdPartyNotices.txt; do
     [ -f "$ORT/$f" ] || { echo "missing $ORT/$f (ONNX Runtime licence texts)" >&2; exit 1; }
     cp "$ORT/$f" "$L/onnxruntime-${f%.txt}.txt"
 done
-# screen blur models: YOLOX (Apache-2.0, Megvii), Marqo nudity classifier (Apache-2.0, model card); gender_v2 is ours
+# screen blur models: YOLOX (Apache-2.0, Megvii), Marqo nudity classifier (Apache-2.0, model card); gender_v3 is ours
 cp "$REPO/models/vision/licences/YOLOX-LICENSE.txt" "$REPO/models/vision/licences/Marqo-nsfw-image-detection-384-NOTICE.txt" "$L/"
 cp "$REPO/android/app/licences/Apache-2.0-LICENSE.txt" "$L/"  # the Apache text of YOLOX and Marqo
 [ -f "$E/models/detector/detector_v1.onnx" ] && cp "$REPO/models/detector/efficientat/LICENSE" "$L/EfficientAT-LICENSE.txt"

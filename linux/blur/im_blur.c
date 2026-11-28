@@ -493,7 +493,7 @@ int main(int argc, char **argv) {
     }
     if (!models[0]) default_models_dir(models, sizeof models);
     snprintf(B.person, sizeof B.person, "%s/person_yolox_nano.onnx", models);
-    snprintf(B.gender, sizeof B.gender, "%s/gender_v2.onnx", models);
+    snprintf(B.gender, sizeof B.gender, "%s/gender_v3.onnx", models);
     snprintf(B.nsfw, sizeof B.nsfw, "%s/nsfw_marqo_int8.onnx", models);
 
     if (!ib_sys_init()) return 1;

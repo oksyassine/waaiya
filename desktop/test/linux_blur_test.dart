@@ -39,7 +39,7 @@ void main() {
     Directory('${engine.path}/models/vision').createSync(recursive: true);
     final exe = File('${engine.path}/build/im-blur')..writeAsStringSync(fakeHelper);
     Process.runSync('chmod', ['+x', exe.path]);
-    for (final m in ['person_yolox_nano.onnx', 'gender_v2.onnx', 'nsfw_marqo_int8.onnx']) {
+    for (final m in ['person_yolox_nano.onnx', 'gender_v3.onnx', 'nsfw_marqo_int8.onnx']) {
       File('${engine.path}/models/vision/$m').writeAsStringSync('x');
     }
     log = '${dir.path}/helper';
@@ -108,8 +108,8 @@ void main() {
 
   test('found with the helper; a missing model keeps the blur (the helper says models_missing), not hidden', () {
     expect(LinuxBlur.find(engineDir: engine)!.missingModels, isEmpty);
-    File('${engine.path}/models/vision/gender_v2.onnx').deleteSync();
-    expect(LinuxBlur.find(engineDir: engine)!.missingModels, ['gender_v2.onnx']);
+    File('${engine.path}/models/vision/gender_v3.onnx').deleteSync();
+    expect(LinuxBlur.find(engineDir: engine)!.missingModels, ['gender_v3.onnx']);
     expect(LinuxBlur.find(engineDir: Directory('${dir.path}/nowhere')), isNull);
     expect(BlurReport.parse('{"state":"on","error":"","uncovered":2}')!.uncovered, 2);
     expect(BlurReport.parse('{"state":"on","error":""}')!.uncovered, 0);

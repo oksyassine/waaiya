@@ -1,7 +1,9 @@
 /* Times im_vision_detect_shapes on real frames, on the machine it runs on (a phone through adb, or this one).
  *
- *   bench_vision PERSON GENDER|- SEG|- NSFW|- FRAMES THREADS [TILES_PER_FRAME]
+ *   bench_vision PERSON GENDER|- SEG|- NSFW|- FRAMES THREADS [TILES_PER_FRAME [REUSE_FRAMES [HOLD]]]
  *
+ * HOLD: each frame is run this many times in a row (default 1), a screen that stays still for a moment; with
+ * REUSE_FRAMES (im_vision_params.reuse_frames) covered people then keep their verdict between those runs.
  * FRAMES: raw file, int32 width, int32 height, then RGBA8888 frames of that size (bench_frames.py writes it).
  * Each frame is run twice (warm-up pass over all frames first); prints the median and p90 ms per frame and how many
  * people were found per frame. "-" leaves a model out (no gender model = every person covered, no classifying).
@@ -35,7 +37,7 @@ static const char *opt(const char *s) { return strcmp(s, "-") ? s : NULL; }
 
 int main(int argc, char **argv) {
     if (argc < 7) {
-        fprintf(stderr, "usage: %s PERSON GENDER|- SEG|- NSFW|- FRAMES THREADS [TILES_PER_FRAME]\n", argv[0]);
+        fprintf(stderr, "usage: %s PERSON GENDER|- SEG|- NSFW|- FRAMES THREADS [TILES_PER_FRAME [REUSE_FRAMES [HOLD]]]\n", argv[0]);
         return 2;
     }
     FILE *f = fopen(argv[5], "rb");
@@ -61,26 +63,31 @@ int main(int argc, char **argv) {
         im_vision_params p;
         im_vision_get_params(v, &p);
         p.tiles_per_frame = atoi(argv[7]);
+        if (argc > 8) p.reuse_frames = atoi(argv[8]);
         im_vision_set_params(v, &p);
     }
 
+    int hold = argc > 9 && atoi(argv[9]) > 1 ? atoi(argv[9]) : 1;
     static im_vrect out[128];
     static im_vshape shapes[128];
-    double *ms = malloc(sizeof(double) * n * 2);
+    double *ms = malloc(sizeof(double) * n * 2 * hold);
     long people = 0;
     for (int i = 0; i < n; i++) /* warm-up */
         im_vision_detect_shapes(v, frames + fsz * i, wh[0], wh[1], wh[0] * 4, 0, out, shapes, 128);
-    for (int k = 0; k < 2 * n; k++) {
+    const int calls = 2 * n * hold;
+    for (int k = 0; k < calls; k++) {
         double t = now_ms();
-        int m = im_vision_detect_shapes(v, frames + fsz * (k % n), wh[0], wh[1], wh[0] * 4, cfg.nsfw_model != NULL,
+        int m = im_vision_detect_shapes(v, frames + fsz * (k / hold % n), wh[0], wh[1], wh[0] * 4, cfg.nsfw_model != NULL,
                                         out, shapes, 128);
         ms[k] = now_ms() - t;
         if (m < 0) { fprintf(stderr, "detect failed: %s\n", im_vision_error(v)); return 1; }
         people += m;
     }
-    qsort(ms, 2 * n, sizeof *ms, cmp);
-    printf("%d frames %dx%d, threads %s: median %.1f ms, p90 %.1f ms, %.1f people/frame\n", n, wh[0], wh[1], argv[6],
-           ms[n], ms[(int)(2 * n * 0.9)], people / (2.0 * n));
+    qsort(ms, calls, sizeof *ms, cmp);
+    double mean = 0;
+    for (int k = 0; k < calls; k++) mean += ms[k] / calls;
+    printf("%d frames %dx%d (x%d), threads %s: median %.1f ms, mean %.1f ms, p90 %.1f ms, %.1f people/frame\n", n,
+           wh[0], wh[1], hold, argv[6], ms[calls / 2], mean, ms[(int)(calls * 0.9)], people / (double)calls);
     im_vision_destroy(v);
     free(ms);
     free(frames);

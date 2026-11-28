@@ -37,3 +37,37 @@ Tune half (2649 women), animal gate on:
 | 0.25 | 7.0% | 91.2% | 73.9% | 10.2% |
 
 Every step trades women (small ones most) for a few animal covers: not worth it.
+
+## In progress: an "other" label in the classifier (2026-11-27)
+
+The remaining false covers are animals the detector's COCO classes do not name. Instead of retraining the detector,
+the classifier gets a fifth label, "other", that the engine leaves clear like a man (`im_vision.c` sums man, boy
+and other; same male_clear 0.999). Training crops: `models/vision/prep_other_crops.py` runs the person detector on
+Open Images **train** photos of animals and keeps a box only when it matches an annotator's animal box (IoU >=
+0.6). That gate matters: on a contact sheet of 60 detector boxes from validation photos with no person label, many
+were real people Open Images did not box (drivers, passers-by), and annotators also put the generic Animal / Mammal /
+Carnivore boxes on people, so images with those are skipped, as are animals people ride. Kaggle run
+`waaiya-blur-gender` v1 trains `gender_v3_other` and a control `gender_v3_ctrl` (same data without "other").
+
+Animal test set rebuilt (the earlier list was not kept): the first 600 validation images by md5(id) with an animal
+box and no person-like or generic animal box, ids in `eval/results/blur_animals_ids.txt`. Baseline, shipped
+detector + gender_v2 at 0.999: images with a cover 13.2%, screen covered 5.6%. People (report half): women
+covered 95.9%, men left clear 8.9%.
+
+Rule, fixed before the run finished: ship `gender_v3_other` only if, at 0.999 on the report half, women covered
+stays >= 95.7% and small women lose at most 2 points, and animal images with a cover drop clearly below both
+gender_v2 and the control.
+
+## Result (2026-11-28): gender_v3_other passes the rule
+
+Kaggle `waaiya-blur-gender` v1, best epoch 8 for both runs. Exported with `export_vision.py gender --arch
+mobilenetv3_large_100`; shipped detector, male_clear 0.999, rectangles.
+
+| classifier | animal images with a cover | animal screen covered | women covered (report) | small women covered | men left clear |
+|---|---|---|---|---|---|
+| gender_v2 | 13.2% | 5.6% | 95.9% | 90.9% | 8.9% |
+| gender_v3_ctrl | 13.2% | 5.6% | 96.0% | 90.9% | 8.3% |
+| gender_v3_other | **6.5%** | **1.6%** | 95.8% | 90.9% | 7.3% |
+
+Rule check: women 95.8% >= 95.7%, small women unchanged, animal covers halved against both. Cost: men left clear
+8.9% -> 7.3% (more men covered), screen covered 68.9% -> 70.2%.

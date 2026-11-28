@@ -163,7 +163,7 @@ val requiredModels = linkedMapOf(
     // -PimBlurPerson / -PimBlurGender / -PimBlurNsfw override; in a debug build a missing file just leaves that part out
     // (no gender model = every person covered; no nudity model = the nudity option reports "not available").
     "blur_person.onnx" to modelFile("imBlurPerson", modelVision.resolve("person_yolox_nano.onnx")),
-    "blur_gender.onnx" to modelFile("imBlurGender", modelVision.resolve("gender_v2.onnx")),
+    "blur_gender.onnx" to modelFile("imBlurGender", modelVision.resolve("gender_v3.onnx")),
     "blur_nsfw.onnx" to modelFile("imBlurNsfw", modelVision.resolve("nsfw_marqo_int8.onnx")),
     // Person segmenter (-PimBlurSeg): covers follow each person's outline; without it, whole rectangles.
     "blur_seg.onnx" to modelFile("imBlurSeg", modelVision.resolve("seg.onnx")),

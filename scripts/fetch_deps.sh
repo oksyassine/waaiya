@@ -20,8 +20,8 @@ cd "$(dirname "$0")/.."
 
 REPO="${WAAIYA_REPO:-oksyassine/waaiya}"
 MODELS_TAG=models-v1
-VISION_TAG=models-vision-v1
-VISION_FILES=(person_yolox_nano.onnx gender_v2.onnx nsfw_marqo_int8.onnx seg.onnx)
+VISION_TAG=models-vision-v2
+VISION_FILES=(person_yolox_nano.onnx gender_v3.onnx nsfw_marqo_int8.onnx seg.onnx)
 DETECTOR=detector_v1.onnx
 ORT_VERSION=1.19.2
 # ONNX Runtime comes from Microsoft's NuGet package (the GitHub release archives answer 404 since 2026-11-18). The

@@ -158,8 +158,8 @@ void main() {
     expect(blurStatus(l, s(BlurState.onCoversVisible, uncovered: 1)), (l.blurStatusUncovered, true));
     expect(blurStatus(l, s(BlurState.onCoversVisible)), (l.blurStatusOnVisibleDesktop, false));
     expect(blurStatus(l, s(BlurState.modelsMissing))!.$1, l.blurStatusModelsMissingDesktop);
-    expect(blurStatus(l, s(BlurState.modelsMissing, e: const BackendMessage('models_missing', 'gender_v2.onnx')))!.$1,
-        contains('gender_v2.onnx'));
+    expect(blurStatus(l, s(BlurState.modelsMissing, e: const BackendMessage('models_missing', 'gender_v3.onnx')))!.$1,
+        contains('gender_v3.onnx'));
   });
 
   test('snapshot: the 0.2.9 keys round-trip and default when missing', () async {
