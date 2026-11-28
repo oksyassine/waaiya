@@ -93,22 +93,24 @@ def _init(out, split, threads):
     _G.update(out=out, split=split, pool=ThreadPoolExecutor(threads))
 
 
-def one(job):
-    image_id, boxes, hold = job
-    data = fetch(_G["split"], image_id)
-    if data is None:
-        return []
+def frame(data, image_id):
+    """The photo as the phone's screen frame (long side FRAME_LONG, RGB), or None for a broken image."""
     try:
         im = Image.open(io.BytesIO(data))
         s = FRAME_LONG / max(im.size)
         W, H = max(1, round(im.size[0] * s)), max(1, round(im.size[1] * s))
         im.draft("RGB", (W, H))  # JPEG DCT downscale: faster decode, still >= the frame size
-        im = im.convert("RGB").resize((W, H), Image.BILINEAR)
+        return im.convert("RGB").resize((W, H), Image.BILINEAR)
     except Exception as e:  # noqa: BLE001 - a broken image: skip it
         print(f"skip {image_id}: {e}", file=sys.stderr)
-        return []
+        return None
+
+
+def cut(im, image_id, boxes, hold, out, folder="crops"):
+    """Saves each (label, x0, y0, x1, y1) box (0..1 of the frame) with MARGIN context; returns index.csv rows."""
+    W, H = im.size
     rows = []
-    sub = os.path.join(_G["out"], "crops", image_id[:2])
+    sub = os.path.join(out, folder, image_id[:2])
     os.makedirs(sub, exist_ok=True)
     for n, (lab, x0, y0, x1, y1) in enumerate(boxes):
         bx0, by0, bx1, by1 = x0 * W, y0 * H, x1 * W, y1 * H
@@ -122,11 +124,18 @@ def one(job):
         k = CROP_LONG / max(cw, ch)
         if k < 1:
             c = c.resize((max(1, round(cw * k)), max(1, round(ch * k))), Image.BILINEAR)
-        name = f"crops/{image_id[:2]}/{image_id}_{n}.jpg"
-        c.save(os.path.join(_G["out"], name), quality=90)
+        name = f"{folder}/{image_id[:2]}/{image_id}_{n}.jpg"
+        c.save(os.path.join(out, name), quality=90)
         rows.append([image_id, lab, int(hold), f"{(bx0 - cx0) / cw:.4f}", f"{(by0 - cy0) / ch:.4f}",
                      f"{(bx1 - cx0) / cw:.4f}", f"{(by1 - cy0) / ch:.4f}", f"{bh / H:.4f}", name])
     return rows
+
+
+def one(job):
+    image_id, boxes, hold = job
+    data = fetch(_G["split"], image_id)
+    im = frame(data, image_id) if data is not None else None
+    return [] if im is None else cut(im, image_id, boxes, hold, _G["out"])
 
 
 def batch(jobs):

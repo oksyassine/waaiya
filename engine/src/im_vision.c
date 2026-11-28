@@ -25,6 +25,8 @@ typedef struct {
     int ok;
 } vmodel;
 
+typedef struct { im_vrect r; int age; } vseen; /* a person covered by an earlier call (prm.reuse_frames) */
+
 #define MAX_CAND 512 /* person candidates per frame, whole frame and tiles together */
 
 struct im_vision {
@@ -40,7 +42,11 @@ struct im_vision {
     char err[512];
     im_vrect cand[MAX_CAND]; /* person candidates of the frame being detected (detect_people) */
     int tile_next;           /* next tile to run when tiles take turns (prm.tiles_per_frame) */
+    vseen seen[MAX_DETS];    /* people covered by the last call, with how many calls their verdict was reused */
+    int n_seen;
 };
+
+#define REUSE_IOU 0.6f
 
 static void seterr(im_vision *v, const char *what, OrtStatus *st) {
     const char *m = st ? v->api->GetErrorMessage(st) : "";
@@ -130,7 +136,7 @@ static void unload(im_vision *v, vmodel *m) {
 im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errlen) {
     im_vision *v = calloc(1, sizeof *v);
     if (!v) { if (err && errlen) snprintf(err, errlen, "out of memory"); return NULL; }
-    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0, 1, 0.15f, 0.25f, 6, 48};
+    v->prm = (im_vision_params){0.10f, 0.5f, 0.999f, 0.6f, 12, 3, 0, 0, 0, 1, 0.15f, 0.25f, 6, 48, 0};
     v->last_nsfw = -1;
     v->nsfw_idx = -1;
     v->policy = cfg ? cfg->policy : 0;
@@ -147,8 +153,9 @@ im_vision *im_vision_create(const im_vision_config *cfg, char *err, size_t errle
     load(v, &v->person, cfg->person_model, "detector", th);
     if (load(v, &v->gender, cfg->gender_model, "classifier", th)) {
         for (int i = 0; i < v->gender.n_labels; i++)
+            /* "other": not a person (an animal the detector took for one), left clear like a man */
             if (!strcmp(v->gender.labels[i], "man") || !strcmp(v->gender.labels[i], "boy") ||
-                !strcmp(v->gender.labels[i], "male"))
+                !strcmp(v->gender.labels[i], "male") || !strcmp(v->gender.labels[i], "other"))
                 v->male_idx[v->n_male++] = i;
         if (!v->n_male) { seterr(v, "gender model has no 'man' label", NULL); unload(v, &v->gender); }
     }
@@ -387,7 +394,7 @@ static int detect_people(im_vision *v, const uint8_t *rgba, int w, int h, int st
     return n;
 }
 
-/* p(man or boy) for one person box, with the same 10% context as training (fetch_openimages.py). */
+/* p(man, boy or other: leave clear) for one person box, with the same 10% context as training (fetch_openimages.py). */
 static float classify(im_vision *v, const uint8_t *rgba, int w, int h, int stride, const im_vrect *r) {
     vmodel *m = &v->gender;
     float bw = (r->x1 - r->x0) * w, bh = (r->y1 - r->y0) * h;
@@ -502,7 +509,8 @@ int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int
                             im_vshape *shapes, int max) {
     if (!v || !rgba || w < 8 || h < 8 || stride < w * 4 || !out || max < 1) return -1;
     v->err[0] = 0;
-    int n = 0, failed = 0, nseg = 0;
+    int n = 0, failed = 0, nseg = 0, n_seen = 0, used[MAX_DETS] = {0};
+    vseen seen[MAX_DETS];
     if ((v->policy & IM_VISION_WOMEN) && v->person.ok) {
         im_vrect people[MAX_DETS];
         int np = detect_people(v, rgba, w, h, stride, people, MAX_DETS);
@@ -513,7 +521,23 @@ int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int
                 im_vrect r = people[i];
                 r.kind = IM_VK_UNSURE; /* fail-closed default */
                 if (v->gender.ok && i < v->prm.max_people) {
-                    float pm = classify(v, rgba, w, h, stride, &r);
+                    /* reuse: the best-overlapping person covered last call, while young enough, and only when
+                       their p(man) still means "cover" at today's male_clear (clear verdicts are never reused) */
+                    int best = -1, age = 0;
+                    float bi = REUSE_IOU;
+                    for (int j = 0; v->prm.reuse_frames > 0 && j < v->n_seen; j++) {
+                        float o = iou(&r, &v->seen[j].r);
+                        if (!used[j] && o >= bi && v->seen[j].age < v->prm.reuse_frames &&
+                            v->seen[j].r.p_male < v->prm.male_clear) { bi = o; best = j; }
+                    }
+                    float pm;
+                    if (best >= 0) { used[best] = 1; pm = v->seen[best].r.p_male; age = v->seen[best].age + 1; }
+                    else pm = classify(v, rgba, w, h, stride, &r);
+                    if (pm >= 0 && pm < v->prm.male_clear && v->prm.reuse_frames > 0 && n_seen < MAX_DETS) {
+                        seen[n_seen].r = r;
+                        seen[n_seen].r.p_male = pm;
+                        seen[n_seen++].age = age;
+                    }
                     if (pm < 0) failed = 1;
                     else {
                         r.p_male = pm;
@@ -535,6 +559,8 @@ int im_vision_detect_shapes(im_vision *v, const uint8_t *rgba, int w, int h, int
             }
         }
     }
+    memcpy(v->seen, seen, (size_t)n_seen * sizeof seen[0]); /* a failed or empty call forgets everyone */
+    v->n_seen = failed ? 0 : n_seen;
     if ((v->policy & IM_VISION_NSFW) && v->nsfw.ok && run_nsfw) {
         letterbox(&v->nsfw, rgba, w, h, stride);
         OrtValue *ov = NULL;

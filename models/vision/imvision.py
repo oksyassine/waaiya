@@ -43,7 +43,7 @@ class Params(C.Structure):
                 ("tiles_per_frame", C.c_int), ("nest", C.c_float),
                 ("tile_score", C.c_float), ("seg", C.c_int), ("seg_threshold", C.c_float),
                 ("seg_min_fill", C.c_float), ("seg_max_people", C.c_int),
-                ("seg_min_px", C.c_int)]
+                ("seg_min_px", C.c_int), ("reuse_frames", C.c_int)]  # append only: matches im_vision.h
 
 
 class CoverParams(C.Structure):

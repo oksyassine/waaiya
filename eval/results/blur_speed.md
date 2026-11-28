@@ -37,3 +37,26 @@ per crop, about 90% Conv.
 
   The int8 detector misses women; the int8 classifier loses the extreme confidence male_clear 0.999 needs.
   Quantization-aware training could fix the classifier, but the speed gain does not justify it now.
+
+## Kept: covered people keep their verdict for a few frames (2026-11-27)
+
+`im_vision_params.reuse_frames` (engine default 0; the Android app sets 3 in `vision_jni.c`): a person covered on
+the previous frame (woman or unsure) whose box overlaps by IoU >= 0.6 keeps that p(man) instead of running the
+classifier again, for up to 3 frames; then they are classified again. People left clear are classified on every
+frame, and a reused p(man) that would now mean "clear" (male_clear raised) is classified again: reuse can only
+keep someone covered a little longer, never uncover anyone. A man who turns clear can wait up to 3 frames longer.
+The evaluation tools keep 0 (unrelated photos must not share verdicts). `models/vision/test_reuse.py` checks it
+through the C library (200 photos: 853 covered people reused, then classified again; 66 clear people never reused).
+
+This PC, 1 thread, the same 30 frames, each run 4 times in a row (a screen that stays still for a moment;
+`bench_vision ... TILES_PER_FRAME REUSE_FRAMES 4`), mean ms per call over 3 interleaved rounds:
+
+| pipeline | reuse 0 | reuse 3 |
+|---|---|---|
+| detector only, tiles take turns | 50 | |
+| + gender_v2, tiles take turns (slow phones) | 72 | 58 (-19%) |
+| + gender_v2, 3 tiles every frame | 127 | 108 (-15%) |
+
+The classifier's share drops from ~23 to ~9 ms. Not measured on the phone; on the MT6769 (gender ~190 ms of
+~450 ms with tiles taking turns) the same share would be ~450 -> ~330 ms on a still screen, less while scrolling
+(boxes move and match less). The detector is now most of the frame.

@@ -29,6 +29,12 @@ JNIEXPORT jlong JNICALL Java_org_waaiya_app_Vision_nativeCreate(JNIEnv *env, jcl
     im_vision_config cfg = {p, g, n, threads, (unsigned)policy, sg};
     char err[512] = {0};
     b->v = im_vision_create(&cfg, err, sizeof err);
+    if (b->v) { /* frames of one screen: a covered person keeps their verdict for 3 frames (only ever covers) */
+        im_vision_params prm;
+        im_vision_get_params(b->v, &prm);
+        prm.reuse_frames = 3;
+        im_vision_set_params(b->v, &prm);
+    }
     b->c = im_cover_create(coversVisible ? 1 : 0);
     unstr(env, person, p);
     unstr(env, gender, g);
