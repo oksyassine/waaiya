@@ -1,6 +1,6 @@
 # Progress (blur side)
 
-Updated 2026-11-25. Project-wide status lives in `docs/STATUS.md`; this file tracks the blur work.
+Updated 2026-11-27. Project-wide status lives in `docs/STATUS.md`; this file tracks the blur work.
 
 ## Done (verified)
 - Kaggle runner `kaggle/run_blur.sh gender|seg`: push, wait, download (5ad0a21, in main via #34).
@@ -21,19 +21,27 @@ Updated 2026-11-25. Project-wide status lives in `docs/STATUS.md`; this file tra
 - Runtime-like crop retrain dropped: `blur_gender_v2.md` diagnostic b shows no crop mismatch.
 - Screen page + blur without Shizuku: PR #45 merged into main (2026-11-24), merged into blur-feature (67a6753).
 
+- Verdict reuse for covered people (2026-11-27, `blur_speed.md`): classifier time ~-60% on a still screen, frame
+  -15..-19% on this PC; Android sets reuse_frames 3; emulator blur check 25/25; `test_reuse.py`.
+
 ## Implemented, not verified
 - Slow phones drop person outlines (69295d4, JNI name fix 9585ac0): ScreenBlur, tiles already taking turns and
   still > 150 ms a frame over 10 frames -> rectangles for the session. Debug APK builds, Android unit tests 142
   passed (before the C-only fix 9585ac0), installed on the MT6769 phone; never run there (no blur log yet).
 - Screen page (PR #45) on a real phone: still not looked at.
 
+- "other" label (animals) in the classifier (2026-11-28, `blur_animals.md`): Kaggle v1 finished; gender_v3_other
+  passes the rule fixed before the run: animal photos with a cover 13.2% -> 6.5%, women covered 95.8%, small women
+  unchanged, men left clear 8.9% -> 7.3%. x86 debug APK with it (-PimBlurGender): emu_check --blur ALL PASSED.
+
 ## In progress
-- Nothing running. Local only (gitignored): `kaggle/blur-gender/out/`, `models/vision/v2b/`, `eval/results/v2b/`.
+- Switch every platform to gender_v3.onnx (local, gitignored, in models/vision/): code still names gender_v2.onnx;
+  goes with release `models-vision-v2` (needs the user's OK). The C changes for "other" + reuse are uncommitted.
 
 ## Next
 - On the phone: start blur, scroll photos 30 s; logcat should show "tiles now take turns" then "person outlines
   off"; frames ~450 ms (expected, not measured).
-- Push blur-feature (28 commits ahead of origin/blur-feature, includes main).
+- Commit the uncommitted blur work (reuse, "other" label, eval docs); open a PR (PR #53 already merged up to 547597c).
 - Publish the animal-gated detector (new release `models-vision-v2`, needs the user's OK).
 - `test_vision_engine.py` fails on main's detector too (worst IoU 0.63 on 20 images): predates tiles/nest.
 - Engine-side handling of extra/part detection boxes (the main cap on men clear), or retrain the segmenter.

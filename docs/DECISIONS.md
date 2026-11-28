@@ -39,3 +39,16 @@
 - Why: on an MT6769 the app runs ~700 ms/frame with tiles taking turns; the segmenter is ~250 ms of it. Rectangles cover the same women.
 - Rejected: XNNPACK EP (-7%), pinning to big cores (no change), static int8 QDQ (15-35% faster; int8 detector women covered 95.3% -> 93.0%, int8 gender men clear 7.5% -> 4.0%), detector input shaped like the screen (only the whole-frame pass has padding: ~7% of a frame).
 
+
+## 2026-11-27: Covered people keep their classifier verdict for 3 frames (Android)
+- Why: the classifier ran on every person every frame; reusing covering verdicts (IoU >= 0.6) cuts its time ~60% on a still screen (frame -15..-19% on this PC). Only covering verdicts are reused, so it can never uncover anyone.
+- Rejected: reusing clear verdicts (a woman replacing a man in the same spot would stay uncovered for frames); reusing outlines (a stale pose can leave an arm uncovered); on by default in the engine (the evaluation tools feed unrelated photos).
+
+## 2026-11-27: Animals: train an "other" label into the classifier, not a new detector
+- Why: reuses the gender Kaggle pipeline and the same model size; a detector retrain risks small-women recall and costs far more Kaggle time.
+- Rejected: "other" crops from photos merely without person labels (many were real people); generic Animal / Mammal boxes (drawn on people too).
+
+## 2026-11-28: Ship gender_v3_other (5 labels, "other" left clear) in place of gender_v2
+- Why: passed the rule fixed before the run (eval/results/blur_animals.md): animal covers halved, women 95.8% >= 95.7%.
+- Cost accepted: men left clear 8.9% -> 7.3%. Rejected: gender_v3_ctrl (no animal gain, 13.2%).
+- Rename in source waits for the release: fetch_deps.sh downloads by file name, so CI would break before it exists.

@@ -19,3 +19,9 @@
 - After merging main into a branch, new JNI functions keep the old package name in their symbol (`Java_org_islamicmute_app_...`) while main renamed the rest: grep `Java_` names after any package rename; the build does not catch it (crash only at first call).
 - Both Flutter installs here (`~/flutter`, `~/development/flutter`) are 3.47.9. For 3.41.5: `git -C ~/flutter worktree add --detach <dir> 3.41.5`, then `flutter pub get` in ui_module with it, and build with `ANDROID_HOME=~/Android/Sdk` set (no android/local.properties).
 
+- Open Images does not box every person: "no person box/label" photos still hold drivers and passers-by, and the generic Animal / Mammal / Carnivore boxes are also drawn on people. Negatives for "not a person" must match an annotator's specific (non-generic) box.
+- `kaggle kernels push` answers "400 Bad Request" for a ~5 MB notebook (a model embedded as base64); download models inside the notebook instead (a public release URL + sha256).
+- `imvision.Vision.detect_raw` returns views of one ctypes buffer that the next call overwrites; copy (`VRect.from_buffer_copy`) before calling again.
+- `emu_check.py` with an arm64-only APK runs under translation: blur frames take 5-8 s and the blur reports FAILING by design. Build with `-PimX86` for blur checks on an x86 emulator.
+- `kaggle kernels status` with no `~/.kaggle` token says "You must authenticate": load the project's .env first (`set -a; . ./.env; set +a`). The kernel id in kernel-metadata.json has no user part; use `mohammedmoutawakkil/<slug>`.
+- A Flutter worktree in the scratchpad disappears between sessions (git marks it "prunable"): `git -C ~/flutter worktree prune` before adding it again.
