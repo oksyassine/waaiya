@@ -96,6 +96,8 @@ void main() {
     await _open(tester, b);
     expect(find.text(l.moveNewTitle), findsOneWidget);
     expect(find.text(l.moveNewImported), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('move_remove_old')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('move_remove_old')));
     await tester.pumpAndSettle();
     expect(calls, ['move.removeOld']);

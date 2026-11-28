@@ -55,6 +55,8 @@ object Diagnostics {
         appendLine("Chip: ${chip()}, ${Runtime.getRuntime().availableProcessors()} cores, " +
             "ABI ${Build.SUPPORTED_ABIS.joinToString("/")}, RAM ${mem.totalMem / (1 shl 20)} MB (free ${mem.availMem / (1 shl 20)} MB)")
         appendLine("Language: ${Lang.current(ctx)}, user: ${s.gender.ifEmpty { "not chosen" }}")
+        appendLine("Report made ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.ROOT).format(java.util.Date())}, " +
+            "installed from ${installer(ctx)}")
         appendLine()
 
         appendLine("[Setup]")
@@ -63,8 +65,8 @@ object Diagnostics {
             "(helper running: ${yes(HelperDumps.helperReady)})")
         appendLine("Skip screen-share question (PROJECT_MEDIA): ${yes(ctx.hasProjectMediaAppOp())}")
         appendLine("Shizuku: ${ShizukuSetup.state(ctx)}")
-        appendLine("Notification text tile (Android 15+): permission ${yes(ScreenShareProtection.canWrite(ctx))}, " +
-            "on ${yes(Settings(ctx).showNotificationText)}")
+        appendLine("Notification text (Android 15+): permission ${yes(ScreenShareProtection.canWrite(ctx))}, " +
+            "on ${yes(Settings(ctx).showNotificationText)}, Android's protection off now ${yes(ScreenShareProtection.protectionOff(ctx))}")
         appendLine("Last setup: " + SetupLog.report(ctx))
         appendLine("Microphone permission: ${yes(granted(android.Manifest.permission.RECORD_AUDIO))}")
         appendLine("Notifications: ${yes(ctx.getSystemService(NotificationManager::class.java).areNotificationsEnabled())}")
@@ -77,6 +79,8 @@ object Diagnostics {
         val h = FilterService.health
         if (h == null) appendLine("Not running: start filtering, play something for 20 seconds, then open this report again.")
         else {
+            appendLine("Numbers from ${(SystemClock.elapsedRealtime() - FilterService.healthAtMs) / 1000} s ago " +
+                "(the filter updates them every 2 s while it runs)")
             appendLine("Model: ${h.model}, delay ${FilterService.delayMs} ms, mono ${yes(h.mono)}" +
                 (if (h.monoForSpeed) " (stereo chosen, phone too slow for it)" else "") + ", too slow ${yes(h.tooSlow)}")
             appendLine("Speed (a hop must take under 10 ms): last 2 s avg %.1f ms, max %.1f ms, late %.0f%%"
@@ -85,8 +89,12 @@ object Diagnostics {
                 .format(java.util.Locale.ROOT, h.overallAvgMs, h.peakHopMs, h.lateHops, h.busyHops, h.hops))
             appendLine("Output: dropouts ${h.underruns}, waiting ${h.bufferedMs} ms, buffer ${h.bufferFrames} of " +
                 "${h.bufferCapacityFrames} frames (minimum ${h.minBufferFrames}), grown ${h.extraBufferHops}, " +
-                "given back ${h.trimmedHops} hops, keeping ${h.keepHops * 10} ms")
-            appendLine("Capture: level ${h.captureDb} dB, read errors ${h.readErrors}, model errors ${h.engineErrors}")
+                "given back ${h.trimmedHops} hops, added ${h.paddedHops} hops, keeping ${h.keepHops * 10} ms")
+            appendLine("Capture: level ${h.captureDb} dB, waiting " +
+                (if (h.captureWaitingMs < 0) "unknown" else "${h.captureWaitingMs} ms") +
+                ", read errors ${h.readErrors}, model errors ${h.engineErrors}")
+            appendLine("Capture silenced by Android: now ${yes(h.captureSilenced)}, ${h.silencedTimes} time(s), ${h.silencedSec} s in all; " +
+                "sound received ${h.hops / 100} s of ${h.runningSec} s, longest wait ${h.longestGapMs} ms, waits over 3 s: ${h.gaps}")
             appendLine("Women's singing filter: " + if (h.gateShare < 0) "off" else "on, muting %.0f%% of the time".format(java.util.Locale.ROOT, h.gateShare * 100))
             appendLine("Keep singing model: running ${yes(h.keepSinging)}")
             power?.let { p ->
@@ -98,6 +106,8 @@ object Diagnostics {
         appendLine("Keep singing chosen: ${yes(s.keepSinging)}, model bundled: ${yes(ModelStore.hasSinging(ctx))}")
         appendLine("Stereo chosen: ${yes(s.audioStereo)}, starts in mono (learned on this phone): ${yes(s.audioMono)}")
         appendLine("Keep apps silent if filtering stops by itself: ${yes(s.holdSilence)}")
+        appendLine("Stops by itself (newest last):")
+        appendLine(StopLog.report(ctx))
         appendLine("Detector model bundled: ${yes(ModelStore.hasDetector(ctx))}")
         val am = ctx.getSystemService(AudioManager::class.java)
         appendLine("Media playing now (Waaiya's own output counts): ${yes(am.isMusicActive)}, media volume ${am.getStreamVolume(AudioManager.STREAM_MUSIC)}/" +
@@ -127,6 +137,19 @@ object Diagnostics {
             }
         }
         appendLine("Silence apps that block filtering: ${yes(s.silenceUnfilterable)}")
+        // Apps heard unfiltered (FixMistakes): they are left out of the session list above. Each with its uid as this
+        // phone gives it, and what the running capture really leaves out.
+        val off = s.filterOffApps.sorted()
+        appendLine("Apps heard unfiltered: " + if (off.isEmpty()) "none" else off.joinToString(", ") { pkg ->
+            val uid = runCatching { ctx.packageManager.getApplicationInfo(pkg, 0).uid }.getOrNull()
+            "$pkg (${uid?.let { "uid $it" } ?: "not installed"})"
+        })
+        FilterService.captureExcluded?.takeIf { FilterService.running }?.let { ex ->
+            appendLine("  capture leaves out: ${if (ex.isEmpty()) "nothing" else ex.sorted().joinToString(", ") { "uid $it" }}" +
+                (FilterService.captureExcludeFailed?.let { f -> "; a capture with ${f.sorted().joinToString(", ") { "uid $it" }} " +
+                    "did not open, those apps stay filtered" } ?: ""))
+        }
+        Protection.pendingForReport(ctx)?.let { appendLine("Protection: a change is waiting: $it") }
         appendLine()
 
         appendLine("[Screen blur]")
@@ -136,6 +159,24 @@ object Diagnostics {
             "accessibility build ${yes(BuildConfig.BLUR_A11Y)}")
         ScreenBlur.coverInfo?.let { appendLine(it) }
         ScreenBlur.stats?.let { appendLine(it) }
+        appendLine()
+
+        // what happened second by second: the minute before a stop survives turning filtering off and on
+        appendLine("[Last minutes]")
+        append(Recent.of(ctx).report(live = FilterService.running))
+    }
+
+    /** Who installed Waaiya: Google Play, a browser or file manager (sideloaded), or "not known". */
+    private fun installer(ctx: Context): String {
+        val pkg = runCatching {
+            if (Build.VERSION.SDK_INT >= 30) ctx.packageManager.getInstallSourceInfo(ctx.packageName).installingPackageName
+            else @Suppress("DEPRECATION") ctx.packageManager.getInstallerPackageName(ctx.packageName)
+        }.getOrNull()
+        return when (pkg) {
+            null -> "not known"
+            "com.android.vending" -> "Google Play"
+            else -> pkg
+        }
     }
 
     /** The chip name where Android tells it (API 31+), else the board name. */

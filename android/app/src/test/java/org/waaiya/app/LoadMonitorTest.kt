@@ -159,4 +159,109 @@ class LoadMonitorTest {
         }
         assertFalse(m.takeTrim(silent = true))
     }
+
+    /**
+     * The live loop over [hours] of sound, with the capture's clock off the output's by [ppm] (parts per million,
+     * + = the capture runs faster). Reads a hop (waiting while the capture fills), skips it or writes it (waiting
+     * while the output buffer of [bufferHops] is full), adds a hop of silence when told. One hop in [silentEvery] holds
+     * no sound (0: none; then every hop is merely quiet). Returns (sound lost to a full capture, output dropouts after
+     * the warm-up, the most sound ever waiting in the capture, in hops).
+     */
+    private fun drift(m: LoadMonitor, ppm: Double, hours: Double, bufferHops: Int = 2, silentEvery: Int = 20,
+                      quiet: Boolean = true):
+        Triple<Double, Int, Double> {
+        val hop = 480.0
+        val r = 1 + ppm * 1e-6           // capture frames per output frame
+        val capacity = FilterService.CAPTURE_HOPS * hop
+        val buffer = bufferHops * hop
+        var fill = buffer; var backlog = 0.0; var lost = 0.0; var dropouts = 0; var most = 0.0
+        val hops = (hours * 3600 * 100).toLong()
+        fun pass(dt: Double) {          // dt output frames of time
+            fill -= dt
+            if (fill < 0) { if (m.hops > LoadMonitor.WARMUP_HOPS) dropouts++; fill = 0.0 }
+            backlog += r * dt
+            if (backlog > capacity) { lost += backlog - capacity; backlog = capacity }
+            if (backlog > most) most = backlog
+        }
+        fun write() { if (fill + hop > buffer) pass(fill + hop - buffer); fill += hop }
+        for (k in 0 until hops) {
+            if (backlog < hop) pass((hop - backlog) / r)
+            backlog -= hop
+            val silent = silentEvery > 0 && k % silentEvery == 0L
+            if (!m.takeTrim(silent, quiet = quiet)) {
+                write()
+                if (m.takePad(silent, quiet = quiet)) write()
+            }
+            m.hop(3 * ms, dropouts, (fill + backlog).toInt())
+        }
+        return Triple(lost, dropouts, most / hop)
+    }
+
+    @Test fun captureFasterThanTheOutput() {
+        val m = LoadMonitor(hopFrames = 480)
+        val (lost, dropouts, most) = drift(m, ppm = 60.0, hours = 3.0)
+        assertEquals("no sound lost to a full capture", 0.0, lost, 0.0)
+        assertEquals(0, dropouts)
+        assertTrue("the delay stays short (most waiting in the capture: $most hops)", most < 3.0)
+        // 60 ppm x 3 h x 48 kHz = 31 104 frames = 64.8 hops: what drifted is given back, no more
+        assertTrue("given back: ${m.trimmedHops}", m.trimmedHops in 60..70)
+    }
+
+    @Test fun captureSlowerThanTheOutput() {
+        val m = LoadMonitor(hopFrames = 480)
+        val (lost, dropouts, _) = drift(m, ppm = -60.0, hours = 3.0)
+        assertEquals(0.0, lost, 0.0)
+        assertEquals("the output never runs dry", 0, dropouts)
+        assertTrue("silence added: ${m.paddedHops}", m.paddedHops in 60..70)
+    }
+
+    @Test fun noDriftNothingToDo() {
+        for (b in listOf(1, 2, 4)) {
+            val m = LoadMonitor(hopFrames = 480)
+            val (lost, dropouts, _) = drift(m, ppm = 0.0, hours = 1.0, bufferHops = b)
+            assertEquals(0.0, lost, 0.0)
+            assertEquals(0, dropouts)
+            assertTrue("buffer $b: at most a hop or two set once (trim ${m.trimmedHops}, pad ${m.paddedHops})",
+                m.trimmedHops + m.paddedHops <= 2)
+        }
+    }
+
+    @Test fun driftWithoutSilentHops() {
+        // a recording with no hop of digital silence for hours: quiet hops are taken after 10 s
+        for (ppm in listOf(60.0, -60.0)) {
+            val m = LoadMonitor(hopFrames = 480)
+            val (lost, dropouts, _) = drift(m, ppm = ppm, hours = 2.0, silentEvery = 0)
+            assertEquals("ppm $ppm", 0.0, lost, 0.0)
+            assertEquals("ppm $ppm", 0, dropouts)
+        }
+    }
+
+    @Test fun loudSoundForHoursStillGivesBack() {
+        // no hop is ever silent or even quiet (music under speech all along): after 30 s a hop with sound is taken
+        // (FilterService crossfades it), so the capture never fills up and loses sound
+        val m = LoadMonitor(hopFrames = 480)
+        val (lost, dropouts, most) = drift(m, ppm = 60.0, hours = 2.0, silentEvery = 0, quiet = false)
+        assertEquals("no sound lost to a full capture", 0.0, lost, 0.0)
+        assertEquals(0, dropouts)
+        assertTrue("the delay stays short (most waiting: $most hops)", most < 3.0)
+        assertTrue("forced trims ${m.forcedTrims} of ${m.trimmedHops}", m.forcedTrims > 0 && m.forcedTrims == m.trimmedHops)
+    }
+
+    @Test fun silentHopsAreStillPreferred() {
+        val m = LoadMonitor(hopFrames = 480)
+        drift(m, ppm = 60.0, hours = 3.0)
+        assertEquals("with silent hops around, no hop with sound is skipped", 0, m.forcedTrims)
+    }
+
+    @Test fun padOnlyWhenTooLittleWaits() {
+        val m = LoadMonitor(hopFrames = 480)
+        m.run(LoadMonitor.WARMUP_HOPS, 3.0)
+        m.run(LoadMonitor.WINDOW_HOPS * LoadMonitor.CALM_WINDOWS, 3.0, fill = 2 * 480)
+        assertFalse("2 hops waiting, 2 kept: nothing to add", m.takePad(silent = true))
+        m.run(LoadMonitor.WINDOW_HOPS * LoadMonitor.CALM_WINDOWS, 3.0, fill = 480 + 100)
+        assertFalse("never in the middle of sound", m.takePad(silent = false, quiet = false))
+        assertTrue(m.takePad(silent = true))
+        assertFalse("one hop was missing", m.takePad(silent = true))
+        assertEquals(1, m.paddedHops)
+    }
 }

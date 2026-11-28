@@ -1,0 +1,5 @@
+- Filtering no longer stops by itself when the phone locks.
+- Phone notifications keep their text while Waaiya filters.
+- Android 16 without the setup: when Android asks what to share, choose "Share one app", then Waaiya. For everything to work (blur included), pair Waaiya once with Wireless debugging.
+- A "Resume" button when Waaiya is kept silent.
+- The diagnostics report lists why the filter stopped.

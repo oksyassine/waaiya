@@ -13,14 +13,14 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Yana cire kayan kiɗa daga kowace manhaja, kuma yana barin magana da karatun Alƙur\'ani.';
+      'Yana cire kayan kiɗa daga sautin manhajojinku, kuma yana barin magana da karatun Alƙur\'ani.';
 
   @override
   String get onboardTitle => 'Barka da zuwa';
 
   @override
   String get onboardBody =>
-      'Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan waya. Ana barin magana da karatun Alƙur\'ani. A yanzu, ana cire muryoyin waƙa ma.';
+      'Waaiya yana cire kayan kiɗa daga sautin manhajojin da ke wannan waya. Ana barin magana da karatun Alƙur\'ani. Ana cire muryoyin waƙa ma.';
 
   @override
   String get onboardQuestion => 'Ni ne';
@@ -46,15 +46,15 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Ana cire kayan kiɗa daga dukkan manhajoji. Sauti yana zuwa a makare da kusan $delayMs ms (1000 ms daƙiƙa ɗaya ne).';
+    return 'Ana tace sautin manhajojinku. Yana zuwa a makare da kusan $delayMs ms (1000 ms daƙiƙa ɗaya ne).';
   }
 
   @override
-  String get stateOffDetail => 'Taɓa maɓallin don farawa.';
+  String get stateOffDetail => 'Danna maɓallin don farawa.';
 
   @override
   String get stateModelFailed =>
-      'Tsarin tace sauti bai iya buɗuwa ba, don haka an kashe sauti don kariya.';
+      'Tsarin tacewa bai iya buɗuwa ba, don haka an kashe sauti maimakon a kunna shi ba tare da tacewa ba.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android ya dakatar da tacewa. Taɓa maɓallin don sake farawa.';
+      'Android ya dakatar da tacewa. Danna maɓallin don sake farawa.';
 
   @override
   String get stateSilencedTitle => 'Tacewa ta tsaya';
 
   @override
   String get stateSilenced =>
-      'Tacewa ta tsaya: an yi wa sauran manhajoji shiru. Taɓa maɓallin don sake farawa, ko Dakatar don jin su ba tare da tacewa ba.';
+      'Tacewa ta tsaya: an yi wa sauran manhajoji shiru. Danna maɓallin don sake farawa, ko Dakatar don jin su ba tare da tacewa ba.';
 
   @override
   String get releaseSilence => 'Dakatar: ji manhajoji ba tare da tacewa ba';
@@ -82,7 +82,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android zai tambaya ko za a raba allonku. Sauti kaɗai ake amfani da shi: ba a naɗar komai, ba a tura komai.';
+      'Android zai tambaya ko za a raba allonku. Ba a naɗar komai, ba a tura komai.';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Ba tare da saitin sau ɗaya da ke ƙasa ba, za ku ji kiɗan da sautin da aka tace tare.';
+      'Ba tare da saitin sau ɗaya ba, za ku ji kiɗan da sautin da aka tace tare.';
 
   @override
   String get step1Title => 'Shigar da Shizuku';
@@ -246,11 +246,11 @@ class AppLocalizationsHa extends AppLocalizations {
   String get change => 'Canza';
 
   @override
-  String get playerTitle => 'Bidiyo ba tare da jinkirin sauti ba';
+  String get playerTitle => 'Bidiyo da sauti da hoto a daidaice';
 
   @override
   String get playerBody =>
-      'Ku tura bidiyo zuwa Waaiya (ko ku yi amfani da “Open with”, wato Buɗe da) don kallonsa a tace ba tare da jinkiri ba.';
+      'Ku tura bidiyo zuwa Waaiya (ko ku yi amfani da “Open with”, wato Buɗe da) don kallonsa a tace, da sauti da hoto a daidaice, ba tare da jinkirin tacewa kai tsaye ba.';
 
   @override
   String get licences => 'Lasisoshin buɗaɗɗen tushe (open-source)';
@@ -393,7 +393,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Yana rufe mutane da hotuna a allo, a kowace manhaja, yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.';
+      'Yana rufe mutane da hotuna a allo yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.';
 
   @override
   String get blurOnTitle => 'Dusashewa tana aiki';
@@ -409,13 +409,13 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'Ku taɓa maɓallin don farawa. Tacewa ma tana farawa tare da ita.';
+      'Ku danna maɓallin don farawa. Tacewa ma tana farawa tare da ita.';
 
   @override
   String get blurWhatTitle => 'Abin da za a dusashe';
 
   @override
-  String get blurWomenTitle => 'Dusashe mata';
+  String get blurWomenTitle => 'Dusashe hotunan mata';
 
   @override
   String get blurWomenBody =>
@@ -801,11 +801,11 @@ class AppLocalizationsHa extends AppLocalizations {
   String get wsetupCodeOk => 'Haɗa';
 
   @override
-  String get blurStrictTitle => 'Waɗanda ake bari ba a rufe ba';
+  String get blurStrictTitle => 'Yawan tabbaci kafin a nuna namiji';
 
   @override
   String blurStrictValue(String level) {
-    return 'Waɗanda ake bari ba a rufe ba: $level';
+    return 'Yawan tabbaci kafin a nuna namiji: $level';
   }
 
   @override
@@ -813,8 +813,7 @@ class AppLocalizationsHa extends AppLocalizations {
       'Tsantsan: sai mutanen da manhajar ta kusan tabbatar maza ne kawai';
 
   @override
-  String get blurStrict1 =>
-      'Tsaka-tsaki: kusan ninki biyu na maza ake bari ba a rufe ba';
+  String get blurStrict1 => 'Tsaka-tsaki: ana nuna kusan ninki biyu na maza';
 
   @override
   String get blurStrict2 => 'Sassauci: ƙarin maza kaɗan fiye da tsaka-tsaki';
@@ -830,19 +829,19 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Duk wanda manhajar ba ta tabbatar namiji ne ba ana rufe shi. Tsantsan yana barin kusan maza 7 cikin 100 ba a rufe ba; tsaka-tsaki kusan 14, sassauci kusan 16. Kowane mataki na rage tsantsan yana kuma barin kusan ƙarin mace 1 cikin 100 ba a rufe ba.';
+      'Ana nuna mutum ne kawai idan manhajar ta tabbatar namiji ne; duk sauran ana dusashe su. Tsantsan yana nuna kusan maza 7 cikin 100; tsaka-tsaki kusan 14, sassauci kusan 16. Har yanzu wasu mata suna tsallakewa; kowane mataki na rage tsantsan yana barin kusan ƙarin 1 cikin 100 su tsallake.';
 
   @override
   String get stateOnNotMuted =>
-      'Ba a yi wa ainihin sauti shiru ba tukuna, don haka kuna jin kiɗan tare da sautin da aka tace. Ku kammala saitin sau ɗaya da ke ƙasa.';
+      'Ba a yi wa ainihin sauti shiru ba tukuna, don haka kuna jin kiɗan tare da sautin da aka tace. Ku kammala saitin sau ɗaya a shafin “Saiti”.';
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (a ƙasan wannan shafi).';
+      'Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (Saituna).';
 
   @override
   String get stateTooSlow =>
-      'Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa. “Buɗe mahaɗa” da ke ƙasa yana aiki duk da haka: yana tace bidiyon kafin ya kunna shi.';
+      'Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa. “Buɗe mahaɗa” da ke shafin “Mahaɗai” yana aiki duk da haka: yana tace bidiyon kafin ya kunna shi.';
 
   @override
   String get stateMonoNote =>
@@ -850,12 +849,12 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'An yi masa shiru, saboda ba ya barin tacewa: $apps.';
+    return 'An yi shiru saboda waɗannan ba sa barin tacewa: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'Yana kunne ba tare da tacewa ba, saboda ba ya barin tacewa: $apps.';
+    return 'Yana kunne ba tare da tacewa ba saboda waɗannan ba sa barin tacewa: $apps.';
   }
 
   @override
@@ -887,7 +886,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Abin da Waaiya ke gani a wannan waya. Ku kwafa shi ko ku raba shi da wanda ke taimaka muku. Manhajar kanta ba ta tura komai.';
+      'Abin da Waaiya ke gani a wannan waya. Ku kwafa shi ko ku raba shi da wanda ke taimaka muku. Waaiya ba ya tura shi da kansa: ku ne kuke zaɓar wanda zai karɓa.';
 
   @override
   String get notifStoppedTitle => 'Waaiya ya tsaya';
@@ -927,7 +926,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get setupGo => 'Je zuwa saitin';
 
   @override
-  String get helperTitle => 'Taɓawa ta cikin murfi';
+  String get helperTitle => 'Taɓawa ta cikin wuraren da aka dusashe';
 
   @override
   String get helperBodyOff =>
@@ -938,7 +937,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'Mataimakin Waaiya yana zana murfin: taɓawa tana ratsa su. Yana tsayawa idan wayar ta sake kunnuwa ko idan an kashe “USB debugging”; sai ku sake taɓa maɓallin.';
+      'Mataimakin Waaiya yana zana dusashewar: taɓawa tana ratsa ta. Yana tsayawa idan wayar ta sake kunnuwa ko idan an kashe “USB debugging” (wani maɓalli dabam a cikin “Developer options”); sai ku sake taɓa maɓallin.';
 
   @override
   String get helperShizukuOn =>
@@ -954,37 +953,38 @@ class AppLocalizationsHa extends AppLocalizations {
   String get settingsGeneralTitle => 'Gabaɗaya';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle =>
+      'Yanayi mai sauƙi (gwaji): babu “Developer options”';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Don wayoyin da saitin da ke ƙasa ya yi musu wuya sosai. Yayin da Waaiya ke tacewa, yana kashe sautin media na wayar kuma yana kunna sautin da aka tace a wata hanyar sauti dabam. Maɓallan ƙarar ku suna saita ƙarar Waaiya. Android tana neman izinin raba allo a kowace farawa. Sautin media yana dawowa idan tacewa ta tsaya.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Yi amfani da yanayi mai sauƙi';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Hanyar sauti: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'Ƙararrawa';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Sanarwa';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Idan ba ku jin komai, ko sauti yana fitowa daga lasifikar wayar alhali belun kunne na ciki, gwada ɗayan hanyar. “Sanarwa” ba ta da sauti idan wayar tana kan girgiza ko “Do Not Disturb”.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Wannan gwaji ne. Bayan kun gwada shi (lasifika, belun kunne, Bluetooth), don Allah ku tura rahoton bincike daga Saituna.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Yanayi mai sauƙi (gwaji): an kashe sautin media yayin da Waaiya ke tacewa.';
 
   @override
   String get worshipPrayerFajr => 'Asuba';
@@ -1127,8 +1127,7 @@ class AppLocalizationsHa extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Ana cire kayan kiɗa daga dukkan manhajoji.';
+  String get stateOnDetailNoDelay => 'Ana tace sautin manhajojinku.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1206,7 +1205,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Abin da Waaiya ke gani a wannan kwamfuta. Ku kwafa shi ku ba wanda ke taimaka muku. Manhajar kanta ba ta tura komai.';
+      'Abin da Waaiya ke gani a wannan kwamfuta. Ku kwafa shi ku ba wanda ke taimaka muku. Waaiya ba ya tura shi da kansa: ku ne kuke zaɓar wanda zai karɓa.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1290,7 +1289,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get fixCancel => 'Soke';
 
   @override
-  String get fixBlurAppsTitle => 'Manhajojin da ba a rufe ba';
+  String get fixBlurAppsTitle => 'Manhajojin da babu dusashewa';
 
   @override
   String get fixBlurAppsBody =>
@@ -1344,7 +1343,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'An rubuta (bayanai $count a wannan na\'ura).';
+    return 'An rubuta. Bayanai a wannan na\'ura: $count.';
   }
 
   @override
@@ -1430,8 +1429,7 @@ class AppLocalizationsHa extends AppLocalizations {
   String get worshipAsrTitle => 'Lokacin La\'asar';
 
   @override
-  String get worshipAsrStandard =>
-      'Na yau da kullum (Shafi\'i, Maliki, Hanbali)';
+  String get worshipAsrStandard => 'Mafi rinjaye (Shafi\'i, Maliki, Hanbali)';
 
   @override
   String get worshipAsrHanafi => 'Hanafi';
@@ -1745,7 +1743,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Da PIN, dakatar da tacewa ko kashe kowace kariya yana neman PIN da farko. Misali, iyaye suna saka PIN don kada yaro ya iya kashe tacewa. Canza lokacin jira ko PIN ma yana neman sa.';
+      'Da PIN, dakatar da tacewa ko kashe kowace kariya yana neman PIN da farko. Misali, iyaye suna saka PIN don kada yaro ya iya kashe tacewa a Waaiya (abin da ba zai iya hanawa ba yana ƙasa). Canza lokacin jira ko PIN ma yana neman sa.';
 
   @override
   String get protectPinForgot =>
@@ -1777,7 +1775,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'PIN ba daidai ba ne. Sauran gwaji $count kafin a ɗan dakata.';
+    return 'PIN ba daidai ba ne. Sauran gwaji kafin a ɗan dakata: $count.';
   }
 
   @override
@@ -1839,7 +1837,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Abin da wannan ba zai iya hanawa ba: tilasta tsayawa (force stop), cire manhajar, share bayanan Waaiya da saitunan Android na kansa. Hana waɗannan zai buƙaci izini na musamman na Android waɗanda Waaiya ba ya amfani da su. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.';
+      'Abin da wannan ba zai iya hanawa ba: sake kunna waya (tacewa ba ta sake farawa da kanta ba), tilasta tsayawa (force stop), cire manhajar, share bayanan Waaiya da saitunan Android na kansa. Hana waɗannan zai buƙaci izini na musamman na Android waɗanda Waaiya ba ya amfani da su. Wannan yana kare ku daga lokacin rauni, ba daga mutumin da ya ƙudura ba.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1889,7 +1887,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan kwamfuta. Ana barin magana da karatun Alƙur\'ani. A yanzu, ana cire muryoyin waƙa ma.';
+      'Waaiya yana cire kayan kiɗa daga sautin manhajojin da ke wannan kwamfuta. Ana barin magana da karatun Alƙur\'ani. Ana cire muryoyin waƙa ma.';
 
   @override
   String get worshipUseLocation => 'Yi amfani da wurina';
@@ -1923,7 +1921,7 @@ class AppLocalizationsHa extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'Lokutan hukuma na Ma\'aikatar Habous da Harkokin Musulunci na $city.';
+    return 'Lokutan da aka lissafa don su dace da jadawalin Ma\'aikatar Habous da Harkokin Musulunci na $city.';
   }
 
   @override
@@ -1939,4 +1937,115 @@ class AppLocalizationsHa extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Saitunan wannan kwamfuta, waɗanda mai kula da ita ya zaɓa, ba sa barin Waaiya ta fara lokacin shiga.';
+
+  @override
+  String get notifTextTitle => 'Nuna rubutun sanarwa yayin tacewa';
+
+  @override
+  String get notifTextBody =>
+      'Android tana ɓoye abin da sanarwa ke faɗi yayin da wata manhaja ke ɗaukar dukan allo, kuma tacewa tana cikin haka. A kunne: Waaiya tana cire wannan kariya ne kawai yayin tacewa, don ka karanta sanarwarka. Yayin da aka cire ta, wani raba allo da aka yi a lokaci guda ma zai iya nuna sanarwarka da lambobinka ga wasu.';
+
+  @override
+  String get notifTextNextStart =>
+      'Dakatar da tacewa ka sake farawa domin wannan canji ya yi aiki.';
+
+  @override
+  String get notifTextRefused =>
+      'Wannan waya ta ƙi canjin. Kunna “Kashe kariyar raba allo” da kanka a cikin Zaɓuɓɓukan masu haɓakawa.';
+
+  @override
+  String get notifTextByHand =>
+      'Ana nunawa: kariyar Android a kashe take a cikin Zaɓuɓɓukan masu haɓakawa (“Kashe kariyar raba allo”). Za ta kasance a kashe ga kowane raba allo har sai ka sake kunna ta a can.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android tana ɓoye abin da sanarwa ke faɗi yayin da Waaiya ke tacewa. Bayan saitin sau ɗaya, Waaiya tana nuna su: tana cire wannan kariya yayin tacewa kawai.';
+
+  @override
+  String get notifTextOpenDev => 'Buɗe Zaɓuɓɓukan masu haɓakawa';
+
+  @override
+  String get notifTextLockNote =>
+      'A wannan waya Android tana dakatar da tacewa idan an kulle allo, sauran manhajoji kuma su yi shiru har sai ka taɓa Ci gaba. Saitin yana hana hakan ma.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Na zaɓi, ba tare da saiti ba: kunna “Kashe kariyar raba allo” a cikin Zaɓuɓɓukan masu haɓakawa. Daga nan za ta kasance a kashe ga kowane raba allo, kuma wasu wayoyi ba su da ita.';
+
+  @override
+  String get notifTextForced =>
+      'A kunne: a wannan waya Android tana tambaya kafin kowace farawa, kuma da za ta dakatar da tacewa duk lokacin da aka kulle allo. Waaiya tana cire wannan kariya yayin tacewa, don haka rubutun sanarwa ma yana bayyana. Yayin da aka cire ta, wani raba allo da aka yi a lokaci guda ma zai iya nuna sanarwarka da lambobinka ga wasu.';
+
+  @override
+  String get oneAppTitle => 'A farawa: “Raba manhaja ɗaya”, sannan Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Idan Android ta tambayi abin da za a raba, zaɓi “Raba manhaja ɗaya”, sannan Waaiya. Sauran manhajoji za su ci gaba da tacewa, sanarwa za su kasance a karanta, kuma tacewa za ta ci gaba idan an kulle allo. Da dukan allo, Android tana ɓoye rubutun sanarwa kuma tana dakatar da tacewa a kowace kullewa.';
+
+  @override
+  String get oneAppPair =>
+      'Domin Waaiya ta yi aiki gaba ɗaya, haɗa ta sau ɗaya da Wireless debugging a shafin Saiti: daga nan ana kashe kiɗan asali ma, kuma Android ta daina tambaya a kowace farawa.';
+
+  @override
+  String get notifTextOneApp =>
+      'Ana nunawa idan ka zaɓi “Raba manhaja ɗaya”, sannan Waaiya, a farawa. Da dukan allo Android tana ɓoye shi; bayan saitin sau ɗaya Waaiya tana cire hakan yayin tacewa.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Dakatar da tacewa ka sake farawa don amfani da dushewa: tana buƙatar dukan allo, kuma wannan tacewa ta fara ne da zaɓin “Raba manhaja ɗaya”.';
+
+  @override
+  String get micOpenSettings =>
+      'Buɗe saitunan Waaiya don ba da izinin makirufo';
+
+  @override
+  String get keepRunningTitle => 'Bar Waaiya yana aiki';
+
+  @override
+  String get keepRunningBattery =>
+      'Wannan waya na iya rufe Waaiya bayan ɗan lokaci don adana baturi, sai tacewa ta tsaya. A saitunan Waaiya, ƙarƙashin Baturi, zaɓi “Babu iyaka”. A Xiaomi, Redmi da POCO: “Babu ƙuntatawa”, kuma kunna Farawa da kanta.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Sanarwar Waaiya a kashe take, don haka ba za ta iya gaya maka lokacin da tacewa ta tsaya ba. Kunna su a saitunan Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Buɗe saitunan Waaiya';
+
+  @override
+  String get lockAskTitle => 'A ci gaba da tacewa idan an kulle allo?';
+
+  @override
+  String get lockTitle => 'A ci gaba da tacewa idan an kulle allo';
+
+  @override
+  String get lockBody =>
+      'A wannan waya Android tana tambaya kafin kowane farawa, sannan ta dakatar da tacewa a duk lokacin da aka kulle allo. Waaiya na iya hana hakan ta hanyar ɗage kariyar raba allo ta Android yayin tacewa, kuma ta mayar da ita idan tacewa ta tsaya. Muddin an ɗage ta, wani raba allo a lokaci guda (kiran bidiyo, misali) zai iya nuna sanarwarka. Canji zai fara aiki a farawa ta gaba.';
+
+  @override
+  String get lockYes => 'Ci gaba da tacewa';
+
+  @override
+  String get lockNo => 'Tsaya a kowane kulle';
+
+  @override
+  String get sendToSupport => 'Aika wa Waaiya';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Ba a yi saitin sau ɗaya ba tukuna. Ba tare da shi ba Waaiya ba zai iya yi wa ainihin sauti shiru ba: za ku ji kiɗan da sautin da aka tace tare.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'Za ka zaɓi jira na $value? Daga yanzu, kashe tacewa ko kowace kariya zai jira $value, haka ma rage wannan jiran.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android ta rufe Waaiya yayin da take tacewa, don haka ba a ƙara tace sautin ba.';
 }

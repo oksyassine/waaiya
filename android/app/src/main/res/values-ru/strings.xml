@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Убирает музыкальные инструменты во всех приложениях и оставляет речь и чтение Корана.</string>
+    <string name="tagline">Убирает музыкальные инструменты из звука ваших приложений и оставляет речь и чтение Корана.</string>
 
     <string name="onboard_title">Добро пожаловать</string>
-    <string name="onboard_body">Waaiya убирает музыкальные инструменты из звука всех приложений на этом телефоне. Речь и чтение Корана сохраняются. Пока что пение тоже убирается.</string>
+    <string name="onboard_body">Waaiya убирает музыкальные инструменты из звука приложений на этом телефоне. Речь и чтение Корана сохраняются. Пение тоже убирается.</string>
     <string name="onboard_question">Я</string>
     <string name="gender_man">Мужчина</string>
     <string name="gender_woman">Женщина</string>
@@ -14,9 +14,9 @@
     <string name="state_on_title">Фильтр включён</string>
     <string name="state_off_title">Фильтр выключен</string>
     <string name="state_starting">Запуск…</string>
-    <string name="state_on_detail">Инструменты убраны во всех приложениях. Звук идёт с опозданием примерно на %1$d мс (1000 мс — это одна секунда).</string>
+    <string name="state_on_detail">Звук ваших приложений фильтруется. Он идёт с опозданием примерно на %1$d мс (1000 мс — это одна секунда).</string>
     <string name="state_off_detail">Нажмите кнопку, чтобы включить.</string>
-    <string name="state_model_failed">Не удалось загрузить звуковую модель, поэтому звук отключён для надёжности.</string>
+    <string name="state_model_failed">Не удалось загрузить фильтр, поэтому звук отключён, а не воспроизводится без фильтра.</string>
     <string name="state_capture_denied">Нужно разрешение на микрофон, чтобы получать звук других приложений.</string>
     <string name="state_stopped_by_system">Android остановил фильтр. Нажмите кнопку, чтобы включить его снова.</string>
     <string name="state_silenced_title">Фильтр остановлен</string>
@@ -24,11 +24,11 @@
     <string name="release_silence">Стоп: слушать приложения без фильтра</string>
     <string name="power_start_cd">Включить фильтр</string>
     <string name="power_stop_cd">Выключить фильтр</string>
-    <string name="capture_hint">Android спросит разрешение на трансляцию экрана. Используется только звук: ничего не записывается и не отправляется.</string>
+    <string name="capture_hint">Android спросит разрешение на трансляцию экрана. Ничего не записывается и не отправляется.</string>
     <string name="need_record_audio">Waaiya нужно разрешение на микрофон, чтобы получать звук других приложений. Ваш голос никогда не записывается.</string>
 
     <string name="setup_banner_title">Ещё один шаг</string>
-    <string name="setup_banner_body">Без однократной настройки ниже вы будете слышать музыку и отфильтрованный звук одновременно.</string>
+    <string name="setup_banner_body">Без однократной настройки вы будете слышать музыку и отфильтрованный звук одновременно.</string>
     <string name="step1_title">Установите Shizuku</string>
     <string name="step1_body">Бесплатное вспомогательное приложение из Google Play.</string>
     <string name="step1_action">Скачать Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Я</string>
     <string name="change">Изменить</string>
 
-    <string name="player_title">Видео с идеальной синхронизацией</string>
-    <string name="player_body">Поделитесь видео с Waaiya (или выберите «Открыть с помощью»), чтобы смотреть его с фильтром без задержки.</string>
+    <string name="player_title">Видео с синхронными звуком и изображением</string>
+    <string name="player_body">Поделитесь видео с Waaiya (или выберите «Открыть с помощью»), чтобы смотреть его с фильтром, с синхронными звуком и изображением, без задержки фильтра в реальном времени.</string>
     <string name="licences">Лицензии открытого ПО</string>
     <string name="licences_intro">Waaiya — свободное ПО под лицензией GNU Affero General Public License версии 3 или более поздней. Исходный код: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (данные для обучения): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Фильтр</string>
     <string name="notif_title">Waaiya работает</string>
-    <string name="notif_text">Инструменты убраны во всех приложениях</string>
+    <string name="notif_text">Звук ваших приложений фильтруется</string>
     <string name="notif_stop">Стоп</string>
+    <string name="notif_resume">Продолжить</string>
     <!-- Link feature -->
     <string name="link_entry_title">Открыть ссылку</string>
     <string name="link_entry_body">Вставьте ссылку на YouTube, TikTok или Instagram, чтобы посмотреть или сохранить видео без музыки.</string>
@@ -125,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Размытие экрана</string>
-    <string name="blur_body">Закрывает людей и изображения на экране во всех приложениях, пока включён фильтр. Работает на самом телефоне; ничего никуда не отправляется.</string>
+    <string name="blur_body">Закрывает людей и изображения на экране, пока включён фильтр. Работает на самом телефоне; ничего никуда не отправляется.</string>
     <string name="blur_on_title">Размытие включено</string>
     <string name="blur_off_title">Размытие выключено</string>
     <string name="blur_start_cd">Включить размытие</string>
     <string name="blur_stop_cd">Выключить размытие</string>
     <string name="blur_off_detail">Нажмите кнопку, чтобы начать. Фильтрация включится вместе с ним.</string>
     <string name="blur_what_title">Что размывать</string>
-    <string name="blur_women_title">Размывать женщин</string>
+    <string name="blur_women_title">Размывать изображения женщин</string>
     <string name="blur_women_body">Закрывает всё тело. Если приложение не уверено, что человек — мужчина, оно закрывает и его.</string>
     <string name="blur_nudity_title">Размывать нескромные изображения</string>
     <string name="blur_nudity_body">Нагота или откровенная одежда, у кого угодно: закрывается весь экран.</string>
@@ -246,19 +247,19 @@
     <string name="wsetup_code_dialog_title">Код подключения</string>
     <string name="wsetup_code_dialog_body">Только в режиме разделённого экрана (Настройки в одной половине, Waaiya в другой): если уйти из Настроек, экран сопряжения закроется и его код перестанет работать. Введите 6-значный код, показанный в разделе «Подключить устройство с помощью кода подключения».</string>
     <string name="wsetup_code_ok">Подключить</string>
-    <string name="blur_strict_title">Кто остаётся открытым</string>
-    <string name="blur_strict_value">Кто остаётся открытым: %1$s</string>
+    <string name="blur_strict_title">Какая уверенность нужна, чтобы показать мужчину</string>
+    <string name="blur_strict_value">Какая уверенность нужна, чтобы показать мужчину: %1$s</string>
     <string name="blur_strict_0">Строго: только те, кого приложение почти наверняка считает мужчинами</string>
     <string name="blur_strict_1">Сбалансированно: открытыми остаются примерно вдвое больше мужчин</string>
     <string name="blur_strict_2">Мягко: ещё немного больше мужчин, чем при сбалансированном</string>
     <string name="blur_strict_0_short">строго</string>
     <string name="blur_strict_1_short">сбалансированно</string>
     <string name="blur_strict_2_short">мягко</string>
-    <string name="blur_strict_help">Закрывается каждый, про кого приложение не уверено, что это мужчина. «Строго» оставляет открытыми около 7 мужчин из 100, «сбалансированно» — около 14, «мягко» — около 16. Каждый шаг в сторону меньшей строгости также оставляет открытыми примерно на 1 женщину из 100 больше.</string>
+    <string name="blur_strict_help">Человек показывается, только когда приложение уверено, что это мужчина; все остальные размываются. «Строго» показывает около 7 мужчин из 100, «сбалансированно» — около 14, «мягко» — около 16. Некоторые женщины всё равно пропускаются; каждый шаг в сторону меньшей строгости пропускает ещё примерно 1 из 100.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Исходный звук ещё не отключён, поэтому вы слышите музыку вместе с отфильтрованным звуком. Завершите однократную настройку ниже.</string>
-    <string name="state_on_mute_failing">Waaiya не может отключить исходный звук приложения, которое сейчас играет, поэтому музыка может быть слышна. Выключите и снова включите фильтр. Если не поможет, отправьте диагностический отчёт (внизу этого экрана).</string>
-    <string name="state_too_slow">Этот телефон слишком медленный, чтобы фильтровать звук на лету, поэтому звук прерывается. «Открыть ссылку» ниже всё равно работает: видео фильтруется до воспроизведения.</string>
+    <string name="state_on_not_muted">Исходный звук ещё не отключён, поэтому вы слышите музыку вместе с отфильтрованным звуком. Завершите однократную настройку на странице «Настройка».</string>
+    <string name="state_on_mute_failing">Waaiya не может отключить исходный звук приложения, которое сейчас играет, поэтому музыка может быть слышна. Выключите и снова включите фильтр. Если не поможет, отправьте диагностический отчёт (Параметры).</string>
+    <string name="state_too_slow">Этот телефон слишком медленный, чтобы фильтровать звук на лету, поэтому звук прерывается. «Открыть ссылку» на странице «Ссылки» всё равно работает: видео фильтруется до воспроизведения.</string>
     <string name="state_mono_note">Звук в моно, чтобы этот телефон успевал.</string>
     <string name="state_blocked_silenced">Без звука, так как фильтрация не разрешена: %1$s.</string>
     <string name="state_blocked_unfiltered">Играет без фильтра, так как фильтрация не разрешена: %1$s.</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Телефон слишком медленный для фильтрации на лету: звук прерывается</string>
     <string name="diag_button">Проблема? Диагностический отчёт</string>
     <string name="diag_title">Диагностический отчёт</string>
-    <string name="diag_note">Что Waaiya видит на этом телефоне. Скопируйте или отправьте это тому, кто вам помогает. Само приложение ничего не отправляет.</string>
+    <string name="diag_note">Что Waaiya видит на этом телефоне. Скопируйте или отправьте это тому, кто вам помогает. Waaiya не отправляет это самостоятельно: вы выбираете, кто это получит.</string>
     <string name="notif_stopped_title">Waaiya остановлено</string>
     <string name="notif_stopped_text">Звук больше не фильтруется. Нажмите, чтобы включить снова.</string>
     <string name="notif_silenced_title">Фильтр остановлен: звук других приложений отключён</string>
     <string name="notif_silenced_text">Нажмите, чтобы включить снова, или «Стоп», чтобы слышать их без фильтра.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Вкл.</string>
+    <string name="tile_model_failed">Включено, но без звука: ошибка модели</string>
     <string name="tile_off">Выкл.</string>
     <string name="tile_starting">Запуск…</string>
     <string name="tile_silenced">Стоп, звук выключен</string>
     <string name="tile_on_not_muted">Вкл., нужна настройка</string>
     <string name="tile_open_app">Открыть Waaiya</string>
-    <string name="tile_text_label">Текст уведомлений</string>
+    <string name="tile_text_label">Waaiya: текст уведомлений</string>
     <string name="tile_text_shown">Виден при фильтре</string>
     <string name="tile_text_hidden">Скрыт при фильтре</string>
     <string name="tile_text_refused">Телефон не разрешает</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Показать настройку снова</string>
     <string name="setup_go">Перейти к настройке</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Нажатия сквозь заслонки</string>
+    <string name="helper_title">Нажатия сквозь размытые области</string>
     <string name="helper_body_off">Без помощника заслонка блокирует нажатия под ней. Помощник Waaiya рисует заслонки так, чтобы нажатия проходили сквозь них. Включите отладку по Wi-Fi (нужен Wi-Fi) и нажмите кнопку; в первый раз выполните сопряжение, как при настройке. После перезагрузки телефона нажмите кнопку снова.</string>
     <string name="helper_start">Запустить помощника Waaiya</string>
-    <string name="helper_on">Помощник Waaiya рисует заслонки: нажатия проходят сквозь них. Он останавливается при перезагрузке телефона или при выключении отладки по USB; тогда снова нажмите кнопку.</string>
+    <string name="helper_on">Помощник Waaiya рисует размытие: нажатия проходят сквозь него. Он останавливается при перезагрузке телефона или при выключении «Отладки по USB» (отдельный переключатель в разделе «Для разработчиков»); тогда снова нажмите кнопку.</string>
     <string name="helper_shizuku_on">Shizuku рисует заслонки: нажатия проходят сквозь них.</string>
     <string name="helper_or_shizuku">Или через Shizuku:</string>
     <string name="guide_w_helper_note">Если размытие экрана включено, настройка также запускает помощника Waaiya, чтобы нажатия проходили сквозь заслонки. Для этого не выключайте «Отладку по USB» (отладку по Wi-Fi можно выключить). После перезагрузки телефона снова запустите помощника на странице «Экран».</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Убрать ручные заслонки</string>
     <string name="notif_fix_note_missed">Что-то пропущено</string>
     <string name="notif_fix_note_wrong">Скрыто по ошибке</string>
-    <string name="notif_fix_noted">Записано (заметок на этом телефоне: %1$d)</string>
+    <string name="notif_fix_noted">Записано. Заметок на этом телефоне: %1$d</string>
     <string name="notif_fix_picker_hint">Проведите пальцем по области, которую нужно закрыть.</string>
     <string name="notif_fix_picker_cover">Закрыть</string>
     <string name="notif_fix_picker_cancel">Отмена</string>
@@ -417,4 +419,39 @@
     <string name="move_new_body">Старая Waaiya (до версии 0.2.15) всё ещё на этом телефоне. Удалите её, чтобы они никогда не фильтровали одновременно.</string>
     <string name="move_new_imported">Ваши настройки перенесены из неё.</string>
     <string name="move_remove_old">Удалить старую Waaiya</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: проверить на музыку</string>
+    <string name="mc_title">Проверить на музыку</string>
+    <string name="mc_unnamed">Общий файл</string>
+    <string name="mc_listening">Слушает… %1$d %%</string>
+    <string name="mc_private">Waaiya слушает на этом телефоне. Фрагмент никуда не отправляется.</string>
+    <string name="mc_music">Waaiya услышала музыку</string>
+    <string name="mc_music_detail">Инструменты в %1$s (около %2$s %% клипа).</string>
+    <string name="mc_percussion">Waaiya услышала только ударные</string>
+    <string name="mc_percussion_detail">Барабаны или ритмичные хлопки без других инструментов в %1$s. Решать вам.</string>
+    <string name="mc_none">Инструменты не услышаны</string>
+    <string name="mc_none_detail">Waaiya прослушала весь клип и не услышала музыкальных инструментов. Часть музыки можно не заметить, чаще всего тихую музыку под речью.</string>
+    <string name="mc_note_quiet">Тихую музыку под речью можно не заметить.</string>
+    <string name="mc_failed">Не удалось проверить этот файл</string>
+    <string name="mc_failed_no_model">Эта версия Waaiya не умеет проверять на музыку.</string>
+    <string name="mc_failed_no_sound">В нём нет звука.</string>
+    <string name="mc_failed_too_long">Он длиннее 30 минут.</string>
+    <string name="mc_failed_unreadable">Waaiya не может прочитать этот файл.</string>
+    <string name="mc_share_clean">Поделиться без музыки</string>
+    <string name="mc_share_anyway">Всё равно поделиться</string>
+    <string name="mc_listen">Слушать здесь</string>
+    <string name="mc_copying">Создаётся копия без музыки… %1$d %%</string>
+    <string name="mc_copy_failed">Не удалось создать копию без музыки.</string>
+    <string name="mc_copy_name">%1$s (без музыки)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Простой режим (тест): без режима разработчика</string>
+    <string name="simple_body">Для телефонов, на которых настройка ниже слишком сложна. Во время фильтрации Waaiya отключает звук медиа на телефоне и воспроизводит отфильтрованный звук через другой звуковой канал. Кнопки громкости регулируют громкость Waaiya. Android просит разрешение на трансляцию экрана при каждом запуске. Звук медиа возвращается, когда фильтрация останавливается.</string>
+    <string name="simple_switch">Использовать простой режим</string>
+    <string name="simple_channel_title">Звуковой канал: %1$s</string>
+    <string name="simple_channel_alarm">Будильник</string>
+    <string name="simple_channel_notification">Уведомления</string>
+    <string name="simple_channel_help">Если ничего не слышно или звук идёт из динамика телефона, когда подключены наушники, попробуйте другой канал. Канал «Уведомления» молчит, когда телефон в режиме вибрации или «Не беспокоить».</string>
+    <string name="simple_test_note">Это тест. Попробовав его (динамик, наушники, Bluetooth), пожалуйста, отправьте диагностический отчёт из раздела «Параметры».</string>
+    <string name="simple_on_detail">Простой режим (тест): звук медиа отключён, пока Waaiya фильтрует.</string>
 </resources>

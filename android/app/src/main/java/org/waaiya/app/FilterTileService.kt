@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
 import android.service.quicksettings.Tile
@@ -54,6 +53,7 @@ class FilterTileService : TileService() {
             state == FilterService.State.STARTING -> R.string.tile_starting
             state == FilterService.State.SILENCED -> R.string.tile_silenced
             !FilterService.running -> R.string.tile_off
+            state == FilterService.State.MODEL_FAILED -> R.string.tile_model_failed
             FilterService.muterStatus == SessionMuter.Status.NO_PERMISSION -> R.string.tile_on_not_muted
             else -> R.string.tile_on
         })
@@ -95,7 +95,13 @@ class TileStartActivity : Activity() {
             finish()
             return
         }
-        if (FilterService.running) { finish(); return }
+        if (FilterService.running && !FilterService.restartPending) { finish(); return }
+        // the screen-lock question was never answered on this phone: Waaiya's Start asks it
+        if (ScreenShareProtection.lockAsk(this)) {
+            UiActivity.open(this, "filter")?.let { runCatching { startActivity(it) } }
+            finish()
+            return
+        }
         val ready = setupDone() || Settings(this).simpleMode  // simple mode (test) needs no setup
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED || !ready) {
             // the setup is missing: the Setup page explains; the microphone question belongs to the Filter page
@@ -126,12 +132,8 @@ class TileStartActivity : Activity() {
             finish()
             return
         }
-        val mpm = getSystemService(MediaProjectionManager::class.java)
-        // As the main screen: the whole device, never "a single app" (Android 14+ offers that first otherwise).
-        val ask = if (Build.VERSION.SDK_INT >= 34)
-            mpm.createScreenCaptureIntent(android.media.projection.MediaProjectionConfig.createConfigForDefaultDisplay())
-        else mpm.createScreenCaptureIntent()
-        @Suppress("DEPRECATION") startActivityForResult(ask, REQ_CAPTURE)
+        // as the main screen: the entire screen, or on Android 16+ also "Share one app" (CaptureChoice)
+        @Suppress("DEPRECATION") startActivityForResult(CaptureChoice.intent(this), REQ_CAPTURE)
     }
 
     @Deprecated("framework Activity API")

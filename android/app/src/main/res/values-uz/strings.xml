@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Barcha ilovalardan musiqa asboblarini olib tashlaydi, nutq va tilovatni saqlaydi.</string>
+    <string name="tagline">Ilovalaringiz ovozidan musiqa asboblarini olib tashlaydi, nutq va tilovatni saqlaydi.</string>
 
     <string name="onboard_title">Xush kelibsiz</string>
-    <string name="onboard_body">Waaiya bu telefondagi barcha ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Hozircha qoʻshiq aytayotgan ovozlar ham olib tashlanadi.</string>
+    <string name="onboard_body">Waaiya bu telefondagi ilovalar ovozidan musiqa asboblarini olib tashlaydi. Nutq va Qurʼon tilovati saqlanadi. Qoʻshiq aytayotgan ovozlar ham olib tashlanadi.</string>
     <string name="onboard_question">Men</string>
     <string name="gender_man">Erkakman</string>
     <string name="gender_woman">Ayolman</string>
@@ -14,9 +14,9 @@
     <string name="state_on_title">Filtrlash yoqilgan</string>
     <string name="state_off_title">Filtrlash oʻchirilgan</string>
     <string name="state_starting">Ishga tushirilmoqda…</string>
-    <string name="state_on_detail">Barcha ilovalardan musiqa asboblari olib tashlanmoqda. Ovoz taxminan %1$d ms kech keladi (1000 ms — bu bir soniya).</string>
+    <string name="state_on_detail">Ilovalaringiz ovozi filtrlanmoqda. U taxminan %1$d ms kech keladi (1000 ms — bu bir soniya).</string>
     <string name="state_off_detail">Boshlash uchun tugmani bosing.</string>
-    <string name="state_model_failed">Ovoz modeli yuklanmadi, shuning uchun xavfsizlik uchun ovoz oʻchirildi.</string>
+    <string name="state_model_failed">Filtr yuklanmadi, shuning uchun ovoz filtrsiz ijro etilish oʻrniga oʻchirildi.</string>
     <string name="state_capture_denied">Boshqa ilovalarning ovozini qabul qilish uchun mikrofon ruxsati kerak.</string>
     <string name="state_stopped_by_system">Android filtrlashni toʻxtatdi. Qayta boshlash uchun tugmani bosing.</string>
     <string name="state_silenced_title">Filtrlash toʻxtadi</string>
@@ -24,11 +24,11 @@
     <string name="release_silence">Toʻxtatish: ilovalarni filtrsiz eshitish</string>
     <string name="power_start_cd">Filtrlashni boshlash</string>
     <string name="power_stop_cd">Filtrlashni toʻxtatish</string>
-    <string name="capture_hint">Android ekraningizni ulashishni soʻraydi. Faqat ovoz ishlatiladi: hech narsa yozib olinmaydi va yuborilmaydi.</string>
+    <string name="capture_hint">Android ekraningizni ulashishni soʻraydi. Hech narsa yozib olinmaydi va yuborilmaydi.</string>
     <string name="need_record_audio">Boshqa ilovalarning ovozini qabul qilishi uchun Waaiyaga mikrofon ruxsati kerak. U hech qachon sizni yozib olmaydi.</string>
 
     <string name="setup_banner_title">Yana bir qadam</string>
-    <string name="setup_banner_body">Quyidagi bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.</string>
+    <string name="setup_banner_body">Bir martalik sozlashsiz musiqa va filtrlangan ovozni birga eshitasiz.</string>
     <string name="step1_title">Shizuku ilovasini oʻrnating</string>
     <string name="step1_body">Play Marketdagi bepul yordamchi ilova.</string>
     <string name="step1_action">Shizuku ilovasini olish</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Men</string>
     <string name="change">Oʻzgartirish</string>
 
-    <string name="player_title">Mukammal sinxron videolar</string>
-    <string name="player_body">Videoni kechikishsiz, filtrlangan holda koʻrish uchun uni Waaiyaga ulashing (yoki “Open with” / “… orqali ochish” bilan Waaiyada oching).</string>
+    <string name="player_title">Ovozi va tasviri sinxron videolar</string>
+    <string name="player_body">Videoni filtrlangan holda, ovozi va tasviri sinxron, jonli filtr kechikishisiz koʻrish uchun uni Waaiyaga ulashing (yoki “Open with” / “… orqali ochish” bilan Waaiyada oching).</string>
     <string name="licences">Ochiq kodli litsenziyalar</string>
     <string name="licences_intro">Waaiya — GNU Affero General Public License v3 yoki undan keyingi versiyasi ostidagi erkin dasturiy taʼminot. Manba kodi: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (oʻqitish maʼlumotlari): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Filtr</string>
     <string name="notif_title">Waaiya yoqilgan</string>
-    <string name="notif_text">Barcha ilovalardan musiqa asboblari olib tashlanmoqda</string>
+    <string name="notif_text">Ilovalaringiz ovozi filtrlanmoqda</string>
     <string name="notif_stop">Toʻxtatish</string>
+    <string name="notif_resume">Davom ettirish</string>
     <!-- Link feature -->
     <string name="link_entry_title">Havolani ochish</string>
     <string name="link_entry_body">YouTube, TikTok yoki Instagram havolasini qoʻying va uni musiqasiz koʻring yoki saqlang.</string>
@@ -125,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Ekranni xiralashtirish</string>
-    <string name="blur_body">Filtrlash yoqilganda barcha ilovalarda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.</string>
+    <string name="blur_body">Filtrlash yoqilganda ekrandagi odamlar va tasvirlarni yopadi. U telefonning oʻzida ishlaydi; hech narsa hech qayerga yuborilmaydi.</string>
     <string name="blur_on_title">Xiralashtirish yoqilgan</string>
     <string name="blur_off_title">Xiralashtirish oʻchirilgan</string>
     <string name="blur_start_cd">Xiralashtirishni boshlash</string>
     <string name="blur_stop_cd">Xiralashtirishni toʻxtatish</string>
     <string name="blur_off_detail">Boshlash uchun tugmani bosing. Filtrlash ham u bilan birga boshlanadi.</string>
     <string name="blur_what_title">Nimani xiralashtirish</string>
-    <string name="blur_women_title">Ayollarni xiralashtirish</string>
+    <string name="blur_women_title">Ayollar tasvirlarini xiralashtirish</string>
     <string name="blur_women_body">Butun tanani yopadi. Agar ilova odamning erkak ekaniga ishonch hosil qila olmasa, uni ham yopadi.</string>
     <string name="blur_nudity_title">Odobsiz tasvirlarni xiralashtirish</string>
     <string name="blur_nudity_body">Har qanday kishining yalangʻochligi yoki ochiq-sochiq kiyimi: butun ekran yopiladi.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Juftlash kodi</string>
     <string name="wsetup_code_dialog_body">Faqat ekranni ikkiga boʻlganda (bir yarmida Sozlamalar, ikkinchisida Waaiya): Sozlamalardan chiqsangiz, juftlash ekrani yopiladi va uning kodi ishlamay qoladi. “Qurilmani juftlash kodi bilan ulash” ostida koʻrsatilgan 6 xonali kodni yozing.</string>
     <string name="wsetup_code_ok">Juftlash</string>
-    <string name="blur_strict_title">Kim yopilmasdan qoladi</string>
-    <string name="blur_strict_value">Kim yopilmasdan qoladi: %1$s</string>
+    <string name="blur_strict_title">Erkak koʻrsatilishi uchun qancha ishonch kerak</string>
+    <string name="blur_strict_value">Erkak koʻrsatilishi uchun qancha ishonch kerak: %1$s</string>
     <string name="blur_strict_0">Qatʼiy: faqat ilova erkak ekaniga deyarli ishongan odamlar</string>
     <string name="blur_strict_1">Muvozanatli: taxminan ikki baravar koʻp erkak yopilmaydi</string>
     <string name="blur_strict_2">Yumshoq: muvozanatlidan biroz koʻproq erkak</string>
     <string name="blur_strict_0_short">qatʼiy</string>
     <string name="blur_strict_1_short">muvozanatli</string>
     <string name="blur_strict_2_short">yumshoq</string>
-    <string name="blur_strict_help">Ilova erkak ekaniga ishonmagan har qanday kishi yopiladi. Qatʼiy rejim 100 erkakdan taxminan 7 tasini yopmaydi; muvozanatli taxminan 14 tasini, yumshoq taxminan 16 tasini. Har bir yumshoqroq bosqich 100 ayoldan yana taxminan 1 tasini ham yopmasdan qoldiradi.</string>
+    <string name="blur_strict_help">Odam faqat ilova uning erkak ekaniga ishonch hosil qilgandagina koʻrsatiladi; qolgan hamma xiralashtiriladi. Qatʼiy rejim 100 erkakdan taxminan 7 tasini koʻrsatadi, muvozanatli taxminan 14 tasini, yumshoq taxminan 16 tasini. Baʼzi ayollar baribir oʻtkazib yuboriladi; har bir yumshoqroq bosqich 100 tadan yana taxminan 1 tasini oʻtkazib yuboradi.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Asl ovoz hali oʻchirilmagan, shuning uchun musiqani filtrlangan ovoz bilan birga eshitasiz. Quyidagi bir martalik sozlashni yakunlang.</string>
-    <string name="state_on_mute_failing">Waaiya hozir ijro etayotgan ilovaning asl ovozini oʻchira olmayapti, shuning uchun musiqa hali ham eshitilishi mumkin. Filtrlashni toʻxtatib, qayta boshlang. Agar shunday qolsa, diagnostika hisobotini yuboring (bu ekranning pastida).</string>
-    <string name="state_too_slow">Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi. Quyidagi “Havolani ochish” baribir ishlaydi: u videoni ijro etishdan oldin filtrlaydi.</string>
+    <string name="state_on_not_muted">Asl ovoz hali oʻchirilmagan, shuning uchun musiqani filtrlangan ovoz bilan birga eshitasiz. “Sozlash” sahifasidagi bir martalik sozlashni yakunlang.</string>
+    <string name="state_on_mute_failing">Waaiya hozir ijro etayotgan ilovaning asl ovozini oʻchira olmayapti, shuning uchun musiqa hali ham eshitilishi mumkin. Filtrlashni toʻxtatib, qayta boshlang. Agar shunday qolsa, diagnostika hisobotini yuboring (Sozlamalar).</string>
+    <string name="state_too_slow">Bu telefon jonli ovozni filtrlash uchun juda sekin, shuning uchun ovoz uziladi. “Havolalar” sahifasidagi “Havolani ochish” baribir ishlaydi: u videoni ijro etishdan oldin filtrlaydi.</string>
     <string name="state_mono_note">Bu telefon ulgurishi uchun ovoz mono rejimda.</string>
-    <string name="state_blocked_silenced">Filtrlashga ruxsat bermagani uchun ovozsiz qilindi: %1$s.</string>
-    <string name="state_blocked_unfiltered">Filtrlashga ruxsat bermagani uchun filtrsiz ijro etilmoqda: %1$s.</string>
+    <string name="state_blocked_silenced">Ovozsiz qilindi, chunki bular filtrlashga ruxsat bermaydi: %1$s.</string>
+    <string name="state_blocked_unfiltered">Filtrsiz ijro etilmoqda, chunki bular filtrlashga ruxsat bermaydi: %1$s.</string>
     <string name="state_capture_failed">Android Waaiyaga boshqa ilovalarning ovozini bermadi. Qayta boshlash uchun tugmani bosing.</string>
     <string name="state_capture_cancelled">Ishga tushirish Androidning ekranni ulashish haqidagi savolida bekor qilindi. Waaiya ovozni qabul qilishi uchun u yerda “Boshlash” ni tanlashingiz kerak. Hech narsa yozib olinmaydi va yuborilmaydi.</string>
     <string name="start_no_setup_title">Musiqa baribir eshitiladi</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Bu telefon jonli filtrlash uchun juda sekin: ovoz uziladi</string>
     <string name="diag_button">Muammo bormi? Diagnostika hisoboti</string>
     <string name="diag_title">Diagnostika hisoboti</string>
-    <string name="diag_note">Waaiya bu telefonda nimalarni koʻrayotgani. Uni nusxalang yoki sizga yordam berayotgan kishiga ulashing. Ilovaning oʻzi hech narsa yubormaydi.</string>
+    <string name="diag_note">Waaiya bu telefonda nimalarni koʻrayotgani. Uni nusxalang yoki sizga yordam berayotgan kishiga ulashing. Waaiya uni oʻzi yubormaydi: kim olishini siz tanlaysiz.</string>
     <string name="notif_stopped_title">Waaiya toʻxtadi</string>
     <string name="notif_stopped_text">Ovoz endi filtrlanmayapti. Qayta boshlash uchun bosing.</string>
     <string name="notif_silenced_title">Filtrlash toʻxtadi: boshqa ilovalar ovozsiz qilindi</string>
     <string name="notif_silenced_text">Qayta boshlash uchun bosing yoki ularni filtrsiz eshitish uchun “Toʻxtatish” ni bosing.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Yoqilgan</string>
+    <string name="tile_model_failed">Yoqilgan, lekin ovozsiz: model xatosi</string>
     <string name="tile_off">Oʻchirilgan</string>
     <string name="tile_starting">Ishga tushmoqda…</string>
     <string name="tile_silenced">Toʻxtagan, ilovalar ovozsiz</string>
     <string name="tile_on_not_muted">Yoqilgan, sozlash kerak</string>
     <string name="tile_open_app">Waaiyani ochish</string>
-    <string name="tile_text_label">Bildirishnoma matni</string>
+    <string name="tile_text_label">Waaiya: bildirishnoma matni</string>
     <string name="tile_text_shown">Filtrlashda koʻrsatiladi</string>
     <string name="tile_text_hidden">Filtrlashda yashiriladi</string>
     <string name="tile_text_refused">Bu telefon ruxsat bermaydi</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Sozlashni yana koʻrsatish</string>
     <string name="setup_go">Sozlashga oʻtish</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Qoplamalar orqali bosish</string>
+    <string name="helper_title">Xiralashtirilgan joylar orqali bosish</string>
     <string name="helper_body_off">Yordamsiz qoplama ostidagi bosishlarni toʻsib qoʻyadi. Waaiya yordamchisi qoplamalarni bosishlar ulardan oʻtib ketadigan qilib chizadi. Wi-Fi orqali debaglashni yoqing (Wi-Fi kerak) va tugmani bosing; birinchi marta sozlashdagidek bir marta juftlang. Telefon qayta ishga tushgandan keyin tugmani yana bosing.</string>
     <string name="helper_start">Waaiya yordamchisini ishga tushirish</string>
-    <string name="helper_on">Waaiya yordamchisi qoplamalarni chizmoqda: bosishlar ulardan oʻtib ketadi. U telefon qayta ishga tushganda yoki USB orqali debaglash oʻchirilganda toʻxtaydi; shunda tugmani yana bosing.</string>
+    <string name="helper_on">Waaiya yordamchisi xiralashtirishni chizmoqda: bosishlar undan oʻtib ketadi. U telefon qayta ishga tushganda yoki “USB orqali debaglash” (“Dasturchilar uchun” boʻlimidagi alohida kalit) oʻchirilganda toʻxtaydi; shunda tugmani yana bosing.</string>
     <string name="helper_shizuku_on">Qoplamalarni Shizuku chizmoqda: bosishlar ulardan oʻtib ketadi.</string>
     <string name="helper_or_shizuku">Yoki Shizuku orqali:</string>
     <string name="guide_w_helper_note">Ekranni xiralashtirish yoqilgan boʻlsa, sozlash Waaiya yordamchisini ham ishga tushiradi, shunda bosishlar qoplamalardan oʻtib ketadi. Buning uchun “USB orqali debaglash” (USB debugging) ni yoqilgan holda qoldiring (Wi-Fi orqali debaglash oʻchiq boʻlishi mumkin). Telefon qayta ishga tushgandan keyin yordamchini Ekran sahifasidan yana ishga tushiring.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Qoʻlda qoʻyilgan qoplamalarni olib tashlash</string>
     <string name="notif_fix_note_missed">Nimadir oʻtib ketdi</string>
     <string name="notif_fix_note_wrong">Xato bilan yashirildi</string>
-    <string name="notif_fix_noted">Qayd etildi (bu telefonda %1$d ta qayd)</string>
+    <string name="notif_fix_noted">Qayd etildi. Bu telefondagi qaydlar: %1$d</string>
     <string name="notif_fix_picker_hint">Yopiladigan joy ustidan barmogʻingizni suring.</string>
     <string name="notif_fix_picker_cover">Yopish</string>
     <string name="notif_fix_picker_cancel">Bekor qilish</string>
@@ -417,4 +419,39 @@
     <string name="move_new_body">Eski Waaiya (0.2.15 versiyasidan oldingi) hali ham bu telefonda. Ikkalasi hech qachon birga filtrlamasligi uchun uni o‘chiring.</string>
     <string name="move_new_imported">Sozlamalaringiz undan olib kelindi.</string>
     <string name="move_remove_old">Eski Waaiya’ni o‘chirish</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: musiqani tekshirish</string>
+    <string name="mc_title">Musiqani tekshirish</string>
+    <string name="mc_unnamed">Ulashilgan fayl</string>
+    <string name="mc_listening">Tinglanmoqda… %1$d %%</string>
+    <string name="mc_private">Waaiya shu telefonda tinglaydi. Yozuv hech qayerga yuborilmaydi.</string>
+    <string name="mc_music">Waaiya musiqa eshitdi</string>
+    <string name="mc_music_detail">%1$s da cholg‘u asboblari (klipning taxminan %2$s %%).</string>
+    <string name="mc_percussion">Waaiya faqat zarbli cholg‘u eshitdi</string>
+    <string name="mc_percussion_detail">Boshqa cholg‘usiz baraban yoki ritmik qarsak, %1$s da. Qaror sizda.</string>
+    <string name="mc_none">Cholg‘u eshitilmadi</string>
+    <string name="mc_none_detail">Waaiya butun klipni tingladi va musiqa asbobi eshitmadi. Baʼzi musiqa eʼtibordan chetda qolishi mumkin, asosan nutq ostidagi past musiqa.</string>
+    <string name="mc_note_quiet">Nutq ostidagi past musiqa e’tibordan chetda qolishi mumkin.</string>
+    <string name="mc_failed">Bu faylni tekshirib bo‘lmadi</string>
+    <string name="mc_failed_no_model">Waaiya’ning bu versiyasi musiqani tekshira olmaydi.</string>
+    <string name="mc_failed_no_sound">Unda ovoz yo‘q.</string>
+    <string name="mc_failed_too_long">U 30 daqiqadan uzun.</string>
+    <string name="mc_failed_unreadable">Waaiya bu faylni o‘qiy olmaydi.</string>
+    <string name="mc_share_clean">Musiqasiz ulashish</string>
+    <string name="mc_share_anyway">Baribir ulashish</string>
+    <string name="mc_listen">Shu yerda tinglash</string>
+    <string name="mc_copying">Musiqasiz nusxa tayyorlanmoqda… %1$d %%</string>
+    <string name="mc_copy_failed">Musiqasiz nusxani tayyorlab bo‘lmadi.</string>
+    <string name="mc_copy_name">%1$s (musiqasiz)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Oddiy rejim (sinov): “Dasturchilar uchun” boʻlimisiz</string>
+    <string name="simple_body">Quyidagi sozlash juda qiyin boʻlgan telefonlar uchun. Waaiya filtrlayotganda telefonning media ovozini oʻchiradi va filtrlangan ovozni boshqa ovoz kanalida ijro etadi. Ovoz tugmalaringiz Waaiya ovoz balandligini sozlaydi. Android har bir ishga tushirishda ekranni ulashishni soʻraydi. Filtrlash toʻxtaganda media ovozi qaytadi.</string>
+    <string name="simple_switch">Oddiy rejimdan foydalanish</string>
+    <string name="simple_channel_title">Ovoz kanali: %1$s</string>
+    <string name="simple_channel_alarm">Budilnik</string>
+    <string name="simple_channel_notification">Bildirishnoma</string>
+    <string name="simple_channel_help">Hech narsa eshitilmasa yoki quloqchin ulangan boʻlsa-da ovoz telefon karnayidan chiqsa, boshqa kanalni sinab koʻring. Telefon tebranish rejimida yoki “Bezovta qilinmasin” yoqilgan boʻlsa, Bildirishnoma kanali ovozsiz boʻladi.</string>
+    <string name="simple_test_note">Bu sinov. Uni sinab koʻrgach (karnay, quloqchin, Bluetooth), iltimos, Sozlamalardan diagnostika hisobotini yuboring.</string>
+    <string name="simple_on_detail">Oddiy rejim (sinov): Waaiya filtrlayotganda media ovozi oʻchiriladi.</string>
 </resources>

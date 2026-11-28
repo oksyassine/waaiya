@@ -1,0 +1,1 @@
+Check for music: share a video or audio file to “Waaiya: check for music”. Waaiya listens on the phone (nothing is sent) and says whether it heard musical instruments and where, then offers a copy without music to share. Quiet music under speech can be missed.

@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Entfernt Musikinstrumente aus allen Apps und behält Sprache und Rezitation.</string>
+    <string name="tagline">Entfernt Musikinstrumente aus dem Ton Ihrer Apps und behält Sprache und Rezitation.</string>
 
     <string name="onboard_title">Willkommen</string>
-    <string name="onboard_body">Waaiya entfernt Musikinstrumente aus dem Ton aller Apps auf diesem Telefon. Sprache und Koranrezitation bleiben erhalten. Vorerst werden auch Gesangsstimmen entfernt.</string>
+    <string name="onboard_body">Waaiya entfernt Musikinstrumente aus dem Ton der Apps auf diesem Telefon. Sprache und Koranrezitation bleiben erhalten. Auch Gesangsstimmen werden entfernt.</string>
     <string name="onboard_question">Ich bin</string>
     <string name="gender_man">Ein Mann</string>
     <string name="gender_woman">Eine Frau</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Der Filter ist an</string>
     <string name="state_off_title">Der Filter ist aus</string>
     <string name="state_starting">Wird gestartet…</string>
-    <string name="state_on_detail">Instrumente werden aus allen Apps entfernt. Der Ton kommt etwa %1$d ms später (1000 ms sind eine Sekunde).</string>
-    <string name="state_off_detail">Tippen Sie zum Starten auf die Taste.</string>
-    <string name="state_model_failed">Das Tonmodell konnte nicht geladen werden, deshalb ist der Ton zur Sicherheit stummgeschaltet.</string>
+    <string name="state_on_detail">Der Ton Ihrer Apps wird gefiltert. Er kommt etwa %1$d ms später (1000 ms sind eine Sekunde).</string>
+    <string name="state_off_detail">Drücken Sie zum Starten die Taste.</string>
+    <string name="state_model_failed">Der Filter konnte nicht geladen werden, deshalb ist der Ton stummgeschaltet, statt ungefiltert abgespielt zu werden.</string>
     <string name="state_capture_denied">Die Mikrofonberechtigung wird benötigt, um den Ton anderer Apps zu empfangen.</string>
-    <string name="state_stopped_by_system">Android hat den Filter beendet. Tippen Sie auf die Taste, um ihn wieder zu starten.</string>
+    <string name="state_stopped_by_system">Android hat den Filter beendet. Drücken Sie die Taste, um ihn wieder zu starten.</string>
     <string name="state_silenced_title">Filter gestoppt</string>
-    <string name="state_silenced">Filter gestoppt: Andere Apps sind stummgeschaltet. Tippen Sie auf die Taste, um wieder zu starten, oder auf Stopp, um sie ungefiltert zu hören.</string>
+    <string name="state_silenced">Filter gestoppt: Andere Apps sind stummgeschaltet. Drücken Sie die Taste, um wieder zu starten, oder Stopp, um sie ungefiltert zu hören.</string>
     <string name="release_silence">Stopp: Apps ungefiltert hören</string>
     <string name="power_start_cd">Filter starten</string>
     <string name="power_stop_cd">Filter stoppen</string>
-    <string name="capture_hint">Android fragt, ob Sie Ihren Bildschirm teilen möchten. Nur der Ton wird verwendet: Nichts wird aufgenommen oder gesendet.</string>
+    <string name="capture_hint">Android fragt, ob Sie Ihren Bildschirm teilen möchten. Nichts wird aufgenommen oder gesendet.</string>
     <string name="need_record_audio">Waaiya braucht die Mikrofonberechtigung, um den Ton anderer Apps zu empfangen. Es nimmt Sie nie auf.</string>
 
     <string name="setup_banner_title">Noch ein Schritt</string>
-    <string name="setup_banner_body">Ohne die einmalige Einrichtung unten hören Sie die Musik und den gefilterten Ton zusammen.</string>
+    <string name="setup_banner_body">Ohne die einmalige Einrichtung hören Sie die Musik und den gefilterten Ton zusammen.</string>
     <string name="step1_title">Shizuku installieren</string>
     <string name="step1_body">Eine kostenlose Hilfs-App aus dem Play Store.</string>
     <string name="step1_action">Shizuku holen</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Ich bin</string>
     <string name="change">Ändern</string>
 
-    <string name="player_title">Videos perfekt synchron</string>
-    <string name="player_body">Teilen Sie ein Video mit Waaiya (oder nutzen Sie „Öffnen mit“), um es gefiltert und ohne Verzögerung anzusehen.</string>
+    <string name="player_title">Videos mit synchronem Ton und Bild</string>
+    <string name="player_body">Teilen Sie ein Video mit Waaiya (oder nutzen Sie „Öffnen mit“), um es gefiltert anzusehen, mit synchronem Ton und Bild, ohne die Verzögerung des Live-Filters.</string>
     <string name="licences">Open-Source-Lizenzen</string>
     <string name="licences_intro">Waaiya ist freie Software unter der GNU Affero General Public License v3 oder höher. Quellcode: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Namensnennung 4.0 (Trainingsdaten): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Filter</string>
     <string name="notif_title">Waaiya ist an</string>
-    <string name="notif_text">Instrumente werden aus allen Apps entfernt</string>
+    <string name="notif_text">Der Ton Ihrer Apps wird gefiltert</string>
     <string name="notif_stop">Stopp</string>
+    <string name="notif_resume">Fortsetzen</string>
     <!-- Link-Funktion -->
     <string name="link_entry_title">Link öffnen</string>
     <string name="link_entry_body">Fügen Sie einen YouTube-, TikTok- oder Instagram-Link ein, um das Video ohne Musik anzusehen oder zu speichern.</string>
@@ -125,14 +126,14 @@
 
     <!-- Bildschirm-Unschärfe -->
     <string name="blur_title">Bildschirm-Unschärfe</string>
-    <string name="blur_body">Verdeckt Menschen und Bilder auf dem Bildschirm, in jeder App, solange der Filter an ist. Das läuft auf dem Telefon; nichts wird irgendwohin gesendet.</string>
+    <string name="blur_body">Verdeckt Menschen und Bilder auf dem Bildschirm, solange der Filter an ist. Das läuft auf dem Telefon; nichts wird irgendwohin gesendet.</string>
     <string name="blur_on_title">Die Unschärfe ist an</string>
     <string name="blur_off_title">Die Unschärfe ist aus</string>
     <string name="blur_start_cd">Unschärfe starten</string>
     <string name="blur_stop_cd">Unschärfe beenden</string>
-    <string name="blur_off_detail">Tippen Sie auf die Taste, um zu starten. Das Filtern startet mit.</string>
+    <string name="blur_off_detail">Drücken Sie die Taste, um zu starten. Das Filtern startet mit.</string>
     <string name="blur_what_title">Was unscharf wird</string>
-    <string name="blur_women_title">Frauen unscharf machen</string>
+    <string name="blur_women_title">Bilder von Frauen unscharf machen</string>
     <string name="blur_women_body">Verdeckt den ganzen Körper. Wenn die App nicht sicher ist, dass eine Person ein Mann ist, verdeckt sie diese Person auch.</string>
     <string name="blur_nudity_title">Freizügige Bilder unscharf machen</string>
     <string name="blur_nudity_body">Nacktheit oder freizügige Kleidung, bei jedem Menschen: Der ganze Bildschirm wird verdeckt.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Kopplungscode</string>
     <string name="wsetup_code_dialog_body">Nur mit geteiltem Bildschirm (Einstellungen in einer Hälfte, Waaiya in der anderen): Wenn Sie die Einstellungen verlassen, schließt sich der Kopplungsbildschirm und sein Code funktioniert nicht mehr. Geben Sie den 6-stelligen Code ein, der unter „Gerät mit Kopplungscode koppeln“ angezeigt wird.</string>
     <string name="wsetup_code_ok">Koppeln</string>
-    <string name="blur_strict_title">Wer unverdeckt bleibt</string>
-    <string name="blur_strict_value">Wer unverdeckt bleibt: %1$s</string>
+    <string name="blur_strict_title">Wie sicher, bevor ein Mann gezeigt wird</string>
+    <string name="blur_strict_value">Wie sicher, bevor ein Mann gezeigt wird: %1$s</string>
     <string name="blur_strict_0">Streng: nur Menschen, bei denen die App fast sicher ist, dass es Männer sind</string>
     <string name="blur_strict_1">Ausgewogen: etwa doppelt so viele Männer bleiben unverdeckt</string>
     <string name="blur_strict_2">Locker: ein paar mehr Männer als bei Ausgewogen</string>
     <string name="blur_strict_0_short">streng</string>
     <string name="blur_strict_1_short">ausgewogen</string>
     <string name="blur_strict_2_short">locker</string>
-    <string name="blur_strict_help">Wer nach Einschätzung der App nicht sicher ein Mann ist, wird verdeckt. Streng lässt etwa 7 von 100 Männern unverdeckt, Ausgewogen etwa 14, Locker etwa 16. Jede weniger strenge Stufe lässt außerdem etwa 1 von 100 Frauen mehr unverdeckt.</string>
+    <string name="blur_strict_help">Eine Person wird nur gezeigt, wenn die App sicher ist, dass es ein Mann ist; alle anderen werden unscharf gemacht. Streng zeigt etwa 7 von 100 Männern, Ausgewogen etwa 14, Locker etwa 16. Manche Frauen werden trotzdem übersehen; jede weniger strenge Stufe übersieht etwa 1 von 100 mehr.</string>
     <!-- Live-Filter: Probleme in Worten, der Diagnosebericht -->
-    <string name="state_on_not_muted">Der Originalton ist noch nicht stummgeschaltet, deshalb hören Sie die Musik zusammen mit dem gefilterten Ton. Schließen Sie unten die einmalige Einrichtung ab.</string>
-    <string name="state_on_mute_failing">Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (unten auf diesem Bildschirm).</string>
-    <string name="state_too_slow">Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus. „Link öffnen“ unten funktioniert trotzdem: Es filtert das Video, bevor es abgespielt wird.</string>
+    <string name="state_on_not_muted">Der Originalton ist noch nicht stummgeschaltet, deshalb hören Sie die Musik zusammen mit dem gefilterten Ton. Schließen Sie die einmalige Einrichtung auf der Seite „Einrichtung“ ab.</string>
+    <string name="state_on_mute_failing">Waaiya kann den Originalton der App, die gerade spielt, nicht stummschalten, deshalb ist die Musik eventuell noch zu hören. Stoppen und starten Sie den Filter. Wenn es so bleibt, senden Sie den Diagnosebericht (Einstellungen).</string>
+    <string name="state_too_slow">Dieses Telefon ist zu langsam, um Ton live zu filtern, deshalb setzt der Ton aus. „Link öffnen“ auf der Seite „Links“ funktioniert trotzdem: Es filtert das Video, bevor es abgespielt wird.</string>
     <string name="state_mono_note">Der Ton ist in Mono, damit dieses Telefon mithält.</string>
-    <string name="state_blocked_silenced">Stummgeschaltet, weil es das Filtern nicht erlaubt: %1$s.</string>
-    <string name="state_blocked_unfiltered">Wird ungefiltert abgespielt, weil es das Filtern nicht erlaubt: %1$s.</string>
+    <string name="state_blocked_silenced">Stummgeschaltet, da das Filtern nicht erlaubt wird von: %1$s.</string>
+    <string name="state_blocked_unfiltered">Wird ungefiltert abgespielt, da das Filtern nicht erlaubt wird von: %1$s.</string>
     <string name="state_capture_failed">Android hat Waaiya den Ton anderer Apps nicht gegeben. Tippen Sie auf die Taste, um wieder zu starten.</string>
     <string name="state_capture_cancelled">Der Start wurde bei der Frage von Android zur Bildschirmfreigabe abgebrochen. Waaiya braucht dort „Starten“, um den Ton zu empfangen. Nichts wird aufgenommen oder gesendet.</string>
     <string name="start_no_setup_title">Die Musik ist weiterhin zu hören</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Dieses Telefon ist zu langsam für Live-Filtern: Der Ton setzt aus</string>
     <string name="diag_button">Problem? Diagnosebericht</string>
     <string name="diag_title">Diagnosebericht</string>
-    <string name="diag_note">Was Waaiya auf diesem Telefon sieht. Kopieren Sie es oder teilen Sie es mit der Person, die Ihnen hilft. Die App selbst sendet nichts.</string>
+    <string name="diag_note">Was Waaiya auf diesem Telefon sieht. Kopieren Sie es oder teilen Sie es mit der Person, die Ihnen hilft. Waaiya sendet es nicht von selbst: Sie entscheiden, wer es bekommt.</string>
     <string name="notif_stopped_title">Waaiya gestoppt</string>
     <string name="notif_stopped_text">Der Ton wird nicht mehr gefiltert. Tippen Sie, um wieder zu starten.</string>
     <string name="notif_silenced_title">Filter gestoppt: Andere Apps sind stummgeschaltet</string>
     <string name="notif_silenced_text">Tippen Sie, um wieder zu starten, oder auf Stopp, um sie ungefiltert zu hören.</string>
     <!-- Kacheln der Schnelleinstellungen (FilterTileService, ScreenShareTileService). Untertitel sind kurz: Sie passen unter eine Kachel. -->
     <string name="tile_on">An</string>
+    <string name="tile_model_failed">An, aber stumm: Modellfehler</string>
     <string name="tile_off">Aus</string>
     <string name="tile_starting">Wird gestartet…</string>
     <string name="tile_silenced">Gestoppt, Apps stumm</string>
     <string name="tile_on_not_muted">An, Einrichtung nötig</string>
     <string name="tile_open_app">Waaiya öffnen</string>
-    <string name="tile_text_label">Benachrichtigungstext</string>
+    <string name="tile_text_label">Waaiya: Benachrichtigungstext</string>
     <string name="tile_text_shown">Beim Filtern sichtbar</string>
     <string name="tile_text_hidden">Beim Filtern verborgen</string>
     <string name="tile_text_refused">Dieses Telefon lehnt es ab</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Einrichtung erneut anzeigen</string>
     <string name="setup_go">Zur Einrichtung</string>
     <!-- Eigener Abdeckungs-Helfer von Waaiya (CoverHelper): Berührungen gehen ohne Shizuku durch die Unschärfe-Abdeckungen -->
-    <string name="helper_title">Berührungen durch die Abdeckungen</string>
+    <string name="helper_title">Durch unscharfe Bereiche tippen</string>
     <string name="helper_body_off">Ohne Hilfe blockiert eine Abdeckung die Berührungen darunter. Der Waaiya-Helfer zeichnet die Abdeckungen so, dass Berührungen hindurchgehen. Schalten Sie „Debugging über WLAN“ ein (WLAN wird benötigt) und tippen Sie auf die Taste; beim ersten Mal koppeln Sie einmal wie bei der Einrichtung. Tippen Sie nach einem Neustart des Telefons erneut darauf.</string>
     <string name="helper_start">Waaiya-Helfer starten</string>
-    <string name="helper_on">Der Waaiya-Helfer zeichnet die Abdeckungen: Berührungen gehen hindurch. Er stoppt, wenn das Telefon neu startet oder wenn USB-Debugging ausgeschaltet wird; tippen Sie dann erneut auf die Taste.</string>
+    <string name="helper_on">Der Waaiya-Helfer zeichnet die Unschärfe: Berührungen gehen hindurch. Er stoppt, wenn das Telefon neu startet oder wenn „USB-Debugging“ (ein eigener Schalter in den Entwickleroptionen) ausgeschaltet wird; tippen Sie dann erneut auf die Taste.</string>
     <string name="helper_shizuku_on">Shizuku zeichnet die Abdeckungen: Berührungen gehen hindurch.</string>
     <string name="helper_or_shizuku">Oder mit Shizuku:</string>
     <string name="guide_w_helper_note">Wenn die Bildschirm-Unschärfe an ist, startet die Einrichtung auch den Waaiya-Helfer, damit Berührungen durch die Abdeckungen gehen. Lassen Sie dafür „USB-Debugging“ an („Debugging über WLAN“ kann aus sein). Starten Sie den Helfer nach einem Neustart des Telefons erneut auf der Seite Bildschirm.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Eigene Abdeckungen entfernen</string>
     <string name="notif_fix_note_missed">Etwas durchgerutscht</string>
     <string name="notif_fix_note_wrong">Versehentlich verdeckt</string>
-    <string name="notif_fix_noted">Notiert (%1$d Notizen auf diesem Telefon)</string>
+    <string name="notif_fix_noted">Notiert. Notizen auf diesem Telefon: %1$d</string>
     <string name="notif_fix_picker_hint">Ziehen Sie den Finger über den Bereich, der verdeckt werden soll.</string>
     <string name="notif_fix_picker_cover">Verdecken</string>
     <string name="notif_fix_picker_cancel">Abbrechen</string>
@@ -416,4 +418,39 @@
     <string name="move_new_body">Das alte Waaiya (von vor Version 0.2.15) ist noch auf diesem Telefon. Entfernen Sie es, damit nie beide gleichzeitig filtern.</string>
     <string name="move_new_imported">Ihre Einstellungen wurden daraus übernommen.</string>
     <string name="move_remove_old">Altes Waaiya entfernen</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: auf Musik prüfen</string>
+    <string name="mc_title">Auf Musik prüfen</string>
+    <string name="mc_unnamed">Geteilte Datei</string>
+    <string name="mc_listening">Hört zu … %1$d %%</string>
+    <string name="mc_private">Waaiya hört auf diesem Handy zu. Der Ausschnitt wird nirgendwohin gesendet.</string>
+    <string name="mc_music">Waaiya hat Musik gehört</string>
+    <string name="mc_music_detail">Instrumente in %1$s (etwa %2$s %% des Clips).</string>
+    <string name="mc_percussion">Waaiya hat nur Schlagwerk gehört</string>
+    <string name="mc_percussion_detail">Trommeln oder rhythmisches Klatschen, ohne andere Instrumente, in %1$s. Sie entscheiden.</string>
+    <string name="mc_none">Keine Instrumente gehört</string>
+    <string name="mc_none_detail">Waaiya hat den ganzen Clip angehört und keine Musikinstrumente gehört. Manche Musik kann überhört werden, vor allem leise Musik unter Sprache.</string>
+    <string name="mc_note_quiet">Leise Musik unter Sprache kann überhört werden.</string>
+    <string name="mc_failed">Diese Datei konnte nicht geprüft werden</string>
+    <string name="mc_failed_no_model">Diese Version von Waaiya kann nicht auf Musik prüfen.</string>
+    <string name="mc_failed_no_sound">Sie hat keinen Ton.</string>
+    <string name="mc_failed_too_long">Sie ist länger als 30 Minuten.</string>
+    <string name="mc_failed_unreadable">Waaiya kann diese Datei nicht lesen.</string>
+    <string name="mc_share_clean">Ohne Musik teilen</string>
+    <string name="mc_share_anyway">Trotzdem teilen</string>
+    <string name="mc_listen">Hier anhören</string>
+    <string name="mc_copying">Kopie ohne Musik wird erstellt … %1$d %%</string>
+    <string name="mc_copy_failed">Die Kopie ohne Musik konnte nicht erstellt werden.</string>
+    <string name="mc_copy_name">%1$s (ohne Musik)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Einfacher Modus (Test): ohne Entwickleroptionen</string>
+    <string name="simple_body">Für Telefone, bei denen die Einrichtung unten zu schwierig ist. Während Waaiya filtert, schaltet es den Medienton des Telefons stumm und spielt den gefilterten Ton auf einem anderen Tonkanal ab. Ihre Lautstärketasten stellen die Lautstärke von Waaiya ein. Android fragt bei jedem Start nach der Bildschirmfreigabe. Der Medienton kommt zurück, wenn das Filtern endet.</string>
+    <string name="simple_switch">Einfachen Modus verwenden</string>
+    <string name="simple_channel_title">Tonkanal: %1$s</string>
+    <string name="simple_channel_alarm">Wecker</string>
+    <string name="simple_channel_notification">Benachrichtigung</string>
+    <string name="simple_channel_help">Wenn Sie nichts hören oder der Ton bei eingesteckten Kopfhörern aus dem Lautsprecher des Telefons kommt, versuchen Sie den anderen Kanal. „Benachrichtigung“ ist stumm, solange das Telefon auf Vibration oder „Bitte nicht stören“ steht.</string>
+    <string name="simple_test_note">Dies ist ein Test. Nachdem Sie es ausprobiert haben (Lautsprecher, Kopfhörer, Bluetooth), senden Sie bitte den Diagnosebericht aus den Einstellungen.</string>
+    <string name="simple_on_detail">Einfacher Modus (Test): Der Medienton ist stummgeschaltet, während Waaiya filtert.</string>
 </resources>

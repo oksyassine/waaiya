@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Yana cire kayan kiɗa daga kowace manhaja, kuma yana barin magana da karatun Alƙur\'ani.</string>
+    <string name="tagline">Yana cire kayan kiɗa daga sautin manhajojinku, kuma yana barin magana da karatun Alƙur\'ani.</string>
 
     <string name="onboard_title">Barka da zuwa</string>
-    <string name="onboard_body">Waaiya yana cire kayan kiɗa daga sautin kowace manhaja a wannan waya. Ana barin magana da karatun Alƙur\'ani. A yanzu, ana cire muryoyin waƙa ma.</string>
+    <string name="onboard_body">Waaiya yana cire kayan kiɗa daga sautin manhajojin da ke wannan waya. Ana barin magana da karatun Alƙur\'ani. Ana cire muryoyin waƙa ma.</string>
     <string name="onboard_question">Ni ne</string>
     <string name="gender_man">Namiji</string>
     <string name="gender_woman">Mace</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Tacewa tana kunne</string>
     <string name="state_off_title">Tacewa a kashe take</string>
     <string name="state_starting">Ana farawa…</string>
-    <string name="state_on_detail">Ana cire kayan kiɗa daga dukkan manhajoji. Sauti yana zuwa a makare da kusan %1$d ms (1000 ms daƙiƙa ɗaya ne).</string>
-    <string name="state_off_detail">Taɓa maɓallin don farawa.</string>
-    <string name="state_model_failed">Tsarin tace sauti bai iya buɗuwa ba, don haka an kashe sauti don kariya.</string>
+    <string name="state_on_detail">Ana tace sautin manhajojinku. Yana zuwa a makare da kusan %1$d ms (1000 ms daƙiƙa ɗaya ne).</string>
+    <string name="state_off_detail">Danna maɓallin don farawa.</string>
+    <string name="state_model_failed">Tsarin tacewa bai iya buɗuwa ba, don haka an kashe sauti maimakon a kunna shi ba tare da tacewa ba.</string>
     <string name="state_capture_denied">Ana buƙatar izinin makirufo don karɓar sautin sauran manhajoji.</string>
-    <string name="state_stopped_by_system">Android ya dakatar da tacewa. Taɓa maɓallin don sake farawa.</string>
+    <string name="state_stopped_by_system">Android ya dakatar da tacewa. Danna maɓallin don sake farawa.</string>
     <string name="state_silenced_title">Tacewa ta tsaya</string>
-    <string name="state_silenced">Tacewa ta tsaya: an yi wa sauran manhajoji shiru. Taɓa maɓallin don sake farawa, ko Dakatar don jin su ba tare da tacewa ba.</string>
+    <string name="state_silenced">Tacewa ta tsaya: an yi wa sauran manhajoji shiru. Danna maɓallin don sake farawa, ko Dakatar don jin su ba tare da tacewa ba.</string>
     <string name="release_silence">Dakatar: ji manhajoji ba tare da tacewa ba</string>
     <string name="power_start_cd">Fara tacewa</string>
     <string name="power_stop_cd">Dakatar da tacewa</string>
-    <string name="capture_hint">Android zai tambaya ko za a raba allonku. Sauti kaɗai ake amfani da shi: ba a naɗar komai, ba a tura komai.</string>
+    <string name="capture_hint">Android zai tambaya ko za a raba allonku. Ba a naɗar komai, ba a tura komai.</string>
     <string name="need_record_audio">Waaiya yana buƙatar izinin makirufo don karɓar sautin sauran manhajoji. Ba ya taɓa naɗar muryarku.</string>
 
     <string name="setup_banner_title">Saura mataki ɗaya</string>
-    <string name="setup_banner_body">Ba tare da saitin sau ɗaya da ke ƙasa ba, za ku ji kiɗan da sautin da aka tace tare.</string>
+    <string name="setup_banner_body">Ba tare da saitin sau ɗaya ba, za ku ji kiɗan da sautin da aka tace tare.</string>
     <string name="step1_title">Shigar da Shizuku</string>
     <string name="step1_body">Manhaja ce mai taimako, kyauta, daga Play Store.</string>
     <string name="step1_action">Samo Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Ni ne</string>
     <string name="change">Canza</string>
 
-    <string name="player_title">Bidiyo ba tare da jinkirin sauti ba</string>
-    <string name="player_body">Ku tura bidiyo zuwa Waaiya (ko ku yi amfani da “Open with”, wato Buɗe da) don kallonsa a tace ba tare da jinkiri ba.</string>
+    <string name="player_title">Bidiyo da sauti da hoto a daidaice</string>
+    <string name="player_body">Ku tura bidiyo zuwa Waaiya (ko ku yi amfani da “Open with”, wato Buɗe da) don kallonsa a tace, da sauti da hoto a daidaice, ba tare da jinkirin tacewa kai tsaye ba.</string>
     <string name="licences">Lasisoshin buɗaɗɗen tushe (open-source)</string>
     <string name="licences_intro">Waaiya manhaja ce mai ʼyanci ƙarƙashin GNU Affero General Public License v3 ko sabuwar sigarta. Lambar tushe (source code): https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (bayanan horarwa): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Tacewa</string>
     <string name="notif_title">Waaiya yana kunne</string>
-    <string name="notif_text">Ana cire kayan kiɗa daga dukkan manhajoji</string>
+    <string name="notif_text">Ana tace sautin manhajojinku</string>
     <string name="notif_stop">Dakatar</string>
+    <string name="notif_resume">Ci gaba</string>
     <!-- Link feature -->
     <string name="link_entry_title">Buɗe mahaɗa</string>
     <string name="link_entry_body">Liƙa mahaɗar (link) YouTube, TikTok ko Instagram don kallo ko ajiye ta ba tare da kiɗa ba.</string>
@@ -125,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Dusashe allo</string>
-    <string name="blur_body">Yana rufe mutane da hotuna a allo, a kowace manhaja, yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.</string>
+    <string name="blur_body">Yana rufe mutane da hotuna a allo yayin da tacewa ke kunne. Yana aiki a cikin wayar; ba a tura komai zuwa ko\'ina ba.</string>
     <string name="blur_on_title">Dusashewa tana aiki</string>
     <string name="blur_off_title">Dusashewa a kashe take</string>
     <string name="blur_start_cd">Kunna dusashewa</string>
     <string name="blur_stop_cd">Kashe dusashewa</string>
-    <string name="blur_off_detail">Ku taɓa maɓallin don farawa. Tacewa ma tana farawa tare da ita.</string>
+    <string name="blur_off_detail">Ku danna maɓallin don farawa. Tacewa ma tana farawa tare da ita.</string>
     <string name="blur_what_title">Abin da za a dusashe</string>
-    <string name="blur_women_title">Dusashe mata</string>
+    <string name="blur_women_title">Dusashe hotunan mata</string>
     <string name="blur_women_body">Ana rufe dukkan jiki. Idan manhajar ba ta tabbata cewa mutum namiji ne ba, ana rufe shi shi ma.</string>
     <string name="blur_nudity_title">Dusashe hotunan tsiraici</string>
     <string name="blur_nudity_body">Tsiraici ko tufafin da ke bayyana jiki, a jikin kowa: ana rufe dukkan allo.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Lambar haɗawa</string>
     <string name="wsetup_code_dialog_body">Sai da raba allo kawai (“Settings” a rabi ɗaya, Waaiya a ɗayan): barin “Settings” yana rufe shafin haɗawa kuma lambarsa ta daina aiki. Rubuta lamba mai lambobi 6 da ke ƙarƙashin “Pair device with pairing code”.</string>
     <string name="wsetup_code_ok">Haɗa</string>
-    <string name="blur_strict_title">Waɗanda ake bari ba a rufe ba</string>
-    <string name="blur_strict_value">Waɗanda ake bari ba a rufe ba: %1$s</string>
+    <string name="blur_strict_title">Yawan tabbaci kafin a nuna namiji</string>
+    <string name="blur_strict_value">Yawan tabbaci kafin a nuna namiji: %1$s</string>
     <string name="blur_strict_0">Tsantsan: sai mutanen da manhajar ta kusan tabbatar maza ne kawai</string>
     <string name="blur_strict_1">Tsaka-tsaki: kusan ninki biyu na maza ake bari ba a rufe ba</string>
     <string name="blur_strict_2">Sassauci: ƙarin maza kaɗan fiye da tsaka-tsaki</string>
     <string name="blur_strict_0_short">tsantsan</string>
     <string name="blur_strict_1_short">tsaka-tsaki</string>
     <string name="blur_strict_2_short">sassauci</string>
-    <string name="blur_strict_help">Duk wanda manhajar ba ta tabbatar namiji ne ba ana rufe shi. Tsantsan yana barin kusan maza 7 cikin 100 ba a rufe ba; tsaka-tsaki kusan 14, sassauci kusan 16. Kowane mataki na rage tsantsan yana kuma barin kusan ƙarin mace 1 cikin 100 ba a rufe ba.</string>
+    <string name="blur_strict_help">Ana nuna mutum ne kawai idan manhajar ta tabbatar namiji ne; duk sauran ana dusashe su. Tsantsan yana nuna kusan maza 7 cikin 100; tsaka-tsaki kusan 14, sassauci kusan 16. Har yanzu wasu mata suna tsallakewa; kowane mataki na rage tsantsan yana barin kusan ƙarin 1 cikin 100 su tsallake.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Ba a yi wa ainihin sauti shiru ba tukuna, don haka kuna jin kiɗan tare da sautin da aka tace. Ku kammala saitin sau ɗaya da ke ƙasa.</string>
-    <string name="state_on_mute_failing">Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (a ƙasan wannan shafi).</string>
-    <string name="state_too_slow">Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa. “Buɗe mahaɗa” da ke ƙasa yana aiki duk da haka: yana tace bidiyon kafin ya kunna shi.</string>
+    <string name="state_on_not_muted">Ba a yi wa ainihin sauti shiru ba tukuna, don haka kuna jin kiɗan tare da sautin da aka tace. Ku kammala saitin sau ɗaya a shafin “Saiti”.</string>
+    <string name="state_on_mute_failing">Waaiya ba zai iya yi wa ainihin sautin manhajar da ke kunne yanzu shiru ba, don haka ana iya jin kiɗan har yanzu. Ku dakatar da tacewa sannan ku sake farawa. Idan ya ci gaba, ku tura rahoton bincike (Saituna).</string>
+    <string name="state_too_slow">Wannan waya tana da jinkiri sosai don tace sauti kai tsaye, don haka sautin yana yankewa. “Buɗe mahaɗa” da ke shafin “Mahaɗai” yana aiki duk da haka: yana tace bidiyon kafin ya kunna shi.</string>
     <string name="state_mono_note">Sautin yana mono don wannan waya ta iya tafiya daidai.</string>
-    <string name="state_blocked_silenced">An yi masa shiru, saboda ba ya barin tacewa: %1$s.</string>
-    <string name="state_blocked_unfiltered">Yana kunne ba tare da tacewa ba, saboda ba ya barin tacewa: %1$s.</string>
+    <string name="state_blocked_silenced">An yi shiru saboda waɗannan ba sa barin tacewa: %1$s.</string>
+    <string name="state_blocked_unfiltered">Yana kunne ba tare da tacewa ba saboda waɗannan ba sa barin tacewa: %1$s.</string>
     <string name="state_capture_failed">Android bai ba Waaiya sautin sauran manhajoji ba. Taɓa maɓallin don sake farawa.</string>
     <string name="state_capture_cancelled">An soke farawa a tambayar raba allo ta Android. Waaiya yana buƙatar ku zaɓi “Start” (Fara) a can don karɓar sautin. Ba a naɗar komai, ba a tura komai.</string>
     <string name="start_no_setup_title">Za a ci gaba da jin kiɗan</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Wannan waya tana da jinkiri sosai don tacewa kai tsaye: sautin yana yankewa</string>
     <string name="diag_button">Akwai matsala? Rahoton bincike</string>
     <string name="diag_title">Rahoton bincike</string>
-    <string name="diag_note">Abin da Waaiya ke gani a wannan waya. Ku kwafa shi ko ku raba shi da wanda ke taimaka muku. Manhajar kanta ba ta tura komai.</string>
+    <string name="diag_note">Abin da Waaiya ke gani a wannan waya. Ku kwafa shi ko ku raba shi da wanda ke taimaka muku. Waaiya ba ya tura shi da kansa: ku ne kuke zaɓar wanda zai karɓa.</string>
     <string name="notif_stopped_title">Waaiya ya tsaya</string>
     <string name="notif_stopped_text">Ba a tace sauti kuma. Taɓa don sake farawa.</string>
     <string name="notif_silenced_title">Tacewa ta tsaya: an yi wa sauran manhajoji shiru</string>
     <string name="notif_silenced_text">Taɓa don sake farawa, ko Dakatar don jin su ba tare da tacewa ba.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">A kunne</string>
+    <string name="tile_model_failed">Yana aiki, amma shiru: kuskuren samfuri</string>
     <string name="tile_off">A kashe</string>
     <string name="tile_starting">Ana farawa…</string>
     <string name="tile_silenced">Ya tsaya, manhajoji shiru</string>
     <string name="tile_on_not_muted">A kunne, ana buƙatar saiti</string>
     <string name="tile_open_app">Buɗe Waaiya</string>
-    <string name="tile_text_label">Rubutun sanarwa</string>
+    <string name="tile_text_label">Waaiya: rubutun sanarwa</string>
     <string name="tile_text_shown">Ana nunawa yayin tacewa</string>
     <string name="tile_text_hidden">Ana ɓoyewa yayin tacewa</string>
     <string name="tile_text_refused">Wannan waya ta ƙi</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Sake nuna saitin</string>
     <string name="setup_go">Je zuwa saitin</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Taɓawa ta cikin murfi</string>
+    <string name="helper_title">Taɓawa ta cikin wuraren da aka dusashe</string>
     <string name="helper_body_off">Ba tare da taimako ba, murfi yana hana taɓawa da ke ƙarƙashinsa. Mataimakin Waaiya yana zana murfin ta yadda taɓawa ke ratsawa. Kunna “Wireless debugging” (ana buƙatar Wi-Fi) sannan ku taɓa maɓallin; a karon farko, ku yi haɗawa sau ɗaya kamar a saiti. Bayan wayar ta sake kunnuwa, ku sake taɓa shi.</string>
     <string name="helper_start">Kunna mataimakin Waaiya</string>
-    <string name="helper_on">Mataimakin Waaiya yana zana murfin: taɓawa tana ratsa su. Yana tsayawa idan wayar ta sake kunnuwa ko idan an kashe “USB debugging”; sai ku sake taɓa maɓallin.</string>
+    <string name="helper_on">Mataimakin Waaiya yana zana dusashewar: taɓawa tana ratsa ta. Yana tsayawa idan wayar ta sake kunnuwa ko idan an kashe “USB debugging” (wani maɓalli dabam a cikin “Developer options”); sai ku sake taɓa maɓallin.</string>
     <string name="helper_shizuku_on">Shizuku yana zana murfin: taɓawa tana ratsa su.</string>
     <string name="helper_or_shizuku">Ko da Shizuku:</string>
     <string name="guide_w_helper_note">Idan dusashe allo yana kunne, saitin yana kuma kunna mataimakin Waaiya, don taɓawa ta ratsa murfin. Ku bar “USB debugging” a kunne saboda shi (“Wireless debugging” zai iya kasancewa a kashe). Bayan wayar ta sake kunnuwa, ku sake kunna mataimakin daga shafin Allo.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Cire murfin hannu</string>
     <string name="notif_fix_note_missed">An tsallake wani abu</string>
     <string name="notif_fix_note_wrong">An ɓoye bisa kuskure</string>
-    <string name="notif_fix_noted">An rubuta (bayanai %1$d a wannan waya)</string>
+    <string name="notif_fix_noted">An rubuta. Bayanai a wannan waya: %1$d</string>
     <string name="notif_fix_picker_hint">Ja yatsanku a kan wurin da za a rufe.</string>
     <string name="notif_fix_picker_cover">Rufe shi</string>
     <string name="notif_fix_picker_cancel">Soke</string>
@@ -416,4 +418,39 @@
     <string name="move_new_body">Tsohuwar Waaiya (ta kafin siga 0.2.15) tana nan a wannan wayar. Cire ta don kada su biyu su tace a lokaci ɗaya.</string>
     <string name="move_new_imported">An kawo saitunanku daga gare ta.</string>
     <string name="move_remove_old">Cire tsohuwar Waaiya</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: duba ko akwai kiɗa</string>
+    <string name="mc_title">Duba ko akwai kiɗa</string>
+    <string name="mc_unnamed">Fayil da aka raba</string>
+    <string name="mc_listening">Ana saurare… %1$d %%</string>
+    <string name="mc_private">Waaiya tana saurare a wannan wayar. Ba a aika guntun sautin zuwa ko\'ina ba.</string>
+    <string name="mc_music">Waaiya ta ji kiɗa</string>
+    <string name="mc_music_detail">Kayan kiɗa a %1$s (kusan %2$s %% na bidiyon).</string>
+    <string name="mc_percussion">Waaiya ta ji kaɗe-kaɗe kawai</string>
+    <string name="mc_percussion_detail">Ganguna ko tafi mai kari, ba tare da wasu kayan kiɗa ba, a %1$s. Kai ne za ka yanke shawara.</string>
+    <string name="mc_none">Ba a ji kayan kiɗa ba</string>
+    <string name="mc_none_detail">Waaiya ta saurari dukan bidiyon kuma ba ta ji kayan kiɗa ba. Wasu kiɗa na iya wucewa ba a ji ba, galibi kiɗa mai ƙaramar murya a ƙarƙashin magana.</string>
+    <string name="mc_note_quiet">Kiɗa mai ƙaramar murya a ƙarƙashin magana na iya wucewa ba a ji ba.</string>
+    <string name="mc_failed">Ba a iya duba wannan fayil ba</string>
+    <string name="mc_failed_no_model">Wannan sigar Waaiya ba ta iya duba kiɗa.</string>
+    <string name="mc_failed_no_sound">Ba shi da sauti.</string>
+    <string name="mc_failed_too_long">Ya fi minti 30 tsawo.</string>
+    <string name="mc_failed_unreadable">Waaiya ba ta iya karanta wannan fayil ba.</string>
+    <string name="mc_share_clean">Raba ba tare da kiɗa ba</string>
+    <string name="mc_share_anyway">Raba duk da haka</string>
+    <string name="mc_listen">Saurara a nan</string>
+    <string name="mc_copying">Ana yin kwafi ba tare da kiɗa ba… %1$d %%</string>
+    <string name="mc_copy_failed">Ba a iya yin kwafin ba tare da kiɗa ba.</string>
+    <string name="mc_copy_name">%1$s (ba tare da kiɗa ba)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Yanayi mai sauƙi (gwaji): babu “Developer options”</string>
+    <string name="simple_body">Don wayoyin da saitin da ke ƙasa ya yi musu wuya sosai. Yayin da Waaiya ke tacewa, yana kashe sautin media na wayar kuma yana kunna sautin da aka tace a wata hanyar sauti dabam. Maɓallan ƙarar ku suna saita ƙarar Waaiya. Android tana neman izinin raba allo a kowace farawa. Sautin media yana dawowa idan tacewa ta tsaya.</string>
+    <string name="simple_switch">Yi amfani da yanayi mai sauƙi</string>
+    <string name="simple_channel_title">Hanyar sauti: %1$s</string>
+    <string name="simple_channel_alarm">Ƙararrawa</string>
+    <string name="simple_channel_notification">Sanarwa</string>
+    <string name="simple_channel_help">Idan ba ku jin komai, ko sauti yana fitowa daga lasifikar wayar alhali belun kunne na ciki, gwada ɗayan hanyar. “Sanarwa” ba ta da sauti idan wayar tana kan girgiza ko “Do Not Disturb”.</string>
+    <string name="simple_test_note">Wannan gwaji ne. Bayan kun gwada shi (lasifika, belun kunne, Bluetooth), don Allah ku tura rahoton bincike daga Saituna.</string>
+    <string name="simple_on_detail">Yanayi mai sauƙi (gwaji): an kashe sautin media yayin da Waaiya ke tacewa.</string>
 </resources>

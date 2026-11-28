@@ -268,7 +268,7 @@ void main() {
     final status = find.byKey(const Key('blur_status'));
     await tester.ensureVisible(status);
     expect(find.descendant(of: status, matching: find.textContaining('no layer-shell')), findsOneWidget);
-    expect(find.descendant(of: status, matching: find.textContaining('لا يستطيع التمويه الرسم')), findsOneWidget);
+    expect(find.descendant(of: status, matching: find.textContaining('لا يستطيع التمويه الظهور')), findsOneWidget);
     // no Android-only setup in the card
     expect(find.byKey(const Key('blur_fail_fix')), findsNothing);
     expect(find.textContaining('Shizuku'), findsNothing);
@@ -311,7 +311,7 @@ void main() {
     await tester.pumpAndSettle();
     // on no page at all, shown or not
     expect(find.byKey(const Key('blur_strict'), skipOffstage: false), findsNothing);
-    expect(find.textContaining('مَن يبقى دون تغطية', skipOffstage: false), findsNothing);
+    expect(find.textContaining('مدى التأكد قبل إظهار رجل', skipOffstage: false), findsNothing);
     expect(find.byKey(const Key('nav_screen')), findsNothing);
     expect(File('$log.args').existsSync(), isFalse); // never started
     await tester.runAsync(() => b.close());

@@ -13,14 +13,14 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get tagline =>
-      'ہر ایپ سے موسیقی کے آلات ہٹاتی ہے اور بات چیت اور تلاوت باقی رکھتی ہے۔';
+      'آپ کی ایپس کی آواز سے موسیقی کے آلات ہٹاتی ہے اور بات چیت اور تلاوت باقی رکھتی ہے۔';
 
   @override
   String get onboardTitle => 'خوش آمدید';
 
   @override
   String get onboardBody =>
-      'واعية اس فون کی ہر ایپ کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ فی الحال گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
+      'واعية اس فون کی ایپس کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
 
   @override
   String get onboardQuestion => 'میں ہوں';
@@ -46,15 +46,15 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'تمام ایپس سے آلات ہٹائے جا رہے ہیں۔ آواز تقریباً $delayMs ملی سیکنڈ دیر سے آتی ہے (1000 ملی سیکنڈ ایک سیکنڈ ہے)۔';
+    return 'آپ کی ایپس کی آواز فلٹر ہو رہی ہے۔ یہ تقریباً $delayMs ملی سیکنڈ دیر سے آتی ہے (1000 ملی سیکنڈ ایک سیکنڈ ہے)۔';
   }
 
   @override
-  String get stateOffDetail => 'شروع کرنے کے لیے بٹن تھپتھپائیں۔';
+  String get stateOffDetail => 'شروع کرنے کے لیے بٹن دبائیں۔';
 
   @override
   String get stateModelFailed =>
-      'آواز کا ماڈل لوڈ نہیں ہو سکا، اس لیے احتیاطاً آواز بند کر دی گئی ہے۔';
+      'فلٹر لوڈ نہیں ہو سکا، اس لیے آواز بغیر فلٹر کے چلنے کے بجائے بند کر دی گئی ہے۔';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android نے فلٹرنگ روک دی۔ دوبارہ شروع کرنے کے لیے بٹن تھپتھپائیں۔';
+      'Android نے فلٹرنگ روک دی۔ دوبارہ شروع کرنے کے لیے بٹن دبائیں۔';
 
   @override
   String get stateSilencedTitle => 'فلٹرنگ رک گئی';
 
   @override
   String get stateSilenced =>
-      'فلٹرنگ رک گئی: دوسری ایپس خاموش ہیں۔ دوبارہ شروع کرنے کے لیے بٹن تھپتھپائیں، یا انہیں بغیر فلٹر کے سننے کے لیے “روکیں”۔';
+      'فلٹرنگ رک گئی: دوسری ایپس خاموش ہیں۔ دوبارہ شروع کرنے کے لیے بٹن دبائیں، یا انہیں بغیر فلٹر کے سننے کے لیے “روکیں”۔';
 
   @override
   String get releaseSilence => 'روکیں: ایپس کو بغیر فلٹر سنیں';
@@ -82,7 +82,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android آپ کی اسکرین کا اشتراک کرنے کو کہے گا۔ صرف آواز استعمال ہوتی ہے: نہ کچھ ریکارڈ ہوتا ہے نہ کہیں بھیجا جاتا ہے۔';
+      'Android آپ کی اسکرین کا اشتراک کرنے کو کہے گا۔ نہ کچھ ریکارڈ ہوتا ہے نہ کہیں بھیجا جاتا ہے۔';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'نیچے دیے گئے ایک بار کے سیٹ اپ کے بغیر آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔';
+      'ایک بار کے سیٹ اپ کے بغیر آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔';
 
   @override
   String get step1Title => 'Shizuku انسٹال کریں';
@@ -246,11 +246,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get change => 'تبدیل کریں';
 
   @override
-  String get playerTitle => 'مکمل ہم آہنگی میں ویڈیوز';
+  String get playerTitle => 'آواز اور تصویر ہم آہنگ ویڈیوز';
 
   @override
   String get playerBody =>
-      'کوئی ویڈیو واعية کے ساتھ شیئر کریں (یا “اس کے ساتھ کھولیں” استعمال کریں) تاکہ اسے بغیر تاخیر کے فلٹر شدہ دیکھیں۔';
+      'کوئی ویڈیو واعية کے ساتھ شیئر کریں (یا “اس کے ساتھ کھولیں” استعمال کریں) تاکہ اسے فلٹر شدہ، آواز اور تصویر کی ہم آہنگی کے ساتھ اور براہ راست فلٹر کی تاخیر کے بغیر دیکھیں۔';
 
   @override
   String get licences => 'اوپن سورس لائسنس';
@@ -393,7 +393,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'فلٹرنگ آن رہنے تک، ہر ایپ میں اسکرین پر لوگوں اور تصاویر کو ڈھانپ دیتی ہے۔ یہ فون پر ہی چلتی ہے؛ کچھ بھی کہیں نہیں بھیجا جاتا۔';
+      'فلٹرنگ آن رہنے تک اسکرین پر لوگوں اور تصاویر کو ڈھانپ دیتی ہے۔ یہ فون پر ہی چلتی ہے؛ کچھ بھی کہیں نہیں بھیجا جاتا۔';
 
   @override
   String get blurOnTitle => 'دھندلاہٹ آن ہے';
@@ -415,7 +415,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get blurWhatTitle => 'کیا دھندلا کیا جائے';
 
   @override
-  String get blurWomenTitle => 'خواتین کو دھندلا کریں';
+  String get blurWomenTitle => 'خواتین کی تصاویر دھندلا کریں';
 
   @override
   String get blurWomenBody =>
@@ -802,11 +802,11 @@ class AppLocalizationsUr extends AppLocalizations {
   String get wsetupCodeOk => 'جوڑا بنائیں';
 
   @override
-  String get blurStrictTitle => 'کون بغیر ڈھکا رہے';
+  String get blurStrictTitle => 'مرد کو دکھانے سے پہلے کتنا یقین';
 
   @override
   String blurStrictValue(String level) {
-    return 'کون بغیر ڈھکا رہے: $level';
+    return 'مرد کو دکھانے سے پہلے کتنا یقین: $level';
   }
 
   @override
@@ -814,7 +814,7 @@ class AppLocalizationsUr extends AppLocalizations {
       'سخت: صرف وہ لوگ جن کے مرد ہونے کا ایپ کو تقریباً یقین ہو';
 
   @override
-  String get blurStrict1 => 'متوازن: تقریباً دگنے مرد بغیر ڈھکے رہتے ہیں';
+  String get blurStrict1 => 'متوازن: تقریباً دگنے مرد دکھائے جاتے ہیں';
 
   @override
   String get blurStrict2 => 'نرم: متوازن سے کچھ زیادہ مرد';
@@ -830,31 +830,31 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'جس کے مرد ہونے کا ایپ کو یقین نہ ہو، اسے ڈھانپ دیا جاتا ہے۔ سخت میں ہر 100 میں سے تقریباً 7 مرد بغیر ڈھکے رہتے ہیں؛ متوازن میں تقریباً 14، نرم میں تقریباً 16۔ ہر کم سخت درجہ ہر 100 میں سے تقریباً 1 مزید عورت کو بھی بغیر ڈھکا چھوڑتا ہے۔';
+      'کسی شخص کو صرف تب دکھایا جاتا ہے جب ایپ کو یقین ہو کہ وہ مرد ہے؛ باقی سب کو دھندلا کر دیا جاتا ہے۔ سخت میں ہر 100 میں سے تقریباً 7 مرد دکھائے جاتے ہیں، متوازن میں تقریباً 14، نرم میں تقریباً 16۔ کچھ عورتیں پھر بھی چھوٹ جاتی ہیں؛ ہر کم سخت درجہ ہر 100 میں سے تقریباً 1 مزید چھوڑ دیتا ہے۔';
 
   @override
   String get stateOnNotMuted =>
-      'اصل آواز ابھی خاموش نہیں ہوئی، اس لیے آپ کو فلٹر شدہ آواز کے ساتھ موسیقی بھی سنائی دے رہی ہے۔ نیچے ایک بار کا سیٹ اپ مکمل کریں۔';
+      'اصل آواز ابھی خاموش نہیں ہوئی، اس لیے آپ کو فلٹر شدہ آواز کے ساتھ موسیقی بھی سنائی دے رہی ہے۔ “سیٹ اپ” صفحے پر ایک بار کا سیٹ اپ مکمل کریں۔';
 
   @override
   String get stateOnMuteFailing =>
-      'واعية اس وقت چلنے والی ایپ کی اصل آواز خاموش نہیں کر پا رہی، اس لیے موسیقی اب بھی سنائی دے سکتی ہے۔ فلٹرنگ روک کر دوبارہ شروع کریں۔ اگر مسئلہ برقرار رہے تو تشخیصی رپورٹ بھیجیں (اس اسکرین کے نیچے)۔';
+      'واعية اس وقت چلنے والی ایپ کی اصل آواز خاموش نہیں کر پا رہی، اس لیے موسیقی اب بھی سنائی دے سکتی ہے۔ فلٹرنگ روک کر دوبارہ شروع کریں۔ اگر مسئلہ برقرار رہے تو تشخیصی رپورٹ بھیجیں (ترتیبات)۔';
 
   @override
   String get stateTooSlow =>
-      'یہ فون براہ راست آواز فلٹر کرنے کے لیے بہت سست ہے، اس لیے آواز ٹوٹتی ہے۔ نیچے “لنک کھولیں” پھر بھی کام کرتا ہے: یہ ویڈیو کو چلانے سے پہلے فلٹر کر دیتا ہے۔';
+      'یہ فون براہ راست آواز فلٹر کرنے کے لیے بہت سست ہے، اس لیے آواز ٹوٹتی ہے۔ “لنکس” صفحے پر “لنک کھولیں” پھر بھی کام کرتا ہے: یہ ویڈیو کو چلانے سے پہلے فلٹر کر دیتا ہے۔';
 
   @override
   String get stateMonoNote => 'آواز مونو میں ہے تاکہ یہ فون ساتھ چل سکے۔';
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'خاموش کر دی گئی، کیونکہ یہ فلٹرنگ کی اجازت نہیں دیتی: $apps۔';
+    return 'خاموش کر دی گئی کیونکہ ان کی طرف سے فلٹرنگ کی اجازت نہیں: $apps۔';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'بغیر فلٹر چل رہی ہے، کیونکہ یہ فلٹرنگ کی اجازت نہیں دیتی: $apps۔';
+    return 'بغیر فلٹر چل رہی ہے کیونکہ ان کی طرف سے فلٹرنگ کی اجازت نہیں: $apps۔';
   }
 
   @override
@@ -886,7 +886,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'اس فون پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں یا جو آپ کی مدد کر رہا ہو اس کے ساتھ شیئر کریں۔ ایپ خود کچھ نہیں بھیجتی۔';
+      'اس فون پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں یا جو آپ کی مدد کر رہا ہو اس کے ساتھ شیئر کریں۔ واعية اسے خود نہیں بھیجتی: آپ چنتے ہیں کہ یہ کسے ملے۔';
 
   @override
   String get notifStoppedTitle => 'واعية رک گئی';
@@ -927,7 +927,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get setupGo => 'سیٹ اپ پر جائیں';
 
   @override
-  String get helperTitle => 'پردوں کے پار ٹچ';
+  String get helperTitle => 'دھندلے حصوں کے پار ٹچ';
 
   @override
   String get helperBodyOff =>
@@ -938,7 +938,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'واعية کا مددگار پردے بناتا ہے: ٹچ ان سے گزر جاتے ہیں۔ فون ری اسٹارٹ ہونے پر یا ‏USB ڈیبگنگ آف ہونے پر یہ رک جاتا ہے؛ تب بٹن دوبارہ تھپتھپائیں۔';
+      'واعية کا مددگار دھندلاہٹ بناتا ہے: ٹچ اس سے گزر جاتے ہیں۔ فون ری اسٹارٹ ہونے پر یا “‏USB ڈیبگنگ” (ڈویلپر کے اختیارات میں ایک الگ سوئچ) آف ہونے پر یہ رک جاتا ہے؛ تب بٹن دوبارہ تھپتھپائیں۔';
 
   @override
   String get helperShizukuOn => 'Shizuku پردے بناتی ہے: ٹچ ان سے گزر جاتے ہیں۔';
@@ -953,37 +953,37 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsGeneralTitle => 'عام';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle => 'آسان موڈ (آزمائشی): ڈویلپر کے اختیارات کے بغیر';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'ان فونز کے لیے جن پر نیچے والا سیٹ اپ بہت مشکل ہو۔ واعية فلٹر کرتے وقت فون کی میڈیا آواز بند کر دیتی ہے اور فلٹر شدہ آواز ایک دوسرے ساؤنڈ چینل پر چلاتی ہے۔ آپ کے والیوم بٹن واعية کا والیوم طے کرتے ہیں۔ اینڈرائیڈ ہر بار شروع کرنے پر اسکرین شیئر کرنے کا پوچھتا ہے۔ فلٹرنگ رکنے پر میڈیا آواز واپس آ جاتی ہے۔';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'آسان موڈ استعمال کریں';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'ساؤنڈ چینل: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'الارم';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'اطلاع';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'اگر کچھ سنائی نہ دے، یا ایئرفون لگے ہونے کے باوجود آواز فون کے اسپیکر سے آئے، تو دوسرا چینل آزمائیں۔ فون وائبریٹ پر ہو یا «ڈسٹرب نہ کریں» آن ہو تو اطلاع والا چینل خاموش رہتا ہے۔';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'یہ ایک آزمائش ہے۔ اسے آزمانے کے بعد (اسپیکر، ایئرفون، Bluetooth) براہ کرم ترتیبات سے تشخیصی رپورٹ بھیجیں۔';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'آسان موڈ (آزمائشی): واعية کے فلٹر کرتے وقت میڈیا آواز بند رہتی ہے۔';
 
   @override
   String get worshipPrayerFajr => 'فجر';
@@ -1125,7 +1125,7 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay => 'تمام ایپس سے آلات ہٹائے جا رہے ہیں۔';
+  String get stateOnDetailNoDelay => 'آپ کی ایپس کی آواز فلٹر ہو رہی ہے۔';
 
   @override
   String get engineErrorNoPactl =>
@@ -1203,7 +1203,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'اس کمپیوٹر پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں اور جو آپ کی مدد کر رہا ہو اسے دے دیں۔ ایپ خود کچھ نہیں بھیجتی۔';
+      'اس کمپیوٹر پر واعية کیا دیکھتی ہے۔ اسے کاپی کریں اور جو آپ کی مدد کر رہا ہو اسے دے دیں۔ واعية اسے خود نہیں بھیجتی: آپ چنتے ہیں کہ یہ کسے ملے۔';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1339,7 +1339,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'نوٹ ہو گیا (اس آلے پر $count نوٹس)۔';
+    return 'نوٹ ہو گیا۔ اس آلے پر نوٹس: $count۔';
   }
 
   @override
@@ -1735,7 +1735,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'PIN لگا ہو تو فلٹر روکنے یا کوئی بھی تحفظ بند کرنے سے پہلے PIN مانگا جاتا ہے۔ مثلاً ماں یا باپ PIN لگا دیتے ہیں تاکہ بچہ فلٹر بند نہ کر سکے۔ انتظار کا وقت یا PIN بدلنے کے لیے بھی یہ مانگا جاتا ہے۔';
+      'PIN لگا ہو تو فلٹر روکنے یا کوئی بھی تحفظ بند کرنے سے پہلے PIN مانگا جاتا ہے۔ مثلاً ماں یا باپ PIN لگا دیتے ہیں تاکہ بچہ واعية میں فلٹر بند نہ کر سکے (جو یہ نہیں روک سکتا وہ نیچے درج ہے)۔ انتظار کا وقت یا PIN بدلنے کے لیے بھی یہ مانگا جاتا ہے۔';
 
   @override
   String get protectPinForgot =>
@@ -1767,7 +1767,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'غلط PIN۔ وقفے سے پہلے $count کوششیں باقی ہیں۔';
+    return 'غلط PIN۔ وقفے سے پہلے باقی کوششیں: $count۔';
   }
 
   @override
@@ -1829,7 +1829,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'جو یہ نہیں روک سکتا: زبردستی بند کرنا، ان انسٹال کرنا، واعية کا ڈیٹا صاف کرنا اور خود Android کی ترتیبات۔ انہیں روکنے کے لیے Android کی خاص اجازتیں چاہئیں جو واعية استعمال نہیں کرتی۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
+      'جو یہ نہیں روک سکتا: فون ری اسٹارٹ کرنا (فلٹرنگ خود سے دوبارہ شروع نہیں ہوتی)، زبردستی بند کرنا، ان انسٹال کرنا، واعية کا ڈیٹا صاف کرنا اور خود Android کی ترتیبات۔ انہیں روکنے کے لیے Android کی خاص اجازتیں چاہئیں جو واعية استعمال نہیں کرتی۔ یہ کمزور لمحے سے بچاتا ہے، پختہ ارادے والے شخص سے نہیں۔';
 
   @override
   String get protectLimitsDesktop =>
@@ -1879,7 +1879,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'واعية اس کمپیوٹر کی ہر ایپ کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ فی الحال گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
+      'واعية اس کمپیوٹر کی ایپس کی آواز سے موسیقی کے آلات ہٹاتی ہے۔ بات چیت اور قرآن کی تلاوت باقی رہتی ہے۔ گانے کی آوازیں بھی ہٹا دی جاتی ہیں۔';
 
   @override
   String get worshipUseLocation => 'میرا مقام استعمال کریں';
@@ -1913,7 +1913,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return '$city کے لیے وزارتِ اوقاف و امورِ اسلامیہ (مراکش) کے سرکاری اوقات۔';
+    return '$city کے لیے وزارتِ اوقاف و امورِ اسلامیہ (مراکش) کے جدولوں کے مطابق حساب کیے گئے اوقات۔';
   }
 
   @override
@@ -1929,4 +1929,115 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'اس کمپیوٹر کی ترتیبات، جو اس کے منتظم نے منتخب کی ہیں، لاگ اِن پر واعية کو شروع ہونے نہیں دیتیں۔';
+
+  @override
+  String get notifTextTitle => 'فلٹر کے دوران اطلاعات کا متن دکھائیں';
+
+  @override
+  String get notifTextBody =>
+      'جب کوئی ایپ پوری اسکرین ریکارڈ کرے تو اینڈرائیڈ اطلاعات کا متن چھپا دیتا ہے، اور فلٹرنگ بھی اسی میں شمار ہوتی ہے۔ آن: واعية یہ حفاظت صرف فلٹر کے دوران ہٹاتی ہے تاکہ آپ اپنی اطلاعات پڑھ سکیں۔ جب تک یہ حفاظت ہٹی رہے، اسی وقت کی کوئی دوسری اسکرین شیئرنگ بھی آپ کی اطلاعات اور کوڈ دوسروں کو دکھا سکتی ہے۔';
+
+  @override
+  String get notifTextNextStart =>
+      'یہ تبدیلی نافذ کرنے کے لیے فلٹر بند کر کے دوبارہ شروع کریں۔';
+
+  @override
+  String get notifTextRefused =>
+      'اس فون نے تبدیلی قبول نہیں کی۔ ڈویلپر کے اختیارات میں ”اسکرین شیئر کی حفاظت غیر فعال کریں“ خود آن کریں۔';
+
+  @override
+  String get notifTextByHand =>
+      'دکھایا جا رہا ہے: ڈویلپر کے اختیارات میں اینڈرائیڈ کی حفاظت بند ہے (”اسکرین شیئر کی حفاظت غیر فعال کریں“)۔ یہ ہر اسکرین شیئرنگ کے لیے بند رہے گی جب تک آپ اسے وہاں دوبارہ آن نہ کریں۔';
+
+  @override
+  String get notifTextHowTo =>
+      'واعیہ کے فلٹر کے دوران اینڈرائیڈ اطلاعات کا متن چھپا دیتا ہے۔ ایک بار کے سیٹ اپ کے بعد واعیہ انہیں دکھاتا ہے: یہ حفاظت صرف فلٹر کے دوران ہٹاتا ہے۔';
+
+  @override
+  String get notifTextOpenDev => 'ڈویلپر کے اختیارات کھولیں';
+
+  @override
+  String get notifTextLockNote =>
+      'اس فون پر اسکرین لاک ہونے پر اینڈرائیڈ فلٹرنگ بھی روک دیتا ہے، پھر دوسری ایپس خاموش رہتی ہیں جب تک آپ ”دوبارہ شروع کریں“ نہ دبائیں۔ سیٹ اپ اسے بھی روکتا ہے۔';
+
+  @override
+  String get notifTextHandOptional =>
+      'اختیاری، بغیر سیٹ اپ کے: ڈویلپر کے اختیارات میں ”اسکرین شیئر کی حفاظت غیر فعال کریں“ آن کریں۔ پھر یہ ہر اسکرین شیئرنگ کے لیے بند رہے گی، اور کچھ فونز میں یہ نہیں ہوتا۔';
+
+  @override
+  String get notifTextForced =>
+      'آن: اس فون پر اینڈرائیڈ ہر بار شروع کرنے سے پہلے پوچھتا ہے اور پھر ہر اسکرین لاک پر فلٹرنگ روک دیتا۔ اس لیے واعية فلٹر کے دوران یہ حفاظت ہٹاتی ہے، جس سے اطلاعات کا متن بھی دکھتا ہے۔ جب تک یہ حفاظت ہٹی رہے، اسی وقت کی کوئی دوسری اسکرین شیئرنگ بھی آپ کی اطلاعات اور کوڈ دوسروں کو دکھا سکتی ہے۔';
+
+  @override
+  String get oneAppTitle => 'شروع کرتے وقت: ”ایک ایپ شیئر کریں“، پھر واعیہ';
+
+  @override
+  String get oneAppBody =>
+      'جب اینڈرائیڈ پوچھے کہ کیا شیئر کرنا ہے، تو ”ایک ایپ شیئر کریں“ چنیں، پھر واعية۔ دوسری ایپس فلٹر ہوتی رہیں گی، اطلاعات پڑھی جا سکیں گی، اور اسکرین لاک ہونے پر بھی فلٹرنگ جاری رہے گی۔ پوری اسکرین کے ساتھ اینڈرائیڈ اطلاعات کا متن چھپا دیتا ہے اور ہر لاک پر فلٹرنگ روک دیتا ہے۔';
+
+  @override
+  String get oneAppPair =>
+      'واعیہ کے مکمل کام کے لیے سیٹ اپ والے صفحے پر وائرلیس ڈیبگنگ سے اسے ایک بار جوڑیں: پھر اصل موسیقی بھی خاموش ہو جائے گی اور اینڈرائیڈ ہر بار شروع پر پوچھنا بند کر دے گا۔';
+
+  @override
+  String get notifTextOneApp =>
+      'شروع پر ”ایک ایپ شیئر کریں“، پھر واعیہ چننے پر دکھایا جاتا ہے۔ پوری اسکرین کے ساتھ اینڈرائیڈ اسے چھپاتا ہے؛ ایک بار کے سیٹ اپ کے بعد واعیہ فلٹر کے دوران یہ ہٹا دیتا ہے۔';
+
+  @override
+  String get blurNeedsRestart =>
+      'دھندلاہٹ استعمال کرنے کے لیے فلٹر بند کر کے دوبارہ شروع کریں: اسے پوری اسکرین چاہیے، اور یہ فلٹرنگ ”ایک ایپ شیئر کریں“ کی پیشکش کے ساتھ شروع ہوئی تھی۔';
+
+  @override
+  String get micOpenSettings =>
+      'مائیکروفون کی اجازت کے لیے واعية کی ترتیبات کھولیں';
+
+  @override
+  String get keepRunningTitle => 'واعية کو چلتا رکھیں';
+
+  @override
+  String get keepRunningBattery =>
+      'یہ فون بیٹری بچانے کے لیے کچھ دیر بعد واعية کو بند کر سکتا ہے، پھر فلٹرنگ رک جاتی ہے۔ واعية کی ترتیبات میں بیٹری کے تحت «غیر محدود» منتخب کریں۔ Xiaomi، Redmi اور POCO پر: «کوئی پابندی نہیں»، اور آٹو اسٹارٹ بھی آن کریں۔';
+
+  @override
+  String get keepRunningNotifications =>
+      'واعية کی اطلاعات بند ہیں، اس لیے فلٹرنگ رکنے پر یہ آپ کو نہیں بتا سکتا۔ انہیں واعية کی ترتیبات میں آن کریں۔';
+
+  @override
+  String get keepRunningOpen => 'واعية کی ترتیبات کھولیں';
+
+  @override
+  String get lockAskTitle => 'کیا اسکرین لاک ہونے پر فلٹرنگ جاری رہے؟';
+
+  @override
+  String get lockTitle => 'اسکرین لاک ہونے پر فلٹرنگ جاری رکھیں';
+
+  @override
+  String get lockBody =>
+      'اس فون پر Android ہر بار شروع کرنے سے پہلے پوچھتا ہے، پھر ہر بار اسکرین لاک ہونے پر فلٹرنگ روک دیتا ہے۔ واعية فلٹرنگ کے دوران Android کی اسکرین شیئر حفاظت ہٹا کر اسے روک سکتا ہے، اور فلٹرنگ رکنے پر اسے واپس لگا دیتا ہے۔ جب تک یہ ہٹی رہے، اسی وقت کوئی دوسری اسکرین شیئرنگ (مثلاً ویڈیو کال) آپ کی اطلاعات بھی دکھا سکتی ہے۔ تبدیلی اگلی بار شروع کرنے پر نافذ ہوگی۔';
+
+  @override
+  String get lockYes => 'فلٹرنگ جاری رکھیں';
+
+  @override
+  String get lockNo => 'ہر لاک پر روک دیں';
+
+  @override
+  String get sendToSupport => 'واعية کو بھیجیں';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'یہ فون براہ راست آواز فلٹر کرنے کے لیے بہت سست ہے، اس لیے آواز ٹوٹتی ہے۔';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'ایک بار کا سیٹ اپ ابھی نہیں ہوا۔ اس کے بغیر واعية اصل آواز خاموش نہیں کر سکتی: آپ کو موسیقی اور فلٹر شدہ آواز ایک ساتھ سنائی دے گی۔';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'کیا $value کا انتظار منتخب کریں؟ اب سے فلٹر یا کوئی بھی حفاظت بند کرنے کے لیے $value انتظار ہوگا، اور اس انتظار کو کم کرنے کے لیے بھی۔';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android نے فلٹرنگ کے دوران واعية کو بند کر دیا، اس لیے آواز فلٹر ہونا بند ہو گئی۔';
 }

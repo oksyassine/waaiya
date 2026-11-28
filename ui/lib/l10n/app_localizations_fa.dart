@@ -13,14 +13,14 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get tagline =>
-      'سازهای موسیقی را از صدای همهٔ برنامه‌ها حذف می‌کند و گفتار و تلاوت را نگه می‌دارد.';
+      'سازهای موسیقی را از صدای برنامه‌هایتان حذف می‌کند و گفتار و تلاوت را نگه می‌دارد.';
 
   @override
   String get onboardTitle => 'خوش آمدید';
 
   @override
   String get onboardBody =>
-      'واعية سازهای موسیقی را از صدای همهٔ برنامه‌های این تلفن حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. فعلاً صدای آواز هم حذف می‌شود.';
+      'واعية سازهای موسیقی را از صدای برنامه‌های این تلفن حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. صدای آواز هم حذف می‌شود.';
 
   @override
   String get onboardQuestion => 'من';
@@ -46,15 +46,15 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'سازها از همهٔ برنامه‌ها حذف می‌شوند. صدا حدود $delayMs میلی‌ثانیه دیرتر می‌رسد (۱۰۰۰ میلی‌ثانیه یک ثانیه است).';
+    return 'صدای برنامه‌هایتان در حال پالایش است. حدود $delayMs میلی‌ثانیه دیرتر می‌رسد (۱۰۰۰ میلی‌ثانیه یک ثانیه است).';
   }
 
   @override
-  String get stateOffDetail => 'برای شروع، روی دکمه ضربه بزنید.';
+  String get stateOffDetail => 'برای شروع، دکمه را بزنید.';
 
   @override
   String get stateModelFailed =>
-      'مدل صدا بارگیری نشد، برای همین صدا برای احتیاط قطع شده است.';
+      'فیلتر بارگیری نشد، برای همین صدا قطع شده است تا بدون پالایش پخش نشود.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'اندروید پالایش را متوقف کرد. برای شروع دوباره، روی دکمه ضربه بزنید.';
+      'اندروید پالایش را متوقف کرد. برای شروع دوباره، دکمه را بزنید.';
 
   @override
   String get stateSilencedTitle => 'پالایش متوقف شد';
 
   @override
   String get stateSilenced =>
-      'پالایش متوقف شد: برنامه‌های دیگر بی‌صدا هستند. برای شروع دوباره روی دکمه ضربه بزنید، یا «توقف» را بزنید تا آن‌ها را بدون پالایش بشنوید.';
+      'پالایش متوقف شد: برنامه‌های دیگر بی‌صدا هستند. برای شروع دوباره دکمه را بزنید، یا «توقف» را بزنید تا آن‌ها را بدون پالایش بشنوید.';
 
   @override
   String get releaseSilence => 'توقف: شنیدن برنامه‌ها بدون پالایش';
@@ -82,7 +82,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'اندروید برای هم‌رسانی صفحه از شما می‌پرسد. فقط از صدا استفاده می‌شود: چیزی ضبط یا ارسال نمی‌شود.';
+      'اندروید برای هم‌رسانی صفحه از شما می‌پرسد. چیزی ضبط یا ارسال نمی‌شود.';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'بدون راه‌اندازی یک‌بارهٔ زیر، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.';
+      'بدون راه‌اندازی یک‌باره، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.';
 
   @override
   String get step1Title => 'نصب Shizuku';
@@ -247,11 +247,11 @@ class AppLocalizationsFa extends AppLocalizations {
   String get change => 'تغییر';
 
   @override
-  String get playerTitle => 'ویدیو با هماهنگی کامل';
+  String get playerTitle => 'ویدیو با صدا و تصویر هماهنگ';
 
   @override
   String get playerBody =>
-      'ویدیویی را با واعية هم‌رسانی کنید (یا از «باز کردن با» استفاده کنید) تا آن را پالایش‌شده و بدون تأخیر تماشا کنید.';
+      'ویدیویی را با واعية هم‌رسانی کنید (یا از «باز کردن با» استفاده کنید) تا آن را پالایش‌شده، با صدا و تصویر هماهنگ و بدون تأخیرِ پالایش زنده تماشا کنید.';
 
   @override
   String get licences => 'مجوزهای متن‌باز';
@@ -394,7 +394,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'افراد و تصاویر روی صفحه را در همهٔ برنامه‌ها، تا وقتی پالایش روشن است، می‌پوشاند. روی خود تلفن اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود.';
+      'افراد و تصاویر روی صفحه را، تا وقتی پالایش روشن است، می‌پوشاند. روی خود تلفن اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود.';
 
   @override
   String get blurOnTitle => 'تاری روشن است';
@@ -416,7 +416,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get blurWhatTitle => 'چه چیزی تار شود';
 
   @override
-  String get blurWomenTitle => 'تار کردن زنان';
+  String get blurWomenTitle => 'تار کردن تصاویر زنان';
 
   @override
   String get blurWomenBody =>
@@ -802,11 +802,11 @@ class AppLocalizationsFa extends AppLocalizations {
   String get wsetupCodeOk => 'جفت کردن';
 
   @override
-  String get blurStrictTitle => 'چه کسانی بی‌پوشش می‌مانند';
+  String get blurStrictTitle => 'میزان اطمینان پیش از نشان دادن یک مرد';
 
   @override
   String blurStrictValue(String level) {
-    return 'چه کسانی بی‌پوشش می‌مانند: $level';
+    return 'میزان اطمینان پیش از نشان دادن یک مرد: $level';
   }
 
   @override
@@ -814,7 +814,7 @@ class AppLocalizationsFa extends AppLocalizations {
       'سخت‌گیرانه: فقط کسانی که برنامه تقریباً مطمئن است مرد هستند';
 
   @override
-  String get blurStrict1 => 'متعادل: حدود دو برابر مرد بیشتر بی‌پوشش می‌مانند';
+  String get blurStrict1 => 'متعادل: حدود دو برابر مرد نشان داده می‌شود';
 
   @override
   String get blurStrict2 => 'آسان‌گیرانه: کمی مرد بیشتر از حالت متعادل';
@@ -830,31 +830,31 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'هر کسی که برنامه مطمئن نیست مرد است، پوشانده می‌شود. حالت سخت‌گیرانه حدود ۷ مرد از هر ۱۰۰ را بی‌پوشش می‌گذارد؛ متعادل حدود ۱۴ و آسان‌گیرانه حدود ۱۶. هر مرحله که سخت‌گیری کمتر شود، حدود ۱ زن بیشتر از هر ۱۰۰ نیز بی‌پوشش می‌ماند.';
+      'فردی فقط وقتی نشان داده می‌شود که برنامه مطمئن باشد مرد است؛ بقیه تار می‌شوند. حالت سخت‌گیرانه حدود ۷ مرد از هر ۱۰۰ را نشان می‌دهد؛ متعادل حدود ۱۴ و آسان‌گیرانه حدود ۱۶. برخی زنان همچنان تشخیص داده نمی‌شوند؛ هر مرحله که سخت‌گیری کمتر شود، حدود ۱ نفر بیشتر از هر ۱۰۰ تشخیص داده نمی‌شود.';
 
   @override
   String get stateOnNotMuted =>
-      'صدای اصلی هنوز بی‌صدا نشده است، برای همین موسیقی را همراه با صدای پالایش‌شده می‌شنوید. راه‌اندازی یک‌بارهٔ زیر را تمام کنید.';
+      'صدای اصلی هنوز بی‌صدا نشده است، برای همین موسیقی را همراه با صدای پالایش‌شده می‌شنوید. راه‌اندازی یک‌باره را در صفحهٔ «راه‌اندازی» تمام کنید.';
 
   @override
   String get stateOnMuteFailing =>
-      'واعية نمی‌تواند صدای اصلی برنامه‌ای را که اکنون پخش می‌کند بی‌صدا کند، برای همین ممکن است موسیقی همچنان شنیده شود. پالایش را متوقف و دوباره شروع کنید. اگر ادامه داشت، گزارش عیب‌یابی را بفرستید (پایین همین صفحه).';
+      'واعية نمی‌تواند صدای اصلی برنامه‌ای را که اکنون پخش می‌کند بی‌صدا کند، برای همین ممکن است موسیقی همچنان شنیده شود. پالایش را متوقف و دوباره شروع کنید. اگر ادامه داشت، گزارش عیب‌یابی را بفرستید (تنظیمات).';
 
   @override
   String get stateTooSlow =>
-      'این تلفن برای پالایش زندهٔ صدا خیلی کند است، برای همین صدا قطع‌ووصل می‌شود. «باز کردن پیوند» در پایین همچنان کار می‌کند: ویدیو را پیش از پخش پالایش می‌کند.';
+      'این تلفن برای پالایش زندهٔ صدا خیلی کند است، برای همین صدا قطع‌ووصل می‌شود. «باز کردن پیوند» در صفحهٔ «پیوندها» همچنان کار می‌کند: ویدیو را پیش از پخش پالایش می‌کند.';
 
   @override
   String get stateMonoNote => 'صدا مونو است تا این تلفن عقب نماند.';
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'بی‌صدا شد، چون اجازهٔ پالایش نمی‌دهد: $apps.';
+    return 'بی‌صدا شد، چون اجازهٔ پالایش نمی‌دهند: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'بدون پالایش پخش می‌شود، چون اجازهٔ پالایش نمی‌دهد: $apps.';
+    return 'بدون پالایش پخش می‌شود، چون اجازهٔ پالایش نمی‌دهند: $apps.';
   }
 
   @override
@@ -886,7 +886,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'آنچه واعية روی این تلفن می‌بیند. آن را کپی کنید یا با کسی که به شما کمک می‌کند هم‌رسانی کنید. خود برنامه چیزی نمی‌فرستد.';
+      'آنچه واعية روی این تلفن می‌بیند. آن را کپی کنید یا با کسی که به شما کمک می‌کند هم‌رسانی کنید. واعية خودش آن را نمی‌فرستد: شما انتخاب می‌کنید چه کسی آن را بگیرد.';
 
   @override
   String get notifStoppedTitle => 'واعية متوقف شد';
@@ -927,7 +927,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get setupGo => 'رفتن به راه‌اندازی';
 
   @override
-  String get helperTitle => 'عبور لمس از پوشش‌ها';
+  String get helperTitle => 'عبور لمس از بخش‌های تار';
 
   @override
   String get helperBodyOff =>
@@ -938,7 +938,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'دستیار واعية پوشش‌ها را می‌کشد: لمس‌ها از آن‌ها عبور می‌کنند. با راه‌اندازی مجدد تلفن یا خاموش شدن ‏اشکال‌زدایی USB متوقف می‌شود؛ آنگاه دوباره روی دکمه ضربه بزنید.';
+      'دستیار واعية تاری را می‌کشد: لمس‌ها از آن عبور می‌کنند. با راه‌اندازی مجدد تلفن یا خاموش شدن «اشکال‌زدایی USB» (کلیدی جداگانه در «گزینه‌های برنامه‌نویسان») متوقف می‌شود؛ آنگاه دوباره روی دکمه ضربه بزنید.';
 
   @override
   String get helperShizukuOn =>
@@ -954,37 +954,38 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsGeneralTitle => 'عمومی';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle =>
+      'حالت ساده (آزمایشی): بدون «گزینه‌های برنامه‌نویسان»';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'برای تلفن‌هایی که راه‌اندازی زیر برایشان بیش از حد دشوار است. تا وقتی واعية پالایش می‌کند، صدای رسانهٔ تلفن را بی‌صدا می‌کند و صدای پالایش‌شده را روی کانال صوتی دیگری پخش می‌کند. دکمه‌های صدای شما میزان صدای واعية را تنظیم می‌کنند. اندروید در هر شروع برای هم‌رسانی صفحه اجازه می‌خواهد. با توقف پالایش، صدای رسانه برمی‌گردد.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'استفاده از حالت ساده';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'کانال صدا: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'زنگ هشدار';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'اعلان';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'اگر چیزی نمی‌شنوید، یا با وجود هدفون صدا از بلندگوی تلفن پخش می‌شود، کانال دیگر را امتحان کنید. وقتی تلفن روی لرزش یا «مزاحم نشوید» است، «اعلان» بی‌صدا است.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'این یک آزمایش است. پس از امتحان آن (بلندگو، هدفون، بلوتوث)، لطفاً گزارش عیب‌یابی را از «تنظیمات» بفرستید.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'حالت ساده (آزمایشی): تا وقتی واعية پالایش می‌کند، صدای رسانه قطع است.';
 
   @override
   String get worshipPrayerFajr => 'صبح';
@@ -1127,7 +1128,7 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay => 'سازها از همهٔ برنامه‌ها حذف می‌شوند.';
+  String get stateOnDetailNoDelay => 'صدای برنامه‌هایتان در حال پالایش است.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1205,7 +1206,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. خود برنامه چیزی نمی‌فرستد.';
+      'آنچه واعية روی این رایانه می‌بیند. آن را کپی کنید و به کسی که به شما کمک می‌کند بدهید. واعية خودش آن را نمی‌فرستد: شما انتخاب می‌کنید چه کسی آن را بگیرد.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1340,7 +1341,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'ثبت شد ($count یادداشت روی این دستگاه).';
+    return 'ثبت شد. یادداشت‌های روی این دستگاه: $count.';
   }
 
   @override
@@ -1737,7 +1738,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'با رمز، برای متوقف کردن فیلتر یا خاموش کردن هر محافظتی، اول رمز خواسته می‌شود. مثلاً پدر یا مادر رمزی می‌گذارد تا کودک نتواند فیلتر را خاموش کند. تغییر مدت انتظار یا خود رمز هم آن را می‌خواهد.';
+      'با رمز، برای متوقف کردن فیلتر یا خاموش کردن هر محافظتی، اول رمز خواسته می‌شود. مثلاً پدر یا مادر رمزی می‌گذارد تا کودک نتواند فیلتر را در واعية خاموش کند (آنچه نمی‌تواند جلویش را بگیرد در پایین آمده است). تغییر مدت انتظار یا خود رمز هم آن را می‌خواهد.';
 
   @override
   String get protectPinForgot =>
@@ -1769,7 +1770,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'رمز اشتباه. $count تلاش تا یک مکث باقی مانده.';
+    return 'رمز اشتباه. تلاش‌های باقی‌مانده تا یک مکث: $count.';
   }
 
   @override
@@ -1831,7 +1832,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'آنچه این نمی‌تواند جلویش را بگیرد: توقف اجباری، حذف برنامه، پاک کردن داده‌های واعية و تنظیمات خود اندروید. جلوگیری از این‌ها به اجازه‌های ویژهٔ اندروید نیاز دارد که واعية از آن‌ها استفاده نمی‌کند. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
+      'آنچه این نمی‌تواند جلویش را بگیرد: راه‌اندازی مجدد تلفن (پالایش خودبه‌خود دوباره شروع نمی‌شود)، توقف اجباری، حذف برنامه، پاک کردن داده‌های واعية و تنظیمات خود اندروید. جلوگیری از این‌ها به اجازه‌های ویژهٔ اندروید نیاز دارد که واعية از آن‌ها استفاده نمی‌کند. این از لحظهٔ ضعف محافظت می‌کند، نه از کسی که مصمم است.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1881,7 +1882,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'واعية سازهای موسیقی را از صدای همهٔ برنامه‌های این رایانه حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. فعلاً صدای آواز هم حذف می‌شود.';
+      'واعية سازهای موسیقی را از صدای برنامه‌های این رایانه حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. صدای آواز هم حذف می‌شود.';
 
   @override
   String get worshipUseLocation => 'استفاده از مکان من';
@@ -1915,7 +1916,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'اوقات رسمی وزارت اوقاف و امور اسلامی مراکش برای $city.';
+    return 'اوقاتی که مطابق جدول‌های وزارت اوقاف و امور اسلامی مراکش برای $city محاسبه شده است.';
   }
 
   @override
@@ -1931,4 +1932,114 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'تنظیمات این رایانه، که مدیر آن انتخاب کرده است، اجازه نمی‌دهد واعية هنگام ورود اجرا شود.';
+
+  @override
+  String get notifTextTitle => 'نمایش متن اعلان‌ها هنگام فیلتر';
+
+  @override
+  String get notifTextBody =>
+      'اندروید تا وقتی برنامه‌ای کل صفحه را ضبط می‌کند متن اعلان‌ها را پنهان می‌کند و فیلتر هم از همین نوع است. روشن: واعیه این محافظت را فقط هنگام فیلتر برمی‌دارد تا بتوانید اعلان‌هایتان را بخوانید. تا وقتی این محافظت برداشته است، اشتراک‌گذاری دیگری از صفحه که هم‌زمان انجام شود هم می‌تواند اعلان‌ها و کدهای شما را به دیگران نشان دهد.';
+
+  @override
+  String get notifTextNextStart =>
+      'برای اعمال این تغییر، فیلتر را متوقف و دوباره شروع کنید.';
+
+  @override
+  String get notifTextRefused =>
+      'این گوشی تغییر را نپذیرفت. «غیرفعال کردن محافظت‌های اشتراک‌گذاری صفحه» را خودتان در گزینه‌های توسعه‌دهنده روشن کنید.';
+
+  @override
+  String get notifTextByHand =>
+      'نمایش داده می‌شود: محافظت اندروید در گزینه‌های توسعه‌دهنده خاموش است («غیرفعال کردن محافظت‌های اشتراک‌گذاری صفحه»). برای هر اشتراک‌گذاری صفحه خاموش می‌ماند تا وقتی آن را دوباره روشن کنید.';
+
+  @override
+  String get notifTextHowTo =>
+      'اندروید هنگام فیلتر واعیه متن اعلان‌ها را پنهان می‌کند. پس از راه‌اندازی یک‌باره، واعیه آن‌ها را نشان می‌دهد: این محافظت را فقط هنگام فیلتر برمی‌دارد.';
+
+  @override
+  String get notifTextOpenDev => 'باز کردن گزینه‌های توسعه‌دهنده';
+
+  @override
+  String get notifTextLockNote =>
+      'در این گوشی اندروید با قفل شدن صفحه، فیلتر را هم متوقف می‌کند و برنامه‌های دیگر تا وقتی «ادامه» را نزنید بی‌صدا می‌مانند. راه‌اندازی جلوی این را هم می‌گیرد.';
+
+  @override
+  String get notifTextHandOptional =>
+      'اختیاری، بدون راه‌اندازی: «غیرفعال کردن محافظت‌های اشتراک‌گذاری صفحه» را در گزینه‌های توسعه‌دهنده روشن کنید. در این صورت برای هر اشتراک‌گذاری صفحه خاموش می‌ماند و برخی گوشی‌ها آن را ندارند.';
+
+  @override
+  String get notifTextForced =>
+      'روشن: در این گوشی اندروید پیش از هر شروع می‌پرسد و سپس با هر قفل صفحه فیلتر را متوقف می‌کرد. واعیه هنگام فیلتر این محافظت را برمی‌دارد، پس متن اعلان‌ها هم نمایش داده می‌شود. تا وقتی این محافظت برداشته است، اشتراک‌گذاری دیگری از صفحه که هم‌زمان انجام شود هم می‌تواند اعلان‌ها و کدهای شما را به دیگران نشان دهد.';
+
+  @override
+  String get oneAppTitle => 'هنگام شروع: «اشتراک یک برنامه»، سپس واعیه';
+
+  @override
+  String get oneAppBody =>
+      'وقتی اندروید پرسید چه چیزی را به اشتراک بگذارید، «اشتراک یک برنامه» و سپس واعیه را انتخاب کنید. برنامه‌های دیگر همچنان فیلتر می‌شوند، اعلان‌ها خوانا می‌مانند و با قفل شدن صفحه فیلتر ادامه می‌یابد. با کل صفحه، اندروید متن اعلان‌ها را پنهان می‌کند و با هر قفل صفحه فیلتر را متوقف می‌کند.';
+
+  @override
+  String get oneAppPair =>
+      'برای کارکرد کامل واعیه، آن را یک بار با «اشکال‌زدایی بی‌سیم» در صفحه راه‌اندازی جفت کنید: آن‌گاه موسیقی اصلی هم بی‌صدا می‌شود و اندروید دیگر در هر شروع نمی‌پرسد.';
+
+  @override
+  String get notifTextOneApp =>
+      'وقتی هنگام شروع «اشتراک یک برنامه» و سپس واعیه را انتخاب کنید نمایش داده می‌شود. با کل صفحه اندروید آن را پنهان می‌کند؛ پس از راه‌اندازی یک‌باره، واعیه هنگام فیلتر این را برمی‌دارد.';
+
+  @override
+  String get blurNeedsRestart =>
+      'برای استفاده از محوسازی، فیلتر را متوقف و دوباره شروع کنید: به کل صفحه نیاز دارد و این فیلتر با پیشنهاد «اشتراک یک برنامه» شروع شده است.';
+
+  @override
+  String get micOpenSettings => 'باز کردن تنظیمات واعية و اجازه به میکروفون';
+
+  @override
+  String get keepRunningTitle => 'واعية را روشن نگه دارید';
+
+  @override
+  String get keepRunningBattery =>
+      'این تلفن ممکن است پس از مدتی برای صرفه‌جویی در باتری واعية را ببندد و پالایش متوقف شود. در تنظیمات واعية، زیر «باتری»، «نامحدود» را انتخاب کنید. در شیائومی، ردمی و پوکو: «بدون محدودیت»، و «شروع خودکار» را هم روشن کنید.';
+
+  @override
+  String get keepRunningNotifications =>
+      'اعلان‌های واعية خاموش است، پس نمی‌تواند وقتی پالایش متوقف شد به شما بگوید. آن‌ها را در تنظیمات واعية روشن کنید.';
+
+  @override
+  String get keepRunningOpen => 'باز کردن تنظیمات واعية';
+
+  @override
+  String get lockAskTitle => 'هنگام قفل صفحه پالایش ادامه یابد؟';
+
+  @override
+  String get lockTitle => 'ادامهٔ پالایش هنگام قفل صفحه';
+
+  @override
+  String get lockBody =>
+      'در این تلفن اندروید پیش از هر شروع می‌پرسد و سپس با هر قفل صفحه پالایش را متوقف می‌کند. واعية می‌تواند با برداشتن محافظت اشتراک صفحهٔ اندروید هنگام پالایش جلوی این را بگیرد و پس از توقف پالایش آن را برمی‌گرداند. تا وقتی برداشته است، اشتراک صفحهٔ دیگری در همان زمان (مثلاً تماس تصویری) هم می‌تواند اعلان‌های شما را نشان دهد. تغییر از شروع بعدی اعمال می‌شود.';
+
+  @override
+  String get lockYes => 'ادامهٔ پالایش';
+
+  @override
+  String get lockNo => 'توقف با هر قفل';
+
+  @override
+  String get sendToSupport => 'ارسال به واعية';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'این تلفن برای پالایش زندهٔ صدا خیلی کند است، برای همین صدا قطع‌ووصل می‌شود.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'راه‌اندازی یک‌باره هنوز انجام نشده است. بدون آن، واعية نمی‌تواند صدای اصلی را بی‌صدا کند: موسیقی و صدای پالایش‌شده را با هم می‌شنوید.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'انتظار $value را انتخاب می‌کنید؟ از این پس خاموش کردن پالایش یا هر محافظتی $value انتظار دارد، و کوتاه کردن این انتظار هم.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'اندروید واعية را هنگام پالایش بست، پس صدا دیگر پالایش نمی‌شد.';
 }

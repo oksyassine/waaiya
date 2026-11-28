@@ -193,7 +193,7 @@ void main() {
     await _pump(tester, b);
     await _tap(tester, find.byKey(const Key('fix_note_missed_filter')));
     expect(b.calls, contains('note missed filter'));
-    expect(find.text('Noted (3 notes on this device).'), findsOneWidget);
+    expect(find.text('Noted. Notes on this device: 3.'), findsOneWidget);
     await _go(tester, 'screen');
     await _tap(tester, find.byKey(const Key('fix_cover_area')));
     expect(b.calls, contains('coverArea'));

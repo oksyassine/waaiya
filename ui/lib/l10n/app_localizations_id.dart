@@ -13,14 +13,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Menghapus alat musik dari semua aplikasi dan mempertahankan suara bicara serta tilawah.';
+      'Menghapus alat musik dari suara aplikasi Anda dan mempertahankan suara bicara serta tilawah.';
 
   @override
   String get onboardTitle => 'Selamat datang';
 
   @override
   String get onboardBody =>
-      'Waaiya menghapus alat musik dari suara semua aplikasi di ponsel ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.';
+      'Waaiya menghapus alat musik dari suara aplikasi di ponsel ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Suara nyanyian juga dihapus.';
 
   @override
   String get onboardQuestion => 'Saya';
@@ -46,15 +46,15 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Alat musik dihapus dari semua aplikasi. Suara terlambat sekitar $delayMs milidetik (1000 milidetik sama dengan satu detik).';
+    return 'Memfilter suara aplikasi Anda. Suara terlambat sekitar $delayMs milidetik (1000 milidetik sama dengan satu detik).';
   }
 
   @override
-  String get stateOffDetail => 'Ketuk tombol untuk memulai.';
+  String get stateOffDetail => 'Tekan tombol untuk memulai.';
 
   @override
   String get stateModelFailed =>
-      'Model suara tidak bisa dimuat, jadi suara dibisukan demi keamanan.';
+      'Filter tidak bisa dimuat, jadi suara dibisukan alih-alih diputar tanpa filter.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android menghentikan filter. Ketuk tombol untuk memulai lagi.';
+      'Android menghentikan filter. Tekan tombol untuk memulai lagi.';
 
   @override
   String get stateSilencedTitle => 'Filter berhenti';
 
   @override
   String get stateSilenced =>
-      'Filter berhenti: aplikasi lain dibisukan. Ketuk tombol untuk memulai lagi, atau Berhenti untuk mendengarnya tanpa filter.';
+      'Filter berhenti: aplikasi lain dibisukan. Tekan tombol untuk memulai lagi, atau Berhenti untuk mendengarnya tanpa filter.';
 
   @override
   String get releaseSilence => 'Berhenti: dengar aplikasi tanpa filter';
@@ -82,7 +82,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android akan meminta untuk membagikan layar Anda. Hanya suaranya yang dipakai: tidak ada yang direkam atau dikirim.';
+      'Android akan meminta untuk membagikan layar Anda. Tidak ada yang direkam atau dikirim.';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Tanpa penyiapan satu kali di bawah, Anda akan mendengar musik dan suara yang difilter secara bersamaan.';
+      'Tanpa penyiapan satu kali, Anda akan mendengar musik dan suara yang difilter secara bersamaan.';
 
   @override
   String get step1Title => 'Instal Shizuku';
@@ -246,11 +246,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get change => 'Ubah';
 
   @override
-  String get playerTitle => 'Video dengan sinkron sempurna';
+  String get playerTitle => 'Video dengan suara dan gambar yang sinkron';
 
   @override
   String get playerBody =>
-      'Bagikan video ke Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan filter tanpa jeda.';
+      'Bagikan video ke Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan filter, dengan suara dan gambar yang sinkron, tanpa jeda filter langsung.';
 
   @override
   String get licences => 'Lisensi sumber terbuka';
@@ -391,7 +391,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Menutupi orang dan gambar di layar, di semua aplikasi, selama filter aktif. Berjalan di ponsel; tidak ada yang dikirim ke mana pun.';
+      'Menutupi orang dan gambar di layar selama filter aktif. Berjalan di ponsel; tidak ada yang dikirim ke mana pun.';
 
   @override
   String get blurOnTitle => 'Buram aktif';
@@ -407,13 +407,13 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'Ketuk tombol untuk memulai. Penyaringan ikut dimulai.';
+      'Tekan tombol untuk memulai. Penyaringan ikut dimulai.';
 
   @override
   String get blurWhatTitle => 'Yang diburamkan';
 
   @override
-  String get blurWomenTitle => 'Buramkan perempuan';
+  String get blurWomenTitle => 'Buramkan gambar perempuan';
 
   @override
   String get blurWomenBody =>
@@ -800,11 +800,11 @@ class AppLocalizationsId extends AppLocalizations {
   String get wsetupCodeOk => 'Sambungkan';
 
   @override
-  String get blurStrictTitle => 'Siapa yang dibiarkan tidak ditutup';
+  String get blurStrictTitle => 'Seberapa yakin sebelum laki-laki ditampilkan';
 
   @override
   String blurStrictValue(String level) {
-    return 'Siapa yang dibiarkan tidak ditutup: $level';
+    return 'Seberapa yakin sebelum laki-laki ditampilkan: $level';
   }
 
   @override
@@ -813,7 +813,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get blurStrict1 =>
-      'Seimbang: sekitar dua kali lebih banyak laki-laki tidak ditutup';
+      'Seimbang: sekitar dua kali lebih banyak laki-laki ditampilkan';
 
   @override
   String get blurStrict2 =>
@@ -830,19 +830,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Siapa pun yang tidak dipastikan aplikasi sebagai laki-laki akan ditutup. Ketat membiarkan sekitar 7 dari 100 laki-laki tidak ditutup; seimbang sekitar 14, longgar sekitar 16. Setiap tingkat yang kurang ketat juga membiarkan sekitar 1 perempuan lagi dari 100 tidak ditutup.';
+      'Seseorang hanya ditampilkan jika aplikasi yakin dia laki-laki; semua yang lain diburamkan. Ketat menampilkan sekitar 7 dari 100 laki-laki, seimbang sekitar 14, longgar sekitar 16. Sebagian perempuan tetap terlewat; setiap tingkat yang kurang ketat melewatkan sekitar 1 lagi dari 100.';
 
   @override
   String get stateOnNotMuted =>
-      'Suara aslinya belum dibisukan, jadi Anda mendengar musik bersama suara yang difilter. Selesaikan penyiapan satu kali di bawah.';
+      'Suara aslinya belum dibisukan, jadi Anda mendengar musik bersama suara yang difilter. Selesaikan penyiapan satu kali di halaman “Penyiapan”.';
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya tidak bisa membisukan suara asli dari aplikasi yang sedang diputar, jadi musik mungkin masih terdengar. Hentikan lalu mulai filter. Jika tetap terjadi, kirim laporan diagnostik (di bagian bawah layar ini).';
+      'Waaiya tidak bisa membisukan suara asli dari aplikasi yang sedang diputar, jadi musik mungkin masih terdengar. Hentikan lalu mulai filter. Jika tetap terjadi, kirim laporan diagnostik (Setelan).';
 
   @override
   String get stateTooSlow =>
-      'Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus. “Buka tautan” di bawah tetap berfungsi: video difilter dulu sebelum diputar.';
+      'Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus. “Buka tautan” di halaman “Tautan” tetap berfungsi: video difilter dulu sebelum diputar.';
 
   @override
   String get stateMonoNote =>
@@ -850,12 +850,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'Dibisukan, karena tidak mengizinkan filter: $apps.';
+    return 'Dibisukan karena filter tidak diizinkan oleh: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'Diputar tanpa filter, karena tidak mengizinkan filter: $apps.';
+    return 'Diputar tanpa filter karena filter tidak diizinkan oleh: $apps.';
   }
 
   @override
@@ -887,7 +887,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Apa yang dilihat Waaiya di ponsel ini. Salin atau bagikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.';
+      'Apa yang dilihat Waaiya di ponsel ini. Salin atau bagikan kepada orang yang membantu Anda. Waaiya tidak mengirimnya sendiri: Anda yang memilih siapa yang menerimanya.';
 
   @override
   String get notifStoppedTitle => 'Waaiya berhenti';
@@ -928,7 +928,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get setupGo => 'Ke penyiapan';
 
   @override
-  String get helperTitle => 'Sentuhan menembus penutup';
+  String get helperTitle => 'Ketuk menembus area buram';
 
   @override
   String get helperBodyOff =>
@@ -939,7 +939,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'Asisten Waaiya menggambar penutup: sentuhan bisa menembusnya. Asisten berhenti saat ponsel dimulai ulang atau saat Proses debug USB dinonaktifkan; ketuk tombolnya lagi saat itu.';
+      'Asisten Waaiya menggambar area buram: ketukan bisa menembusnya. Asisten berhenti saat ponsel dimulai ulang atau saat “Proses debug USB” (sakelar terpisah di Opsi developer) dinonaktifkan; ketuk tombolnya lagi saat itu.';
 
   @override
   String get helperShizukuOn =>
@@ -955,37 +955,37 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingsGeneralTitle => 'Umum';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle => 'Mode sederhana (uji coba): tanpa Opsi developer';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Untuk ponsel yang terlalu sulit disiapkan dengan penyiapan di bawah. Selama Waaiya memfilter, Waaiya membisukan suara media ponsel dan memutar suara yang sudah difilter di saluran suara lain. Tombol volume Anda mengatur volume Waaiya. Android meminta untuk berbagi layar setiap kali mulai. Suara media kembali saat pemfilteran berhenti.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Gunakan mode sederhana';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Saluran suara: $channel';
   }
 
   @override
   String get simpleChannelAlarm => 'Alarm';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Notifikasi';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Jika Anda tidak mendengar apa pun, atau suara keluar dari speaker ponsel saat earphone terpasang, coba saluran yang lain. Notifikasi tidak bersuara saat ponsel dalam mode getar atau Jangan Ganggu.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Ini uji coba. Setelah mencobanya (speaker, earphone, Bluetooth), mohon kirim laporan diagnostik dari Setelan.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Mode sederhana (uji coba): suara media dibisukan selama Waaiya memfilter.';
 
   @override
   String get worshipPrayerFajr => 'Subuh';
@@ -1128,7 +1128,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay => 'Alat musik dihapus dari semua aplikasi.';
+  String get stateOnDetailNoDelay => 'Memfilter suara aplikasi Anda.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1206,7 +1206,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.';
+      'Apa yang dilihat Waaiya di komputer ini. Salin dan berikan kepada orang yang membantu Anda. Waaiya tidak mengirimnya sendiri: Anda yang memilih siapa yang menerimanya.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1342,7 +1342,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'Dicatat ($count catatan di perangkat ini).';
+    return 'Dicatat. Catatan di perangkat ini: $count.';
   }
 
   @override
@@ -1428,7 +1428,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get worshipAsrTitle => 'Waktu Asar';
 
   @override
-  String get worshipAsrStandard => 'Standar (Syafi\'i, Maliki, Hanbali)';
+  String get worshipAsrStandard => 'Mayoritas (Syafi\'i, Maliki, Hanbali)';
 
   @override
   String get worshipAsrHanafi => 'Hanafi';
@@ -1739,7 +1739,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Dengan PIN, menghentikan filter atau mematikan perlindungan apa pun akan meminta PIN dulu. Misalnya, orang tua memasang PIN agar anak tidak bisa mematikan filter. Mengubah waktu tunggu atau PIN juga memintanya.';
+      'Dengan PIN, menghentikan filter atau mematikan perlindungan apa pun akan meminta PIN dulu. Misalnya, orang tua memasang PIN agar anak tidak bisa mematikan filter di Waaiya (yang tidak bisa dicegahnya tercantum di bawah). Mengubah waktu tunggu atau PIN juga memintanya.';
 
   @override
   String get protectPinForgot =>
@@ -1771,7 +1771,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'PIN salah. Tersisa $count percobaan sebelum jeda.';
+    return 'PIN salah. Sisa percobaan sebelum jeda: $count.';
   }
 
   @override
@@ -1833,7 +1833,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Yang tidak bisa dicegah: paksa berhenti, mencopot pemasangan, menghapus data Waaiya, dan pengaturan Android sendiri. Memblokirnya butuh izin khusus Android yang tidak dipakai Waaiya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
+      'Yang tidak bisa dicegah: memulai ulang ponsel (filter tidak mulai lagi dengan sendirinya), paksa berhenti, mencopot pemasangan, menghapus data Waaiya, dan pengaturan Android sendiri. Memblokirnya butuh izin khusus Android yang tidak dipakai Waaiya. Ini melindungi dari saat lemah, bukan dari orang yang bertekad.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1883,7 +1883,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya menghapus alat musik dari suara semua aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.';
+      'Waaiya menghapus alat musik dari suara aplikasi di komputer ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Suara nyanyian juga dihapus.';
 
   @override
   String get worshipUseLocation => 'Gunakan lokasi saya';
@@ -1917,7 +1917,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'Waktu resmi Kementerian Wakaf dan Urusan Islam (Habous) untuk $city.';
+    return 'Waktu yang dihitung agar sesuai dengan tabel Kementerian Wakaf dan Urusan Islam (Habous) untuk $city.';
   }
 
   @override
@@ -1933,4 +1933,115 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Pengaturan komputer ini, yang dipilih oleh administratornya, tidak mengizinkan Waaiya berjalan saat masuk.';
+
+  @override
+  String get notifTextTitle => 'Tampilkan teks notifikasi saat memfilter';
+
+  @override
+  String get notifTextBody =>
+      'Android menyembunyikan isi notifikasi selama ada aplikasi yang merekam seluruh layar, dan pemfilteran termasuk itu. Aktif: Waaiya mencabut perlindungan ini hanya selama memfilter, sehingga Anda bisa membaca notifikasi. Selama perlindungan dicabut, berbagi layar lain pada saat yang sama juga bisa menampilkan notifikasi dan kode Anda kepada orang lain.';
+
+  @override
+  String get notifTextNextStart =>
+      'Hentikan lalu mulai lagi pemfilteran agar perubahan ini berlaku.';
+
+  @override
+  String get notifTextRefused =>
+      'Ponsel ini menolak perubahan. Aktifkan sendiri “Nonaktifkan perlindungan berbagi layar” di Opsi developer.';
+
+  @override
+  String get notifTextByHand =>
+      'Ditampilkan: perlindungan Android nonaktif di Opsi developer (“Nonaktifkan perlindungan berbagi layar”). Tetap nonaktif untuk setiap berbagi layar sampai Anda mengaktifkannya lagi di sana.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android menyembunyikan isi notifikasi selama Waaiya memfilter. Setelah penyiapan sekali, Waaiya menampilkannya: perlindungan ini dicabut hanya selama memfilter.';
+
+  @override
+  String get notifTextOpenDev => 'Buka Opsi developer';
+
+  @override
+  String get notifTextLockNote =>
+      'Di ponsel ini Android juga menghentikan pemfilteran saat layar terkunci, lalu aplikasi lain tetap senyap sampai Anda mengetuk Lanjutkan. Penyiapan juga mencegahnya.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Opsional, tanpa penyiapan: aktifkan “Nonaktifkan perlindungan berbagi layar” di Opsi developer. Perlindungan lalu tetap nonaktif untuk setiap berbagi layar, dan beberapa ponsel tidak memilikinya.';
+
+  @override
+  String get notifTextForced =>
+      'Aktif: di ponsel ini Android bertanya sebelum setiap mulai, lalu akan menghentikan pemfilteran setiap layar terkunci. Waaiya mencabut perlindungan ini selama memfilter, sehingga teks notifikasi juga tampil. Selama perlindungan dicabut, berbagi layar lain pada saat yang sama juga bisa menampilkan notifikasi dan kode Anda kepada orang lain.';
+
+  @override
+  String get oneAppTitle => 'Saat mulai: “Bagikan satu aplikasi”, lalu Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Saat Android menanyakan apa yang dibagikan, pilih “Bagikan satu aplikasi”, lalu Waaiya. Aplikasi lain tetap difilter, notifikasi tetap terbaca, dan pemfilteran terus berjalan saat layar terkunci. Dengan seluruh layar, Android menyembunyikan teks notifikasi dan menghentikan pemfilteran setiap layar terkunci.';
+
+  @override
+  String get oneAppPair =>
+      'Agar Waaiya bekerja penuh, sambungkan sekali dengan Proses debug nirkabel di halaman Penyiapan: musik asli juga akan dibisukan, dan Android berhenti bertanya setiap kali mulai.';
+
+  @override
+  String get notifTextOneApp =>
+      'Tampil saat Anda memilih “Bagikan satu aplikasi”, lalu Waaiya, ketika mulai. Dengan seluruh layar Android menyembunyikannya; setelah penyiapan sekali, Waaiya mencabutnya selama memfilter.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Hentikan lalu mulai lagi pemfilteran untuk memakai blur: blur memerlukan seluruh layar, dan pemfilteran ini dimulai dengan pilihan “Bagikan satu aplikasi”.';
+
+  @override
+  String get micOpenSettings =>
+      'Buka setelan Waaiya untuk mengizinkan mikrofon';
+
+  @override
+  String get keepRunningTitle => 'Biarkan Waaiya tetap berjalan';
+
+  @override
+  String get keepRunningBattery =>
+      'Ponsel ini bisa menutup Waaiya setelah beberapa waktu untuk menghemat baterai, lalu pemfilteran berhenti. Di setelan Waaiya, pada Baterai, pilih “Tidak dibatasi”. Di Xiaomi, Redmi, dan POCO: “Tidak ada batasan”, dan aktifkan juga Mulai otomatis.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Notifikasi Waaiya mati, jadi Waaiya tidak bisa memberi tahu saat pemfilteran berhenti. Aktifkan di setelan Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Buka setelan Waaiya';
+
+  @override
+  String get lockAskTitle => 'Tetap memfilter saat layar terkunci?';
+
+  @override
+  String get lockTitle => 'Tetap memfilter saat layar terkunci';
+
+  @override
+  String get lockBody =>
+      'Di ponsel ini Android bertanya sebelum setiap mulai, lalu menghentikan pemfilteran setiap kali layar terkunci. Waaiya dapat mencegahnya dengan mencabut perlindungan berbagi layar Android selama memfilter, dan memasangnya kembali saat pemfilteran berhenti. Selama dicabut, berbagi layar lain pada saat yang sama (misalnya panggilan video) juga bisa menampilkan notifikasi Anda. Perubahan berlaku saat mulai berikutnya.';
+
+  @override
+  String get lockYes => 'Tetap memfilter';
+
+  @override
+  String get lockNo => 'Berhenti tiap terkunci';
+
+  @override
+  String get sendToSupport => 'Kirim ke Waaiya';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'Penyiapan satu kali belum dilakukan. Tanpanya Waaiya tidak bisa membisukan suara aslinya: Anda akan mendengar musik dan suara yang difilter secara bersamaan.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'Pilih waktu tunggu $value? Mulai sekarang, mematikan filter atau perlindungan apa pun menunggu $value, begitu juga memperpendek waktu tunggu ini.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android menutup Waaiya saat sedang memfilter, sehingga suara tidak lagi difilter.';
 }

@@ -226,6 +226,33 @@ void main() {
     expect(find.text(l.blurOffTitle), findsOneWidget);
   });
 
+  testWidgets('blur power button without "display over other apps": asks for it first, starts on the next tap',
+      (tester) async {
+    final backend = _OverlayBackend(
+      initial: const AppState(
+        settings: WaaiyaSettings(gender: 'man'),
+        capabilities: Capabilities.android,
+        setup: SetupInfo(originalsMuted: true, consentSkipped: true, shizuku: ShizukuState.ready),
+        blur: BlurInfo(overlayAllowed: false),
+      ),
+    );
+    await tester.pumpWidget(WaaiyaApp(backend: backend));
+    await tester.pumpAndSettle();
+    await goTo(tester, 'screen');
+    await tester.tap(find.byKey(const Key('blur_power')));
+    await tester.pumpAndSettle();
+    expect(backend.overlayAsked, 1); // Android's page for the permission
+    expect(backend.state.settings.blurEnabled, isTrue);
+    expect(backend.state.filter.running, isFalse); // nothing starts before the permission
+    // granted in Android's page; back in Waaiya, the next tap starts it
+    backend.allowOverlay();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('blur_power')));
+    await tester.pumpAndSettle();
+    expect(backend.overlayAsked, 1);
+    expect(backend.state.filter.running, isTrue);
+  });
+
   testWidgets('blur card: "who is left uncovered" row and dialog', (tester) async {
     final backend = MemoryBackend(
       initial: const AppState(
@@ -240,14 +267,14 @@ void main() {
     final row = find.byKey(const Key('blur_strict'));
     await tester.ensureVisible(row);
     await tester.pumpAndSettle();
-    expect(find.text('مَن يبقى دون تغطية: صارم'), findsOneWidget);
+    expect(find.text('مدى التأكد قبل إظهار رجل: صارم'), findsOneWidget);
     await tester.tap(find.descendant(of: row, matching: find.text('تغيير')));
     await tester.pumpAndSettle();
-    expect(find.text('مَن يبقى دون تغطية'), findsOneWidget); // dialog title
-    await tester.tap(find.text('متوازن: نحو ضعف عدد الرجال دون تغطية'));
+    expect(find.text('مدى التأكد قبل إظهار رجل'), findsOneWidget); // dialog title
+    await tester.tap(find.text('متوازن: يظهر نحو ضعف عدد الرجال'));
     await tester.pumpAndSettle();
     expect(backend.state.settings.blurStrictness, 1);
-    expect(find.text('مَن يبقى دون تغطية: متوازن'), findsOneWidget);
+    expect(find.text('مدى التأكد قبل إظهار رجل: متوازن'), findsOneWidget);
   });
 
   testWidgets('desktop engine: error text in Arabic, no delay figure, start-at-login switch', (tester) async {
@@ -264,7 +291,7 @@ void main() {
     expect(find.textContaining('Text file busy'), findsOneWidget);
     backend.emit(backend.state.copyWith(filter: const FilterInfo(state: FilterState.filtering)));
     await tester.pumpAndSettle();
-    expect(find.text('تُزال الآلات من كل التطبيقات.'), findsOneWidget); // delay unknown: no "0 ms"
+    expect(find.text('تُصفّى أصوات تطبيقاتك.'), findsOneWidget); // delay unknown: no "0 ms"
     await goTo(tester, 'settings');
     final sw = find.byKey(const Key('autostart'));
     await tester.ensureVisible(sw);
@@ -371,4 +398,15 @@ void main() {
 Future<void> goTo(WidgetTester tester, String page) async {
   await tester.tap(find.byKey(Key('nav_$page')));
   await tester.pumpAndSettle();
+}
+
+/// A phone where "display over other apps" is asked for and then granted.
+class _OverlayBackend extends MemoryBackend {
+  _OverlayBackend({required super.initial});
+  int overlayAsked = 0;
+
+  @override
+  Future<void> openOverlaySettings() async => overlayAsked++;
+
+  void allowOverlay() => emit(state.copyWith(blur: const BlurInfo(overlayAllowed: true)));
 }

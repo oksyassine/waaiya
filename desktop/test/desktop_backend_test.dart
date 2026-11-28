@@ -12,6 +12,32 @@ void main() {
   setUp(() => dir = Directory.systemTemp.createTempSync('waaiya_test'));
   tearDown(() => dir.deleteSync(recursive: true));
 
+  test('a release build without its filter says so and never shows filtering on (Linux and Windows)', () async {
+    for (final platform in ['windows', 'linux']) {
+      final b = await DesktopBackend.open(
+          file: File('${dir.path}/$platform.json'),
+          licencesDir: dir,
+          findEngine: false,
+          findBlur: false,
+          platform: platform,
+          poll: null,
+          simulateWithoutEngine: false);
+      expect(b.state.filter.simulated, isFalse, reason: platform);
+      expect(b.state.filter.error?.code, 'start_failed', reason: platform);
+      expect(b.state.filter.error?.detail, contains('missing'), reason: platform);
+      expect(await b.startFilter(), StartResult.failed, reason: platform);
+      expect(b.state.filter.state, FilterState.stopped, reason: platform);
+      expect(b.state.filter.running, isFalse, reason: platform);
+      expect(b.state.filter.error?.code, 'start_failed', reason: platform);
+    }
+    // a development run (debug, as tests run): the simulated preview
+    final dev = await DesktopBackend.open(
+        file: File('${dir.path}/dev.json'), licencesDir: dir, findEngine: false, findBlur: false, platform: 'windows', poll: null);
+    expect(dev.state.filter.simulated, isTrue);
+    expect(dev.state.filter.error, isNull);
+    expect(await dev.startFilter(), StartResult.started);
+  });
+
   test('settings and language are kept in a JSON file with the Android keys', () async {
     final file = File('${dir.path}/settings.json');
     // first run: the computer's language when Waaiya has it, else Arabic

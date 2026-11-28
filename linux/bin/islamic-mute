@@ -325,7 +325,11 @@ release_cmd() {
 # virtual output (fail-closed) until the service is back.
 stopped_cmd() {
     [ "${SERVICE_RESULT:-success}" = success ] && return 0
-    keep_silent && return 0
+    if keep_silent; then
+        # fail-closed: the apps stay on the silent output; say why, or the sound seems simply gone
+        notify "Waaiya stopped: apps are silenced" "The filter ended by itself, so other apps stay silent. Open Waaiya to start it again, or stop it there to hear them unfiltered."
+        return 0
+    fi
     local master; master="$(cat "$STATE/master" 2>/dev/null || true)"
     if [ -n "$master" ] && sink_exists "$master"; then
         [ "$(current_default)" = "$SINK" ] && pactl set-default-sink "$master"

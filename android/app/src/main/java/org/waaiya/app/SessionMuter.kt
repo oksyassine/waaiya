@@ -75,6 +75,11 @@ class SessionMuter(private val context: Context, private val settings: Settings)
     @Volatile private var pollFailures = 0
     @Volatile private var polls = 0
     private var failedInARow = 0
+    /**
+     * The sessions of Waaiya's own output (FilterService): never muted, whatever uid the system's lists give them.
+     * Muting the filtered copy would silence everything until filtering is started again.
+     */
+    @Volatile var ownSessions: Set<Int> = emptySet()
     /** Called (on the muter thread) when [status] or [blockedUids] changes. */
     var onChange: (() -> Unit)? = null
 
@@ -104,7 +109,13 @@ class SessionMuter(private val context: Context, private val settings: Settings)
             while (running) {
                 val before = status to blockedUids
                 if (!context.canListSessions()) {
-                    // the helper went away (helper mode): what is muted stays muted, new players are not
+                    // the helper went away (helper mode): what is muted stays muted, new players are not. An app
+                    // the user adds to "heard unfiltered" meanwhile is let go from the last list read, so it is not
+                    // left silent (the capture now leaves it out)
+                    val off = FilterService.captureExcluded ?: FixMistakes.filterOffUids(context, settings)
+                    synchronized(effects) {
+                        for (ss in sessions) if (ss.uid in off) { effects.remove(ss.id)?.release(); missed.remove(ss.id) }
+                    }
                     status = Status.NO_PERMISSION
                     lastError = "Waaiya's helper stopped"
                     if (before != status to blockedUids) onChange?.invoke()
@@ -165,9 +176,15 @@ class SessionMuter(private val context: Context, private val settings: Settings)
         // apps the user chose to hear unfiltered (FixMistakes, filter_off_apps): the capture leaves them out, so their
         // original must play. Left out like our own uid (not "blocked", not counted as unmuted); an effect already on
         // one of their sessions is released below at once.
-        val off = FixMistakes.filterOffUids(context, settings)
+        // what the running capture really leaves out: when a capture with a new list could not open, the old one goes
+        // on and an app just added is still filtered, so its original stays muted (not heard twice)
+        val off = FilterService.captureExcluded ?: FixMistakes.filterOffUids(context, settings)
         val offIds = list.filter { it.uid in off }.map { it.id }.toSet()
-        list = list.filter { it.uid != me && it.id > 0 && it.uid !in off }
+        val own = ownSessions
+        list.firstOrNull { it.id in own && it.uid != me }?.let {
+            Log.w("IslamicMute", "muter: Waaiya's output session ${it.id} is listed under uid ${it.uid}: left alone")
+        }
+        list = list.filter { it.uid != me && it.id > 0 && it.uid !in off && it.id !in own }
         sessions = list
         val seen = HashSet<Int>()
         var failedNow = 0
@@ -203,6 +220,11 @@ class SessionMuter(private val context: Context, private val settings: Settings)
         synchronized(effects) {
             for (id in effects.keys.toList()) {
                 if (id in offIds) { effects.remove(id)?.release(); missed.remove(id); continue }
+                if (id in own) {
+                    effects.remove(id)?.release(); missed.remove(id)
+                    Recent.event(context, "the muter had muted Waaiya's own output (session $id): released")
+                    continue
+                }
                 if (id in seen) { missed.remove(id); continue }
                 val m = (missed[id] ?: 0) + 1
                 if (m >= 6) { effects.remove(id)?.release(); missed.remove(id) } else missed[id] = m

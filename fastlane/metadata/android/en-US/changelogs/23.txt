@@ -1,0 +1,1 @@
+Fixes from testers' reports: filtering no longer stops or cuts after a long time, the screen blur can no longer block the app, and the notification-text switch applies at once. New: “Send to Waaiya” for the diagnostics report, a notice when the phone closes Waaiya, a question before filtering continues at screen lock, and clearer texts in 18 languages.

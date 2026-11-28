@@ -12,7 +12,7 @@ LDLIBS  += $(if $(SYSROOT),-Wl$(comma)-rpath-link$(comma)/usr/lib/x86_64-linux-g
 comma   := ,
 BUILD    = build
 
-all: $(BUILD)/im-process $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so \
+all: $(BUILD)/im-process $(BUILD)/im-music-scan $(BUILD)/im-stream $(BUILD)/islamic_mute_ladspa.so $(BUILD)/im-pulse $(BUILD)/libimvision.so \
      $(BUILD)/im-blur
 
 # im-pulse loads libpulse.so.0 at run time (cli/pulse_dl.h), so it builds without libpulse-dev.
@@ -23,12 +23,20 @@ $(BUILD):
 	cp -P $(ORT)/lib/libonnxruntime.so* $(BUILD)/
 
 ENGINE_OBJ = $(BUILD)/im_engine.o $(BUILD)/im_detector.o
+MUSIC_OBJ = $(BUILD)/im_music.o
 
 $(BUILD)/im_engine.o: engine/src/im_engine.c engine/include/im_engine.h engine/src/im_detector.h | $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD)/im_detector.o: engine/src/im_detector.c engine/src/im_detector.h | $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD)/im_music.o: engine/src/im_music.c engine/include/im_music.h engine/src/im_detector.h | $(BUILD)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# "Check for music" tags of a file (the evaluation on the server: models/music/eval_scan.py)
+$(BUILD)/im-music-scan: cli/im_music_scan.c cli/wav.c $(MUSIC_OBJ) $(BUILD)/im_detector.o
+	$(CC) $(CFLAGS) -Icli $^ -o $@ $(LDLIBS) -Wl,-rpath,'$$ORIGIN'
 
 VISION_SRC = engine/src/im_vision.c engine/src/im_cover.c
 
@@ -43,6 +51,10 @@ BLUR_HDR = $(wildcard linux/blur/*.h) engine/include/im_vision.h
 
 $(BUILD)/im-blur: $(BLUR_SRC) $(VISION_SRC) $(BLUR_HDR) | $(BUILD)
 	$(CC) $(CFLAGS) -pthread -Ilinux/blur $(BLUR_SRC) $(VISION_SRC) -o $@ $(LDLIBS) -ldl -Wl,-rpath,'$$ORIGIN'
+
+# make build/test-cover && build/test-cover   (the blur tracker; no model needed)
+$(BUILD)/test-cover: engine/test/test_cover.c engine/src/im_cover.c engine/include/im_vision.h | $(BUILD)
+	$(CC) $(CFLAGS) -Iengine/include engine/test/test_cover.c engine/src/im_cover.c -o $@ -lm
 
 $(BUILD)/test-blur-core: linux/blur/test_blur_core.c linux/blur/blur_core.c $(BLUR_HDR) | $(BUILD)
 	$(CC) $(CFLAGS) -Ilinux/blur linux/blur/test_blur_core.c linux/blur/blur_core.c -o $@ -lm

@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Menghapus alat musik dari semua aplikasi dan mempertahankan suara bicara serta tilawah.</string>
+    <string name="tagline">Menghapus alat musik dari suara aplikasi Anda dan mempertahankan suara bicara serta tilawah.</string>
 
     <string name="onboard_title">Selamat datang</string>
-    <string name="onboard_body">Waaiya menghapus alat musik dari suara semua aplikasi di ponsel ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Untuk saat ini, suara nyanyian juga dihapus.</string>
+    <string name="onboard_body">Waaiya menghapus alat musik dari suara aplikasi di ponsel ini. Suara bicara dan tilawah Al-Quran tetap terdengar. Suara nyanyian juga dihapus.</string>
     <string name="onboard_question">Saya</string>
     <string name="gender_man">Laki-laki</string>
     <string name="gender_woman">Perempuan</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Filter aktif</string>
     <string name="state_off_title">Filter nonaktif</string>
     <string name="state_starting">Memulai…</string>
-    <string name="state_on_detail">Alat musik dihapus dari semua aplikasi. Suara terlambat sekitar %1$d milidetik (1000 milidetik sama dengan satu detik).</string>
-    <string name="state_off_detail">Ketuk tombol untuk memulai.</string>
-    <string name="state_model_failed">Model suara tidak bisa dimuat, jadi suara dibisukan demi keamanan.</string>
+    <string name="state_on_detail">Memfilter suara aplikasi Anda. Suara terlambat sekitar %1$d milidetik (1000 milidetik sama dengan satu detik).</string>
+    <string name="state_off_detail">Tekan tombol untuk memulai.</string>
+    <string name="state_model_failed">Filter tidak bisa dimuat, jadi suara dibisukan alih-alih diputar tanpa filter.</string>
     <string name="state_capture_denied">Izin mikrofon diperlukan untuk menerima suara aplikasi lain.</string>
-    <string name="state_stopped_by_system">Android menghentikan filter. Ketuk tombol untuk memulai lagi.</string>
+    <string name="state_stopped_by_system">Android menghentikan filter. Tekan tombol untuk memulai lagi.</string>
     <string name="state_silenced_title">Filter berhenti</string>
-    <string name="state_silenced">Filter berhenti: aplikasi lain dibisukan. Ketuk tombol untuk memulai lagi, atau Berhenti untuk mendengarnya tanpa filter.</string>
+    <string name="state_silenced">Filter berhenti: aplikasi lain dibisukan. Tekan tombol untuk memulai lagi, atau Berhenti untuk mendengarnya tanpa filter.</string>
     <string name="release_silence">Berhenti: dengar aplikasi tanpa filter</string>
     <string name="power_start_cd">Mulai filter</string>
     <string name="power_stop_cd">Hentikan filter</string>
-    <string name="capture_hint">Android akan meminta untuk membagikan layar Anda. Hanya suaranya yang dipakai: tidak ada yang direkam atau dikirim.</string>
+    <string name="capture_hint">Android akan meminta untuk membagikan layar Anda. Tidak ada yang direkam atau dikirim.</string>
     <string name="need_record_audio">Waaiya memerlukan izin mikrofon untuk menerima suara aplikasi lain. Waaiya tidak pernah merekam Anda.</string>
 
     <string name="setup_banner_title">Satu langkah lagi</string>
-    <string name="setup_banner_body">Tanpa penyiapan satu kali di bawah, Anda akan mendengar musik dan suara yang difilter secara bersamaan.</string>
+    <string name="setup_banner_body">Tanpa penyiapan satu kali, Anda akan mendengar musik dan suara yang difilter secara bersamaan.</string>
     <string name="step1_title">Instal Shizuku</string>
     <string name="step1_body">Aplikasi bantu gratis dari Play Store.</string>
     <string name="step1_action">Dapatkan Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Saya</string>
     <string name="change">Ubah</string>
 
-    <string name="player_title">Video dengan sinkron sempurna</string>
-    <string name="player_body">Bagikan video ke Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan filter tanpa jeda.</string>
+    <string name="player_title">Video dengan suara dan gambar yang sinkron</string>
+    <string name="player_body">Bagikan video ke Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan filter, dengan suara dan gambar yang sinkron, tanpa jeda filter langsung.</string>
     <string name="licences">Lisensi sumber terbuka</string>
     <string name="licences_intro">Waaiya adalah perangkat lunak bebas dengan lisensi GNU Affero General Public License v3 atau yang lebih baru. Kode sumber: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (data pelatihan): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Filter</string>
     <string name="notif_title">Waaiya aktif</string>
-    <string name="notif_text">Alat musik dihapus dari semua aplikasi</string>
+    <string name="notif_text">Memfilter suara aplikasi Anda</string>
     <string name="notif_stop">Berhenti</string>
+    <string name="notif_resume">Lanjutkan</string>
     <!-- Link feature -->
     <string name="link_entry_title">Buka tautan</string>
     <string name="link_entry_body">Tempel tautan YouTube, TikTok, atau Instagram untuk menontonnya atau menyimpannya tanpa musik.</string>
@@ -125,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Buram layar</string>
-    <string name="blur_body">Menutupi orang dan gambar di layar, di semua aplikasi, selama filter aktif. Berjalan di ponsel; tidak ada yang dikirim ke mana pun.</string>
+    <string name="blur_body">Menutupi orang dan gambar di layar selama filter aktif. Berjalan di ponsel; tidak ada yang dikirim ke mana pun.</string>
     <string name="blur_on_title">Buram aktif</string>
     <string name="blur_off_title">Buram nonaktif</string>
     <string name="blur_start_cd">Mulai buram</string>
     <string name="blur_stop_cd">Hentikan buram</string>
-    <string name="blur_off_detail">Ketuk tombol untuk memulai. Penyaringan ikut dimulai.</string>
+    <string name="blur_off_detail">Tekan tombol untuk memulai. Penyaringan ikut dimulai.</string>
     <string name="blur_what_title">Yang diburamkan</string>
-    <string name="blur_women_title">Buramkan perempuan</string>
+    <string name="blur_women_title">Buramkan gambar perempuan</string>
     <string name="blur_women_body">Menutup seluruh tubuh. Jika aplikasi tidak yakin seseorang itu laki-laki, orang itu juga ditutup.</string>
     <string name="blur_nudity_title">Buramkan gambar yang membuka aurat</string>
     <string name="blur_nudity_body">Ketelanjangan atau pakaian terbuka, pada siapa pun: seluruh layar ditutup.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Kode penyambungan</string>
     <string name="wsetup_code_dialog_body">Hanya dengan layar terpisah (Setelan di satu sisi, Waaiya di sisi lain): keluar dari Setelan akan menutup layar penyambungan dan kodenya tidak berlaku lagi. Ketik kode 6 digit yang ditampilkan di bawah “Sambungkan perangkat dengan kode penyambungan”.</string>
     <string name="wsetup_code_ok">Sambungkan</string>
-    <string name="blur_strict_title">Siapa yang dibiarkan tidak ditutup</string>
-    <string name="blur_strict_value">Siapa yang dibiarkan tidak ditutup: %1$s</string>
+    <string name="blur_strict_title">Seberapa yakin sebelum laki-laki ditampilkan</string>
+    <string name="blur_strict_value">Seberapa yakin sebelum laki-laki ditampilkan: %1$s</string>
     <string name="blur_strict_0">Ketat: hanya orang yang hampir pasti laki-laki menurut aplikasi</string>
     <string name="blur_strict_1">Seimbang: sekitar dua kali lebih banyak laki-laki tidak ditutup</string>
     <string name="blur_strict_2">Longgar: sedikit lebih banyak laki-laki daripada seimbang</string>
     <string name="blur_strict_0_short">ketat</string>
     <string name="blur_strict_1_short">seimbang</string>
     <string name="blur_strict_2_short">longgar</string>
-    <string name="blur_strict_help">Siapa pun yang tidak dipastikan aplikasi sebagai laki-laki akan ditutup. Ketat membiarkan sekitar 7 dari 100 laki-laki tidak ditutup; seimbang sekitar 14, longgar sekitar 16. Setiap tingkat yang kurang ketat juga membiarkan sekitar 1 perempuan lagi dari 100 tidak ditutup.</string>
+    <string name="blur_strict_help">Seseorang hanya ditampilkan jika aplikasi yakin dia laki-laki; semua yang lain diburamkan. Ketat menampilkan sekitar 7 dari 100 laki-laki, seimbang sekitar 14, longgar sekitar 16. Sebagian perempuan tetap terlewat; setiap tingkat yang kurang ketat melewatkan sekitar 1 lagi dari 100.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Suara aslinya belum dibisukan, jadi Anda mendengar musik bersama suara yang difilter. Selesaikan penyiapan satu kali di bawah.</string>
-    <string name="state_on_mute_failing">Waaiya tidak bisa membisukan suara asli dari aplikasi yang sedang diputar, jadi musik mungkin masih terdengar. Hentikan lalu mulai filter. Jika tetap terjadi, kirim laporan diagnostik (di bagian bawah layar ini).</string>
-    <string name="state_too_slow">Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus. “Buka tautan” di bawah tetap berfungsi: video difilter dulu sebelum diputar.</string>
+    <string name="state_on_not_muted">Suara aslinya belum dibisukan, jadi Anda mendengar musik bersama suara yang difilter. Selesaikan penyiapan satu kali di halaman “Penyiapan”.</string>
+    <string name="state_on_mute_failing">Waaiya tidak bisa membisukan suara asli dari aplikasi yang sedang diputar, jadi musik mungkin masih terdengar. Hentikan lalu mulai filter. Jika tetap terjadi, kirim laporan diagnostik (Setelan).</string>
+    <string name="state_too_slow">Ponsel ini terlalu lambat untuk memfilter suara secara langsung, jadi suaranya terputus-putus. “Buka tautan” di halaman “Tautan” tetap berfungsi: video difilter dulu sebelum diputar.</string>
     <string name="state_mono_note">Suara dalam mode mono agar ponsel ini sanggup mengikuti.</string>
-    <string name="state_blocked_silenced">Dibisukan, karena tidak mengizinkan filter: %1$s.</string>
-    <string name="state_blocked_unfiltered">Diputar tanpa filter, karena tidak mengizinkan filter: %1$s.</string>
+    <string name="state_blocked_silenced">Dibisukan karena filter tidak diizinkan oleh: %1$s.</string>
+    <string name="state_blocked_unfiltered">Diputar tanpa filter karena filter tidak diizinkan oleh: %1$s.</string>
     <string name="state_capture_failed">Android tidak memberikan suara aplikasi lain ke Waaiya. Ketuk tombol untuk memulai lagi.</string>
     <string name="state_capture_cancelled">Proses mulai dibatalkan di pertanyaan berbagi layar Android. Waaiya memerlukan “Mulai” di sana untuk menerima suaranya. Tidak ada yang direkam atau dikirim.</string>
     <string name="start_no_setup_title">Musik masih akan terdengar</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Ponsel ini terlalu lambat untuk filter langsung: suaranya terputus-putus</string>
     <string name="diag_button">Ada masalah? Laporan diagnostik</string>
     <string name="diag_title">Laporan diagnostik</string>
-    <string name="diag_note">Apa yang dilihat Waaiya di ponsel ini. Salin atau bagikan kepada orang yang membantu Anda. Aplikasinya sendiri tidak mengirim apa pun.</string>
+    <string name="diag_note">Apa yang dilihat Waaiya di ponsel ini. Salin atau bagikan kepada orang yang membantu Anda. Waaiya tidak mengirimnya sendiri: Anda yang memilih siapa yang menerimanya.</string>
     <string name="notif_stopped_title">Waaiya berhenti</string>
     <string name="notif_stopped_text">Suara tidak lagi difilter. Ketuk untuk memulai lagi.</string>
     <string name="notif_silenced_title">Filter berhenti: aplikasi lain dibisukan</string>
     <string name="notif_silenced_text">Ketuk untuk memulai lagi, atau Berhenti untuk mendengarnya tanpa filter.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Aktif</string>
+    <string name="tile_model_failed">Aktif, tetapi senyap: model galat</string>
     <string name="tile_off">Nonaktif</string>
     <string name="tile_starting">Memulai…</string>
     <string name="tile_silenced">Berhenti, aplikasi bisu</string>
     <string name="tile_on_not_muted">Aktif, perlu penyiapan</string>
     <string name="tile_open_app">Buka Waaiya</string>
-    <string name="tile_text_label">Teks notifikasi</string>
+    <string name="tile_text_label">Waaiya: teks notifikasi</string>
     <string name="tile_text_shown">Tampil saat memfilter</string>
     <string name="tile_text_hidden">Tersembunyi saat memfilter</string>
     <string name="tile_text_refused">Ditolak ponsel ini</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Tampilkan penyiapan lagi</string>
     <string name="setup_go">Ke penyiapan</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Sentuhan menembus penutup</string>
+    <string name="helper_title">Ketuk menembus area buram</string>
     <string name="helper_body_off">Tanpa bantuan, penutup menghalangi sentuhan di bawahnya. Asisten Waaiya menggambar penutup agar sentuhan bisa menembusnya. Aktifkan Proses debug nirkabel (Wi-Fi diperlukan) dan ketuk tombolnya; pertama kali, sambungkan sekali seperti saat penyiapan. Setelah ponsel dimulai ulang, ketuk lagi.</string>
     <string name="helper_start">Jalankan asisten Waaiya</string>
-    <string name="helper_on">Asisten Waaiya menggambar penutup: sentuhan bisa menembusnya. Asisten berhenti saat ponsel dimulai ulang atau saat Proses debug USB dinonaktifkan; ketuk tombolnya lagi saat itu.</string>
+    <string name="helper_on">Asisten Waaiya menggambar area buram: ketukan bisa menembusnya. Asisten berhenti saat ponsel dimulai ulang atau saat “Proses debug USB” (sakelar terpisah di Opsi developer) dinonaktifkan; ketuk tombolnya lagi saat itu.</string>
     <string name="helper_shizuku_on">Shizuku menggambar penutup: sentuhan bisa menembusnya.</string>
     <string name="helper_or_shizuku">Atau dengan Shizuku:</string>
     <string name="guide_w_helper_note">Saat buram layar aktif, penyiapan juga menjalankan asisten Waaiya, agar sentuhan bisa menembus penutup. Biarkan “Proses debug USB” tetap aktif untuk itu (Proses debug nirkabel boleh nonaktif). Setelah ponsel dimulai ulang, jalankan asisten lagi dari halaman Layar.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Hapus penutup manual</string>
     <string name="notif_fix_note_missed">Ada yang lolos</string>
     <string name="notif_fix_note_wrong">Tersembunyi karena salah</string>
-    <string name="notif_fix_noted">Dicatat (%1$d catatan di ponsel ini)</string>
+    <string name="notif_fix_noted">Dicatat. Catatan di ponsel ini: %1$d</string>
     <string name="notif_fix_picker_hint">Seret jari di area yang ingin ditutup.</string>
     <string name="notif_fix_picker_cover">Tutup</string>
     <string name="notif_fix_picker_cancel">Batal</string>
@@ -417,4 +419,39 @@
     <string name="move_new_body">Waaiya lama (sebelum versi 0.2.15) masih ada di ponsel ini. Hapus agar keduanya tidak pernah memfilter bersamaan.</string>
     <string name="move_new_imported">Setelan Anda sudah dibawa dari sana.</string>
     <string name="move_remove_old">Hapus Waaiya lama</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: periksa musik</string>
+    <string name="mc_title">Periksa musik</string>
+    <string name="mc_unnamed">File yang dibagikan</string>
+    <string name="mc_listening">Mendengarkan… %1$d %%</string>
+    <string name="mc_private">Waaiya mendengarkan di ponsel ini. Klip tidak dikirim ke mana pun.</string>
+    <string name="mc_music">Waaiya mendengar musik</string>
+    <string name="mc_music_detail">Alat musik di %1$s (sekitar %2$s %% dari klip).</string>
+    <string name="mc_percussion">Waaiya hanya mendengar perkusi</string>
+    <string name="mc_percussion_detail">Gendang atau tepuk tangan berirama, tanpa alat musik lain, di %1$s. Anda yang memutuskan.</string>
+    <string name="mc_none">Tidak terdengar alat musik</string>
+    <string name="mc_none_detail">Waaiya mendengarkan seluruh klip dan tidak mendengar alat musik. Sebagian musik bisa terlewat, terutama musik pelan di bawah suara bicara.</string>
+    <string name="mc_note_quiet">Musik pelan di bawah suara bicara bisa terlewat.</string>
+    <string name="mc_failed">File ini tidak dapat diperiksa</string>
+    <string name="mc_failed_no_model">Versi Waaiya ini tidak dapat memeriksa musik.</string>
+    <string name="mc_failed_no_sound">File ini tidak bersuara.</string>
+    <string name="mc_failed_too_long">Durasinya lebih dari 30 menit.</string>
+    <string name="mc_failed_unreadable">Waaiya tidak dapat membaca file ini.</string>
+    <string name="mc_share_clean">Bagikan tanpa musik</string>
+    <string name="mc_share_anyway">Tetap bagikan</string>
+    <string name="mc_listen">Dengarkan di sini</string>
+    <string name="mc_copying">Membuat salinan tanpa musik… %1$d %%</string>
+    <string name="mc_copy_failed">Salinan tanpa musik tidak dapat dibuat.</string>
+    <string name="mc_copy_name">%1$s (tanpa musik)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Mode sederhana (uji coba): tanpa Opsi developer</string>
+    <string name="simple_body">Untuk ponsel yang terlalu sulit disiapkan dengan penyiapan di bawah. Selama Waaiya memfilter, Waaiya membisukan suara media ponsel dan memutar suara yang sudah difilter di saluran suara lain. Tombol volume Anda mengatur volume Waaiya. Android meminta untuk berbagi layar setiap kali mulai. Suara media kembali saat pemfilteran berhenti.</string>
+    <string name="simple_switch">Gunakan mode sederhana</string>
+    <string name="simple_channel_title">Saluran suara: %1$s</string>
+    <string name="simple_channel_alarm">Alarm</string>
+    <string name="simple_channel_notification">Notifikasi</string>
+    <string name="simple_channel_help">Jika Anda tidak mendengar apa pun, atau suara keluar dari speaker ponsel saat earphone terpasang, coba saluran yang lain. Notifikasi tidak bersuara saat ponsel dalam mode getar atau Jangan Ganggu.</string>
+    <string name="simple_test_note">Ini uji coba. Setelah mencobanya (speaker, earphone, Bluetooth), mohon kirim laporan diagnostik dari Setelan.</string>
+    <string name="simple_on_detail">Mode sederhana (uji coba): suara media dibisukan selama Waaiya memfilter.</string>
 </resources>

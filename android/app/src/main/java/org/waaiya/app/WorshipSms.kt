@@ -34,6 +34,9 @@ import java.time.Instant
 object WorshipSms {
     private const val TAG = "WorshipSms"
     const val ACTION_CHECK = "org.waaiya.app.worship.SMS_CHECK"
+    const val ACTION_SENT = "org.waaiya.app.worship.SMS_SENT"
+    private const val EXTRA_TO = "to"
+    private const val EXTRA_WINDOW = "window"
     private const val NOTIF_SMS = 7303
     private const val MAX_LOG = 20
 
@@ -84,10 +87,22 @@ object WorshipSms {
                     pending?.finish()
                 } else {
                     // no exact alarms: wait in this broadcast (a receiver may take a few seconds), then check
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        runCatching { check(ctx) }
+                    val wait = (at - now).coerceAtLeast(0)
+                    if (wait <= 9_000) {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            runCatching { check(ctx) }
+                            pending?.finish()
+                        }, wait)
+                    } else {
+                        // longer than a receiver may take: an inexact alarm (the phone is awake while it rings, so it
+                        // comes about on time) plus a timer in this process, whichever comes first; check() sends once
+                        runCatching {
+                            ctx.getSystemService(AlarmManager::class.java)
+                                .setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, checkIntent(ctx))
+                        }
+                        Handler(Looper.getMainLooper()).postDelayed({ runCatching { check(ctx) } }, wait)
                         pending?.finish()
-                    }, (at - now).coerceIn(0, 9_000))
+                    }
                 }
             }
             else -> {  // answered (OFFHOOK) or ended (IDLE): nothing to send
@@ -123,14 +138,34 @@ object WorshipSms {
         val ok = runCatching {
             val sms = if (Build.VERSION.SDK_INT >= 31) ctx.getSystemService(SmsManager::class.java)
             else @Suppress("DEPRECATION") SmsManager.getDefault()
-            sms.sendMultipartTextMessage(to, null, sms.divideMessage(text), null, null)
+            val parts = sms.divideMessage(text)
+            // Android's answer for the last part: the "sent" notice waits for it (WorshipReceiver -> [sentResult])
+            val sentIntent = PendingIntent.getBroadcast(ctx, 6 + (to.hashCode() and 0xffff),  // one per number: extras kept
+                Intent(ctx, WorshipReceiver::class.java).setAction(ACTION_SENT).putExtra(EXTRA_TO, to)
+                    .putExtra(EXTRA_WINDOW, window!!),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            val sents = ArrayList<PendingIntent?>(parts.size).apply { repeat(parts.size - 1) { add(null) }; add(sentIntent) }
+            sms.sendMultipartTextMessage(to, null, parts, sents, null)
         }.onFailure { Log.w(TAG, "send", it) }.isSuccess
         if (!ok) return
-        p.edit().putLong("sms_window", window!!).putString("sms_sent", (sent + to).sorted().joinToString(","))
-            .putString("sms_log", (listOf("$now|$to") + log(ctx).map { "${it.first}|${it.second}" }).take(MAX_LOG)
-                .joinToString("\n"))
-            .remove("ring_number").remove("ring_since").apply()
-        notify(c, to)
+        // the call is answered once: a second check (alarm and timer) sends nothing more; the reply counts as sent,
+        // in the list and the log, when Android confirms it ([sentResult])
+        p.edit().remove("ring_number").remove("ring_since").apply()
+    }
+
+    /** Android's answer for a reply (ACTION_SENT): the notice says "sent" only when the network took it. */
+    @Synchronized
+    fun sentResult(ctx: Context, intent: Intent, resultCode: Int) {
+        val to = intent.getStringExtra(EXTRA_TO) ?: return
+        if (resultCode != android.app.Activity.RESULT_OK) { Log.w(TAG, "the reply to $to was not sent (result $resultCode)"); return }
+        val window = intent.getLongExtra(EXTRA_WINDOW, 0)
+        val p = prefs(ctx)
+        val sent = if (window != 0L && p.getLong("sms_window", 0) == window) Settings.csv(p.getString("sms_sent", "")) else emptySet()
+        p.edit().putLong("sms_window", window).putString("sms_sent", (sent + to).sorted().joinToString(","))
+            .putString("sms_log", (listOf("${System.currentTimeMillis()}|$to") + log(ctx).map { "${it.first}|${it.second}" })
+                .take(MAX_LOG).joinToString("\n"))
+            .apply()
+        notify(Lang.wrap(ctx), to)
     }
 
     /** SMS sent, newest first: (epoch ms, number). Kept on the phone only. */

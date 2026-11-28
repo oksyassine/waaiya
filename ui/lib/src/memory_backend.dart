@@ -70,12 +70,15 @@ class MemoryBackend implements WaaiyaBackend {
 
   @override
   Future<void> openOverlaySettings() async => throw const BackendException('unsupported', 'openOverlaySettings');
+  @override
+  Future<void> openAppSettings() async => throw const BackendException('unsupported', 'openAppSettings');
 
   @override
   Future<void> openShizuku() async => throw const BackendException('unsupported', 'openShizuku');
 
   @override
-  Future<void> openDeveloperOptions() async => throw const BackendException('unsupported', 'openDeveloperOptions');
+  Future<void> openDeveloperOptions({String? highlight}) async =>
+      throw const BackendException('unsupported', 'openDeveloperOptions');
 
   @override
   Future<void> setLanguage(String tag) async {
@@ -210,6 +213,9 @@ class MemoryBackend implements WaaiyaBackend {
 
   @override
   Future<void> shareText(String text) async => throw const BackendException('unsupported', 'shareText');
+  @override
+  Future<void> sendToSupport(String subject, String text) async =>
+      throw const BackendException('unsupported', 'sendToSupport');
 
   Future<void> close() => _controller.close();
 }

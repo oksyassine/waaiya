@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Membuang alat muzik daripada setiap apl dan mengekalkan percakapan serta bacaan.</string>
+    <string name="tagline">Membuang alat muzik daripada bunyi apl anda dan mengekalkan percakapan serta bacaan.</string>
 
     <string name="onboard_title">Selamat datang</string>
-    <string name="onboard_body">Waaiya membuang alat muzik daripada bunyi setiap apl pada telefon ini. Percakapan dan bacaan al-Quran dikekalkan. Buat masa ini, suara nyanyian turut dibuang.</string>
+    <string name="onboard_body">Waaiya membuang alat muzik daripada bunyi apl pada telefon ini. Percakapan dan bacaan al-Quran dikekalkan. Suara nyanyian turut dibuang.</string>
     <string name="onboard_question">Saya seorang</string>
     <string name="gender_man">Lelaki</string>
     <string name="gender_woman">Wanita</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Penapisan dihidupkan</string>
     <string name="state_off_title">Penapisan dimatikan</string>
     <string name="state_starting">Memulakan…</string>
-    <string name="state_on_detail">Alat muzik dibuang daripada semua apl. Bunyi sampai lewat kira-kira %1$d ms (1000 ms ialah satu saat).</string>
-    <string name="state_off_detail">Ketik butang untuk bermula.</string>
-    <string name="state_model_failed">Model bunyi tidak dapat dimuatkan, jadi bunyi disenyapkan demi keselamatan.</string>
+    <string name="state_on_detail">Menapis bunyi apl anda. Bunyi sampai lewat kira-kira %1$d ms (1000 ms ialah satu saat).</string>
+    <string name="state_off_detail">Tekan butang untuk bermula.</string>
+    <string name="state_model_failed">Penapis tidak dapat dimuatkan, jadi bunyi disenyapkan dan bukannya dimainkan tanpa penapisan.</string>
     <string name="state_capture_denied">Kebenaran mikrofon diperlukan untuk menerima bunyi apl lain.</string>
-    <string name="state_stopped_by_system">Android menghentikan penapisan. Ketik butang untuk bermula semula.</string>
+    <string name="state_stopped_by_system">Android menghentikan penapisan. Tekan butang untuk bermula semula.</string>
     <string name="state_silenced_title">Penapisan berhenti</string>
-    <string name="state_silenced">Penapisan berhenti: apl lain disenyapkan. Ketik butang untuk bermula semula, atau Henti untuk mendengarnya tanpa penapisan.</string>
+    <string name="state_silenced">Penapisan berhenti: apl lain disenyapkan. Tekan butang untuk bermula semula, atau Henti untuk mendengarnya tanpa penapisan.</string>
     <string name="release_silence">Henti: dengar apl tanpa penapisan</string>
     <string name="power_start_cd">Mulakan penapisan</string>
     <string name="power_stop_cd">Hentikan penapisan</string>
-    <string name="capture_hint">Android akan meminta untuk berkongsi skrin anda. Hanya bunyi yang digunakan: tiada apa-apa dirakam atau dihantar.</string>
+    <string name="capture_hint">Android akan meminta untuk berkongsi skrin anda. Tiada apa-apa dirakam atau dihantar.</string>
     <string name="need_record_audio">Waaiya memerlukan kebenaran mikrofon untuk menerima bunyi apl lain. Ia tidak sekali-kali merakam anda.</string>
 
     <string name="setup_banner_title">Satu langkah lagi</string>
-    <string name="setup_banner_body">Tanpa persediaan sekali sahaja di bawah, anda akan mendengar muzik dan bunyi yang ditapis serentak.</string>
+    <string name="setup_banner_body">Tanpa persediaan sekali sahaja, anda akan mendengar muzik dan bunyi yang ditapis serentak.</string>
     <string name="step1_title">Pasang Shizuku</string>
     <string name="step1_body">Apl pembantu percuma daripada Play Store.</string>
     <string name="step1_action">Dapatkan Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Saya seorang</string>
     <string name="change">Tukar</string>
 
-    <string name="player_title">Video dalam penyegerakan sempurna</string>
-    <string name="player_body">Kongsi video kepada Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan penapisan tanpa kelewatan.</string>
+    <string name="player_title">Video dengan bunyi dan gambar yang segerak</string>
+    <string name="player_body">Kongsi video kepada Waaiya (atau gunakan “Buka dengan”) untuk menontonnya dengan penapisan, dengan bunyi dan gambar yang segerak, tanpa kelewatan penapis langsung.</string>
     <string name="licences">Lesen sumber terbuka</string>
     <string name="licences_intro">Waaiya ialah perisian bebas di bawah GNU Affero General Public License v3 atau lebih baharu. Kod sumber: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (data latihan): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Penapis</string>
     <string name="notif_title">Waaiya dihidupkan</string>
-    <string name="notif_text">Alat muzik dibuang daripada semua apl</string>
+    <string name="notif_text">Menapis bunyi apl anda</string>
     <string name="notif_stop">Henti</string>
+    <string name="notif_resume">Sambung</string>
     <!-- Ciri pautan -->
     <string name="link_entry_title">Buka pautan</string>
     <string name="link_entry_body">Tampal pautan YouTube, TikTok atau Instagram untuk menontonnya atau menyimpannya tanpa muzik.</string>
@@ -125,14 +126,14 @@
 
     <!-- Pengaburan skrin -->
     <string name="blur_title">Pengaburan skrin</string>
-    <string name="blur_body">Menutup orang dan imej pada skrin, dalam setiap apl, semasa penapisan dihidupkan. Ia berjalan pada telefon; tiada apa-apa dihantar ke mana-mana.</string>
+    <string name="blur_body">Menutup orang dan imej pada skrin semasa penapisan dihidupkan. Ia berjalan pada telefon; tiada apa-apa dihantar ke mana-mana.</string>
     <string name="blur_on_title">Pengaburan dihidupkan</string>
     <string name="blur_off_title">Pengaburan dimatikan</string>
     <string name="blur_start_cd">Mulakan pengaburan</string>
     <string name="blur_stop_cd">Hentikan pengaburan</string>
-    <string name="blur_off_detail">Ketik butang untuk bermula. Penapisan bermula bersamanya.</string>
+    <string name="blur_off_detail">Tekan butang untuk bermula. Penapisan bermula bersamanya.</string>
     <string name="blur_what_title">Apa yang dikaburkan</string>
-    <string name="blur_women_title">Kaburkan wanita</string>
+    <string name="blur_women_title">Kaburkan imej wanita</string>
     <string name="blur_women_body">Menutup seluruh badan. Jika apl tidak pasti seseorang itu lelaki, orang itu juga ditutup.</string>
     <string name="blur_nudity_title">Kaburkan imej tidak sopan</string>
     <string name="blur_nudity_body">Kebogelan atau pakaian yang mendedahkan aurat, pada sesiapa pun: seluruh skrin ditutup.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Kod gandingan</string>
     <string name="wsetup_code_dialog_body">Hanya dengan skrin pisah (Tetapan di satu bahagian, Waaiya di bahagian lain): meninggalkan Tetapan akan menutup skrin gandingan dan kodnya tidak lagi berfungsi. Taip kod 6 digit yang ditunjukkan di bawah “Gandingkan peranti dengan kod gandingan”.</string>
     <string name="wsetup_code_ok">Gandingkan</string>
-    <string name="blur_strict_title">Siapa yang dibiarkan tidak ditutup</string>
-    <string name="blur_strict_value">Siapa yang dibiarkan tidak ditutup: %1$s</string>
+    <string name="blur_strict_title">Sejauh mana pasti sebelum lelaki ditunjukkan</string>
+    <string name="blur_strict_value">Sejauh mana pasti sebelum lelaki ditunjukkan: %1$s</string>
     <string name="blur_strict_0">Ketat: hanya orang yang apl hampir pasti lelaki</string>
     <string name="blur_strict_1">Seimbang: kira-kira dua kali ganda lelaki dibiarkan tidak ditutup</string>
     <string name="blur_strict_2">Longgar: sedikit lebih ramai lelaki berbanding seimbang</string>
     <string name="blur_strict_0_short">ketat</string>
     <string name="blur_strict_1_short">seimbang</string>
     <string name="blur_strict_2_short">longgar</string>
-    <string name="blur_strict_help">Sesiapa yang apl tidak pasti lelaki akan ditutup. Ketat membiarkan kira-kira 7 daripada 100 lelaki tidak ditutup; seimbang kira-kira 14, longgar kira-kira 16. Setiap langkah yang kurang ketat juga membiarkan kira-kira 1 lagi daripada 100 wanita tidak ditutup.</string>
+    <string name="blur_strict_help">Seseorang hanya ditunjukkan apabila apl pasti dia lelaki; orang lain semuanya dikaburkan. Ketat menunjukkan kira-kira 7 daripada 100 lelaki, seimbang kira-kira 14, longgar kira-kira 16. Sesetengah wanita masih terlepas; setiap langkah yang kurang ketat melepaskan kira-kira 1 lagi daripada 100.</string>
     <!-- Penapisan langsung: masalah diterangkan dengan perkataan, laporan diagnostik -->
-    <string name="state_on_not_muted">Bunyi asal belum disenyapkan, jadi anda mendengar muzik bersama bunyi yang ditapis. Selesaikan persediaan sekali sahaja di bawah.</string>
-    <string name="state_on_mute_failing">Waaiya tidak dapat menyenyapkan bunyi asal apl yang sedang dimainkan, jadi muzik mungkin masih kedengaran. Hentikan dan mulakan penapisan. Jika masih berlaku, hantar laporan diagnostik (di bahagian bawah skrin ini).</string>
-    <string name="state_too_slow">Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus. “Buka pautan” di bawah masih berfungsi: ia menapis video sebelum memainkannya.</string>
+    <string name="state_on_not_muted">Bunyi asal belum disenyapkan, jadi anda mendengar muzik bersama bunyi yang ditapis. Selesaikan persediaan sekali sahaja di halaman “Persediaan”.</string>
+    <string name="state_on_mute_failing">Waaiya tidak dapat menyenyapkan bunyi asal apl yang sedang dimainkan, jadi muzik mungkin masih kedengaran. Hentikan dan mulakan penapisan. Jika masih berlaku, hantar laporan diagnostik (Tetapan).</string>
+    <string name="state_too_slow">Telefon ini terlalu perlahan untuk menapis bunyi secara langsung, jadi bunyi terputus-putus. “Buka pautan” di halaman “Pautan” masih berfungsi: ia menapis video sebelum memainkannya.</string>
     <string name="state_mono_note">Bunyi dalam mono supaya telefon ini tidak ketinggalan.</string>
-    <string name="state_blocked_silenced">Disenyapkan, kerana ia tidak membenarkan penapisan: %1$s.</string>
-    <string name="state_blocked_unfiltered">Dimainkan tanpa penapisan, kerana ia tidak membenarkan penapisan: %1$s.</string>
+    <string name="state_blocked_silenced">Disenyapkan kerana penapisan tidak dibenarkan oleh: %1$s.</string>
+    <string name="state_blocked_unfiltered">Dimainkan tanpa penapisan kerana penapisan tidak dibenarkan oleh: %1$s.</string>
     <string name="state_capture_failed">Android tidak memberikan bunyi apl lain kepada Waaiya. Ketik butang untuk bermula semula.</string>
     <string name="state_capture_cancelled">Permulaan dibatalkan pada soalan perkongsian skrin Android. Waaiya memerlukan “Mula” di situ untuk menerima bunyi. Tiada apa-apa dirakam atau dihantar.</string>
     <string name="start_no_setup_title">Muzik masih akan kedengaran</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Telefon ini terlalu perlahan untuk penapisan langsung: bunyi terputus-putus</string>
     <string name="diag_button">Ada masalah? Laporan diagnostik</string>
     <string name="diag_title">Laporan diagnostik</string>
-    <string name="diag_note">Apa yang Waaiya lihat pada telefon ini. Salin atau kongsikannya dengan sesiapa yang membantu anda. Apl ini sendiri tidak menghantar apa-apa.</string>
+    <string name="diag_note">Apa yang Waaiya lihat pada telefon ini. Salin atau kongsikannya dengan sesiapa yang membantu anda. Waaiya tidak menghantarnya dengan sendiri: anda yang memilih siapa yang menerimanya.</string>
     <string name="notif_stopped_title">Waaiya berhenti</string>
     <string name="notif_stopped_text">Bunyi tidak ditapis lagi. Ketik untuk bermula semula.</string>
     <string name="notif_silenced_title">Penapisan berhenti: apl lain disenyapkan</string>
     <string name="notif_silenced_text">Ketik untuk bermula semula, atau Henti untuk mendengarnya tanpa penapisan.</string>
     <!-- Jubin Tetapan Pantas (FilterTileService, ScreenShareTileService). Sari kata pendek: ia muat di bawah jubin. -->
     <string name="tile_on">Hidup</string>
+    <string name="tile_model_failed">Hidup, tetapi senyap: ralat model</string>
     <string name="tile_off">Mati</string>
     <string name="tile_starting">Memulakan…</string>
     <string name="tile_silenced">Berhenti, apl disenyapkan</string>
     <string name="tile_on_not_muted">Hidup, perlu persediaan</string>
     <string name="tile_open_app">Buka Waaiya</string>
-    <string name="tile_text_label">Teks pemberitahuan</string>
+    <string name="tile_text_label">Waaiya: teks pemberitahuan</string>
     <string name="tile_text_shown">Ditunjukkan semasa menapis</string>
     <string name="tile_text_hidden">Disembunyikan semasa menapis</string>
     <string name="tile_text_refused">Telefon ini menolaknya</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Tunjukkan persediaan sekali lagi</string>
     <string name="setup_go">Pergi ke persediaan</string>
     <!-- Pembantu penutup Waaiya sendiri (CoverHelper): sentuhan melalui penutup pengaburan tanpa Shizuku -->
-    <string name="helper_title">Sentuhan melalui penutup</string>
+    <string name="helper_title">Ketik melalui kawasan kabur</string>
     <string name="helper_body_off">Tanpa bantuan, penutup menyekat sentuhan di bawahnya. Pembantu Waaiya melukis penutup supaya sentuhan dapat melaluinya. Hidupkan Penyahpepijatan wayarles (Wi-Fi diperlukan) dan ketik butang; kali pertama, gandingkan sekali seperti dalam persediaan. Selepas telefon dimulakan semula, ketiknya sekali lagi.</string>
     <string name="helper_start">Mulakan pembantu Waaiya</string>
-    <string name="helper_on">Pembantu Waaiya melukis penutup: sentuhan dapat melaluinya. Ia berhenti apabila telefon dimulakan semula atau apabila Penyahpepijatan USB dimatikan; ketik butang sekali lagi pada masa itu.</string>
+    <string name="helper_on">Pembantu Waaiya melukis kawasan kabur: ketikan dapat melaluinya. Ia berhenti apabila telefon dimulakan semula atau apabila “Penyahpepijatan USB” (suis berasingan dalam Pilihan pembangun) dimatikan; ketik butang sekali lagi pada masa itu.</string>
     <string name="helper_shizuku_on">Shizuku melukis penutup: sentuhan dapat melaluinya.</string>
     <string name="helper_or_shizuku">Atau dengan Shizuku:</string>
     <string name="guide_w_helper_note">Dengan pengaburan skrin dihidupkan, persediaan juga memulakan pembantu Waaiya, supaya sentuhan dapat melalui penutup. Biarkan “Penyahpepijatan USB” dihidupkan untuknya (Penyahpepijatan wayarles boleh dimatikan). Selepas telefon dimulakan semula, mulakan pembantu sekali lagi dari halaman Skrin.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Buang penutup tangan</string>
     <string name="notif_fix_note_missed">Ada yang terlepas</string>
     <string name="notif_fix_note_wrong">Tersembunyi secara silap</string>
-    <string name="notif_fix_noted">Dicatat (%1$d catatan pada telefon ini)</string>
+    <string name="notif_fix_noted">Dicatat. Catatan pada telefon ini: %1$d</string>
     <string name="notif_fix_picker_hint">Seret jari pada kawasan yang hendak ditutup.</string>
     <string name="notif_fix_picker_cover">Tutupkan</string>
     <string name="notif_fix_picker_cancel">Batal</string>
@@ -417,4 +419,39 @@
     <string name="move_new_body">Waaiya lama (sebelum versi 0.2.15) masih ada pada telefon ini. Buangnya supaya kedua-duanya tidak menapis serentak.</string>
     <string name="move_new_imported">Tetapan anda telah dibawa daripadanya.</string>
     <string name="move_remove_old">Buang Waaiya lama</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: semak muzik</string>
+    <string name="mc_title">Semak muzik</string>
+    <string name="mc_unnamed">Fail yang dikongsi</string>
+    <string name="mc_listening">Sedang mendengar… %1$d %%</string>
+    <string name="mc_private">Waaiya mendengar di telefon ini. Klip tidak dihantar ke mana-mana.</string>
+    <string name="mc_music">Waaiya mendengar muzik</string>
+    <string name="mc_music_detail">Alat muzik dalam %1$s (kira-kira %2$s %% daripada klip).</string>
+    <string name="mc_percussion">Waaiya hanya mendengar perkusi</string>
+    <string name="mc_percussion_detail">Gendang atau tepukan berirama, tanpa alat muzik lain, dalam %1$s. Anda yang memutuskan.</string>
+    <string name="mc_none">Tiada alat muzik didengar</string>
+    <string name="mc_none_detail">Waaiya mendengar keseluruhan klip dan tidak mendengar alat muzik. Sesetengah muzik mungkin terlepas, kebanyakannya muzik perlahan di bawah percakapan.</string>
+    <string name="mc_note_quiet">Muzik perlahan di bawah percakapan mungkin terlepas.</string>
+    <string name="mc_failed">Fail ini tidak dapat disemak</string>
+    <string name="mc_failed_no_model">Versi Waaiya ini tidak dapat menyemak muzik.</string>
+    <string name="mc_failed_no_sound">Fail ini tiada bunyi.</string>
+    <string name="mc_failed_too_long">Tempohnya melebihi 30 minit.</string>
+    <string name="mc_failed_unreadable">Waaiya tidak dapat membaca fail ini.</string>
+    <string name="mc_share_clean">Kongsi tanpa muzik</string>
+    <string name="mc_share_anyway">Kongsi juga</string>
+    <string name="mc_listen">Dengar di sini</string>
+    <string name="mc_copying">Membuat salinan tanpa muzik… %1$d %%</string>
+    <string name="mc_copy_failed">Salinan tanpa muzik tidak dapat dibuat.</string>
+    <string name="mc_copy_name">%1$s (tanpa muzik)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Mod mudah (percubaan): tanpa Pilihan pembangun</string>
+    <string name="simple_body">Untuk telefon yang persediaan di bawah terlalu sukar dibuat. Semasa Waaiya menapis, ia menyenyapkan bunyi media telefon dan memainkan bunyi yang ditapis pada saluran bunyi lain. Butang kelantangan anda menetapkan kelantangan Waaiya. Android meminta untuk berkongsi skrin pada setiap permulaan. Bunyi media kembali apabila penapisan berhenti.</string>
+    <string name="simple_switch">Gunakan mod mudah</string>
+    <string name="simple_channel_title">Saluran bunyi: %1$s</string>
+    <string name="simple_channel_alarm">Penggera</string>
+    <string name="simple_channel_notification">Pemberitahuan</string>
+    <string name="simple_channel_help">Jika anda tidak mendengar apa-apa, atau bunyi keluar dari pembesar suara telefon semasa fon telinga dipakai, cuba saluran yang satu lagi. Pemberitahuan senyap semasa telefon dalam mod getar atau Jangan Ganggu.</string>
+    <string name="simple_test_note">Ini ialah percubaan. Selepas mencubanya (pembesar suara, fon telinga, Bluetooth), sila hantar laporan diagnostik dari Tetapan.</string>
+    <string name="simple_on_detail">Mod mudah (percubaan): bunyi media disenyapkan semasa Waaiya menapis.</string>
 </resources>

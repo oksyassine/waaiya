@@ -159,7 +159,7 @@ void main() {
     expect(find.text('Enter the PIN'), findsOneWidget);
     expect(b.calls, isNot(contains('stop')));
     await _typePin(tester, '1111');
-    expect(find.text('Wrong PIN. 4 tries left before a pause.'), findsOneWidget);
+    expect(find.text('Wrong PIN. Tries left before a pause: 4.'), findsOneWidget);
     await _typePin(tester, '2468');
     expect(find.text('Enter the PIN'), findsNothing);
     expect(b.calls, contains('stop'));

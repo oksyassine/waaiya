@@ -13,14 +13,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Rimuove gli strumenti musicali da tutte le app e mantiene la voce e la recitazione.';
+      'Rimuove gli strumenti musicali dal suono delle tue app e mantiene la voce e la recitazione.';
 
   @override
   String get onboardTitle => 'Ti diamo il benvenuto';
 
   @override
   String get onboardBody =>
-      'Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo telefono. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano.';
+      'Waaiya rimuove gli strumenti musicali dal suono delle app di questo telefono. La voce parlata e la recitazione del Corano vengono mantenute. Vengono rimosse anche le voci che cantano.';
 
   @override
   String get onboardQuestion => 'Sono';
@@ -46,15 +46,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stateOnDetail(int delayMs) {
-    return 'Gli strumenti vengono rimossi da tutte le app. Il suono arriva circa $delayMs ms in ritardo (1000 ms sono un secondo).';
+    return 'Il suono delle tue app viene filtrato. Arriva circa $delayMs ms in ritardo (1000 ms sono un secondo).';
   }
 
   @override
-  String get stateOffDetail => 'Tocca il pulsante per iniziare.';
+  String get stateOffDetail => 'Premi il pulsante per iniziare.';
 
   @override
   String get stateModelFailed =>
-      'Non è stato possibile caricare il modello audio, quindi per sicurezza l\'audio è disattivato.';
+      'Non è stato possibile caricare il filtro, quindi l\'audio è disattivato invece di essere riprodotto senza filtro.';
 
   @override
   String get stateCaptureDenied =>
@@ -62,14 +62,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stateStoppedBySystem =>
-      'Android ha interrotto il filtro. Tocca il pulsante per avviarlo di nuovo.';
+      'Android ha interrotto il filtro. Premi il pulsante per avviarlo di nuovo.';
 
   @override
   String get stateSilencedTitle => 'Filtro interrotto';
 
   @override
   String get stateSilenced =>
-      'Filtro interrotto: le altre app sono silenziate. Tocca il pulsante per avviarlo di nuovo, oppure Interrompi per sentirle senza filtro.';
+      'Filtro interrotto: le altre app sono silenziate. Premi il pulsante per avviarlo di nuovo, oppure Interrompi per sentirle senza filtro.';
 
   @override
   String get releaseSilence => 'Interrompi: senti le app senza filtro';
@@ -82,7 +82,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get captureHint =>
-      'Android chiederà di condividere lo schermo. Viene usato solo l\'audio: niente viene registrato o inviato.';
+      'Android chiederà di condividere lo schermo. Niente viene registrato o inviato.';
 
   @override
   String get needRecordAudio =>
@@ -93,7 +93,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupBannerBody =>
-      'Senza la configurazione iniziale qui sotto, sentirai la musica e l\'audio filtrato insieme.';
+      'Senza la configurazione iniziale, sentirai la musica e l\'audio filtrato insieme.';
 
   @override
   String get step1Title => 'Installa Shizuku';
@@ -246,11 +246,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get change => 'Cambia';
 
   @override
-  String get playerTitle => 'Video perfettamente sincronizzati';
+  String get playerTitle => 'Video con audio e immagine sincronizzati';
 
   @override
   String get playerBody =>
-      'Condividi un video con Waaiya (o usa “Apri con”) per guardarlo filtrato senza ritardo.';
+      'Condividi un video con Waaiya (o usa “Apri con”) per guardarlo filtrato, con audio e immagine sincronizzati, senza il ritardo del filtro in tempo reale.';
 
   @override
   String get licences => 'Licenze open source';
@@ -392,7 +392,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get blurBody =>
-      'Copre le persone e le immagini sullo schermo, in tutte le app, mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.';
+      'Copre le persone e le immagini sullo schermo mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.';
 
   @override
   String get blurOnTitle => 'La sfocatura è attiva';
@@ -408,13 +408,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get blurOffDetail =>
-      'Tocca il pulsante per avviare. Il filtraggio parte insieme.';
+      'Premi il pulsante per avviare. Il filtraggio parte insieme.';
 
   @override
   String get blurWhatTitle => 'Cosa sfocare';
 
   @override
-  String get blurWomenTitle => 'Sfoca le donne';
+  String get blurWomenTitle => 'Sfoca le immagini di donne';
 
   @override
   String get blurWomenBody =>
@@ -806,11 +806,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get wsetupCodeOk => 'Accoppia';
 
   @override
-  String get blurStrictTitle => 'Chi resta scoperto';
+  String get blurStrictTitle => 'Quanta certezza prima di mostrare un uomo';
 
   @override
   String blurStrictValue(String level) {
-    return 'Chi resta scoperto: $level';
+    return 'Quanta certezza prima di mostrare un uomo: $level';
   }
 
   @override
@@ -819,7 +819,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get blurStrict1 =>
-      'Equilibrato: circa il doppio degli uomini resta scoperto';
+      'Equilibrato: circa il doppio degli uomini mostrati';
 
   @override
   String get blurStrict2 =>
@@ -836,19 +836,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get blurStrictHelp =>
-      'Viene coperto chiunque l\'app non riconosca con certezza come uomo. Rigoroso lascia scoperti circa 7 uomini su 100; equilibrato circa 14, permissivo circa 16. Ogni livello meno rigoroso lascia scoperta anche circa 1 donna in più su 100.';
+      'Una persona viene mostrata solo quando l\'app è sicura che sia un uomo; tutti gli altri vengono sfocati. Rigoroso mostra circa 7 uomini su 100, equilibrato circa 14, permissivo circa 16. Alcune donne sfuggono comunque; ogni livello meno rigoroso ne lascia sfuggire circa 1 in più su 100.';
 
   @override
   String get stateOnNotMuted =>
-      'L\'audio originale non è ancora silenziato, quindi senti la musica insieme all\'audio filtrato. Completa la configurazione iniziale qui sotto.';
+      'L\'audio originale non è ancora silenziato, quindi senti la musica insieme all\'audio filtrato. Completa la configurazione iniziale nella pagina “Configura”.';
 
   @override
   String get stateOnMuteFailing =>
-      'Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (in fondo a questa schermata).';
+      'Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (Impostazioni).';
 
   @override
   String get stateTooSlow =>
-      'Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe. “Apri un link” qui sotto funziona comunque: filtra il video prima di riprodurlo.';
+      'Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe. “Apri un link” nella pagina “Link” funziona comunque: filtra il video prima di riprodurlo.';
 
   @override
   String get stateMonoNote =>
@@ -856,12 +856,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stateBlockedSilenced(String apps) {
-    return 'Silenziata, perché non permette il filtro: $apps.';
+    return 'Silenziata perché il filtro non è consentito da: $apps.';
   }
 
   @override
   String stateBlockedUnfiltered(String apps) {
-    return 'In riproduzione senza filtro, perché non permette il filtro: $apps.';
+    return 'In riproduzione senza filtro perché il filtro non è consentito da: $apps.';
   }
 
   @override
@@ -893,7 +893,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get diagNote =>
-      'Ciò che Waaiya vede su questo telefono. Copialo o condividilo con chi ti aiuta. L\'app di per sé non invia nulla.';
+      'Ciò che Waaiya vede su questo telefono. Copialo o condividilo con chi ti aiuta. Waaiya non lo invia da sé: sei tu a scegliere chi lo riceve.';
 
   @override
   String get notifStoppedTitle => 'Waaiya si è fermato';
@@ -934,7 +934,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupGo => 'Vai alla configurazione';
 
   @override
-  String get helperTitle => 'Tocchi attraverso le coperture';
+  String get helperTitle => 'Tocca attraverso le aree sfocate';
 
   @override
   String get helperBodyOff =>
@@ -945,7 +945,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get helperOn =>
-      'L\'assistente di Waaiya disegna le coperture: i tocchi le attraversano. Si ferma quando il telefono si riavvia o quando il Debug USB viene disattivato; in quel caso tocca di nuovo il pulsante.';
+      'L\'assistente di Waaiya disegna la sfocatura: i tocchi la attraversano. Si ferma quando il telefono si riavvia o quando “Debug USB” (un interruttore a parte in Opzioni sviluppatore) viene disattivato; in quel caso tocca di nuovo il pulsante.';
 
   @override
   String get helperShizukuOn =>
@@ -961,37 +961,38 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingsGeneralTitle => 'Generali';
 
   @override
-  String get simpleTitle => 'Simple mode (test): no Developer options';
+  String get simpleTitle =>
+      'Modalità semplice (prova): senza Opzioni sviluppatore';
 
   @override
   String get simpleBody =>
-      'For phones where the setup below is too hard. While Waaiya filters, it mutes the phone\'s media sound and plays the filtered sound on another sound channel. Your volume buttons set Waaiya\'s volume. Android asks to share the screen at each start. The media sound comes back when filtering stops.';
+      'Per i telefoni su cui la configurazione qui sotto è troppo difficile. Mentre Waaiya filtra, disattiva l\'audio multimediale del telefono e riproduce l\'audio filtrato su un altro canale audio. I tasti del volume regolano il volume di Waaiya. Android chiede di condividere lo schermo a ogni avvio. L\'audio multimediale torna quando il filtro si ferma.';
 
   @override
-  String get simpleSwitch => 'Use simple mode';
+  String get simpleSwitch => 'Usa la modalità semplice';
 
   @override
   String simpleChannelTitle(String channel) {
-    return 'Sound channel: $channel';
+    return 'Canale audio: $channel';
   }
 
   @override
-  String get simpleChannelAlarm => 'Alarm';
+  String get simpleChannelAlarm => 'Sveglia';
 
   @override
-  String get simpleChannelNotification => 'Notification';
+  String get simpleChannelNotification => 'Notifica';
 
   @override
   String get simpleChannelHelp =>
-      'If you hear nothing, or the sound comes from the phone\'s speaker while earphones are in, try the other channel. Notification is silent while the phone is on vibrate or Do Not Disturb.';
+      'Se non senti nulla, o il suono esce dall\'altoparlante del telefono mentre hai gli auricolari, prova l\'altro canale. Il canale Notifica resta muto mentre il telefono è in vibrazione o in Non disturbare.';
 
   @override
   String get simpleTestNote =>
-      'This is a test. After trying it (speaker, earphones, Bluetooth), please send the diagnostics report from Settings.';
+      'Questa è una prova. Dopo averla provata (altoparlante, auricolari, Bluetooth), invia il rapporto di diagnostica dalle Impostazioni.';
 
   @override
   String get simpleOnDetail =>
-      'Simple mode (test): media sound is muted while Waaiya filters.';
+      'Modalità semplice (prova): l\'audio multimediale è disattivato mentre Waaiya filtra.';
 
   @override
   String get worshipPrayerFajr => 'Fajr';
@@ -1134,8 +1135,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get stateOnDetailNoDelay =>
-      'Gli strumenti vengono rimossi da tutte le app.';
+  String get stateOnDetailNoDelay => 'Il suono delle tue app viene filtrato.';
 
   @override
   String get engineErrorNoPactl =>
@@ -1213,7 +1213,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get diagNoteDesktop =>
-      'Ciò che Waaiya vede su questo computer. Copialo e dallo a chi ti aiuta. L\'app di per sé non invia nulla.';
+      'Ciò che Waaiya vede su questo computer. Copialo e dallo a chi ti aiuta. Waaiya non lo invia da sé: sei tu a scegliere chi lo riceve.';
 
   @override
   String get settingHoldSilenceBodyDesktop =>
@@ -1295,7 +1295,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get fixCancel => 'Annulla';
 
   @override
-  String get fixBlurAppsTitle => 'App lasciate scoperte';
+  String get fixBlurAppsTitle => 'App senza sfocatura';
 
   @override
   String get fixBlurAppsBody =>
@@ -1349,7 +1349,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String fixNoted(Object count) {
-    return 'Annotato ($count note su questo dispositivo).';
+    return 'Annotato. Note su questo dispositivo: $count.';
   }
 
   @override
@@ -1435,7 +1435,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get worshipAsrTitle => 'Orario dell\'Asr';
 
   @override
-  String get worshipAsrStandard => 'Standard (shafiita, malikita, hanbalita)';
+  String get worshipAsrStandard =>
+      'Maggioranza (shafiita, malikita, hanbalita)';
 
   @override
   String get worshipAsrHanafi => 'Hanafita';
@@ -1749,7 +1750,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get protectPinBody =>
-      'Con un PIN, per fermare il filtro o spegnere qualsiasi protezione viene chiesto prima il PIN. Per esempio, un genitore ne imposta uno così un bambino non può spegnere il filtro. Anche cambiare il periodo di attesa o il PIN lo richiede.';
+      'Con un PIN, per fermare il filtro o spegnere qualsiasi protezione viene chiesto prima il PIN. Per esempio, un genitore ne imposta uno così un bambino non può spegnere il filtro in Waaiya (ciò che non può impedire è elencato qui sotto). Anche cambiare il periodo di attesa o il PIN lo richiede.';
 
   @override
   String get protectPinForgot =>
@@ -1781,7 +1782,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String protectPinWrong(Object count) {
-    return 'PIN errato. Restano $count tentativi prima di una pausa.';
+    return 'PIN errato. Tentativi rimasti prima di una pausa: $count.';
   }
 
   @override
@@ -1843,7 +1844,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get protectLimits =>
-      'Cosa questo non può impedire: l\'arresto forzato, la disinstallazione, la cancellazione dei dati di Waaiya e le impostazioni di Android stesse. Per bloccarli servirebbero autorizzazioni speciali di Android che Waaiya non usa. Protegge da un momento di debolezza, non da una persona determinata.';
+      'Cosa questo non può impedire: il riavvio del telefono (il filtro non riparte da solo), l\'arresto forzato, la disinstallazione, la cancellazione dei dati di Waaiya e le impostazioni di Android stesse. Per bloccarli servirebbero autorizzazioni speciali di Android che Waaiya non usa. Protegge da un momento di debolezza, non da una persona determinata.';
 
   @override
   String get protectLimitsDesktop =>
@@ -1893,7 +1894,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get onboardBodyDesktop =>
-      'Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo computer. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano.';
+      'Waaiya rimuove gli strumenti musicali dal suono delle app di questo computer. La voce parlata e la recitazione del Corano vengono mantenute. Vengono rimosse anche le voci che cantano.';
 
   @override
   String get worshipUseLocation => 'Usa la mia posizione';
@@ -1927,7 +1928,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String worshipHabousNote(Object city) {
-    return 'Gli orari ufficiali del Ministero degli Habous e degli Affari islamici per $city.';
+    return 'Orari calcolati per corrispondere alle tabelle del Ministero degli Habous e degli Affari islamici per $city.';
   }
 
   @override
@@ -1943,4 +1944,117 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get engineErrorAutostartPolicy =>
       'Le impostazioni di questo computer, scelte dal suo amministratore, non consentono a Waaiya di avviarsi all\'accesso.';
+
+  @override
+  String get notifTextTitle =>
+      'Mostra il testo delle notifiche durante il filtro';
+
+  @override
+  String get notifTextBody =>
+      'Android nasconde il contenuto delle notifiche mentre un’app registra tutto lo schermo, e il filtro conta come tale. Attivo: Waaiya toglie questa protezione solo mentre filtra, così puoi leggere le notifiche. Mentre è tolta, un’altra condivisione dello schermo nello stesso momento può mostrare anche ad altri le tue notifiche e i tuoi codici.';
+
+  @override
+  String get notifTextNextStart =>
+      'Ferma e riavvia il filtro perché la modifica abbia effetto.';
+
+  @override
+  String get notifTextRefused =>
+      'Questo telefono ha rifiutato la modifica. Attiva tu «Disattiva protezioni condivisione schermo» nelle opzioni sviluppatore.';
+
+  @override
+  String get notifTextByHand =>
+      'Visibile: la protezione di Android è disattivata nelle opzioni sviluppatore («Disattiva protezioni condivisione schermo»). Resta disattivata per ogni condivisione dello schermo finché non la riattivi lì.';
+
+  @override
+  String get notifTextHowTo =>
+      'Android nasconde il contenuto delle notifiche mentre Waaiya filtra. Dopo la configurazione una tantum Waaiya le mostra: toglie questa protezione solo mentre filtra.';
+
+  @override
+  String get notifTextOpenDev => 'Apri opzioni sviluppatore';
+
+  @override
+  String get notifTextLockNote =>
+      'Su questo telefono Android ferma il filtro anche quando lo schermo si blocca, e le altre app restano mute finché non tocchi Riprendi. La configurazione evita anche questo.';
+
+  @override
+  String get notifTextHandOptional =>
+      'Facoltativo, senza configurazione: attiva «Disattiva protezioni condivisione schermo» nelle opzioni sviluppatore. Resta poi disattivata per ogni condivisione dello schermo, e alcuni telefoni non ce l’hanno.';
+
+  @override
+  String get notifTextForced =>
+      'Attivo: su questo telefono Android chiede prima di ogni avvio e fermerebbe il filtro a ogni blocco dello schermo. Waaiya toglie questa protezione mentre filtra, e così si vede anche il testo delle notifiche. Mentre è tolta, un’altra condivisione dello schermo nello stesso momento può mostrare anche ad altri le tue notifiche e i tuoi codici.';
+
+  @override
+  String get oneAppTitle => 'All’avvio: «Condividi un’app», poi Waaiya';
+
+  @override
+  String get oneAppBody =>
+      'Quando Android chiede cosa condividere, scegli «Condividi un’app», poi Waaiya. Le altre app restano filtrate, le notifiche restano leggibili e il filtro continua quando lo schermo si blocca. Con tutto lo schermo, Android nasconde il testo delle notifiche e ferma il filtro a ogni blocco.';
+
+  @override
+  String get oneAppPair =>
+      'Perché Waaiya funzioni del tutto, associalo una volta con il debug wireless nella pagina Configurazione: così anche la musica originale viene silenziata e Android smette di chiedere a ogni avvio.';
+
+  @override
+  String get notifTextOneApp =>
+      'Visibile quando all’avvio scegli «Condividi un’app», poi Waaiya. Con tutto lo schermo Android lo nasconde; dopo la configurazione una tantum Waaiya lo toglie durante il filtro.';
+
+  @override
+  String get blurNeedsRestart =>
+      'Ferma e riavvia il filtro per usare la sfocatura: richiede tutto lo schermo, e questo filtro è partito offrendo «Condividi un’app».';
+
+  @override
+  String get micOpenSettings =>
+      'Apri le impostazioni di Waaiya per consentire il microfono';
+
+  @override
+  String get keepRunningTitle => 'Tieni Waaiya in funzione';
+
+  @override
+  String get keepRunningBattery =>
+      'Questo telefono può chiudere Waaiya dopo un po\' per risparmiare batteria, e il filtro si ferma. Nelle impostazioni di Waaiya, sotto Batteria, scegli «Senza restrizioni». Su Xiaomi, Redmi e POCO: «Nessuna restrizione», e attiva anche l\'Avvio automatico.';
+
+  @override
+  String get keepRunningNotifications =>
+      'Le notifiche di Waaiya sono disattivate, quindi non può avvisarti quando il filtro si ferma. Attivale nelle impostazioni di Waaiya.';
+
+  @override
+  String get keepRunningOpen => 'Apri le impostazioni di Waaiya';
+
+  @override
+  String get lockAskTitle =>
+      'Continuare a filtrare quando lo schermo si blocca?';
+
+  @override
+  String get lockTitle => 'Continua a filtrare quando lo schermo si blocca';
+
+  @override
+  String get lockBody =>
+      'Su questo telefono Android chiede prima di ogni avvio e poi interrompe il filtro a ogni blocco dello schermo. Waaiya può evitarlo togliendo la protezione di condivisione schermo di Android mentre filtra, e la ripristina quando il filtro si ferma. Finché è tolta, un\'altra condivisione dello schermo nello stesso momento (una videochiamata, per esempio) può mostrare anche le tue notifiche. Una modifica vale dal prossimo avvio.';
+
+  @override
+  String get lockYes => 'Continua a filtrare';
+
+  @override
+  String get lockNo => 'Ferma a ogni blocco';
+
+  @override
+  String get sendToSupport => 'Invia a Waaiya';
+
+  @override
+  String get stateTooSlowNoLinks =>
+      'Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe.';
+
+  @override
+  String get startNoSetupBodyNoLinks =>
+      'La configurazione iniziale non è ancora stata fatta. Senza di essa Waaiya non può silenziare l\'audio originale: sentirai la musica e l\'audio filtrato insieme.';
+
+  @override
+  String protectDelayLongAsk(String value) {
+    return 'Scegliere un\'attesa di $value? Da ora, disattivare il filtro o qualsiasi protezione attenderà $value, e così pure accorciare questa attesa.';
+  }
+
+  @override
+  String get keepRunningKilled =>
+      'Android ha chiuso Waaiya mentre filtrava, quindi l\'audio non era più filtrato.';
 }

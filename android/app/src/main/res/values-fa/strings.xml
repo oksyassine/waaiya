@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">واعية</string>
-    <string name="tagline">سازهای موسیقی را از صدای همهٔ برنامه‌ها حذف می‌کند و گفتار و تلاوت را نگه می‌دارد.</string>
+    <string name="tagline">سازهای موسیقی را از صدای برنامه‌هایتان حذف می‌کند و گفتار و تلاوت را نگه می‌دارد.</string>
 
     <string name="onboard_title">خوش آمدید</string>
-    <string name="onboard_body">واعية سازهای موسیقی را از صدای همهٔ برنامه‌های این تلفن حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. فعلاً صدای آواز هم حذف می‌شود.</string>
+    <string name="onboard_body">واعية سازهای موسیقی را از صدای برنامه‌های این تلفن حذف می‌کند. گفتار و تلاوت قرآن حفظ می‌شود. صدای آواز هم حذف می‌شود.</string>
     <string name="onboard_question">من</string>
     <string name="gender_man">مرد</string>
     <string name="gender_woman">زن</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">پالایش روشن است</string>
     <string name="state_off_title">پالایش خاموش است</string>
     <string name="state_starting">در حال شروع…</string>
-    <string name="state_on_detail">سازها از همهٔ برنامه‌ها حذف می‌شوند. صدا حدود %1$d میلی‌ثانیه دیرتر می‌رسد (۱۰۰۰ میلی‌ثانیه یک ثانیه است).</string>
-    <string name="state_off_detail">برای شروع، روی دکمه ضربه بزنید.</string>
-    <string name="state_model_failed">مدل صدا بارگیری نشد، برای همین صدا برای احتیاط قطع شده است.</string>
+    <string name="state_on_detail">صدای برنامه‌هایتان در حال پالایش است. حدود %1$d میلی‌ثانیه دیرتر می‌رسد (۱۰۰۰ میلی‌ثانیه یک ثانیه است).</string>
+    <string name="state_off_detail">برای شروع، دکمه را بزنید.</string>
+    <string name="state_model_failed">فیلتر بارگیری نشد، برای همین صدا قطع شده است تا بدون پالایش پخش نشود.</string>
     <string name="state_capture_denied">برای دریافت صدای برنامه‌های دیگر، مجوز میکروفون لازم است.</string>
-    <string name="state_stopped_by_system">اندروید پالایش را متوقف کرد. برای شروع دوباره، روی دکمه ضربه بزنید.</string>
+    <string name="state_stopped_by_system">اندروید پالایش را متوقف کرد. برای شروع دوباره، دکمه را بزنید.</string>
     <string name="state_silenced_title">پالایش متوقف شد</string>
-    <string name="state_silenced">پالایش متوقف شد: برنامه‌های دیگر بی‌صدا هستند. برای شروع دوباره روی دکمه ضربه بزنید، یا «توقف» را بزنید تا آن‌ها را بدون پالایش بشنوید.</string>
+    <string name="state_silenced">پالایش متوقف شد: برنامه‌های دیگر بی‌صدا هستند. برای شروع دوباره دکمه را بزنید، یا «توقف» را بزنید تا آن‌ها را بدون پالایش بشنوید.</string>
     <string name="release_silence">توقف: شنیدن برنامه‌ها بدون پالایش</string>
     <string name="power_start_cd">شروع پالایش</string>
     <string name="power_stop_cd">توقف پالایش</string>
-    <string name="capture_hint">اندروید برای هم‌رسانی صفحه از شما می‌پرسد. فقط از صدا استفاده می‌شود: چیزی ضبط یا ارسال نمی‌شود.</string>
+    <string name="capture_hint">اندروید برای هم‌رسانی صفحه از شما می‌پرسد. چیزی ضبط یا ارسال نمی‌شود.</string>
     <string name="need_record_audio">واعية برای دریافت صدای برنامه‌های دیگر به مجوز میکروفون نیاز دارد. هرگز صدای شما را ضبط نمی‌کند.</string>
 
     <string name="setup_banner_title">یک قدم دیگر</string>
-    <string name="setup_banner_body">بدون راه‌اندازی یک‌بارهٔ زیر، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.</string>
+    <string name="setup_banner_body">بدون راه‌اندازی یک‌باره، موسیقی و صدای پالایش‌شده را با هم می‌شنوید.</string>
     <string name="step1_title">نصب Shizuku</string>
     <string name="step1_body">یک برنامهٔ کمکی رایگان از فروشگاه Play.</string>
     <string name="step1_action">دریافت Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">من</string>
     <string name="change">تغییر</string>
 
-    <string name="player_title">ویدیو با هماهنگی کامل</string>
-    <string name="player_body">ویدیویی را با واعية هم‌رسانی کنید (یا از «باز کردن با» استفاده کنید) تا آن را پالایش‌شده و بدون تأخیر تماشا کنید.</string>
+    <string name="player_title">ویدیو با صدا و تصویر هماهنگ</string>
+    <string name="player_body">ویدیویی را با واعية هم‌رسانی کنید (یا از «باز کردن با» استفاده کنید) تا آن را پالایش‌شده، با صدا و تصویر هماهنگ و بدون تأخیرِ پالایش زنده تماشا کنید.</string>
     <string name="licences">مجوزهای متن‌باز</string>
     <string name="licences_intro">واعية نرم‌افزاری آزاد تحت مجوز GNU Affero General Public License نسخهٔ ۳ یا بالاتر است. کد منبع: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">مجوز Creative Commons Attribution 4.0 (داده‌های آموزشی): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">پالایش</string>
     <string name="notif_title">واعية روشن است</string>
-    <string name="notif_text">سازها از همهٔ برنامه‌ها حذف می‌شوند</string>
+    <string name="notif_text">صدای برنامه‌هایتان در حال پالایش است</string>
     <string name="notif_stop">توقف</string>
+    <string name="notif_resume">ادامه</string>
     <!-- Link feature -->
     <string name="link_entry_title">باز کردن پیوند</string>
     <string name="link_entry_body">پیوندی از YouTube، TikTok یا Instagram را جای‌گذاری کنید تا آن را بدون موسیقی تماشا یا ذخیره کنید.</string>
@@ -125,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">تاری صفحه</string>
-    <string name="blur_body">افراد و تصاویر روی صفحه را در همهٔ برنامه‌ها، تا وقتی پالایش روشن است، می‌پوشاند. روی خود تلفن اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود.</string>
+    <string name="blur_body">افراد و تصاویر روی صفحه را، تا وقتی پالایش روشن است، می‌پوشاند. روی خود تلفن اجرا می‌شود؛ چیزی به جایی فرستاده نمی‌شود.</string>
     <string name="blur_on_title">تاری روشن است</string>
     <string name="blur_off_title">تاری خاموش است</string>
     <string name="blur_start_cd">روشن کردن تاری</string>
     <string name="blur_stop_cd">خاموش کردن تاری</string>
     <string name="blur_off_detail">برای شروع دکمه را بزنید. پالایش هم همراه آن شروع می‌شود.</string>
     <string name="blur_what_title">چه چیزی تار شود</string>
-    <string name="blur_women_title">تار کردن زنان</string>
+    <string name="blur_women_title">تار کردن تصاویر زنان</string>
     <string name="blur_women_body">کل بدن را می‌پوشاند. اگر برنامه مطمئن نباشد که کسی مرد است، او را هم می‌پوشاند.</string>
     <string name="blur_nudity_title">تار کردن تصاویر ناشایست</string>
     <string name="blur_nudity_body">برهنگی یا لباس بدن‌نما، از هر کسی: کل صفحه پوشانده می‌شود.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">کد مرتبط‌سازی</string>
     <string name="wsetup_code_dialog_body">فقط با تقسیم صفحه (تنظیمات در یک نیمه، واعية در نیمهٔ دیگر): بیرون رفتن از تنظیمات صفحهٔ جفت کردن را می‌بندد و کد آن دیگر کار نمی‌کند. کد ۶ رقمی نشان‌داده‌شده زیر «جفت کردن دستگاه با کد مرتبط‌سازی» را تایپ کنید.</string>
     <string name="wsetup_code_ok">جفت کردن</string>
-    <string name="blur_strict_title">چه کسانی بی‌پوشش می‌مانند</string>
-    <string name="blur_strict_value">چه کسانی بی‌پوشش می‌مانند: %1$s</string>
+    <string name="blur_strict_title">میزان اطمینان پیش از نشان دادن یک مرد</string>
+    <string name="blur_strict_value">میزان اطمینان پیش از نشان دادن یک مرد: %1$s</string>
     <string name="blur_strict_0">سخت‌گیرانه: فقط کسانی که برنامه تقریباً مطمئن است مرد هستند</string>
     <string name="blur_strict_1">متعادل: حدود دو برابر مرد بیشتر بی‌پوشش می‌مانند</string>
     <string name="blur_strict_2">آسان‌گیرانه: کمی مرد بیشتر از حالت متعادل</string>
     <string name="blur_strict_0_short">سخت‌گیرانه</string>
     <string name="blur_strict_1_short">متعادل</string>
     <string name="blur_strict_2_short">آسان‌گیرانه</string>
-    <string name="blur_strict_help">هر کسی که برنامه مطمئن نیست مرد است، پوشانده می‌شود. حالت سخت‌گیرانه حدود ۷ مرد از هر ۱۰۰ را بی‌پوشش می‌گذارد؛ متعادل حدود ۱۴ و آسان‌گیرانه حدود ۱۶. هر مرحله که سخت‌گیری کمتر شود، حدود ۱ زن بیشتر از هر ۱۰۰ نیز بی‌پوشش می‌ماند.</string>
+    <string name="blur_strict_help">فردی فقط وقتی نشان داده می‌شود که برنامه مطمئن باشد مرد است؛ بقیه تار می‌شوند. حالت سخت‌گیرانه حدود ۷ مرد از هر ۱۰۰ را نشان می‌دهد؛ متعادل حدود ۱۴ و آسان‌گیرانه حدود ۱۶. برخی زنان همچنان تشخیص داده نمی‌شوند؛ هر مرحله که سخت‌گیری کمتر شود، حدود ۱ نفر بیشتر از هر ۱۰۰ تشخیص داده نمی‌شود.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">صدای اصلی هنوز بی‌صدا نشده است، برای همین موسیقی را همراه با صدای پالایش‌شده می‌شنوید. راه‌اندازی یک‌بارهٔ زیر را تمام کنید.</string>
-    <string name="state_on_mute_failing">واعية نمی‌تواند صدای اصلی برنامه‌ای را که اکنون پخش می‌کند بی‌صدا کند، برای همین ممکن است موسیقی همچنان شنیده شود. پالایش را متوقف و دوباره شروع کنید. اگر ادامه داشت، گزارش عیب‌یابی را بفرستید (پایین همین صفحه).</string>
-    <string name="state_too_slow">این تلفن برای پالایش زندهٔ صدا خیلی کند است، برای همین صدا قطع‌ووصل می‌شود. «باز کردن پیوند» در پایین همچنان کار می‌کند: ویدیو را پیش از پخش پالایش می‌کند.</string>
+    <string name="state_on_not_muted">صدای اصلی هنوز بی‌صدا نشده است، برای همین موسیقی را همراه با صدای پالایش‌شده می‌شنوید. راه‌اندازی یک‌باره را در صفحهٔ «راه‌اندازی» تمام کنید.</string>
+    <string name="state_on_mute_failing">واعية نمی‌تواند صدای اصلی برنامه‌ای را که اکنون پخش می‌کند بی‌صدا کند، برای همین ممکن است موسیقی همچنان شنیده شود. پالایش را متوقف و دوباره شروع کنید. اگر ادامه داشت، گزارش عیب‌یابی را بفرستید (تنظیمات).</string>
+    <string name="state_too_slow">این تلفن برای پالایش زندهٔ صدا خیلی کند است، برای همین صدا قطع‌ووصل می‌شود. «باز کردن پیوند» در صفحهٔ «پیوندها» همچنان کار می‌کند: ویدیو را پیش از پخش پالایش می‌کند.</string>
     <string name="state_mono_note">صدا مونو است تا این تلفن عقب نماند.</string>
-    <string name="state_blocked_silenced">بی‌صدا شد، چون اجازهٔ پالایش نمی‌دهد: %1$s.</string>
-    <string name="state_blocked_unfiltered">بدون پالایش پخش می‌شود، چون اجازهٔ پالایش نمی‌دهد: %1$s.</string>
+    <string name="state_blocked_silenced">بی‌صدا شد، چون اجازهٔ پالایش نمی‌دهند: %1$s.</string>
+    <string name="state_blocked_unfiltered">بدون پالایش پخش می‌شود، چون اجازهٔ پالایش نمی‌دهند: %1$s.</string>
     <string name="state_capture_failed">اندروید صدای برنامه‌های دیگر را به واعية نداد. برای شروع دوباره، روی دکمه ضربه بزنید.</string>
     <string name="state_capture_cancelled">شروع در پرسش هم‌رسانی صفحهٔ اندروید لغو شد. واعية برای دریافت صدا نیاز دارد آنجا «شروع» را بزنید. چیزی ضبط یا ارسال نمی‌شود.</string>
     <string name="start_no_setup_title">موسیقی همچنان شنیده می‌شود</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">این تلفن برای پالایش زنده خیلی کند است: صدا قطع‌ووصل می‌شود</string>
     <string name="diag_button">مشکلی هست؟ گزارش عیب‌یابی</string>
     <string name="diag_title">گزارش عیب‌یابی</string>
-    <string name="diag_note">آنچه واعية روی این تلفن می‌بیند. آن را کپی کنید یا با کسی که به شما کمک می‌کند هم‌رسانی کنید. خود برنامه چیزی نمی‌فرستد.</string>
+    <string name="diag_note">آنچه واعية روی این تلفن می‌بیند. آن را کپی کنید یا با کسی که به شما کمک می‌کند هم‌رسانی کنید. واعية خودش آن را نمی‌فرستد: شما انتخاب می‌کنید چه کسی آن را بگیرد.</string>
     <string name="notif_stopped_title">واعية متوقف شد</string>
     <string name="notif_stopped_text">صدا دیگر پالایش نمی‌شود. برای شروع دوباره ضربه بزنید.</string>
     <string name="notif_silenced_title">پالایش متوقف شد: برنامه‌های دیگر بی‌صدا هستند</string>
     <string name="notif_silenced_text">برای شروع دوباره ضربه بزنید، یا «توقف» را بزنید تا آن‌ها را بدون پالایش بشنوید.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">روشن</string>
+    <string name="tile_model_failed">روشن، اما بی‌صدا: خطای مدل</string>
     <string name="tile_off">خاموش</string>
     <string name="tile_starting">در حال شروع…</string>
     <string name="tile_silenced">متوقف، برنامه‌ها بی‌صدا</string>
     <string name="tile_on_not_muted">روشن، راه‌اندازی لازم است</string>
     <string name="tile_open_app">باز کردن واعية</string>
-    <string name="tile_text_label">متن اعلان‌ها</string>
+    <string name="tile_text_label">واعية: متن اعلان‌ها</string>
     <string name="tile_text_shown">نمایان هنگام پالایش</string>
     <string name="tile_text_hidden">پنهان هنگام پالایش</string>
     <string name="tile_text_refused">این تلفن اجازه نمی‌دهد</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">نمایش دوبارهٔ راه‌اندازی</string>
     <string name="setup_go">رفتن به راه‌اندازی</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">عبور لمس از پوشش‌ها</string>
+    <string name="helper_title">عبور لمس از بخش‌های تار</string>
     <string name="helper_body_off">بدون کمک، پوشش جلوی لمس‌های زیر خودش را می‌گیرد. دستیار واعية پوشش‌ها را طوری می‌کشد که لمس‌ها از آن‌ها عبور کنند. «اشکال‌زدایی بی‌سیم» را روشن کنید (Wi‑Fi لازم است) و روی دکمه ضربه بزنید؛ بار اول، مانند راه‌اندازی یک بار جفت کنید. پس از راه‌اندازی مجدد تلفن، دوباره روی آن ضربه بزنید.</string>
     <string name="helper_start">اجرای دستیار واعية</string>
-    <string name="helper_on">دستیار واعية پوشش‌ها را می‌کشد: لمس‌ها از آن‌ها عبور می‌کنند. با راه‌اندازی مجدد تلفن یا خاموش شدن ‏اشکال‌زدایی USB متوقف می‌شود؛ آنگاه دوباره روی دکمه ضربه بزنید.</string>
+    <string name="helper_on">دستیار واعية تاری را می‌کشد: لمس‌ها از آن عبور می‌کنند. با راه‌اندازی مجدد تلفن یا خاموش شدن «اشکال‌زدایی USB» (کلیدی جداگانه در «گزینه‌های برنامه‌نویسان») متوقف می‌شود؛ آنگاه دوباره روی دکمه ضربه بزنید.</string>
     <string name="helper_shizuku_on">برنامهٔ Shizuku پوشش‌ها را می‌کشد: لمس‌ها از آن‌ها عبور می‌کنند.</string>
     <string name="helper_or_shizuku">یا با Shizuku:</string>
     <string name="guide_w_helper_note">وقتی تاری صفحه روشن است، راه‌اندازی دستیار واعية را هم اجرا می‌کند تا لمس‌ها از پوشش‌ها عبور کنند. برای آن «‏اشکال‌زدایی USB» را روشن نگه دارید («اشکال‌زدایی بی‌سیم» می‌تواند خاموش باشد). پس از راه‌اندازی مجدد تلفن، دستیار را دوباره از صفحهٔ «صفحه» اجرا کنید.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">برداشتن پوشش‌های دستی</string>
     <string name="notif_fix_note_missed">چیزی جا افتاد</string>
     <string name="notif_fix_note_wrong">به‌اشتباه پنهان شد</string>
-    <string name="notif_fix_noted">ثبت شد (%1$d یادداشت روی این گوشی)</string>
+    <string name="notif_fix_noted">ثبت شد. یادداشت‌های روی این گوشی: %1$d</string>
     <string name="notif_fix_picker_hint">انگشت خود را روی بخشی که باید پوشانده شود بکشید.</string>
     <string name="notif_fix_picker_cover">بپوشان</string>
     <string name="notif_fix_picker_cancel">لغو</string>
@@ -417,4 +419,39 @@
     <string name="move_new_body">‏واعیهٔ قدیمی (پیش از نسخهٔ 0.2.15) هنوز روی این تلفن است. آن را حذف کنید تا هرگز هر دو با هم پالایش نکنند.</string>
     <string name="move_new_imported">‏تنظیمات شما از آن منتقل شد.</string>
     <string name="move_remove_old">‏حذف واعیهٔ قدیمی</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">واعية: بررسی موسیقی</string>
+    <string name="mc_title">بررسی موسیقی</string>
+    <string name="mc_unnamed">فایل اشتراک‌گذاشته</string>
+    <string name="mc_listening">در حال گوش دادن… %1$d %%</string>
+    <string name="mc_private">واعية روی همین گوشی گوش می‌دهد. این قطعه به جایی فرستاده نمی‌شود.</string>
+    <string name="mc_music">واعية موسیقی شنید</string>
+    <string name="mc_music_detail">سازها در %1$s (حدود %2$s %% از کلیپ).</string>
+    <string name="mc_percussion">واعية فقط ضرب شنید</string>
+    <string name="mc_percussion_detail">طبل یا دست‌زدن ریتمیک، بدون ساز دیگر، در %1$s. تصمیم با شماست.</string>
+    <string name="mc_none">سازی شنیده نشد</string>
+    <string name="mc_none_detail">واعية کل کلیپ را گوش داد و ساز موسیقی نشنید. ممکن است برخی موسیقی‌ها از قلم بیفتد، بیشتر موسیقی آرام زیر صحبت.</string>
+    <string name="mc_note_quiet">موسیقی آرام زیر صحبت ممکن است از قلم بیفتد.</string>
+    <string name="mc_failed">این فایل بررسی نشد</string>
+    <string name="mc_failed_no_model">این نسخه از واعية نمی‌تواند موسیقی را بررسی کند.</string>
+    <string name="mc_failed_no_sound">صدا ندارد.</string>
+    <string name="mc_failed_too_long">بیشتر از ۳۰ دقیقه است.</string>
+    <string name="mc_failed_unreadable">واعية نمی‌تواند این فایل را بخواند.</string>
+    <string name="mc_share_clean">اشتراک بدون موسیقی</string>
+    <string name="mc_share_anyway">اشتراک به همین صورت</string>
+    <string name="mc_listen">گوش دادن در اینجا</string>
+    <string name="mc_copying">در حال ساخت نسخهٔ بدون موسیقی… %1$d %%</string>
+    <string name="mc_copy_failed">نسخهٔ بدون موسیقی ساخته نشد.</string>
+    <string name="mc_copy_name">%1$s (بدون موسیقی)</string>
+    <string name="mc_list_sep">"، "</string>
+    <string name="simple_title">حالت ساده (آزمایشی): بدون «گزینه‌های برنامه‌نویسان»</string>
+    <string name="simple_body">برای تلفن‌هایی که راه‌اندازی زیر برایشان بیش از حد دشوار است. تا وقتی واعية پالایش می‌کند، صدای رسانهٔ تلفن را بی‌صدا می‌کند و صدای پالایش‌شده را روی کانال صوتی دیگری پخش می‌کند. دکمه‌های صدای شما میزان صدای واعية را تنظیم می‌کنند. اندروید در هر شروع برای هم‌رسانی صفحه اجازه می‌خواهد. با توقف پالایش، صدای رسانه برمی‌گردد.</string>
+    <string name="simple_switch">استفاده از حالت ساده</string>
+    <string name="simple_channel_title">کانال صدا: %1$s</string>
+    <string name="simple_channel_alarm">زنگ هشدار</string>
+    <string name="simple_channel_notification">اعلان</string>
+    <string name="simple_channel_help">اگر چیزی نمی‌شنوید، یا با وجود هدفون صدا از بلندگوی تلفن پخش می‌شود، کانال دیگر را امتحان کنید. وقتی تلفن روی لرزش یا «مزاحم نشوید» است، «اعلان» بی‌صدا است.</string>
+    <string name="simple_test_note">این یک آزمایش است. پس از امتحان آن (بلندگو، هدفون، بلوتوث)، لطفاً گزارش عیب‌یابی را از «تنظیمات» بفرستید.</string>
+    <string name="simple_on_detail">حالت ساده (آزمایشی): تا وقتی واعية پالایش می‌کند، صدای رسانه قطع است.</string>
 </resources>

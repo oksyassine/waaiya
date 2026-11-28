@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Rimuove gli strumenti musicali da tutte le app e mantiene la voce e la recitazione.</string>
+    <string name="tagline">Rimuove gli strumenti musicali dal suono delle tue app e mantiene la voce e la recitazione.</string>
 
     <string name="onboard_title">Ti diamo il benvenuto</string>
-    <string name="onboard_body">Waaiya rimuove gli strumenti musicali dal suono di tutte le app di questo telefono. La voce parlata e la recitazione del Corano vengono mantenute. Per ora vengono rimosse anche le voci che cantano.</string>
+    <string name="onboard_body">Waaiya rimuove gli strumenti musicali dal suono delle app di questo telefono. La voce parlata e la recitazione del Corano vengono mantenute. Vengono rimosse anche le voci che cantano.</string>
     <string name="onboard_question">Sono</string>
     <string name="gender_man">Un uomo</string>
     <string name="gender_woman">Una donna</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Il filtro è attivo</string>
     <string name="state_off_title">Il filtro è disattivato</string>
     <string name="state_starting">Avvio…</string>
-    <string name="state_on_detail">Gli strumenti vengono rimossi da tutte le app. Il suono arriva circa %1$d ms in ritardo (1000 ms sono un secondo).</string>
-    <string name="state_off_detail">Tocca il pulsante per iniziare.</string>
-    <string name="state_model_failed">Non è stato possibile caricare il modello audio, quindi per sicurezza l\'audio è disattivato.</string>
+    <string name="state_on_detail">Il suono delle tue app viene filtrato. Arriva circa %1$d ms in ritardo (1000 ms sono un secondo).</string>
+    <string name="state_off_detail">Premi il pulsante per iniziare.</string>
+    <string name="state_model_failed">Non è stato possibile caricare il filtro, quindi l\'audio è disattivato invece di essere riprodotto senza filtro.</string>
     <string name="state_capture_denied">Serve l\'autorizzazione del microfono per ricevere l\'audio delle altre app.</string>
-    <string name="state_stopped_by_system">Android ha interrotto il filtro. Tocca il pulsante per avviarlo di nuovo.</string>
+    <string name="state_stopped_by_system">Android ha interrotto il filtro. Premi il pulsante per avviarlo di nuovo.</string>
     <string name="state_silenced_title">Filtro interrotto</string>
-    <string name="state_silenced">Filtro interrotto: le altre app sono silenziate. Tocca il pulsante per avviarlo di nuovo, oppure Interrompi per sentirle senza filtro.</string>
+    <string name="state_silenced">Filtro interrotto: le altre app sono silenziate. Premi il pulsante per avviarlo di nuovo, oppure Interrompi per sentirle senza filtro.</string>
     <string name="release_silence">Interrompi: senti le app senza filtro</string>
     <string name="power_start_cd">Avvia il filtro</string>
     <string name="power_stop_cd">Interrompi il filtro</string>
-    <string name="capture_hint">Android chiederà di condividere lo schermo. Viene usato solo l\'audio: niente viene registrato o inviato.</string>
+    <string name="capture_hint">Android chiederà di condividere lo schermo. Niente viene registrato o inviato.</string>
     <string name="need_record_audio">Waaiya ha bisogno dell\'autorizzazione del microfono per ricevere l\'audio delle altre app. Non ti registra mai.</string>
 
     <string name="setup_banner_title">Ancora un passaggio</string>
-    <string name="setup_banner_body">Senza la configurazione iniziale qui sotto, sentirai la musica e l\'audio filtrato insieme.</string>
+    <string name="setup_banner_body">Senza la configurazione iniziale, sentirai la musica e l\'audio filtrato insieme.</string>
     <string name="step1_title">Installa Shizuku</string>
     <string name="step1_body">Un\'app di supporto gratuita dal Play Store.</string>
     <string name="step1_action">Scarica Shizuku</string>
@@ -73,8 +73,8 @@
     <string name="setting_gender_title">Sono</string>
     <string name="change">Cambia</string>
 
-    <string name="player_title">Video perfettamente sincronizzati</string>
-    <string name="player_body">Condividi un video con Waaiya (o usa “Apri con”) per guardarlo filtrato senza ritardo.</string>
+    <string name="player_title">Video con audio e immagine sincronizzati</string>
+    <string name="player_body">Condividi un video con Waaiya (o usa “Apri con”) per guardarlo filtrato, con audio e immagine sincronizzati, senza il ritardo del filtro in tempo reale.</string>
     <string name="licences">Licenze open source</string>
     <string name="licences_intro">Waaiya è software libero con licenza GNU Affero General Public License v3 o successiva. Codice sorgente: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (dati di addestramento): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Filtro</string>
     <string name="notif_title">Waaiya è attivo</string>
-    <string name="notif_text">Gli strumenti vengono rimossi da tutte le app</string>
+    <string name="notif_text">Il suono delle tue app viene filtrato</string>
     <string name="notif_stop">Interrompi</string>
+    <string name="notif_resume">Riprendi</string>
     <!-- Funzione link -->
     <string name="link_entry_title">Apri un link</string>
     <string name="link_entry_body">Incolla un link di YouTube, TikTok o Instagram per guardarlo o salvarlo senza musica.</string>
@@ -125,14 +126,14 @@
 
     <!-- Sfocatura dello schermo -->
     <string name="blur_title">Sfocatura dello schermo</string>
-    <string name="blur_body">Copre le persone e le immagini sullo schermo, in tutte le app, mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.</string>
+    <string name="blur_body">Copre le persone e le immagini sullo schermo mentre il filtro è attivo. Funziona sul telefono; niente viene inviato da nessuna parte.</string>
     <string name="blur_on_title">La sfocatura è attiva</string>
     <string name="blur_off_title">La sfocatura è spenta</string>
     <string name="blur_start_cd">Avvia la sfocatura</string>
     <string name="blur_stop_cd">Ferma la sfocatura</string>
-    <string name="blur_off_detail">Tocca il pulsante per avviare. Il filtraggio parte insieme.</string>
+    <string name="blur_off_detail">Premi il pulsante per avviare. Il filtraggio parte insieme.</string>
     <string name="blur_what_title">Cosa sfocare</string>
-    <string name="blur_women_title">Sfoca le donne</string>
+    <string name="blur_women_title">Sfoca le immagini di donne</string>
     <string name="blur_women_body">Copre tutto il corpo. Se l\'app non è sicura che una persona sia un uomo, copre anche lei.</string>
     <string name="blur_nudity_title">Sfoca le immagini indecenti</string>
     <string name="blur_nudity_body">Nudità o abiti succinti, su chiunque: viene coperto tutto lo schermo.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Codice di accoppiamento</string>
     <string name="wsetup_code_dialog_body">Solo con lo schermo diviso (Impostazioni in una metà, Waaiya nell\'altra): se esci dalle Impostazioni, la schermata di accoppiamento si chiude e il suo codice smette di funzionare. Digita il codice di 6 cifre mostrato sotto “Accoppia dispositivo con codice di accoppiamento”.</string>
     <string name="wsetup_code_ok">Accoppia</string>
-    <string name="blur_strict_title">Chi resta scoperto</string>
-    <string name="blur_strict_value">Chi resta scoperto: %1$s</string>
+    <string name="blur_strict_title">Quanta certezza prima di mostrare un uomo</string>
+    <string name="blur_strict_value">Quanta certezza prima di mostrare un uomo: %1$s</string>
     <string name="blur_strict_0">Rigoroso: solo le persone che l\'app ritiene quasi certamente uomini</string>
     <string name="blur_strict_1">Equilibrato: circa il doppio degli uomini resta scoperto</string>
     <string name="blur_strict_2">Permissivo: qualche uomo in più rispetto a equilibrato</string>
     <string name="blur_strict_0_short">rigoroso</string>
     <string name="blur_strict_1_short">equilibrato</string>
     <string name="blur_strict_2_short">permissivo</string>
-    <string name="blur_strict_help">Viene coperto chiunque l\'app non riconosca con certezza come uomo. Rigoroso lascia scoperti circa 7 uomini su 100; equilibrato circa 14, permissivo circa 16. Ogni livello meno rigoroso lascia scoperta anche circa 1 donna in più su 100.</string>
+    <string name="blur_strict_help">Una persona viene mostrata solo quando l\'app è sicura che sia un uomo; tutti gli altri vengono sfocati. Rigoroso mostra circa 7 uomini su 100, equilibrato circa 14, permissivo circa 16. Alcune donne sfuggono comunque; ogni livello meno rigoroso ne lascia sfuggire circa 1 in più su 100.</string>
     <!-- Filtro in tempo reale: problemi spiegati a parole, il rapporto di diagnostica -->
-    <string name="state_on_not_muted">L\'audio originale non è ancora silenziato, quindi senti la musica insieme all\'audio filtrato. Completa la configurazione iniziale qui sotto.</string>
-    <string name="state_on_mute_failing">Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (in fondo a questa schermata).</string>
-    <string name="state_too_slow">Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe. “Apri un link” qui sotto funziona comunque: filtra il video prima di riprodurlo.</string>
+    <string name="state_on_not_muted">L\'audio originale non è ancora silenziato, quindi senti la musica insieme all\'audio filtrato. Completa la configurazione iniziale nella pagina “Configura”.</string>
+    <string name="state_on_mute_failing">Waaiya non riesce a silenziare l\'audio originale dell\'app in riproduzione, quindi la musica potrebbe sentirsi ancora. Interrompi e riavvia il filtro. Se continua, invia il rapporto di diagnostica (Impostazioni).</string>
+    <string name="state_too_slow">Questo telefono è troppo lento per filtrare l\'audio in tempo reale, quindi l\'audio si interrompe. “Apri un link” nella pagina “Link” funziona comunque: filtra il video prima di riprodurlo.</string>
     <string name="state_mono_note">L\'audio è in mono perché questo telefono riesca a stare al passo.</string>
-    <string name="state_blocked_silenced">Silenziata, perché non permette il filtro: %1$s.</string>
-    <string name="state_blocked_unfiltered">In riproduzione senza filtro, perché non permette il filtro: %1$s.</string>
+    <string name="state_blocked_silenced">Silenziata perché il filtro non è consentito da: %1$s.</string>
+    <string name="state_blocked_unfiltered">In riproduzione senza filtro perché il filtro non è consentito da: %1$s.</string>
     <string name="state_capture_failed">Android non ha dato a Waaiya l\'audio delle altre app. Tocca il pulsante per avviare di nuovo.</string>
     <string name="state_capture_cancelled">L\'avvio è stato annullato alla domanda di Android sulla condivisione dello schermo. Lì Waaiya ha bisogno che tu scelga “Avvia” per ricevere l\'audio. Niente viene registrato o inviato.</string>
     <string name="start_no_setup_title">La musica si sentirà ancora</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Questo telefono è troppo lento per il filtro in tempo reale: l\'audio si interrompe</string>
     <string name="diag_button">Un problema? Rapporto di diagnostica</string>
     <string name="diag_title">Rapporto di diagnostica</string>
-    <string name="diag_note">Ciò che Waaiya vede su questo telefono. Copialo o condividilo con chi ti aiuta. L\'app di per sé non invia nulla.</string>
+    <string name="diag_note">Ciò che Waaiya vede su questo telefono. Copialo o condividilo con chi ti aiuta. Waaiya non lo invia da sé: sei tu a scegliere chi lo riceve.</string>
     <string name="notif_stopped_title">Waaiya si è fermato</string>
     <string name="notif_stopped_text">L\'audio non è più filtrato. Tocca per avviare di nuovo.</string>
     <string name="notif_silenced_title">Filtro interrotto: le altre app sono silenziate</string>
     <string name="notif_silenced_text">Tocca per avviare di nuovo, oppure Interrompi per sentirle senza filtro.</string>
     <!-- Riquadri delle Impostazioni rapide (FilterTileService, ScreenShareTileService). I sottotitoli sono brevi: devono stare sotto un riquadro. -->
     <string name="tile_on">Attivo</string>
+    <string name="tile_model_failed">Attivo, ma muto: errore del modello</string>
     <string name="tile_off">Disattivato</string>
     <string name="tile_starting">Avvio…</string>
     <string name="tile_silenced">Fermo, app silenziate</string>
     <string name="tile_on_not_muted">Attivo, da configurare</string>
     <string name="tile_open_app">Apri Waaiya</string>
-    <string name="tile_text_label">Testo delle notifiche</string>
+    <string name="tile_text_label">Waaiya: testo delle notifiche</string>
     <string name="tile_text_shown">Mostrato durante il filtro</string>
     <string name="tile_text_hidden">Nascosto durante il filtro</string>
     <string name="tile_text_refused">Questo telefono lo rifiuta</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Mostra di nuovo la configurazione</string>
     <string name="setup_go">Vai alla configurazione</string>
     <!-- L'assistente di Waaiya per le coperture (CoverHelper): i tocchi attraversano le coperture della sfocatura senza Shizuku -->
-    <string name="helper_title">Tocchi attraverso le coperture</string>
+    <string name="helper_title">Tocca attraverso le aree sfocate</string>
     <string name="helper_body_off">Senza aiuto, una copertura blocca i tocchi sotto di essa. L\'assistente di Waaiya disegna le coperture in modo che i tocchi le attraversino. Attiva il Debug wireless (serve il Wi-Fi) e tocca il pulsante; la prima volta, esegui l\'accoppiamento una volta come nella configurazione. Dopo un riavvio del telefono, toccalo di nuovo.</string>
     <string name="helper_start">Avvia l\'assistente di Waaiya</string>
-    <string name="helper_on">L\'assistente di Waaiya disegna le coperture: i tocchi le attraversano. Si ferma quando il telefono si riavvia o quando il Debug USB viene disattivato; in quel caso tocca di nuovo il pulsante.</string>
+    <string name="helper_on">L\'assistente di Waaiya disegna la sfocatura: i tocchi la attraversano. Si ferma quando il telefono si riavvia o quando “Debug USB” (un interruttore a parte in Opzioni sviluppatore) viene disattivato; in quel caso tocca di nuovo il pulsante.</string>
     <string name="helper_shizuku_on">Shizuku disegna le coperture: i tocchi le attraversano.</string>
     <string name="helper_or_shizuku">Oppure con Shizuku:</string>
     <string name="guide_w_helper_note">Con la sfocatura dello schermo attiva, la configurazione avvia anche l\'assistente di Waaiya, così i tocchi attraversano le coperture. Per questo lascia attivo il “Debug USB” (il Debug wireless può essere disattivato). Dopo un riavvio del telefono, avvia di nuovo l\'assistente dalla pagina Schermo.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Rimuovi le coperture manuali</string>
     <string name="notif_fix_note_missed">Qualcosa è sfuggito</string>
     <string name="notif_fix_note_wrong">Nascosto per errore</string>
-    <string name="notif_fix_noted">Annotato (%1$d note su questo telefono)</string>
+    <string name="notif_fix_noted">Annotato. Note su questo telefono: %1$d</string>
     <string name="notif_fix_picker_hint">Trascina il dito sull\'area da coprire.</string>
     <string name="notif_fix_picker_cover">Coprila</string>
     <string name="notif_fix_picker_cancel">Annulla</string>
@@ -417,4 +419,39 @@
     <string name="move_new_body">La vecchia Waaiya (precedente alla versione 0.2.15) è ancora su questo telefono. Rimuovila così che le due non filtrino mai insieme.</string>
     <string name="move_new_imported">Le tue impostazioni sono state prese da lì.</string>
     <string name="move_remove_old">Rimuovi la vecchia Waaiya</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: controlla la musica</string>
+    <string name="mc_title">Controlla la musica</string>
+    <string name="mc_unnamed">File condiviso</string>
+    <string name="mc_listening">In ascolto… %1$d %%</string>
+    <string name="mc_private">Waaiya ascolta su questo telefono. La clip non viene inviata da nessuna parte.</string>
+    <string name="mc_music">Waaiya ha sentito musica</string>
+    <string name="mc_music_detail">Strumenti in %1$s (circa il %2$s %% della clip).</string>
+    <string name="mc_percussion">Waaiya ha sentito solo percussioni</string>
+    <string name="mc_percussion_detail">Tamburi o battiti di mani ritmati, senza altri strumenti, in %1$s. Decidi tu.</string>
+    <string name="mc_none">Nessuno strumento sentito</string>
+    <string name="mc_none_detail">Waaiya ha ascoltato tutta la clip e non ha sentito strumenti musicali. Un po\' di musica può sfuggire, soprattutto la musica bassa sotto la voce.</string>
+    <string name="mc_note_quiet">La musica bassa sotto la voce può sfuggire.</string>
+    <string name="mc_failed">Impossibile controllare questo file</string>
+    <string name="mc_failed_no_model">Questa versione di Waaiya non può controllare la musica.</string>
+    <string name="mc_failed_no_sound">Non ha audio.</string>
+    <string name="mc_failed_too_long">Dura più di 30 minuti.</string>
+    <string name="mc_failed_unreadable">Waaiya non riesce a leggere questo file.</string>
+    <string name="mc_share_clean">Condividi senza musica</string>
+    <string name="mc_share_anyway">Condividi comunque</string>
+    <string name="mc_listen">Ascolta qui</string>
+    <string name="mc_copying">Creazione di una copia senza musica… %1$d %%</string>
+    <string name="mc_copy_failed">Impossibile creare la copia senza musica.</string>
+    <string name="mc_copy_name">%1$s (senza musica)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Modalità semplice (prova): senza Opzioni sviluppatore</string>
+    <string name="simple_body">Per i telefoni su cui la configurazione qui sotto è troppo difficile. Mentre Waaiya filtra, disattiva l\'audio multimediale del telefono e riproduce l\'audio filtrato su un altro canale audio. I tasti del volume regolano il volume di Waaiya. Android chiede di condividere lo schermo a ogni avvio. L\'audio multimediale torna quando il filtro si ferma.</string>
+    <string name="simple_switch">Usa la modalità semplice</string>
+    <string name="simple_channel_title">Canale audio: %1$s</string>
+    <string name="simple_channel_alarm">Sveglia</string>
+    <string name="simple_channel_notification">Notifica</string>
+    <string name="simple_channel_help">Se non senti nulla, o il suono esce dall\'altoparlante del telefono mentre hai gli auricolari, prova l\'altro canale. Il canale Notifica resta muto mentre il telefono è in vibrazione o in Non disturbare.</string>
+    <string name="simple_test_note">Questa è una prova. Dopo averla provata (altoparlante, auricolari, Bluetooth), invia il rapporto di diagnostica dalle Impostazioni.</string>
+    <string name="simple_on_detail">Modalità semplice (prova): l\'audio multimediale è disattivato mentre Waaiya filtra.</string>
 </resources>

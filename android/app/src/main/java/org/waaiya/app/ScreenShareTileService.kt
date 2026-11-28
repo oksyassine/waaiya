@@ -48,13 +48,15 @@ class ScreenShareTileService : TileService() {
     }
 
     /**
-     * Android reads its switch only when a capture starts: turning on takes effect at the next start (FilterService
-     * applies it then). Turning off puts Android's switch back at once, for screen shares started from now on.
+     * Android reads its switch only when a capture starts (FilterService applies it then). Turning off puts Android's
+     * switch back at once, for screen shares started from now on. While filtering, a new capture starts at once so
+     * the choice shows now ([FilterService.restartForNotificationText]); this closes the Quick Settings panel.
      */
     private fun set(on: Boolean) {
         Settings(this).showNotificationText = on
         if (!on) ScreenShareProtection.restore(this)
         update()
+        FilterService.restartForNotificationText(this)?.let { FilterTileService.openActivity(this, it) }
     }
 
     /**
@@ -66,7 +68,7 @@ class ScreenShareTileService : TileService() {
         if (ScreenShareProtection.setUp(this)) return
         when {
             ShizukuSetup.state(this) == ShizukuSetup.State.READY -> grantWithShizuku()
-            withDialog -> showDialog(dialog()
+            withDialog -> safeDialog(dialog()
                 .setTitle(R.string.tile_text_setup_title)
                 .setMessage(R.string.tile_text_setup_body)
                 .setPositiveButton(R.string.tile_open_app) { _, _ -> openApp() }
@@ -84,7 +86,7 @@ class ScreenShareTileService : TileService() {
         val viaApp = !can && ShizukuSetup.state(this) != ShizukuSetup.State.READY
         val body = getString(R.string.tile_text_explain_body) +
             if (viaApp) "\n\n" + getString(R.string.tile_text_setup_body) else ""
-        showDialog(dialog()
+        safeDialog(dialog()
             .setTitle(R.string.tile_text_explain_title)
             .setMessage(body)
             .setPositiveButton(if (viaApp) R.string.tile_open_app else R.string.tile_text_turn_on) { _, _ ->
@@ -108,12 +110,21 @@ class ScreenShareTileService : TileService() {
         UiActivity.open(this, "setup")?.let { FilterTileService.openActivity(this, it) }
     }
 
+    /** A tile's dialog needs the Quick Settings panel open: shown while it closes (or from a shell), Android throws,
+     *  which used to end the whole app, filtering included. Then Waaiya opens instead, where the same choice is. */
+    private fun safeDialog(d: android.app.Dialog) {
+        runCatching { showDialog(d) }.onFailure {
+            android.util.Log.w("IslamicMute", "tile: dialog not shown (${it.javaClass.simpleName}), opening Waaiya")
+            UiActivity.open(this, "filter")?.let { i -> FilterTileService.openActivity(this, i) }
+        }
+    }
+
     private fun dialog() = AlertDialog.Builder(ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault_DayNight))
 
     private fun update() {
         val tile = qsTile ?: return
         val can = ScreenShareProtection.setUp(this)
-        val on = can && Settings(this).showNotificationText
+        val on = can && ScreenShareProtection.wanted(this)
         tile.label = getString(R.string.tile_text_label)
         tile.state = if (on) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
         val running = ScreenShareProtection.shownInCapture

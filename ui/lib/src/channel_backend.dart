@@ -48,12 +48,15 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<void> openOverlaySettings() => _call<void>('openOverlaySettings');
+  @override
+  Future<void> openAppSettings() => _call<void>('openAppSettings');
 
   @override
   Future<void> openShizuku() => _call<void>('openShizuku');
 
   @override
-  Future<void> openDeveloperOptions() => _call<void>('openDeveloperOptions');
+  Future<void> openDeveloperOptions({String? highlight}) =>
+      _call<void>('openDeveloperOptions', {'highlight': ?highlight});
 
   @override
   Future<void> setLanguage(String tag) => _call<void>('setLanguage', {'tag': tag});
@@ -125,4 +128,7 @@ class ChannelBackend implements WaaiyaBackend {
 
   @override
   Future<void> shareText(String text) => _call<void>('shareText', {'text': text});
+  @override
+  Future<void> sendToSupport(String subject, String text) =>
+      _call<void>('sendToSupport', {'subject': subject, 'text': text});
 }

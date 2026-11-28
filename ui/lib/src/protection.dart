@@ -394,9 +394,28 @@ class _ProtectionCardState extends State<ProtectionCard> {
         title: l.protectDelayTitle,
         options: [for (final m in protectDelays) protectDelayLabel(l, m)],
         selected: protectDelays.indexOf(current));
-    if (i != null && protectDelays[i] != current && mounted) {
-      await HomeScreen.set(context, SettingKeys.protectDelayMinutes, protectDelays[i]);
+    if (i == null || protectDelays[i] == current || !mounted) return;
+    final chosen = protectDelays[i];
+    // a long wait binds the person for hours (shortening it waits too): one tap in a list is not enough for that
+    if (chosen > current && chosen >= 240) {
+      final label = protectDelayLabel(l, chosen);
+      final ok = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(l.protectDelayTitle),
+          content: Text(l.protectDelayLongAsk(label)),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx, false),
+                child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
+            FilledButton(key: const Key('protect_delay_confirm'), onPressed: () => Navigator.pop(ctx, true),
+                child: Text(MaterialLocalizations.of(ctx).okButtonLabel)),
+          ],
+        ),
+      );
+      if (ok != true || !mounted) return;
     }
+    if (!mounted) return;
+    await HomeScreen.set(context, SettingKeys.protectDelayMinutes, chosen);
   }
 
   @override

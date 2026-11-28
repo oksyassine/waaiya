@@ -87,6 +87,8 @@ object ModelStore {
     private const val MODEL = "voice.onnx"
     private const val STATE = "voice.state_init.bin"
     private const val DETECTOR = "detector.onnx"
+    /** "Check for music": the AudioSet tagger (models/music/export_tagger.py). */
+    private const val MUSIC_TAGGER = "music_tagger.onnx"
     /** Keep singing (voice_v1): the engine finds voice_singing.state_init.bin next to it. */
     private const val SINGING = "voice_singing.onnx"
     private const val SINGING_STATE = "voice_singing.state_init.bin"
@@ -96,18 +98,22 @@ object ModelStore {
     const val BLUR_SEG = "blur_seg.onnx"
     private val BLUR_MODELS = listOf(BLUR_PERSON, BLUR_GENDER, BLUR_NSFW, BLUR_SEG)
 
+    /** One copy at a time: the audio thread, the blur and a model reload call this at once at a start, and two
+     *  copies writing the same file would leave a model half written. */
+    @Synchronized
     fun modelPath(context: Context): String {
         val dir = File(context.filesDir, "models").apply { mkdirs() }
         val version = context.packageManager.getPackageInfo(context.packageName, 0).longVersionCode
         val stamp = File(dir, "version")
         // copied again on a new version, or when a bundled model is missing here (a debug reinstall keeps the version)
-        val names = listOf(MODEL, STATE, DETECTOR, SINGING, SINGING_STATE) + BLUR_MODELS
+        val names = listOf(MODEL, STATE, DETECTOR, SINGING, SINGING_STATE, MUSIC_TAGGER) + BLUR_MODELS
         if (stamp.takeIf { it.exists() }?.readText() != version.toString() ||
             names.any { !File(dir, it).exists() && hasAsset(context, it) }) {
             for (name in names) {
                 runCatching { context.assets.open(name).use { i -> File(dir, name).outputStream().use { i.copyTo(it) } } }
             }
-            stamp.writeText(version.toString())
+            // a full disk: the models are copied again next time instead of ending the caller's thread
+            runCatching { stamp.writeText(version.toString()) }
         }
         return File(dir, MODEL).absolutePath
     }
@@ -136,6 +142,14 @@ object ModelStore {
     fun blurModel(context: Context, name: String): String? {
         modelPath(context)
         return File(File(context.filesDir, "models"), name).takeIf { it.exists() }?.absolutePath
+    }
+
+    /** The "check for music" tagger, or null when this build does not bundle it. */
+    fun musicTaggerPath(context: Context): String? {
+        modelPath(context)
+        val f = File(File(context.filesDir, "models"), MUSIC_TAGGER)
+        if (!hasAsset(context, MUSIC_TAGGER)) { f.delete(); return null }
+        return f.takeIf { it.exists() }?.absolutePath
     }
 
     fun hasAsset(context: Context, name: String): Boolean = runCatching { context.assets.open(name).close() }.isSuccess

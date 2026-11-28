@@ -67,6 +67,7 @@ object FixMistakes : Feature {
      */
     @Synchronized
     fun filterOffUids(ctx: Context, settings: Settings): Set<Int> {
+        if (settings.simpleMode) return emptySet()  // everything is muted there: a left-out app would be silent
         val apps = settings.filterOffApps
         val key = apps.sorted().joinToString(",")
         val now = SystemClock.uptimeMillis()
@@ -75,7 +76,7 @@ object FixMistakes : Feature {
         uidSet = apps.mapNotNull { pkg ->
             runCatching { ctx.packageManager.getApplicationInfo(pkg, 0).uid }.getOrNull()
                 ?.takeIf { it != me && it >= Process.FIRST_APPLICATION_UID }
-        }.toSet()
+        }.flatMap { uid -> listOf(uid, cloneUid(uid)) }.toSet()
         uidKey = key
         uidAt = now
         return uidSet
@@ -288,7 +289,9 @@ object FixMistakes : Feature {
         val s = Settings(ctx)
         val reason = blurAppsReason(ctx)
         return mapOf(
-            "filterApps" to true,
+            // simple mode mutes all media and plays the filtered copy: an app left out of the capture would be
+            // silent, not heard as it is, so the list is not offered there
+            "filterApps" to !s.simpleMode,
             "blurApps" to (reason == null),
             "blurAppsReason" to reason,
             "handCover" to true,
@@ -430,3 +433,7 @@ object FixMistakes : Feature {
         FilterService.refreshNotification()
     }
 }
+
+/** The same app's copy in the "dual apps" / "app clone" profile (user 999 on Xiaomi, OPPO, OnePlus, vivo): a uid
+ *  that does not exist on the phone matches nothing. */
+internal fun cloneUid(uid: Int): Int = 999 * 100_000 + uid % 100_000

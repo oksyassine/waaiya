@@ -2,10 +2,10 @@
 <resources>
     <!-- Machine translation from the English, not reviewed by a native speaker yet. -->
     <string name="app_name">Waaiya</string>
-    <string name="tagline">Waxay ka saartaa qalabka muusigga barnaamij kasta, waxayna ka tagtaa hadalka iyo akhriska Qur\'aanka.</string>
+    <string name="tagline">Waxay ka saartaa qalabka muusigga codka barnaamijyadaada, waxayna ka tagtaa hadalka iyo akhriska Qur\'aanka.</string>
 
     <string name="onboard_title">Soo dhawoow</string>
-    <string name="onboard_body">Waaiya waxay ka saartaa qalabka muusigga codka barnaamij kasta oo taleefankan ku jira. Hadalka iyo akhriska Qur\'aanka waa la hayaa. Hadda, codadka heesaha sidoo kale waa la saaraa.</string>
+    <string name="onboard_body">Waaiya waxay ka saartaa qalabka muusigga codka barnaamijyada taleefankan ku jira. Hadalka iyo akhriska Qur\'aanka waa la hayaa. Codadka heesaha sidoo kale waa la saaraa.</string>
     <string name="onboard_question">Waxaan ahay</string>
     <string name="gender_man">Nin</string>
     <string name="gender_woman">Haweeney</string>
@@ -14,21 +14,21 @@
     <string name="state_on_title">Shaandhayntu way daaran tahay</string>
     <string name="state_off_title">Shaandhayntu way damsan tahay</string>
     <string name="state_starting">Waa la bilaabayaa…</string>
-    <string name="state_on_detail">Qalabka muusigga waa laga saaray dhammaan barnaamijyada. Codku wuxuu daahaa qiyaastii %1$d ms (1000 ms waa hal ilbiriqsi).</string>
-    <string name="state_off_detail">Taabo badhanka si aad u bilowdo.</string>
-    <string name="state_model_failed">Moodeelka codka lama soo shubi karin, sidaas darteed codka waa la aamusiiyay badbaado awgeed.</string>
+    <string name="state_on_detail">Codka barnaamijyadaada waa la shaandheynayaa. Wuxuu daahaa qiyaastii %1$d ms (1000 ms waa hal ilbiriqsi).</string>
+    <string name="state_off_detail">Riix badhanka si aad u bilowdo.</string>
+    <string name="state_model_failed">Shaandhaynta lama soo shubi karin, sidaas darteed codka waa la aamusiiyay halkii la daari lahaa iyadoo aan la shaandheyn.</string>
     <string name="state_capture_denied">Ogolaanshaha makarafoonka ayaa loo baahan yahay si loo helo codka barnaamijyada kale.</string>
-    <string name="state_stopped_by_system">Android ayaa joojisay shaandhaynta. Taabo badhanka si aad dib ugu bilowdo.</string>
+    <string name="state_stopped_by_system">Android ayaa joojisay shaandhaynta. Riix badhanka si aad dib ugu bilowdo.</string>
     <string name="state_silenced_title">Shaandhayntu way joogsatay</string>
-    <string name="state_silenced">Shaandhayntu way joogsatay: barnaamijyada kale waa la aamusiiyay. Taabo badhanka si aad dib ugu bilowdo, ama Jooji si aad u maqasho iyagoo aan la shaandheyn.</string>
+    <string name="state_silenced">Shaandhayntu way joogsatay: barnaamijyada kale waa la aamusiiyay. Riix badhanka si aad dib ugu bilowdo, ama Jooji si aad u maqasho iyagoo aan la shaandheyn.</string>
     <string name="release_silence">Jooji: maqal barnaamijyada iyagoo aan la shaandheyn</string>
     <string name="power_start_cd">Bilow shaandhaynta</string>
     <string name="power_stop_cd">Jooji shaandhaynta</string>
-    <string name="capture_hint">Android waxay ku weydiin doontaa inaad wadaagto shaashaddaada. Codka oo kaliya ayaa la isticmaalaa: waxba lama duubo, waxna lama diro.</string>
+    <string name="capture_hint">Android waxay ku weydiin doontaa inaad wadaagto shaashaddaada. Waxba lama duubo, waxna lama diro.</string>
     <string name="need_record_audio">Waaiya waxay u baahan tahay ogolaanshaha makarafoonka si ay u hesho codka barnaamijyada kale. Marnaba ma duubto codkaaga.</string>
 
     <string name="setup_banner_title">Hal tallaabo oo kale</string>
-    <string name="setup_banner_body">Haddii aadan samayn habaynta hal mar ah ee hoose, waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.</string>
+    <string name="setup_banner_body">Haddii aadan samayn habaynta hal mar ah, waxaad wada maqli doontaa muusigga iyo codka la shaandheeyay.</string>
     <string name="step1_title">Rakib Shizuku</string>
     <string name="step1_body">Barnaamij caawiye ah oo bilaash ah, oo ku jira Play Store.</string>
     <string name="step1_action">Soo deji Shizuku</string>
@@ -74,7 +74,7 @@
     <string name="change">Beddel</string>
 
     <string name="player_title">Muuqaallo cod iyo sawir isku dhigma</string>
-    <string name="player_body">Muuqaal la wadaag Waaiya (ama isticmaal ku fur “Open with”) si aad u daawato isagoo la shaandheeyay, dib u dhac la\'aan.</string>
+    <string name="player_body">Muuqaal la wadaag Waaiya (ama isticmaal ku fur “Open with”) si aad u daawato isagoo la shaandheeyay, codka iyo sawirkuna isku dhigmaan, iyadoo aan jirin dib u dhaca shaandhaynta tooska ah.</string>
     <string name="licences">Shatiyada isha furan</string>
     <string name="licences_intro">Waaiya waa barnaamij xor ah oo hoos yimaada GNU Affero General Public License v3 ama mid ka dambeeya. Koodhka isha: https://github.com/oksyassine/waaiya</string>
     <string name="licences_cc">Creative Commons Attribution 4.0 (xogta tababarka): https://creativecommons.org/licenses/by/4.0/</string>
@@ -83,8 +83,9 @@
 
     <string name="notif_channel">Shaandhaynta</string>
     <string name="notif_title">Waaiya way daaran tahay</string>
-    <string name="notif_text">Qalabka muusigga waa laga saaray dhammaan barnaamijyada</string>
+    <string name="notif_text">Codka barnaamijyadaada waa la shaandheynayaa</string>
     <string name="notif_stop">Jooji</string>
+    <string name="notif_resume">Sii wad</string>
     <!-- Link feature -->
     <string name="link_entry_title">Fur link</string>
     <string name="link_entry_body">Dhaji link YouTube, TikTok ama Instagram si aad u daawato ama aad u kaydiso muusig la\'aan.</string>
@@ -125,14 +126,14 @@
 
     <!-- Screen blur -->
     <string name="blur_title">Qarinta shaashadda</string>
-    <string name="blur_body">Waxay daboolaysaa dadka iyo sawirrada shaashadda, barnaamij kasta, inta shaandhayntu daaran tahay. Taleefanka ayay ka shaqaysaa; meelna waxba looma diro.</string>
+    <string name="blur_body">Waxay daboolaysaa dadka iyo sawirrada shaashadda inta shaandhayntu daaran tahay. Taleefanka ayay ka shaqaysaa; meelna waxba looma diro.</string>
     <string name="blur_on_title">Qarintu way shaqaynaysaa</string>
     <string name="blur_off_title">Qarintu way dansan tahay</string>
     <string name="blur_start_cd">Bilow qarinta</string>
     <string name="blur_stop_cd">Jooji qarinta</string>
-    <string name="blur_off_detail">Taabo badhanka si aad u bilowdo. Shaandhayntu way la bilaabantaa.</string>
+    <string name="blur_off_detail">Riix badhanka si aad u bilowdo. Shaandhayntu way la bilaabantaa.</string>
     <string name="blur_what_title">Waxa la qarinayo</string>
-    <string name="blur_women_title">Qari haweenka</string>
+    <string name="blur_women_title">Qari sawirrada haweenka</string>
     <string name="blur_women_body">Jirka oo dhan waa la daboolaa. Haddii barnaamijku uusan hubin in qofku nin yahay, isna waa la daboolaa.</string>
     <string name="blur_nudity_title">Qari sawirrada aan asturnayn</string>
     <string name="blur_nudity_body">Qaawanaan ama dhar jirka muujiya, qof kasta ha ahaadee: shaashadda oo dhan waa la daboolaa.</string>
@@ -246,22 +247,22 @@
     <string name="wsetup_code_dialog_title">Koodhka isku xirka</string>
     <string name="wsetup_code_dialog_body">Kaliya marka shaashaddu qaybsan tahay (“Settings” hal dhinac, Waaiya dhinaca kale): haddii aad ka baxdo “Settings” shaashadda isku xirka way xirantaa, koodhkeeduna ma shaqeeyo. Qor koodhka 6 lambar ah ee ka muuqda hoosta “Pair device with pairing code”.</string>
     <string name="wsetup_code_ok">Isku xir</string>
-    <string name="blur_strict_title">Yaa aan la daboolin</string>
-    <string name="blur_strict_value">Yaa aan la daboolin: %1$s</string>
+    <string name="blur_strict_title">Hubinta loo baahan yahay ka hor inta nin la muujin</string>
+    <string name="blur_strict_value">Hubinta loo baahan yahay ka hor inta nin la muujin: %1$s</string>
     <string name="blur_strict_0">Adag: kaliya dadka barnaamijku ku dhow yahay inuu hubo inay rag yihiin</string>
     <string name="blur_strict_1">Dhexdhexaad: qiyaastii laba jeer rag ka badan oo aan la daboolin</string>
     <string name="blur_strict_2">Fudud: rag yar oo ka badan dhexdhexaadka</string>
     <string name="blur_strict_0_short">adag</string>
     <string name="blur_strict_1_short">dhexdhexaad</string>
     <string name="blur_strict_2_short">fudud</string>
-    <string name="blur_strict_help">Qof kasta oo barnaamijku aanu hubin inuu nin yahay waa la daboolaa. Adag wuxuu ka tagaa qiyaastii 7 nin 100-kii iyagoo aan la daboolin; dhexdhexaad qiyaastii 14, fudud qiyaastii 16. Heer kasta oo ka adkaan yar wuxuu sidoo kale ka tagaa qiyaastii 1 haweeney oo dheeraad ah 100-kii iyadoo aan la daboolin.</string>
+    <string name="blur_strict_help">Qof waxaa la muujiyaa oo keliya marka barnaamijku hubo inuu nin yahay; qof kasta oo kale waa la qariyaa. Adag wuxuu muujiyaa qiyaastii 7 nin 100-kii, dhexdhexaad qiyaastii 14, fudud qiyaastii 16. Haween qaarkood weli waa laga dhaafaa; heer kasta oo ka adkaan yar wuxuu ka dhaafaa qiyaastii 1 kale 100-kii.</string>
     <!-- Live filter: problems said in words, the diagnostics report -->
-    <string name="state_on_not_muted">Codka asalka ah weli lama aamusiin, sidaas darteed waxaad maqlaysaa muusigga oo la socda codka la shaandheeyay. Dhammaystir habaynta hal mar ah ee hoose.</string>
-    <string name="state_on_mute_failing">Waaiya ma aamusiin karto codka asalka ah ee barnaamijka hadda shaqaynaya, sidaas darteed muusigga weli waa la maqli karaa. Jooji oo dib u bilow shaandhaynta. Haddii ay sii jirto, dir warbixinta baaritaanka (hoosta shaashaddan).</string>
-    <string name="state_too_slow">Taleefankani aad buu ugu gaabis yahay inuu shaandheeyo codka tooska ah, sidaas darteed codku wuu go\'aa. “Fur link” ee hoose weli wuu shaqeeyaa: wuxuu shaandheeyaa muuqaalka ka hor inta aan la daarin.</string>
+    <string name="state_on_not_muted">Codka asalka ah weli lama aamusiin, sidaas darteed waxaad maqlaysaa muusigga oo la socda codka la shaandheeyay. Dhammaystir habaynta hal mar ah ee bogga “Habaynta”.</string>
+    <string name="state_on_mute_failing">Waaiya ma aamusiin karto codka asalka ah ee barnaamijka hadda shaqaynaya, sidaas darteed muusigga weli waa la maqli karaa. Jooji oo dib u bilow shaandhaynta. Haddii ay sii jirto, dir warbixinta baaritaanka (Dejinta).</string>
+    <string name="state_too_slow">Taleefankani aad buu ugu gaabis yahay inuu shaandheeyo codka tooska ah, sidaas darteed codku wuu go\'aa. “Fur link” ee bogga “Linkiyada” weli wuu shaqeeyaa: wuxuu shaandheeyaa muuqaalka ka hor inta aan la daarin.</string>
     <string name="state_mono_note">Codku waa mono si taleefankani ula jaanqaado.</string>
-    <string name="state_blocked_silenced">Waa la aamusiiyay, maxaa yeelay ma oggola shaandhaynta: %1$s.</string>
-    <string name="state_blocked_unfiltered">Waxaa la daarayaa iyadoo aan la shaandheyn, maxaa yeelay ma oggola shaandhaynta: %1$s.</string>
+    <string name="state_blocked_silenced">Waa la aamusiiyay maxaa yeelay kuwan ma oggola shaandhaynta: %1$s.</string>
+    <string name="state_blocked_unfiltered">Waxaa la daarayaa iyadoo aan la shaandheyn maxaa yeelay kuwan ma oggola shaandhaynta: %1$s.</string>
     <string name="state_capture_failed">Android ma siin Waaiya codka barnaamijyada kale. Taabo badhanka si aad dib ugu bilowdo.</string>
     <string name="state_capture_cancelled">Bilowga waa laga noqday markii Android ay weydiisay wadaagista shaashadda. Waaiya waxay u baahan tahay in halkaas la doorto Bilow (“Start”) si ay u hesho codka. Waxba lama duubo, waxna lama diro.</string>
     <string name="start_no_setup_title">Muusigga weli waa la maqli doonaa</string>
@@ -273,19 +274,20 @@
     <string name="notif_too_slow">Taleefankani aad buu ugu gaabis yahay shaandhaynta tooska ah: codku wuu go\'aa</string>
     <string name="diag_button">Dhibaato? Warbixinta baaritaanka</string>
     <string name="diag_title">Warbixinta baaritaanka</string>
-    <string name="diag_note">Waxa Waaiya ku aragto taleefankan. Koobiyee ama la wadaag qofka ku caawinaya. Barnaamijka laftiisu waxba ma diro.</string>
+    <string name="diag_note">Waxa Waaiya ku aragto taleefankan. Koobiyee ama la wadaag qofka ku caawinaya. Waaiya iskeed uma dirto: adiga ayaa dooranaya cidda helaysa.</string>
     <string name="notif_stopped_title">Waaiya way joogsatay</string>
     <string name="notif_stopped_text">Codka mar dambe lama shaandheynayo. Taabo si aad dib ugu bilowdo.</string>
     <string name="notif_silenced_title">Shaandhayntu way joogsatay: barnaamijyada kale waa la aamusiiyay</string>
     <string name="notif_silenced_text">Taabo si aad dib ugu bilowdo, ama Jooji si aad u maqasho iyagoo aan la shaandheyn.</string>
     <!-- Quick Settings tiles (FilterTileService, ScreenShareTileService). Subtitles are short: they fit under a tile. -->
     <string name="tile_on">Daaran</string>
+    <string name="tile_model_failed">Shidan, laakiin aamusan: khalad model</string>
     <string name="tile_off">Damsan</string>
     <string name="tile_starting">Waa la bilaabayaa…</string>
     <string name="tile_silenced">Joogsaday, barnaamijyadu waa aamusan yihiin</string>
     <string name="tile_on_not_muted">Daaran, habayn ayaa loo baahan yahay</string>
     <string name="tile_open_app">Fur Waaiya</string>
-    <string name="tile_text_label">Qoraalka ogeysiisyada</string>
+    <string name="tile_text_label">Waaiya: qoraalka ogeysiisyada</string>
     <string name="tile_text_shown">Wuu muuqdaa inta la shaandheynayo</string>
     <string name="tile_text_hidden">Wuu qarsoon yahay inta la shaandheynayo</string>
     <string name="tile_text_refused">Taleefankani wuu diiday</string>
@@ -327,10 +329,10 @@
     <string name="setup_redo">Mar kale muuji habaynta</string>
     <string name="setup_go">U gudub habaynta</string>
     <!-- Waaiya's own cover helper (CoverHelper): touches pass through the blur covers without Shizuku -->
-    <string name="helper_title">Taabasho ka gudubta daboollada</string>
+    <string name="helper_title">Taabasho ka gudubta meelaha la qariyay</string>
     <string name="helper_body_off">Caawin la\'aan, daboolku wuxuu xannibaa taabashada ka hoosaysa. Caawiyaha Waaiya wuxuu u sawiraa daboollada si taabashadu uga gudubto. Daar “Wireless debugging” (Wi-Fi ayaa loo baahan yahay) oo taabo badhanka; markii ugu horreysay, hal mar isku xir sidii habaynta. Marka taleefanka dib loo shido, mar kale taabo.</string>
     <string name="helper_start">Bilow caawiyaha Waaiya</string>
-    <string name="helper_on">Caawiyaha Waaiya ayaa sawira daboollada: taabashadu way ka gudubtaa. Wuu joogsadaa marka taleefanka dib loo shido ama marka “USB debugging” la damiyo; markaas mar kale taabo badhanka.</string>
+    <string name="helper_on">Caawiyaha Waaiya ayaa sawira qarinta: taabashadu way ka gudubtaa. Wuu joogsadaa marka taleefanka dib loo shido ama marka “USB debugging” (fure gaar ah oo ku jira “Developer options”) la damiyo; markaas mar kale taabo badhanka.</string>
     <string name="helper_shizuku_on">Shizuku ayaa sawira daboollada: taabashadu way ka gudubtaa.</string>
     <string name="helper_or_shizuku">Ama adigoo isticmaalaya Shizuku:</string>
     <string name="guide_w_helper_note">Marka qarinta shaashaddu daaran tahay, habayntu waxay sidoo kale bilaabaysaa caawiyaha Waaiya, si taabashadu uga gudubto daboollada. “USB debugging” u daaran ku hay (“Wireless debugging” waa la demin karaa). Marka taleefanka dib loo shido, caawiyaha mar kale ka bilow bogga Shaashadda.</string>
@@ -346,7 +348,7 @@
     <string name="notif_fix_remove_covers">Ka saar daboollada gacanta</string>
     <string name="notif_fix_note_missed">Wax baa ka dhaafay</string>
     <string name="notif_fix_note_wrong">Si khalad ah ayaa loo qariyay</string>
-    <string name="notif_fix_noted">Waa la qoray (%1$d qoraal oo ku jira taleefankan)</string>
+    <string name="notif_fix_noted">Waa la qoray. Qoraallada ku jira taleefankan: %1$d</string>
     <string name="notif_fix_picker_hint">Farta ku jiid meesha aad dabooleyso.</string>
     <string name="notif_fix_picker_cover">Dabool</string>
     <string name="notif_fix_picker_cancel">Ka noqo</string>
@@ -416,4 +418,39 @@
     <string name="move_new_body">Waaiya duugga ah (ka hor nooca 0.2.15) weli waxay ku jirtaa taleefankan. Ka saar si aanay labaduba marna isku mar u shaandhayn.</string>
     <string name="move_new_imported">Dejimahaaga waa laga soo qaaday.</string>
     <string name="move_remove_old">Ka saar Waaiya duugga ah</string>
+
+    <!-- "Check for music" (MusicCheckActivity, docs/MUSIC_CHECK.md) -->
+    <string name="music_check_label">Waaiya: hubi muusigga</string>
+    <string name="mc_title">Hubi muusigga</string>
+    <string name="mc_unnamed">Fayl la wadaagay</string>
+    <string name="mc_listening">Waa la dhegeysanayaa… %1$d %%</string>
+    <string name="mc_private">Waaiya waxay ku dhegeysataa taleefankan. Duubistaas meelna looma diro.</string>
+    <string name="mc_music">Waaiya waxay maqashay muusig</string>
+    <string name="mc_music_detail">Qalab muusig ah gudaha %1$s (qiyaastii %2$s %% muuqaalka).</string>
+    <string name="mc_percussion">Waaiya waxay maqashay garaacis kaliya</string>
+    <string name="mc_percussion_detail">Durbaanno ama sacabbo laxan leh, qalab kale la\'aan, gudaha %1$s. Adigaa go\'aansanaya.</string>
+    <string name="mc_none">Qalab muusig ah lama maqlin</string>
+    <string name="mc_none_detail">Waaiya waxay dhegeysatay muuqaalka oo dhan, mana maqal qalab muusig ah. Muusig qaar ayaa laga yaabaa in la waayo, inta badan muusig hoose oo hadalka ka hooseeya.</string>
+    <string name="mc_note_quiet">Muusig hoose oo hadalka ka hooseeya waa laga yaabaa in la waayo.</string>
+    <string name="mc_failed">Faylkan lama hubin karin</string>
+    <string name="mc_failed_no_model">Noocan Waaiya ma hubin karo muusigga.</string>
+    <string name="mc_failed_no_sound">Cod ma laha.</string>
+    <string name="mc_failed_too_long">Wuxuu ka dheer yahay 30 daqiiqo.</string>
+    <string name="mc_failed_unreadable">Waaiya ma akhrin karto faylkan.</string>
+    <string name="mc_share_clean">La wadaag muusig la\'aan</string>
+    <string name="mc_share_anyway">Sidaas u wadaag</string>
+    <string name="mc_listen">Halkan ka dhegeyso</string>
+    <string name="mc_copying">Nuqul muusig la\'aan ah ayaa la samaynayaa… %1$d %%</string>
+    <string name="mc_copy_failed">Nuqulka muusig la\'aanta ah lama samayn karin.</string>
+    <string name="mc_copy_name">%1$s (muusig la\'aan)</string>
+    <string name="mc_list_sep">", "</string>
+    <string name="simple_title">Hab fudud (tijaabo): “Developer options” la\'aan</string>
+    <string name="simple_body">Waxaa loogu talagalay taleefannada ay habaynta hoose aad ugu adag tahay. Inta Waaiya shaandheyneyso, waxay aamusisaa codka warbaahinta taleefanka, codka la shaandheeyayna waxay ku shiddaa kanaal kale oo cod. Badhamada codkaagu waxay dejiyaan heerka codka Waaiya. Android waxay weydiisaa wadaagista shaashadda bilow kasta. Codka warbaahintu wuu soo noqdaa marka shaandhayntu joogsato.</string>
+    <string name="simple_switch">Isticmaal habka fudud</string>
+    <string name="simple_channel_title">Kanaalka codka: %1$s</string>
+    <string name="simple_channel_alarm">Alaarm</string>
+    <string name="simple_channel_notification">Ogeysiis</string>
+    <string name="simple_channel_help">Haddii aadan waxba maqlin, ama codku ka soo baxo kuhadlaha taleefanka iyadoo sameecadaha dhegaha ku jiraan, isku day kanaalka kale. Ogeysiisku waa aamusan yahay marka taleefanku ku jiro gariir ama “Do Not Disturb”.</string>
+    <string name="simple_test_note">Tani waa tijaabo. Kadib markaad isku daydo (kuhadlaha, sameecadaha dhegaha, Bluetooth), fadlan ka dir warbixinta baaritaanka “Dejinta”.</string>
+    <string name="simple_on_detail">Hab fudud (tijaabo): codka warbaahinta waa la aamusiiyay inta Waaiya shaandheyneyso.</string>
 </resources>

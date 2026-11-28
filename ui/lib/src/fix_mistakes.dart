@@ -382,6 +382,15 @@ class _NotesCard extends StatelessWidget {
               },
               child: Text(l.linkShare),
             ),
+          if (android)
+            TextButton(
+              key: const Key('fix_notes_send'),
+              onPressed: () {
+                Navigator.pop(ctx);
+                runAction(context, (b) => b.sendToSupport('Waaiya mistake notes', text));
+              },
+              child: Text(l.sendToSupport),
+            ),
           FilledButton(
             onPressed: () async {
               await Clipboard.setData(ClipboardData(text: text));

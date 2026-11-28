@@ -42,6 +42,24 @@ object ScreenShareProtection {
     fun protectionOff(ctx: Context) =
         android.provider.Settings.Global.getInt(ctx.contentResolver, KEY, 0) != 0
 
+    /**
+     * Android asks before each capture on this phone (no PROJECT_MEDIA: Xiaomi and the OPPO family refuse it to the
+     * setup). Android 15 QPR1+ then stops the capture at every screen lock (STOP_REASON_KEYGUARD, checked on the
+     * Android 16 emulator, blur on or off), and Waaiya holds the other apps silent until the user resumes. With this
+     * protection off the lock does not stop it. So on such a phone Waaiya lifts the protection while filtering
+     * whatever the notification-text choice, when it can.
+     */
+    fun lockApplies(ctx: Context) = supported && !ctx.hasProjectMediaAppOp() && setUp(ctx)
+
+    /** Lifted for the lock only after the user said yes ([Settings.keepAtLock]): it also unprotects other shares. */
+    fun neededForLock(ctx: Context) = lockApplies(ctx) && Settings(ctx).keepAtLock == 1
+
+    /** The question has not been answered yet: Start asks it first (the tile opens Waaiya for it). */
+    fun lockAsk(ctx: Context) = lockApplies(ctx) && Settings(ctx).keepAtLock == -1
+
+    /** Lift the protection at the next capture start: the user's notification-text choice, or [neededForLock]. */
+    fun wanted(ctx: Context) = Settings(ctx).showNotificationText || neededForLock(ctx)
+
     /** The user turned the tile on but the permission is missing: the main screen shows the setup card again. */
     fun needsSetup(ctx: Context) = supported && Settings(ctx).showNotificationText && !setUp(ctx)
 
@@ -57,7 +75,7 @@ object ScreenShareProtection {
     /** Called by FilterService just before the capture starts. commit(): the mark must be on disk before a crash. */
     @android.annotation.SuppressLint("ApplySharedPref")
     fun apply(ctx: Context) {
-        if (supported && Settings(ctx).showNotificationText && canWrite(ctx) && !protectionOff(ctx) && put(ctx, 1))
+        if (supported && wanted(ctx) && canWrite(ctx) && !protectionOff(ctx) && put(ctx, 1))
             prefs(ctx).edit().putBoolean(CHANGED, true).commit()
         shownInCapture = if (supported) protectionOff(ctx) else null
     }
