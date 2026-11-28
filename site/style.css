@@ -234,6 +234,14 @@ html:not(.js) .lshot { grid-column: 1 / -1; }
 html[lang="ar"] .how h3 { letter-spacing: 0; line-height: 1.35; }
 .how li p { font-size: var(--s4); max-width: 44ch; }
 
+/* ---------- the walkthrough video, one per language ---------- */
+.walk { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(32px, 5vw, 96px); row-gap: 40px; padding-inline: var(--m); align-items: center; }
+.walk-text { display: grid; gap: 24px; }
+.walk-text p { font-size: var(--s3); line-height: 1.5; max-width: 34ch; }
+.walk-film { justify-self: center; width: min(100%, 380px, calc((100svh - 140px) * 0.5625)); min-width: 260px; margin: 0; }
+.walk-film video { display: block; width: 100%; background: #000; aspect-ratio: 720 / 1280; }
+.walk-film figcaption { margin-top: 12px; font-size: var(--s5); color: var(--muted); }
+
 /* ---------- nothing leaves your device, and the introduction video ---------- */
 .priv { background: #053D35; color: #E6F2EF; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 96px); padding: clamp(64px, 8vw, 128px) var(--m); align-items: center; }
 .priv-text { display: grid; gap: 28px; }
@@ -437,6 +445,8 @@ html:not(.js) .try-tool, .try:not(.try-on) .try-tool { display: none; }
   .facts { grid-template-columns: repeat(2, 1fr); }
   .film { justify-self: start; }
   .how li { grid-template-columns: 1fr; row-gap: 6px; }
+  .walk { grid-template-columns: 1fr; }
+  .walk-film { justify-self: start; width: min(100%, 320px); }
   .dl-rows { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 860px) {

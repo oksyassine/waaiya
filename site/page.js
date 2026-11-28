@@ -69,7 +69,7 @@
   var groups = [
     [".hero-text", "[data-e]"], [".hero-power", ".power-l, .readout"],
     [".hear", "h2 span, [data-e]"], [".opts", ".opt"], [".cover", "[data-e], .cover-frag"], [".wait", ".card, [data-e]"],
-    [".langs", "[data-e], .ltabs li, .lshot"], [".phones", "h2, .tile"], [".how", "h2, li"], [".priv", "[data-e], .film"],
+    [".langs", "[data-e], .ltabs li, .lshot"], [".phones", "h2, .tile"], [".how", "h2, li"], [".walk", "[data-e], .walk-film"], [".priv", "[data-e], .film"],
     [".faq", "h2, .qq, .qa:not([data-closed])"], [".dl", ".dl-line, .dl-rows li"]
   ];
   if (G && !reduce() && "IntersectionObserver" in window) {

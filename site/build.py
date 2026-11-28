@@ -27,6 +27,7 @@ REPO = "https://github.com/oksyassine/waaiya"
 VERSION = "0.2.19"
 INDEXNOW_KEY = "975a156c404dff8c423982350b431cc8"  # public by design: Bing, Yandex and others fetch /<key>.txt
 VIDEO_DATE = "2026-11-21"  # the introduction video's upload date (VideoObject)
+WALK_DATE, WALK_DUR = "2026-11-28", "PT3M51S"  # the walkthrough videos (one per language, assets/walkthrough-<lang>.mp4)
 DL = "https://waaiya.mssid.org/downloads/"   # every download lives here (site/upload_downloads.sh); GitHub has the same files
 APK = DL + "waaiya.apk"                      # the universal APK under a stable name
 APK_ARM64 = DL + f"waaiya-v{VERSION}-arm64-v8a-release.apk"
@@ -153,6 +154,10 @@ T = {
             ("ثم اضغط الزر.", "تُزال الآلات الموسيقية من صوت تطبيقاتك. يبقى الإشعار ظاهرًا، وفيه زر الإيقاف."),
             ("وشغّل ما شئت.", "يوتيوب، إنستغرام، المتصفح، وأي تطبيق: محاضرة أو خبر أو وصفة، يصل الكلام وحده."),
         ],
+        walk_h="واعية خطوة بخطوة",
+        walk_p="جولة على هاتف أندرويد في أقل من [[4]] دقائق: الإعداد، والتصفية، وتمويه الشاشة، والروابط، وأوقات الصلاة. وفي كل تجربة للصوت تسمع ما تُخرجه واعية فعلًا.",
+        walk_cap="سُجّلت على محاكي أندرويد [[16]]، مع ترجمة إنجليزية.",
+        walk_alt="جولة في واعية خطوة بخطوة",
         priv_h="الترشيح والتغطية يبقيان على جهازك",
         priv_p="التصفية وتمويه الشاشة يعملان على الجهاز. لا حساب، ولا إحصاءات، ولا إعلانات. وكل تغيير في الشيفرة يُختبر والإنترنت مقطوع عنه. والشيفرة كاملة على [[GitHub]] برخصة [[AGPL]]: يستطيع أي أحد أن يبني التطبيق منها ويقارنه بما ننشر.",
         facts=[("0", "اتصال بالإنترنت أثناء التصفية"), ("18", "لغة"), ("3", "أنظمة: أندرويد، ويندوز، لينكس"), ("30", "ملّي ثانية تأخير تقريبًا")],
@@ -287,6 +292,10 @@ T = {
             ("Then press the button.", "Musical instruments are removed from your apps' sound. The notification stays, with its Stop button."),
             ("And play anything.", "YouTube, Instagram, the browser, any app: a lecture, the news, a recipe, only the voice comes through."),
         ],
+        walk_h="Waaiya, step by step",
+        walk_p="A tour of the Android app in under 4 minutes: the setup, filtering, screen blur, links and prayer times. In each sound trial you hear what Waaiya really outputs.",
+        walk_cap="Recorded on the Android 16 emulator.",
+        walk_alt="Waaiya walkthrough, step by step",
         priv_h="The filter and the blur stay on your device",
         priv_p="Filtering and screen blur run on the device. No account, no analytics, no ads. Every change to the code is tested with the internet cut off. All the code is on GitHub under the AGPL: anyone can build the app from it and compare it with what we publish.",
         facts=[("0", "internet connections while filtering"), ("18", "languages"), ("3", "platforms: Android, Windows, Linux"), ("30", "milliseconds of delay, roughly")],
@@ -412,7 +421,10 @@ def jsonld(lang, t, root_url):
     video = {"@context": "https://schema.org", "@type": "VideoObject", "name": plain(t["film_alt"]),
              "description": plain(t["film_cap"]), "inLanguage": "ar", "uploadDate": VIDEO_DATE, "duration": "PT52S",
              "thumbnailUrl": SITE + "assets/waaiya-intro.jpg", "contentUrl": SITE + "assets/waaiya-intro.mp4"}
-    return json.dumps([app, faq, video], ensure_ascii=False).replace("</", "<\\/")
+    walk = {"@context": "https://schema.org", "@type": "VideoObject", "name": plain(t["walk_alt"]),
+            "description": plain(t["walk_p"]), "inLanguage": lang, "uploadDate": WALK_DATE, "duration": WALK_DUR,
+            "thumbnailUrl": SITE + f"assets/walkthrough-{lang}.jpg", "contentUrl": SITE + f"assets/walkthrough-{lang}.mp4"}
+    return json.dumps([app, faq, video, walk], ensure_ascii=False).replace("</", "<\\/")
 
 
 def page(lang, root):
@@ -636,6 +648,14 @@ def page(lang, root):
 <section class="how" aria-labelledby="how-h">
   <h2 id="how-h">{e(t['how_h'])}</h2>
   <ol>{how}</ol>
+</section>
+{strip}
+<section class="walk" id="walk" aria-labelledby="walk-h">
+  <div class="walk-text" data-enter>
+    <h2 id="walk-h" data-e>{e(t['walk_h'])}</h2>
+    <p data-e>{e(t['walk_p'])}</p>
+  </div>
+  <figure class="walk-film"><video src="{a}walkthrough-{lang}.mp4" poster="{a}walkthrough-{lang}.jpg" width="720" height="1280" controls playsinline preload="none" aria-label="{e(t['walk_alt'])}"></video><figcaption>{e(t['walk_cap'])}</figcaption></figure>
 </section>
 {strip}
 <section class="priv" aria-labelledby="priv-h">
